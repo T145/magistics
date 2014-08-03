@@ -1,0 +1,16 @@
+[
+{
+  "modid": "Magistics",
+  "name": "Magistics",
+  "description": "Logistical magic!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["T145"],
+  "credits": "Azanor, for making Thaumcraft and helping me code this occasionally!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
