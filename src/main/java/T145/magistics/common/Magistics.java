@@ -1,5 +1,13 @@
 package T145.magistics.common;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import T145.magistics.common.config.Config;
 import T145.magistics.net.UniversalProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -19,15 +27,27 @@ public class Magistics {
 	@SidedProxy(clientSide = proxyPath, serverSide = proxyPath)
 	public static UniversalProxy proxy;
 
+	public static Logger logger = LogManager.getLogger(modid);
+
+	public static CreativeTabs tabMagistics = new CreativeTabs(modid) {
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(Blocks.anvil);
+		}
+	};
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
+		Config.preInit(e.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
+		Config.init();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
+		Config.postInit();
 	}
 }
