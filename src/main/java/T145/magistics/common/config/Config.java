@@ -2,6 +2,7 @@ package T145.magistics.common.config;
 
 import java.io.File;
 
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
@@ -9,9 +10,14 @@ import org.apache.logging.log4j.Level;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.external.ModHandler;
 import T145.magistics.common.config.external.ThaumcraftHandler;
+import T145.magistics.common.items.ItemResources;
 
 public class Config {
 	public static Configuration config;
+
+	public static Item items[] = {
+		new ItemResources()
+	};
 
 	public static void preInit(File configFile) {
 		config = new Configuration(configFile);
