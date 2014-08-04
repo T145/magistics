@@ -3,17 +3,14 @@ package T145.magistics.common.items.baubles;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.IIcon;
 import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBeltCleansing extends Item implements IBauble {
+public class ItemBeltCleansing extends ItemBauble {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
@@ -27,30 +24,9 @@ public class ItemBeltCleansing extends Item implements IBauble {
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack is) {
-		return EnumRarity.rare;
-	}
-
-	@Override
-	public boolean canEquip(ItemStack is, EntityLivingBase player) {
-		return true;
-	}
-
-	@Override
-	public boolean canUnequip(ItemStack is, EntityLivingBase player) {
-		return true;
-	}
-
-	@Override
 	public BaubleType getBaubleType(ItemStack is) {
 		return BaubleType.BELT;
 	}
-
-	@Override
-	public void onEquipped(ItemStack is, EntityLivingBase player) {}
-
-	@Override
-	public void onUnequipped(ItemStack is, EntityLivingBase player) {}
 
 	@Override
 	public void onWornTick(ItemStack is, EntityLivingBase player) {

@@ -1,17 +1,22 @@
 package T145.magistics.common.items.baubles;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAmuletDeath extends Item implements IBauble {
+public class ItemAmuletDeath extends ItemBauble {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
@@ -25,33 +30,24 @@ public class ItemAmuletDeath extends Item implements IBauble {
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack is) {
-		return EnumRarity.rare;
-	}
-
-	@Override
-	public boolean canEquip(ItemStack is, EntityLivingBase player) {
-		return true;
-	}
-
-	@Override
-	public boolean canUnequip(ItemStack is, EntityLivingBase player) {
-		return true;
-	}
-
-	@Override
 	public BaubleType getBaubleType(ItemStack is) {
 		return BaubleType.AMULET;
 	}
 
 	@Override
-	public void onEquipped(ItemStack is, EntityLivingBase player) {}
-
-	@Override
-	public void onUnequipped(ItemStack is, EntityLivingBase player) {}
-
-	@Override
 	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		
+		if (player instanceof EntityPlayer) {
+			List mobs = player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(player.posX - 8.0D, player.posY - 3.0D, player.posZ - 8.0D, player.posX + 8.0D, player.posY + 3.0D, player.posZ + 8.0D));
+
+			for (int mob = 0; mob < mobs.size(); mob++) {
+				EntityLiving beast = (EntityLiving) mobs.get(mob);
+
+				if (beast.isEntityUndead() && beast.getAttackTarget() instanceof EntityPlayer) {
+					beast.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 40, 0, true));
+					is.damageItem(1, player);
+					break;
+				}
+			}
+		}
 	}
 }
