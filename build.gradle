@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 
 version = "0.4.3"
-group= "T145.magistics"
+group = "T145.magistics"
 archivesBaseName = "Magistics"
 
 minecraft {
@@ -31,19 +31,19 @@ dependencies {
 }
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
+    // this will ensure that this task is redone when the version changes
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
+    // copy the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
         expand 'version':project.version, 'mcversion':project.minecraft.version
     }
-        
-    // copy everything else, thats not the mcmod.info
+
+    // copy everything else
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
