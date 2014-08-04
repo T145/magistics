@@ -30,7 +30,6 @@ public class ItemBauble extends Item implements IBauble {
 					break;
 				}
 		}
-
 		return is;
 	}
 
