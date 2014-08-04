@@ -5,8 +5,11 @@ build/
 ## Forge
 forge-*.txt
 
+## Project-specific dependencies
+!eclipse/mods/
+
 ## Eclipse
-!eclipse/.metadata
+!eclipse/.metadata/
 eclipse/
 .classpath
 .gradle/
