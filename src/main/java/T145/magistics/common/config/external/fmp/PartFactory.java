@@ -12,7 +12,7 @@ import codechicken.multipart.MultiPartRegistry.IPartFactory;
 import codechicken.multipart.TMultiPart;
 
 public class PartFactory implements IPartFactory, IPartConverter {
-	private static final String parts[] = {
+	public static final String parts[] = {
 		"tc_candle", "tc_mirror"
 	};
 

@@ -7,6 +7,8 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 
 import T145.magistics.common.Magistics;
+import T145.magistics.common.config.external.ModHandler;
+import T145.magistics.common.config.external.ThaumcraftHandler;
 
 public class Config {
 	public static Configuration config;
@@ -24,7 +26,11 @@ public class Config {
 		}
 	}
 
-	public static void init() {}
+	public static void init() {
+		ModHandler.init();
+	}
 
-	public static void postInit() {}
+	public static void postInit() {
+		ThaumcraftHandler.init();
+	}
 }

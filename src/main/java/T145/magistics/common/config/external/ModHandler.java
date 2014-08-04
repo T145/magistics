@@ -25,18 +25,17 @@ public class ModHandler {
 		}
 		if (Loader.isModLoaded("BuildCraft|Transport")) {
 			Magistics.logger.log(Level.INFO, "Buildcraft detected; compatibility loaded.");
-			// add facades here
 		}
 	}
 
-	private static void registerMultiparts(Block block, int i, int j) {
-		for (int k = i; k <= j; k++)
-			registerMultiparts(block, k);
+	private static void registerMultiparts(Block b, int meta_start, int meta_end) {
+		for (int meta = meta_start; meta <= meta_end; meta++)
+			registerMultiparts(b, meta);
 	}
 
-	private static void registerMultiparts(Block block, int meta) {
-		Magistics.logger.log(Level.INFO, "Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
-		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(block, meta), block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
+	private static void registerMultiparts(Block b, int meta) {
+		Magistics.logger.log(Level.INFO, "Registering Multiparts for " + b.getUnlocalizedName() + "." + meta);
+		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(b, meta), b.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
 	}
 
 	public static void addFacade(Block block, int meta) {
