@@ -8,6 +8,8 @@ import T145.magistics.common.blocks.BlockStoneApparatus.Types;
 public class BlockStoneApparatusItem extends ItemBlock {
 	public BlockStoneApparatusItem(Block b) {
 		super(b);
+		setHasSubtypes(true);
+		setMaxDamage(0);
 	}
 
 	@Override

@@ -14,7 +14,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockFragileApparatus extends BlockApparatus {
 	public static enum Types {
-		essentia_pipe(0);
+		crystal_capacitor(0),
+		crystal_core(1),
+		thaumic_duplicator(2),
+		thaumic_repairer(3),
+		essentia_pipe(4),
+		essentia_pump(5),
+		essentia_tank(6),
+		alchemical_ultracentrifuge(7);
 
 		private Types(int metadata) {}
 	}

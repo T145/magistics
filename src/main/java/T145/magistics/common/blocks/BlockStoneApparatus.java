@@ -14,7 +14,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStoneApparatus extends BlockApparatus {
 	public static enum Types {
-		arcane_seal(0);
+		arcane_seal(0),
+		infuser(1),
+		infuser_dark(2),
+		enchanter_thaumic(3),
+		enchanter_occultic(4),
+		eldritch_stone(5),
+		everfull_urn(6);
 
 		private Types(int metadata) {}
 	}

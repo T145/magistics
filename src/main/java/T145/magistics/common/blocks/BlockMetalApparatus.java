@@ -14,7 +14,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMetalApparatus extends BlockApparatus {
 	public static enum Types {
-		crystallizer(0);
+		crucible_eyes(0),
+		crucible_thaumium(1),
+		crucible_souls(2),
+		arcane_retort(3),
+		arcane_furnace(4),
+		crystallizer(5),
+		soul_brazier(6);
 
 		private Types(int metadata) {}
 	}
