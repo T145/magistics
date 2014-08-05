@@ -57,7 +57,7 @@ public class ItemSeal extends Item {
 		}
 		if (is.stackSize == 0 || !player.canPlayerEdit(i, j, k, side, is) || !world.canPlaceEntityOnSide(Config.block[0], i, j, k, false, side, (Entity) player, is))
 			return false;
-		if (canPlaceBlockAt(is, player, world, i, j, k, side, par8, par9, par10, Config.block[0], is.getItemDamage())) {
+		if (placeBlockAt(is, player, world, i, j, k, side, par8, par9, par10, Config.block[0], is.getItemDamage())) {
 			world.playSoundEffect((double) i + 0.5F, (double) j + 0.5F, (double) k + 0.5F, obstruction.stepSound.getStepResourcePath(), (obstruction.stepSound.getVolume() + 1.0F) / 2.0F, obstruction.stepSound.getPitch() * 0.8F);
 			--is.stackSize;
 			return true;
@@ -65,7 +65,7 @@ public class ItemSeal extends Item {
 		return false;
 	}
 
-	public boolean canPlaceBlockAt(ItemStack stack, EntityPlayer player, World world, int i, int j, int k, int side, float hitX, float hitY, float hitZ, Block b, int meta) {
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int i, int j, int k, int side, float hitX, float hitY, float hitZ, Block b, int meta) {
 		if (!world.setBlock(i, j, k, b, meta, 3))
 			return false;
 		if (world.getBlock(i, j, k) == b) {

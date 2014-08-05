@@ -7,7 +7,7 @@ forge-*.txt
 
 ## Project-specific dependencies
 minecraft/*
-!/minecraft/mods/*
+!minecraft/mods/
 lib/Thaumcraft*.jar
 
 ## Eclipse
