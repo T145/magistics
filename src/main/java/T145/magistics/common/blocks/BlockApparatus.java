@@ -7,12 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.InventoryHelper;
 import thaumcraft.common.tiles.TileCrucible;
-import T145.magistics.common.Magistics;
 
 public class BlockApparatus extends BlockContainer {
 	public BlockApparatus(Material m) {
 		super(m);
-		setCreativeTab(Magistics.tabMagistics);
 	}
 
 	@Override

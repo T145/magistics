@@ -49,9 +49,9 @@ public class Config {
 	};
 
 	public static Block block[] = {
-		new BlockFragileApparatus().setBlockName(blockName[0]),
-		new BlockMetalApparatus().setBlockName(blockName[1]),
-		new BlockStoneApparatus().setBlockName(blockName[2])
+		new BlockFragileApparatus().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics),
+		new BlockMetalApparatus().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics),
+		new BlockStoneApparatus().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics)
 	};
 
 	private static Class blockItem[] = {
