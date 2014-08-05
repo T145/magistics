@@ -12,4 +12,4 @@ Luckily most of this has been taken care of! Simply run one of the scripts conta
 3. Create a new pull request
 
 ### Parameters
-All that I ask when making a new pull request is that none of the project's formatting be affected. Yes, I'm very hypocritical when outlining this, but the way that my IDE formats things is just what I prefer. Any other format tends to look disorganized, particularly when blended w/ other formats. Code isn't ment to just be functional; it's meant to look good too!
+All that I ask when making a new pull request is that none of the project's general formatting be affected. This is so that other formats do not conflict w/ what is existing, and avoids giant blocks of highlighted code in Git commits. Also, it's generally because it has a great appearance! Code isn't meant to just be functional; it's meant to look good too!
