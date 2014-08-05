@@ -28,6 +28,7 @@ minecraft {
 
 dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
+    compile fileTree(dir: 'minecraft/mods', include: '*.jar')
 }
 
 processResources {
