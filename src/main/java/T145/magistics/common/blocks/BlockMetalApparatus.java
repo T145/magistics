@@ -12,9 +12,9 @@ import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockStoneApparatus extends BlockApparatus {
+public class BlockMetalApparatus extends BlockApparatus {
 	public static enum Types {
-		arcane_seal(0);
+		crystallizer(0);
 
 		private Types(int metadata) {}
 	}
@@ -22,8 +22,8 @@ public class BlockStoneApparatus extends BlockApparatus {
 	@SideOnly(Side.CLIENT)
 	public static IIcon icon[];
 
-	public BlockStoneApparatus() {
-		super(Material.rock);
+	public BlockMetalApparatus() {
+		super(Material.iron);
 	}
 
 	@Override

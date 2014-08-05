@@ -50,11 +50,11 @@ public class ItemRingSouls extends ItemBauble {
 				xpOrb.setDead();
 
 				if (damage <= 0) {
-					((EntityPlayer) player).inventory.addItemStackToInventory(new ItemStack(Config.items[0], 1, 6));
+					((EntityPlayer) player).inventory.addItemStackToInventory(new ItemStack(Config.item[0], 1, 6));
 					damage += 50;
 				}
 			}
-			is.setItemDamage(damage);
+			is.damageItem(damage, player);
 		}
 	}
 }

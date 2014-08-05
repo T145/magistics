@@ -29,12 +29,12 @@ public class ItemSeal extends Item {
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int i, int j, int k, int level, float par8, float par9, float par10) {
+	public boolean onItemUse(ItemStack is, EntityPlayer player, World world, int i, int j, int k, int side, float par8, float par9, float par10) {
 		Block obstruction = world.getBlock(i, j, k);
 		if (obstruction == Blocks.snow_layer && (world.getBlockMetadata(i, j, k) & 0x7) < 1)
-			level = 1;
+			side = 1;
 		else if (obstruction != Blocks.vine && obstruction != Blocks.tallgrass && obstruction != Blocks.deadbush && !obstruction.isReplaceable((IBlockAccess) world, i, j, k)) {
-			switch (level) {
+			switch (side) {
 			case 0:
 				j--;
 				break;
@@ -55,9 +55,9 @@ public class ItemSeal extends Item {
 				break;
 			}
 		}
-		if (is.stackSize == 0 || !player.canPlayerEdit(i, j, k, level, is) || !world.canPlaceEntityOnSide(Config.blocks[0], i, j, k, false, level, (Entity) player, is))
+		if (is.stackSize == 0 || !player.canPlayerEdit(i, j, k, side, is) || !world.canPlaceEntityOnSide(Config.block[0], i, j, k, false, side, (Entity) player, is))
 			return false;
-		if (canPlaceBlockAt(is, player, world, i, j, k, level, par8, par9, par10, Config.blocks[0], is.getItemDamage())) {
+		if (canPlaceBlockAt(is, player, world, i, j, k, side, par8, par9, par10, Config.block[0], is.getItemDamage())) {
 			world.playSoundEffect((double) i + 0.5F, (double) j + 0.5F, (double) k + 0.5F, obstruction.stepSound.getStepResourcePath(), (obstruction.stepSound.getVolume() + 1.0F) / 2.0F, obstruction.stepSound.getPitch() * 0.8F);
 			--is.stackSize;
 			return true;
