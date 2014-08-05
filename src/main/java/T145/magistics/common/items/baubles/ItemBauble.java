@@ -6,12 +6,18 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import T145.magistics.common.Magistics;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
 
 public class ItemBauble extends Item implements IBauble {
+	public ItemBauble() {
+		setCreativeTab(Magistics.tabMagistics);
+		setMaxStackSize(1);
+	}
+
 	@Override
 	public EnumRarity getRarity(ItemStack is) {
 		return EnumRarity.rare;
