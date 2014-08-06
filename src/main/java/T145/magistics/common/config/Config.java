@@ -31,6 +31,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Config {
 	public static Configuration config;
 
+	public static boolean colored_names;
+
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls", "arcane_seal"
 	}, blockName[] = {
@@ -65,6 +67,7 @@ public class Config {
 
 		try {
 			config.load();
+			colored_names = config.get(config.CATEGORY_GENERAL, "colored_names", false, "Toggles whether or not the blocks have colored names like in Thaumcraft 2.").getBoolean(colored_names);
 		} catch (Exception e) {
 			Magistics.logger.log(Level.ERROR, "An error has occurred while loading configuration properties!", e);
 		} finally {

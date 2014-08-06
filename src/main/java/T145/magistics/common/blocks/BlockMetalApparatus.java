@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -43,15 +42,6 @@ public class BlockMetalApparatus extends BlockApparatus {
 		switch (meta) {
 		default:
 			return blockIcon;
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(IBlockAccess ib, int i, int j, int k, int side) {
-		switch (ib.getBlockMetadata(i, j, k)) {
-		default:
-			return null;
 		}
 	}
 

@@ -2,7 +2,6 @@ package T145.magistics.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -10,16 +9,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import T145.magistics.common.blocks.BlockMetalApparatus.Types;
 import T145.magistics.common.tiles.TileArcaneRetort;
 
-public class BlockMetalApparatusItem extends ItemBlock {
+public class BlockMetalApparatusItem extends BlockApparatusItem {
 	public BlockMetalApparatusItem(Block b) {
 		super(b);
-		setHasSubtypes(true);
-		setMaxDamage(0);
-	}
-
-	@Override
-	public int getMetadata(int meta) {
-		return meta;
 	}
 
 	@Override
