@@ -7,7 +7,7 @@
 Luckily most of this has been taken care of! Simply run one of the scripts contained in the "scripts" directory (that's catered to your OS) from the project's root directory and you should be all set!
 
 ## License Stuff
-The license and all of that wonderful information is located in the project's license file. All of the project source code falls under this license. *While the assets (images and such) are separate, they are being outlined as separate content!* They belong to the original creators, and require their explicit permission for usage outside of this project.
+The license and all of that wonderful information is located in the project's license file. All of the project source code falls under this license. *As for the assets (images and such), and while they're included, they are being outlined as separate content!* They belong to the original creators, and require their explicit permission for usage outside of this project.
 
 ## Contributing
 1. Fork it
