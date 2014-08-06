@@ -12,20 +12,20 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
+import T145.magistics.common.tiles.TileSeal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStoneApparatus extends BlockApparatus {
-	public static boolean connected;
-
 	public static enum Types {
 		arcane_seal(0),
 		infuser(1),
 		infuser_dark(2),
-		enchanter_occultic(3),
-		enchanter_thaumic(4),
+		enchanter_thaumic(3),
+		enchanter_occultic(4),
 		eldritch_stone(5),
 		everfull_urn(6);
 
@@ -142,6 +142,45 @@ public class BlockStoneApparatus extends BlockApparatus {
 
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess ib, int i, int j, int k) {
+		float mod = BlockRenderer.W1;
+
+		switch (ib.getBlockMetadata(i, j, k)) {
+		case 0:
+			if (ib.getTileEntity(i, j, k) != null)
+				switch (((TileSeal) ib.getTileEntity(i, j, k)).orientation.ordinal()) {
+				case 0:
+					setBlockBounds(0.3F, 1.0F - mod, 0.3F, 0.7F, 1.0F, 0.7F);
+					break;
+				case 1:
+					setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, mod, 0.7F);
+					break;
+				case 2:
+					setBlockBounds(0.3F, 0.3F, 1.0F - mod, 0.7F, 0.7F, 1.0F);
+					break;
+				case 3:
+					setBlockBounds(0.3F, 0.3F, 0.0F, 0.7F, 0.7F, mod);
+					break;
+				case 4:
+					setBlockBounds(1.0F - mod, 0.3F, 0.3F, 1.0F, 0.7F, 0.7F);
+					break;
+				case 5:
+					setBlockBounds(0.0F, 0.3F, 0.3F, mod, 0.7F, 0.7F);
+					break;
+				}
+			break;
+		case 1: case 2:
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F - mod, 1.0F);
+			break;
+		case 3:
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
+			break;
+		case 6:
+			setBlockBounds(0.125F, 0.0F, 0.125F, 0.875F, 0.5625F, 0.875F);
+			break;
+		default:
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			break;
+		}
 	}
 
 	@Override
