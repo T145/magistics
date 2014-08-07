@@ -1,18 +1,25 @@
 package T145.magistics.common.blocks;
 
+import static net.minecraftforge.common.util.ForgeDirection.EAST;
+import static net.minecraftforge.common.util.ForgeDirection.NORTH;
+import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
+import static net.minecraftforge.common.util.ForgeDirection.UNKNOWN;
+import static net.minecraftforge.common.util.ForgeDirection.WEST;
+import static thaumcraft.client.renderers.block.BlockRenderer.W1;
+
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
 import T145.magistics.common.tiles.TileSeal;
@@ -80,18 +87,18 @@ public class BlockStoneApparatus extends BlockApparatus {
 			case 0:
 				return icon[0];
 			case 1:
-				return icon[4];
+				return icon[3];
 			case 2: case 3: case 4: case 5:
-				return ((TileInfuser) ib.getTileEntity(i, j, k)).isConnectable(ForgeDirection.UNKNOWN) ? icon[1] : icon[2];
+				return ((TileInfuser) ib.getTileEntity(i, j, k)).isConnectable(UNKNOWN) ? icon[1] : icon[2];
 			}
 		case 2:
 			switch (side) {
 			case 0:
 				return icon[5];
 			case 1:
-				return icon[9];
+				return icon[8];
 			case 2: case 3: case 4: case 5:
-				return ((TileInfuserDark) ib.getTileEntity(i, j, k)).isConnectable(ForgeDirection.UNKNOWN) ? icon[6] : icon[7];
+				return ((TileInfuserDark) ib.getTileEntity(i, j, k)).isConnectable(UNKNOWN) ? icon[6] : icon[7];
 			}
 		case 3:
 			switch (side) {
@@ -142,34 +149,34 @@ public class BlockStoneApparatus extends BlockApparatus {
 
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess ib, int i, int j, int k) {
-		float mod = BlockRenderer.W1;
+		TileEntity tile = ib.getTileEntity(i, j, k);
 
 		switch (ib.getBlockMetadata(i, j, k)) {
 		case 0:
-			if (ib.getTileEntity(i, j, k) != null)
-				switch (((TileSeal) ib.getTileEntity(i, j, k)).orientation.ordinal()) {
+			if (tile != null)
+				switch (((TileSeal) tile).orientation.ordinal()) {
 				case 0:
-					setBlockBounds(0.3F, 1.0F - mod, 0.3F, 0.7F, 1.0F, 0.7F);
+					setBlockBounds(0.3F, 1.0F - W1, 0.3F, 0.7F, 1.0F, 0.7F);
 					break;
 				case 1:
-					setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, mod, 0.7F);
+					setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, W1, 0.7F);
 					break;
 				case 2:
-					setBlockBounds(0.3F, 0.3F, 1.0F - mod, 0.7F, 0.7F, 1.0F);
+					setBlockBounds(0.3F, 0.3F, 1.0F - W1, 0.7F, 0.7F, 1.0F);
 					break;
 				case 3:
-					setBlockBounds(0.3F, 0.3F, 0.0F, 0.7F, 0.7F, mod);
+					setBlockBounds(0.3F, 0.3F, 0.0F, 0.7F, 0.7F, W1);
 					break;
 				case 4:
-					setBlockBounds(1.0F - mod, 0.3F, 0.3F, 1.0F, 0.7F, 0.7F);
+					setBlockBounds(1.0F - W1, 0.3F, 0.3F, 1.0F, 0.7F, 0.7F);
 					break;
 				case 5:
-					setBlockBounds(0.0F, 0.3F, 0.3F, mod, 0.7F, 0.7F);
+					setBlockBounds(0.0F, 0.3F, 0.3F, W1, 0.7F, 0.7F);
 					break;
 				}
 			break;
 		case 1: case 2:
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F - mod, 1.0F);
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F - W1, 1.0F);
 			break;
 		case 3:
 			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
@@ -188,5 +195,22 @@ public class BlockStoneApparatus extends BlockApparatus {
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int i, int j, int k) {
 		setBlockBoundsBasedOnState(world, i, j, k);
 		return super.getSelectedBoundingBoxFromPool(world, i, j, k);
+	}
+
+	@Override
+	public boolean canPlaceBlockAt(World world, int i, int j, int k) {
+		if (world.getBlockMetadata(i, j, k) == 0)
+			return world.isSideSolid(i - 1, j, k, EAST) || world.isSideSolid(i + 1, j, k, WEST) || world.isSideSolid(i, j, k - 1, SOUTH) || world.isSideSolid(i, j, k + 1, NORTH);
+		else
+			return world.getBlock(i, j, k).isReplaceable(world, i, j, k);
+	}
+
+	@Override
+	public void onNeighborBlockChange(World world, int i, int j, int k, Block b) {
+		if (world.getBlockMetadata(i, j, k) == 0 && !super.canPlaceBlockAt(world, i, j, k)) {
+			dropBlockAsItem(world, i, j, k, 0, 0);
+			world.setBlockToAir(i, j, k);
+		}
+		super.onNeighborBlockChange(world, i, j, k, b);
 	}
 }
