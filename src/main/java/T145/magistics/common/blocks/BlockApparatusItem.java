@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import T145.magistics.common.config.Config;
+import T145.magistics.common.config.MagisticsConfig;
 
 public class BlockApparatusItem extends ItemBlock {
 	public BlockApparatusItem(Block b) {
@@ -20,6 +20,6 @@ public class BlockApparatusItem extends ItemBlock {
 
 	@Override
 	public EnumRarity getRarity(ItemStack is) {
-		return Config.colored_names ? EnumRarity.uncommon : EnumRarity.common;
+		return MagisticsConfig.colored_names ? EnumRarity.uncommon : EnumRarity.common;
 	}
 }

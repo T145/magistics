@@ -28,7 +28,7 @@ import T145.magistics.common.items.baubles.ItemRingSouls;
 import T145.magistics.common.items.relics.ItemSeal;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class Config {
+public class MagisticsConfig {
 	public static Configuration config;
 
 	public static boolean colored_names;

@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.magistics.common.config.Config;
+import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.net.UniversalProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -39,18 +39,18 @@ public class Magistics {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		Config.preInit(e.getSuggestedConfigurationFile());
+		MagisticsConfig.preInit(e.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
-		Config.init();
+		MagisticsConfig.init();
 		proxy.registerRenderInformation();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-		Config.postInit();
+		MagisticsConfig.postInit();
 	}
 }

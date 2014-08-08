@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import thaumcraft.client.fx.FXWisp;
-import T145.magistics.common.config.Config;
+import T145.magistics.common.config.MagisticsConfig;
 import baubles.api.BaubleType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,7 +50,7 @@ public class ItemRingSouls extends ItemBauble {
 				xpOrb.setDead();
 
 				if (damage <= 0) {
-					((EntityPlayer) player).inventory.addItemStackToInventory(new ItemStack(Config.item[0], 1, 6));
+					((EntityPlayer) player).inventory.addItemStackToInventory(new ItemStack(MagisticsConfig.item[0], 1, 6));
 					damage += 50;
 				}
 			}

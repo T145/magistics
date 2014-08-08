@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import T145.magistics.common.config.Config;
+import T145.magistics.common.config.MagisticsConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -55,9 +55,9 @@ public class ItemSeal extends Item {
 				break;
 			}
 		}
-		if (is.stackSize == 0 || !player.canPlayerEdit(i, j, k, side, is) || !world.canPlaceEntityOnSide(Config.block[0], i, j, k, false, side, (Entity) player, is))
+		if (is.stackSize == 0 || !player.canPlayerEdit(i, j, k, side, is) || !world.canPlaceEntityOnSide(MagisticsConfig.block[0], i, j, k, false, side, (Entity) player, is))
 			return false;
-		if (placeBlockAt(is, player, world, i, j, k, side, par8, par9, par10, Config.block[0], is.getItemDamage())) {
+		if (placeBlockAt(is, player, world, i, j, k, side, par8, par9, par10, MagisticsConfig.block[0], is.getItemDamage())) {
 			world.playSoundEffect((double) i + 0.5F, (double) j + 0.5F, (double) k + 0.5F, obstruction.stepSound.getStepResourcePath(), (obstruction.stepSound.getVolume() + 1.0F) / 2.0F, obstruction.stepSound.getPitch() * 0.8F);
 			--is.stackSize;
 			return true;
