@@ -1,117 +1,231 @@
 package T145.magistics.common.tiles;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.wands.IWandable;
+import T145.magistics.common.blocks.BlockChestHungryMod;
 
 public class TileChestHungryMod extends TileEntity implements IInventory, IWandable {
+	public float lidAngle;
+	public int numPlayersUsing, ticksSinceSync;
 	public ForgeDirection orientation;
-	public int numPlayersUsing;
+	public ItemStack chestContents[] = new ItemStack[getSizeInventory()];
 
-	public TileChestHungryMod(int meta) {
-		meta = super.getBlockMetadata();
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+
+		if (++ticksSinceSync % 20 * 4 == 0)
+			worldObj.addBlockEvent(xCoord, yCoord, zCoord, super.getBlockType(), 1, numPlayersUsing);
+
+		if (numPlayersUsing > 0 && lidAngle == 0.0F)
+			worldObj.playSoundEffect((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+
+		if (numPlayersUsing == 0 && lidAngle > 0.0F || numPlayersUsing > 0 && lidAngle < 1.0F) {
+			if (numPlayersUsing > 0)
+				lidAngle += 0.1F;
+			else
+				lidAngle -= 0.1F;
+
+			if (lidAngle > 1.0F)
+				lidAngle = 1.0F;
+
+			if (lidAngle < 0.5F && lidAngle >= 0.5F)
+				worldObj.playSoundEffect((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+
+			if (lidAngle < 0.0F)
+				lidAngle = 0.0F;
+		}
 	}
 
 	@Override
-	public void onUsingWandTick(ItemStack arg0, EntityPlayer arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
+	public boolean receiveClientEvent(int eventID, int recievedData) {
+		switch (eventID) {
+		case 0:
+			numPlayersUsing = recievedData;
+			return true;
+		case 1:
+			if (lidAngle < recievedData / 10.0F)
+				lidAngle = recievedData / 10.0F;
+			return true;
+		default:
+			return super.receiveClientEvent(eventID, recievedData);
+		}
 	}
 
 	@Override
-	public ItemStack onWandRightClick(World arg0, ItemStack arg1,
-			EntityPlayer arg2) {
-		// TODO Auto-generated method stub
+	public void invalidate() {
+		updateContainingBlockInfo();
+		super.invalidate();
+	}
+
+	@Override
+	public void onUsingWandTick(ItemStack is, EntityPlayer player, int arg2) {}
+
+	@Override
+	public ItemStack onWandRightClick(World world, ItemStack is, EntityPlayer player) {
 		return null;
 	}
 
 	@Override
-	public int onWandRightClick(World arg0, ItemStack arg1, EntityPlayer arg2,
-			int arg3, int arg4, int arg5, int arg6, int arg7) {
-		// TODO Auto-generated method stub
+	public int onWandRightClick(World world, ItemStack is, EntityPlayer player, int i, int j, int k, int side, int meta) {
+		orientation = ForgeDirection.getOrientation(side);
+		world.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + world.rand.nextFloat() * 0.2f, false);
+		world.markBlockForUpdate(i, j, k);
+		player.swingItem();
 		return 0;
 	}
 
 	@Override
-	public void onWandStoppedUsing(ItemStack arg0, World arg1,
-			EntityPlayer arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onWandStoppedUsing(ItemStack is, World world, EntityPlayer player, int arg3) {}
 
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		switch (super.getBlockMetadata()) {
+		case 4:
+			return 54;
+		case 5:
+			return 81;
+		case 6:
+			return 108;
+		case 7:
+			return 45;
+		case 8:
+			return 72;
+		case 9:
+			return 108;
+		case 10:
+			return 108;
+		case 11:
+			return 1;
+		default:
+			return 27;
+		}
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int var1) {
-		// TODO Auto-generated method stub
-		return null;
+	public ItemStack getStackInSlot(int slot) {
+		return chestContents[slot];
 	}
 
 	@Override
-	public ItemStack decrStackSize(int var1, int var2) {
-		// TODO Auto-generated method stub
-		return null;
+	public ItemStack decrStackSize(int slot_from, int slot_to) {
+		if (chestContents[slot_from] != null) {
+			ItemStack is;
+
+			if (chestContents[slot_from].stackSize <= slot_to) {
+				is = chestContents[slot_from];
+				chestContents[slot_from] = null;
+				markDirty();
+				return is;
+			} else {
+				is = chestContents[slot_from].splitStack(slot_to);
+
+				if (chestContents[slot_from].stackSize == 0)
+					chestContents[slot_from] = null;
+
+				markDirty();
+				return is;
+			}
+		} else
+			return null;
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int var1) {
-		// TODO Auto-generated method stub
-		return null;
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		if (chestContents[slot] != null) {
+			ItemStack is = chestContents[slot];
+			chestContents[slot] = null;
+			return is;
+		} else
+			return null;
 	}
 
 	@Override
-	public void setInventorySlotContents(int var1, ItemStack var2) {
-		// TODO Auto-generated method stub
-		
+	public void setInventorySlotContents(int slot, ItemStack is) {
+		chestContents[slot] = is;
+
+		if (is != null && is.stackSize > getInventoryStackLimit())
+			is.stackSize = getInventoryStackLimit();
+
+		markDirty();
 	}
 
 	@Override
 	public String getInventoryName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Hungry " + BlockChestHungryMod.Types.values()[super.getBlockMetadata()].name() + " Chest";
 	}
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		NBTTagList nbtlist = nbt.getTagList("Items", 10);
+
+		for (int i = 0; i < nbtlist.tagCount(); ++i) {
+			NBTTagCompound slotMeta = nbtlist.getCompoundTagAt(i);
+			int j = slotMeta.getByte("Slot") & 255;
+
+			if (j >= 0 && j < chestContents.length)
+				chestContents[j] = ItemStack.loadItemStackFromNBT(slotMeta);
+		}
+
+		orientation = ForgeDirection.getOrientation(nbt.getInteger("orientation"));
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		NBTTagList nbtlist = new NBTTagList();
+
+		for (int i = 0; i < chestContents.length; ++i)
+			if (chestContents[i] != null) {
+				NBTTagCompound slotMeta = new NBTTagCompound();
+				slotMeta.setByte("Slot", (byte) i);
+				chestContents[i].writeToNBT(slotMeta);
+				nbtlist.appendTag(slotMeta);
+			}
+
+		nbt.setTag("Items", nbtlist);
+		nbt.setInteger("orientation", orientation.ordinal());
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 64;
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer var1) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isUseableByPlayer(EntityPlayer player) {
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
 	public void openInventory() {
-		// TODO Auto-generated method stub
-		
+		++numPlayersUsing;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, super.getBlockType(), 1, numPlayersUsing);
 	}
 
 	@Override
 	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
+		--numPlayersUsing;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, super.getBlockType(), 1, numPlayersUsing);
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int var1, ItemStack var2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isItemValidForSlot(int slot, ItemStack is) {
+		return super.getBlockMetadata() == 11 ? is.getItem() == Item.getItemFromBlock(Blocks.dirt) ? true : false : true;
 	}
 }

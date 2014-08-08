@@ -20,6 +20,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
 import T145.magistics.common.tiles.TileSeal;
@@ -31,8 +32,8 @@ public class BlockStoneApparatus extends BlockApparatus {
 		arcane_seal(0),
 		infuser(1),
 		infuser_dark(2),
-		enchanter_thaumic(3),
-		enchanter_occultic(4),
+		enchanter_occultic(3),
+		enchanter_thaumic(4),
 		eldritch_stone(5),
 		everfull_urn(6);
 
@@ -142,6 +143,11 @@ public class BlockStoneApparatus extends BlockApparatus {
 	}
 
 	@Override
+	public int getRenderType() {
+		return Magistics.proxy.renderID[2];
+	}
+
+	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
 		setBlockBoundsBasedOnState(world, i, j, k);
 		return super.getCollisionBoundingBoxFromPool(world, i, j, k);
@@ -178,7 +184,7 @@ public class BlockStoneApparatus extends BlockApparatus {
 		case 1: case 2:
 			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F - W1, 1.0F);
 			break;
-		case 3:
+		case 4:
 			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
 			break;
 		case 6:

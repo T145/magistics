@@ -89,7 +89,7 @@ public class BlockChestHungryMod extends BlockApparatus {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileChestHungryMod(meta);
+		return new TileChestHungryMod();
 	}
 
 	@Override

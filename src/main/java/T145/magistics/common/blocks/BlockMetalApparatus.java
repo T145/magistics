@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import T145.magistics.common.Magistics;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -26,6 +27,14 @@ public class BlockMetalApparatus extends BlockApparatus {
 
 	@SideOnly(Side.CLIENT)
 	public static IIcon icon[];
+
+	public static String sideMapping[][] = {
+		{
+			"side", "top", "bottom"
+		}, {
+			"in", "out", "out_off", "out_on"
+		}
+	};
 
 	public BlockMetalApparatus() {
 		super(Material.iron);
@@ -50,5 +59,10 @@ public class BlockMetalApparatus extends BlockApparatus {
 	public void getSubBlocks(Item i, CreativeTabs t, List l) {
 		for (Types type : Types.values())
 			l.add(new ItemStack(i, 1, type.ordinal()));
+	}
+
+	@Override
+	public int getRenderType() {
+		return Magistics.proxy.renderID[1];
 	}
 }

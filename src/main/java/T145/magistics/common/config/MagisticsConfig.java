@@ -3,6 +3,8 @@ package T145.magistics.common.config;
 import java.io.File;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
@@ -10,6 +12,8 @@ import org.apache.logging.log4j.Level;
 
 import thaumcraft.api.ThaumcraftApi;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockChestHungryMod;
+import T145.magistics.common.blocks.BlockChestHungryModItem;
 import T145.magistics.common.blocks.BlockFragileApparatus;
 import T145.magistics.common.blocks.BlockFragileApparatusItem;
 import T145.magistics.common.blocks.BlockMetalApparatus;
@@ -33,30 +37,39 @@ public class MagisticsConfig {
 
 	public static boolean colored_names;
 
+	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(Blocks.anvil);
+		}
+	};
+
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls", "arcane_seal"
 	}, blockName[] = {
-		"fragile_apparatus", "metal_apparatus", "stone_apparatus"
+		"hungry_chest_mod", "fragile_apparatus", "metal_apparatus", "stone_apparatus"
 	};
 
 	public static Item item[] = {
-		new ItemResources().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setMaxDamage(0).setUnlocalizedName(itemName[0]),
-		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
-		new ItemAmuletDeath().setMaxDamage(50).setUnlocalizedName(itemName[2]),
-		new ItemAmuletLife().setMaxDamage(100).setUnlocalizedName(itemName[3]),
-		new ItemBeltCleansing().setMaxDamage(50).setUnlocalizedName(itemName[4]),
-		new ItemBeltVigor().setMaxDamage(100).setUnlocalizedName(itemName[5]),
-		new ItemRingSouls().setMaxDamage(51).setUnlocalizedName(itemName[6]),
-		new ItemSeal().setCreativeTab(Magistics.tabMagistics).setMaxDamage(0).setUnlocalizedName(itemName[7])
+		new ItemResources().setCreativeTab(tabMagistics).setHasSubtypes(true).setMaxDamage(0).setUnlocalizedName(itemName[0]),
+		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
+		new ItemAmuletDeath().setCreativeTab(tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[2]),
+		new ItemAmuletLife().setCreativeTab(tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[3]),
+		new ItemBeltCleansing().setCreativeTab(tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[4]),
+		new ItemBeltVigor().setCreativeTab(tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[5]),
+		new ItemRingSouls().setCreativeTab(tabMagistics).setMaxDamage(51).setUnlocalizedName(itemName[6]),
+		new ItemSeal().setCreativeTab(tabMagistics).setMaxDamage(0).setUnlocalizedName(itemName[7])
 	};
 
 	public static Block block[] = {
-		new BlockFragileApparatus().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics),
-		new BlockMetalApparatus().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics),
-		new BlockStoneApparatus().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics)
+		new BlockChestHungryMod().setBlockName(blockName[0]).setCreativeTab(tabMagistics),
+		new BlockFragileApparatus().setBlockName(blockName[1]).setCreativeTab(tabMagistics),
+		new BlockMetalApparatus().setBlockName(blockName[2]).setCreativeTab(tabMagistics),
+		new BlockStoneApparatus().setBlockName(blockName[3]).setCreativeTab(tabMagistics)
 	};
 
 	private static Class blockItem[] = {
+		BlockChestHungryModItem.class,
 		BlockFragileApparatusItem.class,
 		BlockMetalApparatusItem.class,
 		BlockStoneApparatusItem.class
