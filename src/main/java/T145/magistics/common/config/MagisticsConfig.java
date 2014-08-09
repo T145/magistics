@@ -30,6 +30,7 @@ import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
 import T145.magistics.common.items.relics.ItemSeal;
+import T145.magistics.common.tiles.TileChestHungryMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagisticsConfig {
@@ -75,6 +76,10 @@ public class MagisticsConfig {
 		BlockStoneApparatusItem.class
 	};
 
+	public static Class tile[] = {
+		TileChestHungryMod.class
+	};
+
 	public static void preInit(File configFile) {
 		config = new Configuration(configFile);
 
@@ -94,6 +99,8 @@ public class MagisticsConfig {
 			GameRegistry.registerItem(item[i], itemName[i]);
 		for (int j = 0; j <= block.length; j++)
 			GameRegistry.registerBlock(block[j], blockItem[j], blockName[j]);
+		for (int k = 0; k <= tile.length; k++)
+			GameRegistry.registerTileEntity(tile[k], "magistics." + tile[k].getName());
 		ModHandler.init();
 	}
 

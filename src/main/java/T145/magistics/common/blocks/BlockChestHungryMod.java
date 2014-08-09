@@ -11,6 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -22,7 +23,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.InventoryHelper;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.tiles.TileChestHungryMod;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -30,25 +33,24 @@ public class BlockChestHungryMod extends BlockApparatus {
 	private static boolean isTrapped, isExplosionResistant;
 
 	public static enum Types {
-		normal(0),
-		trapped(1),
-		ender(2),
-		ender_mod(3),
-		iron(4),
-		gold(5),
-		diamond(6),
-		copper(7),
-		silver(8),
-		crystal(9),
-		obsidian(10),
-		dirt(11);
+		trapped(0),
+		ender(1),
+		ender_mod(2),
+		iron(3),
+		gold(4),
+		diamond(5),
+		copper(6),
+		silver(7),
+		crystal(8),
+		obsidian(9),
+		dirt(10);
 
 		private Types(int metadata) {
 			switch (metadata) {
-			case 1:
+			case 0:
 				isTrapped = true;
 				break;
-			case 10:
+			case 9:
 				isExplosionResistant = true;
 				break;
 			}
@@ -77,14 +79,21 @@ public class BlockChestHungryMod extends BlockApparatus {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item i, CreativeTabs t, List l) {
-		for (Types type : Types.values())
-			l.add(new ItemStack(i, 1, type.ordinal()));
+	public void getSubBlocks(Item apparatus, CreativeTabs t, List l) {
+		for (Types type : Types.values()) {
+			for (int i = type.trapped.ordinal(); i <= type.ender.ordinal(); i++)
+				l.add(new ItemStack(apparatus, 1, i));
+			if (Loader.isModLoaded("EnderStorage"))
+				l.add(new ItemStack(apparatus, 1, type.ender_mod.ordinal()));
+			if (Loader.isModLoaded("IronChest"))
+				for (int j = type.iron.ordinal(); j <= type.dirt.ordinal(); j++)
+					l.add(new ItemStack(apparatus, 1, j));
+		}
 	}
 
 	@Override
 	public int getRenderType() {
-		return 22;
+		return Magistics.proxy.renderID[0];
 	}
 
 	@Override
@@ -110,6 +119,20 @@ public class BlockChestHungryMod extends BlockApparatus {
 				else
 					entity.setDead();
 			}
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3) {
+		if (world.isRemote)
+			return true;
+		else {
+			IInventory inventory = getInventory(world, i, j, k);
+
+			if (inventory != null)
+				player.openGui(Magistics.instance, world.getBlockMetadata(i, j, k), world, i, j, k);
+
+			return true;
+		}
 	}
 
 	public IInventory getInventory(World world, int i, int j, int k) {
@@ -154,7 +177,7 @@ public class BlockChestHungryMod extends BlockApparatus {
 
 	@Override
 	public int isProvidingStrongPower(IBlockAccess ib, int i, int j, int k, int meta) {
-		return meta == 1 ? isProvidingWeakPower(ib, i, j, k, meta) : 0;
+		return meta == Types.trapped.ordinal() ? isProvidingWeakPower(ib, i, j, k, meta) : 0;
 	}
 
 	@Override

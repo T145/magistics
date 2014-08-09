@@ -14,7 +14,7 @@ import thaumcraft.api.wands.IWandable;
 import T145.magistics.common.blocks.BlockChestHungryMod;
 
 public class TileChestHungryMod extends TileEntity implements IInventory, IWandable {
-	public float lidAngle;
+	public float lidAngle, prevLidAngle;
 	public int numPlayersUsing, ticksSinceSync;
 	public ForgeDirection orientation;
 	public ItemStack chestContents[] = new ItemStack[getSizeInventory()];
@@ -25,6 +25,8 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 
 		if (++ticksSinceSync % 20 * 4 == 0)
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, super.getBlockType(), 1, numPlayersUsing);
+
+		prevLidAngle = lidAngle;
 
 		if (numPlayersUsing > 0 && lidAngle == 0.0F)
 			worldObj.playSoundEffect((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
@@ -37,10 +39,8 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 
 			if (lidAngle > 1.0F)
 				lidAngle = 1.0F;
-
 			if (lidAngle < 0.5F && lidAngle >= 0.5F)
 				worldObj.playSoundEffect((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-
 			if (lidAngle < 0.0F)
 				lidAngle = 0.0F;
 		}
@@ -161,7 +161,7 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 
 	@Override
 	public String getInventoryName() {
-		return "Hungry " + BlockChestHungryMod.Types.values()[super.getBlockMetadata()].name() + " Chest";
+		return "Hungry " + BlockChestHungryMod.Types.values()[super.getBlockMetadata()] + " Chest";
 	}
 
 	@Override

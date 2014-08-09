@@ -63,6 +63,6 @@ public class BlockMetalApparatus extends BlockApparatus {
 
 	@Override
 	public int getRenderType() {
-		return Magistics.proxy.renderID[1];
+		return Magistics.proxy.renderID[2];
 	}
 }

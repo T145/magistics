@@ -56,6 +56,6 @@ public class BlockFragileApparatus extends BlockApparatus {
 
 	@Override
 	public int getRenderType() {
-		return Magistics.proxy.renderID[0];
+		return Magistics.proxy.renderID[1];
 	}
 }

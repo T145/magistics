@@ -144,7 +144,7 @@ public class BlockStoneApparatus extends BlockApparatus {
 
 	@Override
 	public int getRenderType() {
-		return Magistics.proxy.renderID[2];
+		return Magistics.proxy.renderID[3];
 	}
 
 	@Override
