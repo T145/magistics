@@ -28,12 +28,12 @@ public class ModHandler {
 		}
 	}
 
-	private static void registerMultiparts(Block b, int meta_start, int meta_end) {
+	public static void registerMultiparts(Block b, int meta_start, int meta_end) {
 		for (int meta = meta_start; meta <= meta_end; meta++)
 			registerMultiparts(b, meta);
 	}
 
-	private static void registerMultiparts(Block b, int meta) {
+	public static void registerMultiparts(Block b, int meta) {
 		Magistics.logger.log(Level.INFO, "Registering Multiparts for " + b.getUnlocalizedName() + "." + meta);
 		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(b, meta), b.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
 	}

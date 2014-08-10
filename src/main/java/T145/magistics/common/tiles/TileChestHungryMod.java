@@ -18,6 +18,7 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 	public int numPlayersUsing, ticksSinceSync;
 	public ForgeDirection orientation;
 	public ItemStack chestContents[] = new ItemStack[getSizeInventory()];
+	private BlockChestHungryMod.Types types;
 
 	@Override
 	public void updateEntity() {
@@ -78,7 +79,7 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 	@Override
 	public int onWandRightClick(World world, ItemStack is, EntityPlayer player, int i, int j, int k, int side, int meta) {
 		orientation = ForgeDirection.getOrientation(side);
-		world.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + world.rand.nextFloat() * 0.2f, false);
+		world.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + world.rand.nextFloat() * 0.2F, false);
 		world.markBlockForUpdate(i, j, k);
 		player.swingItem();
 		return 0;
@@ -161,7 +162,7 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 
 	@Override
 	public String getInventoryName() {
-		return "Hungry " + BlockChestHungryMod.Types.values()[super.getBlockMetadata()] + " Chest";
+		return "Hungry " + types.values()[super.getBlockMetadata()] + " Chest";
 	}
 
 	@Override
@@ -226,6 +227,6 @@ public class TileChestHungryMod extends TileEntity implements IInventory, IWanda
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		return super.getBlockMetadata() == 11 ? is.getItem() == Item.getItemFromBlock(Blocks.dirt) ? true : false : true;
+		return super.getBlockMetadata() == types.dirt.ordinal() ? is.getItem() == Item.getItemFromBlock(Blocks.dirt) ? true : false : true;
 	}
 }

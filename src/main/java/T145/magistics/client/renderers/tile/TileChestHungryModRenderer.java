@@ -26,10 +26,7 @@ public class TileChestHungryModRenderer extends TileEntitySpecialRenderer {
 	}
 
 	private void renderChest(TileChestHungryMod tile, double i, double j, double k, float mod) {
-		int mark = 0;
-
-		if (tile.hasWorldObj())
-			mark = tile.getBlockMetadata();
+		int mark = tile.getBlockMetadata();
 
 		chestModelTexture[mark] = new ResourceLocation("magistics", "textures/models/chest_hungry_" + types.values()[mark]);
 		bindTexture(chestModelTexture[mark]);

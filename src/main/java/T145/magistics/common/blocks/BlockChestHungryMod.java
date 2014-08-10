@@ -30,30 +30,43 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChestHungryMod extends BlockApparatus {
-	private static boolean isTrapped, isExplosionResistant;
+	private static boolean isTrapped, isClear, isExplosionResistant;
 
 	public static enum Types {
 		trapped(0),
 		ender(1),
 		ender_mod(2),
-		iron(3),
-		gold(4),
-		diamond(5),
-		copper(6),
-		silver(7),
-		crystal(8),
-		obsidian(9),
-		dirt(10);
+		iron(3, 9),
+		gold(4, 9),
+		diamond(5, 12),
+		copper(6, 9),
+		silver(7, 9),
+		crystal(8, 12),
+		obsidian(9, 12),
+		dirt(10, 1);
+
+		public int size = new TileChestHungryMod().getSizeInventory(), rowLength;
+
+		public int getRowCount() {
+			return size / rowLength;
+		}
 
 		private Types(int metadata) {
 			switch (metadata) {
 			case 0:
 				isTrapped = true;
 				break;
+			case 8:
+				isClear = true;
+				break;
 			case 9:
 				isExplosionResistant = true;
 				break;
 			}
+		}
+
+		private Types(int metadata, int rowSize) {
+			rowLength = rowSize;
 		}
 	}
 
@@ -94,6 +107,12 @@ public class BlockChestHungryMod extends BlockApparatus {
 	@Override
 	public int getRenderType() {
 		return Magistics.proxy.renderID[0];
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return isClear ? 1 : 0;
 	}
 
 	@Override
