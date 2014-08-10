@@ -1,27 +1,19 @@
-itemGroup.Magistics=Magistics
+itemGroup.magistics=Magistics
 
-tc.research_category.Magistics=Magistics
+item.mystic_resources.animated_piston.name=Animated Piston
+item.mystic_resources.arcane_singularity.name=Arcane Singularity
+item.mystic_resources.dust_faint.name=Faint Dust
+item.mystic_resources.eldritch_keystone_inert.name=Inert Eldritch Keystone
+item.mystic_resources.eldritch_keystone_tlhutlh.name=Eldritch Keystone
+item.mystic_resources.eldritch_mechansim.name=Eldritch Mechanism
+item.mystic_resources.soul_fragment.name=Soul Fragment
+item.mystic_resources.void_ingot.name=Void Ingot
 
-tc.research_name.CAP_amber=Amber Cap
-tc.research_text.CAP_amber=Proper form!
-tc.research_page.CAP_amber.1=*test*
+item.cruel_mask.name=Mask Of Cruelty
 
-tc.research_name.HUNRGYIRONCHEST=Hungry Iron Chests
-tc.research_text.HUNGRYIRONCHEST=Who needs lunchboxes?
-tc.research_page.HUNRGYIRONCHEST.1=After learning the intricacies of the Hungry Chest, you have successfully devised a way to integrate its mystical properties into other similar chest types!
-
-tc.research_name.BUILDINGBLOCKS=Arcane Building Blocks
-tc.research_text.BUILDINGBLOCKS=Putting it all together
-tc.research_page.BUILDINGBLOCKS.1=You have found a way to merge the strength of stone with the resiliency of Thaumium. The result is a block quite resistant to daily wear and tear.<BR><BR>More importantly, these arcane stone blocks are perfectly suited for the creation of magical constructs and structures (including Beacon bases).<BR><BR>The lattice of Thaumium that forms the core of this block allows it to be easily transformed into a myriad of configurations.
-tc.research_page.BUILDINGBLOCKS.2=By placing four Arcane Stone Blocks together (as shown on the right) and infusing them with vis with a wave of your wand, the stones will merge together into an Infusion Altar.<BR><BR>The Infusion Workbench can be used to perform any crafting a normal workbench and arcane worktable can. In addition it is able to infuse certain creations with mystical aspects allowing for the creation of objects of great magical power.<BR><BR>To do this, the Infusion Workbench requires a source of aspects - a crucible is a good example of one such source. After placing the components in the Altar you should get an idea of what aspects are required to create the object.
-tc.research_page.BUILDINGBLOCKS.3=If there is a source of those aspects nearby, you should be able to craft the item. It should be noted that a single type of aspect can only come from a single source - the Infusion Workbench cannot draw that aspect from multiple sources to reach the required amount. Different aspects can come from different sources though.<BR><BR>If the source is a crucible, you should note that once the aspects are drawn from it, any remaining aspects might be spilled into the aura as Flux.
-
-tile.magistics.stone_apparatus.reinforced_arcane_stone.name=Reinforced Arcane Stone
-tile.magistics.stone_apparatus.reinforced_arcane_stone_bricks.name=Reinforced Arcane Stone Bricks
-
-item.magistics.wandcap.0.name=Amber Cap
-item.magistics.wandrod.0.name=Amber Rod
-item.magistics.wandrod.50.name=Amber Staff Core
-
-item.Wand.amber.cap=Amber Capped
-item.Wand.amber.rod=Amber
+# More original names to come!
+item.bauble.amulet_death.name=Amulet of Dismay
+item.bauble.amulet_life.name=Amulet of Life
+item.bauble.belt_cleansing.name=Belt of Cleansing
+item.bauble.belt_vigor.name=Belt of Vigor
+item.bauble.ring_souls.name=Ring of Souls

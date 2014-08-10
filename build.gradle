@@ -23,12 +23,12 @@ archivesBaseName = "Magistics"
 
 minecraft {
     version = "1.7.2-10.12.2.1121"
-    runDir = "minecraft"
+    runDir = "eclipse/assets"
 }
 
 dependencies {
+    compile fileTree(dir: 'eclipse/mods', include: '*.jar')
     compile fileTree(dir: 'lib', include: '*.jar')
-    compile fileTree(dir: 'minecraft/mods', include: '*.jar')
 }
 
 processResources {
@@ -48,4 +48,21 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+// add a developer release
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+// add a javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+artifacts {
+    archives deobfJar
+    archives javadocJar
 }

@@ -6,12 +6,11 @@ build/
 forge-*.txt
 
 ## Project-specific dependencies
-minecraft/*
-!minecraft/mods/
+eclipse/*
+!eclipse/mods/
 lib/Thaumcraft*.jar
 
 ## Eclipse
-eclipse/
 .classpath
 .gradle/
 .project

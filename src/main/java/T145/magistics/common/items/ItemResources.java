@@ -25,7 +25,7 @@ public class ItemResources extends Item {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static IIcon icon[];
+	public static IIcon icon[] = new IIcon[Types.values().length];
 
 	@Override
 	@SideOnly(Side.CLIENT)
