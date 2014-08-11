@@ -1,5 +1,8 @@
 package T145.magistics.common;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +28,13 @@ public class Magistics {
 	public static UniversalProxy proxy;
 
 	public static Logger logger = LogManager.getLogger(modid);
+
+	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
+		@Override
+		public Item getTabIconItem() {
+			return MagisticsConfig.item[0];
+		}
+	};
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {

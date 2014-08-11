@@ -2,8 +2,6 @@ package T145.magistics.common.config;
 
 import java.io.File;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
@@ -27,25 +25,18 @@ public class MagisticsConfig {
 
 	public static boolean colored_names;
 
-	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.anvil);
-		}
-	};
-
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls"
 	};
 
 	public static Item item[] = {
-		new ItemResources().setCreativeTab(tabMagistics).setHasSubtypes(true).setMaxDamage(0).setUnlocalizedName(itemName[0]),
-		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
-		new ItemAmuletDeath().setCreativeTab(tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[2]),
-		new ItemAmuletLife().setCreativeTab(tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[3]),
-		new ItemBeltCleansing().setCreativeTab(tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[4]),
-		new ItemBeltVigor().setCreativeTab(tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[5]),
-		new ItemRingSouls().setCreativeTab(tabMagistics).setMaxDamage(51).setUnlocalizedName(itemName[6]),
+		new ItemResources().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setMaxDamage(0).setUnlocalizedName(itemName[0]),
+		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
+		new ItemAmuletDeath().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[2]),
+		new ItemAmuletLife().setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[3]),
+		new ItemBeltCleansing().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[4]),
+		new ItemBeltVigor().setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[5]),
+		new ItemRingSouls().setCreativeTab(Magistics.tabMagistics).setMaxDamage(51).setUnlocalizedName(itemName[6]),
 	};
 
 	public static void preInit(File configFile) {
