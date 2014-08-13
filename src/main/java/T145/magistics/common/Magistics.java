@@ -32,7 +32,7 @@ public class Magistics {
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
 		@Override
 		public Item getTabIconItem() {
-			return MagisticsConfig.item[0];
+			return MagisticsConfig.item[1];
 		}
 	};
 

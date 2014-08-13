@@ -2,6 +2,7 @@ package T145.magistics.common.config;
 
 import java.io.File;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.Level;
 
 import thaumcraft.api.ThaumcraftApi;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.config.external.ModHandler;
 import T145.magistics.common.config.external.ThaumcraftHandler;
 import T145.magistics.common.items.ItemResources;
@@ -18,6 +20,7 @@ import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
+import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagisticsConfig {
@@ -27,6 +30,8 @@ public class MagisticsConfig {
 
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls"
+	}, blockName[] = {
+		"ender_hungry_chest"
 	};
 
 	public static Item item[] = {
@@ -37,6 +42,10 @@ public class MagisticsConfig {
 		new ItemBeltCleansing().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[4]),
 		new ItemBeltVigor().setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setUnlocalizedName(itemName[5]),
 		new ItemRingSouls().setCreativeTab(Magistics.tabMagistics).setMaxDamage(51).setUnlocalizedName(itemName[6]),
+	};
+
+	public static Block block[] = {
+		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics)
 	};
 
 	public static void preInit(File configFile) {
@@ -56,6 +65,10 @@ public class MagisticsConfig {
 	public static void init() {
 		for (Item item : item)
 			GameRegistry.registerItem(item, item.getUnlocalizedName());
+
+		GameRegistry.registerBlock(block[0], blockName[0]);
+		GameRegistry.registerTileEntity(TileChestHungryEnder.class, "TileChestHungryEnder");
+
 		ModHandler.init();
 	}
 
