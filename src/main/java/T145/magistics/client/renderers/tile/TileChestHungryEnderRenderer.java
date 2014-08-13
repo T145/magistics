@@ -16,41 +16,43 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 	private ModelChest chest = new ModelChest();
 
-	public void renderTileEntityAt(TileChestHungryEnder p_147519_1_, double p_147519_2_, double p_147519_4_, double p_147519_6_, float p_147519_8_) {
-		int i = 0;
+	@Override
+	public void renderTileEntityAt(TileEntity tile, double i, double j, double k, float mod) {
+		renderChest((TileChestHungryEnder) tile, i, j, k, mod);
+	}
 
-		if (p_147519_1_.hasWorldObj()) {
-			i = p_147519_1_.getBlockMetadata();
-		}
+	public void renderChest(TileChestHungryEnder tile, double i, double j, double k, float mod) {
+		int meta = 0, rotation = 0;
+
+		if (tile.hasWorldObj())
+			meta = tile.getBlockMetadata();
 
 		bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/ender.png"));
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glTranslatef((float) p_147519_2_, (float) p_147519_4_ + 1.0F, (float) p_147519_6_ + 1.0F);
+		GL11.glTranslatef((float) i, (float) j + 1.0F, (float) k + 1.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		short short1 = 0;
 
-		if (i == 2) {
-			short1 = 180;
+		switch (meta) {
+		case 2:
+			rotation = 180;
+			break;
+		case 4:
+			rotation = 90;
+			break;
+		case 5:
+			rotation = -90;
+			break;
+		default:
+			rotation = 0;
+			break;
 		}
 
-		if (i == 3) {
-			short1 = 0;
-		}
-
-		if (i == 4) {
-			short1 = 90;
-		}
-
-		if (i == 5) {
-			short1 = -90;
-		}
-
-		GL11.glRotatef((float) short1, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef((float) rotation, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		float f1 = p_147519_1_.field_145975_i + (p_147519_1_.field_145972_a - p_147519_1_.field_145975_i) * p_147519_8_;
+		float f1 = tile.field_145975_i + (tile.field_145972_a - tile.field_145975_i) * mod;
 		f1 = 1.0F - f1;
 		f1 = 1.0F - f1 * f1 * f1;
 		chest.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
@@ -58,9 +60,5 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-	}
-
-	public void renderTileEntityAt(TileEntity p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_) {
-		renderTileEntityAt((TileChestHungryEnder) p_147500_1_, p_147500_2_, p_147500_4_, p_147500_6_, p_147500_8_);
 	}
 }

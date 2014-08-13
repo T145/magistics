@@ -122,15 +122,12 @@ public class BlockChestHungryEnder extends BlockContainer {
 			double d4 = 0.0D;
 			double d5 = 0.0D;
 			int i1 = rand.nextInt(2) * 2 - 1;
-			int j1 = rand.nextInt(2) * 2 - 1;
 			d3 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
 			d4 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
 			d5 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
-			double d2 = (double) k + 0.5D + 0.25D * (double) j1;
-			d5 = (double) (rand.nextFloat() * 1.0F * (float) j1);
-			double d0 = (double) i + 0.5D + 0.25D * (double) i1;
+			d5 = (double) (rand.nextFloat() * 1.0F * (float) i1);
 			d3 = (double) (rand.nextFloat() * 1.0F * (float) i1);
-			world.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+			world.spawnParticle("portal", (double) i + 0.5D + 0.25D * (double) i1, d1, (double) k + 0.5D + 0.25D * (double) i1, d3, d4, d5);
 		}
 	}
 }
