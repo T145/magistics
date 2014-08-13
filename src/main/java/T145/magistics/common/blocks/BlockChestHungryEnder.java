@@ -76,7 +76,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 		if (world.getTileEntity(i, j, k) != null || !world.isRemote)
 			if (entity instanceof EntityItem && !entity.isDead) {
 				EntityItem item = (EntityItem) entity;
-				ItemStack leftovers = InventoryHelper.placeItemStackIntoInventory(item.getEntityItem(), owner.getInventoryEnderChest(), 1, true);
+				ItemStack leftovers = InventoryHelper.insertStack(owner.getInventoryEnderChest(), item.getEntityItem(), 0, true);
 
 				if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
 					world.playSoundAtEntity(entity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
@@ -122,12 +122,15 @@ public class BlockChestHungryEnder extends BlockContainer {
 			double d4 = 0.0D;
 			double d5 = 0.0D;
 			int i1 = rand.nextInt(2) * 2 - 1;
+			int j1 = rand.nextInt(2) * 2 - 1;
 			d3 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
 			d4 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
 			d5 = ((double) rand.nextFloat() - 0.5D) * 0.125D;
-			d5 = (double) (rand.nextFloat() * 1.0F * (float) i1);
+			double d2 = (double) k + 0.5D + 0.25D * (double) j1;
+			d5 = (double) (rand.nextFloat() * 1.0F * (float) j1);
+			double d0 = (double) i + 0.5D + 0.25D * (double) i1;
 			d3 = (double) (rand.nextFloat() * 1.0F * (float) i1);
-			world.spawnParticle("portal", (double) i + 0.5D + 0.25D * (double) i1, d1, (double) k + 0.5D + 0.25D * (double) i1, d3, d4, d5);
+			world.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
 		}
 	}
 }

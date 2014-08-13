@@ -45,7 +45,11 @@ public class MagisticsConfig {
 	};
 
 	public static Block block[] = {
-		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics)
+		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston)
+	};
+
+	public static Class tile[] = {
+		TileChestHungryEnder.class
 	};
 
 	public static void preInit(File configFile) {
@@ -65,9 +69,9 @@ public class MagisticsConfig {
 	public static void init() {
 		for (Item item : item)
 			GameRegistry.registerItem(item, item.getUnlocalizedName());
-
+		for (Class tileEntity : tile)
+			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
 		GameRegistry.registerBlock(block[0], blockName[0]);
-		GameRegistry.registerTileEntity(TileChestHungryEnder.class, "TileChestHungryEnder");
 
 		ModHandler.init();
 	}

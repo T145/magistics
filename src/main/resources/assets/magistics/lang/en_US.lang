@@ -1,5 +1,9 @@
 itemGroup.magistics=Magistics
 
+####
+# Items
+###
+
 item.mystic_resources.animated_piston.name=Animated Piston
 item.mystic_resources.arcane_singularity.name=Arcane Singularity
 item.mystic_resources.dust_faint.name=Faint Dust
@@ -17,3 +21,9 @@ item.bauble.amulet_life.name=Amulet of Life
 item.bauble.belt_cleansing.name=Belt of Cleansing
 item.bauble.belt_vigor.name=Belt of Vigor
 item.bauble.ring_souls.name=Ring of Souls
+
+####
+# Blocks
+###
+
+tile.ender_hungry_chest.name=Hungry Ender Chest
