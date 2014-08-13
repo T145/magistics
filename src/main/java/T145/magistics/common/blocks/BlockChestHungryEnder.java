@@ -91,7 +91,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-		InventoryEnderChest enderInv = player.getInventoryEnderChest();
+		InventoryEnderChest enderInv = owner.getInventoryEnderChest();
 		TileChestHungryEnder enderChest = (TileChestHungryEnder) world.getTileEntity(i, j, k);
 
 		if (enderInv != null && enderChest != null) {
@@ -99,7 +99,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 				return true;
 			else {
 				enderInv.func_146031_a(enderChest);
-				player.displayGUIChest(enderInv);
+				owner.displayGUIChest(enderInv);
 				return true;
 			}
 		} else
