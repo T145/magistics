@@ -34,7 +34,7 @@ public class MagisticsConfig {
 		"ender_hungry_chest"
 	};
 
-	public static Item item[] = {
+	public static Item items[] = {
 		new ItemResources().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setMaxDamage(0).setUnlocalizedName(itemName[0]),
 		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
 		new ItemAmuletDeath().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(itemName[2]),
@@ -44,11 +44,11 @@ public class MagisticsConfig {
 		new ItemRingSouls().setCreativeTab(Magistics.tabMagistics).setMaxDamage(51).setUnlocalizedName(itemName[6]),
 	};
 
-	public static Block block[] = {
+	public static Block blocks[] = {
 		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston)
 	};
 
-	public static Class tile[] = {
+	public static Class tiles[] = {
 		TileChestHungryEnder.class
 	};
 
@@ -67,11 +67,11 @@ public class MagisticsConfig {
 	}
 
 	public static void init() {
-		for (Item item : item)
+		for (Item item : items)
 			GameRegistry.registerItem(item, item.getUnlocalizedName());
-		for (Class tileEntity : tile)
+		for (Class tileEntity : tiles)
 			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
-		GameRegistry.registerBlock(block[0], blockName[0]);
+		GameRegistry.registerBlock(blocks[0], blockName[0]);
 
 		ModHandler.init();
 	}

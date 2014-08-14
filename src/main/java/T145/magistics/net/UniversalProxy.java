@@ -11,7 +11,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class UniversalProxy implements IGuiHandler {
-	public static int renderID[] = new int[MagisticsConfig.block.length];
+	public static int renderID[] = new int[MagisticsConfig.blocks.length];
 
 	public void registerRenderInformation() {
 		TileEntityRendererChestHelper.instance = new ChestHungryEnderRenderHelper();
