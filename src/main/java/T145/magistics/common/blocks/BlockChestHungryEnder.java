@@ -73,20 +73,22 @@ public class BlockChestHungryEnder extends BlockContainer {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		if (world.getTileEntity(i, j, k) != null || !world.isRemote)
-			if (entity instanceof EntityItem && !entity.isDead) {
-				EntityItem item = (EntityItem) entity;
-				ItemStack leftovers = InventoryHelper.insertStack(owner.getInventoryEnderChest(), item.getEntityItem(), 0, true);
+		TileEntity tile = world.getTileEntity(i, j, k);
+		if (tile == null || world.isRemote)
+			return;
+		if (entity instanceof EntityItem && !entity.isDead) {
+			EntityItem item = (EntityItem) entity;
+			ItemStack leftovers = InventoryHelper.placeItemStackIntoInventory(item.getEntityItem(), owner.getInventoryEnderChest(), 1, true);
 
-				if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
-					world.playSoundAtEntity(entity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-					world.addBlockEvent(i, j, k, this, 2, 2);
-				}
-				if (leftovers != null)
-					item.setEntityItemStack(leftovers);
-				else
-					entity.setDead();
+			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
+				world.playSoundAtEntity(entity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+				world.addBlockEvent(i, j, k, this, 2, 2);
 			}
+			if (leftovers != null)
+				item.setEntityItemStack(leftovers);
+			else
+				entity.setDead();
+		}
 	}
 
 	@Override
