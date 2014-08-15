@@ -38,11 +38,13 @@ public class ItemRingSouls extends ItemBauble {
 	public void onWornTick(ItemStack is, EntityLivingBase player) {
 		if (player instanceof EntityPlayer) {
 			int damage = is.getItemDamage();
-			List xpOrbs = player.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(player.posX - 2.0D, player.posY - 2.0D, player.posZ - 2.0D, player.posX + 2.0D, player.posY + 2.0D, player.posZ + 2.0D));
+			List<EntityXPOrb> xpOrbs = player.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(player.posX - 2.0D, player.posY - 2.0D, player.posZ - 2.0D, player.posX + 2.0D, player.posY + 2.0D, player.posZ + 2.0D));
+			EntityXPOrb xpOrb = null;
 
-			EntityXPOrb xpOrb = (EntityXPOrb) xpOrbs.get(0);
+			if (xpOrbs.size() > 0)
+				xpOrb = xpOrbs.get(0);
 
-			if (!xpOrb.isDead) {
+			if (xpOrb != null && !xpOrb.isDead) {
 				damage -= xpOrb.getXpValue();
 				FXWisp fx = new FXWisp(player.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, 0.5F, 5);
 				fx.shrink = true;
