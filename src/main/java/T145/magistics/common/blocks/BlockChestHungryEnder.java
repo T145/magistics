@@ -1,11 +1,13 @@
 package T145.magistics.common.blocks;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -18,6 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryEnder;
+
+import com.google.common.collect.Lists;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -58,6 +63,11 @@ public class BlockChestHungryEnder extends BlockContainer {
 	@Override
 	public int quantityDropped(Random rand) {
 		return 8;
+	}
+
+	@Override
+	public void harvestBlock(World world, EntityPlayer player, int i, int j, int k, int meta) {
+		if (EnchantmentHelper.getSilkTouchModifier(owner) && player == owner) {}
 	}
 
 	@Override

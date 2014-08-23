@@ -53,7 +53,10 @@ public class ItemBauble extends Item implements IBauble {
 	}
 
 	@Override
-	public void onEquipped(ItemStack is, EntityLivingBase player) {}
+	public void onEquipped(ItemStack is, EntityLivingBase player) {
+		if (!player.worldObj.isRemote)
+			player.worldObj.playSoundAtEntity(player, "random.orb", 0.1F, 1.3F);
+	}
 
 	@Override
 	public void onUnequipped(ItemStack is, EntityLivingBase player) {}

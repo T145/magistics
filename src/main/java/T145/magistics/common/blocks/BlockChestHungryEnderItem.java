@@ -15,12 +15,13 @@ public class BlockChestHungryEnderItem extends ItemBlock {
 
 	public BlockChestHungryEnderItem(Block block) {
 		super(block);
+		enderChest = (BlockChestHungryEnder) block;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer player, List l, boolean mod) {
 		if (enderChest.owner != null)
-			l.add(StatCollector.translateToLocal("Owner: " + enderChest.owner));
+			l.add(StatCollector.translateToLocal("Owner: " + enderChest.owner.getDisplayName()));
 	}
 }

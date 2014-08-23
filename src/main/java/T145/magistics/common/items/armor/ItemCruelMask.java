@@ -48,21 +48,23 @@ public class ItemCruelMask extends ItemArmor {
 		Entity e = Utils.getPointedEntity(world, player, 2.0D, 24.0D, 0.2F);
 
 		if (e != null && e instanceof EntityLiving) {
+			EntityLiving creature = (EntityLiving) e;
+
 			switch (world.rand.nextInt(4)) {
 			case 0:
-				((EntityLiving) e).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 6));
+				creature.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 6));
 				is.damageItem(1, player);
 				break;
 			case 1:
-				((EntityLiving) e).addPotionEffect(new PotionEffect(Potion.poison.id, 100, 0));
+				creature.addPotionEffect(new PotionEffect(Potion.poison.id, 100, 0));
 				is.damageItem(1, player);
 				break;
 			case 2:
-				((EntityLiving) e).addPotionEffect(new PotionEffect(Potion.weakness.id, 100, 6));
+				creature.addPotionEffect(new PotionEffect(Potion.weakness.id, 100, 6));
 				is.damageItem(1, player);
 				break;
 			case 3:
-				((EntityLiving) e).attackEntityFrom(DamageSource.causePlayerDamage(player), 1);
+				creature.attackEntityFrom(DamageSource.causePlayerDamage(player), 1);
 				is.damageItem(1, player);
 				break;
 			}

@@ -30,30 +30,28 @@ public class ItemBeltCleansing extends ItemBauble {
 
 	@Override
 	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
-			boolean cleansed = false;
+		boolean cleansed = false;
 
-			if (player.isBurning()) {
-				player.extinguish();
-				cleansed = true;
-			} else if (player.getActivePotionEffect(Potion.blindness) != null) {
-				player.removePotionEffect(Potion.blindness.getId());
-				cleansed = true;
-			} else if (player.getActivePotionEffect(Potion.confusion) != null) {
-				player.removePotionEffect(Potion.confusion.getId());
-				cleansed = true;
-			} else if (player.getActivePotionEffect(Potion.poison) != null) {
-				player.removePotionEffect(Potion.poison.getId());
-				cleansed = true;
-			} else if (player.getActivePotionEffect(Potion.weakness) != null) {
-				player.removePotionEffect(Potion.weakness.getId());
-				cleansed = true;
-			}
+		if (player.isBurning()) {
+			player.extinguish();
+			cleansed = true;
+		} else if (player.getActivePotionEffect(Potion.blindness) != null) {
+			player.removePotionEffect(Potion.blindness.getId());
+			cleansed = true;
+		} else if (player.getActivePotionEffect(Potion.confusion) != null) {
+			player.removePotionEffect(Potion.confusion.getId());
+			cleansed = true;
+		} else if (player.getActivePotionEffect(Potion.poison) != null) {
+			player.removePotionEffect(Potion.poison.getId());
+			cleansed = true;
+		} else if (player.getActivePotionEffect(Potion.weakness) != null) {
+			player.removePotionEffect(Potion.weakness.getId());
+			cleansed = true;
+		}
 
-			if (cleansed) {
-				is.damageItem(1, player);
-				player.worldObj.playSoundAtEntity(player, "magistics.heal", 1.0F, 1.0F);
-			}
+		if (cleansed) {
+			is.damageItem(1, player);
+			player.worldObj.playSoundAtEntity(player, "magistics.heal", 1.0F, 1.0F);
 		}
 	}
 }
