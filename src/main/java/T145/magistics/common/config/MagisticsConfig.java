@@ -4,15 +4,16 @@ import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
 
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.research.ResearchCategories;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.config.external.ModHandler;
-import T145.magistics.common.config.external.ThaumcraftHandler;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDeath;
@@ -26,7 +27,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class MagisticsConfig {
 	public static Configuration config;
 
-	public static boolean colored_names;
+	public static boolean colored_names, low_gfx;
 
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls"
@@ -57,7 +58,8 @@ public class MagisticsConfig {
 
 		try {
 			config.load();
-			colored_names = config.get(config.CATEGORY_GENERAL, "colored_names", false, "Toggles whether or not the blocks have colored names like in Thaumcraft 2.").getBoolean(colored_names);
+			colored_names = config.get(config.CATEGORY_GENERAL, "colored_names", false, "Toggles whether or not blocks have colored names like in Thaumcraft 2.").getBoolean(colored_names);
+			low_gfx = config.get(config.CATEGORY_GENERAL, "low_gfx", false, "Toggles or lessens graphical effects created by some blocks & items; great for low-end computers.").getBoolean(low_gfx);
 		} catch (Exception e) {
 			Magistics.logger.log(Level.ERROR, "An error has occurred while loading configuration properties!", e);
 		} finally {
@@ -72,11 +74,11 @@ public class MagisticsConfig {
 		for (Class tileEntity : tiles)
 			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
 		GameRegistry.registerBlock(blocks[0], blockName[0]);
-
-		ModHandler.init();
 	}
 
 	public static void postInit() {
-		ThaumcraftHandler.init();
+		ModHandler.init();
+
+		ResearchCategories.registerCategory(Magistics.modid.toUpperCase(), new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 	}
 }

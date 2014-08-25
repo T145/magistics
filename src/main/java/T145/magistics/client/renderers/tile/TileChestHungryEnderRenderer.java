@@ -3,38 +3,39 @@ package T145.magistics.client.renderers.tile;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
+import thaumcraft.client.lib.UtilsFX;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
-	private ModelChest chest = new ModelChest();
+	private ModelChest chestModel = new ModelChest();
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double i, double j, double k, float mod) {
-		renderChest((TileChestHungryEnder) tile, i, j, k, mod);
+		renderChestAt((TileChestHungryEnder) tile, i, j, k, mod);
 	}
 
-	public void renderChest(TileChestHungryEnder tile, double i, double j, double k, float mod) {
-		int meta = 0, rotation = 0;
+	public void renderChestAt(TileChestHungryEnder chest, double i, double j, double k, float mod) {
+		int meta;
+		if (chest.hasWorldObj())
+			meta = chest.getBlockMetadata();
+		else
+			meta = 0;
 
-		if (tile.hasWorldObj())
-			meta = tile.getBlockMetadata();
-
-		bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/ender.png"));
+		UtilsFX.bindTexture("magistics", "textures/models/chest_hungry/ender.png");
 		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glEnable(32826);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glTranslatef((float) i, (float) j + 1.0F, (float) k + 1.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 
+		short rotation;
 		switch (meta) {
 		case 2:
 			rotation = 180;
@@ -52,13 +53,13 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 
 		GL11.glRotatef((float) rotation, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		float f1 = tile.field_145975_i + (tile.field_145972_a - tile.field_145975_i) * mod;
-		f1 = 1.0F - f1;
-		f1 = 1.0F - f1 * f1 * f1;
-		chest.chestLid.rotateAngleX = -(f1 * (float) Math.PI / 2.0F);
-		chest.renderAll();
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		float lidOpening = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * mod;
+		lidOpening = 1.0F - lidOpening;
+		lidOpening = 1.0F - lidOpening * lidOpening * lidOpening;
+		chestModel.chestLid.rotateAngleX = -(lidOpening * (float) Math.PI / 2.0F);
+		chestModel.renderAll();
+		GL11.glDisable(32826);
 		GL11.glPopMatrix();
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0f);
 	}
 }
