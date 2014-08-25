@@ -82,7 +82,7 @@ public class TileChestHungryEnder extends TileEntityEnderChest {
 	}
 
 	@Override
-	public boolean func_145971_a(EntityPlayer p_145971_1_) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : p_145971_1_.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
+	public boolean func_145971_a(EntityPlayer player) {
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
 	}
 }

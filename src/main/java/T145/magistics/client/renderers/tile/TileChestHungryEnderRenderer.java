@@ -60,6 +60,6 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 		chestModel.renderAll();
 		GL11.glDisable(32826);
 		GL11.glPopMatrix();
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0f);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 }

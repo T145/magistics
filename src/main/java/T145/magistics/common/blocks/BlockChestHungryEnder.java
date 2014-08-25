@@ -3,7 +3,6 @@ package T145.magistics.common.blocks;
 import net.minecraft.block.BlockEnderChest;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -24,11 +23,6 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
 		blockIcon = r.registerIcon("magistics:chest_hungry_ender");
-	}
-
-	@Override
-	public void harvestBlock(World world, EntityPlayer player, int i, int j, int k, int meta) {
-		if (EnchantmentHelper.getSilkTouchModifier(owner) && player == owner) {}
 	}
 
 	@Override
