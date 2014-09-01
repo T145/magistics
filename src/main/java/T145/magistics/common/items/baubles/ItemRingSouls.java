@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
-import thaumcraft.client.fx.FXWisp;
+import thaumcraft.client.fx.particles.FXWisp;
 import T145.magistics.common.config.MagisticsConfig;
 import baubles.api.BaubleType;
 import cpw.mods.fml.relauncher.Side;

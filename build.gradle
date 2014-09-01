@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.4.3"
+version = "0.5.1"
 group = "T145.magistics"
 archivesBaseName = "Magistics"
 
 minecraft {
-    version = "1.7.2-10.12.2.1121"
+    version = "1.7.10-10.13.0.1180"
     runDir = "eclipse/assets"
 }
 
