@@ -1,0 +1,31 @@
+#zh_CN
+
+itemGroup.magistics=Magistics
+
+####
+# Items
+###
+
+item.mystic_resources.animated_piston.name=动态活塞
+item.mystic_resources.arcane_singularity.name=奥术奇点
+item.mystic_resources.dust_faint.name=微弱之尘
+item.mystic_resources.eldritch_keystone_inert.name=惰性畏术楔石
+item.mystic_resources.eldritch_keystone_tlhutlh.name=畏术楔石
+item.mystic_resources.eldritch_mechansim.name=畏术机构
+item.mystic_resources.soul_fragment.name=灵魂碎片
+item.mystic_resources.void_ingot.name=虚空锭
+
+item.cruel_mask.name=残暴面具
+
+# More original names to come!
+item.bauble.amulet_death.name=恐慌护身符
+item.bauble.amulet_life.name=生命护身符
+item.bauble.belt_cleansing.name=净化腰带
+item.bauble.belt_vigor.name=活力腰带
+item.bauble.ring_souls.name=灵魂戒指
+
+####
+# Blocks
+###
+
+tile.ender_hungry_chest.name=末影饕餮箱子
