@@ -11,7 +11,7 @@ import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import thaumcraft.common.lib.InventoryHelper;
+import T145.magistics.common.lib.MagisticsUtils;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,30 +32,18 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 	}
 
 	public InventoryEnderChest getEnderInventory(EntityPlayer player, World world, int i, int j, int k) {
-		if (owner != null && player == owner && !world.isRemote && !world.getBlock(i, j + 1, k).isNormalCube())
-			return player.getInventoryEnderChest();
-		else
+		if (owner == null || owner != player || world.getBlock(i, j + 1, k).isNormalCube())
 			return null;
+		else
+			return player.getInventoryEnderChest();
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		TileEntity tile = world.getTileEntity(i, j, k);
-		if (tile == null || world.isRemote)
-			return;
-		if (entity instanceof EntityItem && !entity.isDead) {
-			EntityItem item = (EntityItem) entity;
-			ItemStack leftovers = InventoryHelper.placeItemStackIntoInventory(item.getEntityItem(), getEnderInventory(owner, world, i, j, k), 1, true);
+		InventoryEnderChest enderInv = getEnderInventory(owner, world, i, j, k);
 
-			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
-				world.playSoundAtEntity(entity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-				world.addBlockEvent(i, j, k, this, 2, 2);
-			}
-			if (leftovers != null)
-				item.setEntityItemStack(leftovers);
-			else
-				entity.setDead();
-		}
+		if (enderInv != null && entity instanceof EntityItem)
+			MagisticsUtils.absorbToInventory(world, i, j, k, (EntityItem) entity, this, 2, 2, owner.getInventoryEnderChest(), true);
 	}
 
 	@Override
