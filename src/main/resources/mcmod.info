@@ -2,13 +2,13 @@
 {
   "modid": "Magistics",
   "name": "Magistics",
-  "description": "Logistical magic!",
+  "description": "Adding some logistics to Thaumcraft!",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/T145/magistics",
   "updateUrl": "",
   "authorList": ["T145"],
-  "credits": "Azanor, for making Thaumcraft and helping me code this occasionally!",
+  "credits": "Azanor, for making Thaumcraft and helping me out initially!",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

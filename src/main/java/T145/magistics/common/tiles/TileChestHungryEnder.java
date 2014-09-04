@@ -1,6 +1,5 @@
 package T145.magistics.common.tiles;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntityEnderChest;
 import T145.magistics.common.config.MagisticsConfig;
 
@@ -79,10 +78,5 @@ public class TileChestHungryEnder extends TileEntityEnderChest {
 	public void func_145970_b() {
 		--numPlayersUsing;
 		worldObj.addBlockEvent(xCoord, yCoord, zCoord, MagisticsConfig.blocks[0], 1, numPlayersUsing);
-	}
-
-	@Override
-	public boolean func_145971_a(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
 	}
 }
