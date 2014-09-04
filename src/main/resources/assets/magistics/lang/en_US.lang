@@ -1,6 +1,15 @@
 itemGroup.magistics=Magistics
 
 ####
+# Research
+###
+
+tc.research_category.MAGISTICS=Magistics
+tc.research_name.HUNGRYCHESTENDER=Hungry Ender Chest
+tc.research_text.HUNGRYCHESTENDER=It's starving!
+tc.research_page.HUNGRYCHESTENDER.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
+
+####
 # Items
 ###
 

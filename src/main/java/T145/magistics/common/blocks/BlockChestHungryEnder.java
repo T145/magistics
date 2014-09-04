@@ -124,7 +124,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 		InventoryEnderChest enderInv = getEnderInventory(owner, world, i, j, k);
 
 		if (enderInv != null && entity instanceof EntityItem)
-			MagisticsUtils.absorbToInventory(world, i, j, k, (EntityItem) entity, this, 2, 2, owner.getInventoryEnderChest(), true);
+			MagisticsUtils.absorbToInventory(world, i, j, k, (EntityItem) entity, this, 2, 2, enderInv, true);
 	}
 
 	@Override
