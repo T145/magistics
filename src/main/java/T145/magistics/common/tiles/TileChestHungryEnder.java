@@ -1,12 +1,27 @@
 package T145.magistics.common.tiles;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityEnderChest;
+import net.minecraftforge.common.util.ForgeDirection;
 import T145.magistics.common.config.MagisticsConfig;
 
 public class TileChestHungryEnder extends TileEntityEnderChest {
 	public float lidAngle, prevLidAngle;
 	public int numPlayersUsing;
 	private int ticksSinceSync;
+	public ForgeDirection orientation = ForgeDirection.getOrientation(0);
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		orientation = ForgeDirection.getOrientation(nbt.getInteger("orientation"));
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		nbt.setInteger("orientation", orientation.ordinal());
+	}
 
 	@Override
 	public void updateEntity() {

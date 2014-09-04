@@ -21,12 +21,6 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 	}
 
 	public void renderChestAt(TileChestHungryEnder chest, double i, double j, double k, float mod) {
-		int meta;
-		if (chest.hasWorldObj())
-			meta = chest.getBlockMetadata();
-		else
-			meta = 0;
-
 		UtilsFX.bindTexture("magistics", "textures/models/chest_hungry/ender.png");
 		GL11.glPushMatrix();
 		GL11.glEnable(32826);
@@ -34,24 +28,20 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float) i, (float) j + 1.0F, (float) k + 1.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-
-		short rotation;
-		switch (meta) {
+		switch (chest.orientation.ordinal()) {
 		case 2:
-			rotation = 180;
+			GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+			break;
+		case 3:
+			GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
 			break;
 		case 4:
-			rotation = 90;
+			GL11.glRotatef(90.0F, 0.0F, 1.0f, 0.0F);
 			break;
 		case 5:
-			rotation = -90;
-			break;
-		default:
-			rotation = 0;
+			GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 			break;
 		}
-
-		GL11.glRotatef((float) rotation, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		float lidOpening = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * mod;
 		lidOpening = 1.0F - lidOpening;
