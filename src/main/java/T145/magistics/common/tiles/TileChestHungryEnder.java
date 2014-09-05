@@ -1,11 +1,15 @@
 package T145.magistics.common.tiles;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityEnderChest;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.wands.IWandable;
 import T145.magistics.common.config.MagisticsConfig;
 
-public class TileChestHungryEnder extends TileEntityEnderChest {
+public class TileChestHungryEnder extends TileEntityEnderChest implements IWandable {
 	public float lidAngle, prevLidAngle;
 	public int numPlayersUsing;
 	private int ticksSinceSync;
@@ -22,6 +26,25 @@ public class TileChestHungryEnder extends TileEntityEnderChest {
 		super.writeToNBT(nbt);
 		nbt.setInteger("orientation", orientation.ordinal());
 	}
+
+	@Override
+	public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int i, int j, int k, int side, int md) {
+		orientation = ForgeDirection.getOrientation(side);
+		player.worldObj.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
+		player.swingItem();
+		return 0;
+	}
+
+	@Override
+	public ItemStack onWandRightClick(World world, ItemStack wand, EntityPlayer player) {
+		return null;
+	}
+
+	@Override
+	public void onUsingWandTick(ItemStack wand, EntityPlayer player, int count) {}
+
+	@Override
+	public void onWandStoppedUsing(ItemStack wand, World world, EntityPlayer player, int count) {}
 
 	@Override
 	public void updateEntity() {
