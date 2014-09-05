@@ -84,11 +84,10 @@ public class MagisticsConfig {
 		for (Class tileEntity : tiles)
 			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
 		GameRegistry.registerBlock(blocks[0], blockName[0]);
+		ModHandler.init();
 	}
 
 	public static void postInit() {
-		ModHandler.init();
-
 		ThaumcraftApi.registerComplexObjectTag(new ItemStack(MagisticsConfig.blocks[0], 1, 32767), new AspectList().merge(Aspect.EXCHANGE, 2).merge(Aspect.TRAVEL, 2).merge(Aspect.VOID, 4));
 
 		ResearchCategories.registerCategory(Magistics.modid.toUpperCase(), new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
