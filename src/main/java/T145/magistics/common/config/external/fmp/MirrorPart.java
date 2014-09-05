@@ -1,8 +1,8 @@
 package T145.magistics.common.config.external.fmp;
 
+import static thaumcraft.client.renderers.block.BlockRenderer.W1;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import thaumcraft.client.renderers.block.BlockRenderer;
 import thaumcraft.common.config.ConfigBlocks;
 import codechicken.lib.vec.BlockCoord;
 import codechicken.lib.vec.Cuboid6;
@@ -36,20 +36,19 @@ public class MirrorPart extends McSidedMetaPart {
 	}
 
 	public Cuboid6 getBounds(final int meta) {
-		final float w = BlockRenderer.W1;
 		switch (meta % 6) {
 		case 1:
-			return new Cuboid6(0.0F, 0.0F, 0.0F, 1.0F, w, 1.0F);
+			return new Cuboid6(0.0F, 0.0F, 0.0F, 1.0F, W1, 1.0F);
 		case 2:
-			return new Cuboid6(0.0F, 0.0F, 1.0F - w, 1.0F, 1.0F, 1.0F);
+			return new Cuboid6(0.0F, 0.0F, 1.0F - W1, 1.0F, 1.0F, 1.0F);
 		case 3:
-			return new Cuboid6(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, w);
+			return new Cuboid6(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, W1);
 		case 4:
-			return new Cuboid6(1.0F - w, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			return new Cuboid6(1.0F - W1, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		case 5:
-			return new Cuboid6(0.0F, 0.0F, 0.0F, w, 1.0F, 1.0F);
+			return new Cuboid6(0.0F, 0.0F, 0.0F, W1, 1.0F, 1.0F);
 		default:
-			return new Cuboid6(0.0F, 1.0F - w, 0.0F, 1.0F, 1.0F, 1.0F);
+			return new Cuboid6(0.0F, 1.0F - W1, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 

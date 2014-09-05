@@ -36,7 +36,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class MagisticsConfig {
 	public static Configuration config;
 
-	public static boolean colored_names, low_gfx;
+	public static boolean colored_names, debug, low_gfx;
 
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls"
@@ -67,8 +67,9 @@ public class MagisticsConfig {
 
 		try {
 			config.load();
-			colored_names = config.get(config.CATEGORY_GENERAL, "colored_names", false, "Toggles whether or not blocks have colored names like in Thaumcraft 2.").getBoolean(colored_names);
-			low_gfx = config.get(config.CATEGORY_GENERAL, "low_gfx", false, "Toggles or lessens graphical effects created by some blocks & items; great for low-end computers.").getBoolean(low_gfx);
+			colored_names = config.getBoolean("colored_names", config.CATEGORY_GENERAL, false, "Toggles whether or not blocks have colored names like in Thaumcraft 2.");
+			debug = config.getBoolean("debug", config.CATEGORY_GENERAL, true, "Toggles the log output of the mod. Great for development, though some people may like logs more silent than others.");
+			low_gfx = config.getBoolean("low_gfx", config.CATEGORY_GENERAL, false, "Toggles or lessens graphical effects created by some blocks & items; great for low-end computers.");
 		} catch (Exception e) {
 			Magistics.logger.log(Level.ERROR, "An error has occurred while loading configuration properties!", e);
 		} finally {

@@ -1,9 +1,6 @@
 package T145.magistics.common.config.external;
 
 import net.minecraft.block.Block;
-
-import org.apache.logging.log4j.Level;
-
 import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.external.fmp.PartFactory;
@@ -14,7 +11,7 @@ import cpw.mods.fml.common.Loader;
 public class ModHandler {
 	public static void init() {
 		if (Loader.isModLoaded("ForgeMultipart")) {
-			Magistics.logger.log(Level.INFO, "ForgeMultipart detected; compatibility loaded.");
+			Magistics.log("ForgeMultipart detected; compatibility loaded.");
 			new PartFactory().init();
 			addMultiparts(ConfigBlocks.blockCosmeticSolid, 2, 5);
 			addMultiparts(ConfigBlocks.blockCosmeticSolid, 7);
@@ -29,7 +26,7 @@ public class ModHandler {
 	}
 
 	public static void addMultiparts(Block block, int meta) {
-		Magistics.logger.log(Level.INFO, "Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
+		Magistics.log("Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
 		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(block, meta), block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
 	}
 }

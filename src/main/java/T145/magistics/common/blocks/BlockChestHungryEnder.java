@@ -64,7 +64,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("magistics:chest_hungry_ender");
+		blockIcon = r.registerIcon("magistics:chest_hungry/ender");
 	}
 
 	@SideOnly(Side.CLIENT)
