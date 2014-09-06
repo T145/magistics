@@ -18,9 +18,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.modid, name = Magistics.modid, version = Magistics.version, dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.modid, useMetadata = true, dependencies = "after:Thaumcraft")
 public class Magistics {
-	public static final String modid = "Magistics", version = "0.5.1", proxyPath = "T145.magistics.net.UniversalProxy";
+	public static final String modid = "Magistics", proxyPath = "T145.magistics.net.UniversalProxy";
 
 	@Instance(modid)
 	public static Magistics instance;
