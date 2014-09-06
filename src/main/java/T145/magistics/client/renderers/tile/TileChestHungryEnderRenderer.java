@@ -3,10 +3,11 @@ package T145.magistics.client.renderers.tile;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
-import thaumcraft.client.lib.UtilsFX;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,9 +22,9 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 	}
 
 	public void renderChestAt(TileChestHungryEnder chest, double i, double j, double k, float mod) {
-		UtilsFX.bindTexture("magistics", "textures/models/chest_hungry/ender.png");
+		bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/ender.png"));
 		GL11.glPushMatrix();
-		GL11.glEnable(32826);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glTranslatef((float) i, (float) j + 1.0F, (float) k + 1.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);

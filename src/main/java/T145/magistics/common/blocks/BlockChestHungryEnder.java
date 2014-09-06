@@ -67,6 +67,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 		blockIcon = r.registerIcon("magistics:chest_hungry/ender");
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int i, int j, int k, Random rand) {
 		for (int l = 0; l < 3; ++l) {
