@@ -13,10 +13,10 @@ public class ModHandler {
 		if (Loader.isModLoaded("ForgeMultipart")) {
 			Magistics.log("ForgeMultipart detected; compatibility loaded.");
 			new PartFactory().init();
-			addMultiparts(ConfigBlocks.blockCosmeticSolid, 2, 5);
-			addMultiparts(ConfigBlocks.blockCosmeticSolid, 7);
-			addMultiparts(ConfigBlocks.blockCosmeticSolid, 9, 10);
 			addMultiparts(ConfigBlocks.blockCosmeticOpaque, 0, 1);
+			addMultiparts(ConfigBlocks.blockCosmeticSolid, 0);
+			addMultiparts(ConfigBlocks.blockCosmeticSolid, 2, 7);
+			addMultiparts(ConfigBlocks.blockWoodenDevice, 6, 7);
 		}
 	}
 
