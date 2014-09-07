@@ -4,19 +4,19 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore files are not wanted in general.
+# Ignore files are not wanted in general
 .*
 _MACOSX
 Thumbs.db
 
-# Ignore Gradle cache files & directories
+# Ignore Gradle output
 bin/
 build/
 
-## Forge
+# Ignore Forge changelogs
 forge-*.txt
 
-## Project-specific dependencies
+# Project-specific dependencies
 eclipse/*
 !eclipse/mods/
 lib/Thaumcraft*.jar
