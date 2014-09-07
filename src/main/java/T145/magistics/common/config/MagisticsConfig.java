@@ -64,7 +64,10 @@ public class MagisticsConfig {
 
 	public static void preInit(File configFile) {
 		config = new Configuration(configFile);
+		sync();
+	}
 
+	public static void sync() {
 		try {
 			config.load();
 			colored_names = config.getBoolean("colored_names", config.CATEGORY_GENERAL, false, "Toggles whether or not blocks have colored names like in Thaumcraft 2.");
