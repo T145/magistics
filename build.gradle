@@ -50,11 +50,6 @@ processResources {
     }
 }
 
-task scrub(type: Delete) {
-    delete fileTree(dir: 'eclipse/crash-reports')
-    delete fileTree(dir: 'eclipse/logs')
-}
-
 // add a developer release
 task deobfJar(type: Jar) {
     from sourceSets.main.output
