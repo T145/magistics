@@ -1,4 +1,4 @@
-package T145.magistics.common.config.gui;
+package T145.magistics.client.gui.config;
 
 import java.util.Set;
 

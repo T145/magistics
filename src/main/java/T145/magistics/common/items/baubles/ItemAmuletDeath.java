@@ -35,18 +35,16 @@ public class ItemAmuletDeath extends ItemBauble {
 	}
 
 	@Override
-	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
-			List mobs = player.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(player.posX - 8.0D, player.posY - 3.0D, player.posZ - 8.0D, player.posX + 8.0D, player.posY + 3.0D, player.posZ + 8.0D));
+	public void onWornTick(ItemStack is, EntityLivingBase user) {
+		List mobs = user.worldObj.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getBoundingBox(user.posX - 8.0D, user.posY - 3.0D, user.posZ - 8.0D, user.posX + 8.0D, user.posY + 3.0D, user.posZ + 8.0D));
 
-			for (int mob = 0; mob < mobs.size(); mob++) {
-				EntityLiving beast = (EntityLiving) mobs.get(mob);
+		for (int mob = 0; mob < mobs.size(); mob++) {
+			EntityLiving beast = (EntityLiving) mobs.get(mob);
 
-				if (beast.isEntityUndead() && beast.getAttackTarget() instanceof EntityPlayer) {
-					beast.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 40, 0, true));
-					is.damageItem(1, player);
-					break;
-				}
+			if (beast.isEntityUndead() && beast.getAttackTarget() instanceof EntityPlayer) {
+				beast.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 40, 0, true));
+				is.damageItem(1, user);
+				break;
 			}
 		}
 	}

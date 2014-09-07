@@ -1,4 +1,4 @@
-package T145.magistics.common.config.gui;
+package T145.magistics.client.gui.config;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;

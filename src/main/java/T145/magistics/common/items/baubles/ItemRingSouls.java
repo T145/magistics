@@ -12,6 +12,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import thaumcraft.client.fx.particles.FXWisp;
 import T145.magistics.common.config.MagisticsConfig;
+import T145.magistics.common.items.ItemResources;
 import baubles.api.BaubleType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,10 +36,11 @@ public class ItemRingSouls extends ItemBauble {
 	}
 
 	@Override
-	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
+	public void onWornTick(ItemStack is, EntityLivingBase user) {
+		if (user instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) user;
 			int damage = is.getItemDamage();
-			List<EntityXPOrb> xpOrbs = player.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(player.posX - 2.0D, player.posY - 2.0D, player.posZ - 2.0D, player.posX + 2.0D, player.posY + 2.0D, player.posZ + 2.0D));
+			List<EntityXPOrb> xpOrbs = user.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(user.posX - 2.0D, user.posY - 2.0D, user.posZ - 2.0D, user.posX + 2.0D, user.posY + 2.0D, user.posZ + 2.0D));
 			EntityXPOrb xpOrb = null;
 
 			if (xpOrbs.size() > 0)
@@ -46,17 +48,17 @@ public class ItemRingSouls extends ItemBauble {
 
 			if (xpOrb != null && !xpOrb.isDead) {
 				damage -= xpOrb.getXpValue();
-				FXWisp fx = new FXWisp(player.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, 0.5F, 5);
+				FXWisp fx = new FXWisp(user.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, 0.5F, 5);
 				fx.shrink = true;
 				Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 				xpOrb.setDead();
 
 				if (damage <= 0) {
-					((EntityPlayer) player).inventory.addItemStackToInventory(new ItemStack(MagisticsConfig.items[0], 1, 6));
+					player.inventory.addItemStackToInventory(new ItemStack(MagisticsConfig.items[0], 1, ItemResources.Types.soul_fragment.ordinal()));
 					damage += 50;
 				}
 			}
-			is.damageItem(damage, player);
+			is.damageItem(damage, user);
 		}
 	}
 }

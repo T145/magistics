@@ -3,7 +3,7 @@
   "modid": "Magistics",
   "name": "Magistics",
   "description": "Adding some logistics to Thaumcraft!",
-  "version": "0.5.3",
+  "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/T145/magistics",
   "updateUrl": "https://github.com/T145/magistics/releases",

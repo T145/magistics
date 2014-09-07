@@ -28,20 +28,20 @@ public class ItemBeltVigor extends ItemBauble {
 	}
 
 	@Override
-	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer) player;
+	public void onWornTick(ItemStack is, EntityLivingBase user) {
+		if (user instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) user;
 
-			if (p.getFoodStats().needFood()) {
-				p.getFoodStats().setFoodLevel(p.getFoodStats().getFoodLevel() + 1);
-				player.worldObj.playSoundAtEntity(player, "random.eat", 0.25F, player.worldObj.rand.nextFloat() * 0.5F + 0.5F);
-				is.damageItem(1, player);
+			if (player.getFoodStats().needFood()) {
+				player.getFoodStats().setFoodLevel(player.getFoodStats().getFoodLevel() + 1);
+				user.worldObj.playSoundAtEntity(user, "random.eat", 0.25F, user.worldObj.rand.nextFloat() * 0.5F + 0.5F);
+				is.damageItem(1, user);
 			}
 
-			if (player.getAir() < 150) {
-				player.setAir(300);
-				player.worldObj.playSoundAtEntity(player, "random.breath", 0.8F, 0.5F * ((player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.6F + 2.0F));
-				is.damageItem(1, player);
+			if (user.getAir() < 150) {
+				user.setAir(300);
+				user.worldObj.playSoundAtEntity(user, "random.breath", 0.8F, 0.5F * ((user.worldObj.rand.nextFloat() - user.worldObj.rand.nextFloat()) * 0.6F + 2.0F));
+				is.damageItem(1, user);
 			}
 		}
 	}

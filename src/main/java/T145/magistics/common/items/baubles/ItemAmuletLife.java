@@ -2,7 +2,6 @@ package T145.magistics.common.items.baubles;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import baubles.api.BaubleType;
@@ -28,13 +27,11 @@ public class ItemAmuletLife extends ItemBauble {
 	}
 
 	@Override
-	public void onWornTick(ItemStack is, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
-			if (player.getHealth() < player.getMaxHealth()) {
-				player.heal(1);
-				player.worldObj.playSoundAtEntity(player, "thaumcraft.heal", 1.0F, 1.0F);
-				is.damageItem(1, player);
-			}
+	public void onWornTick(ItemStack is, EntityLivingBase user) {
+		if (user.getHealth() < user.getMaxHealth()) {
+			user.heal(1);
+			user.worldObj.playSoundAtEntity(user, "thaumcraft.heal", 1.0F, 1.0F);
+			is.damageItem(1, user);
 		}
 	}
 }

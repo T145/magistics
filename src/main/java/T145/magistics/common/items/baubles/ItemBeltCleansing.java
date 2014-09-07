@@ -2,7 +2,6 @@ package T145.magistics.common.items.baubles;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.IIcon;
@@ -29,29 +28,29 @@ public class ItemBeltCleansing extends ItemBauble {
 	}
 
 	@Override
-	public void onWornTick(ItemStack is, EntityLivingBase player) {
+	public void onWornTick(ItemStack is, EntityLivingBase user) {
 		boolean cleansed = false;
 
-		if (player.isBurning()) {
-			player.extinguish();
+		if (user.isBurning()) {
+			user.extinguish();
 			cleansed = true;
-		} else if (player.getActivePotionEffect(Potion.blindness) != null) {
-			player.removePotionEffect(Potion.blindness.getId());
+		} else if (user.getActivePotionEffect(Potion.blindness) != null) {
+			user.removePotionEffect(Potion.blindness.getId());
 			cleansed = true;
-		} else if (player.getActivePotionEffect(Potion.confusion) != null) {
-			player.removePotionEffect(Potion.confusion.getId());
+		} else if (user.getActivePotionEffect(Potion.confusion) != null) {
+			user.removePotionEffect(Potion.confusion.getId());
 			cleansed = true;
-		} else if (player.getActivePotionEffect(Potion.poison) != null) {
-			player.removePotionEffect(Potion.poison.getId());
+		} else if (user.getActivePotionEffect(Potion.poison) != null) {
+			user.removePotionEffect(Potion.poison.getId());
 			cleansed = true;
-		} else if (player.getActivePotionEffect(Potion.weakness) != null) {
-			player.removePotionEffect(Potion.weakness.getId());
+		} else if (user.getActivePotionEffect(Potion.weakness) != null) {
+			user.removePotionEffect(Potion.weakness.getId());
 			cleansed = true;
 		}
 
 		if (cleansed) {
-			is.damageItem(1, player);
-			player.worldObj.playSoundAtEntity(player, "magistics.heal", 1.0F, 1.0F);
+			is.damageItem(1, user);
+			user.worldObj.playSoundAtEntity(user, "magistics.heal", 1.0F, 1.0F);
 		}
 	}
 }

@@ -17,8 +17,7 @@ public class ItemResources extends Item {
 		dust_faint(2),
 		eldritch_keystone_inert(3),
 		eldritch_keystone_tlhutlh(4),
-		eldritch_gear(5),
-		soul_fragment(6);
+		soul_fragment(5);
 
 		private Types(int metadata) {}
 	}
