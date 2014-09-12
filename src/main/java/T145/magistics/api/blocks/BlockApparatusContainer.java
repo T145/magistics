@@ -1,41 +1,15 @@
-package T145.magistics.common.blocks;
+package T145.magistics.api.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.InventoryHelper;
 import thaumcraft.common.tiles.TileCrucible;
 
-public class BlockApparatus extends BlockContainer {
-	public BlockApparatus(Material material) {
+public class BlockApparatusContainer extends BlockApparatus {
+	public BlockApparatusContainer(Material material) {
 		super(material);
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return null;
-	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
-	public int damageDropped(int meta) {
-		return meta;
-	}
-
-	@Override
-	public void onBlockAdded(World world, int i, int j, int k) {
-		world.markBlockForUpdate(i, j, k);
 	}
 
 	@Override

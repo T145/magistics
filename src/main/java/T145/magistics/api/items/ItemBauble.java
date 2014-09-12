@@ -1,4 +1,4 @@
-package T145.magistics.common.items.baubles;
+package T145.magistics.api.items;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import thaumcraft.client.fx.particles.FXWisp;
+import T145.magistics.api.items.ItemBauble;
 import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.items.ItemResources;
 import baubles.api.BaubleType;

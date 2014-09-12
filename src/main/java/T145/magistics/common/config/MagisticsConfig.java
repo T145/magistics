@@ -9,9 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-
-import org.apache.logging.log4j.Level;
-
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -74,7 +71,7 @@ public class MagisticsConfig {
 			debug = config.getBoolean("debug", config.CATEGORY_GENERAL, true, "Toggles the log output of the mod. Great for development, though some people may like logs more silent than others.");
 			low_gfx = config.getBoolean("low_gfx", config.CATEGORY_GENERAL, false, "Toggles or lessens graphical effects created by some blocks & items; great for low-end computers.");
 		} catch (Exception e) {
-			Magistics.logger.log(Level.ERROR, "An error has occurred while loading configuration properties!", e);
+			Magistics.error("An error has occurred while loading configuration properties!", e);
 		} finally {
 			if (config.hasChanged())
 				config.save();

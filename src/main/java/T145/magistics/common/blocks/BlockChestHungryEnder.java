@@ -2,7 +2,6 @@ package T145.magistics.common.blocks;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -17,13 +16,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.api.blocks.BlockApparatus;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.lib.MagisticsUtils;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockChestHungryEnder extends BlockContainer {
+public class BlockChestHungryEnder extends BlockApparatus {
 	public EntityPlayer owner;
 
 	public BlockChestHungryEnder() {
@@ -32,33 +32,8 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-
-	@Override
 	public int getRenderType() {
 		return Magistics.proxy.renderID[0];
-	}
-
-	@Override
-	public Item getItemDropped(int meta, Random rand, int amount) {
-		return Item.getItemFromBlock(Blocks.obsidian);
-	}
-
-	@Override
-	public int quantityDropped(Random rand) {
-		return 8;
-	}
-
-	@Override
-	public boolean canSilkHarvest() {
-		return true;
 	}
 
 	@Override
@@ -88,6 +63,21 @@ public class BlockChestHungryEnder extends BlockContainer {
 			d3 = (double) (rand.nextFloat() * 1.0F * (float) i1);
 			world.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
 		}
+	}
+
+	@Override
+	public Item getItemDropped(int meta, Random rand, int amount) {
+		return Item.getItemFromBlock(Blocks.obsidian);
+	}
+
+	@Override
+	public int quantityDropped(Random rand) {
+		return 8;
+	}
+
+	@Override
+	public boolean canSilkHarvest() {
+		return true;
 	}
 
 	@Override

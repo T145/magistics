@@ -38,9 +38,9 @@ public class Magistics {
 			logger.log(Level.INFO, message);
 	}
 
-	public static void error(String message) {
+	public static void error(String message, Exception error) {
 		if (MagisticsConfig.debug)
-			logger.log(Level.ERROR, message);
+			logger.log(Level.ERROR, message, error);
 	}
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
