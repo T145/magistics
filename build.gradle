@@ -58,18 +58,18 @@ jar {
 
 // add a developer release
 task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'development'
-    version = "${project.minecraft.version}-${project.version}"
+	from sourceSets.main.output
+	classifier = 'development'
+	version = "${project.minecraft.version}-${project.version}"
 }
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from 'build/docs/javadoc'
-    version = "${project.minecraft.version}-${project.version}"
+	from 'build/docs/javadoc'
+	classifier = 'javadoc'
+	version = "${project.minecraft.version}-${project.version}"
 }
 
 artifacts {
-    archives deobfJar, javadocJar
+	archives deobfJar, javadocJar
 }
