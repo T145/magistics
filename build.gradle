@@ -2,12 +2,12 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven'
         }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
     }
     dependencies {
@@ -17,13 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.5.3"
-group = "T145.magistics"
-archivesBaseName = "Magistics"
+version = '0.5.3'
+group = 'T145.magistics'
+archivesBaseName = 'Magistics'
 
 minecraft {
-    version = "1.7.10-10.13.0.1208"
-    runDir = "eclipse/assets"
+    version = '1.7.10-10.13.0.1208'
+    runDir = 'eclipse/assets'
 }
 
 dependencies {
@@ -33,8 +33,8 @@ dependencies {
 
 processResources {
     // this will ensure that this task is redone when the version changes
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
 
     // copy the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
@@ -50,16 +50,24 @@ processResources {
     }
 }
 
+// modifies the actual release
+jar {
+	classifier = 'production'
+	version = "${project.minecraft.version}-${project.version}"
+}
+
 // add a developer release
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    classifier = 'dev'
+    classifier = 'development'
+    version = "${project.minecraft.version}-${project.version}"
 }
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from 'build/docs/javadoc'
+    version = "${project.minecraft.version}-${project.version}"
 }
 
 artifacts {
