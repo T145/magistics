@@ -4,7 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore files are not wanted in general
+# Ignore files that are not wanted in general
 .*
 _MACOSX
 Thumbs.db

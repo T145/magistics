@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = '0.5.3'
+version = project_version
 group = 'T145.magistics'
 archivesBaseName = 'Magistics'
 
