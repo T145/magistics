@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bash eclipse
+bash gradlew setupDecompWorkspace && bash gradlew eclipse
