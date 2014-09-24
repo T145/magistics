@@ -16,6 +16,11 @@ build/
 # Ignore Forge changelogs
 forge-*.txt
 
+# IDEA files
+*.iml
+*.ipr
+*.iws
+
 # Project-specific dependencies
 eclipse/*
 !eclipse/mods/
