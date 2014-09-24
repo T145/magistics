@@ -102,7 +102,7 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 				lidAngle = recievedData / 10.0F;
 			return true;
 		default:
-			return super.receiveClientEvent(eventID, recievedData);
+			return tileEntityInvalid;
 		}
 	}
 
