@@ -21,7 +21,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.modid, version = "0.5.3", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.modid, version = "0.5.7", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
 public class Magistics {
 	public static final String modid = "Magistics", proxyPath = "T145.magistics.net.UniversalProxy";
 
