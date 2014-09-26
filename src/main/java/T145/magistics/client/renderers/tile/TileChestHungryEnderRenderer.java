@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
-	private ModelChest chestModel = new ModelChest();
+	public ModelChest chestModel = new ModelChest();
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double i, double j, double k, float mod) {
@@ -49,7 +49,7 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 		lidOpening = 1.0F - lidOpening * lidOpening * lidOpening;
 		chestModel.chestLid.rotateAngleX = -(lidOpening * (float) Math.PI / 2.0F);
 		chestModel.renderAll();
-		GL11.glDisable(32826);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}

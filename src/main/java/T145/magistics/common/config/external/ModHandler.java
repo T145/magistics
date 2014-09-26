@@ -3,10 +3,13 @@ package T145.magistics.common.config.external;
 import net.minecraft.block.Block;
 import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockChestHungryMetalItem;
+import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.config.external.fmp.PartFactory;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.MicroMaterialRegistry;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModHandler {
 	public static void init() {
@@ -17,6 +20,10 @@ public class ModHandler {
 			addMultiparts(ConfigBlocks.blockCosmeticSolid, 0);
 			addMultiparts(ConfigBlocks.blockCosmeticSolid, 2, 7);
 			addMultiparts(ConfigBlocks.blockWoodenDevice, 6, 7);
+		}
+		if (Loader.isModLoaded("IronChest")) {
+			Magistics.log("IronChest detected; support loaded.");
+			GameRegistry.registerBlock(MagisticsConfig.blocks[1], BlockChestHungryMetalItem.class, MagisticsConfig.blockName[1]);
 		}
 	}
 

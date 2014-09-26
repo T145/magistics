@@ -19,6 +19,7 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
+import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.config.external.ModHandler;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
@@ -28,6 +29,7 @@ import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
 import T145.magistics.common.tiles.TileChestHungryEnder;
+import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagisticsConfig {
@@ -38,7 +40,7 @@ public class MagisticsConfig {
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor", "bauble.ring_souls"
 	}, blockName[] = {
-		"ender_hungry_chest"
+		"ender_hungry_chest", "metal_hungry_chest"
 	};
 
 	public static Item items[] = {
@@ -52,11 +54,13 @@ public class MagisticsConfig {
 	};
 
 	public static Block blocks[] = {
-		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston)
+		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston),
+		new BlockChestHungryMetal().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics)
 	};
 
 	public static Class tiles[] = {
-		TileChestHungryEnder.class
+		TileChestHungryEnder.class,
+		TileChestHungryMetal.class
 	};
 
 	public static void preInit(File configFile) {

@@ -1,13 +1,36 @@
 package T145.magistics.common.lib;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 
 public class MagisticsUtils {
+	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inventory, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
+		if (tile != null && !world.isRemote && inventory != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
+			EntityItem item = (EntityItem) collidingEntity;
+			ItemStack leftovers = placeItemStackIntoInventory(item.getEntityItem(), inventory, 1, true);
+
+			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
+				if (playSoundEffect)
+					world.playSoundAtEntity(collidingEntity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+				world.addBlockEvent(i, j, k, addEventTo, eventID, eventParameter);
+			}
+			if (leftovers != null)
+				item.setEntityItemStack(leftovers);
+			else
+				collidingEntity.setDead();
+			tile.markDirty();
+		}
+	}
+
 	public static ItemStack placeItemStackIntoInventory(ItemStack stack, IInventory inventory, int side, boolean doit) {
 		ItemStack itemstack = stack.copy();
 		ItemStack itemstack2 = insertStack(inventory, itemstack, side, doit);

@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryEnderChest;
@@ -112,25 +111,7 @@ public class BlockChestHungryEnder extends BlockApparatus {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		InventoryEnderChest enderInv = getEnderInventory(owner, world, i, j, k);
-		TileEntity tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-
-		if (tile == null || world.isRemote || enderInv == null)
-			return;
-		if (entity instanceof EntityItem && !entity.isDead) {
-			EntityItem item = (EntityItem) entity;
-			ItemStack leftovers = MagisticsUtils.placeItemStackIntoInventory(item.getEntityItem(), enderInv, 1, true);
-
-			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
-				world.playSoundAtEntity(entity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-				world.addBlockEvent(i, j, k, this, 2, 2);
-			}
-			if (leftovers != null)
-				item.setEntityItemStack(leftovers);
-			else
-				entity.setDead();
-			tile.markDirty();
-		}
+		MagisticsUtils.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryEnder) world.getTileEntity(i, j, k), getEnderInventory(owner, world, i, j, k), this, 2, 2, world, i, j, k, true);
 	}
 
 	@Override
