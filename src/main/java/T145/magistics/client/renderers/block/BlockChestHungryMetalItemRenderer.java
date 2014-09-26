@@ -1,11 +1,19 @@
 package T145.magistics.client.renderers.block;
 
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.lib.TextureHelper;
@@ -44,11 +52,18 @@ public class BlockChestHungryMetalItemRenderer implements IItemRenderer {
 				FMLClientHandler.instance().getClient().renderEngine.bindTexture(loc);
 		}
 
-		GL11.glPushMatrix();
-		GL11.glTranslatef(1F, 1F, 1F);
-		GL11.glRotatef(180, 1, 0, 0);
-		GL11.glRotatef(-90, 0, 1, 0);
+		glPushMatrix();
+		glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		glTranslatef(0.0F, 1.0F, 1.0F);
+		glScalef(1.0F, -1F, -1F);
+		glTranslatef(0.5F, 0.5F, 0.5F);
+		glRotatef(-90F, 0.0F, 1.0F, 0.0F);
+		glTranslatef(-0.5F, -0.5F, -0.5F);
 		chestModel.renderAll();
-		GL11.glPopMatrix();
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		glPopMatrix();
+		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 }
