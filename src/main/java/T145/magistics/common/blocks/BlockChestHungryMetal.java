@@ -34,11 +34,6 @@ public class BlockChestHungryMetal extends BlockIronChest {
 		return icon[meta];
 	}
 
-	/*@Override
-	public int getRenderType() {
-		return Magistics.proxy.renderID[1];
-	}*/
-
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {

@@ -36,3 +36,12 @@ item.bauble.ring_souls.name=Ring of Souls
 ###
 
 tile.ender_hungry_chest.name=Hungry Ender Chest
+
+tile.metal_hungry_chest.iron=Hungry Iron Chest
+tile.metal_hungry_chest.gold=Hungry Gold Chest
+tile.metal_hungry_chest.diamond=Hungry Diamond Chest
+tile.metal_hungry_chest.copper=Hungry Copper Chest
+tile.metal_hungry_chest.tin=Hungry Tin Chest
+tile.metal_hungry_chest.crystal=Hungry Crystal Chest
+tile.metal_hungry_chest.obsidian=Hungry Obsidian Chest
+tile.metal_hungry_chest.dirt=Hungry Dirt Chest
