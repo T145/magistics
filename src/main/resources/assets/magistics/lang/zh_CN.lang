@@ -38,3 +38,12 @@ item.bauble.ring_souls.name=灵魂戒指
 ###
 
 tile.ender_hungry_chest.name=末影饕餮箱子
+
+tile.metal_hungry_chest.iron.name=饕餮铁箱子
+tile.metal_hungry_chest.gold.name=饕餮金箱子
+tile.metal_hungry_chest.diamond.name=饕餮钻石箱子
+tile.metal_hungry_chest.copper.name=饕餮铜箱子
+tile.metal_hungry_chest.tin.name=饕餮锡箱子
+tile.metal_hungry_chest.crystal.name=饕餮水晶箱子
+tile.metal_hungry_chest.obsidian.name=饕餮黑曜石箱子
+tile.metal_hungry_chest.dirt.name=吃货泥箱子9000
