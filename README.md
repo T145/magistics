@@ -24,3 +24,5 @@ The main thing that I ask when making a new pull request is that none of the pro
 
 #### Public, public, public!
 Whenever new variables, classes, etc. are added to code, please make sure that they are not private. This is so that Magistics can be 100% modular, and other mods can override various things w/ ease! The only time I ever make anything private is whenever I'm certain that it doesn't serve any purpose other than for one specific function that's usually geared to help not type as much, e.g. `private static BlockStoneApparatus.Types = types;`.
+
+![upcoming](http://i1064.photobucket.com/albums/u370/MegaT145/Magistics/2014-03-16_185841.png)
