@@ -27,7 +27,7 @@ public class Magistics {
 	@Instance(modid)
 	public static Magistics instance;
 
-	@SidedProxy(clientSide = "T145.magistics.net.ClientProxy", serverSide = "T145.magistics.net.CommonProxy")
+	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static Logger logger = LogManager.getLogger(modid);
