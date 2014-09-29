@@ -4,15 +4,13 @@ import net.minecraft.client.model.ModelChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.lib.ChestRenderHelper;
-import T145.magistics.common.lib.TextureHelper;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class BlockChestHungryMetalItemRenderer implements IItemRenderer {
+public class BlockChestHungryEnderItemRenderer implements IItemRenderer {
 	public ModelChest chestModel = new ModelChest();
 
 	@Override
@@ -27,10 +25,7 @@ public class BlockChestHungryMetalItemRenderer implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		BlockChestHungryMetal.Types chest = BlockChestHungryMetal.Types.values()[item.getItemDamage()];
-		ResourceLocation loc = TextureHelper.ironChestTextures.get(chest);
-		if (loc != null)
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(loc);
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/ender.png"));
 		ChestRenderHelper.renderChest(type, chestModel);
 	}
 }

@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import T145.magistics.common.Magistics;
 import T145.magistics.common.lib.MagisticsUtils;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
@@ -18,11 +17,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChestHungryEnder extends BlockEnderChest {
 	public EntityPlayer owner;
-
-	@Override
-	public int getRenderType() {
-		return Magistics.proxy.renderID[0];
-	}
 
 	@Override
 	@SideOnly(Side.CLIENT)

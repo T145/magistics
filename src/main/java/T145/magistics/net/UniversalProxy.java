@@ -3,8 +3,9 @@ package T145.magistics.net;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import T145.magistics.client.renderers.block.BlockChestHungryEnderRenderer;
+import T145.magistics.client.renderers.block.BlockChestHungryEnderItemRenderer;
 import T145.magistics.client.renderers.block.BlockChestHungryMetalItemRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
@@ -12,18 +13,17 @@ import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class UniversalProxy implements IGuiHandler {
-	public static int renderID[] = new int[MagisticsConfig.blocks.length];
+	public static IItemRenderer[] itemRenderers = {
+		new BlockChestHungryEnderItemRenderer(),
+		new BlockChestHungryMetalItemRenderer()
+	};
 
 	public void registerRenderInformation() {
-		for (int i = 0; i <= renderID.length - 1; i++)
-			renderID[i] = RenderingRegistry.getNextAvailableRenderId();
-
-		RenderingRegistry.registerBlockHandler(new BlockChestHungryEnderRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(MagisticsConfig.blocks[1]), new BlockChestHungryMetalItemRenderer());
+		for (int i = 0; i <= itemRenderers.length - 1; i++)
+			MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(MagisticsConfig.blocks[i]), itemRenderers[i]);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryEnder.class, new TileChestHungryEnderRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 	}
