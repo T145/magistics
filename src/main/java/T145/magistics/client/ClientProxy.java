@@ -1,4 +1,4 @@
-package T145.magistics.net;
+package T145.magistics.client;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -9,18 +9,19 @@ import T145.magistics.client.renderers.block.BlockChestHungryEnderItemRenderer;
 import T145.magistics.client.renderers.block.BlockChestHungryMetalItemRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
+import T145.magistics.common.CommonProxy;
 import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.network.IGuiHandler;
 
-public class UniversalProxy implements IGuiHandler {
+public class ClientProxy extends CommonProxy {
 	public static IItemRenderer[] itemRenderers = {
 		new BlockChestHungryEnderItemRenderer(),
 		new BlockChestHungryMetalItemRenderer()
 	};
 
+	@Override
 	public void registerRenderInformation() {
 		for (int i = 0; i <= itemRenderers.length - 1; i++)
 			MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(MagisticsConfig.blocks[i]), itemRenderers[i]);
@@ -29,18 +30,12 @@ public class UniversalProxy implements IGuiHandler {
 	}
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
-		switch (ID) {
-		default:
-			return null;
-		}
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		return null;
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
-		switch (ID) {
-		default:
-			return null;
-		}
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		return null;
 	}
 }

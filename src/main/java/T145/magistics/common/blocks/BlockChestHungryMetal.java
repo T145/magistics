@@ -18,7 +18,6 @@ public class BlockChestHungryMetal extends BlockIronChest {
 		iron, gold, diamond, copper, silver, crystal, obsidian, dirt;
 	}
 
-	@SideOnly(Side.CLIENT)
 	public static IIcon icon[] = new IIcon[Types.values().length];
 
 	@Override

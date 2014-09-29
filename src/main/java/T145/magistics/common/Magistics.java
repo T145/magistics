@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.common.config.MagisticsConfig;
-import T145.magistics.net.UniversalProxy;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -23,13 +22,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.modid, version = "0.6.0", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
 public class Magistics {
-	public static final String modid = "Magistics", proxyPath = "T145.magistics.net.UniversalProxy";
+	public static final String modid = "Magistics";
 
 	@Instance(modid)
 	public static Magistics instance;
 
-	@SidedProxy(clientSide = proxyPath, serverSide = proxyPath)
-	public static UniversalProxy proxy;
+	@SidedProxy(clientSide = "T145.magistics.net.ClientProxy", serverSide = "T145.magistics.net.CommonProxy")
+	public static CommonProxy proxy;
 
 	public static Logger logger = LogManager.getLogger(modid);
 

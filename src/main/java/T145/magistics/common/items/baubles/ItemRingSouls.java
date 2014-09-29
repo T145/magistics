@@ -2,7 +2,6 @@ package T145.magistics.common.items.baubles;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -10,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
-import thaumcraft.client.fx.particles.FXWisp;
 import T145.magistics.api.items.ItemBauble;
 import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.items.ItemResources;
@@ -49,9 +47,9 @@ public class ItemRingSouls extends ItemBauble {
 
 			if (xpOrb != null && !xpOrb.isDead) {
 				damage -= xpOrb.getXpValue();
-				FXWisp fx = new FXWisp(user.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, 0.5F, 5);
+				/*FXWisp fx = new FXWisp(user.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, 0.5F, 5);
 				fx.shrink = true;
-				Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+				Minecraft.getMinecraft().effectRenderer.addEffect(fx);*/
 				xpOrb.setDead();
 
 				if (damage <= 0) {

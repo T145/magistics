@@ -22,7 +22,6 @@ public class ItemResources extends Item {
 		private Types(int metadata) {}
 	}
 
-	@SideOnly(Side.CLIENT)
 	public static IIcon icon[] = new IIcon[Types.values().length];
 
 	@Override
