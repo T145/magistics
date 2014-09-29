@@ -14,8 +14,6 @@ import cpw.mods.ironchest.TileEntityIronChest;
 public class TileChestHungryMetal extends TileEntityIronChest {
 	public int numPlayersUsing = (Integer) ReflectionHelper.getPrivateValue(TileEntityIronChest.class, this, "numUsingPlayers");
 
-	public TileChestHungryMetal() {}
-
 	public TileChestHungryMetal(IronChestType type) {
 		super(type);
 	}
@@ -26,13 +24,10 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 			return null;
 		TileChestHungryMetal newEntity = new TileChestHungryMetal(IronChestType.values()[itemChestChanger.getTargetChestOrdinal(getType().ordinal())]);
 
-		// Copy stacks and remove old stacks
 		int newSize = newEntity.chestContents.length;
 		System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
 		BlockChestHungryMetal block = (BlockChestHungryMetal) MagisticsConfig.blocks[1];
 		block.dropContent(newSize, this, worldObj, xCoord, yCoord, zCoord);
-
-		// Set facing, sort and reset syncTick
 		newEntity.setFacing(getFacing());
 		newEntity.sortTopStacks();
 		ReflectionHelper.setPrivateValue(TileEntityIronChest.class, this, -1, "ticksSinceSync");
@@ -55,15 +50,12 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 		return this;
 	}
 
-	public void fixType(IronChestType type) {
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		IronChestType type = IronChestType.values()[compound.getByte("type")];
 		if (type != getType())
 			ReflectionHelper.setPrivateValue(TileEntityIronChest.class, this, type, "type");
 		chestContents = new ItemStack[getSizeInventory()];
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		fixType(IronChestType.values()[compound.getByte("type")]);
 		super.readFromNBT(compound);
 	}
 
@@ -76,9 +68,6 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 	@Override
 	public boolean receiveClientEvent(int eventID, int recievedData) {
 		switch (eventID) {
-		/*case 1:
-			numPlayersUsing = recievedData;
-			return true;*/
 		case 2:
 			if (lidAngle < recievedData / 10.0F)
 				lidAngle = recievedData / 10.0F;

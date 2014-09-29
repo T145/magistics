@@ -1,4 +1,4 @@
-package T145.magistics.common.lib;
+package T145.magistics.client.lib;
 
 import java.util.Map;
 

@@ -58,7 +58,7 @@ jar {
 // add a developer release
 task deobfJar(type: Jar) {
 	from sourceSets.main.output
-	classifier = 'development'
+	classifier = 'dev'
 	version = "${project.minecraft.version}-${project.version}"
 }
 

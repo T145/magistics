@@ -1,4 +1,4 @@
-package T145.magistics.common.lib;
+package T145.magistics.client.lib;
 
 import net.minecraft.client.model.ModelChest;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
@@ -29,7 +29,7 @@ public class ChestRenderHelper {
 		}
 	}
 
-	public static void renderChest(float x, float y, float z, ModelChest model) {
+	private static void renderChest(float x, float y, float z, ModelChest model) {
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glTranslatef(x, y, z);
