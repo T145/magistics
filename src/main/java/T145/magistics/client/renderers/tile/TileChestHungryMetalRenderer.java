@@ -19,6 +19,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL12;
+
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.lib.TextureHelper;
 import T145.magistics.common.tiles.TileChestHungryMetal;
@@ -77,7 +80,7 @@ public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 			bindTexture(loc);
 
 		glPushMatrix();
-		glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
+		glEnable(GL12.GL_RESCALE_NORMAL);
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
 		glScalef(1.0F, -1F, -1F);
@@ -100,9 +103,9 @@ public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 		float lidangle = tile.prevLidAngle + (tile.lidAngle - tile.prevLidAngle) * partialTick;
 		lidangle = 1.0F - lidangle;
 		lidangle = 1.0F - lidangle * lidangle * lidangle;
-		model.chestLid.rotateAngleX = -((lidangle * 3.141593F) / 2.0F);
+		model.chestLid.rotateAngleX = -(lidangle * (float) Math.PI / 2.0F);
 		model.renderAll();
-		glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
+		glDisable(GL12.GL_RESCALE_NORMAL);
 		glPopMatrix();
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (IronChestType.values()[tile.getBlockMetadata()].isTransparent() && tile.getDistanceFrom(field_147501_a.field_147560_j, field_147501_a.field_147561_k, field_147501_a.field_147558_l) < 128d) {

@@ -1,6 +1,7 @@
 package T145.magistics.client.renderers.block;
 
 import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
@@ -12,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import T145.magistics.common.blocks.BlockChestHungryMetal;
@@ -53,8 +53,8 @@ public class BlockChestHungryMetalItemRenderer implements IItemRenderer {
 		}
 
 		glPushMatrix();
+		glTranslatef(-0.5F, -0.5F, -0.5F);
 		glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		glTranslatef(0.0F, 1.0F, 1.0F);
 		glScalef(1.0F, -1F, -1F);
@@ -62,7 +62,7 @@ public class BlockChestHungryMetalItemRenderer implements IItemRenderer {
 		glRotatef(-90F, 0.0F, 1.0F, 0.0F);
 		glTranslatef(-0.5F, -0.5F, -0.5F);
 		chestModel.renderAll();
-		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		glDisable(GL12.GL_RESCALE_NORMAL);
 		glPopMatrix();
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}
