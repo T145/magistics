@@ -29,7 +29,10 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import com.google.common.primitives.SignedBytes;
 
 import cpw.mods.ironchest.IronChestType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 	public Random random;
 	public RenderItem itemRenderer;
