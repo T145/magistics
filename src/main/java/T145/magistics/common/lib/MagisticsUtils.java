@@ -9,8 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
-import thaumcraft.api.ThaumcraftApiHelper;
+import thaumcraft.common.lib.InventoryHelper;
 
 public class MagisticsUtils {
 	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inventory, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
@@ -85,9 +84,9 @@ public class MagisticsUtils {
 		return stack1;
 	}
 
-	private static ItemStack attemptInsertion(IInventory inventory, ItemStack stack, int slot, int side, boolean doit) {
+	public static ItemStack attemptInsertion(IInventory inventory, ItemStack stack, int slot, int side, boolean doit) {
 		ItemStack slotStack = inventory.getStackInSlot(slot);
-		if (canInsertItemToInventory(inventory, stack, slot, side)) {
+		if (InventoryHelper.canInsertItemToInventory(inventory, stack, slot, side)) {
 			boolean flag = false;
 			if (slotStack == null) {
 				if (inventory.getInventoryStackLimit() < stack.stackSize) {
@@ -100,7 +99,7 @@ public class MagisticsUtils {
 					stack = null;
 				}
 				flag = true;
-			} else if (areItemStacksEqualStrict(slotStack, stack)) {
+			} else if (InventoryHelper.areItemStacksEqualStrict(slotStack, stack)) {
 				int k = Math.min(stack.stackSize, Math.min(inventory.getInventoryStackLimit() - slotStack.stackSize, stack.getMaxStackSize() - slotStack.stackSize));
 				ItemStack itemStack = stack;
 				itemStack.stackSize -= k;
@@ -119,35 +118,5 @@ public class MagisticsUtils {
 			}
 		}
 		return stack;
-	}
-
-	public static boolean canInsertItemToInventory(IInventory inventory, ItemStack stack1, int par2, int par3) {
-		return inventory.isItemValidForSlot(par2, stack1) && (!(inventory instanceof ISidedInventory) || ((ISidedInventory) inventory).canInsertItem(par2, stack1, par3));
-	}
-
-	public static boolean areItemStacksEqualStrict(ItemStack stack0, ItemStack stack1) {
-		return areItemStacksEqual(stack0, stack1, false, false, false);
-	}
-
-	public static boolean areItemStacksEqual(ItemStack stack0, ItemStack stack1, boolean useOre, boolean ignoreDamage, boolean ignoreNBT) {
-		if (stack0 == null && stack1 != null || stack0 != null && stack1 == null)
-			return false;
-		if (stack0 == null && stack1 == null)
-			return true;
-		if (useOre) {
-			int od = OreDictionary.getOreID(stack0);
-			if (od != -1) {
-				ItemStack[] ores = OreDictionary.getOres(od).toArray( new ItemStack[0]);
-				if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[] { stack1 }, ores))
-					return true;
-			}
-		}
-		boolean t1 = true;
-		if (!ignoreNBT)
-			t1 = ItemStack.areItemStackTagsEqual(stack0, stack1);
-		boolean t2 = stack0.getItemDamage() != stack1.getItemDamage();
-		if ((ignoreDamage && stack0.isItemStackDamageable() && stack1.isItemStackDamageable()) || (t2 && ignoreDamage && (stack0.getItemDamage() == 32767 || stack1.getItemDamage() == 32767)))
-			t2 = false;
-		return stack0.getItem() == stack1.getItem() && !t2 && t1;
 	}
 }
