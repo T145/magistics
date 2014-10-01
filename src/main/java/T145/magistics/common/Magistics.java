@@ -2,11 +2,6 @@ package T145.magistics.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import T145.magistics.common.config.MagisticsConfig;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -29,18 +24,6 @@ public class Magistics {
 
 	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
 	public static CommonProxy proxy;
-
-	public static Logger logger = LogManager.getLogger(modid);
-
-	public static void log(String message) {
-		if (MagisticsConfig.debug)
-			logger.log(Level.INFO, message);
-	}
-
-	public static void error(String message, Exception error) {
-		if (MagisticsConfig.debug)
-			logger.log(Level.ERROR, message, error);
-	}
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
 		@Override

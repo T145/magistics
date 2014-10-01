@@ -2,9 +2,9 @@ package T145.magistics.common.config.external;
 
 import net.minecraft.block.Block;
 import thaumcraft.common.config.ConfigBlocks;
-import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.config.MagisticsConfig;
+import T145.magistics.common.config.MagisticsLogger;
 import T145.magistics.common.config.external.fmp.PartFactory;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.MicroMaterialRegistry;
@@ -14,7 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModHandler {
 	public static void init() {
 		if (Loader.isModLoaded("ForgeMultipart")) {
-			Magistics.log("ForgeMultipart detected; compatibility loaded.");
+			MagisticsLogger.log("ForgeMultipart detected; compatibility loaded.");
 			new PartFactory().init();
 			addMultiparts(ConfigBlocks.blockCosmeticOpaque, 0, 1);
 			addMultiparts(ConfigBlocks.blockCosmeticSolid, 0);
@@ -22,7 +22,7 @@ public class ModHandler {
 			addMultiparts(ConfigBlocks.blockWoodenDevice, 6, 7);
 		}
 		if (Loader.isModLoaded("IronChest")) {
-			Magistics.log("IronChest detected; support loaded.");
+			MagisticsLogger.log("IronChest detected; support loaded.");
 			GameRegistry.registerBlock(MagisticsConfig.blocks[1], BlockChestHungryMetalItem.class, MagisticsConfig.blockName[1]);
 		}
 	}
@@ -33,7 +33,7 @@ public class ModHandler {
 	}
 
 	public static void addMultiparts(Block block, int meta) {
-		Magistics.log("Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
+		MagisticsLogger.log("Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
 		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(block, meta), block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
 	}
 }
