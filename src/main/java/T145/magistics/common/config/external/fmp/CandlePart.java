@@ -20,6 +20,16 @@ public class CandlePart extends McMetaPart implements IRandomDisplayTick {
 	}
 
 	@Override
+	public Cuboid6 getBounds() {
+		return new Cuboid6(0.375, 0, 0.375, 0.625, 0.5, 0.625);
+	}
+
+	@Override
+	public void randomDisplayTick(Random rand) {
+		getBlock().randomDisplayTick(world(), x(), y(), z(), rand);
+	}
+
+	@Override
 	public Block getBlock() {
 		return ConfigBlocks.blockCandle;
 	}
@@ -27,16 +37,6 @@ public class CandlePart extends McMetaPart implements IRandomDisplayTick {
 	@Override
 	public String getType() {
 		return "tc_candle";
-	}
-
-	@Override
-	public Cuboid6 getBounds() {
-		return new Cuboid6(0.375F, 0.0F, 0.375F, 0.625F, 0.5F, 0.625F);
-	}
-
-	@Override
-	public void randomDisplayTick(Random r) {
-		getBlock().randomDisplayTick(world(), x(), y(), z(), r);
 	}
 
 	@Override

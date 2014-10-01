@@ -10,39 +10,34 @@ import codechicken.multipart.MultiPartRegistry;
 import codechicken.multipart.MultiPartRegistry.IPartConverter;
 import codechicken.multipart.MultiPartRegistry.IPartFactory;
 import codechicken.multipart.TMultiPart;
+import cpw.mods.fml.common.Loader;
 
 public class PartFactory implements IPartFactory, IPartConverter {
-	public static final String parts[] = {
-		"tc_candle", "tc_mirror"
-	};
-
 	@Override
 	public TMultiPart createPart(String name, boolean client) {
-		if (name.equals(parts[0]))
+		if (name.equals("tc_candle") && !Loader.isModLoaded("ThaumicTinkerer"))
 			return new CandlePart();
-		else if (name.equals(parts[1]))
-			return new MirrorPart();
+
 		return null;
 	}
 
 	public void init() {
 		MultiPartRegistry.registerConverter(this);
-		MultiPartRegistry.registerParts(this, parts);
+		MultiPartRegistry.registerParts(this, new String[] { "tc_candle" });
 	}
 
 	@Override
 	public Iterable<Block> blockTypes() {
-		return Arrays.asList(ConfigBlocks.blockCandle, ConfigBlocks.blockMirror);
+		return Arrays.asList(ConfigBlocks.blockCandle);
 	}
 
 	@Override
-	public TMultiPart convert(World w, BlockCoord pos) {
-		Block b = w.getBlock(pos.x, pos.y, pos.z);
-		int meta = w.getBlockMetadata(pos.x, pos.y, pos.z);
-		if (b == ConfigBlocks.blockCandle)
+	public TMultiPart convert(World world, BlockCoord pos) {
+		Block b = world.getBlock(pos.x, pos.y, pos.z);
+		int meta = world.getBlockMetadata(pos.x, pos.y, pos.z);
+		if (b == ConfigBlocks.blockCandle && !Loader.isModLoaded("ThaumicTinkerer"))
 			return new CandlePart(meta);
-		else if (b == ConfigBlocks.blockMirror)
-			return new MirrorPart(meta);
+
 		return null;
 	}
 }
