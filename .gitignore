@@ -23,5 +23,4 @@ forge-*.txt
 
 # Project-specific dependencies
 eclipse/*
-!eclipse/mods/
 lib/Thaumcraft*.jar

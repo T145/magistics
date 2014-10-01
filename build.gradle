@@ -15,6 +15,17 @@ buildscript {
     }
 }
 
+repositories {
+    maven {
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name 'CB Repo'
+        url "http://chickenbones.net/maven/"
+    }
+}
+
 apply plugin: 'forge'
 
 version = project_version
@@ -27,6 +38,13 @@ minecraft {
 }
 
 dependencies {
+    compile 'mcp.mobius.waila:Waila:1.5.5_1.7.10'
+    compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev'
+    compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.310:dev'
+    compile 'codechicken:EnderStorage:1.7.10-1.4.5.24:dev'
+
     compile fileTree(dir: 'eclipse/mods', include: '*.jar')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
@@ -49,6 +67,18 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+task copyChicken(type: Copy, dependsOn: "extractUserDev") {
+    from {
+        configurations.compile
+    }
+    include '**/*Chicken*.jar', '**/*NotEnoughItems*.jar', '**/*Multipart*.jar'
+    into file(System.getProperty('user.dir') + '/eclipse/mods')
+    mustRunAfter 'deobfBinJar'
+    mustRunAfter 'repackMinecraft'
+}
+tasks.setupDevWorkspace.dependsOn copyChicken
+tasks.setupDecompWorkspace.dependsOn copyChicken
 
 // modifies the actual release
 jar {
