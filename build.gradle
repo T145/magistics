@@ -17,12 +17,12 @@ buildscript {
 
 repositories {
     maven {
-        name "Mobius Repo"
-        url "http://mobiusstrip.eu/maven"
+        name 'Mobius Repo'
+        url 'http://mobiusstrip.eu/maven'
     }
     maven {
         name 'CB Repo'
-        url "http://chickenbones.net/maven/"
+        url 'http://chickenbones.net/maven/'
     }
 }
 
@@ -68,6 +68,7 @@ processResources {
     }
 }
 
+// required since all of ChickenBones's coremods need to be directly on the load path
 task copyChicken(type: Copy, dependsOn: "extractUserDev") {
     from {
         configurations.compile
