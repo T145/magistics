@@ -38,7 +38,6 @@ public class ItemRingSouls extends ItemBauble {
 	@Override
 	public void onWornTick(ItemStack is, EntityLivingBase user) {
 		if (user instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) user;
 			int damage = is.getItemDamage();
 			List<EntityXPOrb> xpOrbs = user.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.getBoundingBox(user.posX - 2.0D, user.posY - 2.0D, user.posZ - 2.0D, user.posX + 2.0D, user.posY + 2.0D, user.posZ + 2.0D));
 			EntityXPOrb xpOrb = null;
@@ -52,11 +51,11 @@ public class ItemRingSouls extends ItemBauble {
 				xpOrb.setDead();
 
 				if (damage <= 0) {
-					player.inventory.addItemStackToInventory(new ItemStack(MagisticsConfig.items[0], 1, ItemResources.Types.soul_fragment.ordinal()));
+					((EntityPlayer) user).inventory.addItemStackToInventory(new ItemStack(MagisticsConfig.items[0], 1, ItemResources.Types.soul_fragment.ordinal()));
 					damage += 50;
 				}
+				is.damageItem(damage, user);
 			}
-			is.damageItem(damage, user);
 		}
 	}
 }
