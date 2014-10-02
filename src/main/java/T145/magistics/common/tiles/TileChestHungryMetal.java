@@ -1,7 +1,10 @@
 package T145.magistics.common.tiles;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import thaumcraft.api.wands.IWandable;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.config.MagisticsConfig;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -11,7 +14,7 @@ import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemChestChanger;
 import cpw.mods.ironchest.TileEntityIronChest;
 
-public class TileChestHungryMetal extends TileEntityIronChest {
+public class TileChestHungryMetal extends TileEntityIronChest implements IWandable {
 	public int numPlayersUsing = (Integer) ReflectionHelper.getPrivateValue(TileEntityIronChest.class, this, "numUsingPlayers");
 
 	public TileChestHungryMetal(IronChestType type) {
@@ -76,4 +79,27 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 			return tileEntityInvalid;
 		}
 	}
+
+	@Override
+	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int meta) {
+		if (player.isSneaking()) {
+			setFacing(side);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			player.worldObj.playSound(x + 0.5, y + 0.5, z + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
+			player.swingItem();
+			markDirty();
+		}
+		return 0;
+	}
+
+	@Override
+	public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
+		return null;
+	}
+
+	@Override
+	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
+
+	@Override
+	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
 }
