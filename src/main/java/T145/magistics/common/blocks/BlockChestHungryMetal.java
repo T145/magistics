@@ -36,13 +36,7 @@ public class BlockChestHungryMetal extends BlockIronChest {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderBlockPass() {
-		return 1;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean canRenderInPass(int pass) {
-		return pass == 0 || pass == 1;
+		return 0;
 	}
 
 	@Override

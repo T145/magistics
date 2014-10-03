@@ -31,12 +31,10 @@ public class ChestRenderHelper {
 
 	private static void renderChest(float x, float y, float z, ModelChest model) {
 		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glTranslatef(x, y, z);
 		GL11.glRotatef(180, 1, 0, 0);
 		GL11.glRotatef(-90, 0, 1, 0);
 		model.renderAll();
-		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 }

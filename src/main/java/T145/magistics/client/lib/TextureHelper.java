@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 
 public class TextureHelper {
-	public static String connected_suffix[] = { "1_d", "1_u", "1_l", "1_r", "2_h", "2_v", "2_dl", "2_dr", "2_ul", "2_ur", "3_d", "3_u", "3_l", "3_r", "4" };
+	public static String connected_suffix[] = { "", "1_d", "1_u", "1_l", "1_r", "2_h", "2_v", "2_dl", "2_dr", "2_ul", "2_ur", "3_d", "3_u", "3_l", "3_r", "4" };
 	public static Map<BlockChestHungryMetal.Types, ResourceLocation> ironChestTextures;
 
 	static {
@@ -22,11 +22,11 @@ public class TextureHelper {
 		ironChestTextures = builder.build();
 	}
 
-	public boolean shouldConnectToBlock(Block blockFrom, Block blockTo) {
+	protected static boolean shouldConnectToBlock(Block blockFrom, Block blockTo) {
 		return blockTo == blockFrom;
 	}
 
-	public IIcon getConnectedBlockTexture(Block blockFrom, IBlockAccess ib, int i, int j, int k, int side, IIcon[] icons) {
+	public static IIcon getConnectedBlockTexture(Block blockFrom, IBlockAccess ib, int i, int j, int k, int side, IIcon[] icons) {
 		boolean isOpenUp = false, isOpenDown = false, isOpenLeft = false, isOpenRight = false;
 
 		switch (side) {
