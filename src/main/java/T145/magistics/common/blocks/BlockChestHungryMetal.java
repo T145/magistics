@@ -23,8 +23,8 @@ public class BlockChestHungryMetal extends BlockIronChest {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		for (int i = 0; i <= Types.values().length - 1; i++)
-			icon[i] = r.registerIcon("magistics:chest_hungry/" + Types.values()[i]);
+		for (Types type : Types.values())
+			icon[type.ordinal()] = r.registerIcon("magistics:chest_hungry/" + type.name());
 	}
 
 	@Override

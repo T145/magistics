@@ -8,10 +8,28 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.common.lib.InventoryHelper;
 
 public class MagisticsUtils {
+	public static TileEntity getTileAtSide(IBlockAccess world, int i, int j, int k, ForgeDirection direction) {
+		return world.getTileEntity(i + direction.offsetX, j + direction.offsetY, k + direction.offsetZ);
+	}
+
+	public static TileEntity getTileAtSide(TileEntity tile, ForgeDirection direction) {
+		return getTileAtSide(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, direction);
+	}
+
+	public static Block getBlockAtSide(IBlockAccess world, int i, int j, int k, ForgeDirection direction) {
+		return world.getBlock(i + direction.offsetX, j + direction.offsetY, k + direction.offsetZ);
+	}
+
+	public static Block getBlockAtSide(TileEntity tile, ForgeDirection direction) {
+		return getBlockAtSide(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, direction);
+	}
+
 	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inventory, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
 		if (tile != null && !world.isRemote && inventory != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
 			EntityItem item = (EntityItem) collidingEntity;

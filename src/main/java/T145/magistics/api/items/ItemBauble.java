@@ -6,6 +6,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import T145.magistics.common.config.MagisticsConfig;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
@@ -18,7 +19,10 @@ public class ItemBauble extends Item implements IBauble {
 
 	@Override
 	public EnumRarity getRarity(ItemStack is) {
-		return EnumRarity.rare;
+		if (MagisticsConfig.colored_names)
+			return EnumRarity.rare;
+		else
+			return EnumRarity.common;
 	}
 
 	@Override

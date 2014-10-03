@@ -1,4 +1,4 @@
-package T145.magistics.common.items;
+package T145.magistics.common.items.relics;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemResources extends Item {
+public class ItemEldritchKeystone extends Item {
 	public static enum Types {
-		amber_drop, animated_piston, arcane_singularity, dust_faint, eldritch_mechanism, soul_fragment;
+		inert, tlhutlh
 	}
 
 	public static IIcon icon[] = new IIcon[Types.values().length];
@@ -21,7 +21,7 @@ public class ItemResources extends Item {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
 		for (Types type : Types.values())
-			icon[type.ordinal()] = r.registerIcon("magistics:" + type.name());
+			icon[type.ordinal()] = r.registerIcon("magistics:eldritch_keystone_" + type.name());
 	}
 
 	@Override

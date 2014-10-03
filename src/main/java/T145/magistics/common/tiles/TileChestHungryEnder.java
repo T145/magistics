@@ -40,8 +40,8 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 			world.setBlockMetadataWithNotify(x, y, z, side, 2);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			player.worldObj.playSound(x + 0.5, y + 0.5, z + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
-	        player.swingItem();
-	        markDirty();
+			player.swingItem();
+			markDirty();
 		}
 		return 0;
 	}

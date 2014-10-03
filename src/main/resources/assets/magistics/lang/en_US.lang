@@ -22,6 +22,8 @@ item.mystic_resources.eldritch_gear.name=Voidmetal Gear
 item.mystic_resources.soul_fragment.name=Soul Fragment
 item.mystic_resources.void_ingot.name=Void Ingot
 
+item.dawnstone.name=Dawnstone
+
 item.cruel_mask.name=Mask Of Cruelty
 
 # More original names to come!
