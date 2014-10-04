@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.api.blocks.BlockApparatusContainer;
+import T145.magistics.client.lib.TextureHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -25,7 +26,6 @@ public class BlockArcaneStone extends BlockApparatusContainer {
 		super(Material.rock);
 	}
 
-	// TODO: CLEAN THIS UP!
 	@Override
 	public void registerBlockIcons(IIconRegister r) {
 		base[0] = r.registerIcon("magistics:infusion_workbench/base/0");
@@ -44,6 +44,7 @@ public class BlockArcaneStone extends BlockApparatusContainer {
 		base[13] = r.registerIcon("magistics:infusion_workbench/base/3_l");
 		base[14] = r.registerIcon("magistics:infusion_workbench/base/3_r");
 		base[15] = r.registerIcon("magistics:infusion_workbench/base/4");
+
 		brick[0] = r.registerIcon("magistics:infusion_workbench/brick/0");
 		brick[1] = r.registerIcon("magistics:infusion_workbench/brick/1_d");
 		brick[2] = r.registerIcon("magistics:infusion_workbench/brick/1_u");
@@ -69,22 +70,17 @@ public class BlockArcaneStone extends BlockApparatusContainer {
 			l.add(new ItemStack(item, 1, i));
 	}
 
-	public boolean shouldConnectToBlock(IBlockAccess ib, int i, int j, int k, Block block, int meta) {
-		return block == (Block) this && meta == ib.getBlockMetadata(i, j, k);
-	}
-
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess ib, int i, int j, int k, int side) {
 		switch (ib.getBlockMetadata(i, j, k)) {
 		case 0:
-			return getConnectedBlockTexture(ib, i, j, k, side, base);
+			return TextureHelper.getConnectedBlockTexture(ib, i, j, k, side, base, this);
 		case 1:
-			return getConnectedBlockTexture(ib, i, j, k, side, brick);
+			return TextureHelper.getConnectedBlockTexture(ib, i, j, k, side, brick, this);
 		default:
 			return blockIcon;
 		}
-		//return ib.getBlockMetadata(i, j, k) == 15 ? base[0] : getConnectedBlockTexture(ib, i, j, k, side, base);
 	}
 
 	@Override
@@ -103,261 +99,5 @@ public class BlockArcaneStone extends BlockApparatusContainer {
 	@Override
 	public boolean shouldSideBeRendered(IBlockAccess ib, int i, int j, int k, int side) {
 		return ib.getBlock(i, j, k) == (Block) this ? false : super.shouldSideBeRendered(ib, i, j, k, side);
-	}
-
-	public IIcon getConnectedBlockTexture(IBlockAccess ib, int i, int j, int k, int side, IIcon[] icon) {
-		boolean isOpenUp = false, isOpenDown = false, isOpenLeft = false, isOpenRight = false;
-
-		switch (side) {
-		case 0:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i - 1, j, k), ib.getBlockMetadata(i - 1, j, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i + 1, j, k), ib.getBlockMetadata(i + 1, j, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k - 1), ib.getBlockMetadata(i, j, k - 1)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k + 1), ib.getBlockMetadata(i, j, k + 1)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
-				return icon[15];
-			else if (isOpenUp && isOpenDown && isOpenLeft)
-				return icon[11];
-			else if (isOpenUp && isOpenDown && isOpenRight)
-				return icon[12];
-			else if (isOpenUp && isOpenLeft && isOpenRight)
-				return icon[13];
-			else if (isOpenDown && isOpenLeft && isOpenRight)
-				return icon[14];
-			else if (isOpenDown && isOpenUp)
-				return icon[5];
-			else if (isOpenLeft && isOpenRight)
-				return icon[6];
-			else if (isOpenDown && isOpenLeft)
-				return icon[8];
-			else if (isOpenDown && isOpenRight)
-				return icon[10];
-			else if (isOpenUp && isOpenLeft)
-				return icon[7];
-			else if (isOpenUp && isOpenRight)
-				return icon[9];
-			else if (isOpenDown)
-				return icon[3];
-			else if (isOpenUp)
-				return icon[4];
-			else if (isOpenLeft)
-				return icon[2];
-			else if (isOpenRight)
-				return icon[1];
-			break;
-		case 1:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i - 1, j, k), ib.getBlockMetadata(i - 1, j, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i + 1, j, k), ib.getBlockMetadata(i + 1, j, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k - 1), ib.getBlockMetadata(i, j, k - 1)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k + 1), ib.getBlockMetadata(i, j, k + 1)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight) {
-				return icon[15];
-			} else if (isOpenUp && isOpenDown && isOpenLeft) {
-				return icon[11];
-			} else if (isOpenUp && isOpenDown && isOpenRight) {
-				return icon[12];
-			} else if (isOpenUp && isOpenLeft && isOpenRight) {
-				return icon[13];
-			} else if (isOpenDown && isOpenLeft && isOpenRight) {
-				return icon[14];
-			} else if (isOpenDown && isOpenUp) {
-				return icon[5];
-			} else if (isOpenLeft && isOpenRight) {
-				return icon[6];
-			} else if (isOpenDown && isOpenLeft) {
-				return icon[8];
-			} else if (isOpenDown && isOpenRight) {
-				return icon[10];
-			} else if (isOpenUp && isOpenLeft) {
-				return icon[7];
-			} else if (isOpenUp && isOpenRight) {
-				return icon[9];
-			} else if (isOpenDown) {
-				return icon[3];
-			} else if (isOpenUp) {
-				return icon[4];
-			} else if (isOpenLeft) {
-				return icon[2];
-			} else if (isOpenRight) {
-				return icon[1];
-			}
-			break;
-		case 2:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j - 1, k), ib.getBlockMetadata(i, j - 1, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j + 1, k), ib.getBlockMetadata(i, j + 1, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i - 1, j, k), ib.getBlockMetadata(i - 1, j, k)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i + 1, j, k), ib.getBlockMetadata(i + 1, j, k)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
-				return icon[15];
-			else if (isOpenUp && isOpenDown && isOpenLeft)
-				return icon[13];
-			else if (isOpenUp && isOpenDown && isOpenRight)
-				return icon[14];
-			else if (isOpenUp && isOpenLeft && isOpenRight)
-				return icon[11];
-			else if (isOpenDown && isOpenLeft && isOpenRight)
-				return icon[12];
-			else if (isOpenDown && isOpenUp)
-				return icon[6];
-			else if (isOpenLeft && isOpenRight)
-				return icon[5];
-			else if (isOpenDown && isOpenLeft)
-				return icon[9];
-			else if (isOpenDown && isOpenRight)
-				return icon[10];
-			else if (isOpenUp && isOpenLeft)
-				return icon[7];
-			else if (isOpenUp && isOpenRight)
-				return icon[8];
-			else if (isOpenDown)
-				return icon[1];
-			else if (isOpenUp)
-				return icon[2];
-			else if (isOpenLeft)
-				return icon[4];
-			else if (isOpenRight)
-				return icon[3];
-			break;
-		case 3:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j - 1, k), ib.getBlockMetadata(i, j - 1, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j + 1, k), ib.getBlockMetadata(i, j + 1, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i - 1, j, k), ib.getBlockMetadata(i - 1, j, k)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i + 1, j, k), ib.getBlockMetadata(i + 1, j, k)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
-				return icon[15];
-			else if (isOpenUp && isOpenDown && isOpenLeft)
-				return icon[14];
-			else if (isOpenUp && isOpenDown && isOpenRight)
-				return icon[13];
-			else if (isOpenUp && isOpenLeft && isOpenRight)
-				return icon[11];
-			else if (isOpenDown && isOpenLeft && isOpenRight)
-				return icon[12];
-			else if (isOpenDown && isOpenUp)
-				return icon[6];
-			else if (isOpenLeft && isOpenRight)
-				return icon[5];
-			else if (isOpenDown && isOpenLeft)
-				return icon[10];
-			else if (isOpenDown && isOpenRight)
-				return icon[9];
-			else if (isOpenUp && isOpenLeft)
-				return icon[8];
-			else if (isOpenUp && isOpenRight)
-				return icon[7];
-			else if (isOpenDown)
-				return icon[1];
-			else if (isOpenUp)
-				return icon[2];
-			else if (isOpenLeft)
-				return icon[3];
-			else if (isOpenRight)
-				return icon[4];
-			break;
-		case 4:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j - 1, k), ib.getBlockMetadata(i, j - 1, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j + 1, k), ib.getBlockMetadata(i, j + 1, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k - 1), ib.getBlockMetadata(i, j, k - 1)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k + 1), ib.getBlockMetadata(i, j, k + 1)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
-				return icon[15];
-			else if (isOpenUp && isOpenDown && isOpenLeft)
-				return icon[14];
-			else if (isOpenUp && isOpenDown && isOpenRight)
-				return icon[13];
-			else if (isOpenUp && isOpenLeft && isOpenRight)
-				return icon[11];
-			else if (isOpenDown && isOpenLeft && isOpenRight)
-				return icon[12];
-			else if (isOpenDown && isOpenUp)
-				return icon[6];
-			else if (isOpenLeft && isOpenRight)
-				return icon[5];
-			else if (isOpenDown && isOpenLeft)
-				return icon[10];
-			else if (isOpenDown && isOpenRight)
-				return icon[9];
-			else if (isOpenUp && isOpenLeft)
-				return icon[8];
-			else if (isOpenUp && isOpenRight)
-				return icon[7];
-			else if (isOpenDown)
-				return icon[1];
-			else if (isOpenUp)
-				return icon[2];
-			else if (isOpenLeft)
-				return icon[3];
-			else if (isOpenRight)
-				return icon[4];
-			break;
-		case 5:
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j - 1, k), ib.getBlockMetadata(i, j - 1, k)))
-				isOpenDown = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j + 1, k), ib.getBlockMetadata(i, j + 1, k)))
-				isOpenUp = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k - 1), ib.getBlockMetadata(i, j, k - 1)))
-				isOpenLeft = true;
-			if (shouldConnectToBlock(ib, i, j, k, ib.getBlock(i, j, k + 1), ib.getBlockMetadata(i, j, k + 1)))
-				isOpenRight = true;
-
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
-				return icon[15];
-			else if (isOpenUp && isOpenDown && isOpenLeft)
-				return icon[13];
-			else if (isOpenUp && isOpenDown && isOpenRight)
-				return icon[14];
-			else if (isOpenUp && isOpenLeft && isOpenRight)
-				return icon[11];
-			else if (isOpenDown && isOpenLeft && isOpenRight)
-				return icon[12];
-			else if (isOpenDown && isOpenUp)
-				return icon[6];
-			else if (isOpenLeft && isOpenRight)
-				return icon[5];
-			else if (isOpenDown && isOpenLeft)
-				return icon[9];
-			else if (isOpenDown && isOpenRight)
-				return icon[10];
-			else if (isOpenUp && isOpenLeft)
-				return icon[7];
-			else if (isOpenUp && isOpenRight)
-				return icon[8];
-			else if (isOpenDown)
-				return icon[1];
-			else if (isOpenUp)
-				return icon[2];
-			else if (isOpenLeft)
-				return icon[4];
-			else if (isOpenRight)
-				return icon[3];
-			break;
-		}
-
-		return icon[0];
 	}
 }

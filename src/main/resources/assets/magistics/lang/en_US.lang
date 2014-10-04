@@ -13,16 +13,28 @@ tc.research_page.HUNGRYCHESTENDER.1=After discovering the intricacies of the hun
 # Items
 ###
 
+item.mystic_resources.amber_drop.name=Amber Drop
 item.mystic_resources.animated_piston.name=Animated Piston
 item.mystic_resources.arcane_singularity.name=Arcane Singularity
 item.mystic_resources.dust_faint.name=Faint Dust
+item.mystic_resources.eldritch_mechanism.name=Eldritch Gear
 item.mystic_resources.eldritch_keystone_inert.name=Inert Eldritch Keystone
 item.mystic_resources.eldritch_keystone_tlhutlh.name=Eldritch Keystone
 item.mystic_resources.eldritch_gear.name=Voidmetal Gear
 item.mystic_resources.soul_fragment.name=Soul Fragment
 item.mystic_resources.void_ingot.name=Void Ingot
 
+item.shard_fragment.aer.name=Aer Shard Fragment
+item.shard_fragment.aqua.name=Aqua Shard Fragment
+item.shard_fragment.ignis.name=Ignis Shard Fragment
+item.shard_fragment.ordo.name=Ordo Shard Fragment
+item.shard_fragment.perdito.name=Perdito Shard Fragment
+item.shard_fragment.terra.name=Terra Shard Fragment
+
 item.dawnstone.name=Dawnstone
+
+item.eldritch_keystone.inert.name=Inert Eldritch Keystone
+item.eldritch_keystone.tlhutlh.name=Eldritch Keystone Tlhutlh
 
 item.cruel_mask.name=Mask Of Cruelty
 
