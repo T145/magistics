@@ -6,10 +6,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import T145.magistics.api.blocks.BlockApparatusContainer;
 import T145.magistics.client.lib.TextureHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -99,5 +101,26 @@ public class BlockArcaneStone extends BlockApparatusContainer {
 	@Override
 	public boolean shouldSideBeRendered(IBlockAccess ib, int i, int j, int k, int side) {
 		return ib.getBlock(i, j, k) == (Block) this ? false : super.shouldSideBeRendered(ib, i, j, k, side);
+	}
+
+	@Override
+	public float getBlockHardness(World world, int i, int j, int k) {
+		if (world.getBlockMetadata(i, j, k) == 1)
+			return 16F;
+		else
+			return 4F;
+	}
+
+	@Override
+	public float getExplosionResistance(Entity entity, World world, int i, int j, int k, double explosionX, double explosionY, double explosionZ) {
+		if (world.getBlockMetadata(i, j, k) == 1)
+			return 400F;
+		else
+			return 100F;
+	}
+
+	@Override
+	public boolean isBeaconBase(IBlockAccess ib, int i, int j, int k, int beaconX, int beaconY, int beaconZ) {
+		return true;
 	}
 }

@@ -64,7 +64,7 @@ public class MagisticsConfig {
 	public static Block blocks[] = {
 		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston),
 		new BlockChestHungryMetal().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics).setHardness(3.0F),
-		new BlockArcaneStone().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics).setHardness(4.0F).setResistance(100.0F).setStepSound(Block.soundTypeStone)
+		new BlockArcaneStone().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics).setStepSound(Block.soundTypeStone)
 	};
 
 	public static Class tiles[] = {
