@@ -18,6 +18,8 @@ import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockArcaneStone;
+import T145.magistics.common.blocks.BlockArcaneStoneItem;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.config.external.ModHandler;
@@ -44,7 +46,7 @@ public class MagisticsConfig {
 	}, baubleName[] = {
 		"bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor"
 	}, blockName[] = {
-		"ender_hungry_chest", "metal_hungry_chest"
+		"ender_hungry_chest", "metal_hungry_chest", "arcane_stone"
 	};
 
 	public static Item items[] = {
@@ -61,7 +63,8 @@ public class MagisticsConfig {
 
 	public static Block blocks[] = {
 		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston),
-		new BlockChestHungryMetal().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics).setHardness(3.0F)
+		new BlockChestHungryMetal().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics).setHardness(3.0F),
+		new BlockArcaneStone().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics).setHardness(4.0F).setResistance(100.0F).setStepSound(Block.soundTypeStone)
 	};
 
 	public static Class tiles[] = {
@@ -94,6 +97,7 @@ public class MagisticsConfig {
 		for (Class tileEntity : tiles)
 			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
 		GameRegistry.registerBlock(blocks[0], blockName[0]);
+		GameRegistry.registerBlock(blocks[2], BlockArcaneStoneItem.class, blockName[2]);
 		ModHandler.init();
 	}
 

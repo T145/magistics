@@ -37,6 +37,9 @@ item.bauble.ring_souls.name=Ring of Souls
 # Blocks
 ###
 
+tile.arcane_stone.base.name=Reinforced Arcane Stone
+tile.arcane_stone.brick.name=Reinforced Arcane Stone Bricks
+
 tile.ender_hungry_chest.name=Hungry Ender Chest
 
 tile.metal_hungry_chest.iron.name=Hungry Iron Chest
