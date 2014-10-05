@@ -32,6 +32,7 @@ import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.items.relics.ItemEldritchKeystone;
+import T145.magistics.common.lib.ResearchPages;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -108,7 +109,7 @@ public class MagisticsConfig {
 
 		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYCHESTENDER", new ItemStack(MagisticsConfig.blocks[0]), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
 
-		new ResearchItem("HUNGRYCHESTENDER", Magistics.modid.toUpperCase(), new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3).add(Aspect.EXCHANGE, 2).add(Aspect.TRAVEL, 2).add(Aspect.VOID, 4), -1, 0, 1, new ItemStack(MagisticsConfig.blocks[0])).setPages(new ResearchPage("tc.research_page.HUNGRYCHESTENDER.1"), new ResearchPage(ConfigResearch.recipes.get("HungryEnderChest").toString())).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
+		new ResearchItem("HUNGRYCHESTENDER", Magistics.modid.toUpperCase(), new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3).add(Aspect.EXCHANGE, 2).add(Aspect.TRAVEL, 2).add(Aspect.VOID, 4), -1, 0, 2, new ItemStack(MagisticsConfig.blocks[0])).setPages(new ResearchPage("tc.research_page.HUNGRYCHESTENDER.1"), new ResearchPages().arcaneRecipe("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
 		ThaumcraftApi.addWarpToResearch("HUNGRYCHESTENDER", 1);
 	}
 }

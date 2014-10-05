@@ -2,16 +2,26 @@ package T145.magistics.common.items.relics;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import T145.magistics.common.config.MagisticsConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDawnstone extends Item {
 	private long destDawn = 0;
+
+	@Override
+	public EnumRarity getRarity(ItemStack is) {
+		if (MagisticsConfig.colored_names)
+			return EnumRarity.uncommon;
+		else
+			return EnumRarity.common;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
