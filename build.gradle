@@ -39,7 +39,7 @@ minecraft {
 
 dependencies {
     compile 'mcp.mobius.waila:Waila:1.5.5_1.7.10'
-    compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.0.18:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
     compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev'
     compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.310:dev'
