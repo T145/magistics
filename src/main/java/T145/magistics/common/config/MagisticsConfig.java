@@ -26,7 +26,7 @@ import T145.magistics.common.config.external.ModHandler;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.ItemShardFragment;
 import T145.magistics.common.items.armor.ItemCruelMask;
-import T145.magistics.common.items.baubles.ItemAmuletDeath;
+import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
@@ -44,7 +44,7 @@ public class MagisticsConfig {
 	public static final String itemName[] = {
 		"mystic_resources", "cruel_mask", "shard_fragment", "eldritch_keystone", "dawnstone"
 	}, baubleName[] = {
-		"bauble.amulet_death", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor"
+		"bauble.amulet_dismay", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor"
 	}, blockName[] = {
 		"ender_hungry_chest", "metal_hungry_chest", "arcane_stone"
 	};
@@ -55,7 +55,7 @@ public class MagisticsConfig {
 		new ItemShardFragment().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[2]),
 		new ItemEldritchKeystone().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[3]),
 		new ItemDawnstone().setCreativeTab(Magistics.tabMagistics).setUnlocalizedName(itemName[4]),
-		new ItemAmuletDeath().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(baubleName[0]),
+		new ItemAmuletDismay().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(baubleName[0]),
 		new ItemAmuletLife().setCreativeTab(Magistics.tabMagistics).setMaxDamage(60).setUnlocalizedName(baubleName[1]),
 		new ItemBeltCleansing().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(baubleName[2]),
 		new ItemBeltVigor().setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setUnlocalizedName(baubleName[3])
@@ -102,9 +102,9 @@ public class MagisticsConfig {
 	}
 
 	public static void postInit() {
-		ThaumcraftApi.registerComplexObjectTag(new ItemStack(MagisticsConfig.blocks[0], 1, 32767), new AspectList().merge(Aspect.EXCHANGE, 2).merge(Aspect.TRAVEL, 2).merge(Aspect.VOID, 4));
-
 		ResearchCategories.registerCategory(Magistics.modid.toUpperCase(), new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
+
+		ThaumcraftApi.registerComplexObjectTag(new ItemStack(MagisticsConfig.blocks[0], 1, 32767), new AspectList().merge(Aspect.EXCHANGE, 2).merge(Aspect.TRAVEL, 2).merge(Aspect.VOID, 4));
 
 		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYCHESTENDER", new ItemStack(MagisticsConfig.blocks[0]), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
 

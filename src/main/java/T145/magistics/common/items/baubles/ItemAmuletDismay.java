@@ -17,7 +17,7 @@ import baubles.api.BaubleType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAmuletDeath extends ItemBauble {
+public class ItemAmuletDismay extends ItemBauble {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {

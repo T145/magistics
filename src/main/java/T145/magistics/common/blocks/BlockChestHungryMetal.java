@@ -34,12 +34,6 @@ public class BlockChestHungryMetal extends BlockIronChest {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderBlockPass() {
-		return 0;
-	}
-
-	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
 		TileChestHungryMetal tile = (TileChestHungryMetal) world.getTileEntity(i, j, k);
 		MagisticsUtils.absorbCollidingItemStackIntoInventory(entity, tile, (IInventory) tile, this, 2, 2, world, i, j, k, true);

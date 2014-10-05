@@ -53,7 +53,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 		InventoryEnderChest enderInv = getEnderInventory(player, world, i, j, k);
 		TileChestHungryEnder enderChest = (TileChestHungryEnder) world.getTileEntity(i, j, k);
 
-		if (enderInv != null && enderChest != null) {
+		if (enderInv != null && enderChest != null && player == owner) {
 			enderInv.func_146031_a(enderChest);
 			owner.displayGUIChest(enderInv);
 			return true;

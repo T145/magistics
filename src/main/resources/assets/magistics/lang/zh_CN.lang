@@ -1,5 +1,3 @@
-#zh_CN
-
 itemGroup.magistics=Magistics
 
 ####
@@ -27,7 +25,7 @@ item.mystic_resources.void_ingot.name=虚空锭
 item.cruel_mask.name=残暴面具
 
 # More original names to come!
-item.bauble.amulet_death.name=恐慌护身符
+item.bauble.amulet_dismay.name=恐慌护身符
 item.bauble.amulet_life.name=生命护身符
 item.bauble.belt_cleansing.name=净化腰带
 item.bauble.belt_vigor.name=活力腰带
