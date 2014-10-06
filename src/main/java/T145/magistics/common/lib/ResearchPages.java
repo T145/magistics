@@ -21,13 +21,6 @@ public class ResearchPages {
 		return new ResearchPage((InfusionRecipe) ConfigResearch.recipes.get(name));
 	}
 
-	public static ResearchPage infusionRecipe(String name, int count) {
-		InfusionRecipe[] recipes = new InfusionRecipe[count];
-		for (int i = 0; i < count; i++)
-			recipes[i] = (InfusionRecipe) ConfigResearch.recipes.get(name + i);
-		return new ResearchPage(recipes);
-	}
-
 	public static ResearchPage infusionEnchantmentRecipe(String name) {
 		return new ResearchPage((InfusionEnchantmentRecipe) ConfigResearch.recipes.get(name));
 	}
