@@ -7,10 +7,10 @@
 Luckily most of this has been taken care of! Simply run one of the scripts contained in the "scripts" directory (that's catered to your OS) from the project's root directory and you should be all set!
 
 ### Adding libraries
-The project has two places designated for where libraries are loaded onto its path: [mods](https://github.com/T145/magistics/tree/master/eclipse/mods) and [lib](https://github.com/T145/magistics/tree/master/lib). Any mods that's a coremod should go directly into the mods directory, and everything else goes into the lib directory.
+The project has two places designated for where libraries are loaded onto its path: mods and [lib](https://github.com/T145/magistics/tree/master/lib). Any mods that's a coremod should go directly into the mods directory, and everything else goes into the lib directory. Also, The mods directory will not be available until the inital build process is run.
 
 ## License Stuff
-The license and all of that wonderful information is located in the project's license file. All of the project source code falls under this license. *As for the assets (images and such), while they're included in the project, they are being outlined as separate content!* They belong to the original creators, and require their explicit permission for external usage.
+All of the wonderful license information is located in the project's license file. All of the project source code falls under this license. *As for the assets (images and such), while they're included in the project, they are being outlined as separate content!* They belong to the original creators, and require their explicit permission for external usage.
 
 ## Contributing
 1. Fork it
