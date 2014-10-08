@@ -3,6 +3,7 @@ package T145.magistics.common;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import T145.magistics.common.config.MagisticsConfig;
+import T145.magistics.common.config.external.ModHandler;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -15,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.modid, version = "0.6.5", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.modid, version = "0.6.8", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
 public class Magistics {
 	public static final String modid = "Magistics";
 
@@ -53,6 +54,6 @@ public class Magistics {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-		MagisticsConfig.postInit();
+		ModHandler.postInit();
 	}
 }

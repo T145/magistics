@@ -68,8 +68,8 @@ processResources {
     }
 }
 
-// required since all of ChickenBones's coremods need to be directly on the load path
-task copyChicken(type: Copy, dependsOn: "extractUserDev") {
+// required since all coremods need to be directly on the load path
+task copyCoremods(type: Copy, dependsOn: "extractUserDev") {
     from {
         configurations.compile
     }
@@ -78,8 +78,8 @@ task copyChicken(type: Copy, dependsOn: "extractUserDev") {
     mustRunAfter 'deobfBinJar'
     mustRunAfter 'repackMinecraft'
 }
-tasks.setupDevWorkspace.dependsOn copyChicken
-tasks.setupDecompWorkspace.dependsOn copyChicken
+tasks.setupDevWorkspace.dependsOn copyCoremods
+tasks.setupDecompWorkspace.dependsOn copyCoremods
 
 // modifies the actual release
 jar {

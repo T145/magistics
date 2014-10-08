@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class BlockArcaneStoneItem extends ItemBlock {
-	public BlockArcaneStoneItem(Block block) {
+public class BlockInfusionWorkbenchItem extends ItemBlock {
+	public BlockInfusionWorkbenchItem(Block block) {
 		super(block);
 		setHasSubtypes(true);
 	}
@@ -17,6 +17,6 @@ public class BlockArcaneStoneItem extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack is) {
-		return super.getUnlocalizedName() + "." + BlockArcaneStone.Types.values()[is.getItemDamage()];
+		return super.getUnlocalizedName() + "." + BlockInfusionWorkbench.Types.values()[is.getItemDamage()];
 	}
 }

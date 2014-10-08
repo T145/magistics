@@ -3,28 +3,14 @@ package T145.magistics.common.config;
 import java.io.File;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchItem;
-import thaumcraft.api.research.ResearchPage;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.blocks.BlockArcaneStone;
-import T145.magistics.common.blocks.BlockArcaneStoneItem;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.config.external.ModHandler;
 import T145.magistics.common.items.ItemResources;
-import T145.magistics.common.items.ItemShardFragment;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
@@ -32,7 +18,6 @@ import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.items.relics.ItemEldritchKeystone;
-import T145.magistics.common.lib.ResearchPages;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -43,19 +28,18 @@ public class MagisticsConfig {
 	public static boolean colored_names, debug, low_gfx;
 
 	public static final String itemName[] = {
-		"mystic_resources", "cruel_mask", "shard_fragment", "eldritch_keystone", "dawnstone"
+		"mystic_resources", "cruel_mask", "eldritch_keystone", "dawnstone"
 	}, baubleName[] = {
 		"bauble.amulet_dismay", "bauble.amulet_life", "bauble.belt_cleansing", "bauble.belt_vigor"
 	}, blockName[] = {
-		"ender_hungry_chest", "metal_hungry_chest", "arcane_stone"
+		"ender_hungry_chest", "metal_hungry_chest", "infusion_workbench"
 	};
 
 	public static Item items[] = {
 		new ItemResources().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[0]),
 		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setCreativeTab(Magistics.tabMagistics).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName(itemName[1]),
-		new ItemShardFragment().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[2]),
-		new ItemEldritchKeystone().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[3]),
-		new ItemDawnstone().setCreativeTab(Magistics.tabMagistics).setUnlocalizedName(itemName[4]),
+		new ItemEldritchKeystone().setCreativeTab(Magistics.tabMagistics).setHasSubtypes(true).setUnlocalizedName(itemName[2]),
+		new ItemDawnstone().setCreativeTab(Magistics.tabMagistics).setUnlocalizedName(itemName[3]),
 		new ItemAmuletDismay().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(baubleName[0]),
 		new ItemAmuletLife().setCreativeTab(Magistics.tabMagistics).setMaxDamage(60).setUnlocalizedName(baubleName[1]),
 		new ItemBeltCleansing().setCreativeTab(Magistics.tabMagistics).setMaxDamage(50).setUnlocalizedName(baubleName[2]),
@@ -65,12 +49,13 @@ public class MagisticsConfig {
 	public static Block blocks[] = {
 		new BlockChestHungryEnder().setBlockName(blockName[0]).setCreativeTab(Magistics.tabMagistics).setHardness(22.5F).setLightLevel(0.5F).setResistance(1000F).setStepSound(Block.soundTypePiston),
 		new BlockChestHungryMetal().setBlockName(blockName[1]).setCreativeTab(Magistics.tabMagistics).setHardness(3.0F),
-		new BlockArcaneStone().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics).setStepSound(Block.soundTypeStone)
+		//new BlockInfusionWorkbench().setBlockName(blockName[2]).setCreativeTab(Magistics.tabMagistics).setStepSound(Block.soundTypeStone)
 	};
 
 	public static Class tiles[] = {
 		TileChestHungryEnder.class,
-		TileChestHungryMetal.class
+		TileChestHungryMetal.class,
+		//TileInfusionWorkbench.class
 	};
 
 	public static void preInit(File configFile) {
@@ -98,18 +83,7 @@ public class MagisticsConfig {
 		for (Class tileEntity : tiles)
 			GameRegistry.registerTileEntity(tileEntity, tileEntity.getSimpleName());
 		GameRegistry.registerBlock(blocks[0], blockName[0]);
-		GameRegistry.registerBlock(blocks[2], BlockArcaneStoneItem.class, blockName[2]);
+		//GameRegistry.registerBlock(blocks[2], BlockInfusionWorkbenchItem.class, blockName[2]);
 		ModHandler.init();
-	}
-
-	public static void postInit() {
-		ResearchCategories.registerCategory(Magistics.modid.toUpperCase(), new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
-
-		ThaumcraftApi.registerComplexObjectTag(new ItemStack(MagisticsConfig.blocks[0], 1, 32767), new AspectList().merge(Aspect.EXCHANGE, 2).merge(Aspect.TRAVEL, 2).merge(Aspect.VOID, 4));
-
-		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYCHESTENDER", new ItemStack(MagisticsConfig.blocks[0]), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
-
-		new ResearchItem("HUNGRYCHESTENDER", Magistics.modid.toUpperCase(), new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3).add(Aspect.EXCHANGE, 2).add(Aspect.TRAVEL, 2).add(Aspect.VOID, 4), -1, 0, 2, new ItemStack(MagisticsConfig.blocks[0])).setPages(new ResearchPage("tc.research_page.HUNGRYCHESTENDER.1"), new ResearchPages().arcaneRecipe("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
-		ThaumcraftApi.addWarpToResearch("HUNGRYCHESTENDER", 1);
 	}
 }
