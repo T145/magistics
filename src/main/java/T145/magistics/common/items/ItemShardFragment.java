@@ -21,7 +21,7 @@ public class ItemShardFragment extends Item {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
 		for (Types type : Types.values())
-			icon[type.ordinal()] = r.registerIcon("magistics:shard_" + type.name());
+			icon[type.ordinal()] = r.registerIcon("magistics:shard_fragment/" + type.name());
 	}
 
 	@Override

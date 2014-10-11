@@ -9,7 +9,7 @@
   "updateUrl": "https://github.com/T145/magistics/releases",
   "authorList": ["T145"],
   "credits": "Azanor, for making Thaumcraft and helping me out initially!",
-  "logoFile": "",
+  "logoFile": "logo.png",
   "screenshots": [],
   "dependencies": ["Thaumcraft"]
 }

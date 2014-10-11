@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.common.lib.InventoryHelper;
+import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class MagisticsUtils {
 	public static TileEntity getTileAtSide(IBlockAccess world, int i, int j, int k, ForgeDirection direction) {
@@ -104,7 +104,7 @@ public class MagisticsUtils {
 
 	public static ItemStack attemptInsertion(IInventory inventory, ItemStack stack, int slot, int side, boolean doit) {
 		ItemStack slotStack = inventory.getStackInSlot(slot);
-		if (InventoryHelper.canInsertItemToInventory(inventory, stack, slot, side)) {
+		if (InventoryUtils.canInsertItemToInventory(inventory, stack, slot, side)) {
 			boolean flag = false;
 			if (slotStack == null) {
 				if (inventory.getInventoryStackLimit() < stack.stackSize) {
@@ -117,7 +117,7 @@ public class MagisticsUtils {
 					stack = null;
 				}
 				flag = true;
-			} else if (InventoryHelper.areItemStacksEqualStrict(slotStack, stack)) {
+			} else if (InventoryUtils.areItemStacksEqualStrict(slotStack, stack)) {
 				int k = Math.min(stack.stackSize, Math.min(inventory.getInventoryStackLimit() - slotStack.stackSize, stack.getMaxStackSize() - slotStack.stackSize));
 				ItemStack itemStack = stack;
 				itemStack.stackSize -= k;

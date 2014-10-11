@@ -12,7 +12,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import thaumcraft.common.lib.Utils;
+import thaumcraft.common.lib.utils.EntityUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -45,7 +45,7 @@ public class ItemCruelMask extends ItemArmor {
 
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack is) {
-		Entity e = Utils.getPointedEntity(world, player, 2.0D, 24.0D, 0.2F);
+		Entity e = EntityUtils.getPointedEntity(world, player, 2.0D, 24.0D, 0.2F);
 
 		if (e != null && e instanceof EntityLiving) {
 			EntityLiving creature = (EntityLiving) e;
