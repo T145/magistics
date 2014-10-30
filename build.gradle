@@ -34,7 +34,7 @@ archivesBaseName = 'Magistics'
 
 minecraft {
     version = forge_version
-    runDir = 'eclipse/assets'
+    runDir = 'eclipse'
 }
 
 dependencies {

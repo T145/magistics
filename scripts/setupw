@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FORGE_VERSION=1.7.10-10.13.1.1219
+FORGE_VERSION=1.7.10-10.13.2.1230
 
 curl -L -O -k http://files.minecraftforge.net/maven/net/minecraftforge/forge/$FORGE_VERSION/forge-$FORGE_VERSION-src.zip
 mkdir forge
