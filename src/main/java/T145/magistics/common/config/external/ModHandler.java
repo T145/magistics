@@ -1,6 +1,5 @@
 package T145.magistics.common.config.external;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,10 +16,7 @@ import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.config.MagisticsConfig;
 import T145.magistics.common.config.MagisticsLogger;
-import T145.magistics.common.config.external.fmp.PartFactory;
 import T145.magistics.common.lib.ResearchPages;
-import codechicken.microblock.BlockMicroMaterial;
-import codechicken.microblock.MicroMaterialRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -28,15 +24,6 @@ import cpw.mods.ironchest.IronChest;
 
 public class ModHandler {
 	public static void init() {
-		if (Loader.isModLoaded("ForgeMultipart")) {
-			MagisticsLogger.log("ForgeMultipart detected; compatibility loaded.");
-			new PartFactory().init();
-			addMultiparts(ConfigBlocks.blockCosmeticOpaque, 0, 1);
-			addMultiparts(ConfigBlocks.blockCosmeticSolid, 0);
-			addMultiparts(ConfigBlocks.blockCosmeticSolid, 2, 7);
-			addMultiparts(ConfigBlocks.blockWoodenDevice, 6, 7);
-			//addMultiparts(MagisticsConfig.blocks[2], 0, 1);
-		}
 		if (Loader.isModLoaded("BuildCraft|Transport")) {
 			MagisticsLogger.log("Buildcraft detected; compatibility loaded.");
 			//addFacades(MagisticsConfig.blocks[2].getUnlocalizedName(), 0, 1);
@@ -93,16 +80,6 @@ public class ModHandler {
 
 		if (Loader.isModLoaded("IronChest"))
 			new ResearchItem("HUNGRYCHESTIRON", Magistics.modid.toUpperCase(), new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), 1, 1, 1, new ItemStack(MagisticsConfig.blocks[1], 1, 32767)).setPages(new ResearchPage("tc.research_page.HUNGRYCHESTIRON.1"), new ResearchPages().arcaneRecipe("HungryIronChest"), new ResearchPages().arcaneRecipe("HungryIronChestAlt"), new ResearchPages().arcaneRecipe("HungryGoldChest"), new ResearchPages().arcaneRecipe("HungryGoldChestAlt"), new ResearchPages().arcaneRecipe("HungryDiamondChest"), new ResearchPages().arcaneRecipe("HungryDiamondChestAlt"), new ResearchPages().arcaneRecipe("HungryCopperChest"), new ResearchPages().arcaneRecipe("HungrySilverChest"), new ResearchPages().arcaneRecipe("HungrySilverChestAlt"), new ResearchPages().arcaneRecipe("HungryCrystalChest"), new ResearchPages().arcaneRecipe("HungryObsidianChest"), new ResearchPages().arcaneRecipe("HungryDirtChest")).setSecondary().registerResearchItem();
-	}
-
-	public static void addMultiparts(Block block, int meta_start, int meta_end) {
-		for (int meta = meta_start; meta <= meta_end; meta++)
-			addMultiparts(block, meta);
-	}
-
-	public static void addMultiparts(Block block, int meta) {
-		MagisticsLogger.log("Registering Multiparts for " + block.getUnlocalizedName() + "." + meta);
-		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(block, meta), block.getUnlocalizedName() + (meta == 0 ? "" : "_" + meta));
 	}
 
 	public static void addFacades(String blockName, int meta_start, int meta_end) {

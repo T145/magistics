@@ -15,17 +15,6 @@ buildscript {
     }
 }
 
-repositories {
-    maven {
-        name 'Mobius Repo'
-        url 'http://mobiusstrip.eu/maven'
-    }
-    maven {
-        name 'ChickenBones Repo'
-        url 'http://chickenbones.net/maven/'
-    }
-}
-
 apply plugin: 'forge'
 
 version = project_version
@@ -38,12 +27,8 @@ minecraft {
 }
 
 dependencies {
-    compile 'mcp.mobius.waila:Waila:1.5.5_1.7.10'
     compile 'com.mod-buildcraft:buildcraft:6.1.5:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
-    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.105:dev'
-    compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.313:dev'
-    compile 'codechicken:EnderStorage:1.7.10-1.4.5.25:dev'
 
     compile fileTree(dir: 'lib', include: '*.jar')
 }
@@ -66,19 +51,6 @@ processResources {
         exclude 'mcmod.info'
     }
 }
-
-// required since all coremods need to be directly on the load path
-task copyCoremods(type: Copy, dependsOn: "extractUserDev") {
-    from {
-        configurations.compile
-    }
-    include '**/*Chicken*.jar', '**/*NotEnoughItems*.jar', '**/*Multipart*.jar'
-    into file(minecraft.runDir + '/mods')
-    mustRunAfter 'deobfBinJar'
-    mustRunAfter 'repackMinecraft'
-}
-tasks.setupDevWorkspace.dependsOn copyCoremods
-tasks.setupDecompWorkspace.dependsOn copyCoremods
 
 // modifies the actual release
 jar {
