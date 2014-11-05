@@ -4,10 +4,7 @@
 **_Adding some logistics to Thaumcraft!_**
 
 ## Workspace Setup
-Simply run one of the scripts contained in the [scripts](https://github.com/T145/magistics/tree/master/scripts) directory (that's catered to your OS) from the project's root directory and you should be all set!
-
-### Adding libraries
-The project has two places designated for where libraries are loaded onto its path: mods and [lib](https://github.com/T145/magistics/tree/master/lib). Any mod that's a coremod should go directly into the mods directory, and everything else goes into the lib directory. Also, The mods directory will not be available until the build process is run at least once.
+Simply plop your deobfuscated copy of Thaumcraft into the lib directory. Once that's set, then run one of the scripts contained in the [scripts](https://github.com/T145/magistics/tree/master/scripts) directory from the project's root directory and you should be all set!
 
 ## License Stuff
 All of the wonderful license information is located in the project's license file. The project source code falls under this license. *As for the assets (images and such), they are outlined as separate content!* The original creators own them, and require their explicit permission for external usage.
