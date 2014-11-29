@@ -29,21 +29,18 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float) i, (float) j + 1.0F, (float) k + 1.0F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		int meta = 0;
 		if (chest.hasWorldObj())
-			meta = chest.getBlockMetadata();
-		float mod = 0;
-		switch (meta) {
-		case 2:
-			mod = 180;
-			break;
-		case 4:
-			mod = 90;
-			break;
-		case 5:
-			mod = -90;
-		}
-		GL11.glRotatef(mod, 0.0F, 1.0F, 0.0F);
+			switch (chest.getBlockMetadata()) {
+			case 2:
+				GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
+				break;
+			case 4:
+				GL11.glRotatef(90, 0.0F, 1.0F, 0.0F);
+				break;
+			case 5:
+				GL11.glRotatef(-90, 0.0F, 1.0F, 0.0F);
+				break;
+			}
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		float lidOpening = chest.field_145975_i + (chest.field_145972_a - chest.field_145975_i) * rotation;
 		lidOpening = 1.0F - lidOpening;

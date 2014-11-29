@@ -11,11 +11,11 @@ import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
-public class MagisticsUtils {
-	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inventory, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
-		if (tile != null && !world.isRemote && inventory != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
+public class InventoryHelper {
+	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inv, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
+		if (tile != null && !world.isRemote && inv != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
 			EntityItem item = (EntityItem) collidingEntity;
-			ItemStack leftovers = placeItemStackIntoInventory(item.getEntityItem(), inventory, 1, true);
+			ItemStack leftovers = placeItemStackIntoInventory(item.getEntityItem(), inv, 1, true);
 
 			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
 				if (playSoundEffect)
@@ -30,49 +30,49 @@ public class MagisticsUtils {
 		}
 	}
 
-	public static ItemStack placeItemStackIntoInventory(ItemStack stack, IInventory inventory, int side, boolean doit) {
+	public static ItemStack placeItemStackIntoInventory(ItemStack stack, IInventory inv, int side, boolean doit) {
 		ItemStack itemstack = stack.copy();
-		ItemStack itemstack2 = insertStack(inventory, itemstack, side, doit);
+		ItemStack itemstack2 = insertStack(inv, itemstack, side, doit);
 		if (itemstack2 == null || itemstack2.stackSize == 0) {
 			if (doit)
-				inventory.markDirty();
+				inv.markDirty();
 			return null;
 		}
 		stack = itemstack2;
 		return stack.copy();
 	}
 
-	public static ItemStack insertStack(IInventory inventory, ItemStack stack1, int side, boolean doit) {
-		if (inventory instanceof ISidedInventory && side > -1) {
-			ISidedInventory isidedinventory = (ISidedInventory) inventory;
-			int[] aint = isidedinventory.getAccessibleSlotsFromSide(side);
+	public static ItemStack insertStack(IInventory inv, ItemStack stack1, int side, boolean doit) {
+		if (inv instanceof ISidedInventory && side > -1) {
+			ISidedInventory isidedinv = (ISidedInventory) inv;
+			int[] aint = isidedinv.getAccessibleSlotsFromSide(side);
 			if (aint != null) {
 				for (int j = 0; j < aint.length && stack1 != null && stack1.stackSize > 0; ++j) {
-					if (inventory.getStackInSlot(aint[j]) != null && inventory.getStackInSlot(aint[j]).isItemEqual(stack1))
-						stack1 = attemptInsertion(inventory, stack1, aint[j], side, doit);
+					if (inv.getStackInSlot(aint[j]) != null && inv.getStackInSlot(aint[j]).isItemEqual(stack1))
+						stack1 = attemptInsertion(inv, stack1, aint[j], side, doit);
 					if (stack1 == null || stack1.stackSize == 0)
 						break;
 				}
 			}
 			if (aint != null && stack1 != null && stack1.stackSize > 0) {
 				for (int j = 0; j < aint.length && stack1 != null && stack1.stackSize > 0; ++j) {
-					stack1 = attemptInsertion(inventory, stack1, aint[j], side, doit);
+					stack1 = attemptInsertion(inv, stack1, aint[j], side, doit);
 					if (stack1 == null || stack1.stackSize == 0)
 						break;
 				}
 			}
 		} else {
-			int k = inventory.getSizeInventory();
+			int k = inv.getSizeInventory();
 			for (int l = 0; l < k && stack1 != null && stack1.stackSize > 0; ++l) {
-				if (inventory.getStackInSlot(l) != null && inventory.getStackInSlot(l).isItemEqual(stack1))
-					stack1 = attemptInsertion(inventory, stack1, l, side, doit);
+				if (inv.getStackInSlot(l) != null && inv.getStackInSlot(l).isItemEqual(stack1))
+					stack1 = attemptInsertion(inv, stack1, l, side, doit);
 				if (stack1 == null || stack1.stackSize == 0)
 					break;
 			}
 			if (stack1 != null && stack1.stackSize > 0) {
 				if (stack1 != null && stack1.stackSize > 0) {
 					for (int m = 0; m < k && stack1 != null && stack1.stackSize > 0; ++m) {
-						stack1 = attemptInsertion(inventory, stack1, m, side, doit);
+						stack1 = attemptInsertion(inv, stack1, m, side, doit);
 						if (stack1 == null || stack1.stackSize == 0)
 							break;
 					}
@@ -84,23 +84,23 @@ public class MagisticsUtils {
 		return stack1;
 	}
 
-	public static ItemStack attemptInsertion(IInventory inventory, ItemStack stack, int slot, int side, boolean doit) {
-		ItemStack slotStack = inventory.getStackInSlot(slot);
-		if (InventoryUtils.canInsertItemToInventory(inventory, stack, slot, side)) {
+	public static ItemStack attemptInsertion(IInventory inv, ItemStack stack, int slot, int side, boolean doit) {
+		ItemStack slotStack = inv.getStackInSlot(slot);
+		if (InventoryUtils.canInsertItemToInventory(inv, stack, slot, side)) {
 			boolean flag = false;
 			if (slotStack == null) {
-				if (inventory.getInventoryStackLimit() < stack.stackSize) {
-					ItemStack in = stack.splitStack(inventory.getInventoryStackLimit());
+				if (inv.getInventoryStackLimit() < stack.stackSize) {
+					ItemStack in = stack.splitStack(inv.getInventoryStackLimit());
 					if (doit)
-						inventory.setInventorySlotContents(slot, in);
+						inv.setInventorySlotContents(slot, in);
 				} else {
 					if (doit)
-						inventory.setInventorySlotContents(slot, stack);
+						inv.setInventorySlotContents(slot, stack);
 					stack = null;
 				}
 				flag = true;
 			} else if (InventoryUtils.areItemStacksEqualStrict(slotStack, stack)) {
-				int k = Math.min(stack.stackSize, Math.min(inventory.getInventoryStackLimit() - slotStack.stackSize, stack.getMaxStackSize() - slotStack.stackSize));
+				int k = Math.min(stack.stackSize, Math.min(inv.getInventoryStackLimit() - slotStack.stackSize, stack.getMaxStackSize() - slotStack.stackSize));
 				ItemStack itemStack = stack;
 				itemStack.stackSize -= k;
 				if (doit) {
@@ -110,11 +110,11 @@ public class MagisticsUtils {
 				flag = (k > 0);
 			}
 			if (flag && doit) {
-				if (inventory instanceof TileEntityHopper) {
-					((TileEntityHopper) inventory).func_145896_c(8);
-					inventory.markDirty();
+				if (inv instanceof TileEntityHopper) {
+					((TileEntityHopper) inv).func_145896_c(8);
+					inv.markDirty();
 				}
-				inventory.markDirty();
+				inv.markDirty();
 			}
 		}
 		return stack;

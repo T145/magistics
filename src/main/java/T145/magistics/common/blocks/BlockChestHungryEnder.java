@@ -1,33 +1,40 @@
 package T145.magistics.common.blocks;
 
 import net.minecraft.block.BlockEnderChest;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import T145.magistics.common.lib.MagisticsUtils;
+import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryEnder;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockChestHungryEnder extends BlockEnderChest {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public EntityPlayer owner;
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("magistics:chest_hungry/ender");
+	public int getRenderType() {
+		return renderID;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta) {
-		return blockIcon;
+	public boolean hasComparatorInputOverride() {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(World world, int i, int j, int k, int rs) {
+		TileEntity te = world.getTileEntity(i, j, k);
+		if (te != null && te instanceof IInventory)
+			return Container.calcRedstoneFromInventory((IInventory) te);
+		else
+			return 0;
 	}
 
 	@Override
@@ -45,7 +52,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		MagisticsUtils.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryEnder) world.getTileEntity(i, j, k), getEnderInventory(owner, world, i, j, k), this, 2, 2, world, i, j, k, true);
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryEnder) world.getTileEntity(i, j, k), getEnderInventory(owner, world, i, j, k), this, 2, 2, world, i, j, k, true);
 	}
 
 	@Override

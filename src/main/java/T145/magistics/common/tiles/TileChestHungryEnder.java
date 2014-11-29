@@ -35,7 +35,7 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 	}
 
 	@Override
-	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int meta) {
+	public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int x, int y, int z, int side, int meta) {
 		if (player.isSneaking()) {
 			world.setBlockMetadataWithNotify(x, y, z, side, 2);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -47,13 +47,13 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 	}
 
 	@Override
-	public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
+	public ItemStack onWandRightClick(World world, ItemStack wand, EntityPlayer player) {
 		return null;
 	}
 
 	@Override
-	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
+	public void onUsingWandTick(ItemStack wand, EntityPlayer player, int count) {}
 
 	@Override
-	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
+	public void onWandStoppedUsing(ItemStack wand, World world, EntityPlayer player, int count) {}
 }

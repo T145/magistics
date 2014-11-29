@@ -1,4 +1,4 @@
-itemGroup.magistics=Magistics
+itemGroup.Magistics=Magistics
 
 ####
 # Research
@@ -56,13 +56,13 @@ item.bauble.ring_souls.name=Ring of Souls
 tile.infusion_workbench.base.name=Reinforced Arcane Stone
 tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks
 
-tile.ender_hungry_chest.name=Hungry Ender Chest
+tile.hungry_ender_chest.name=Hungry Ender Chest
 
-tile.metal_hungry_chest.iron.name=Hungry Iron Chest
-tile.metal_hungry_chest.gold.name=Hungry Gold Chest
-tile.metal_hungry_chest.diamond.name=Hungry Diamond Chest
-tile.metal_hungry_chest.copper.name=Hungry Copper Chest
-tile.metal_hungry_chest.silver.name=Hungry Silver Chest
-tile.metal_hungry_chest.crystal.name=Hungry Crystal Chest
-tile.metal_hungry_chest.obsidian.name=Hungry Obsidian Chest
-tile.metal_hungry_chest.dirt.name=Hungry Dirt Chest
+tile.hungry_metal_chest.iron.name=Hungry Iron Chest
+tile.hungry_metal_chest.gold.name=Hungry Gold Chest
+tile.hungry_metal_chest.diamond.name=Hungry Diamond Chest
+tile.hungry_metal_chest.copper.name=Hungry Copper Chest
+tile.hungry_metal_chest.silver.name=Hungry Silver Chest
+tile.hungry_metal_chest.crystal.name=Hungry Crystal Chest
+tile.hungry_metal_chest.obsidian.name=Hungry Obsidian Chest
+tile.hungry_metal_chest.dirt.name=Hungry Dirt Chest

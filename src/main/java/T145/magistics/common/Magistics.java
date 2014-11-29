@@ -1,11 +1,7 @@
 package T145.magistics.common;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import T145.magistics.common.config.MagisticsConfig;
-import T145.magistics.common.config.external.ModHandler;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
+import T145.magistics.common.config.Settings;
+import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -14,11 +10,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.modid, version = "0.6.8", guiFactory = "T145.magistics.client.gui.config.MagisticsConfigGuiFactory", dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.modid, name = Magistics.modid, version = Magistics.version, guiFactory = "T145.magistics.client.gui.GuiSettings")
 public class Magistics {
-	public static final String modid = "Magistics";
+	public static final String modid = "Magistics", version = "0.7.0";
 
 	@Instance(modid)
 	public static Magistics instance;
@@ -26,34 +21,25 @@ public class Magistics {
 	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid.toLowerCase()) {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(MagisticsConfig.blocks[0]);
-		}
-	};
-
 	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent e) {
+	public void onConfigChanged(OnConfigChangedEvent e) {
 		if (e.modID.equals(modid))
-			MagisticsConfig.sync();
+			Settings.sync();
 	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		FMLCommonHandler.instance().bus().register(instance);
-		MagisticsConfig.preInit(e.getSuggestedConfigurationFile());
+		Settings.preInit(e.getSuggestedConfigurationFile());
+		proxy.registerRenderInformation();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
-		MagisticsConfig.init();
-		proxy.registerRenderInformation();
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+		Settings.init();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-		ModHandler.postInit();
+		Settings.postInit();
 	}
 }
