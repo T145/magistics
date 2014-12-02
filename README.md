@@ -11,8 +11,9 @@ All of the wonderful license information is located in the project's license fil
 
 ## Contributing
 1. Fork it
-2. Commit your changes (`git add -A && git commit -m "My awesome change!"`)
-3. Create a new pull request
+2. Add or remove some stuff
+3. Commit your changes (`git commit -am "My awesome change!"`)
+4. Create a new pull request!
 
 ### Parameters
 

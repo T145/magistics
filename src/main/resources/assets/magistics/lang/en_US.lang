@@ -4,14 +4,14 @@ itemGroup.Magistics=Magistics
 # Research
 ###
 
-tc.research_category.MAGISTICS=Magistics
-tc.research_name.HUNGRYCHESTENDER=Hungry Ender Chest
-tc.research_text.HUNGRYCHESTENDER=It's starving!
-tc.research_page.HUNGRYCHESTENDER.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
+tc.research_category.Magistics=Magistics
+tc.research_name.HUNGRYENDERCHEST=Hungry Ender Chest
+tc.research_text.HUNGRYENDERCHEST=It's starving!
+tc.research_page.HUNGRYENDERCHEST.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
 
-tc.research_name.HUNGRYCHESTIRON=Hungry Iron Chests
-tc.research_text.HUNGRYCHESTIRON=Who needs lunchboxes?
-tc.research_page.HUNGRYCHESTIRON.1=After learning the intricacies of the Hungry Chest, you have successfully devised a way to integrate its mystical properties into other similar chest types!
+tc.research_name.HUNGRYIRONCHEST=Hungry Iron Chests
+tc.research_text.HUNGRYIRONCHEST=Who needs lunchboxes?
+tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry Chest, you have successfully devised a way to integrate its mystical properties into other similar chest types!
 
 ####
 # Items

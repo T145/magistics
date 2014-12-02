@@ -27,7 +27,7 @@ minecraft {
 }
 
 dependencies {
-    compile 'com.mod-buildcraft:buildcraft:6.1.5:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.1.8:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
     compile fileTree(dir: 'lib', include: '*.jar')
@@ -54,14 +54,14 @@ processResources {
 
 // modifies the actual release
 jar {
-	version = '${project.minecraft.version}-${project.version}'
+	version = '${project.minecraft.version}-${project_version}'
 }
 
 // add a developer release
 task deobfJar(type: Jar) {
 	from sourceSets.main.output
 	classifier = 'dev'
-	version = '${project.minecraft.version}-${project.version}'
+	version = '${project.minecraft.version}-${project_version}'
 }
 
 // add an archive of the API
@@ -78,7 +78,7 @@ api.mustRunAfter deobfJar
 task javadocJar(type: Jar, dependsOn: javadoc) {
 	from 'build/docs/javadoc'
 	classifier = 'javadoc'
-	version = '${project.minecraft.version}-${project.version}'
+	version = '${project.minecraft.version}-${project_version}'
 }
 
 artifacts {
