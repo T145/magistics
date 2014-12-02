@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
@@ -16,10 +17,10 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 public class BlockChestHungryEnderRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
-		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt((TileEntity) new TileChestHungryEnder(), 0.0, 0.0, 0.0, 0.0F);
-		GL11.glEnable(32826);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt((TileEntity) new TileChestHungryEnder(), 0, 0, 0, 0F);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 
 	@Override

@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class InventoryHelper {
-	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, TileEntity tile, IInventory inv, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
+	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, IInventory inv, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
+		TileEntity tile = world.getTileEntity(i, j, k);
 		if (tile != null && !world.isRemote && inv != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
 			EntityItem item = (EntityItem) collidingEntity;
 			ItemStack leftovers = placeItemStackIntoInventory(item.getEntityItem(), inv, 1, true);

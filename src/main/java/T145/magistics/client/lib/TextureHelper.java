@@ -11,7 +11,7 @@ public class TextureHelper {
 		return blockTo == blockFrom && meta == ib.getBlockMetadata(i, j, k);
 	}
 
-	public static IIcon getConnectedBlockTexture(IBlockAccess ib, int i, int j, int k, int side, IIcon[] icon, Block blockFrom) {
+	public static IIcon getConnectedTexture(IBlockAccess ib, int i, int j, int k, int side, IIcon[] icon, Block blockFrom) {
 		boolean isOpenUp = false, isOpenDown = false, isOpenLeft = false, isOpenRight = false;
 
 		switch (side) {

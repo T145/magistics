@@ -16,7 +16,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockChestHungryEnder extends BlockEnderChest {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-	public EntityPlayer owner;
+	private EntityPlayer master;
 
 	@Override
 	public int getRenderType() {
@@ -30,42 +30,51 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 
 	@Override
 	public int getComparatorInputOverride(World world, int i, int j, int k, int rs) {
-		TileEntity te = world.getTileEntity(i, j, k);
-		if (te != null && te instanceof IInventory)
-			return Container.calcRedstoneFromInventory((IInventory) te);
+		TileEntity tile = world.getTileEntity(i, j, k);
+		if (tile != null && tile instanceof IInventory)
+			return Container.calcRedstoneFromInventory((IInventory) tile);
 		else
 			return 0;
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase user, ItemStack is) {
-		owner = (EntityPlayer) user;
+		if (user instanceof EntityPlayer)
+			master = (EntityPlayer) user;
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		if (tile != null)
+			tile.owner = master.getCommandSenderName();
 		super.onBlockPlacedBy(world, i, j, k, user, is);
 	}
 
-	public InventoryEnderChest getEnderInventory(EntityPlayer player, World world, int i, int j, int k) {
-		if (owner == null || owner != player || world.getBlock(i, j + 1, k).isNormalCube())
-			return null;
+	public InventoryEnderChest getEnderInventory(World world, int i, int j, int k) {
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		if (master.getCommandSenderName().equals(tile.owner))
+			return master.getInventoryEnderChest();
 		else
-			return player.getInventoryEnderChest();
+			return null;
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer user, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+		InventoryEnderChest enderInv = getEnderInventory(world, i, j, k);
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+
+		if (enderInv != null && tile != null) {
+			if (world.getBlock(i, j + 1, k).isNormalCube() || world.isRemote)
+				return true;
+			else {
+				enderInv.func_146031_a(tile);
+				user.displayGUIChest(enderInv);
+				return true;
+			}
+		} else
+			return true;
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryEnder) world.getTileEntity(i, j, k), getEnderInventory(owner, world, i, j, k), this, 2, 2, world, i, j, k, true);
-	}
-
-	@Override
-	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-		InventoryEnderChest enderInv = getEnderInventory(player, world, i, j, k);
-		TileChestHungryEnder enderChest = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-
-		if (enderInv != null && enderChest != null && player == owner) {
-			enderInv.func_146031_a(enderChest);
-			owner.displayGUIChest(enderInv);
-			return true;
-		} else
-			return true;
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, getEnderInventory(world, i, j, k), this, 2, 2, world, i, j, k, true);
 	}
 
 	@Override
