@@ -16,7 +16,6 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockChestHungryEnder extends BlockEnderChest {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-	private EntityPlayer master;
 
 	@Override
 	public int getRenderType() {
@@ -39,42 +38,29 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase user, ItemStack is) {
-		if (user instanceof EntityPlayer)
-			master = (EntityPlayer) user;
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-		if (tile != null)
-			tile.owner = master.getCommandSenderName();
+		if (user != null && user instanceof EntityPlayer)
+			tile.owner = user.getCommandSenderName();
 		super.onBlockPlacedBy(world, i, j, k, user, is);
-	}
-
-	public InventoryEnderChest getEnderInventory(World world, int i, int j, int k) {
-		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-		if (master.getCommandSenderName().equals(tile.owner))
-			return master.getInventoryEnderChest();
-		else
-			return null;
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer user, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
-		InventoryEnderChest enderInv = getEnderInventory(world, i, j, k);
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		InventoryEnderChest enderInv = tile.getEnderInventory();
 
-		if (enderInv != null && tile != null && master == user) {
-			if (world.getBlock(i, j + 1, k).isNormalCube() || world.isRemote)
-				return true;
-			else {
-				enderInv.func_146031_a(tile);
-				user.displayGUIChest(enderInv);
-				return true;
-			}
+		if (enderInv != null && tile != null && !world.getBlock(i, j + 1, k).isNormalCube() && !world.isRemote) {
+			enderInv.func_146031_a(tile);
+			user.displayGUIChest(enderInv);
+			return true;
 		} else
 			return true;
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, getEnderInventory(world, i, j, k), this, 2, 2, world, i, j, k, true);
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, tile.getEnderInventory(), this, 2, 2, world, i, j, k, true);
 	}
 
 	@Override

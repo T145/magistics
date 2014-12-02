@@ -3,6 +3,8 @@ package T145.magistics.common.tiles;
 import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -13,15 +15,19 @@ import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
 
-public class TileChestHungryEnder extends TileEntityEnderChest implements IWandable {
+public class TileChestHungryEnder extends TileEntityEnderChest implements IWandable, ISidedInventory {
 	public String owner = "";
 	public ArrayList<String> accessList = new ArrayList<String>();
 	public boolean safeToRemove = false;
 
+	public InventoryEnderChest getEnderInventory() {
+		EntityPlayer master = worldObj.getPlayerEntityByName(owner);
+		return master == null ? null : master.getInventoryEnderChest();
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		readCustomNBT(nbt);
 		owner = nbt.getString("owner");
 		NBTTagList tags = nbt.getTagList("access", 10);
 		int tagCount = tags.tagCount();
@@ -33,14 +39,10 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 		}
 	}
 
-	public void readCustomNBT(NBTTagCompound nbt) {
-		owner = nbt.getString("owner");
-	}
-
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		writeCustomNBT(nbt);
+		nbt.setString("owner", owner);
 		NBTTagList tags = new NBTTagList();
 		int tagCount = tags.tagCount();
 		for (tagCount = 0; tagCount < accessList.size(); tagCount++) {
@@ -51,21 +53,17 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 		nbt.setTag("access", tags);
 	}
 
-	public void writeCustomNBT(NBTTagCompound nbt) {
-		nbt.setString("owner", owner);
-	}
-
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		writeCustomNBT(nbt);
+		nbt.setString("owner", owner);
 		return (Packet) new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbt);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
 		super.onDataPacket(net, packet);
-		readCustomNBT(packet.func_148857_g());
+		owner = packet.func_148857_g().getString("owner");
 	}
 
 	@Override
@@ -117,4 +115,86 @@ public class TileChestHungryEnder extends TileEntityEnderChest implements IWanda
 
 	@Override
 	public void onWandStoppedUsing(ItemStack wand, World world, EntityPlayer player, int count) {}
+
+	@Override
+	public int getSizeInventory() {
+		return getEnderInventory().getSizeInventory();
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return getEnderInventory().getStackInSlot(slot);
+	}
+
+	@Override
+	public ItemStack decrStackSize(int slotFrom, int slotTo) {
+		return getEnderInventory().decrStackSize(slotFrom, slotTo);
+	}
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		return getEnderInventory().getStackInSlotOnClosing(slot);
+	}
+
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack is) {
+		getEnderInventory().setInventorySlotContents(slot, is);
+	}
+
+	@Override
+	public String getInventoryName() {
+		return getEnderInventory().getInventoryName();
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return getEnderInventory().hasCustomInventoryName();
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 64;
+	}
+
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer player) {
+		return player.getCommandSenderName() == owner ? true : false;
+	}
+
+	@Override
+	public void openInventory() {
+		getEnderInventory().openInventory();
+	}
+
+	@Override
+	public void closeInventory() {
+		getEnderInventory().closeInventory();
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack is) {
+		return getEnderInventory().isItemValidForSlot(slot, is);
+	}
+
+	public static int[] createSlotArray(int first, int count) {
+		int[] slots = new int[count];
+		for (int k = first; k < first + count; k++)
+			slots[k - first] = k;
+		return slots;
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side) {
+		return createSlotArray(0, 10);
+	}
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack is, int side) {
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, ItemStack is, int side) {
+		return true;
+	}
 }
