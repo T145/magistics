@@ -60,7 +60,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 		InventoryEnderChest enderInv = getEnderInventory(world, i, j, k);
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
 
-		if (enderInv != null && tile != null) {
+		if (enderInv != null && tile != null && master == user) {
 			if (world.getBlock(i, j + 1, k).isNormalCube() || world.isRemote)
 				return true;
 			else {
