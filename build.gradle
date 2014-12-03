@@ -15,6 +15,13 @@ buildscript {
     }
 }
 
+repositories {
+     maven {
+         name 'ChickenBones Repo'
+         url "http://chickenbones.net/maven/"
+     }
+}
+
 apply plugin: 'forge'
 
 version = project_version
@@ -29,6 +36,13 @@ minecraft {
 dependencies {
     compile 'com.mod-buildcraft:buildcraft:6.1.8:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+
+    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.106:dev'
+    compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev'
+
+    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
+    compile 'codechicken:EnderStorage:1.7.10-1.4.5.26:dev'
+    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.71:dev'
 
     compile fileTree(dir: 'lib', include: '*.jar')
 }
