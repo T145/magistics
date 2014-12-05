@@ -1,2 +1,7 @@
 language: java
-script: ./scripts/setupw
+
+script:
+- ./scripts/setup
+
+install:
+- /bin/true
