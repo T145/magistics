@@ -1,9 +1,9 @@
 language: java
 
-script: ./scripts/setup
-
-before_install: chmod +x ./scripts/setup
+before_install: chmod +x ./scripts/setupw
 
 install: /bin/true
 
-after_install: gradle build
+script: ./scripts/setupw
+
+after_success: ./gradlew build
