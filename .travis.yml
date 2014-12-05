@@ -3,5 +3,7 @@ language: java
 script:
 - ./scripts/setup
 
+before_install: chmod +x ./scripts/setup
+
 install:
 - /bin/true
