@@ -3,6 +3,8 @@
 
 **_Adding some logistics to Thaumcraft!_**
 
+[![Build Status](https://travis-ci.org/T145/magistics.svg?branch=rewrite)](https://travis-ci.org/T145/magistics)
+
 ## Workspace Setup
 Simply plop your deobfuscated copy of Thaumcraft into the lib directory. Once that's set, then run one of the scripts contained in the [scripts](https://github.com/T145/magistics/tree/master/scripts) directory from the project's root directory and you should be all set!
 
