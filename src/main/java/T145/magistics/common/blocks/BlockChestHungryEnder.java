@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -97,6 +98,12 @@ public class BlockChestHungryEnder extends BlockContainer {
 				player.displayGUIChest(tile);
 		}
 		return true;
+	}
+
+	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(x, y, z);
+		return ForgeHooks.blockStrength(player.getCommandSenderName().equals(tile.owner) ? Blocks.bedrock : this, player, world, 0, 0, 0);
 	}
 
 	@Override
