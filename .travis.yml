@@ -1,9 +1,9 @@
 language: java
 
-before_install: chmod +x ./scripts/setupw
+before_install: find scripts -type f -exec chmod 755 {} \;
 
 install: /bin/true
 
-script: ./scripts/setupw
+script: ./scripts/setup
 
-after_success: ./gradlew build
+after_success: ./scripts/build
