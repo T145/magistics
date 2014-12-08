@@ -25,7 +25,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChestHungryEnder extends BlockContainer {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-	public static IIcon icon;
 
 	public BlockChestHungryEnder() {
 		super(Material.rock);
@@ -40,13 +39,13 @@ public class BlockChestHungryEnder extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		icon = r.registerIcon("magistics:chest_hungry/ender");
+		blockIcon = r.registerIcon("magistics:chest_hungry/ender");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return icon;
+		return blockIcon;
 	}
 
 	@Override

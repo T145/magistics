@@ -1,9 +1,7 @@
 language: java
 
-before_install: find scripts -type f -exec chmod 755 {} \;
-
 install: /bin/true
 
-script: ./scripts/setup
+script: bash scripts/setup
 
-after_success: ./scripts/build
+after_success: bash scripts/build

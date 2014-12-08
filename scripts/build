@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd lib && { curl -O curl -L -O -k https://www.dropbox.com/s/gen11an4tqscpns/Thaumcraft-deobf-1.7.10-4.2.2.B3.jar?dl=0 ; cd -; }
+cd lib && { curl -O curl -L -O -k https://www.dropbox.com/s/gen11an4tqscpns/Thaumcraft-deobf-1.7.10-4.2.2.B3.jar ; cd -; }
 gradle build
 rm -rf lib/Thaumcraft-deobf*.jar
