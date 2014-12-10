@@ -7,4 +7,4 @@ mkdir forge
 unzip forge-$FORGE_VERSION-src.zip -d forge
 cp -rf forge/eclipse/.metadata eclipse/.metadata
 rm -rf forge && rm -rf forge-$FORGE_VERSION-src.zip
-gradle setupDecompWorkspace && gradle eclipse
+gradle setupDecompWorkspace eclipse
