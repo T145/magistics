@@ -2,6 +2,6 @@ language: java
 
 install: /bin/true
 
-script: bash exec/setup
-
-after_success: bash exec/build
+script:
+ - bash exec/setup
+ - bash exec/build
