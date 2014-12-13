@@ -3,6 +3,8 @@
 
 **_Adding some logistics to Thaumcraft!_**
 
+[![Codeship Status for T145/magistics](https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=rewrite)](https://codeship.com/projects/52617)
+
 [![Build Status](https://travis-ci.org/T145/magistics.svg?branch=rewrite)](https://travis-ci.org/T145/magistics)
 
 ## Workspace Setup
