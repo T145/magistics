@@ -17,18 +17,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import vazkii.botania.api.wand.IWandable;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockChestHungryEnder extends BlockContainer {
+public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
 	public BlockChestHungryEnder() {
 		super(Material.rock);
-		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+		setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && !world.getBlock(i, j + 1, k).isNormalCube()) {
 			TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-			if (tile != null && tile.isOwned())
+			if (tile != null && tile.isOwnedBy(player))
 				player.displayGUIChest(tile);
 		}
 		return true;
@@ -102,7 +103,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	@Override
 	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(x, y, z);
-		return ForgeHooks.blockStrength(player.getCommandSenderName().equals(tile.owner) ? Blocks.bedrock : this, player, world, 0, 0, 0);
+		return ForgeHooks.blockStrength(tile.isOwnedBy(player) ? Blocks.bedrock : this, player, world, 0, 0, 0);
 	}
 
 	@Override
@@ -129,5 +130,11 @@ public class BlockChestHungryEnder extends BlockContainer {
 			return Container.calcRedstoneFromInventory((IInventory) tile);
 		else
 			return 0;
+	}
+
+	@Override
+	public boolean onUsedByWand(EntityPlayer player, ItemStack wand, World world, int i, int j, int k, int side) {
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		return tile.onWanded(player, world, i, j, k, side);
 	}
 }

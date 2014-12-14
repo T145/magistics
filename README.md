@@ -5,8 +5,6 @@
 
 [![Codeship Status for T145/magistics](https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=rewrite)](https://codeship.com/projects/52617)
 
-[![Build Status](https://travis-ci.org/T145/magistics.svg?branch=rewrite)](https://travis-ci.org/T145/magistics)
-
 ## Workspace Setup
 Once your deobfuscated copy of Thaumcraft is placed into the lib directory, then run one of the scripts contained in the [exec](https://github.com/T145/magistics/tree/master/exec) directory from the project's root directory and you should be all set!
 

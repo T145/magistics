@@ -20,16 +20,55 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
+import T145.magistics.common.items.armor.ItemCruelMask;
+import T145.magistics.common.items.baubles.ItemAmuletDismay;
+import T145.magistics.common.items.baubles.ItemAmuletLife;
+import T145.magistics.common.items.baubles.ItemBeltCleansing;
+import T145.magistics.common.items.baubles.ItemBeltVigor;
+import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.lib.ResearchPageType;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Settings extends Log {
+	public static Item[] items = {
+		new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"),
+		new ItemAmuletLife().setUnlocalizedName("bauble.amulet_life"),
+		new ItemBeltCleansing().setUnlocalizedName("bauble.belt_cleansing"),
+		new ItemBeltVigor().setUnlocalizedName("bauble.belt_vigor"),
+		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"),
+		new ItemDawnstone().setUnlocalizedName("dawnstone")
+	};
+
+	public static Class tiles[] = {
+		TileChestHungryEnder.class
+	};
+
+	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(Blocks.bookshelf);
+		}
+	};
+
+	public static Block blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F);
+
 	public static Configuration config;
+	public static final String[] categories = {
+		"Blocks", "Items"
+	};
+
+	public static boolean low_gfx, colored_names, enableItem[] = new boolean[items.length];
 
 	public static void sync() {
 		try {
 			config.load();
+
+			config.addCustomCategoryComment(categories[0], "The blocks added by Magistics");
+			config.addCustomCategoryComment(categories[1], "The items added by Magistics");
+
+			config.getBoolean("Low Graphics", config.CATEGORY_GENERAL, false, "Determines if graphically intensive features are enabled.");
+			config.getBoolean("Colored Names", config.CATEGORY_GENERAL, true, "Toggles name coloring from TC2!");
 		} catch (Exception err) {
 			error("An error has occurred while loading configuration properties!", err);
 		} finally {
@@ -43,20 +82,9 @@ public class Settings extends Log {
 		sync();
 	}
 
-	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.bookshelf);
-		}
-	};
-
-	public static Class tiles[] = {
-		TileChestHungryEnder.class
-	};
-
-	public static Block blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F);
-
 	public static void init() {
+		for (Item item : items)
+			GameRegistry.registerItem(item.setCreativeTab(tabMagistics), item.getUnlocalizedName());
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, tile.getSimpleName());
 		GameRegistry.registerBlock(blockChestHungryEnder, blockChestHungryEnder.getLocalizedName());

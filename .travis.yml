@@ -1,7 +1,0 @@
-language: java
-
-install: /bin/true
-
-script:
- - bash exec/setup
- - bash exec/build

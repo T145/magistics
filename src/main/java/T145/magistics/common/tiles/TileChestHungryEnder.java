@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.tiles.TileOwned;
@@ -17,8 +16,8 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 		owner = name;
 	}
 
-	public boolean isOwned() {
-		return StringUtils.isNullOrEmpty(owner) ? false : worldObj.getPlayerEntityByName(owner) != null;
+	public boolean isOwnedBy(EntityPlayer player) {
+		return player.getCommandSenderName().equals(owner);
 	}
 
 	public InventoryEnderChest getEnderInventory() {
@@ -68,7 +67,7 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return player == worldObj.getPlayerEntityByName(owner) ? true : false;
+		return isOwnedBy(player) ? true : false;
 	}
 
 	@Override
@@ -158,15 +157,20 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 		return true;
 	}
 
-	@Override
-	public int onWandRightClick(World world, ItemStack wand, EntityPlayer user, int i, int j, int k, int side, int meta) {
-		if (user.isSneaking() && user.getCommandSenderName().equals(owner)) {
+	public boolean onWanded(EntityPlayer player, World world, int i, int j, int k, int side) {
+		if (player.isSneaking() && isOwnedBy(player)) {
 			world.setBlockMetadataWithNotify(i, j, k, side, 2);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			user.worldObj.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + user.worldObj.rand.nextFloat() * 0.2F, false);
-			user.swingItem();
+			player.worldObj.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
+			player.swingItem();
 			markDirty();
 		}
+		return true;
+	}
+
+	@Override
+	public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int i, int j, int k, int side, int meta) {
+		onWanded(player, world, i, j, k, side);
 		return 0;
 	}
 

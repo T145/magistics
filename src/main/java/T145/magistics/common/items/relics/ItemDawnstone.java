@@ -8,15 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import T145.magistics.common.config.Settings;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDawnstone extends Item {
-	private long destDawn = 0;
-
 	@Override
 	public EnumRarity getRarity(ItemStack is) {
-		return EnumRarity.common;
+		if (Settings.colored_names)
+			return EnumRarity.uncommon;
+		else
+			return EnumRarity.common;
 	}
 
 	@Override
@@ -34,12 +36,12 @@ public class ItemDawnstone extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player) {
 		if (world.getWorldTime() % 24000L >= 6000L) {
-			long time = world.getWorldTime() + 24000L;
+			long time = world.getWorldTime() + 24000L, destDawn = 0;
 			destDawn = time - time % 24000L;
-			for (int j = 0; j < MinecraftServer.getServer().worldServers.length; ++j)
+			for (int j = 0; j < MinecraftServer.getServer().worldServers.length; j++)
 				MinecraftServer.getServer().worldServers[j].setWorldTime(destDawn);
 			--is.stackSize;
-			world.playSoundAtEntity(player, "magistics.recover", 1.0F, 1.0F);
+			world.playSoundAtEntity(player, "thaumcraft.recover", 1.0F, 1.0F);
 		}
 		return super.onItemRightClick(is, world, player);
 	}
