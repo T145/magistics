@@ -1,5 +1,8 @@
 package T145.magistics.common.items.baubles;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -30,28 +33,19 @@ public class ItemBeltCleansing extends ItemBauble {
 
 	@Override
 	public void onWornTick(ItemStack is, EntityLivingBase user) {
-		boolean cleansed = false;
+		Collection effects = user.getActivePotionEffects();
+		Potion cleansable[] = { Potion.blindness, Potion.confusion, Potion.poison, Potion.weakness };
 
-		if (user.isBurning()) {
-			user.extinguish();
-			cleansed = true;
-		} else if (user.getActivePotionEffect(Potion.blindness) != null) {
-			user.removePotionEffect(Potion.blindness.getId());
-			cleansed = true;
-		} else if (user.getActivePotionEffect(Potion.confusion) != null) {
-			user.removePotionEffect(Potion.confusion.getId());
-			cleansed = true;
-		} else if (user.getActivePotionEffect(Potion.poison) != null) {
-			user.removePotionEffect(Potion.poison.getId());
-			cleansed = true;
-		} else if (user.getActivePotionEffect(Potion.weakness) != null) {
-			user.removePotionEffect(Potion.weakness.getId());
-			cleansed = true;
-		}
-
-		if (cleansed) {
-			is.damageItem(1, user);
-			user.worldObj.playSoundAtEntity(user, "magistics.heal", 1F, 1F);
+		if (!effects.isEmpty()) {
+			Iterator iterator = effects.iterator();
+			while (iterator.hasNext()) {
+				Potion effect = (Potion) iterator.next();
+				for (int i = 0; i < cleansable.length; i++)
+					if (effect == cleansable[i]) {
+						user.removePotionEffect(effect.id);
+						user.worldObj.playSoundAtEntity(user, "magistics.heal", 1F, 1F);
+					}
+			}
 		}
 	}
 }
