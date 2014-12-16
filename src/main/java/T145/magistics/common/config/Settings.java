@@ -28,9 +28,41 @@ import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.lib.ResearchPageType;
 import T145.magistics.common.tiles.TileChestHungryEnder;
+import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Settings extends Log {
+	public static Configuration config;
+
+	public static boolean low_gfx, colored_names;
+
+	public static void sync() {
+		colored_names = config.get(config.CATEGORY_GENERAL, "Colored Names", false, "Toggles name coloring similar to TC2!").getBoolean();
+		low_gfx = config.get(config.CATEGORY_GENERAL, "Low Graphics", false, "Determines if graphically intensive features are enabled.").getBoolean();
+	}
+
+	public static void preInit(File configFile) {
+		try {
+			config = new Configuration(configFile);
+			config.load();
+			sync();
+			config.save();
+		} catch (Exception err) {
+			error("An error has occurred while loading configuration properties!", err);
+		} finally {
+			if (config != null)
+				config.save();
+		}
+	}
+
+	public static void onConfigChange(OnConfigChangedEvent e, String modid) {
+		if (e.modID.equals(modid)) {
+			sync();
+			if (config != null && config.hasChanged())
+				config.save();
+		}
+	}
+
 	public static Item[] items = {
 		new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"),
 		new ItemAmuletLife().setUnlocalizedName("bauble.amulet_life"),
@@ -44,50 +76,21 @@ public class Settings extends Log {
 		TileChestHungryEnder.class
 	};
 
+	public static Block blockChestHungryEnder;
+
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.bookshelf);
+			return Item.getItemFromBlock(blockChestHungryEnder);
 		}
 	};
-
-	public static Block blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F);
-
-	public static Configuration config;
-	public static final String[] categories = {
-		"Blocks", "Items"
-	};
-
-	public static boolean low_gfx, colored_names, enableItem[] = new boolean[items.length];
-
-	public static void sync() {
-		try {
-			config.load();
-
-			config.addCustomCategoryComment(categories[0], "The blocks added by Magistics");
-			config.addCustomCategoryComment(categories[1], "The items added by Magistics");
-
-			config.getBoolean("Low Graphics", config.CATEGORY_GENERAL, false, "Determines if graphically intensive features are enabled.");
-			config.getBoolean("Colored Names", config.CATEGORY_GENERAL, true, "Toggles name coloring from TC2!");
-		} catch (Exception err) {
-			error("An error has occurred while loading configuration properties!", err);
-		} finally {
-			if (config.hasChanged())
-				config.save();
-		}
-	}
-
-	public static void preInit(File configFile) {
-		config = new Configuration(configFile);
-		sync();
-	}
 
 	public static void init() {
 		for (Item item : items)
 			GameRegistry.registerItem(item.setCreativeTab(tabMagistics), item.getUnlocalizedName());
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, tile.getSimpleName());
-		GameRegistry.registerBlock(blockChestHungryEnder, blockChestHungryEnder.getLocalizedName());
+		GameRegistry.registerBlock(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F), blockChestHungryEnder.getLocalizedName());
 	}
 
 	public static void postInit() {

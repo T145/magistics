@@ -11,7 +11,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = Magistics.modid, name = Magistics.modid, version = Magistics.version, guiFactory = "T145.magistics.client.gui.GuiSettings", dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.modid, name = Magistics.modid, version = Magistics.version, guiFactory = "T145.magistics.client.GuiFactory", dependencies = "after:Thaumcraft")
 public class Magistics {
 	public static final String modid = "Magistics", version = "0.7.0";
 
@@ -23,8 +23,7 @@ public class Magistics {
 
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent e) {
-		if (e.modID.equals(modid))
-			Settings.sync();
+		Settings.onConfigChange(e, modid);
 	}
 
 	@EventHandler
