@@ -66,7 +66,7 @@ public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 	}
 
 	@Override
-	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+	public Item getItemDropped(int meta, Random rand, int fortune) {
 		return Item.getItemFromBlock(Blocks.obsidian);
 	}
 
@@ -76,7 +76,7 @@ public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 	}
 
 	@Override
-	protected boolean canSilkHarvest() {
+	public boolean canSilkHarvest() {
 		return true;
 	}
 
@@ -103,7 +103,7 @@ public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 	@Override
 	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(x, y, z);
-		return ForgeHooks.blockStrength(tile.isOwnedBy(player) ? Blocks.bedrock : this, player, world, 0, 0, 0);
+		return ForgeHooks.blockStrength(tile.isOwnedBy(player) ? this : Blocks.bedrock, player, world, 0, 0, 0);
 	}
 
 	@Override

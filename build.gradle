@@ -34,7 +34,7 @@ minecraft {
 }
 
 dependencies {
-    compile 'com.mod-buildcraft:buildcraft:6.2.2:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.2.6:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
     compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.106:dev'
