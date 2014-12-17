@@ -19,7 +19,11 @@ import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockAestheticItem;
+import T145.magistics.common.blocks.BlockAestheticStructure;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
+import T145.magistics.common.blocks.BlockChestHungryIron;
+import T145.magistics.common.blocks.BlockChestHungryIronItem;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
@@ -76,7 +80,7 @@ public class Settings extends Log {
 		TileChestHungryEnder.class
 	};
 
-	public static Block blockChestHungryEnder;
+	public static Block blockChestHungryEnder, blockChestHungryIron, blockAesthetic, blockAestheticStructure;
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override
@@ -91,6 +95,9 @@ public class Settings extends Log {
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, tile.getSimpleName());
 		GameRegistry.registerBlock(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F), blockChestHungryEnder.getLocalizedName());
+		GameRegistry.registerBlock(blockChestHungryIron = new BlockChestHungryIron().setBlockName("hungry_metal_chest").setCreativeTab(tabMagistics).setHardness(3F), BlockChestHungryIronItem.class, blockChestHungryIron.getLocalizedName());
+		//GameRegistry.registerBlock(blockAesthetic = new BlockAesthetic().setBlockName("aesthetic").setCreativeTab(tabMagistics), BlockAestheticItem.class, blockAesthetic.getLocalizedName());
+		GameRegistry.registerBlock(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure").setCreativeTab(tabMagistics), BlockAestheticItem.class, blockAestheticStructure.getLocalizedName());
 	}
 
 	public static void postInit() {
