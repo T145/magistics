@@ -3,7 +3,6 @@ package T145.magistics.client.renderers.block;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
@@ -19,7 +18,7 @@ public class BlockChestHungryEnderRenderer extends BlockRenderer implements ISim
 	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 		GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		TileEntityRendererDispatcher.instance.renderTileEntityAt((TileEntity) new TileChestHungryEnder(), 0, 0, 0, 0F);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileChestHungryEnder(), 0, 0, 0, 0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 

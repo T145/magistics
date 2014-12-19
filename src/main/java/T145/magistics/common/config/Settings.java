@@ -22,8 +22,8 @@ import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockAestheticItem;
 import T145.magistics.common.blocks.BlockAestheticStructure;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
-import T145.magistics.common.blocks.BlockChestHungryIron;
-import T145.magistics.common.blocks.BlockChestHungryIronItem;
+import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
@@ -32,6 +32,7 @@ import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.lib.ResearchPageType;
 import T145.magistics.common.tiles.TileChestHungryEnder;
+import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -77,10 +78,11 @@ public class Settings extends Log {
 	};
 
 	public static Class tiles[] = {
-		TileChestHungryEnder.class
+		TileChestHungryEnder.class,
+		TileChestHungryMetal.class
 	};
 
-	public static Block blockChestHungryEnder, blockChestHungryIron, blockAesthetic, blockAestheticStructure;
+	public static Block blockChestHungryEnder, blockChestHungryMetal, blockAesthetic, blockAestheticStructure;
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override
@@ -95,8 +97,7 @@ public class Settings extends Log {
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, tile.getSimpleName());
 		GameRegistry.registerBlock(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F), blockChestHungryEnder.getLocalizedName());
-		GameRegistry.registerBlock(blockChestHungryIron = new BlockChestHungryIron().setBlockName("hungry_metal_chest").setCreativeTab(tabMagistics).setHardness(3F), BlockChestHungryIronItem.class, blockChestHungryIron.getLocalizedName());
-		//GameRegistry.registerBlock(blockAesthetic = new BlockAesthetic().setBlockName("aesthetic").setCreativeTab(tabMagistics), BlockAestheticItem.class, blockAesthetic.getLocalizedName());
+		GameRegistry.registerBlock(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setCreativeTab(tabMagistics).setHardness(3F), BlockChestHungryMetalItem.class, blockChestHungryMetal.getLocalizedName());
 		GameRegistry.registerBlock(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure").setCreativeTab(tabMagistics), BlockAestheticItem.class, blockAestheticStructure.getLocalizedName());
 	}
 

@@ -2,13 +2,13 @@ package T145.magistics.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 
 public class BlockAestheticItem extends ItemBlock {
 	public BlockAestheticItem(Block block) {
 		super(block);
 		setHasSubtypes(true);
-		setMaxDamage(0);
 	}
 
 	@Override
@@ -18,6 +18,6 @@ public class BlockAestheticItem extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack is) {
-		return getUnlocalizedName() + "." + is.getItemDamage();
+		return getUnlocalizedName() + "." + ItemDye.field_150921_b[is.getItemDamage()];
 	}
 }
