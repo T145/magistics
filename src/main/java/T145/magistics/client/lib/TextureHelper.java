@@ -6,19 +6,25 @@ import net.minecraft.block.Block;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.blocks.BlockChestHungryMetal;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 
+import cpw.mods.ironchest.IronChestType;
+
 public class TextureHelper {
 	public static String connected_suffix[] = { "", "1_d", "1_u", "1_l", "1_r", "2_h", "2_v", "2_dl", "2_dr", "2_ul", "2_ur", "3_d", "3_u", "3_l", "3_r", "4" };
-	public static Map<BlockChestHungryMetal.Types, ResourceLocation> ironChestTextures;
+	public static Map<IronChestType, ResourceLocation> ironChestTextures;
+
+	public static String getSimpleIronChestName(IronChestType type) {
+		return type.name().toLowerCase().replaceAll("[0-9]", "").replaceAll("chest", "");
+	}
 
 	static {
-		Builder<BlockChestHungryMetal.Types, ResourceLocation> builder = ImmutableMap.<BlockChestHungryMetal.Types, ResourceLocation> builder();
-		for (BlockChestHungryMetal.Types type : BlockChestHungryMetal.Types.values())
-			builder.put(type, new ResourceLocation("magistics", "textures/models/chest_hungry/" + type.name() + ".png"));
+		Builder<IronChestType, ResourceLocation> builder = ImmutableMap.<IronChestType, ResourceLocation> builder();
+		for (IronChestType type : IronChestType.values())
+			if (type != type.WOOD)
+				builder.put(type, new ResourceLocation("magistics", "textures/models/chest_hungry/" + getSimpleIronChestName(type) + ".png"));
 		ironChestTextures = builder.build();
 	}
 
@@ -81,37 +87,36 @@ public class TextureHelper {
 			if (shouldConnect(ib, i, j, k, ib.getBlock(i, j, k + 1), blockFrom, ib.getBlockMetadata(i, j, k + 1)))
 				isOpenRight = true;
 
-			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight) {
+			if (isOpenUp && isOpenDown && isOpenLeft && isOpenRight)
 				return icon[15];
-			} else if (isOpenUp && isOpenDown && isOpenLeft) {
+			else if (isOpenUp && isOpenDown && isOpenLeft)
 				return icon[11];
-			} else if (isOpenUp && isOpenDown && isOpenRight) {
+			else if (isOpenUp && isOpenDown && isOpenRight)
 				return icon[12];
-			} else if (isOpenUp && isOpenLeft && isOpenRight) {
+			else if (isOpenUp && isOpenLeft && isOpenRight)
 				return icon[13];
-			} else if (isOpenDown && isOpenLeft && isOpenRight) {
+			else if (isOpenDown && isOpenLeft && isOpenRight)
 				return icon[14];
-			} else if (isOpenDown && isOpenUp) {
+			else if (isOpenDown && isOpenUp)
 				return icon[5];
-			} else if (isOpenLeft && isOpenRight) {
+			else if (isOpenLeft && isOpenRight)
 				return icon[6];
-			} else if (isOpenDown && isOpenLeft) {
+			else if (isOpenDown && isOpenLeft)
 				return icon[8];
-			} else if (isOpenDown && isOpenRight) {
+			else if (isOpenDown && isOpenRight)
 				return icon[10];
-			} else if (isOpenUp && isOpenLeft) {
+			else if (isOpenUp && isOpenLeft)
 				return icon[7];
-			} else if (isOpenUp && isOpenRight) {
+			else if (isOpenUp && isOpenRight)
 				return icon[9];
-			} else if (isOpenDown) {
+			else if (isOpenDown)
 				return icon[3];
-			} else if (isOpenUp) {
+			else if (isOpenUp)
 				return icon[4];
-			} else if (isOpenLeft) {
+			else if (isOpenLeft)
 				return icon[2];
-			} else if (isOpenRight) {
+			else if (isOpenRight)
 				return icon[1];
-			}
 			break;
 		case 2:
 			if (shouldConnect(ib, i, j, k, ib.getBlock(i, j - 1, k), blockFrom, ib.getBlockMetadata(i, j - 1, k)))

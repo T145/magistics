@@ -53,16 +53,36 @@ item.bauble.ring_souls.name=Ring of Souls
 # Blocks
 ###
 
-tile.infusion_workbench.base.name=Reinforced Arcane Stone
-tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks
+tile.hungry_chest.name=Hungry Chest
+tile.trapped_hungry_chest.name=Trapped Hungry Chest
 
 tile.hungry_ender_chest.name=Hungry Ender Chest
 
-tile.hungry_metal_chest.iron.name=Hungry Iron Chest
-tile.hungry_metal_chest.gold.name=Hungry Gold Chest
-tile.hungry_metal_chest.diamond.name=Hungry Diamond Chest
-tile.hungry_metal_chest.copper.name=Hungry Copper Chest
-tile.hungry_metal_chest.silver.name=Hungry Silver Chest
-tile.hungry_metal_chest.crystal.name=Hungry Crystal Chest
-tile.hungry_metal_chest.obsidian.name=Hungry Obsidian Chest
-tile.hungry_metal_chest.dirt.name=Hungry Dirt Chest
+tile.hungry_metal_chest.0.name=Hungry Iron Chest
+tile.hungry_metal_chest.1.name=Hungry Gold Chest
+tile.hungry_metal_chest.2.name=Hungry Diamond Chest
+tile.hungry_metal_chest.3.name=Hungry Copper Chest
+tile.hungry_metal_chest.4.name=Hungry Silver Chest
+tile.hungry_metal_chest.5.name=Hungry Crystal Chest
+tile.hungry_metal_chest.6.name=Hungry Obsidian Chest
+tile.hungry_metal_chest.7.name=Hungry Dirt Chest
+
+tile.aesthetic_structure.0.name=Black Crystal Structure
+tile.aesthetic_structure.1.name=Red Crystal Structure
+tile.aesthetic_structure.2.name=Green Crystal Structure
+tile.aesthetic_structure.3.name=Brown Crystal Structure
+tile.aesthetic_structure.4.name=Blue Crystal Structure
+tile.aesthetic_structure.5.name=Purple Crystal Structure
+tile.aesthetic_structure.6.name=Cyan Crystal Structure
+tile.aesthetic_structure.7.name=Silver Crystal Structure
+tile.aesthetic_structure.8.name=Grey Crystal Structure
+tile.aesthetic_structure.9.name=Pink Crystal Structure
+tile.aesthetic_structure.10.name=Lime Crystal Structure
+tile.aesthetic_structure.11.name=Yellow Crystal Structure
+tile.aesthetic_structure.12.name=Light Blue Crystal Structure
+tile.aesthetic_structure.13.name=Magenta Crystal Structure
+tile.aesthetic_structure.14.name=Orange Crystal Structure
+tile.aesthetic_structure.15.name=White Crystal Structure
+
+tile.infusion_workbench.base.name=Reinforced Arcane Stone
+tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks

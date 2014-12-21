@@ -7,9 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.tiles.TileOwned;
+import T145.magistics.common.lib.InventoryHelper;
 
 public class TileChestHungryEnder extends TileOwned implements ISidedInventory, IWandable {
-	public int playersUsing;
+	public int numPlayersUsing;
 	public float prevLidAngle, lidAngle;
 
 	public void setOwner(String name) {
@@ -79,13 +80,13 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 	public void updateEntity() {
 		prevLidAngle = lidAngle;
 
-		if (playersUsing > 0 && lidAngle == 0.0F)
+		if (numPlayersUsing > 0 && lidAngle == 0.0F)
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
-		if (playersUsing == 0 && lidAngle > 0.0F || playersUsing > 0 && lidAngle < 1.0F) {
+		if (numPlayersUsing == 0 && lidAngle > 0.0F || numPlayersUsing > 0 && lidAngle < 1.0F) {
 			float oldAngle = lidAngle;
 
-			if (playersUsing > 0)
+			if (numPlayersUsing > 0)
 				lidAngle += 0.1F;
 			else
 				lidAngle -= 0.1F;
@@ -105,29 +106,29 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 	public boolean receiveClientEvent(int id, int data) {
 		switch (id) {
 		case 0:
-			playersUsing = data;
+			numPlayersUsing = data;
 			return true;
 		case 1:
 			if (lidAngle < data / 10F)
 				lidAngle = data / 10F;
 			return true;
 		default:
-			return false;
+			return super.receiveClientEvent(id, data);
 		}
 	}
 
 	@Override
 	public void openInventory() {
-		if (playersUsing < 0)
-			playersUsing = 0;
-		playersUsing++;
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, playersUsing);
+		if (numPlayersUsing < 0)
+			numPlayersUsing = 0;
+		numPlayersUsing++;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numPlayersUsing);
 	}
 
 	@Override
 	public void closeInventory() {
-		playersUsing--;
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, playersUsing);
+		numPlayersUsing--;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numPlayersUsing);
 	}
 
 	@Override
@@ -135,16 +136,9 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 		return getEnderInventory().isItemValidForSlot(slot, is);
 	}
 
-	public static int[] createSlotArray(int first, int count) {
-		int[] slots = new int[count];
-		for (int k = first; k < first + count; k++)
-			slots[k - first] = k;
-		return slots;
-	}
-
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return createSlotArray(0, 10);
+		return InventoryHelper.createSlotArray(0, 10);
 	}
 
 	@Override

@@ -16,6 +16,10 @@ public class Log {
 		logger.log(Level.ERROR, msg);
 	}
 
+	public static void error(String msg, Object... data) {
+		logger.log(Level.ERROR, msg, data);
+	}
+
 	public static void error(String msg, Throwable err) {
 		logger.log(Level.ERROR, msg, err);
 	}
@@ -30,21 +34,22 @@ public class Log {
 
 	public static String rainbow(String input) {
 		int inputLength = input.length();
-		if (inputLength < 1)
+		if (inputLength > 0) {
+			String output = EMPTY_STRING;
+			EnumChatFormatting[] color = {
+					EnumChatFormatting.RED,
+					EnumChatFormatting.GOLD,
+					EnumChatFormatting.YELLOW,
+					EnumChatFormatting.GREEN,
+					EnumChatFormatting.AQUA,
+					EnumChatFormatting.BLACK,
+					EnumChatFormatting.LIGHT_PURPLE,
+					EnumChatFormatting.DARK_PURPLE
+			};
+			for (int i = 0; i < inputLength; i++)
+				output += color[i % 8] + input.substring(i, i + 1);
+			return output;
+		} else
 			return EMPTY_STRING;
-		String outputString = EMPTY_STRING;
-		EnumChatFormatting[] colorChar = {
-				EnumChatFormatting.RED,
-				EnumChatFormatting.GOLD,
-				EnumChatFormatting.YELLOW,
-				EnumChatFormatting.GREEN,
-				EnumChatFormatting.AQUA,
-				EnumChatFormatting.BLACK,
-				EnumChatFormatting.LIGHT_PURPLE,
-				EnumChatFormatting.DARK_PURPLE
-		};
-		for (int i = 0; i < inputLength; i++)
-			outputString += colorChar[i % 8] + input.substring(i, i + 1);
-		return outputString;
 	}
 }

@@ -78,16 +78,6 @@ task deobfJar(type: Jar) {
 	version = project.minecraft.version + '-' + project.version
 }
 
-// add an archive of the API
-task api(type: Zip) {
-	from(sourceSets.main.java) {
-		include 'magistics/api/**'
-	}
-	classifier = 'api'
-}
-
-api.mustRunAfter deobfJar
-
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
 	from 'build/docs/javadoc'
@@ -96,5 +86,5 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-	archives deobfJar, api, javadocJar
+	archives deobfJar, javadocJar
 }
