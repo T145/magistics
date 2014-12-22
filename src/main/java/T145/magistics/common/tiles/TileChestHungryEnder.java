@@ -113,7 +113,7 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 				lidAngle = data / 10F;
 			return true;
 		default:
-			return super.receiveClientEvent(id, data);
+			return false;
 		}
 	}
 
@@ -151,11 +151,11 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 		return true;
 	}
 
-	public boolean onWanded(EntityPlayer player, World world, int i, int j, int k, int side) {
+	public boolean onWanded(EntityPlayer player, int side) {
 		if (player.isSneaking() && isOwnedBy(player)) {
-			world.setBlockMetadataWithNotify(i, j, k, side, 2);
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, side, 2);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			player.worldObj.playSound(i + 0.5, j + 0.5, k + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
+			player.worldObj.playSound(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
 			player.swingItem();
 			markDirty();
 		}
@@ -164,7 +164,7 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int i, int j, int k, int side, int meta) {
-		onWanded(player, world, i, j, k, side);
+		onWanded(player, side);
 		return 0;
 	}
 

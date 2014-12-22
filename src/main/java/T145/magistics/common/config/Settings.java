@@ -80,12 +80,12 @@ public class Settings extends Log {
 	};
 
 	public static Class tiles[] = {
-		TileChestHungryEnder.class,
 		TileChestHungry.class,
+		TileChestHungryEnder.class,
 		TileChestHungryMetal.class
 	};
 
-	public static Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockAestheticStructure;
+	public static Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockHungryStrongbox, blockAestheticStructure;
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override

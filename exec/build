@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-cd lib && { curl -LOk https://www.dropbox.com/s/1sm6ve3ha9d9dxw/Thaumcraft-1.7.10-4.2.2.B4.jar ; cd -; }
-gradle build
-rm -rf lib/Thaumcraft-deobf*.jar

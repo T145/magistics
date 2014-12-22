@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -125,9 +124,9 @@ public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 
 	@Override
 	public int getComparatorInputOverride(World world, int i, int j, int k, int rs) {
-		TileEntity tile = world.getTileEntity(i, j, k);
-		if (tile != null && tile instanceof IInventory)
-			return Container.calcRedstoneFromInventory((IInventory) tile);
+		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
+		if (tile != null && tile.getEnderInventory() != null)
+			return Container.calcRedstoneFromInventory(tile.getEnderInventory());
 		else
 			return 0;
 	}
@@ -135,6 +134,6 @@ public class BlockChestHungryEnder extends BlockContainer implements IWandable {
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack wand, World world, int i, int j, int k, int side) {
 		TileChestHungryEnder tile = (TileChestHungryEnder) world.getTileEntity(i, j, k);
-		return tile.onWanded(player, world, i, j, k, side);
+		return tile.onWanded(player, side);
 	}
 }
