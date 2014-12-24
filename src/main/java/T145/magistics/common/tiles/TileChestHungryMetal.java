@@ -15,8 +15,6 @@ import cpw.mods.ironchest.TileEntityIronChest;
 public class TileChestHungryMetal extends TileEntityIronChest implements IWandable {
 	public int numUsingPlayers = (Integer) ReflectionHelper.getPrivateValue(TileEntityIronChest.class, this, "numUsingPlayers");
 
-	public TileChestHungryMetal() {}
-
 	public TileChestHungryMetal(IronChestType type) {
 		super(type);
 	}

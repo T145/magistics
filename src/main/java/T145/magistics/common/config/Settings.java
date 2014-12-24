@@ -1,6 +1,10 @@
 package T145.magistics.common.config;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -35,12 +39,17 @@ import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Settings extends Log {
 	public static Configuration config;
-
 	public static boolean low_gfx, colored_names, hungry_chest_override;
+
+	public static List<Class> tiles = new ArrayList<Class>();
+	public static List<Item> items = new ArrayList<Item>();
+	public static Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockHungryStrongbox, blockChestHungryAlchemical, blockAestheticStructure;
+	public static Map<Block, Class> blocks = new HashMap<Block, Class>();
 
 	public static void sync() {
 		colored_names = config.get(config.CATEGORY_GENERAL, "Colored Names", false, "Toggles name coloring similar to TC2!").getBoolean();
@@ -60,6 +69,25 @@ public class Settings extends Log {
 			if (config != null)
 				config.save();
 		}
+
+		items.add(new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"));
+		items.add(new ItemAmuletLife().setUnlocalizedName("bauble.amulet_life"));
+		items.add(new ItemBeltCleansing().setUnlocalizedName("bauble.belt_cleansing"));
+		items.add(new ItemBeltVigor().setUnlocalizedName("bauble.belt_vigor"));
+		items.add(new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"));
+		items.add(new ItemDawnstone().setUnlocalizedName("dawnstone"));
+
+		blocks.put(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure"), BlockMagisticsItem.class);
+		blocks.put(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"), null);
+		blocks.put(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest"), null);
+		tiles.add(TileChestHungry.class);
+		blocks.put(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F), null);
+		tiles.add(TileChestHungryEnder.class);
+
+		if (Loader.isModLoaded("IronChest")) {
+			blocks.put(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setHardness(3F), BlockMagisticsItem.class);
+			tiles.add(TileChestHungryMetal.class);
+		}
 	}
 
 	public static void onConfigChange(OnConfigChangedEvent e, String modid) {
@@ -69,23 +97,6 @@ public class Settings extends Log {
 				config.save();
 		}
 	}
-
-	public static Item[] items = {
-		new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"),
-		new ItemAmuletLife().setUnlocalizedName("bauble.amulet_life"),
-		new ItemBeltCleansing().setUnlocalizedName("bauble.belt_cleansing"),
-		new ItemBeltVigor().setUnlocalizedName("bauble.belt_vigor"),
-		new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"),
-		new ItemDawnstone().setUnlocalizedName("dawnstone")
-	};
-
-	public static Class tiles[] = {
-		TileChestHungry.class,
-		TileChestHungryEnder.class,
-		TileChestHungryMetal.class
-	};
-
-	public static Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockHungryStrongbox, blockAestheticStructure;
 
 	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override
@@ -99,11 +110,11 @@ public class Settings extends Log {
 			GameRegistry.registerItem(item.setCreativeTab(tabMagistics), item.getUnlocalizedName());
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, "magistics:" + tile.getSimpleName());
-		GameRegistry.registerBlock(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setCreativeTab(tabMagistics).setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F), blockChestHungryEnder.getLocalizedName());
-		GameRegistry.registerBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest").setCreativeTab(tabMagistics), blockChestHungry.getLocalizedName());
-		GameRegistry.registerBlock(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest").setCreativeTab(tabMagistics), blockChestHungryTrapped.getLocalizedName());
-		GameRegistry.registerBlock(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setCreativeTab(tabMagistics), BlockMagisticsItem.class, blockChestHungryMetal.getLocalizedName());
-		GameRegistry.registerBlock(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure").setCreativeTab(tabMagistics), BlockMagisticsItem.class, blockAestheticStructure.getLocalizedName());
+		for (Block block : blocks.keySet())
+			if (blocks.get(block) == null)
+				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), block.getLocalizedName());
+			else
+				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), blocks.get(block), block.getLocalizedName());
 	}
 
 	public static void postInit() {
