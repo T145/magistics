@@ -16,10 +16,19 @@ buildscript {
 }
 
 repositories {
-     maven {
-         name 'ChickenBones Repo'
-         url "http://chickenbones.net/maven/"
-     }
+    mavenCentral()
+    maven {
+        name = 'ChickenBones Repo'
+        url = 'http://chickenbones.net/maven'
+    }
+    maven {
+        name = 'IC2 Repo'
+        url = 'http://maven.ic2.player.to/'
+    }
+    maven {
+        name 'Mobius Repo'
+        url 'http://mobiusstrip.eu/maven'
+    }
 }
 
 apply plugin: 'forge'
