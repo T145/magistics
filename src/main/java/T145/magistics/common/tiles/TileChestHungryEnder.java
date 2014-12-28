@@ -10,7 +10,7 @@ import thaumcraft.common.tiles.TileOwned;
 import T145.magistics.common.lib.InventoryHelper;
 
 public class TileChestHungryEnder extends TileOwned implements ISidedInventory, IWandable {
-	public int numPlayersUsing;
+	public int numUsingPlayers;
 	public float prevLidAngle, lidAngle;
 
 	public void setOwner(String name) {
@@ -80,13 +80,13 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 	public void updateEntity() {
 		prevLidAngle = lidAngle;
 
-		if (numPlayersUsing > 0 && lidAngle == 0.0F)
+		if (numUsingPlayers > 0 && lidAngle == 0.0F)
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
-		if (numPlayersUsing == 0 && lidAngle > 0.0F || numPlayersUsing > 0 && lidAngle < 1.0F) {
+		if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F) {
 			float oldAngle = lidAngle;
 
-			if (numPlayersUsing > 0)
+			if (numUsingPlayers > 0)
 				lidAngle += 0.1F;
 			else
 				lidAngle -= 0.1F;
@@ -106,7 +106,7 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 	public boolean receiveClientEvent(int id, int data) {
 		switch (id) {
 		case 0:
-			numPlayersUsing = data;
+			numUsingPlayers = data;
 			return true;
 		case 1:
 			if (lidAngle < data / 10F)
@@ -119,16 +119,16 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 
 	@Override
 	public void openInventory() {
-		if (numPlayersUsing < 0)
-			numPlayersUsing = 0;
-		numPlayersUsing++;
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numPlayersUsing);
+		if (numUsingPlayers < 0)
+			numUsingPlayers = 0;
+		numUsingPlayers++;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numUsingPlayers);
 	}
 
 	@Override
 	public void closeInventory() {
-		numPlayersUsing--;
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numPlayersUsing);
+		numUsingPlayers--;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 0, numUsingPlayers);
 	}
 
 	@Override
@@ -158,8 +158,9 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 			player.worldObj.playSound(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
 			player.swingItem();
 			markDirty();
-		}
-		return true;
+			return true;
+		} else
+			return false;
 	}
 
 	@Override

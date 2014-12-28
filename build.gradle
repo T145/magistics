@@ -34,7 +34,9 @@ minecraft {
 }
 
 dependencies {
+    compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
     compile 'com.mod-buildcraft:buildcraft:6.2.6:dev'
+    compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.347:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
     compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.106:dev'
@@ -53,7 +55,7 @@ processResources {
     inputs.property 'mcversion', project.minecraft.version
 
     // copy the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
+    from (sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 
         // replace version and mcversion
@@ -61,7 +63,7 @@ processResources {
     }
 
     // copy everything else
-    from(sourceSets.main.resources.srcDirs) {
+    from (sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
 }

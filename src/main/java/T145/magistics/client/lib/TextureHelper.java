@@ -1,38 +1,23 @@
 package T145.magistics.client.lib;
 
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import thermalexpansion.block.strongbox.BlockStrongbox;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMap.Builder;
-
 import cpw.mods.ironchest.IronChestType;
 
 public class TextureHelper {
 	public static String connected_suffix[] = { "", "1_d", "1_u", "1_l", "1_r", "2_h", "2_v", "2_dl", "2_dr", "2_ul", "2_ur", "3_d", "3_u", "3_l", "3_r", "4" };
-	public static Map<IronChestType, ResourceLocation> ironChestTextures;
-	public static Map<BlockStrongbox.Types, ResourceLocation> strongboxTextures;
+	public static ResourceLocation[] ironChestTextures = new ResourceLocation[IronChestType.values().length];
 
 	public static String getSimpleIronChestName(IronChestType type) {
 		return type.name().toLowerCase().replaceAll("[0-9]", "").replaceAll("chest", "");
 	}
 
 	static {
-		Builder<IronChestType, ResourceLocation> ironChestTextureBuilder = ImmutableMap.<IronChestType, ResourceLocation> builder();
 		for (IronChestType type : IronChestType.values())
 			if (type != type.WOOD)
-				ironChestTextureBuilder.put(type, new ResourceLocation("magistics", "textures/models/chest_hungry/" + getSimpleIronChestName(type) + ".png"));
-		ironChestTextures = ironChestTextureBuilder.build();
-
-		Builder<BlockStrongbox.Types, ResourceLocation> strongboxTextureBuilder = ImmutableMap.<BlockStrongbox.Types, ResourceLocation> builder();
-		for (BlockStrongbox.Types type : BlockStrongbox.Types.values())
-			strongboxTextureBuilder.put(type, new ResourceLocation("magistics", "textures/models/chest_hungry/strongbox/" + type.name().toLowerCase() + ".png"));
-		strongboxTextures = strongboxTextureBuilder.build();
+				ironChestTextures[type.ordinal()] = new ResourceLocation("magistics", "textures/models/chest_hungry/" + getSimpleIronChestName(type) + ".png");
 	}
 
 	public static boolean shouldConnect(IBlockAccess ib, int i, int j, int k, Block blockTo, Block blockFrom, int meta) {

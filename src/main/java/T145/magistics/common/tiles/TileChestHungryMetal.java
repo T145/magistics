@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
-import T145.magistics.common.config.Settings;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemChestChanger;
@@ -26,7 +26,7 @@ public class TileChestHungryMetal extends TileEntityIronChest implements IWandab
 		TileChestHungryMetal newTile = new TileChestHungryMetal(IronChestType.values()[chestChanger.getTargetChestOrdinal(getType().ordinal())]);
 		int newSize = newTile.chestContents.length;
 		System.arraycopy(chestContents, 0, newTile.chestContents, 0, Math.min(newSize, chestContents.length));
-		BlockChestHungryMetal block = (BlockChestHungryMetal) Settings.blockChestHungryMetal;
+		BlockChestHungryMetal block = (BlockChestHungryMetal) Magistics.proxy.blockChestHungryMetal;
 		block.dropContent(newSize, this, worldObj, xCoord, yCoord, zCoord);
 		newTile.setFacing(getFacing());
 		newTile.sortTopStacks();
@@ -75,14 +75,15 @@ public class TileChestHungryMetal extends TileEntityIronChest implements IWandab
 	}
 
 	public boolean onWanded(EntityPlayer player, int side) {
-		if (player.isSneaking()) {
+		if (player.isSneaking() && numUsingPlayers == 0) {
 			setFacing(side);
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			player.worldObj.playSound(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
 			player.swingItem();
 			markDirty();
-		}
-		return true;
+			return true;
+		} else
+			return false;
 	}
 
 	@Override

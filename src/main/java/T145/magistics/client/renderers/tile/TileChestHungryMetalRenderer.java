@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -63,9 +62,7 @@ public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
 		if (tile != null && tile.hasWorldObj())
 			facing = tile.getFacing();
 
-		ResourceLocation texture = TextureHelper.ironChestTextures.get(type);
-		if (texture != null)
-			bindTexture(texture);
+		bindTexture(TextureHelper.ironChestTextures[type.ordinal()]);
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);

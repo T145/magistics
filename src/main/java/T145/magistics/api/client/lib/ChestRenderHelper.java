@@ -1,12 +1,12 @@
-package T145.magistics.client.lib;
+package T145.magistics.api.client.lib;
 
 import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 import org.lwjgl.opengl.GL11;
-
-import thermalexpansion.render.model.ModelStrongbox;
-import cofh.core.render.RenderUtils;
+import org.lwjgl.opengl.GL12;
 
 public class ChestRenderHelper {
 	public static void renderChest(ItemRenderType type) {
@@ -41,18 +41,10 @@ public class ChestRenderHelper {
 		renderChest(0.5F, 0.5F, 0.5F);
 	}
 
-	public static void renderStrongbox(int renderParam, int facing, float xRotation, double i, double j, double k) {
-		ModelStrongbox model = new ModelStrongbox();
-		model.boxLid.rotateAngleX = xRotation;
-		GL11.glPushMatrix();
-		GL11.glTranslated(i, j + 1, k + 1);
-		GL11.glScalef(1F, -1F, -1F);
-		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		GL11.glRotatef((float) RenderUtils.facingAngle[facing], 0F, 1F, 0F);
+	public static void renderChest(TileEntity tile) {
+		GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		GL11.glEnable(32826);
-		model.render(renderParam);
-		GL11.glDisable(32826);
-		GL11.glPopMatrix();
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, 0, 0, 0, 0F);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 }

@@ -11,7 +11,6 @@ import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.common.blocks.BlockAesthetic;
 import T145.magistics.common.blocks.BlockAestheticStructure;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
