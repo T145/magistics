@@ -6,11 +6,10 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.api.client.lib.ChestRenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class ChestRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
+public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	public int id = 0;
 	public ResourceLocation textures[];
 	public TileEntity chest;
