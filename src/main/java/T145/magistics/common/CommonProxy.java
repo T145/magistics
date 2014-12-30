@@ -41,6 +41,7 @@ import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.world.MagisticsWorldGenerator;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
@@ -127,6 +128,7 @@ public class CommonProxy implements IGuiHandler {
 				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), block.getLocalizedName());
 			else
 				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), blocks.get(block), block.getLocalizedName());
+		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
 	}
 
 	public void postInit() {

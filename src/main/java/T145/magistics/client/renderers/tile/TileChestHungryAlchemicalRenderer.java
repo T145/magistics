@@ -40,10 +40,11 @@ public class TileChestHungryAlchemicalRenderer extends TileEntitySpecialRenderer
 
 			GL11.glPushMatrix();
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
-			GL11.glScalef(1.0F, -1.0F, -1.0F);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
+			GL11.glTranslatef((float) x, (float) y + 1F, (float) z + 1F);
+			GL11.glScalef(1F, -1F, -1F);
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
 			short angle = 0;
 			if (direction != null)
 				switch (direction) {
@@ -61,16 +62,16 @@ public class TileChestHungryAlchemicalRenderer extends TileEntitySpecialRenderer
 					break;
 				}
 
-			GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(angle, 0F, 1F, 0F);
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 			float adjustedLidAngle = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * tick;
-			adjustedLidAngle = 1.0F - adjustedLidAngle;
-			adjustedLidAngle = 1.0F - adjustedLidAngle * adjustedLidAngle * adjustedLidAngle;
-			model.chestLid.rotateAngleX = -(adjustedLidAngle * (float) Math.PI / 2.0F);
+			adjustedLidAngle = 1F - adjustedLidAngle;
+			adjustedLidAngle = 1F - adjustedLidAngle * adjustedLidAngle * adjustedLidAngle;
+			model.chestLid.rotateAngleX = -(adjustedLidAngle * (float) Math.PI / 2F);
 			model.renderAll();
 			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 			GL11.glPopMatrix();
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
 		}
 	}
 }

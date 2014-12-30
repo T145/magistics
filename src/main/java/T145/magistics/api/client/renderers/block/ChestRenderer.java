@@ -8,7 +8,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.api.client.lib.ChestRenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	public int id = 0;
 	public ResourceLocation textures[];
