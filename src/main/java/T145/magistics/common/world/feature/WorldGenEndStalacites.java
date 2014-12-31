@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class WorldGenEndstoneStalacites extends WorldGenerator {
+public class WorldGenEndStalacites extends WorldGenerator {
 	public float radius = 2F;
 	public int max = 5, min = 3;
 

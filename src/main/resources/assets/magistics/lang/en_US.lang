@@ -53,6 +53,8 @@ item.bauble.ring_souls.name=Ring of Souls
 # Blocks
 ###
 
+tile.eridium_ore.name=Eridium Ore
+
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest
 

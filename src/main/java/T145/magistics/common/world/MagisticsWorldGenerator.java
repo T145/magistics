@@ -7,7 +7,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
-import T145.magistics.common.world.feature.WorldGenEndstoneStalacites;
+import T145.magistics.common.CommonProxy;
+import T145.magistics.common.world.feature.WorldGenCustomSpikes;
+import T145.magistics.common.world.feature.WorldGenEndStalacites;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class MagisticsWorldGenerator implements IWorldGenerator {
@@ -31,10 +33,14 @@ public class MagisticsWorldGenerator implements IWorldGenerator {
 	}
 
 	public void generateEnd(World world, Random rand, int chunkX, int chunkZ) {
+		if (rand.nextInt(5) == 2) {
+			int x = chunkX + rand.nextInt(16) + 8, z = chunkZ + rand.nextInt(16) + 8, y = world.getTopSolidOrLiquidBlock(x, z);
+			new WorldGenCustomSpikes(CommonProxy.blockEridiumOre).generate(world, rand, x, y, z);
+		}
 		if (rand.nextInt(3) == 0) {
 			int x = chunkX + rand.nextInt(16) + 8, z = chunkZ + rand.nextInt(16) + 8, y = getBottomSolidBlock(world, x, z);
 			if (y != -1)
-				new WorldGenEndstoneStalacites().generate(world, rand, x, y - 1, z);
+				new WorldGenEndStalacites().generate(world, rand, x, y - 1, z);
 		}
 	}
 }

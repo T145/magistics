@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -29,6 +30,7 @@ import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockEridiumOre;
 import T145.magistics.common.config.Log;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
@@ -56,7 +58,7 @@ public class CommonProxy implements IGuiHandler {
 
 	public List<Class> tiles = new ArrayList<Class>();
 	public List<Item> items = new ArrayList<Item>();
-	public Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockHungryStrongbox, blockChestHungryAlchemical, blockAestheticStructure;
+	public static Block blockChestHungryEnder, blockChestHungry, blockChestHungryTrapped, blockChestHungryMetal, blockChestHungryAlchemical, blockAestheticStructure, blockEridiumOre;
 	public Map<Block, Class> blocks = new HashMap<Block, Class>();
 
 	public void sync() {
@@ -85,6 +87,7 @@ public class CommonProxy implements IGuiHandler {
 		items.add(new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"));
 		items.add(new ItemDawnstone().setUnlocalizedName("dawnstone"));
 
+		blocks.put(blockEridiumOre = new BlockEridiumOre().setBlockName("eridium_ore").setHardness(50F).setResistance(2000F).setStepSound(Block.soundTypePiston), null);
 		//blocks.put(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure"), BlockMagisticsItem.class);
 		blocks.put(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"), null);
 		blocks.put(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest"), null);
@@ -132,6 +135,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void postInit() {
+		OreDictionary.registerOre("oreEridium", blockEridiumOre);
 		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
 		new ResearchItem("HUNGRYENDERCHEST", Magistics.modid, new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), -1, 0, 1, new ItemStack(blockChestHungryEnder)).setPages(new ResearchPage("tc.research_page.HUNGRYENDERCHEST.1"), ResearchRecipe.arcane("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
