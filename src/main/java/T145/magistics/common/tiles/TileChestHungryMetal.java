@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
-import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.config.ModBlocks;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemChestChanger;
@@ -26,7 +26,7 @@ public class TileChestHungryMetal extends TileEntityIronChest implements IWandab
 		TileChestHungryMetal newTile = new TileChestHungryMetal(IronChestType.values()[chestChanger.getTargetChestOrdinal(getType().ordinal())]);
 		int newSize = newTile.chestContents.length;
 		System.arraycopy(chestContents, 0, newTile.chestContents, 0, Math.min(newSize, chestContents.length));
-		BlockChestHungryMetal block = (BlockChestHungryMetal) Magistics.proxy.blockChestHungryMetal;
+		BlockChestHungryMetal block = (BlockChestHungryMetal) ModBlocks.blockChestHungryMetal;
 		block.dropContent(newSize, this, worldObj, xCoord, yCoord, zCoord);
 		newTile.setFacing(getFacing());
 		newTile.sortTopStacks();

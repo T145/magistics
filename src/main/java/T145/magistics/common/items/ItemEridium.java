@@ -1,4 +1,4 @@
-package T145.magistics.common.items.relics;
+package T145.magistics.common.items;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemEldritchKeystone extends Item {
+public class ItemEridium extends Item {
 	public static enum Types {
-		inert, tlhutlh
+		ingot, nugget
 	}
 
 	public static IIcon icon[] = new IIcon[Types.values().length];
@@ -21,7 +21,7 @@ public class ItemEldritchKeystone extends Item {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
 		for (Types type : Types.values())
-			icon[type.ordinal()] = r.registerIcon("magistics:eldritch_keystone_" + type.name());
+			icon[type.ordinal()] = r.registerIcon("magistics:eridium/" + type.name());
 	}
 
 	@Override

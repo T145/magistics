@@ -17,6 +17,9 @@ tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry 
 # Items
 ###
 
+item.eridium.ingot.name=Eridium Ingot
+item.eridium.nugget.name=Eridium Nugget
+
 item.mystic_resources.amber_drop.name=Amber Drop
 item.mystic_resources.animated_piston.name=Animated Piston
 item.mystic_resources.arcane_singularity.name=Arcane Singularity
@@ -53,7 +56,8 @@ item.bauble.ring_souls.name=Ring of Souls
 # Blocks
 ###
 
-tile.eridium_ore.name=Eridium Ore
+tile.eridium.0.name=Eridium Ore
+tile.eridium.1.name=Block of Eridium
 
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest

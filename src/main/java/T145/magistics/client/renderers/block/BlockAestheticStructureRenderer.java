@@ -14,7 +14,7 @@ import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.common.blocks.BlockAestheticStructure;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockAestheticStructureRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
+public class BlockAestheticStructureRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
@@ -30,14 +30,12 @@ public class BlockAestheticStructureRenderer extends BlockRenderer implements IS
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		int bb = BlockRenderer.setBrightness(world, x, y, z, block);
-		int meta = world.getBlockMetadata(x, y, z);
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
 		Tessellator t = Tessellator.instance;
-		t.setColorOpaque_I(ItemDye.field_150922_c[meta]);
-		bb = 180;
+		t.setColorOpaque_I(ItemDye.field_150922_c[world.getBlockMetadata(x, y, z)]);
+		int bb = 180;
 		t.setBrightness(bb);
 		if (block.shouldSideBeRendered(world, x, y + 1, z, 6))
 			renderer.renderFaceYPos(block, (double) x, (double) (y - 0.01F), (double) z, BlockAestheticStructure.iconGlow);

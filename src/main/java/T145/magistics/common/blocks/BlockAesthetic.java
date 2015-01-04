@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAesthetic extends Block {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-	public static IIcon icon[] = new IIcon[16], iconGlow;
+	public static IIcon icon[] = new IIcon[12], iconGlow;
 
 	public BlockAesthetic() {
 		super(Material.ground);
@@ -26,8 +26,11 @@ public class BlockAesthetic extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		for (int i = 0; i < 6; i++)
-			icon[i] = r.registerIcon("magistics:decor/storage_basic");
+		for (int i = 0; i < 12; i++)
+			if (i <= 6)
+				icon[i] = r.registerIcon("magistics:decor/storage_basic");
+			else
+				icon[i] = r.registerIcon("magistics:decor/storage_brick");
 		iconGlow = r.registerIcon("thaumcraft:animatedglow");
 	}
 
@@ -44,9 +47,9 @@ public class BlockAesthetic extends Block {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item i, CreativeTabs t, List l) {
-		for (int j = 0; j < 6; j++)
-			l.add(new ItemStack(i, 1, j));
+	public void getSubBlocks(Item item, CreativeTabs t, List l) {
+		for (int i = 0; i < icon.length; i++)
+			l.add(new ItemStack(item, 1, i));
 	}
 
 	@Override

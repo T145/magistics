@@ -14,7 +14,7 @@ import thaumcraft.common.blocks.BlockCustomOreItem;
 import T145.magistics.common.blocks.BlockAesthetic;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BlockAestheticRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
+public class BlockAestheticRenderer implements ISimpleBlockRenderingHandler {
 	public int getColor(int meta) {
 		int color = BlockCustomOreItem.colors[5];
 		for (int a = 1; a < 6; a++)
@@ -40,15 +40,12 @@ public class BlockAestheticRenderer extends BlockRenderer implements ISimpleBloc
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		int bb = BlockRenderer.setBrightness(world, x, y, z, block);
-		int meta = world.getBlockMetadata(x, y, z);
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
 		Tessellator t = Tessellator.instance;
-		t.setColorOpaque_I(getColor(meta));
-		bb = 180;
-		t.setBrightness(bb);
+		t.setColorOpaque_I(getColor(world.getBlockMetadata(x, y, z)));
+		t.setBrightness(180);
 		if (block.shouldSideBeRendered(world, x, y + 1, z, 6))
 			renderer.renderFaceYPos(block, (double) x, (double) (y - 0.01F), (double) z, BlockAesthetic.iconGlow);
 		if (block.shouldSideBeRendered(world, x + 1, y, z, 6))

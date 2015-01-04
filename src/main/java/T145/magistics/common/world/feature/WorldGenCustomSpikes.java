@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -13,6 +14,10 @@ public class WorldGenCustomSpikes extends WorldGenerator {
 
 	public WorldGenCustomSpikes(Block oreBlock) {
 		ore = oreBlock;
+	}
+
+	public WorldGenCustomSpikes(ItemStack oreStack) {
+		ore = Block.getBlockFromItem(oreStack.getItem());
 	}
 
 	@Override
