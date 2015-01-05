@@ -34,7 +34,7 @@ public class TileChestHungry extends TileEntityChest implements ISidedInventory,
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return InventoryHelper.createSlotArray(0, 10);
+		return InventoryHelper.createSlotArray(getSizeInventory());
 	}
 
 	@Override

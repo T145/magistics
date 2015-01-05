@@ -35,8 +35,7 @@ public class BlockAestheticStructureRenderer implements ISimpleBlockRenderingHan
 		renderer.renderStandardBlock(block, x, y, z);
 		Tessellator t = Tessellator.instance;
 		t.setColorOpaque_I(ItemDye.field_150922_c[world.getBlockMetadata(x, y, z)]);
-		int bb = 180;
-		t.setBrightness(bb);
+		t.setBrightness(180);
 		if (block.shouldSideBeRendered(world, x, y + 1, z, 6))
 			renderer.renderFaceYPos(block, (double) x, (double) (y - 0.01F), (double) z, BlockAestheticStructure.iconGlow);
 		if (block.shouldSideBeRendered(world, x + 1, y, z, 6))

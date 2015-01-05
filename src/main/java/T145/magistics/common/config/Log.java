@@ -21,7 +21,10 @@ public class Log {
 	}
 
 	public static void error(String msg, Throwable err) {
-		logger.log(Level.ERROR, msg, err);
+		if (Magistics.proxy.debug)
+			logger.log(Level.ERROR, msg, err);
+		else
+			err.printStackTrace();
 	}
 
 	public static void warn(String msg) {

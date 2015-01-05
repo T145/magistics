@@ -17,6 +17,8 @@ public class GuiSettings extends GuiConfig {
 	private static List<IConfigElement> getConfigElements() {
 		List<IConfigElement> list = new ArrayList<IConfigElement>();
 		list.addAll(new ConfigElement(Magistics.proxy.config.getCategory("general")).getChildElements());
+		for (String category : Magistics.proxy.category)
+			list.addAll(new ConfigElement(Magistics.proxy.config.getCategory(category)).getChildElements());
 		return list;
 	}
 }

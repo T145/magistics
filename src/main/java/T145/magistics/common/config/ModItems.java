@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.items.ItemEridium;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
@@ -14,6 +15,7 @@ import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.relics.ItemDawnstone;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModItems {
 	public static List<Item> items = new ArrayList<Item>();
@@ -28,6 +30,9 @@ public class ModItems {
 		items.add(itemBeltVigor = new ItemBeltVigor().setUnlocalizedName("bauble.belt_vigor"));
 		items.add(itemCruelMask = new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"));
 		items.add(itemDawnstone = new ItemDawnstone().setUnlocalizedName("dawnstone"));
+
+		for (Item item : ModItems.items)
+			GameRegistry.registerItem(item.setCreativeTab(Magistics.proxy.tabMagistics), item.getUnlocalizedName());
 	}
 
 	public static void postInit() {

@@ -1,9 +1,8 @@
 package T145.magistics.common.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -18,6 +17,7 @@ import T145.magistics.client.renderers.tile.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryRenderer;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockAestheticStructure;
 import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
@@ -33,11 +33,12 @@ import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 	public static List<Class> tiles = new ArrayList<Class>();
-	public static Map<Block, Class> blocks = new HashMap<Block, Class>();
-	public static Map<Class, TileEntitySpecialRenderer> tileRenderers = new HashMap<Class, TileEntitySpecialRenderer>();
+	public static LinkedHashMap<Block, Class> blocks = new LinkedHashMap<Block, Class>();
+	public static LinkedHashMap<Class, TileEntitySpecialRenderer> tileRenderers = new LinkedHashMap<Class, TileEntitySpecialRenderer>();
 	public static List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
 
 	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal;
@@ -48,11 +49,13 @@ public class ModBlocks {
 		blocks.put(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure"), BlockMeta.class);
 		blockRenderers.add(new BlockAestheticStructureRenderer());
 
-		tiles.add(TileChestHungry.class);
-		tileRenderers.put(TileChestHungry.class, new TileChestHungryRenderer());
-		blocks.put(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"), null);
-		blocks.put(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest"), null);
-		blockRenderers.add(new ChestRenderer(BlockChestHungry.renderID, new TileChestHungry()));
+		if (Magistics.proxy.hungry_chest_override) {
+			tiles.add(TileChestHungry.class);
+			tileRenderers.put(TileChestHungry.class, new TileChestHungryRenderer());
+			blocks.put(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"), null);
+			blocks.put(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest"), null);
+			blockRenderers.add(new ChestRenderer(BlockChestHungry.renderID, new TileChestHungry()));
+		}
 
 		tiles.add(TileChestHungryEnder.class);
 		tileRenderers.put(TileChestHungryEnder.class, new TileChestHungryEnderRenderer());
@@ -76,6 +79,14 @@ public class ModBlocks {
 			blocks.put(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setHardness(3F), BlockMeta.class);
 			blockRenderers.add(new ChestRenderer(BlockChestHungryMetal.renderID, TextureHelper.ironChestTextures));
 		}
+
+		for (Class tile : tiles)
+			GameRegistry.registerTileEntity(tile, "magistics:" + tile.getSimpleName());
+		for (Block block : blocks.keySet())
+			if (blocks.get(block) == null)
+				GameRegistry.registerBlock(block.setCreativeTab(Magistics.proxy.tabMagistics), block.getLocalizedName());
+			else
+				GameRegistry.registerBlock(block.setCreativeTab(Magistics.proxy.tabMagistics), blocks.get(block), block.getLocalizedName());
 	}
 
 	public static void postInit() {

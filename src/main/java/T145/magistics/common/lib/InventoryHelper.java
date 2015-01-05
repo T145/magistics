@@ -12,10 +12,10 @@ import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class InventoryHelper {
-	public static int[] createSlotArray(int first, int count) {
-		int[] slots = new int[count];
-		for (int k = first; k < first + count; k++)
-			slots[k - first] = k;
+	public static int[] createSlotArray(int size) {
+		int[] slots = new int[size];
+		for (int k = 0; k < size; k++)
+			slots[k] = k;
 		return slots;
 	}
 

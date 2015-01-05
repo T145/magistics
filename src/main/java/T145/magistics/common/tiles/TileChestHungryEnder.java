@@ -138,7 +138,7 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return InventoryHelper.createSlotArray(0, 10);
+		return InventoryHelper.createSlotArray(getEnderInventory().getSizeInventory());
 	}
 
 	@Override

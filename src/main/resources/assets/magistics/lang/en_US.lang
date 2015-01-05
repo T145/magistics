@@ -64,6 +64,8 @@ tile.trapped_hungry_chest.name=Trapped Hungry Chest
 
 tile.hungry_ender_chest.name=Hungry Ender Chest
 
+tile.ee3:hungry_alchemical_chest.name=Hungry Alchemical Chest
+
 tile.hungry_metal_chest.0.name=Hungry Iron Chest
 tile.hungry_metal_chest.1.name=Hungry Gold Chest
 tile.hungry_metal_chest.2.name=Hungry Diamond Chest
@@ -80,7 +82,7 @@ tile.aesthetic_structure.3.name=Brown Crystal Structure
 tile.aesthetic_structure.4.name=Blue Crystal Structure
 tile.aesthetic_structure.5.name=Purple Crystal Structure
 tile.aesthetic_structure.6.name=Cyan Crystal Structure
-tile.aesthetic_structure.7.name=Silver Crystal Structure
+tile.aesthetic_structure.7.name=Light Grey Crystal Structure
 tile.aesthetic_structure.8.name=Grey Crystal Structure
 tile.aesthetic_structure.9.name=Pink Crystal Structure
 tile.aesthetic_structure.10.name=Lime Crystal Structure
