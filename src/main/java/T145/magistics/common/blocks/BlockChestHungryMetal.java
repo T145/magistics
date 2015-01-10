@@ -12,6 +12,7 @@ import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.BlockIronChest;
@@ -53,6 +54,9 @@ public class BlockChestHungryMetal extends BlockIronChest implements IWandable {
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack wand, World world, int i, int j, int k, int side) {
 		TileChestHungryMetal tile = (TileChestHungryMetal) world.getTileEntity(i, j, k);
-		return tile.onWanded(player, side);
+		if (Loader.isModLoaded("Botania"))
+			return tile.onWanded(player, side);
+		else
+			return false;
 	}
 }

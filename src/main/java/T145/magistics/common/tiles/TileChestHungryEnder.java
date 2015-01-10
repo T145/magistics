@@ -1,15 +1,14 @@
 package T145.magistics.common.tiles;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.tiles.TileOwned;
-import T145.magistics.common.lib.InventoryHelper;
 
-public class TileChestHungryEnder extends TileOwned implements ISidedInventory, IWandable {
+public class TileChestHungryEnder extends TileOwned implements IInventory, IWandable {
 	public int numUsingPlayers;
 	public float prevLidAngle, lidAngle;
 
@@ -134,21 +133,6 @@ public class TileChestHungryEnder extends TileOwned implements ISidedInventory, 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
 		return getEnderInventory().isItemValidForSlot(slot, is);
-	}
-
-	@Override
-	public int[] getAccessibleSlotsFromSide(int side) {
-		return InventoryHelper.createSlotArray(getEnderInventory().getSizeInventory());
-	}
-
-	@Override
-	public boolean canInsertItem(int slot, ItemStack is, int side) {
-		return true;
-	}
-
-	@Override
-	public boolean canExtractItem(int slot, ItemStack is, int side) {
-		return true;
 	}
 
 	public boolean onWanded(EntityPlayer player, int side) {

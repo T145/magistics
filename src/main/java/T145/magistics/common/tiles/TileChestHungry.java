@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
-import T145.magistics.common.lib.InventoryHelper;
 
 public class TileChestHungry extends TileEntityChest implements ISidedInventory, IWandable {
 	public TileChestHungry() {
@@ -34,7 +33,7 @@ public class TileChestHungry extends TileEntityChest implements ISidedInventory,
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return InventoryHelper.createSlotArray(getSizeInventory());
+		return new int[getSizeInventory()];
 	}
 
 	@Override

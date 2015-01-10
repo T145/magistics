@@ -1,11 +1,14 @@
 package T145.magistics.common;
 
 import java.io.File;
+import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -19,7 +22,6 @@ import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.common.config.Log;
-import T145.magistics.common.config.MagisticsCreativeTab;
 import T145.magistics.common.config.ModBlocks;
 import T145.magistics.common.config.ModItems;
 import T145.magistics.common.lib.ResearchRecipe;
@@ -29,7 +31,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy extends Log implements IGuiHandler {
-	public static CreativeTabs tabMagistics = new MagisticsCreativeTab();
+	public static CreativeTabs tabMagistics;
 	public static Configuration config;
 	public static final String category[] = {
 		"Graphics", "Blocks", "Items"
@@ -39,7 +41,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 	public void sync() {
 		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
 		hungry_chest_override = config.getBoolean(config.CATEGORY_GENERAL, "Hungry Chest Override", true, "Replaces Thaumcraft's Hungry Chest w/ a modified version.");
-		colored_names = config.get(category[0], "Colored Names", false, "Toggles name coloring for some things.").getBoolean();
+		colored_names = config.getBoolean(category[0], "Colored Names", false, "Toggles name coloring for some things.");
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
 	}
 
@@ -69,6 +71,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 		ModBlocks.init();
 		ModItems.init();
 		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
+		tabMagistics.setBackgroundImageName("magistics.png");
 	}
 
 	public void postInit() {
@@ -87,5 +90,27 @@ public class CommonProxy extends Log implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
 		return null;
+	}
+
+	static {
+		tabMagistics = new CreativeTabs(Magistics.modid) {
+			@Override
+			public Item getTabIconItem() {
+				return Item.getItemFromBlock(ModBlocks.blockChestHungryEnder);
+			}
+
+			@Override
+			public boolean hasSearchBar() {
+				return true;
+			}
+
+			@Override
+			public void displayAllReleventItems(List list) {
+				for (Block block : ModBlocks.blocks.keySet())
+					block.getSubBlocks(Item.getItemFromBlock(block), this, list);
+				for (Item item : ModItems.items)
+					item.getSubItems(item, this, list);
+			}
+		};
 	}
 }

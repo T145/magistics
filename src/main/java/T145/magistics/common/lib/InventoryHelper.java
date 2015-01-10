@@ -12,13 +12,6 @@ import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class InventoryHelper {
-	public static int[] createSlotArray(int size) {
-		int[] slots = new int[size];
-		for (int k = 0; k < size; k++)
-			slots[k] = k;
-		return slots;
-	}
-
 	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, IInventory inv, Block addEventTo, int eventID, int eventParameter, World world, int i, int j, int k, boolean playSoundEffect) {
 		TileEntity tile = world.getTileEntity(i, j, k);
 		if (tile != null && !world.isRemote && inv != null && collidingEntity instanceof EntityItem && !collidingEntity.isDead) {
