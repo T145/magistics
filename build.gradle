@@ -44,7 +44,7 @@ minecraft {
 
 dependencies {
     compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
-    compile 'com.mod-buildcraft:buildcraft:6.2.6:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.3.1:dev'
     compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.347:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
@@ -52,8 +52,8 @@ dependencies {
     compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev'
 
     compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
-    compile 'codechicken:EnderStorage:1.7.10-1.4.5.26:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.71:dev'
+    compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
+    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
 
     compile fileTree(dir: 'lib', include: '*.jar')
 }
@@ -77,23 +77,25 @@ processResources {
     }
 }
 
+String release_title = project.minecraft.version + '-' + project.version
+
 // modifies the actual release
 jar {
-    version = project.minecraft.version + '-' + project.version
+    version = release_title
 }
 
 // add a developer release
 task deobfJar(type: Jar) {
 	from sourceSets.main.output
 	classifier = 'dev'
-	version = project.minecraft.version + '-' + project.version
+	version = release_title
 }
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
 	from 'build/docs/javadoc'
 	classifier = 'javadoc'
-	version = project.minecraft.version + '-' + project.version
+	version = release_title
 }
 
 artifacts {
