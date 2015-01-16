@@ -12,7 +12,6 @@ import vazkii.botania.api.wand.IWandable;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -53,9 +52,6 @@ public class BlockChestHungry extends BlockChest implements IWandable {
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack wand, World world, int i, int j, int k, int side) {
 		TileChestHungry tile = (TileChestHungry) world.getTileEntity(i, j, k);
-		if (Loader.isModLoaded("Botania"))
-			return tile.onWanded(player, side);
-		else
-			return false;
+		return tile.onWanded(player, side);
 	}
 }

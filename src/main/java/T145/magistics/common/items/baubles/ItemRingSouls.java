@@ -47,7 +47,7 @@ public class ItemRingSouls extends ItemBauble {
 			xpOrb = xpOrbs.get(0);
 
 		if (xpOrb != null && !xpOrb.isDead) {
-			Thaumcraft.proxy.bolt(user.worldObj, xpOrb, user);
+			Thaumcraft.proxy.wispFXEG(xpOrb.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, xpOrb);
 			if (user instanceof EntityPlayer)
 				((EntityPlayer) user).inventory.addItemStackToInventory(new ItemStack(ModItems.itemResources, 1, ItemResources.Types.soul_fragment.ordinal()));
 			xpOrb.setDead();

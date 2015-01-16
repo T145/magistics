@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class BlockMeta extends ItemBlock {
-	public BlockMeta(Block block) {
+public class BlockMagisticsItem extends ItemBlock {
+	public BlockMagisticsItem(Block block) {
 		super(block);
 		setHasSubtypes(true);
 	}
