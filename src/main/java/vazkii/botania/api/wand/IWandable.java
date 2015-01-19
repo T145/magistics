@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 /**
  * Any block that implements this can be used with the Wand for the Forest for some purpose.
  */
+@SuppressWarnings("all") // prevent the compiler from complaining about a silly API - T145
 public interface IWandable {
 
 	/**

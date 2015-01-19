@@ -9,6 +9,7 @@ import thaumcraft.client.fx.particles.FXWisp;
 import thaumcraft.common.Thaumcraft;
 
 public class TileTintedNitor extends TileEntity {
+	@Override
 	public boolean canUpdate() {
 		return true;
 	}
@@ -17,6 +18,7 @@ public class TileTintedNitor extends TileEntity {
 		return ItemDye.field_150922_c[meta];
 	}
 
+	@Override
 	public void updateEntity() {
 		super.updateEntity();
 		Color tint = new Color(getColor(getBlockMetadata()));

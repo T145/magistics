@@ -57,31 +57,43 @@ public class BlockInfuser extends BlockContainer {
 			icon[j] = r.registerIcon("magistics:dark_infuser_" + SideTypes.values()[j].name());
 	}
 
+	public boolean isDark(int meta) {
+		return meta == 1 ? true : false;
+	}
+
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		int meta = world.getBlockMetadata(i, j, k);
 
-		switch (meta) {
-		case 0:
-			switch (ForgeDirection.getOrientation(side)) {
-			case UP:
+		switch (ForgeDirection.getOrientation(side)) {
+		case UP:
+			if (isDark(meta))
+				return icon[5];
+			else
 				return icon[0];
-			case DOWN:
+		case DOWN:
+			if (isDark(meta))
+				return icon[8];
+			else
 				return icon[3];
-			default:
-				TileEntity tile = world.getTileEntity(i, j, k);
-				if (tile instanceof TileInfuser) {
-					TileInfuser infuser = (TileInfuser) tile;
+		default:
+			TileEntity tile = world.getTileEntity(i, j, k);
+			if (tile instanceof TileInfuser) {
+				TileInfuser infuser = (TileInfuser) tile;
 
-					if (infuser.isSideConnected(side))
+				if (infuser.isSideConnected(side))
+					if (isDark(meta))
+						return icon[7];
+					else
 						return icon[2];
+				else
+					if (isDark(meta))
+						return icon[6];
 					else
 						return icon[1];
-				}
 			}
-		default:
-			return blockIcon;
 		}
+		return null;
 	}
 
 	@Override
