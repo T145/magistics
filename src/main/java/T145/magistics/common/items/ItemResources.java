@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemResources extends Item {
 	public static enum Types {
-		amber_drop, animated_piston, arcane_singularity, dust_faint, eldritch_mechanism, soul_fragment, nitor;
+		amber_drop, animated_piston, arcane_singularity, dust_faint, eldritch_mechanism, soul_fragment;
 	}
 
 	public static IIcon icon[] = new IIcon[Types.values().length];
@@ -20,12 +20,8 @@ public class ItemResources extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister r) {
-		for (Types type : Types.values()) {
+		for (Types type : Types.values())
 			icon[type.ordinal()] = r.registerIcon("magistics:" + type.name());
-
-			if (type.ordinal() == type.nitor.ordinal())
-				icon[type.nitor.ordinal()] = r.registerIcon("thaumcraft:nitor");
-		}
 	}
 
 	@Override

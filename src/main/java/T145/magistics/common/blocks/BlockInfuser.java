@@ -61,6 +61,7 @@ public class BlockInfuser extends BlockContainer {
 		return meta == 1 ? true : false;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int i, int j, int k, int side) {
 		int meta = world.getBlockMetadata(i, j, k);
@@ -98,8 +99,9 @@ public class BlockInfuser extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase user, ItemStack is) {
-		if (world.getTileEntity(i, j, k) instanceof TileInfuser) {
-			TileInfuser infuser = (TileInfuser) world.getTileEntity(i, j, k);
+		TileEntity tile = world.getTileEntity(i, j, k);
+		if (tile instanceof TileInfuser) {
+			TileInfuser infuser = (TileInfuser) tile;
 			infuser.setOrientation(ForgeDirection.values()[MathHelper.floor_double(user.rotationYaw * 4F / 360F + 0.5D) & 3]);
 		}
 	}

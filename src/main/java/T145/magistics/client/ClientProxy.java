@@ -10,7 +10,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit() {
 		for (Class tile : ModBlocks.tiles)
-			ClientRegistry.bindTileEntitySpecialRenderer(tile, ModBlocks.tileRenderers.get(tile));
+			if (ModBlocks.tileRenderers.get(tile) != null)
+				ClientRegistry.bindTileEntitySpecialRenderer(tile, ModBlocks.tileRenderers.get(tile));
 		for (ISimpleBlockRenderingHandler blockRenderer : ModBlocks.blockRenderers)
 			RenderingRegistry.registerBlockHandler(blockRenderer);
 	}
