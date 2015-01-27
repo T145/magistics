@@ -8,12 +8,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 	@Override
-	public void init() {
-		ModBlocks.loadClient();
-	}
-
-	@Override
 	public void postInit() {
+		ModBlocks.loadClient();
 		for (Class tile : ModBlocks.tiles)
 			if (ModBlocks.tileRenderers.get(tile) != null)
 				ClientRegistry.bindTileEntitySpecialRenderer(tile, ModBlocks.tileRenderers.get(tile));

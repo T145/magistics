@@ -101,7 +101,7 @@ public class ModBlocks {
 		}
 	}
 
-	public static void postInit() {
+	public static void registerOres() {
 		OreDictionary.registerOre("oreEridium", new ItemStack(blockEridium, 1, 0));
 	}
 }

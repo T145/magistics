@@ -39,7 +39,7 @@ public class ModItems {
 			GameRegistry.registerItem(item.setCreativeTab(Magistics.proxy.tabMagistics), item.getUnlocalizedName());
 	}
 
-	public static void postInit() {
+	public static void registerOres() {
 		OreDictionary.registerOre("ingotEridium", new ItemStack(itemEridium, 1, 0));
 		OreDictionary.registerOre("nuggetEridium", new ItemStack(itemEridium, 1, 1));
 	}
