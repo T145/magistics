@@ -44,14 +44,14 @@ minecraft {
 
 dependencies {
     compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
-    compile 'com.mod-buildcraft:buildcraft:6.3.1:dev'
-    compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.347:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.3.3:dev'
+    compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.374:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
-    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.106:dev'
-    compile 'codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev'
+    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev'
+    compile 'codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev'
 
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev'
+    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
     compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
 

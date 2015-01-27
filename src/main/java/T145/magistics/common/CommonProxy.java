@@ -68,7 +68,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 	}
 
 	public void init() {
-		ModBlocks.init();
+		ModBlocks.loadServer();
 		ModItems.init();
 		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
 		tabMagistics.setBackgroundImageName("magistics.png");

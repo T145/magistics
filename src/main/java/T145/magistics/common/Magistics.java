@@ -11,7 +11,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = Magistics.modid, name = Magistics.modid, version = Magistics.version, guiFactory = "T145.magistics.client.GuiFactory", dependencies = "after:Thaumcraft")
 public class Magistics {
-	public static final String modid = "Magistics", version = "0.7.5";
+	public static final String modid = "Magistics", version = "0.7.6";
 
 	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
 	public static CommonProxy proxy;
