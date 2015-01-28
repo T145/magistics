@@ -1,9 +1,7 @@
 package T145.magistics.common;
 
 import java.io.File;
-import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -69,7 +67,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 
 	public void init() {
 		ModBlocks.loadServer();
-		ModItems.init();
+		ModItems.load();
 		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
 		tabMagistics.setBackgroundImageName("magistics.png");
 	}
@@ -77,7 +75,9 @@ public class CommonProxy extends Log implements IGuiHandler {
 	public void postInit() {
 		ModBlocks.registerOres();
 		ModItems.registerOres();
+
 		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
+
 		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(ModBlocks.blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
 		new ResearchItem("HUNGRYENDERCHEST", Magistics.modid, new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), -1, 0, 1, new ItemStack(ModBlocks.blockChestHungryEnder)).setPages(new ResearchPage("tc.research_page.HUNGRYENDERCHEST.1"), ResearchRecipe.arcane("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
 	}
@@ -102,19 +102,6 @@ public class CommonProxy extends Log implements IGuiHandler {
 			@Override
 			public boolean hasSearchBar() {
 				return true;
-			}
-
-			@Override
-			public void displayAllReleventItems(List list) {
-				/*
-				 * TODO: Find a way to add blocks to the creative tab w/ all of their
-				 * metadata values. This helps get around having "getSubBlocks" methods
-				 * scattered throughout the block classes.
-				 */
-				for (Block block : ModBlocks.blocks.keySet())
-					block.getSubBlocks(Item.getItemFromBlock(block), this, list);
-				for (Item item : ModItems.items)
-					item.getSubItems(item, this, list);
 			}
 		};
 	}

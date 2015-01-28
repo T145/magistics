@@ -24,7 +24,7 @@ public class ModItems {
 
 	public static Item itemEridium, itemResources, itemAmuletDismay, itemAmuletLife, itemBeltCleansing, itemBeltVigor, itemRingSouls, itemCruelMask, itemDawnstone;
 
-	public static void init() {
+	public static void load() {
 		items.add(itemEridium = new ItemEridium().setUnlocalizedName("eridium"));
 		items.add(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
 		items.add(itemAmuletDismay = new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"));
