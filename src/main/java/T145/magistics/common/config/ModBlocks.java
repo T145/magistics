@@ -19,11 +19,13 @@ import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryRenderer;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockAestheticStructure;
+import T145.magistics.common.blocks.BlockArcaneRedstoneLamp;
 import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockEridium;
+import T145.magistics.common.tiles.TileArcaneRedstoneLamp;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -41,7 +43,7 @@ public class ModBlocks {
 	public static LinkedHashMap<Class, TileEntitySpecialRenderer> tileRenderers = new LinkedHashMap<Class, TileEntitySpecialRenderer>();
 	public static List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
 
-	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal;
+	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockArcaneRedstoneLamp;
 
 	public static void loadServer() {
 		blocks.put(blockEridium = new BlockEridium().setBlockName("eridium").setHardness(50F).setResistance(2000F).setStepSound(Block.soundTypePiston), BlockMagisticsItem.class);
@@ -65,6 +67,9 @@ public class ModBlocks {
 			tiles.add(TileChestHungryMetal.class);
 			blocks.put(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setHardness(3F), BlockMagisticsItem.class);
 		}
+
+		tiles.add(TileArcaneRedstoneLamp.class);
+		blocks.put(blockArcaneRedstoneLamp = new BlockArcaneRedstoneLamp().setBlockName("arcane_redstone_lamp"), null);
 
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, "magistics:" + tile.getSimpleName());
