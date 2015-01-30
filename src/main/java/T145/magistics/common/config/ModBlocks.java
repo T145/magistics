@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import mods.railcraft.client.render.RenderChest;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -19,17 +20,18 @@ import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryRenderer;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockAestheticStructure;
-import T145.magistics.common.blocks.BlockArcaneRedstoneLamp;
 import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockChestHungryRailcraft;
 import T145.magistics.common.blocks.BlockEridium;
-import T145.magistics.common.tiles.TileArcaneRedstoneLamp;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileChestHungryMetals;
+import T145.magistics.common.tiles.TileChestHungryVoid;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
@@ -43,7 +45,7 @@ public class ModBlocks {
 	public static LinkedHashMap<Class, TileEntitySpecialRenderer> tileRenderers = new LinkedHashMap<Class, TileEntitySpecialRenderer>();
 	public static List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
 
-	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockArcaneRedstoneLamp;
+	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockArcaneRedstoneLamp;
 
 	public static void loadServer() {
 		blocks.put(blockEridium = new BlockEridium().setBlockName("eridium").setHardness(50F).setResistance(2000F).setStepSound(Block.soundTypePiston), BlockMagisticsItem.class);
@@ -68,8 +70,11 @@ public class ModBlocks {
 			blocks.put(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setHardness(3F), BlockMagisticsItem.class);
 		}
 
-		tiles.add(TileArcaneRedstoneLamp.class);
-		blocks.put(blockArcaneRedstoneLamp = new BlockArcaneRedstoneLamp().setBlockName("arcane_redstone_lamp"), null);
+		if (Loader.isModLoaded("Railcraft")) {
+			tiles.add(TileChestHungryMetals.class);
+			tiles.add(TileChestHungryVoid.class);
+			blocks.put(blockChestHungryRailcraft = new BlockChestHungryRailcraft().setBlockName("hungry_railcraft_chest").setHardness(2F).setResistance(4.5F), BlockMagisticsItem.class);
+		}
 
 		for (Class tile : tiles)
 			GameRegistry.registerTileEntity(tile, "magistics:" + tile.getSimpleName());
@@ -103,6 +108,15 @@ public class ModBlocks {
 		if (Loader.isModLoaded("IronChest")) {
 			tileRenderers.put(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 			blockRenderers.add(new ChestRenderer(BlockChestHungryMetal.renderID, TextureHelper.ironChestTextures));
+		}
+
+		if (Loader.isModLoaded("Railcraft")) {
+			tileRenderers.put(TileChestHungryMetals.class, new RenderChest("magistics:textures/models/chest_hungry/metals.png", new TileChestHungryMetals()));
+			tileRenderers.put(TileChestHungryVoid.class, new RenderChest("magistics:textures/models/chest_hungry/void.png", new TileChestHungryVoid()));
+			blockRenderers.add(new ChestRenderer(BlockChestHungryRailcraft.renderID, new ResourceLocation[] {
+					new ResourceLocation("magistics", "textures/models/chest_hungry/metals.png"),
+					new ResourceLocation("magistics", "textures/models/chest_hungry/void.png")
+			}));
 		}
 	}
 
