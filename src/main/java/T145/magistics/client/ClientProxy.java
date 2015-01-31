@@ -1,5 +1,7 @@
 package T145.magistics.client;
 
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
 import T145.magistics.common.CommonProxy;
 import T145.magistics.common.config.ModBlocks;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -15,5 +17,7 @@ public class ClientProxy extends CommonProxy {
 				ClientRegistry.bindTileEntitySpecialRenderer(tile, ModBlocks.tileRenderers.get(tile));
 		for (ISimpleBlockRenderingHandler blockRenderer : ModBlocks.blockRenderers)
 			RenderingRegistry.registerBlockHandler(blockRenderer);
+		for (Item block : ModBlocks.itemRenderers.keySet())
+			MinecraftForgeClient.registerItemRenderer(block, ModBlocks.itemRenderers.get(block));
 	}
 }

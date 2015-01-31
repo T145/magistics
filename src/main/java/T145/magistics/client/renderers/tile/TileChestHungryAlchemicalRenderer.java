@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryAlchemicalRenderer extends TileEntitySpecialRenderer {
-	private final ModelChest model = new ModelChest();
+	public final ModelChest model = new ModelChest();
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {

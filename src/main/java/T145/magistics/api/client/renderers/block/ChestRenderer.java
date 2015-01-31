@@ -29,12 +29,11 @@ public class ChestRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
-		if (chest != null)
-			ChestRenderHelper.renderChest(chest);
-		else {
+		if (chest == null) {
 			Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
 			ChestRenderHelper.renderChest();
-		}
+		} else
+			ChestRenderHelper.renderChest(chest);
 	}
 
 	@Override

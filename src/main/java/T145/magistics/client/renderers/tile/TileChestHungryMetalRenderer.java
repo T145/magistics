@@ -20,13 +20,14 @@ import com.google.common.primitives.SignedBytes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.TileEntityIronChest;
 import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
-	private ModelChest model = new ModelChest();
-	private Random rand = new Random();
-	private RenderItem itemRenderer = new RenderItem() {
+	public ModelChest model = new ModelChest();
+	public Random rand = new Random();
+	public RenderItem itemRenderer = new RenderItem() {
 		@Override
 		public byte getMiniBlockCount(ItemStack stack, byte original) {
 			return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
@@ -48,13 +49,13 @@ public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
 		}
 	};
 
-	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F } };
+	public static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F } };
 
 	public TileChestHungryMetalRenderer() {
 		itemRenderer.setRenderManager(RenderManager.instance);
 	}
 
-	public void render(TileChestHungryMetal tile, double x, double y, double z, float partialTick) {
+	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
 		if (tile == null)
 			return;
 		int facing = 3;
@@ -126,7 +127,7 @@ public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTick) {
-		render((TileChestHungryMetal) tileentity, x, y, z, partialTick);
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTick) {
+		render((TileChestHungryMetal) tile, x, y, z, partialTick);
 	}
 }

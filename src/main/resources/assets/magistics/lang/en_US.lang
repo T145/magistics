@@ -61,10 +61,12 @@ tile.eridium.1.name=Block of Eridium
 
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest
+tile.sorting_hungry_chest.name=Hungry Sorting Chest
 
 tile.hungry_ender_chest.name=Hungry Ender Chest
 
 tile.ee3:hungry_alchemical_chest.name=Hungry Alchemical Chest
+tile.ee3:sorting_hungry_alchemical_chest.name=Hungry Alchemical Chest
 
 tile.hungry_metal_chest.0.name=Hungry Iron Chest
 tile.hungry_metal_chest.1.name=Hungry Gold Chest
@@ -74,6 +76,14 @@ tile.hungry_metal_chest.4.name=Hungry Silver Chest
 tile.hungry_metal_chest.5.name=Hungry Crystal Chest
 tile.hungry_metal_chest.6.name=Hungry Obsidian Chest
 tile.hungry_metal_chest.7.name=Hungry Dirt Chest
+tile.sorting_hungry_metal_chest.0.name=Hungry Sorting Iron Chest
+tile.sorting_hungry_metal_chest.1.name=Hungry Sorting Gold Chest
+tile.sorting_hungry_metal_chest.2.name=Hungry Sorting Diamond Chest
+tile.sorting_hungry_metal_chest.3.name=Hungry Sorting Copper Chest
+tile.sorting_hungry_metal_chest.4.name=Hungry Sorting Silver Chest
+tile.sorting_hungry_metal_chest.5.name=Hungry Sorting Crystal Chest
+tile.sorting_hungry_metal_chest.6.name=Hungry Sorting Obsidian Chest
+tile.sorting_hungry_metal_chest.7.name=Hungry Sorting Dirt Chest
 
 tile.aesthetic_structure.0.name=Black Crystal Structure
 tile.aesthetic_structure.1.name=Red Crystal Structure

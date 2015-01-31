@@ -8,17 +8,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import vazkii.botania.api.wand.IWandable;
 import T145.magistics.common.lib.InventoryHelper;
-import T145.magistics.common.tiles.TileChestHungryAlchemical;
+import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 
-import com.pahimar.ee3.block.BlockAlchemicalChest;
+import com.dynious.refinedrelocation.block.BlockSortingAlchemicalChest;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockChestHungryAlchemical extends BlockAlchemicalChest implements IWandable {
-	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-
+public class BlockSortingChestHungryAlchemical extends BlockSortingAlchemicalChest implements IWandable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
@@ -26,23 +23,18 @@ public class BlockChestHungryAlchemical extends BlockAlchemicalChest implements 
 	}
 
 	@Override
-	public int getRenderType() {
-		return renderID;
-	}
-
-	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileChestHungryAlchemical(meta);
+		return new TileSortingChestHungryAlchemical(meta);
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryAlchemical) world.getTileEntity(i, j, k), this, 2, 2, world, i, j, k, true);
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileSortingChestHungryAlchemical) world.getTileEntity(i, j, k), this, 2, 2, world, i, j, k, true);
 	}
 
 	@Override
 	public boolean onUsedByWand(EntityPlayer player, ItemStack wand, World world, int i, int j, int k, int side) {
-		TileChestHungryAlchemical tile = (TileChestHungryAlchemical) world.getTileEntity(i, j, k);
+		TileSortingChestHungryAlchemical tile = (TileSortingChestHungryAlchemical) world.getTileEntity(i, j, k);
 		return tile.onWanded(player, side);
 	}
 }
