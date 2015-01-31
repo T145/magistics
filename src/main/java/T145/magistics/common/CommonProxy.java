@@ -1,6 +1,8 @@
 package T145.magistics.common;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,6 +37,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 		"Graphics", "Blocks", "Items"
 	};
 	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
+	public static List<String> supportedMods = new ArrayList<String>();
 
 	public void sync() {
 		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
@@ -70,6 +73,10 @@ public class CommonProxy extends Log implements IGuiHandler {
 		ModItems.load();
 		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
 		tabMagistics.setBackgroundImageName("magistics.png");
+
+		if (!supportedMods.isEmpty())
+			for (String supportedMod : supportedMods)
+				inform("Registered: " + supportedMod);
 	}
 
 	public void postInit() {

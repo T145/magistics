@@ -8,10 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ModBlocks;
 import T145.magistics.common.world.feature.WorldGenCustomSpikes;
 import T145.magistics.common.world.feature.WorldGenEndStalacites;
 import cpw.mods.fml.common.IWorldGenerator;
+import cpw.mods.fml.common.Loader;
 
 public class MagisticsWorldGenerator implements IWorldGenerator {
 	@Override
@@ -34,10 +36,13 @@ public class MagisticsWorldGenerator implements IWorldGenerator {
 	}
 
 	public void generateEnd(World world, Random rand, int chunkX, int chunkZ) {
-		if (rand.nextInt(5) == 2) {
-			int x = chunkX + rand.nextInt(16) + 8, z = chunkZ + rand.nextInt(16) + 8, y = world.getTopSolidOrLiquidBlock(x, z);
-			new WorldGenCustomSpikes(new ItemStack(ModBlocks.blockEridium, 1, 0)).generate(world, rand, x, y, z);
-		}
+		if (!Loader.isModLoaded("HEE")) {
+			if (rand.nextInt(5) == 2) {
+				int x = chunkX + rand.nextInt(16) + 8, z = chunkZ + rand.nextInt(16) + 8, y = world.getTopSolidOrLiquidBlock(x, z);
+				new WorldGenCustomSpikes(new ItemStack(ModBlocks.blockEridium, 1, 0)).generate(world, rand, x, y, z);
+			}
+		} else // TODO: Generate custom versions of HEE's spikes
+			Magistics.proxy.supportedMods.add("HEE");
 		if (rand.nextInt(3) == 0) {
 			int x = chunkX + rand.nextInt(16) + 8, z = chunkZ + rand.nextInt(16) + 8, y = getBottomSolidBlock(world, x, z);
 			if (y != -1)
