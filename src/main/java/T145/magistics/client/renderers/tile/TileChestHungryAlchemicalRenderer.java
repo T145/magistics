@@ -23,7 +23,7 @@ public class TileChestHungryAlchemicalRenderer extends TileEntitySpecialRenderer
 			TileChestHungryAlchemical chest = (TileChestHungryAlchemical) tile;
 			ForgeDirection direction = null;
 
-			if (chest.getWorldObj() != null)
+			if (chest.hasWorldObj())
 				direction = chest.getOrientation();
 
 			switch (chest.getState()) {

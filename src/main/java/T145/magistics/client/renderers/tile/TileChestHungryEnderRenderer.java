@@ -17,11 +17,11 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 	public ModelChest model = new ModelChest();
 
 	@Override
-	public void renderTileEntityAt(TileEntity tile, double i, double j, double k, float rotation) {
-		renderChestAt((TileChestHungryEnder) tile, i, j, k, rotation);
+	public void renderTileEntityAt(TileEntity tile, double i, double j, double k, float tick) {
+		renderChestAt((TileChestHungryEnder) tile, i, j, k, tick);
 	}
 
-	public void renderChestAt(TileChestHungryEnder chest, double i, double j, double k, float rotation) {
+	public void renderChestAt(TileChestHungryEnder chest, double i, double j, double k, float tick) {
 		bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/ender.png"));
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -42,7 +42,7 @@ public class TileChestHungryEnderRenderer extends TileEntitySpecialRenderer {
 				break;
 			}
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		float lidOpening = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * rotation;
+		float lidOpening = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * tick;
 		lidOpening = 1F - lidOpening;
 		lidOpening = 1F - lidOpening * lidOpening * lidOpening;
 		model.chestLid.rotateAngleX = -(lidOpening * (float) Math.PI / 2F);
