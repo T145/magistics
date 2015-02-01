@@ -25,10 +25,8 @@ import T145.magistics.common.config.Log;
 import T145.magistics.common.config.ModBlocks;
 import T145.magistics.common.config.ModItems;
 import T145.magistics.common.lib.ResearchRecipe;
-import T145.magistics.common.world.MagisticsWorldGenerator;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy extends Log implements IGuiHandler {
 	public static CreativeTabs tabMagistics;
@@ -71,7 +69,6 @@ public class CommonProxy extends Log implements IGuiHandler {
 	public void init() {
 		ModBlocks.loadServer();
 		ModItems.load();
-		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
 		tabMagistics.setBackgroundImageName("magistics.png");
 
 		if (!supportedMods.isEmpty())
@@ -80,9 +77,6 @@ public class CommonProxy extends Log implements IGuiHandler {
 	}
 
 	public void postInit() {
-		ModBlocks.registerOres();
-		ModItems.registerOres();
-
 		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 
 		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(ModBlocks.blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));

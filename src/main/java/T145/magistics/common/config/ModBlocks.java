@@ -7,10 +7,8 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.oredict.OreDictionary;
 import T145.magistics.api.blocks.BlockMagisticsItem;
 import T145.magistics.api.client.renderers.block.ChestRenderer;
 import T145.magistics.api.client.renderers.block.SortingChestItemRenderer;
@@ -29,7 +27,6 @@ import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
-import T145.magistics.common.blocks.BlockEridium;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
@@ -54,14 +51,9 @@ public class ModBlocks extends CommonProxy {
 	public static List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
 	public static LinkedHashMap<Item, IItemRenderer> itemRenderers = new LinkedHashMap<Item, IItemRenderer>();
 
-	public static Block blockEridium, blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft,
-	blockSortingChestHungry,
-	blockSortingChestHungryAlchemical,
-	blockSortingChestHungryMetal,
-	blockArcaneRedstoneLamp;
+	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
 	public static void loadServer() {
-		blocks.put(blockEridium = new BlockEridium().setBlockName("eridium").setHardness(50F).setResistance(2000F).setStepSound(Block.soundTypePiston), BlockMagisticsItem.class);
 		blocks.put(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure"), BlockMagisticsItem.class);
 
 		if (hungry_chest_override) {
@@ -160,9 +152,5 @@ public class ModBlocks extends CommonProxy {
 				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungryMetal), new SortingChestItemRenderer(TextureHelper.ironChestTextures));
 			}
 		}
-	}
-
-	public static void registerOres() {
-		OreDictionary.registerOre("oreEridium", new ItemStack(blockEridium, 1, 0));
 	}
 }
