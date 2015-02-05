@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -25,7 +26,7 @@ import cpw.mods.ironchest.IronChestType;
 
 @SideOnly(Side.CLIENT)
 public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRenderer {
-	public ModelChest model = new ModelChest();
+	public final ModelChest model = new ModelChest();
 	public Random rand = new Random();
 	public RenderItem itemRenderer = new RenderItem() {
 		@Override
@@ -55,16 +56,23 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 		itemRenderer.setRenderManager(RenderManager.instance);
 	}
 
-	public void render(TileChestHungryMetal tile, double x, double y, double z, float tick, int pass) {
+	private void setTextures(IronChestType type, boolean renderOverlay) {
+		bindTexture(TextureHelper.ironChestTextures[type.ordinal()]);
+
+		if (renderOverlay)
+			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_CHEST);
+	}
+
+	public void render(TileChestHungryMetal tile, double x, double y, double z, float tick) {
 		int facing = 3;
 		IronChestType type = tile.getType();
 		if (tile.hasWorldObj())
 			facing = tile.getFacing();
 
-		if (pass == 0)
-			bindTexture(TextureHelper.ironChestTextures[type.ordinal()]);
+		if (MinecraftForgeClient.getRenderPass() == 0)
+			setTextures(type, false);
 		else
-			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST);
+			setTextures(type, true);
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -72,6 +80,7 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 		GL11.glTranslatef((float) x, (float) y + 1F, (float) z + 1F);
 		GL11.glScalef(1F, -1F, -1F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
 		int k = 0;
 		if (facing == 2)
 			k = 180;
@@ -79,6 +88,7 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 			k = 90;
 		if (facing == 5)
 			k = -90;
+
 		GL11.glRotatef(k, 0F, 1F, 0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		float lidangle = tile.prevLidAngle + (tile.lidAngle - tile.prevLidAngle) * tick;
@@ -130,8 +140,6 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
-		if (tile instanceof TileChestHungryMetal)
-			for (int pass = 0; pass < 2; pass++)
-				render((TileChestHungryMetal) tile, x, y, z, tick, pass);
+		render((TileChestHungryMetal) tile, x, y, z, tick);
 	}
 }

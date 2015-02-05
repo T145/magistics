@@ -4,6 +4,7 @@ import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
@@ -13,31 +14,40 @@ import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 
 import com.dynious.refinedrelocation.lib.Resources;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TileSortingChestHungryAlchemicalRenderer extends TileEntitySpecialRenderer {
 	public final ModelChest model = new ModelChest();
 
-	public void render(TileSortingChestHungryAlchemical chest, double i, double j, double k, float tick, int pass) {
+	private void setTextures(TileSortingChestHungryAlchemical chest, boolean renderOverlay) {
+		switch (chest.getState()) {
+		case 0:
+			bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"));
+			break;
+		case 1:
+			bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"));
+			break;
+		case 2:
+			bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png"));
+			break;
+		}
+
+		if (renderOverlay)
+			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST);
+	}
+
+	public void render(TileSortingChestHungryAlchemical chest, double i, double j, double k, float tick) {
 		ForgeDirection direction = null;
 
 		if (chest.hasWorldObj())
 			direction = chest.getOrientation();
 
-		if (pass == 0)
-			switch (chest.getState()) {
-			case 0:
-				bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"));
-				break;
-			case 1:
-				bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"));
-				break;
-			case 2:
-				bindTexture(new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png"));
-				break;
-			}
+		if (MinecraftForgeClient.getRenderPass() == 0)
+			setTextures(chest, false);
 		else
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST);
+			setTextures(chest, true);
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -77,8 +87,6 @@ public class TileSortingChestHungryAlchemicalRenderer extends TileEntitySpecialR
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
-		if (tile instanceof TileSortingChestHungryAlchemical)
-			for (int pass = 0; pass < 2; pass++)
-				render((TileSortingChestHungryAlchemical) tile, x, y, z, tick, pass);
+		render((TileSortingChestHungryAlchemical) tile, x, y, z, tick);
 	}
 }

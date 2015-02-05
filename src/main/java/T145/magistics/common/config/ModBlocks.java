@@ -10,8 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import T145.magistics.api.blocks.BlockMagisticsItem;
+import T145.magistics.api.client.renderers.block.ChestItemRenderer;
 import T145.magistics.api.client.renderers.block.ChestRenderer;
-import T145.magistics.api.client.renderers.block.SortingChestItemRenderer;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryAlchemicalRenderer;
@@ -39,6 +39,7 @@ import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
 
+import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -134,23 +135,23 @@ public class ModBlocks extends CommonProxy {
 		if (Loader.isModLoaded("RefinedRelocation")) {
 			if (hungry_chest_override) {
 				tileRenderers.put(TileSortingChestHungry.class, new TileSortingChestHungryRenderer());
-				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungry), new SortingChestItemRenderer(new ResourceLocation[] {
+				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungry), new ChestItemRenderer(new ResourceLocation[] {
 						new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
-				}));
+				}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
 			}
 
 			if (Loader.isModLoaded("EE3")) {
 				tileRenderers.put(TileSortingChestHungryAlchemical.class, new TileSortingChestHungryAlchemicalRenderer());
-				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungryAlchemical), new SortingChestItemRenderer(new ResourceLocation[] {
+				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungryAlchemical), new ChestItemRenderer(new ResourceLocation[] {
 						new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"),
 						new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"),
 						new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png")
-				}));
+				}, Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST));
 			}
 
 			if (Loader.isModLoaded("IronChest")) {
 				tileRenderers.put(TileSortingChestHungryMetal.class, new TileSortingChestHungryMetalRenderer());
-				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungryMetal), new SortingChestItemRenderer(TextureHelper.ironChestTextures));
+				itemRenderers.put(Item.getItemFromBlock(blockSortingChestHungryMetal), new ChestItemRenderer(TextureHelper.ironChestTextures, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
 			}
 		}
 	}

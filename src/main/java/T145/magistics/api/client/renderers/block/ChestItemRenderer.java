@@ -7,19 +7,21 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.api.client.lib.ChestRenderHelper;
-
-import com.dynious.refinedrelocation.lib.Resources;
-
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class SortingChestItemRenderer implements IItemRenderer {
-	public ResourceLocation textures[];
+public class ChestItemRenderer implements IItemRenderer {
+	public ResourceLocation textures[], cover;
 
-	public SortingChestItemRenderer(ResourceLocation[] resources) {
+	public ChestItemRenderer(ResourceLocation[] resources) {
 		textures = resources;
+	}
+
+	public ChestItemRenderer(ResourceLocation[] resources, ResourceLocation overlay) {
+		textures = resources;
+		cover = overlay;
 	}
 
 	@Override
@@ -45,7 +47,8 @@ public class SortingChestItemRenderer implements IItemRenderer {
 					bindTexture(textures[is.getItemDamage()]);
 			ChestRenderHelper.renderChest(type);
 		} else {
-			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_CHEST);
+			if (cover != null)
+				bindTexture(cover);
 			GL11.glEnable(GL11.GL_ALPHA_TEST);
 			ChestRenderHelper.renderChest(type);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
