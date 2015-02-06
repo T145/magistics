@@ -20,7 +20,7 @@ public class BlockAestheticStructure extends Block {
 	public static IIcon icon, iconGlow;
 
 	public BlockAestheticStructure() {
-		super(Material.ground);
+		super(Material.rock);
 	}
 
 	@Override
