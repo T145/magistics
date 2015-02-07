@@ -3,13 +3,13 @@
 
 **_Adding some logistics to Thaumcraft!_**
 
-[![Codeship Status for T145/magistics](https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master)](https://codeship.com/projects/52617)
+[![Codeship Status](https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master)](https://codeship.com/projects/52617)
 
 ## Workspace Setup
-Once your deobfuscated copy of Thaumcraft is placed into the lib directory, then run one of the scripts contained in the [exec](https://github.com/T145/magistics/tree/master/exec) directory from the project's root directory and you should be all set!
+Once your deobfuscated copy of Thaumcraft is placed into the lib directory, run one of the scripts contained in the [exec](https://github.com/T145/magistics/tree/master/exec) directory from the root directory. You should be all set now!
 
-## License Stuff
-All of the wonderful license information is located in the project's license file. The project source code falls under this license. *As for the assets (images and such), they are outlined as separate content!* The original creators own them, and require their explicit permission for external usage. Please relay this message through me so I may be in the loop.
+## License
+All of the wonderful license information is located in the project's license file. Please consult both the license and myself if you wish to use component of Magistics.
 
 ## Contributing
 1. Fork it
