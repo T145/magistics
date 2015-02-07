@@ -26,7 +26,7 @@ public class BlockAestheticStructure extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		icon = r.registerIcon("magistics:decor/storage_structure");
+		icon = r.registerIcon("magistics:decor/structure");
 		iconGlow = r.registerIcon("thaumcraft:animatedglow");
 	}
 

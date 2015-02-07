@@ -28,6 +28,7 @@ public class BlockSortingChestHungryAlchemicalItem extends ItemBlock {
 		return getUnlocalizedName() + ".hungry";
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer entityPlayer, List list, boolean flag) {
 		for (int i = 0; i < size.length; i++)

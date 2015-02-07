@@ -3,9 +3,6 @@ package T145.magistics.api.client.renderers.block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
-import org.lwjgl.opengl.GL11;
-
 import T145.magistics.api.client.lib.ChestRenderHelper;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -45,14 +42,9 @@ public class ChestItemRenderer implements IItemRenderer {
 					bindTexture(textures[0]);
 				else
 					bindTexture(textures[is.getItemDamage()]);
-			ChestRenderHelper.renderChest(type);
-		} else {
-			if (cover != null)
-				bindTexture(cover);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			ChestRenderHelper.renderChest(type);
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
-		}
+		} else if (cover != null)
+			bindTexture(cover);
+		ChestRenderHelper.renderChest(type);
 	}
 
 	@Override

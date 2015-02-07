@@ -1,14 +1,10 @@
 package T145.magistics.common;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -21,21 +17,18 @@ import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigResearch;
+import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.config.Log;
-import T145.magistics.common.config.ModBlocks;
-import T145.magistics.common.config.ModItems;
 import T145.magistics.common.lib.ResearchRecipe;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy extends Log implements IGuiHandler {
-	public static CreativeTabs tabMagistics;
 	public static Configuration config;
+	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
 	public static final String category[] = {
 		"Graphics", "Blocks", "Items"
 	};
-	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
-	public static List<String> supportedMods = new ArrayList<String>();
 
 	public void sync() {
 		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
@@ -44,7 +37,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
 	}
 
-	public void preInit(File configFile) {
+	public void loadConfig(File configFile) {
 		try {
 			config = new Configuration(configFile);
 			config.load();
@@ -66,23 +59,11 @@ public class CommonProxy extends Log implements IGuiHandler {
 		}
 	}
 
-	public void init() {
-		ModBlocks.loadServer();
-		ModItems.load();
-		tabMagistics.setBackgroundImageName("magistics.png");
-
-		if (!supportedMods.isEmpty())
-			for (String supportedMod : supportedMods)
-				inform("Registered: " + supportedMod);
-	}
-
 	public void postInit() {
 		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 
-		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(ModBlocks.blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
-		new ResearchItem("HUNGRYENDERCHEST", Magistics.modid, new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), -1, 0, 1, new ItemStack(ModBlocks.blockChestHungryEnder)).setPages(new ResearchPage("tc.research_page.HUNGRYENDERCHEST.1"), ResearchRecipe.arcane("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
-		
-		
+		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(ConfigObjects.blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
+		new ResearchItem("HUNGRYENDERCHEST", Magistics.modid, new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), -1, 0, 1, new ItemStack(ConfigObjects.blockChestHungryEnder)).setPages(new ResearchPage("tc.research_page.HUNGRYENDERCHEST.1"), ResearchRecipe.arcane("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
 	}
 
 	@Override
@@ -93,19 +74,5 @@ public class CommonProxy extends Log implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
 		return null;
-	}
-
-	static {
-		tabMagistics = new CreativeTabs(Magistics.modid) {
-			@Override
-			public Item getTabIconItem() {
-				return Item.getItemFromBlock(ModBlocks.blockChestHungryEnder);
-			}
-
-			@Override
-			public boolean hasSearchBar() {
-				return true;
-			}
-		};
 	}
 }

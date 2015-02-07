@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import T145.magistics.client.lib.TextureHelper;
-import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileSortingChestHungryMetal;
 
 import com.dynious.refinedrelocation.lib.Resources;
 import com.google.common.primitives.SignedBytes;
@@ -63,7 +63,7 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_CHEST);
 	}
 
-	public void render(TileChestHungryMetal tile, double x, double y, double z, float tick) {
+	public void render(TileSortingChestHungryMetal tile, double x, double y, double z, float tick) {
 		int facing = 3;
 		IronChestType type = tile.getType();
 		if (tile.hasWorldObj())
@@ -140,6 +140,6 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
-		render((TileChestHungryMetal) tile, x, y, z, tick);
+		render((TileSortingChestHungryMetal) tile, x, y, z, tick);
 	}
 }
