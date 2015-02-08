@@ -1,4 +1,4 @@
-package T145.magistics.common.blocks;
+package T145.magistics.common.blocks.aesthetics;
 
 import java.util.List;
 
@@ -9,24 +9,22 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAesthetic extends Block {
+public class BlockAestheticStructure extends Block {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon icon, iconGlow;
 
-	public BlockAesthetic() {
+	public BlockAestheticStructure() {
 		super(Material.rock);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		icon = r.registerIcon("magistics:decor/basic");
+		icon = r.registerIcon("magistics:decor/structure");
 		iconGlow = r.registerIcon("thaumcraft:animatedglow");
 	}
 
@@ -37,8 +35,8 @@ public class BlockAesthetic extends Block {
 	}
 
 	@Override
-	public int damageDropped(int meta) {
-		return meta;
+	public int getRenderType() {
+		return renderID;
 	}
 
 	@Override
@@ -46,20 +44,5 @@ public class BlockAesthetic extends Block {
 	public void getSubBlocks(Item i, CreativeTabs t, List l) {
 		for (int j = 0; j <= 15; j++)
 			l.add(new ItemStack(i, 1, j));
-	}
-
-	@Override
-	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
-		return true;
-	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-
-	@Override
-	public int getRenderType() {
-		return renderID;
 	}
 }

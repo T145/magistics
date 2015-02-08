@@ -16,11 +16,11 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockAestheticRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 	public int id = 0;
-	public IIcon icon[], iconGlow;
+	public IIcon icon, iconGlow;
 
-	public BlockAestheticRenderer(int renderID, IIcon[] textures, IIcon glow) {
+	public BlockAestheticRenderer(int renderID, IIcon blockIcon, IIcon glow) {
 		id = renderID;
-		icon = textures;
+		icon = blockIcon;
 		iconGlow = glow;
 	}
 
@@ -38,7 +38,7 @@ public class BlockAestheticRenderer extends BlockRenderer implements ISimpleBloc
 	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
-		BlockRenderer.drawFaces(renderer, block, icon[meta], false);
+		BlockRenderer.drawFaces(renderer, block, icon, false);
 		Color c = new Color(getColor(meta));
 		GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
 		block.setBlockBounds(0.005F, 0.005F, 0.005F, 0.995F, 0.995F, 0.995F);
