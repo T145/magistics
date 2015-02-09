@@ -1,0 +1,47 @@
+tile.extendSäule.name=Basis Säule
+tile.showOffSäule.name=Showcase Säule
+tile.craftingSäule.name=Crafting Säule
+tile.furnaceSäule.name=Ofen Säule
+tile.anvilSäule.name=Anvil Säule
+tile.brewingSäule.name=Brewing Säule
+tile.diskSäule.name=Juke Säule
+tile.freezerSäule.name=Freezer Säule
+tile.potSäule.name=Pot Säule
+tile.trashSäule.name=Trash Säule
+tile.sentrySäule.name=Sentry Säule
+tile.christmas_light.name=Weihnachten Licht
+
+itemGroup.CraftingSäules=Crafting Säules
+achievement.gettingstarted=Getting Started
+achievement.gettingstarted.desc=Craft a BasicSäule
+
+achievement.recursion=Recursion I
+achievement.recursion.desc=Craft a CraftingSäule in a CraftingSäule!
+
+achievement.showoff=Recursion II
+achievement.showoff.desc=Show off your Showcase Säule!
+
+achievement.recursion3=Recursion III
+achievement.recursion3.desc=Get a present from a present!
+
+achievement.christmaspillar=Christmas Event
+achievement.christmaspillar.desc=Celebrate Christmas with us!
+
+achievement.christmasdiamond=Diamond Mania
+achievement.christmasdiamond.desc=Unwrap a Diamond!
+
+achievement.liquids=Liquid Tanks!
+achievement.liquids.desc=Store liquids in an ancient way!
+
+achievement.elysiandisc=Preparing with music!
+achievement.elysiandisc.desc=Listen to the Elysium Theme disc!
+
+tile.xmasLeaves.spruce.name=Christmas Leaves
+tile.xmasLeaves.fostimber.name=Fostimber Christmas Leaves
+tile.ChristmasTreeSapling.name=Christmas Tree Sapling
+tile.ChristmasPresent.name=Christmas Present
+craftingpillars:UranusParadiseShort=Elysium - Uranus Paradise Short
+itemCalendar2013.name + ".name=Advent Calendar 2013
+
+item.ring_base.name=Modular Ring
+item.ring_dummy.name=DOES NOTHING

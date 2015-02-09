@@ -1,0 +1,60 @@
+tile.extendPillar.name=Base Pillar
+tile.showOffPillar.name=Showcase Pillar
+tile.craftingPillar.name=Crafting Pillar
+tile.furnacePillar.name=Smelting Pillar
+tile.anvilPillar.name=Anvil Pillar
+tile.brewingPillar.name=Brewing Pillar
+tile.diskPillar.name=Juke Pillar
+tile.freezerPillar.name=Freezer Pillar
+tile.tankPillar.name=Tank Pillar
+tile.potPillar.name=Pot Pillar
+tile.trashPillar.name=Trash Pillar
+tile.sentryPillar.name=Sentry Pillar
+tile.christmas_light.name=Christmas Lights
+
+itemGroup.CraftingPillars=Crafting Pillars
+achievement.gettingstarted=Getting Started
+achievement.gettingstarted.desc=Craft a BasicPillar
+
+achievement.recursion=Recursion I
+achievement.recursion.desc=Craft a CraftingPillar in a CraftingPillar!
+
+achievement.showoff=Recursion II
+achievement.showoff.desc=Show off your Showcase Pillar!
+
+achievement.recursion3=Recursion III
+achievement.recursion3.desc=Get a present from a present!
+
+achievement.christmaspillar=Christmas Event
+achievement.christmaspillar.desc=Celebrate Christmas with us!
+
+achievement.christmasdiamond=Diamond Mania
+achievement.christmasdiamond.desc=Unwrap a Diamond!
+
+achievement.liquids=Liquid Tanks!
+achievement.liquids.desc=Store liquids in an ancient way!
+
+achievement.elysiandisc=Preparing with music!
+achievement.elysiandisc.desc=Listen to the Elysium Theme disc!
+
+tile.xmasLeaves.name=Christmas Leaves
+tile.ChristmasTreeSapling.name=Christmas Tree Sapling
+tile.present.name=Christmas Present
+craftingpillars:UranusParadiseShort=Elysium - Uranus Paradise Short
+itemCalendar2013.name=Advent Calendar 2013
+
+item.Virgacs.name=Virgács
+item.RibbonDiamond.name=Ribbon Diamond
+item.record.UranusParadise.desc=Uranus Paradise
+item.WinterFood.0.name=Christmas Candy
+item.WinterFood.1.name=Candy Cane
+item.WinterFood.2.name=Lollipop
+item.WinterFood.3.name=Gingerbread Man
+item.WinterFood.4.name=Star Biscuit
+item.WinterFood.5.name=TreeBiscuit
+item.WinterFood.6.name=Blue Szaloncukor
+item.WinterFood.7.name=Gold Szaloncukor
+item.WinterFood.8.name=Red Szaloncukor
+
+item.ring_base.name=Modular Ring
+item.ring_dummy.name=DOES NOTHING
