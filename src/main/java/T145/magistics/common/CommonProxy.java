@@ -100,6 +100,8 @@ public class CommonProxy extends Log implements IGuiHandler {
 		//			}
 		//		}
 
+		ConfigObjects.initAPI();
+
 		FreezerRecipes.addRecipe("water", new ItemStack(Blocks.ice));
 		FreezerRecipes.addRecipe("lava", new ItemStack(Blocks.obsidian));
 

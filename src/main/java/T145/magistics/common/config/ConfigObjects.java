@@ -188,8 +188,8 @@ public class ConfigObjects extends CommonProxy {
 	public static Block blockChristmasLight;
 
 	public static Item itemDiscElysium;
-	//	public static Item itemCalendar2013;
-	//	public static Item itemElysiumLoreBook;
+	// public static Item itemCalendar2013;
+	// public static Item itemElysiumLoreBook;
 	public static Item itemRibbonDiamond;
 	public static Item itemWinterFood2013;
 	public static Item itemVirgacs;
@@ -209,7 +209,7 @@ public class ConfigObjects extends CommonProxy {
 		new ItemStack(itemWinterFood2013, 2, 6),
 		new ItemStack(itemWinterFood2013, 1, 7),
 		new ItemStack(itemWinterFood2013, 4, 8),
-		//				new ItemStack(itemElysiumLoreBook, 1, 0),
+		// new ItemStack(itemElysiumLoreBook, 1, 0),
 		new ItemStack(blockCraftingPillar, 1, 0),
 		new ItemStack(blockAnvilPillar, 1, 0),
 		new ItemStack(blockFurnacePillar, 1, 0),
@@ -300,7 +300,7 @@ public class ConfigObjects extends CommonProxy {
 		tiles.add(TileEntityFurnacePillar.class);
 		tiles.add(TileEntityAnvilPillar.class);
 		tiles.add(TileEntityTankPillar.class);
-		//		tiles.add(TileEntityEnchantmentPillar.class);
+		// tiles.add(TileEntityEnchantmentPillar.class);
 		tiles.add(TileEntityBrewingPillar.class);
 		tiles.add(TileEntityDiskPlayerPillar.class);
 		tiles.add(TileEntityFreezerPillar.class);
@@ -415,6 +415,45 @@ public class ConfigObjects extends CommonProxy {
 
 		tileRenderers.put(TileEntityChristmasPresent.class, new RenderPresent());
 		tileRenderers.put(TileEntityLight.class, new RenderLight());
+
+		extendPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		showOffPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		craftingPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		furnacePillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		anvilPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		tankPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		brewingillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		diskPlayerRenderID = RenderingRegistry.getNextAvailableRenderId();
+		freezerPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		potPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		sentryPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		trashPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+		pumpPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
+
+		christmasLeavesRenderID = RenderingRegistry.getNextAvailableRenderId();
+		PresentRenderID = RenderingRegistry.getNextAvailableRenderId();
+		lightRenderID = RenderingRegistry.getNextAvailableRenderId();
+
+		RenderingRegistry.registerBlockHandler(new RenderExtendPillar());
+		RenderingRegistry.registerBlockHandler(new RenderShowOffPillar());
+		RenderingRegistry.registerBlockHandler(new RenderCraftingPillar());
+		RenderingRegistry.registerBlockHandler(new RenderFurnacePillar());
+		RenderingRegistry.registerBlockHandler(new RenderAnvilPillar());
+		RenderingRegistry.registerBlockHandler(new RenderTankPillar());
+		RenderingRegistry.registerBlockHandler(new RenderBrewingPillar());
+		RenderingRegistry.registerBlockHandler(new RenderDiskPillar());
+		RenderingRegistry.registerBlockHandler(new RenderFreezerPillar());
+		RenderingRegistry.registerBlockHandler(new RenderPotPillar());
+		RenderingRegistry.registerBlockHandler(new RenderSentryPillar());
+		RenderingRegistry.registerBlockHandler(new RenderTrashPillar());
+		RenderingRegistry.registerBlockHandler(new RenderPumpPillar());
+
+		if(winter)
+			RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
+		RenderingRegistry.registerBlockHandler(new RenderPresent());
+		RenderingRegistry.registerBlockHandler(new RenderLight());
+
+		MinecraftForgeClient.registerItemRenderer(itemRing, new RingItemRenderer());
 	}
 
 	public static void registerHandlers() {
@@ -521,48 +560,6 @@ public class ConfigObjects extends CommonProxy {
 		OreDictionary.registerOre("record", itemDiscElysium);
 		OreDictionary.registerOre("treeSapling", blockChristmasTreeSapling);
 		OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
-	}
-
-	public void initIconRegistry()
-	{
-		extendPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		showOffPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		craftingPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		furnacePillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		anvilPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		tankPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		brewingillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		diskPlayerRenderID = RenderingRegistry.getNextAvailableRenderId();
-		freezerPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		potPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		sentryPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		trashPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		pumpPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-
-		christmasLeavesRenderID = RenderingRegistry.getNextAvailableRenderId();
-		PresentRenderID = RenderingRegistry.getNextAvailableRenderId();
-		lightRenderID = RenderingRegistry.getNextAvailableRenderId();
-
-		RenderingRegistry.registerBlockHandler(new RenderExtendPillar());
-		RenderingRegistry.registerBlockHandler(new RenderShowOffPillar());
-		RenderingRegistry.registerBlockHandler(new RenderCraftingPillar());
-		RenderingRegistry.registerBlockHandler(new RenderFurnacePillar());
-		RenderingRegistry.registerBlockHandler(new RenderAnvilPillar());
-		RenderingRegistry.registerBlockHandler(new RenderTankPillar());
-		RenderingRegistry.registerBlockHandler(new RenderBrewingPillar());
-		RenderingRegistry.registerBlockHandler(new RenderDiskPillar());
-		RenderingRegistry.registerBlockHandler(new RenderFreezerPillar());
-		RenderingRegistry.registerBlockHandler(new RenderPotPillar());
-		RenderingRegistry.registerBlockHandler(new RenderSentryPillar());
-		RenderingRegistry.registerBlockHandler(new RenderTrashPillar());
-		RenderingRegistry.registerBlockHandler(new RenderPumpPillar());
-
-		if(winter)
-			RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
-		RenderingRegistry.registerBlockHandler(new RenderPresent());
-		RenderingRegistry.registerBlockHandler(new RenderLight());
-
-		MinecraftForgeClient.registerItemRenderer(itemRing, new RingItemRenderer());
 	}
 
 	public static void initAPI()

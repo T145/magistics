@@ -95,7 +95,7 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 		else
 			this.TEXTURE_DISKPILLAR = new ResourceLocation("craftingpillars:textures/models/diskPillar.png");
 
-		this.disk = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/Disk.mtl"));
+		this.disk = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/Disk.obj"));
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;

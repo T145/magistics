@@ -123,7 +123,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 		else
 			this.TEXTURE_PUMPPILLAR = new ResourceLocation("craftingpillars:textures/models/freezerPillar.png");
 
-		this.drill = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:models/pump_bottom.obj"));
+		this.drill = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/pump_bottom.obj"));
 
 		this.random = new Random();
 		this.itemRenderer = new RenderingHelper.ItemRender(false, true);

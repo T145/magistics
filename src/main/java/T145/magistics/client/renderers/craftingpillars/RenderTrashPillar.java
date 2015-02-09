@@ -42,78 +42,68 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
-{
-	private ResourceLocation TEXTURE_TRASHPILLAR;
+public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
+	public ResourceLocation TEXTURE_TRASHPILLAR;
 
-	public static ModelBase model = new ModelBase()
-	{
+	public static ModelBase model = new ModelBase() {};
 
-	};
+	public ModelRenderer BunnyTail1;
+	public ModelRenderer BunnyTail2;
+	public ModelRenderer BunnyTail3;
+	public ModelRenderer BunnyEar1;
+	public ModelRenderer BunnyEar2;
 
-	private ModelRenderer BunnyTail1;
-	private ModelRenderer BunnyTail2;
-	private ModelRenderer BunnyTail3;
-	private ModelRenderer BunnyEar1;
-	private ModelRenderer BunnyEar2;
+	public ModelRenderer Icicle1A;
+	public ModelRenderer Icicle1B;
+	public ModelRenderer Icicle1C;
+	public ModelRenderer Icicle2A;
+	public ModelRenderer Icicle2B;
+	public ModelRenderer Icicle2C;
+	public ModelRenderer Icicle3A;
+	public ModelRenderer Icicle3B;
+	public ModelRenderer Icicle4A;
+	public ModelRenderer Icicle4B;
+	public ModelRenderer Icicle5A;
+	public ModelRenderer Icicle5B;
+	public ModelRenderer Icicle5C;
+	public ModelRenderer Icicle6A;
+	public ModelRenderer Icicle6B;
+	public ModelRenderer Icicle6C;
+	public ModelRenderer Icicle7A;
+	public ModelRenderer Icicle7B;
+	public ModelRenderer Icicle7C;
+	public ModelRenderer Icicle8A;
+	public ModelRenderer Icicle8B;
+	public ModelRenderer Icicle8C;
+	public ModelRenderer Icicle8D;
 
-	private ModelRenderer Icicle1A;
-	private ModelRenderer Icicle1B;
-	private ModelRenderer Icicle1C;
-	private ModelRenderer Icicle2A;
-	private ModelRenderer Icicle2B;
-	private ModelRenderer Icicle2C;
-	private ModelRenderer Icicle3A;
-	private ModelRenderer Icicle3B;
-	private ModelRenderer Icicle4A;
-	private ModelRenderer Icicle4B;
-	private ModelRenderer Icicle5A;
-	private ModelRenderer Icicle5B;
-	private ModelRenderer Icicle5C;
-	private ModelRenderer Icicle6A;
-	private ModelRenderer Icicle6B;
-	private ModelRenderer Icicle6C;
-	private ModelRenderer Icicle7A;
-	private ModelRenderer Icicle7B;
-	private ModelRenderer Icicle7C;
-	private ModelRenderer Icicle8A;
-	private ModelRenderer Icicle8B;
-	private ModelRenderer Icicle8C;
-	private ModelRenderer Icicle8D;
+	public ModelRenderer Icicle9A;
+	public ModelRenderer Icicle9B;
+	public ModelRenderer Icicle10A;
+	public ModelRenderer Icicle10B;
+	public ModelRenderer Icicle10C;
+	public ModelRenderer Icicle11A;
+	public ModelRenderer Icicle11B;
+	public ModelRenderer Icicle11C;
 
-	private ModelRenderer Icicle9A;
-	private ModelRenderer Icicle9B;
-	private ModelRenderer Icicle10A;
-	private ModelRenderer Icicle10B;
-	private ModelRenderer Icicle10C;
-	private ModelRenderer Icicle11A;
-	private ModelRenderer Icicle11B;
-	private ModelRenderer Icicle11C;
-
-	private Random random;
-	private RenderingHelper.ItemRender itemRenderer;
-	private RenderingHelper.ItemRender resultRenderer;
+	public Random random = new Random();
+	public RenderingHelper.ItemRender itemRenderer = new RenderingHelper.ItemRender(false, true);
+	public RenderingHelper.ItemRender resultRenderer = new RenderingHelper.ItemRender(true, true);
 
 	public IModelCustom trash;
 
-	public RenderTrashPillar()
-	{
+	public RenderTrashPillar() {
 		if (Magistics.proxy.winter)
-			this.TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillarFrozen.png");
+			TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillarFrozen.png");
 		else
-			this.TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillar.png");
+			TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillar.png");
 
-		this.trash = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/trashPillar.obj"));
-
-		this.random = new Random();
-		this.itemRenderer = new RenderingHelper.ItemRender(false, true);
-		this.resultRenderer = new RenderingHelper.ItemRender(true, true);
+		trash = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/trashPillar.obj"));
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
 
-		if (Magistics.proxy.easter)
-		{
+		if (Magistics.proxy.easter) {
 			BunnyTail1 = new ModelRenderer(model, 0, 35);
 			BunnyTail1.addBox(0F, 0F, 0F, 2, 4, 2);
 			BunnyTail1.setRotationPoint(-1F, 18F, 7F);
@@ -146,248 +136,242 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 			setRotation(BunnyEar2, 0F, 0F, 0F);
 		}
 
-		if (Magistics.proxy.winter)
-		{
-			this.Icicle1A = new ModelRenderer(model, 122, 60);
-			this.Icicle1A.addBox(0F, 0F, 0F, 1, 2, 2);
-			this.Icicle1A.setRotationPoint(6F, 11F, -5F);
-			this.Icicle1A.setTextureSize(128, 64);
-			this.Icicle1A.mirror = true;
-			this.setRotation(this.Icicle1A, 0F, 0F, 0F);
-			this.Icicle1B = new ModelRenderer(model, 124, 58);
-			this.Icicle1B.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle1B.setRotationPoint(6F, 11F, -3F);
-			this.Icicle1B.setTextureSize(128, 64);
-			this.Icicle1B.mirror = true;
-			this.setRotation(this.Icicle1B, 0F, 0F, 0F);
-			this.Icicle1C = new ModelRenderer(model, 124, 56);
-			this.Icicle1C.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle1C.setRotationPoint(6F, 13F, -4F);
-			this.Icicle1C.setTextureSize(128, 64);
-			this.Icicle1C.mirror = true;
-			this.setRotation(this.Icicle1C, 0F, 0F, 0F);
-			this.Icicle2A = new ModelRenderer(model, 122, 50);
-			this.Icicle2A.addBox(0F, 0F, 0F, 1, 2, 2);
-			this.Icicle2A.setRotationPoint(6F, 11F, 0F);
-			this.Icicle2A.setTextureSize(128, 64);
-			this.Icicle2A.mirror = true;
-			this.setRotation(this.Icicle2A, 0F, 0F, 0F);
-			this.Icicle2B = new ModelRenderer(model, 124, 47);
-			this.Icicle2B.addBox(0F, 0F, 0F, 1, 2, 1);
-			this.Icicle2B.setRotationPoint(6F, 13F, 0F);
-			this.Icicle2B.setTextureSize(128, 64);
-			this.Icicle2B.mirror = true;
-			this.setRotation(this.Icicle2B, 0F, 0F, 0F);
-			this.Icicle2C = new ModelRenderer(model, 124, 54);
-			this.Icicle2C.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle2C.setRotationPoint(6F, 11F, -1F);
-			this.Icicle2C.setTextureSize(128, 64);
-			this.Icicle2C.mirror = true;
-			this.setRotation(this.Icicle2C, 0F, 0F, 0F);
-			this.Icicle3A = new ModelRenderer(model, 120, 43);
-			this.Icicle3A.addBox(0F, 0F, 0F, 1, 1, 3);
-			this.Icicle3A.setRotationPoint(6F, 11F, 3F);
-			this.Icicle3A.setTextureSize(128, 64);
-			this.Icicle3A.mirror = true;
-			this.setRotation(this.Icicle3A, 0F, 0F, 0F);
-			this.Icicle3B = new ModelRenderer(model, 124, 40);
-			this.Icicle3B.addBox(0F, 0F, 0F, 1, 2, 1);
-			this.Icicle3B.setRotationPoint(6F, 12F, 4F);
-			this.Icicle3B.setTextureSize(128, 64);
-			this.Icicle3B.mirror = true;
-			this.setRotation(this.Icicle3B, 0F, 0F, 0F);
-			this.Icicle4A = new ModelRenderer(model, 122, 38);
-			this.Icicle4A.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle4A.setRotationPoint(3F, 11F, 6F);
-			this.Icicle4A.setTextureSize(128, 64);
-			this.Icicle4A.mirror = true;
-			this.setRotation(this.Icicle4A, 0F, 0F, 0F);
-			this.Icicle4B = new ModelRenderer(model, 124, 36);
-			this.Icicle4B.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle4B.setRotationPoint(4F, 12F, 6F);
-			this.Icicle4B.setTextureSize(128, 64);
-			this.Icicle4B.mirror = true;
-			this.setRotation(this.Icicle4B, 0F, 0F, 0F);
-			this.Icicle5A = new ModelRenderer(model, 114, 61);
-			this.Icicle5A.addBox(0F, 0F, 0F, 3, 2, 1);
-			this.Icicle5A.setRotationPoint(-1F, 11F, 6F);
-			this.Icicle5A.setTextureSize(128, 64);
-			this.Icicle5A.mirror = true;
-			this.setRotation(this.Icicle5A, 0F, 0F, 0F);
-			this.Icicle5B = new ModelRenderer(model, 116, 59);
-			this.Icicle5B.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle5B.setRotationPoint(-1F, 13F, 6F);
-			this.Icicle5B.setTextureSize(128, 64);
-			this.Icicle5B.mirror = true;
-			this.setRotation(this.Icicle5B, 0F, 0F, 0F);
-			this.Icicle5C = new ModelRenderer(model, 120, 56);
-			this.Icicle5C.addBox(0F, 0F, 0F, 1, 2, 1);
-			this.Icicle5C.setRotationPoint(0F, 14F, 6F);
-			this.Icicle5C.setTextureSize(128, 64);
-			this.Icicle5C.mirror = true;
-			this.setRotation(this.Icicle5C, 0F, 0F, 0F);
-			this.Icicle6A = new ModelRenderer(model, 114, 54);
-			this.Icicle6A.addBox(0F, 0F, 0F, 4, 1, 1);
-			this.Icicle6A.setRotationPoint(-5F, 11F, 6F);
-			this.Icicle6A.setTextureSize(128, 64);
-			this.Icicle6A.mirror = true;
-			this.setRotation(this.Icicle6A, 0F, 0F, 0F);
-			this.Icicle6B = new ModelRenderer(model, 116, 52);
-			this.Icicle6B.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle6B.setRotationPoint(-4F, 12F, 6F);
-			this.Icicle6B.setTextureSize(128, 64);
-			this.Icicle6B.mirror = true;
-			this.setRotation(this.Icicle6B, 0F, 0F, 0F);
-			this.Icicle6C = new ModelRenderer(model, 118, 50);
-			this.Icicle6C.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle6C.setRotationPoint(-4F, 13F, 6F);
-			this.Icicle6C.setTextureSize(128, 64);
-			this.Icicle6C.mirror = true;
-			this.setRotation(this.Icicle6C, 0F, 0F, 0F);
-			this.Icicle7A = new ModelRenderer(model, 104, 59);
-			this.Icicle7A.addBox(0F, 0F, 0F, 1, 1, 4);
-			this.Icicle7A.setRotationPoint(-7F, 11F, 1F);
-			this.Icicle7A.setTextureSize(128, 64);
-			this.Icicle7A.mirror = true;
-			this.setRotation(this.Icicle7A, 0F, 0F, 0F);
-			this.Icicle7B = new ModelRenderer(model, 114, 46);
-			this.Icicle7B.addBox(0F, 0F, 0F, 1, 2, 2);
-			this.Icicle7B.setRotationPoint(-7F, 12F, 2F);
-			this.Icicle7B.setTextureSize(128, 64);
-			this.Icicle7B.mirror = true;
-			this.setRotation(this.Icicle7B, 0F, 0F, 0F);
-			this.Icicle7C = new ModelRenderer(model, 116, 44);
-			this.Icicle7C.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle7C.setRotationPoint(-7F, 14F, 2F);
-			this.Icicle7C.setTextureSize(128, 64);
-			this.Icicle7C.mirror = true;
-			this.setRotation(this.Icicle7C, 0F, 0F, 0F);
-			this.Icicle8A = new ModelRenderer(model, 104, 54);
-			this.Icicle8A.addBox(0F, 0F, 0F, 1, 1, 4);
-			this.Icicle8A.setRotationPoint(-7F, 11F, -5F);
-			this.Icicle8A.setTextureSize(128, 64);
-			this.Icicle8A.mirror = true;
-			this.setRotation(this.Icicle8A, 0F, 0F, 0F);
-			this.Icicle8B = new ModelRenderer(model, 106, 50);
-			this.Icicle8B.addBox(0F, 0F, 0F, 1, 1, 3);
-			this.Icicle8B.setRotationPoint(-7F, 12F, -4F);
-			this.Icicle8B.setTextureSize(128, 64);
-			this.Icicle8B.mirror = true;
-			this.setRotation(this.Icicle8B, 0F, 0F, 0F);
-			this.Icicle8C = new ModelRenderer(model, 108, 46);
-			this.Icicle8C.addBox(0F, 0F, 0F, 1, 2, 2);
-			this.Icicle8C.setRotationPoint(-7F, 13F, -4F);
-			this.Icicle8C.setTextureSize(128, 64);
-			this.Icicle8C.mirror = true;
-			this.setRotation(this.Icicle8C, 0F, 0F, 0F);
-			this.Icicle8D = new ModelRenderer(model, 112, 44);
-			this.Icicle8D.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle8D.setRotationPoint(-7F, 15F, -3F);
-			this.Icicle8D.setTextureSize(128, 64);
-			this.Icicle8D.mirror = true;
-			this.setRotation(this.Icicle8D, 0F, 0F, 0F);
+		if (Magistics.proxy.winter) {
+			Icicle1A = new ModelRenderer(model, 122, 60);
+			Icicle1A.addBox(0F, 0F, 0F, 1, 2, 2);
+			Icicle1A.setRotationPoint(6F, 11F, -5F);
+			Icicle1A.setTextureSize(128, 64);
+			Icicle1A.mirror = true;
+			setRotation(Icicle1A, 0F, 0F, 0F);
+			Icicle1B = new ModelRenderer(model, 124, 58);
+			Icicle1B.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle1B.setRotationPoint(6F, 11F, -3F);
+			Icicle1B.setTextureSize(128, 64);
+			Icicle1B.mirror = true;
+			setRotation(Icicle1B, 0F, 0F, 0F);
+			Icicle1C = new ModelRenderer(model, 124, 56);
+			Icicle1C.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle1C.setRotationPoint(6F, 13F, -4F);
+			Icicle1C.setTextureSize(128, 64);
+			Icicle1C.mirror = true;
+			setRotation(Icicle1C, 0F, 0F, 0F);
+			Icicle2A = new ModelRenderer(model, 122, 50);
+			Icicle2A.addBox(0F, 0F, 0F, 1, 2, 2);
+			Icicle2A.setRotationPoint(6F, 11F, 0F);
+			Icicle2A.setTextureSize(128, 64);
+			Icicle2A.mirror = true;
+			setRotation(Icicle2A, 0F, 0F, 0F);
+			Icicle2B = new ModelRenderer(model, 124, 47);
+			Icicle2B.addBox(0F, 0F, 0F, 1, 2, 1);
+			Icicle2B.setRotationPoint(6F, 13F, 0F);
+			Icicle2B.setTextureSize(128, 64);
+			Icicle2B.mirror = true;
+			setRotation(Icicle2B, 0F, 0F, 0F);
+			Icicle2C = new ModelRenderer(model, 124, 54);
+			Icicle2C.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle2C.setRotationPoint(6F, 11F, -1F);
+			Icicle2C.setTextureSize(128, 64);
+			Icicle2C.mirror = true;
+			setRotation(Icicle2C, 0F, 0F, 0F);
+			Icicle3A = new ModelRenderer(model, 120, 43);
+			Icicle3A.addBox(0F, 0F, 0F, 1, 1, 3);
+			Icicle3A.setRotationPoint(6F, 11F, 3F);
+			Icicle3A.setTextureSize(128, 64);
+			Icicle3A.mirror = true;
+			setRotation(Icicle3A, 0F, 0F, 0F);
+			Icicle3B = new ModelRenderer(model, 124, 40);
+			Icicle3B.addBox(0F, 0F, 0F, 1, 2, 1);
+			Icicle3B.setRotationPoint(6F, 12F, 4F);
+			Icicle3B.setTextureSize(128, 64);
+			Icicle3B.mirror = true;
+			setRotation(Icicle3B, 0F, 0F, 0F);
+			Icicle4A = new ModelRenderer(model, 122, 38);
+			Icicle4A.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle4A.setRotationPoint(3F, 11F, 6F);
+			Icicle4A.setTextureSize(128, 64);
+			Icicle4A.mirror = true;
+			setRotation(Icicle4A, 0F, 0F, 0F);
+			Icicle4B = new ModelRenderer(model, 124, 36);
+			Icicle4B.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle4B.setRotationPoint(4F, 12F, 6F);
+			Icicle4B.setTextureSize(128, 64);
+			Icicle4B.mirror = true;
+			setRotation(Icicle4B, 0F, 0F, 0F);
+			Icicle5A = new ModelRenderer(model, 114, 61);
+			Icicle5A.addBox(0F, 0F, 0F, 3, 2, 1);
+			Icicle5A.setRotationPoint(-1F, 11F, 6F);
+			Icicle5A.setTextureSize(128, 64);
+			Icicle5A.mirror = true;
+			setRotation(Icicle5A, 0F, 0F, 0F);
+			Icicle5B = new ModelRenderer(model, 116, 59);
+			Icicle5B.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle5B.setRotationPoint(-1F, 13F, 6F);
+			Icicle5B.setTextureSize(128, 64);
+			Icicle5B.mirror = true;
+			setRotation(Icicle5B, 0F, 0F, 0F);
+			Icicle5C = new ModelRenderer(model, 120, 56);
+			Icicle5C.addBox(0F, 0F, 0F, 1, 2, 1);
+			Icicle5C.setRotationPoint(0F, 14F, 6F);
+			Icicle5C.setTextureSize(128, 64);
+			Icicle5C.mirror = true;
+			setRotation(Icicle5C, 0F, 0F, 0F);
+			Icicle6A = new ModelRenderer(model, 114, 54);
+			Icicle6A.addBox(0F, 0F, 0F, 4, 1, 1);
+			Icicle6A.setRotationPoint(-5F, 11F, 6F);
+			Icicle6A.setTextureSize(128, 64);
+			Icicle6A.mirror = true;
+			setRotation(Icicle6A, 0F, 0F, 0F);
+			Icicle6B = new ModelRenderer(model, 116, 52);
+			Icicle6B.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle6B.setRotationPoint(-4F, 12F, 6F);
+			Icicle6B.setTextureSize(128, 64);
+			Icicle6B.mirror = true;
+			setRotation(Icicle6B, 0F, 0F, 0F);
+			Icicle6C = new ModelRenderer(model, 118, 50);
+			Icicle6C.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle6C.setRotationPoint(-4F, 13F, 6F);
+			Icicle6C.setTextureSize(128, 64);
+			Icicle6C.mirror = true;
+			setRotation(Icicle6C, 0F, 0F, 0F);
+			Icicle7A = new ModelRenderer(model, 104, 59);
+			Icicle7A.addBox(0F, 0F, 0F, 1, 1, 4);
+			Icicle7A.setRotationPoint(-7F, 11F, 1F);
+			Icicle7A.setTextureSize(128, 64);
+			Icicle7A.mirror = true;
+			setRotation(Icicle7A, 0F, 0F, 0F);
+			Icicle7B = new ModelRenderer(model, 114, 46);
+			Icicle7B.addBox(0F, 0F, 0F, 1, 2, 2);
+			Icicle7B.setRotationPoint(-7F, 12F, 2F);
+			Icicle7B.setTextureSize(128, 64);
+			Icicle7B.mirror = true;
+			setRotation(Icicle7B, 0F, 0F, 0F);
+			Icicle7C = new ModelRenderer(model, 116, 44);
+			Icicle7C.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle7C.setRotationPoint(-7F, 14F, 2F);
+			Icicle7C.setTextureSize(128, 64);
+			Icicle7C.mirror = true;
+			setRotation(Icicle7C, 0F, 0F, 0F);
+			Icicle8A = new ModelRenderer(model, 104, 54);
+			Icicle8A.addBox(0F, 0F, 0F, 1, 1, 4);
+			Icicle8A.setRotationPoint(-7F, 11F, -5F);
+			Icicle8A.setTextureSize(128, 64);
+			Icicle8A.mirror = true;
+			setRotation(Icicle8A, 0F, 0F, 0F);
+			Icicle8B = new ModelRenderer(model, 106, 50);
+			Icicle8B.addBox(0F, 0F, 0F, 1, 1, 3);
+			Icicle8B.setRotationPoint(-7F, 12F, -4F);
+			Icicle8B.setTextureSize(128, 64);
+			Icicle8B.mirror = true;
+			setRotation(Icicle8B, 0F, 0F, 0F);
+			Icicle8C = new ModelRenderer(model, 108, 46);
+			Icicle8C.addBox(0F, 0F, 0F, 1, 2, 2);
+			Icicle8C.setRotationPoint(-7F, 13F, -4F);
+			Icicle8C.setTextureSize(128, 64);
+			Icicle8C.mirror = true;
+			setRotation(Icicle8C, 0F, 0F, 0F);
+			Icicle8D = new ModelRenderer(model, 112, 44);
+			Icicle8D.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle8D.setRotationPoint(-7F, 15F, -3F);
+			Icicle8D.setTextureSize(128, 64);
+			Icicle8D.mirror = true;
+			setRotation(Icicle8D, 0F, 0F, 0F);
 
-			this.Icicle9A = new ModelRenderer(model, 122, 38);
-			this.Icicle9A.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle9A.setRotationPoint(3F, 11F, -7F);
-			this.Icicle9A.setTextureSize(128, 64);
-			this.Icicle9A.mirror = true;
-			this.setRotation(this.Icicle9A, 0F, 0F, 0F);
-			this.Icicle9B = new ModelRenderer(model, 124, 36);
-			this.Icicle9B.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle9B.setRotationPoint(4F, 12F, -7F);
-			this.Icicle9B.setTextureSize(128, 64);
-			this.Icicle9B.mirror = true;
-			this.setRotation(this.Icicle9B, 0F, 0F, 0F);
-			this.Icicle10A = new ModelRenderer(model, 114, 61);
-			this.Icicle10A.addBox(0F, 0F, 0F, 3, 2, 1);
-			this.Icicle10A.setRotationPoint(-1F, 11F, -7F);
-			this.Icicle10A.setTextureSize(128, 64);
-			this.Icicle10A.mirror = true;
-			this.setRotation(this.Icicle10A, 0F, 0F, 0F);
-			this.Icicle10B = new ModelRenderer(model, 116, 59);
-			this.Icicle10B.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle10B.setRotationPoint(-1F, 13F, -7F);
-			this.Icicle10B.setTextureSize(128, 64);
-			this.Icicle10B.mirror = true;
-			this.setRotation(this.Icicle10B, 0F, 0F, 0F);
-			this.Icicle10C = new ModelRenderer(model, 120, 56);
-			this.Icicle10C.addBox(0F, 0F, 0F, 1, 2, 1);
-			this.Icicle10C.setRotationPoint(0F, 14F, -7F);
-			this.Icicle10C.setTextureSize(128, 64);
-			this.Icicle10C.mirror = true;
-			this.setRotation(this.Icicle10C, 0F, 0F, 0F);
-			this.Icicle11A = new ModelRenderer(model, 114, 54);
-			this.Icicle11A.addBox(0F, 0F, 0F, 4, 1, 1);
-			this.Icicle11A.setRotationPoint(-5F, 11F, -7F);
-			this.Icicle11A.setTextureSize(128, 64);
-			this.Icicle11A.mirror = true;
-			this.setRotation(this.Icicle11A, 0F, 0F, 0F);
-			this.Icicle11B = new ModelRenderer(model, 116, 52);
-			this.Icicle11B.addBox(0F, 0F, 0F, 2, 1, 1);
-			this.Icicle11B.setRotationPoint(-4F, 12F, -7F);
-			this.Icicle11B.setTextureSize(128, 64);
-			this.Icicle11B.mirror = true;
-			this.setRotation(this.Icicle11B, 0F, 0F, 0F);
-			this.Icicle11C = new ModelRenderer(model, 118, 50);
-			this.Icicle11C.addBox(0F, 0F, 0F, 1, 1, 1);
-			this.Icicle11C.setRotationPoint(-4F, 13F, -7F);
-			this.Icicle11C.setTextureSize(128, 64);
-			this.Icicle11C.mirror = true;
-			this.setRotation(this.Icicle11C, 0F, 0F, 0F);
+			Icicle9A = new ModelRenderer(model, 122, 38);
+			Icicle9A.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle9A.setRotationPoint(3F, 11F, -7F);
+			Icicle9A.setTextureSize(128, 64);
+			Icicle9A.mirror = true;
+			setRotation(Icicle9A, 0F, 0F, 0F);
+			Icicle9B = new ModelRenderer(model, 124, 36);
+			Icicle9B.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle9B.setRotationPoint(4F, 12F, -7F);
+			Icicle9B.setTextureSize(128, 64);
+			Icicle9B.mirror = true;
+			setRotation(Icicle9B, 0F, 0F, 0F);
+			Icicle10A = new ModelRenderer(model, 114, 61);
+			Icicle10A.addBox(0F, 0F, 0F, 3, 2, 1);
+			Icicle10A.setRotationPoint(-1F, 11F, -7F);
+			Icicle10A.setTextureSize(128, 64);
+			Icicle10A.mirror = true;
+			setRotation(Icicle10A, 0F, 0F, 0F);
+			Icicle10B = new ModelRenderer(model, 116, 59);
+			Icicle10B.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle10B.setRotationPoint(-1F, 13F, -7F);
+			Icicle10B.setTextureSize(128, 64);
+			Icicle10B.mirror = true;
+			setRotation(Icicle10B, 0F, 0F, 0F);
+			Icicle10C = new ModelRenderer(model, 120, 56);
+			Icicle10C.addBox(0F, 0F, 0F, 1, 2, 1);
+			Icicle10C.setRotationPoint(0F, 14F, -7F);
+			Icicle10C.setTextureSize(128, 64);
+			Icicle10C.mirror = true;
+			setRotation(Icicle10C, 0F, 0F, 0F);
+			Icicle11A = new ModelRenderer(model, 114, 54);
+			Icicle11A.addBox(0F, 0F, 0F, 4, 1, 1);
+			Icicle11A.setRotationPoint(-5F, 11F, -7F);
+			Icicle11A.setTextureSize(128, 64);
+			Icicle11A.mirror = true;
+			setRotation(Icicle11A, 0F, 0F, 0F);
+			Icicle11B = new ModelRenderer(model, 116, 52);
+			Icicle11B.addBox(0F, 0F, 0F, 2, 1, 1);
+			Icicle11B.setRotationPoint(-4F, 12F, -7F);
+			Icicle11B.setTextureSize(128, 64);
+			Icicle11B.mirror = true;
+			setRotation(Icicle11B, 0F, 0F, 0F);
+			Icicle11C = new ModelRenderer(model, 118, 50);
+			Icicle11C.addBox(0F, 0F, 0F, 1, 1, 1);
+			Icicle11C.setRotationPoint(-4F, 13F, -7F);
+			Icicle11C.setTextureSize(128, 64);
+			Icicle11C.mirror = true;
+			setRotation(Icicle11C, 0F, 0F, 0F);
 		}
 	}
 
-	public void render(float f)
-	{
-		if (Magistics.proxy.winter)
-		{
-			this.Icicle1A.render(f);
-			this.Icicle1B.render(f);
-			this.Icicle1C.render(f);
-			this.Icicle2A.render(f);
-			this.Icicle2B.render(f);
-			this.Icicle2C.render(f);
-			this.Icicle3A.render(f);
-			this.Icicle3B.render(f);
-			this.Icicle4A.render(f);
-			this.Icicle4B.render(f);
-			this.Icicle5A.render(f);
-			this.Icicle5B.render(f);
-			this.Icicle5C.render(f);
-			this.Icicle6A.render(f);
-			this.Icicle6B.render(f);
-			this.Icicle6C.render(f);
-			this.Icicle7A.render(f);
-			this.Icicle7B.render(f);
-			this.Icicle7C.render(f);
-			this.Icicle8A.render(f);
-			this.Icicle8B.render(f);
-			this.Icicle8C.render(f);
-			this.Icicle8D.render(f);
+	public void render(float f) {
+		if (Magistics.proxy.winter) {
+			Icicle1A.render(f);
+			Icicle1B.render(f);
+			Icicle1C.render(f);
+			Icicle2A.render(f);
+			Icicle2B.render(f);
+			Icicle2C.render(f);
+			Icicle3A.render(f);
+			Icicle3B.render(f);
+			Icicle4A.render(f);
+			Icicle4B.render(f);
+			Icicle5A.render(f);
+			Icicle5B.render(f);
+			Icicle5C.render(f);
+			Icicle6A.render(f);
+			Icicle6B.render(f);
+			Icicle6C.render(f);
+			Icicle7A.render(f);
+			Icicle7B.render(f);
+			Icicle7C.render(f);
+			Icicle8A.render(f);
+			Icicle8B.render(f);
+			Icicle8C.render(f);
+			Icicle8D.render(f);
 
-			this.Icicle9A.render(f);
-			this.Icicle9B.render(f);
-			this.Icicle10A.render(f);
-			this.Icicle10B.render(f);
-			this.Icicle10C.render(f);
-			this.Icicle11A.render(f);
-			this.Icicle11B.render(f);
-			this.Icicle11C.render(f);
+			Icicle9A.render(f);
+			Icicle9B.render(f);
+			Icicle10A.render(f);
+			Icicle10B.render(f);
+			Icicle10C.render(f);
+			Icicle11A.render(f);
+			Icicle11B.render(f);
+			Icicle11C.render(f);
 		}
 	}
 
-	private void setRotation(ModelRenderer model, float x, float y, float z)
-	{
+	public void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
-	{
-
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
 		glPushMatrix();
 		TileEntityTrashPillar workTile = (TileEntityTrashPillar) tile;
 
@@ -398,8 +382,8 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		glTranslated(0.5D, 0, 0.5D);
 		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
 		glRotatef(180F, 1F, 0F, 0F);
-		Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_TRASHPILLAR);
-		this.render(0.0625F);
+		Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		render(0.0625F);
 
 		glPopMatrix();
 
@@ -408,20 +392,19 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		float scale = 0.0255F;
 		glScalef(scale, scale, scale);
 		// glDisable(GL_LIGHTING);
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_TRASHPILLAR);
-		this.trash.renderPart("TrashPillar");
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		trash.renderPart("TrashPillar");
 		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
 
 		if (workTile.isOpen)
-			this.trash.renderPart("DoorsOpen");
+			trash.renderPart("DoorsOpen");
 		else
-			this.trash.renderPart("DoorsClosed");
+			trash.renderPart("DoorsClosed");
 
 		// glEnable(GL_LIGHTING);
 		glPopMatrix();
-		
-		if (Magistics.proxy.easter)
-		{
+
+		if (Magistics.proxy.easter) {
 			glPushMatrix();
 			glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 			glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
@@ -438,33 +421,27 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		}
 	}
 
-	private static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
-	private static final ResourceLocation endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
-	private static final Random field_110644_e = new Random(31100L);
+	public static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
+	public static final ResourceLocation endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
+	public static final Random field_110644_e = new Random(31100L);
 	FloatBuffer field_76908_a = GLAllocation.createDirectFloatBuffer(16);
 
-	/**
-	 * Renders the End Portal.
-	 */
-	private void renderEndPortal(double x, double y, double z)
-	{
-		float f1 = (float)this.field_147501_a.field_147560_j;
-		float f2 = (float)this.field_147501_a.field_147561_k;
-		float f3 = (float)this.field_147501_a.field_147558_l;
+	public void renderEndPortal(double x, double y, double z) {
+		float f1 = (float) field_147501_a.field_147560_j;
+		float f2 = (float) field_147501_a.field_147561_k;
+		float f3 = (float) field_147501_a.field_147558_l;
 		GL11.glDisable(GL11.GL_LIGHTING);
 		field_110644_e.setSeed(31100L);
 		float f4 = 11F / 16F;
 
-		for (int i = 0; i < 16; ++i)
-		{
+		for (int i = 0; i < 16; ++i) {
 			GL11.glPushMatrix();
 			float f5 = (float) (16 - i);
 			float f6 = 0.0625F;
 			float f7 = 1.0F / (f5 + 1.0F);
 
-			if (i == 0)
-			{
-				this.bindTexture(enderPortalEndSkyTextures);
+			if (i == 0) {
+				bindTexture(enderPortalEndSkyTextures);
 				f7 = 0.1F;
 				f5 = 65.0F;
 				f6 = 0.125F;
@@ -472,9 +449,8 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			}
 
-			if (i == 1)
-			{
-				this.bindTexture(endPortalTextures);
+			if (i == 1) {
+				bindTexture(endPortalTextures);
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
 				f6 = 0.5F;
@@ -490,10 +466,10 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 			GL11.glTexGeni(GL11.GL_T, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_OBJECT_LINEAR);
 			GL11.glTexGeni(GL11.GL_R, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_OBJECT_LINEAR);
 			GL11.glTexGeni(GL11.GL_Q, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_EYE_LINEAR);
-			GL11.glTexGen(GL11.GL_S, GL11.GL_OBJECT_PLANE, this.func_76907_a(1.0F, 0.0F, 0.0F, 0.0F));
-			GL11.glTexGen(GL11.GL_T, GL11.GL_OBJECT_PLANE, this.func_76907_a(0.0F, 0.0F, 1.0F, 0.0F));
-			GL11.glTexGen(GL11.GL_R, GL11.GL_OBJECT_PLANE, this.func_76907_a(0.0F, 0.0F, 0.0F, 1.0F));
-			GL11.glTexGen(GL11.GL_Q, GL11.GL_EYE_PLANE, this.func_76907_a(0.0F, 1.0F, 0.0F, 0.0F));
+			GL11.glTexGen(GL11.GL_S, GL11.GL_OBJECT_PLANE, func_76907_a(1.0F, 0.0F, 0.0F, 0.0F));
+			GL11.glTexGen(GL11.GL_T, GL11.GL_OBJECT_PLANE, func_76907_a(0.0F, 0.0F, 1.0F, 0.0F));
+			GL11.glTexGen(GL11.GL_R, GL11.GL_OBJECT_PLANE, func_76907_a(0.0F, 0.0F, 0.0F, 1.0F));
+			GL11.glTexGen(GL11.GL_Q, GL11.GL_EYE_PLANE, func_76907_a(0.0F, 1.0F, 0.0F, 0.0F));
 			GL11.glEnable(GL11.GL_TEXTURE_GEN_S);
 			GL11.glEnable(GL11.GL_TEXTURE_GEN_T);
 			GL11.glEnable(GL11.GL_TEXTURE_GEN_R);
@@ -515,8 +491,7 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 			float f12 = field_110644_e.nextFloat() * 0.5F + 0.4F;
 			float f13 = field_110644_e.nextFloat() * 0.5F + 0.5F;
 
-			if (i == 0)
-			{
+			if (i == 0) {
 				f13 = 1.0F;
 				f12 = 1.0F;
 				f11 = 1.0F;
@@ -543,51 +518,46 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 
 	}
 
-	private FloatBuffer func_76907_a(float par1, float par2, float par3, float par4)
-	{
-		this.field_76908_a.clear();
-		this.field_76908_a.put(par1).put(par2).put(par3).put(par4);
-		this.field_76908_a.flip();
-		return this.field_76908_a;
+	public FloatBuffer func_76907_a(float par1, float par2, float par3, float par4) {
+		field_76908_a.clear();
+		field_76908_a.put(par1).put(par2).put(par3).put(par4);
+		field_76908_a.flip();
+		return field_76908_a;
 	}
 
 	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
-	{
+	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		glPushMatrix();
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_DEPTH_TEST);
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_TRASHPILLAR);
-		this.render(0.0625F);
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		render(0.0625F);
 		glRotatef(180F, 1F, 0F, 0F);
 
 		glTranslated(0, -1.5F, 0);
 		float scale = 0.0255F;
 		glScalef(scale, scale, scale);
 
-		this.trash.renderPart("TrashPillar");
+		trash.renderPart("TrashPillar");
 		glPopAttrib();
 		glPopMatrix();
 	}
 
 	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
-	{
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		return false;
 	}
 
 	@Override
-	public boolean shouldRender3DInInventory(int i)
-	{
+	public boolean shouldRender3DInInventory(int i) {
 		return true;
 	}
 
 	@Override
-	public int getRenderId()
-	{
+	public int getRenderId() {
 		return ConfigObjects.trashPillarRenderID;
 	}
 }
