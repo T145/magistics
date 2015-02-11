@@ -32,7 +32,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
-import T145.magistics.common.tiles.craftingpillars.TileEntityBrewingPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarBrewing;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -318,7 +318,7 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 		this.render(0.0625F);
 		glPopMatrix();
 
-		TileEntityBrewingPillar pillarTile = (TileEntityBrewingPillar) tile;
+		TilePillarBrewing pillarTile = (TilePillarBrewing) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 
 		glPushMatrix();
@@ -358,7 +358,7 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 				//processed item
 				if (pillarTile.canBrew() && pillarTile.getBrewTime() > 0  && !pillarTile.getStackInSlot(i).isItemEqual(new ItemStack(Items.glass_bottle))) {
 					int j = pillarTile.getStackInSlot(i).getItemDamage();
-					int k = TileEntityBrewingPillar.getPotionResult(j, pillarTile.getStackInSlot(4));
+					int k = TilePillarBrewing.getPotionResult(j, pillarTile.getStackInSlot(4));
 					List list = Items.potionitem.getEffects(j);
 					List list1 = Items.potionitem.getEffects(k);
 					if (((j <= 0 || list != list1) && (list == null || !list.equals(list1) && list1 != null)) || !ItemPotion.isSplash(j) && ItemPotion.isSplash(k))

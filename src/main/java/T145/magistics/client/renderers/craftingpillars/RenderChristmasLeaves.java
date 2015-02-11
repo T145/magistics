@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLeavesBlock;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimpleBlockRenderingHandler
@@ -16,7 +16,7 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderer.setRenderBoundsFromBlock(block);
 		drawBlock(renderer, block, block.getIcon(0, metadata));
-		drawBlock(renderer, block, ChristmasLeavesBlock.glowing);
+		drawBlock(renderer, block, BlockChristmasLeaves.glowing);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 		Tessellator t = Tessellator.instance;
 		t.setBrightness(160);
 
-		IIcon tex = ChristmasLeavesBlock.glowing;
+		IIcon tex = BlockChristmasLeaves.glowing;
 
 		renderer.renderFaceXPos(block, x, y, z, tex);
 		renderer.renderFaceXNeg(block, x, y, z, tex);
@@ -80,6 +80,6 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 
 	@Override
 	public int getRenderId() {
-		return ChristmasLeavesBlock.renderID;
+		return BlockChristmasLeaves.renderID;
 	}
 }

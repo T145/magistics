@@ -25,7 +25,7 @@ import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
 import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.tiles.craftingpillars.TileEntityCraftingPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarCrafting;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -456,7 +456,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		}
 		glPopMatrix();
 
-		TileEntityCraftingPillar workTile = (TileEntityCraftingPillar) tile;
+		TilePillarCrafting workTile = (TilePillarCrafting) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 		citem.hoverStart = ConfigObjects.floatingItems ? workTile.rot : 0F;
 

@@ -38,7 +38,7 @@ import org.lwjgl.opengl.GL11;
 
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
-import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTrash;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -373,7 +373,7 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
 		glPushMatrix();
-		TileEntityTrashPillar workTile = (TileEntityTrashPillar) tile;
+		TilePillarTrash workTile = (TilePillarTrash) tile;
 
 		glTranslated(x, y + 1.5D, z);
 		if (workTile.isOpen)

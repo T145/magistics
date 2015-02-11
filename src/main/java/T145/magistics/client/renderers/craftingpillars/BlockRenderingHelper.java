@@ -26,28 +26,28 @@ public class BlockRenderingHelper {
 		Tessellator tessellator = Tessellator.instance;
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, -1.0F, 0.0F);
-		renderblocks.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, i1);
+		tessellator.setNormal(0F, -1F, 0F);
+		renderblocks.renderFaceYNeg(block, 0D, 0D, 0D, i1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 1.0F, 0.0F);
-		renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, i2);
+		tessellator.setNormal(0F, 1F, 0F);
+		renderblocks.renderFaceYPos(block, 0D, 0D, 0D, i2);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, 1.0F);
-		renderblocks.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, i3);
+		tessellator.setNormal(0F, 0F, 1F);
+		renderblocks.renderFaceXNeg(block, 0D, 0D, 0D, i3);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, -1.0F);
-		renderblocks.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, i4);
+		tessellator.setNormal(0F, 0F, -1F);
+		renderblocks.renderFaceXPos(block, 0D, 0D, 0D, i4);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(1.0F, 0.0F, 0.0F);
-		renderblocks.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, i5);
+		tessellator.setNormal(1F, 0F, 0F);
+		renderblocks.renderFaceZNeg(block, 0D, 0D, 0D, i5);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-		renderblocks.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, i6);
+		tessellator.setNormal(-1F, 0F, 0F);
+		renderblocks.renderFaceZPos(block, 0D, 0D, 0D, i6);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
@@ -55,28 +55,28 @@ public class BlockRenderingHelper {
 	public static void drawFaces(Tessellator tessellator, RenderBlocks renderblocks, Block block, IIcon i1, IIcon i2, IIcon i3, IIcon i4, IIcon i5, IIcon i6) {
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, -1.0F, 0.0F);
-		renderblocks.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, i1);
+		tessellator.setNormal(0F, -1F, 0F);
+		renderblocks.renderFaceYNeg(block, 0D, 0D, 0D, i1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 1.0F, 0.0F);
-		renderblocks.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, i2);
+		tessellator.setNormal(0F, 1F, 0F);
+		renderblocks.renderFaceYPos(block, 0D, 0D, 0D, i2);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, 1.0F);
-		renderblocks.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, i3);
+		tessellator.setNormal(0F, 0F, 1F);
+		renderblocks.renderFaceXNeg(block, 0D, 0D, 0D, i3);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, -1.0F);
-		renderblocks.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, i4);
+		tessellator.setNormal(0F, 0F, -1F);
+		renderblocks.renderFaceXPos(block, 0D, 0D, 0D, i4);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(1.0F, 0.0F, 0.0F);
-		renderblocks.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, i5);
+		tessellator.setNormal(1F, 0F, 0F);
+		renderblocks.renderFaceZNeg(block, 0D, 0D, 0D, i5);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
-		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-		renderblocks.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, i6);
+		tessellator.setNormal(-1F, 0F, 0F);
+		renderblocks.renderFaceZPos(block, 0D, 0D, 0D, i6);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
@@ -85,21 +85,15 @@ public class BlockRenderingHelper {
 		int brightness = block.getMixedBrightnessForBlock(blockAccess, i, j, k);
 
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess,
-				i, j, k));
-
-		float f = 1.0F;
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, i, j, k));
 
 		int l = block.colorMultiplier(blockAccess, i, j, k);
-		float f1 = (l >> 16 & 255) / 255.0F;
-		float f2 = (l >> 8 & 255) / 255.0F;
-		float f3 = (l & 255) / 255.0F;
-		float f4;
+		float f = 1F, f1 = (l >> 16 & 255) / 255F, f2 = (l >> 8 & 255) / 255F,  f3 = (l & 255) / 255F, f4;
 
 		if (EntityRenderer.anaglyphEnable) {
-			float f5 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
-			f4 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
-			float f6 = (f1 * 30.0F + f3 * 70.0F) / 100.0F;
+			float f5 = (f1 * 30F + f2 * 59F + f3 * 11F) / 100F;
+			f4 = (f1 * 30F + f2 * 70F) / 100F;
+			float f6 = (f1 * 30F + f3 * 70F) / 100F;
 			f1 = f5;
 			f2 = f4;
 			f3 = f6;

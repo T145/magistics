@@ -14,118 +14,88 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
+import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTurntable;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockPillarTurntable extends BlockPillarBase
-{
+public class BlockPillarTurntable extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public BlockPillarTurntable(Material mat)
-	{
+	public BlockPillarTurntable(Material mat) {
 		super(mat);
 	}
 
 	@Override
-	public int getRenderType()
-	{
+	public int getRenderType() {
 		return renderID;
 	}
 
 	@Override
-	public boolean renderAsNormalBlock()
-	{
+	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
+	public boolean isOpaqueCube() {
 		return false;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-	{
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		world.setBlockMetadataWithNotify(x, y, z, determineOrientation(world, x, y, z, entity), 0);
 	}
 
-	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity)
-	{
+	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity) {
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
-	/**
-	 * Called upon block activation (right click on the block.)
-	 */
+
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
-	{
-		TileEntityDiskPlayerPillar tile = ((TileEntityDiskPlayerPillar)world.getTileEntity(x, y, z));
-		if (tile.getDisk() == null)
-		{
-			if(side == 1)
-			{
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		TilePillarTurntable tile = ((TilePillarTurntable) world.getTileEntity(x, y, z));
+		if (tile.getDisk() == null) {
+			if (side == 1) {
 				ItemStack disk = player.getCurrentEquippedItem();
-				if(disk != null && disk.getItem() instanceof ItemRecord)
-				{
-					//					if(disk.isItemEqual(new ItemStack(CraftingPillars.itemDiscElysium)))
-					//						player.addStat(CraftingPillars.achievementDisc, 1);
-					this.insertRecord(world, x, y, z, player.getCurrentEquippedItem());
+				if (disk != null && disk.getItem() instanceof ItemRecord) {
+					if (disk.isItemEqual(new ItemStack(ConfigObjects.itemDiscElysium)))
+						player.addStat(ConfigObjects.achievementDisc, 1);
+					insertRecord(world, x, y, z, player.getCurrentEquippedItem());
 					world.playAuxSFXAtEntity(null, 1005, x, y, z, Item.getIdFromItem(disk.getItem()));
-					if(!player.capabilities.isCreativeMode)
+					if (!player.capabilities.isCreativeMode)
 						--player.getCurrentEquippedItem().stackSize;
 					return true;
 				}
 			}
+		} else if (side == 1) {
+			ejectRecord(world, x, y, z);
+			return true;
 		}
-		else
-		{
-			if(side == 1)
-			{
-				this.ejectRecord(world, x, y, z);
-				return true;
-			}
-		}
-		if(side != 1) tile.showNum = !tile.showNum;
+		if (side != 1)
+			tile.showNum = !tile.showNum;
 		return true;
 	}
 
-	/**
-	 * Insert the specified music disc in the jukebox at the given coordinates
-	 */
-	public void insertRecord(World world, int x, int y, int z, ItemStack item)
-	{
-		if (!world.isRemote)
-		{
-			TileEntityDiskPlayerPillar tileentityrecordplayer = (TileEntityDiskPlayerPillar)world.getTileEntity(x, y, z);
+	public void insertRecord(World world, int x, int y, int z, ItemStack item) {
+		if (!world.isRemote) {
+			TilePillarTurntable tileentityrecordplayer = (TilePillarTurntable) world.getTileEntity(x, y, z);
 
 			if (tileentityrecordplayer != null)
-			{
 				tileentityrecordplayer.setDisk(item.copy());
-			}
 		}
 	}
 
-	/**
-	 * Ejects the current record inside of the jukebox.
-	 */
-	public void ejectRecord(World world, int x, int y, int z)
-	{
-		if (!world.isRemote)
-		{
-			TileEntityDiskPlayerPillar tileentityrecordplayer = (TileEntityDiskPlayerPillar)world.getTileEntity(x, y, z);
+	public void ejectRecord(World world, int x, int y, int z) {
+		if (!world.isRemote) {
+			TilePillarTurntable tileentityrecordplayer = (TilePillarTurntable) world.getTileEntity(x, y, z);
 
-			if (tileentityrecordplayer != null)
-			{
+			if (tileentityrecordplayer != null) {
 				ItemStack itemstack = tileentityrecordplayer.getDisk();
 
-				if (itemstack != null)
-				{
+				if (itemstack != null) {
 					world.playAuxSFX(1005, x, y, z, 0);
-					world.playRecord((String)null, x, y, z);
-					tileentityrecordplayer.setDisk((ItemStack)null);
+					world.playRecord((String) null, x, y, z);
+					tileentityrecordplayer.setDisk((ItemStack) null);
 					float f = 0.7F;
 					double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
 					double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.2D + 0.6D;
@@ -139,69 +109,43 @@ public class BlockPillarTurntable extends BlockPillarBase
 		}
 	}
 
-	/**
-	 * Called on server worlds only when the block has been replaced by a different block ID, or the same block with a
-	 * different metadata value, but before the new metadata value is set. Args: World, x, y, z, old block ID, old
-	 * metadata
-	 */
 	@Override
-	public void breakBlock(World par1World, int par2, int par3, int par4, Block block, int par6)
-	{
-		this.ejectRecord(par1World, par2, par3, par4);
-		super.breakBlock(par1World, par2, par3, par4, block, par6);
+	public void breakBlock(World world, int par2, int par3, int par4, Block block, int par6) {
+		ejectRecord(world, par2, par3, par4);
+		super.breakBlock(world, par2, par3, par4, block, par6);
 	}
 
-	/**
-	 * Drops the block items with a specified chance of dropping the specified items
-	 */
 	@Override
-	public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
-	{
-		if (!par1World.isRemote)
-		{
-			super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, par6, 0);
-		}
+	public void dropBlockAsItemWithChance(World world, int par2, int par3, int par4, int par5, float par6, int par7) {
+		if (!world.isRemote)
+			super.dropBlockAsItemWithChance(world, par2, par3, par4, par5, par6, 0);
 	}
 
-	/**
-	 * Returns a new instance of a block's tile entity class. Called on placing the block.
-	 */
 	@Override
-	public TileEntity createTileEntity(World world, int meta)
-	{
-		return new TileEntityDiskPlayerPillar();
+	public TileEntity createTileEntity(World world, int meta) {
+		return new TilePillarTurntable();
 	}
 
-	/**
-	 * If this returns true, then comparators facing away from this block will use the value from
-	 * getComparatorInputOverride instead of the actual redstone signal strength.
-	 */
-	public boolean hasComparatorInputOverride()
-	{
+	@Override
+	public boolean hasComparatorInputOverride() {
 		return true;
 	}
 
-	/**
-	 * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
-	 * strength when this block inputs to a comparator.
-	 */
-	public int getComparatorInputOverride(World world, int x, int y, int p_149736_4_, int z)
-	{
-		ItemStack itemstack = ((TileEntityDiskPlayerPillar)world.getTileEntity(x, y, z)).getDisk();
+	@Override
+	public int getComparatorInputOverride(World world, int x, int y, int p_149736_4_, int z) {
+		ItemStack itemstack = ((TilePillarTurntable) world.getTileEntity(x, y, z)).getDisk();
 		return itemstack == null ? 0 : Item.getIdFromItem(itemstack.getItem()) + 1 - Item.getIdFromItem(Items.record_13);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister itemIcon)
-	{
-		this.blockIcon = itemIcon.registerIcon("craftingpillars:craftingPillar_side");
+	public void registerBlockIcons(IIconRegister r) {
+		blockIcon = r.registerIcon("craftingpillars:craftingPillar_side");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int par1, int par2)
-	{
-		return this.blockIcon;
+	public IIcon getIcon(int par1, int par2) {
+		return blockIcon;
 	}
 }

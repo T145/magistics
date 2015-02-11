@@ -14,60 +14,51 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTrash;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockPillarTrash extends BlockPillarBase
-{
+public class BlockPillarTrash extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public BlockPillarTrash(Material mat)
-	{
+	public BlockPillarTrash(Material mat) {
 		super(mat);
 		setBlockBounds(0, 0, 0, 1F, 15F / 16F, 1F);
 	}
 
 	@Override
-	public int getRenderType()
-	{
+	public int getRenderType() {
 		return renderID;
 	}
 
 	@Override
-	public boolean renderAsNormalBlock()
-	{
+	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
+	public boolean isOpaqueCube() {
 		return false;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-	{
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		world.setBlockMetadataWithNotify(x, y, z, determineOrientation(world, x, y, z, entity), 0);
 	}
 
-	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity)
-	{
+	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity) {
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
-	{
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (world.isRemote)
 			return true;
 
-		TileEntityTrashPillar pillarTile = (TileEntityTrashPillar) world.getTileEntity(x, y, z);
+		TilePillarTrash pillarTile = (TilePillarTrash) world.getTileEntity(x, y, z);
 
-		if (!player.isSneaking() && player.getCurrentEquippedItem() == null)
-		{
+		if (!player.isSneaking() && player.getCurrentEquippedItem() == null) {
 			pillarTile.isOpen = !pillarTile.isOpen;
 			pillarTile.onInventoryChanged();
 			world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, "random.click", 0.3F, world.rand.nextFloat() * 0.1F + 0.5F);
@@ -78,89 +69,57 @@ public class BlockPillarTrash extends BlockPillarBase
 		return false;
 	}
 
-	/**
-	 * Lets the block know when one of its neighbor changes. Doesn't know which
-	 * neighbor changed (coordinates passed are their own) Args: x, y, z,
-	 * neighbor blockID
-	 */
 	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
-	{
-		if (world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockIndirectlyGettingPowered(x, y - 1, z))
-		{
-			TileEntityTrashPillar pillarTile = (TileEntityTrashPillar) world.getTileEntity(x, y, z);
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+		if (world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockIndirectlyGettingPowered(x, y - 1, z)) {
+			TilePillarTrash pillarTile = (TilePillarTrash) world.getTileEntity(x, y, z);
 
 			pillarTile.isOpen = !pillarTile.isOpen;
 			pillarTile.onInventoryChanged();
 
 			world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, "random.click", 0.3F, world.rand.nextFloat() * 0.1F + 0.9F);
-
 		}
 	}
 
-	/**
-	 * Triggered whenever an entity collides with this block (enters into the
-	 * block). Args: world, x, y, z, entity
-	 */
 	@Override
-	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
-	{
-		if (entity instanceof EntityItem)
-		{
-			TileEntityTrashPillar pillarTile = (TileEntityTrashPillar) world.getTileEntity(x, y, z);
-			if (pillarTile.isOpen)
-			{
-				if (world.isRemote)
-				{
+	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+		if (entity instanceof EntityItem) {
+			TilePillarTrash pillarTile = (TilePillarTrash) world.getTileEntity(x, y, z);
+			if (pillarTile.isOpen) {
+				if (world.isRemote) {
 					world.spawnParticle("largesmoke", entity.posX, entity.posY, entity.posZ, 0.0D, 0.0D, 0.0D);
 					world.playSoundEffect(entity.posX, entity.posY, entity.posZ, "random.fizz", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-
 				} else
-				{
 					entity.setDead();
-				}
 			}
 		}
 	}
 
-	/**
-	 * A randomly called display update to be able to add particles or other
-	 * items for display
-	 */
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-	{
-		TileEntityTrashPillar pillarTile = (TileEntityTrashPillar) world.getTileEntity(x, y, z);
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+		TilePillarTrash pillarTile = (TilePillarTrash) world.getTileEntity(x, y, z);
 
-		if (pillarTile.isOpen)
-		{
-			double d0 = (double) ((float) x + rand.nextFloat());
-			double d1 = (double) ((float) y + 0.8F);
-			double d2 = (double) ((float) z + rand.nextFloat());
+		if (pillarTile.isOpen) {
+			double d0 = (double) ((float) x + rand.nextFloat()), d1 = (double) ((float) y + 0.8F), d2 = (double) ((float) z + rand.nextFloat());
 			world.spawnParticle("smoke", d0, d1, d2, 0D, 0D, 0D);
 		}
-
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int meta)
-	{
-		TileEntityTrashPillar tile = new TileEntityTrashPillar();
-		return tile;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister itemIcon)
-	{
-		this.blockIcon = itemIcon.registerIcon("craftingpillars:craftingPillar_side");
+	public TileEntity createTileEntity(World world, int meta) {
+		return new TilePillarTrash();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int par1, int par2)
-	{
-		return this.blockIcon;
+	public void registerBlockIcons(IIconRegister r) {
+		blockIcon = r.registerIcon("craftingpillars:craftingPillar_side");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int par1, int par2) {
+		return blockIcon;
 	}
 }

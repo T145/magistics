@@ -8,18 +8,49 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import T145.magistics.common.Magistics;
+import baubles.api.IBauble;
 
-public class TileEntityTrashPillar extends BaseTileEntity implements IInventory, ISidedInventory
+public class TilePillarDisplay extends TileBase implements IInventory, ISidedInventory
 {
 	private ItemStack[] inventory = new ItemStack[this.getSizeInventory()];
 
+	// @SideOnly(Side.CLIENT)
+	public float rot = 0F;
+
 	public boolean showNum = false;
-	public boolean isOpen = false;
 
 	@Override
 	public void updateEntity()
 	{
+		if(this.worldObj.isRemote)
+		{
+			this.rot += 0.1F;
+			if(this.rot >= 360F)
+				this.rot -= 360F;
+		}
+
 		super.updateEntity();
+		
+		if(inventory[0] != null && inventory[0].getItem() instanceof IBauble)
+		{
+			try
+			{
+				((IBauble) inventory[0].getItem()).onWornTick(inventory[0], worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 16));
+			}
+			catch (Exception e)
+			{
+				System.out.println("Baubles " + inventory[0].getItem().getUnlocalizedName() + " has a problem running in the Show-off Pillar!");
+			}
+			
+		}
+		
+//		try
+//		{
+//			inventory[0].getItem().onUpdate(inventory[0], worldObj, null, 0, true);
+//		} catch (Exception e)
+//		{
+//			System.out.println("[Crafting Pillars] error: inventory[0].getItem().onUpdate(inventory[0], worldObj, null, 0, true)\n " + e.getStackTrace());
+//		}
 	}
 
 	@Override
@@ -39,7 +70,6 @@ public class TileEntityTrashPillar extends BaseTileEntity implements IInventory,
 		}
 
 		this.showNum = nbt.getBoolean("showNum");
-		this.isOpen = nbt.getBoolean("isOpen");
 	}
 
 	@Override
@@ -59,7 +89,6 @@ public class TileEntityTrashPillar extends BaseTileEntity implements IInventory,
 		}
 		nbt.setTag("Items", nbtlist);
 		nbt.setBoolean("showNum", this.showNum);
-		nbt.setBoolean("isOpen", this.isOpen);
 	}
 
 	@Override
@@ -165,6 +194,12 @@ public class TileEntityTrashPillar extends BaseTileEntity implements IInventory,
 	}
 
 	@Override
+	public boolean hasCustomInventoryName()
+	{
+		return false;
+	}
+
+	@Override
 	public int getInventoryStackLimit()
 	{
 		return 64;
@@ -183,14 +218,9 @@ public class TileEntityTrashPillar extends BaseTileEntity implements IInventory,
 	@Override
 	public String getInventoryName()
 	{
-		return "Trash Pillar";
+		return "Showcase Pillar";
 	}
 
-	@Override
-	public boolean hasCustomInventoryName()
-	{
-		return false;
-	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack)
@@ -219,7 +249,7 @@ public class TileEntityTrashPillar extends BaseTileEntity implements IInventory,
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemstack, int side)
 	{
-		return false;
+		return true;
 	}
 
 }

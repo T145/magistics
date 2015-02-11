@@ -20,203 +20,149 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import T145.magistics.common.tiles.craftingpillars.TileEntityFurnacePillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarFurnace;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockPillarFurnace extends BlockPillarBase
-{
+public class BlockPillarFurnace extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public BlockPillarFurnace(Material mat)
-	{
+	public BlockPillarFurnace(Material mat) {
 		super(mat);
 	}
 
 	@Override
-	public int getRenderType()
-	{
+	public int getRenderType() {
 		return renderID;
 	}
 
 	@Override
-	public boolean renderAsNormalBlock()
-	{
+	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
+	public boolean isOpaqueCube() {
 		return false;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-	{
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		world.setBlockMetadataWithNotify(x, y, z, determineOrientation(world, x, y, z, entity), 0);
 	}
 
-	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity)
-	{
-		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+	public static int determineOrientation(World world, int x, int y, int z, EntityLivingBase entity) {
+		return MathHelper.floor_double(entity.rotationYaw * 4F / 360F + 0.5D) & 3;
 	}
 
 	@Override
-	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
-	{
-		if(!world.isRemote)
-		{
-			TileEntityFurnacePillar pillarTile = (TileEntityFurnacePillar) world.getTileEntity(x, y, z);
+	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
+		if (!world.isRemote) {
+			TilePillarFurnace pillarTile = (TilePillarFurnace) world.getTileEntity(x, y, z);
 
-			if(pillarTile.getStackInSlot(2) != null)
-			{
-				if(player.isSneaking())
-				{
-					this.onCrafting(pillarTile.getStackInSlot(2), player);
+			if (pillarTile.getStackInSlot(2) != null)
+				if (player.isSneaking()) {
+					onCrafting(pillarTile.getStackInSlot(2), player);
 					pillarTile.dropItemFromSlot(2, pillarTile.getStackInSlot(2).stackSize, player);
-				}
-				else
-				{
+				} else {
 					ItemStack itemStack = pillarTile.getStackInSlot(2).copy();
 					itemStack.stackSize = 1;
-					this.onCrafting(itemStack, player);
+					onCrafting(itemStack, player);
 					pillarTile.dropItemFromSlot(2, 1, player);
 				}
-			}
 		} else
-		{
-			for (int i = 0; i < 7; ++i)
-			{
+			for (int i = 0; i < 7; i++) {
 				double d0 = world.rand.nextGaussian() * 0.02D;
 				double d1 = world.rand.nextGaussian() * 0.02D;
 				double d2 = world.rand.nextGaussian() * 0.02D;
 				world.spawnParticle("heart", x + (double) (world.rand.nextFloat()), y + 1, z + (double) (world.rand.nextFloat()), d0, d1, d2);
 			}
-		}
 	}
 
-	public void onCrafting(ItemStack itemstack, EntityPlayer player)//?field_75228_b
-	{
-		int field_75228_b = itemstack.stackSize;
-		itemstack.onCrafting(player.worldObj, player, field_75228_b);
+	public void onCrafting(ItemStack is, EntityPlayer player) {
+		int stackSize = is.stackSize;
+		is.onCrafting(player.worldObj, player, stackSize);
 
-		if(itemstack != null)
-		{
-			if (!player.worldObj.isRemote)
-			{
-				int i = field_75228_b;
-				float f = FurnaceRecipes.smelting().func_151398_b(itemstack);
+		if (is != null) {
+			if (!player.worldObj.isRemote) {
+				int i = stackSize;
+				float f = FurnaceRecipes.smelting().func_151398_b(is);
 				int j;
 
-				if (f == 0.0F)
-				{
+				if (f == 0F)
 					i = 0;
-				}
-				else if (f < 1.0F)
-				{
-					j = MathHelper.floor_float(i * f);
-
-					if (j < MathHelper.ceiling_float_int(i * f) && (float)Math.random() < i * f - j)
-					{
-						++j;
-					}
-
+				else if (f < 1F) {
+					for (j = MathHelper.floor_float(i * f); j < MathHelper.ceiling_float_int(i * f) && (float) Math.random() < i * f - j; j++);
 					i = j;
 				}
 
-				while (i > 0)
-				{
+				while (i > 0) {
 					j = EntityXPOrb.getXPSplit(i);
 					i -= j;
 					player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY + 0.5D, player.posZ + 0.5D, j));
 				}
 			}
 
-			field_75228_b = 0;
+			stackSize = 0;
 
-			FMLCommonHandler.instance().firePlayerSmeltedEvent(player, itemstack);
+			FMLCommonHandler.instance().firePlayerSmeltedEvent(player, is);
 
-			if (itemstack.getItem() == Items.iron_ingot)
-			{
+			if (is.getItem() == Items.iron_ingot)
 				player.addStat(AchievementList.acquireIron, 1);
-			}
 
-			if (itemstack.getItem() == Items.cooked_fished)
-			{
+			if (is.getItem() == Items.cooked_fished)
 				player.addStat(AchievementList.cookFish, 1);
-			}
 		}
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
-	{
-		if(world.isRemote)
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (world.isRemote)
 			return true;
 
-		TileEntityFurnacePillar pillarTile = (TileEntityFurnacePillar) world.getTileEntity(x, y, z);
+		TilePillarFurnace pillarTile = (TilePillarFurnace) world.getTileEntity(x, y, z);
 
-		if(!player.isSneaking() && hitY < 1F && (player.inventory.getCurrentItem() == null || !TileEntityFurnace.isItemFuel(player.inventory.getCurrentItem())))
-		{
+		if (!player.isSneaking() && hitY < 1F && (player.inventory.getCurrentItem() == null || !TileEntityFurnace.isItemFuel(player.inventory.getCurrentItem()))) {
 			pillarTile.showNum = !pillarTile.showNum;
 			pillarTile.onInventoryChanged();
 		}
 
-		if(player.isSneaking())
-		{
-			if(hitY < 1F)
-			{
+		if (player.isSneaking()) {
+			if (hitY < 1F)
 				pillarTile.dropItemFromSlot(1, 1, player);
-			}
 			else
-			{
 				pillarTile.dropItemFromSlot(0, 1, player);
-			}
-		}
-		else if(player.getCurrentEquippedItem() != null)
-		{
-			if(hitY < 1F)
-			{
-				if(pillarTile.getStackInSlot(1) == null)
-				{
+		} else if (player.getCurrentEquippedItem() != null) {
+			if (hitY < 1F) {
+				if (pillarTile.getStackInSlot(1) == null) {
 					ItemStack in = player.getCurrentEquippedItem().copy();
 					in.stackSize = 1;
-					if(TileEntityFurnace.isItemFuel(in))
-					{
+					if (TileEntityFurnace.isItemFuel(in)) {
 						pillarTile.setInventorySlotContents(1, in);
 
-						if(!player.capabilities.isCreativeMode)
+						if (!player.capabilities.isCreativeMode)
 							player.getCurrentEquippedItem().stackSize--;
 					}
-				}
-				else if (pillarTile.getStackInSlot(1).isItemEqual(player.getCurrentEquippedItem()) && (pillarTile.getStackInSlot(1).stackSize < pillarTile.getStackInSlot(1).getMaxStackSize()))
-				{
-					if(!player.capabilities.isCreativeMode)
+				} else if (pillarTile.getStackInSlot(1).isItemEqual(player.getCurrentEquippedItem()) && (pillarTile.getStackInSlot(1).stackSize < pillarTile.getStackInSlot(1).getMaxStackSize())) {
+					if (!player.capabilities.isCreativeMode)
 						player.getCurrentEquippedItem().stackSize--;
 
 					pillarTile.decrStackSize(1, -1);
 				}
-			}
-			else
-			{
-				if(pillarTile.getStackInSlot(0) == null)
-				{
+			} else {
+				if (pillarTile.getStackInSlot(0) == null) {
 					ItemStack in = player.getCurrentEquippedItem().copy();
 					in.stackSize = 1;
-					if(FurnaceRecipes.smelting().getSmeltingResult(in) != null)
-					{
+					if (FurnaceRecipes.smelting().getSmeltingResult(in) != null) {
 						pillarTile.setInventorySlotContents(0, in);
 
-						if(!player.capabilities.isCreativeMode)
+						if (!player.capabilities.isCreativeMode)
 							player.getCurrentEquippedItem().stackSize--;
 					}
-				}
-				else if(pillarTile.getStackInSlot(0).isItemEqual(player.getCurrentEquippedItem()) && (pillarTile.getStackInSlot(0).stackSize < pillarTile.getStackInSlot(0).getMaxStackSize()))
-				{
-					if(!player.capabilities.isCreativeMode)
+				} else if (pillarTile.getStackInSlot(0).isItemEqual(player.getCurrentEquippedItem()) && (pillarTile.getStackInSlot(0).stackSize < pillarTile.getStackInSlot(0).getMaxStackSize())) {
+					if (!player.capabilities.isCreativeMode)
 						player.getCurrentEquippedItem().stackSize--;
 
 					pillarTile.decrStackSize(0, -1);
@@ -228,20 +174,16 @@ public class BlockPillarFurnace extends BlockPillarBase
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int par6)
-	{
-		if(!world.isRemote)
-		{
-			TileEntityFurnacePillar pillarTile = (TileEntityFurnacePillar) world.getTileEntity(x, y, z);
+	public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
+		if (!world.isRemote) {
+			TilePillarFurnace pillarTile = (TilePillarFurnace) world.getTileEntity(x, y, z);
 
-			for(int i = 0; i < pillarTile.getSizeInventory(); i++)
-			{
-				if(pillarTile.getStackInSlot(i) != null)
-				{
+			for (int i = 0; i < pillarTile.getSizeInventory(); i++) {
+				if (pillarTile.getStackInSlot(i) != null) {
 					EntityItem itemDropped = new EntityItem(world, x + 0.5D, y, z + 0.5D, pillarTile.getStackInSlot(i));
 					itemDropped.motionX = itemDropped.motionY = itemDropped.motionZ = 0D;
 
-					if(pillarTile.getStackInSlot(i).hasTagCompound())
+					if (pillarTile.getStackInSlot(i).hasTagCompound())
 						itemDropped.getEntityItem().setTagCompound((NBTTagCompound) pillarTile.getStackInSlot(i).getTagCompound().copy());
 
 					world.spawnEntityInWorld(itemDropped);
@@ -253,24 +195,17 @@ public class BlockPillarFurnace extends BlockPillarBase
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int meta)
-	{
-		TileEntityFurnacePillar tile = new TileEntityFurnacePillar();
-		return tile;
+	public TileEntity createTileEntity(World world, int meta) {
+		return new TilePillarFurnace();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	/**
-	 * A randomly called display update to be able to add particles or other items for display
-	 */
-	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-	{
-		if(((TileEntityFurnacePillar) world.getTileEntity(x, y, z)).burnTime > 0)
-		{
-			double rx = x + rand.nextDouble() / 2 + 0.25D;
-			double ry = y + rand.nextDouble() / 2 + 0.25D;
-			double rz = z + rand.nextDouble() / 2 + 0.25D;
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+		TilePillarFurnace furnace = (TilePillarFurnace) world.getTileEntity(x, y, z);
+
+		if (furnace.burnTime > 0) {
+			double rx = x + rand.nextDouble() / 2 + 0.25D, ry = y + rand.nextDouble() / 2 + 0.25D, rz = z + rand.nextDouble() / 2 + 0.25D;
 
 			world.spawnParticle("smoke", rx, ry, rz, 0D, 0D, 0D);
 			world.spawnParticle("flame", rx, ry, rz, 0D, 0D, 0D);
@@ -281,8 +216,8 @@ public class BlockPillarFurnace extends BlockPillarBase
 	@SideOnly(Side.CLIENT)
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile instanceof TileEntityFurnacePillar) {
-			TileEntityFurnacePillar workPillar = (TileEntityFurnacePillar) tile;
+		if (tile instanceof TilePillarFurnace) {
+			TilePillarFurnace workPillar = (TilePillarFurnace) tile;
 			return workPillar.getLightLevel();
 		}
 		return super.getLightValue(world, x, y, z);
@@ -290,15 +225,13 @@ public class BlockPillarFurnace extends BlockPillarBase
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister itemIcon)
-	{
-		this.blockIcon = itemIcon.registerIcon("craftingpillars:craftingPillar_side");
+	public void registerBlockIcons(IIconRegister r) {
+		blockIcon = r.registerIcon("craftingpillars:craftingPillar_side");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int par1, int par2)
-	{
-		return this.blockIcon;
+	public IIcon getIcon(int side, int meta) {
+		return blockIcon;
 	}
 }

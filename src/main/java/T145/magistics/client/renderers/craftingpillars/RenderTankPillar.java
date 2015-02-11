@@ -36,7 +36,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import T145.magistics.client.lib.Blobs;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
-import T145.magistics.common.tiles.craftingpillars.TileEntityTankPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTank;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -353,9 +353,9 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 		}
 		glPopMatrix();
 
-		TileEntityTankPillar tank = ((TileEntityTankPillar) tile);
+		TilePillarTank tank = ((TilePillarTank) tile);
 
-		if (tank.showNum && !tank.isEmpty)
+		if (tank.showNum && !tank.empty)
 		{
 			glPushMatrix();
 			glTranslated(x + 0.5D, y + 1, z + 0.5D);
@@ -370,7 +370,7 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 
 		}
 
-		if (tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid == null || tank.isEmpty)
+		if (tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid == null || tank.empty)
 			return;
 		EntityClientPlayerMP player = FMLClientHandler.instance().getClient().thePlayer;
 		if (player.getDistanceSq(tile.xCoord, tile.yCoord, tile.zCoord) < 128)

@@ -22,8 +22,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.blocks.craftingpillars.ChristmasPresentBlock;
-import T145.magistics.common.tiles.craftingpillars.TileEntityChristmasPresent;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasPresent;
+import T145.magistics.common.tiles.craftingpillars.TileChristmasPresent;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
@@ -112,12 +112,12 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
-		TileEntityChristmasPresent present = (TileEntityChristmasPresent)tile;
+		TileChristmasPresent present = (TileChristmasPresent)tile;
 		glPushMatrix();
 		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 		glRotatef(180F, 1F, 0F, 0F);
 
-		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[present.color*2]), new Color(TileEntityChristmasPresent.colors[present.color*2+1]), /*present.model*/present.getBlockMetadata() == 1);
+		this.render(0.0625F, new Color(TileChristmasPresent.colors[present.color*2]), new Color(TileChristmasPresent.colors[present.color*2+1]), /*present.model*/present.getBlockMetadata() == 1);
 		glPopMatrix();
 	}
 
@@ -130,7 +130,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
-		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[0]), new Color(TileEntityChristmasPresent.colors[1]), false);
+		this.render(0.0625F, new Color(TileChristmasPresent.colors[0]), new Color(TileChristmasPresent.colors[1]), false);
 
 		glPopAttrib();
 		glPopMatrix();
@@ -148,6 +148,6 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 
 	@Override
 	public int getRenderId() {
-		return ChristmasPresentBlock.renderID;
+		return BlockChristmasPresent.renderID;
 	}
 }

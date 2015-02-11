@@ -29,7 +29,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarPot;
-import T145.magistics.common.tiles.craftingpillars.TileEntityPotPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarPot;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -455,7 +455,7 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 		}
 		glPopMatrix();
 
-		TileEntityPotPillar pillarTile = (TileEntityPotPillar) tile;
+		TilePillarPot pillarTile = (TilePillarPot) tile;
 
 		if (pillarTile.getStackInSlot(0) != null)
 		{
@@ -491,7 +491,7 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
 	{
-		TileEntityPotPillar tile = (TileEntityPotPillar) blockAccess.getTileEntity(x, y, z);
+		TilePillarPot tile = (TilePillarPot) blockAccess.getTileEntity(x, y, z);
 		renderer.renderAllFaces = true;
 
 		if (tile.getStackInSlot(0) != null)

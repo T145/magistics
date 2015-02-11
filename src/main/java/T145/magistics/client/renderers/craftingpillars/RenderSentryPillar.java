@@ -28,7 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
 import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.tiles.craftingpillars.TileEntitySentryPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarSentry;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -440,7 +440,7 @@ public class RenderSentryPillar extends TileEntitySpecialRenderer implements ISi
 		}
 		glPopMatrix();
 
-		TileEntitySentryPillar workTile = (TileEntitySentryPillar) tile;
+		TilePillarSentry workTile = (TilePillarSentry) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 		citem.hoverStart = ConfigObjects.floatingItems ? workTile.rot : 0F;
 

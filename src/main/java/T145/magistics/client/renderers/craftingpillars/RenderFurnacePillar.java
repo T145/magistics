@@ -28,7 +28,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFurnace;
-import T145.magistics.common.tiles.craftingpillars.TileEntityFurnacePillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarFurnace;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -300,7 +300,7 @@ public class RenderFurnacePillar extends TileEntitySpecialRenderer implements IS
 		}
 		glPopMatrix();
 
-		TileEntityFurnacePillar pillarTile = (TileEntityFurnacePillar) tile;
+		TilePillarFurnace pillarTile = (TilePillarFurnace) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 
 		glPushMatrix();

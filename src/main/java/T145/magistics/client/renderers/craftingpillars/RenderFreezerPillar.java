@@ -38,7 +38,7 @@ import T145.magistics.api.FreezerRecipes;
 import T145.magistics.client.lib.Blobs;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFreezer;
-import T145.magistics.common.tiles.craftingpillars.TileEntityFreezerPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarFreezer;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -355,7 +355,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		}
 		glPopMatrix();
 
-		TileEntityFreezerPillar tank = ((TileEntityFreezerPillar) tile);
+		TilePillarFreezer tank = ((TilePillarFreezer) tile);
 
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 
@@ -374,7 +374,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		}
 
 		// processed item
-		if (tank.canFreeze() && tank.freezingTime > 0 && !tank.isEmpty)
+		if (tank.canFreeze() && tank.freezingTime > 0 && !tank.empty)
 		{
 			glPushMatrix();
 			glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
@@ -387,7 +387,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		}
 		glPopMatrix();
 
-		if (tank.showNum && !tank.isEmpty)
+		if (tank.showNum && !tank.empty)
 		{
 			glPushMatrix();
 			glTranslated(x + 0.5D, y + 1, z + 0.5D);
@@ -402,7 +402,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 
 		}
 
-		if (tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid == null || tank.isEmpty)
+		if (tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid == null || tank.empty)
 			return;
 		EntityClientPlayerMP player = FMLClientHandler.instance().getClient().thePlayer;
 		if (player.getDistanceSq(tile.xCoord, tile.yCoord, tile.zCoord) < 128)

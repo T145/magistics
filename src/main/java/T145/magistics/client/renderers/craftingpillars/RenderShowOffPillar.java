@@ -28,7 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
 import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.tiles.craftingpillars.TileEntityShowOffPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarDisplay;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -441,7 +441,7 @@ public class RenderShowOffPillar extends TileEntitySpecialRenderer implements IS
 		}
 		glPopMatrix();
 
-		TileEntityShowOffPillar workTile = (TileEntityShowOffPillar) tile;
+		TilePillarDisplay workTile = (TilePillarDisplay) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 		citem.hoverStart = ConfigObjects.floatingItems ? workTile.rot : 0F;
 

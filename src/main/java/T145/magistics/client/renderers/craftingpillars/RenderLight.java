@@ -24,8 +24,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLightBlock;
-import T145.magistics.common.tiles.craftingpillars.TileEntityLight;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLight;
+import T145.magistics.common.tiles.craftingpillars.TileChristmasLight;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderLight extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
@@ -143,7 +143,7 @@ public class RenderLight extends TileEntitySpecialRenderer implements ISimpleBlo
 	@Override
 	public int getRenderId()
 	{
-		return ChristmasLightBlock.renderID;
+		return BlockChristmasLight.renderID;
 	}
 
 	public void render(int meta, Color color)
@@ -186,7 +186,7 @@ public class RenderLight extends TileEntitySpecialRenderer implements ISimpleBlo
 	{
 		glPushMatrix();
 		glTranslated(x, y, z);
-		this.render(tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord), new Color(TileEntityLight.colors[((TileEntityLight)tile).color]));
+		this.render(tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord), new Color(TileChristmasLight.colors[((TileChristmasLight)tile).color]));
 		glPopMatrix();
 	}
 }

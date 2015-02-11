@@ -29,7 +29,7 @@ import net.minecraftforge.client.model.IModelCustom;
 import T145.magistics.api.CraftingPillarAPI;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
-import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTurntable;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -436,7 +436,7 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 		this.render(0.0625F);
 		glPopMatrix();
 
-		TileEntityDiskPlayerPillar workTile = (TileEntityDiskPlayerPillar) tile;
+		TilePillarTurntable workTile = (TilePillarTurntable) tile;
 
 		if (workTile.getDisk() != null && !workTile.isEmpty)
 		{

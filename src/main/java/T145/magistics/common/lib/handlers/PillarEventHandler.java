@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -16,7 +15,6 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import T145.magistics.api.items.baubles.Baubles;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarBase;
 import T145.magistics.common.config.ConfigObjects;
 import baubles.api.BaublesApi;
@@ -84,11 +82,6 @@ public class PillarEventHandler {
 
 				boolean isRing1 = false;
 				boolean isRing2 = false;
-
-				if (stack1 != null)
-					isRing1 = Baubles.isGemInRing(Items.ender_pearl, stack1);
-				if (stack2 != null)
-					isRing2 = Baubles.isGemInRing(Items.ender_pearl, stack2);
 
 				if (isRing1 || isRing2) {
 					double d0 = event.entityLiving.posX

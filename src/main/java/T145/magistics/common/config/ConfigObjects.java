@@ -27,7 +27,6 @@ import T145.magistics.api.client.renderers.block.ChestItemRenderer;
 import T145.magistics.api.client.renderers.block.ChestRenderer;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
-import T145.magistics.client.renderers.craftingpillars.RenderAnvilPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderBrewingPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderChristmasLeaves;
 import T145.magistics.client.renderers.craftingpillars.RenderCraftingPillar;
@@ -38,7 +37,6 @@ import T145.magistics.client.renderers.craftingpillars.RenderFurnacePillar;
 import T145.magistics.client.renderers.craftingpillars.RenderLight;
 import T145.magistics.client.renderers.craftingpillars.RenderPotPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderPresent;
-import T145.magistics.client.renderers.craftingpillars.RenderPumpPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderSentryPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderShowOffPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTankPillar;
@@ -61,7 +59,6 @@ import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarAnvil;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
@@ -69,21 +66,19 @@ import T145.magistics.common.blocks.craftingpillars.BlockPillarExtend;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFreezer;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFurnace;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarPot;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarPump;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLeavesBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLightBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasPresentBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasTreeSapling;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLight;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasPresent;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasTreeSapling;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorArrow;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorEgg;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorFireball;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorPotion;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorSnowball;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviors;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
@@ -101,21 +96,19 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
-import T145.magistics.common.tiles.craftingpillars.TileEntityAnvilPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityBrewingPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityChristmasPresent;
-import T145.magistics.common.tiles.craftingpillars.TileEntityCraftingPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityExtendPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityFreezerPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityFurnacePillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityLight;
-import T145.magistics.common.tiles.craftingpillars.TileEntityPotPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityPumpPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntitySentryPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityShowOffPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityTankPillar;
-import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
+import T145.magistics.common.tiles.craftingpillars.TileChristmasLight;
+import T145.magistics.common.tiles.craftingpillars.TileChristmasPresent;
+import T145.magistics.common.tiles.craftingpillars.TilePillarBrewing;
+import T145.magistics.common.tiles.craftingpillars.TilePillarCrafting;
+import T145.magistics.common.tiles.craftingpillars.TilePillarDisplay;
+import T145.magistics.common.tiles.craftingpillars.TilePillarExtend;
+import T145.magistics.common.tiles.craftingpillars.TilePillarFreezer;
+import T145.magistics.common.tiles.craftingpillars.TilePillarFurnace;
+import T145.magistics.common.tiles.craftingpillars.TilePillarPot;
+import T145.magistics.common.tiles.craftingpillars.TilePillarSentry;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTank;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTrash;
+import T145.magistics.common.tiles.craftingpillars.TilePillarTurntable;
 
 import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
@@ -248,30 +241,26 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
-		tiles.add(TileEntityExtendPillar.class);
-		tiles.add(TileEntityShowOffPillar.class);
-		tiles.add(TileEntityCraftingPillar.class);
-		tiles.add(TileEntityFurnacePillar.class);
-		tiles.add(TileEntityAnvilPillar.class);
-		tiles.add(TileEntityTankPillar.class);
-		// tiles.add(TileEntityEnchantmentPillar.class);
-		tiles.add(TileEntityBrewingPillar.class);
-		tiles.add(TileEntityDiskPlayerPillar.class);
-		tiles.add(TileEntityFreezerPillar.class);
-		tiles.add(TileEntityPotPillar.class);
-		tiles.add(TileEntitySentryPillar.class);
-		tiles.add(TileEntityTrashPillar.class);
-		tiles.add(TileEntityPumpPillar.class);
+		tiles.add(TilePillarExtend.class);
+		tiles.add(TilePillarDisplay.class);
+		tiles.add(TilePillarCrafting.class);
+		tiles.add(TilePillarFurnace.class);
+		tiles.add(TilePillarTank.class);
+		tiles.add(TilePillarBrewing.class);
+		tiles.add(TilePillarTurntable.class);
+		tiles.add(TilePillarFreezer.class);
+		tiles.add(TilePillarPot.class);
+		tiles.add(TilePillarSentry.class);
+		tiles.add(TilePillarTrash.class);
 
-		tiles.add(TileEntityChristmasPresent.class);
-		tiles.add(TileEntityLight.class);
+		tiles.add(TileChristmasPresent.class);
+		tiles.add(TileChristmasLight.class);
 
 		// Crafting Pillars
 		blocks.put(blockBasePillar = (new BlockPillarExtend(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("extendPillar"), null);
 		blocks.put(blockShowOffPillar = (new BlockPillarDisplay(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("showOffPillar"), null);
 		blocks.put(blockCraftingPillar = (new BlockPillarCrafting(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("craftingPillar"), null);
 		blocks.put(blockFurnacePillar = (new BlockPillarFurnace(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("furnacePillar"), null);
-		blocks.put(blockAnvilPillar = (new BlockPillarAnvil(Material.anvil)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("anvilPillar"), null);
 		blocks.put(blockTankPillar = (new BlockPillarTank(Material.glass)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("tankPillar"), null);
 		blocks.put(blockBrewingPillar = (new BlockPillarBrewing(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("brewingPillar"), null);
 		blocks.put(blockDiskPlayerPillar = (new BlockPillarTurntable(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("diskPillar"), null);
@@ -279,13 +268,12 @@ public class ConfigObjects extends CommonProxy {
 		blocks.put(blockPotPillar = (new BlockPillarPot(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("potPillar"), null);
 		blocks.put(blockSentryPillar = (new BlockPillarSentry(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("sentryPillar"), null);
 		blocks.put(blockTrashPillar = (new BlockPillarTrash(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar"), null);
-		blocks.put(blockPumpPillar = (new BlockPillarPump(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("pumpPillar"), null);
 
 		if (winter) {
-			blocks.put(blockChristmasLeaves = (new ChristmasLeavesBlock(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("xmasLeaves"), null);
-			blocks.put(blockChristmasTreeSapling = (new ChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("ChristmasTreeSapling"), null);
-			blocks.put(blockChristmasPresent = (new ChristmasPresentBlock(Material.cloth)).setHardness(1.0F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
-			blocks.put(blockChristmasLight = (new ChristmasLightBlock(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
+			blocks.put(blockChristmasLeaves = (new BlockChristmasLeaves(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("xmasLeaves"), null);
+			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("ChristmasTreeSapling"), null);
+			blocks.put(blockChristmasPresent = (new BlockChristmasPresent(Material.cloth)).setHardness(1.0F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
+			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
 		}
 
 		items.add(itemDiscElysium = new PillarRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
@@ -339,28 +327,25 @@ public class ConfigObjects extends CommonProxy {
 			}
 		}
 
-		tileRenderers.put(TileEntityExtendPillar.class, new RenderExtendPillar());
-		tileRenderers.put(TileEntityShowOffPillar.class, new RenderShowOffPillar());
-		tileRenderers.put(TileEntityCraftingPillar.class, new RenderCraftingPillar());
-		tileRenderers.put(TileEntityFurnacePillar.class, new RenderFurnacePillar());
-		tileRenderers.put(TileEntityAnvilPillar.class, new RenderAnvilPillar());
-		tileRenderers.put(TileEntityTankPillar.class, new RenderTankPillar());
-		tileRenderers.put(TileEntityBrewingPillar.class, new RenderBrewingPillar());
-		tileRenderers.put(TileEntityDiskPlayerPillar.class, new RenderDiskPillar());
-		tileRenderers.put(TileEntityFreezerPillar.class, new RenderFreezerPillar());
-		tileRenderers.put(TileEntityPotPillar.class, new RenderPotPillar());
-		tileRenderers.put(TileEntitySentryPillar.class, new RenderSentryPillar());
-		tileRenderers.put(TileEntityTrashPillar.class, new RenderTrashPillar());
-		tileRenderers.put(TileEntityPumpPillar.class, new RenderPumpPillar());
+		tileRenderers.put(TilePillarExtend.class, new RenderExtendPillar());
+		tileRenderers.put(TilePillarDisplay.class, new RenderShowOffPillar());
+		tileRenderers.put(TilePillarCrafting.class, new RenderCraftingPillar());
+		tileRenderers.put(TilePillarFurnace.class, new RenderFurnacePillar());
+		tileRenderers.put(TilePillarTank.class, new RenderTankPillar());
+		tileRenderers.put(TilePillarBrewing.class, new RenderBrewingPillar());
+		tileRenderers.put(TilePillarTurntable.class, new RenderDiskPillar());
+		tileRenderers.put(TilePillarFreezer.class, new RenderFreezerPillar());
+		tileRenderers.put(TilePillarPot.class, new RenderPotPillar());
+		tileRenderers.put(TilePillarSentry.class, new RenderSentryPillar());
+		tileRenderers.put(TilePillarTrash.class, new RenderTrashPillar());
 
-		tileRenderers.put(TileEntityChristmasPresent.class, new RenderPresent());
-		tileRenderers.put(TileEntityLight.class, new RenderLight());
+		tileRenderers.put(TileChristmasPresent.class, new RenderPresent());
+		tileRenderers.put(TileChristmasLight.class, new RenderLight());
 
 		RenderingRegistry.registerBlockHandler(new RenderExtendPillar());
 		RenderingRegistry.registerBlockHandler(new RenderShowOffPillar());
 		RenderingRegistry.registerBlockHandler(new RenderCraftingPillar());
 		RenderingRegistry.registerBlockHandler(new RenderFurnacePillar());
-		RenderingRegistry.registerBlockHandler(new RenderAnvilPillar());
 		RenderingRegistry.registerBlockHandler(new RenderTankPillar());
 		RenderingRegistry.registerBlockHandler(new RenderBrewingPillar());
 		RenderingRegistry.registerBlockHandler(new RenderDiskPillar());
@@ -368,7 +353,6 @@ public class ConfigObjects extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(new RenderPotPillar());
 		RenderingRegistry.registerBlockHandler(new RenderSentryPillar());
 		RenderingRegistry.registerBlockHandler(new RenderTrashPillar());
-		RenderingRegistry.registerBlockHandler(new RenderPumpPillar());
 
 		if (winter) {
 			RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
@@ -487,11 +471,11 @@ public class ConfigObjects extends CommonProxy {
 		CraftingPillarAPI.addDiskTexture(Items.record_11, "craftingpillars:textures/models/disk_11.png");
 		CraftingPillarAPI.addDiskTexture(Items.record_wait, "craftingpillars:textures/models/disk_wait.png");
 
-		SentryBehaviors.add(Items.arrow, new SentryBehaviorArrow());
-		SentryBehaviors.add(Items.snowball, new SentryBehaviorSnowball());
-		SentryBehaviors.add(Items.fire_charge, new SentryBehaviorFireball());
-		SentryBehaviors.add(Items.potionitem, new SentryBehaviorPotion());
-		SentryBehaviors.add(Items.egg, new SentryBehaviorEgg());
+		BlockPillarSentry.addBehavior(Items.arrow, new SentryBehaviorArrow());
+		BlockPillarSentry.addBehavior(Items.snowball, new SentryBehaviorSnowball());
+		BlockPillarSentry.addBehavior(Items.fire_charge, new SentryBehaviorFireball());
+		BlockPillarSentry.addBehavior(Items.potionitem, new SentryBehaviorPotion());
+		BlockPillarSentry.addBehavior(Items.egg, new SentryBehaviorEgg());
 	}
 
 	static {
