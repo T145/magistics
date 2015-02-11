@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityLight;
 
-public class ChristmasLightBlock extends BaseBlockContainer
+public class ChristmasLightBlock extends BlockPillarBase
 {
 	public ChristmasLightBlock(Material mat)
 	{

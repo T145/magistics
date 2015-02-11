@@ -19,9 +19,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityPotPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class PotPillarBlock extends BaseBlockContainer
+public class BlockPillarPot extends BlockPillarBase
 {
-	public PotPillarBlock(Material mat)
+	public BlockPillarPot(Material mat)
 	{
 		super(mat);
 		this.setTickRandomly(true);

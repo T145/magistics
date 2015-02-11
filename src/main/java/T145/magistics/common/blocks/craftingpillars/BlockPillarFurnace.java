@@ -26,9 +26,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class FurnacePillarBlock extends BaseBlockContainer
+public class BlockPillarFurnace extends BlockPillarBase
 {
-	public FurnacePillarBlock(Material mat)
+	public BlockPillarFurnace(Material mat)
 	{
 		super(mat);
 	}

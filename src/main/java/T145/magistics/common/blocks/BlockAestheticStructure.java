@@ -1,4 +1,4 @@
-package T145.magistics.common.blocks.aesthetics;
+package T145.magistics.common.blocks;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAestheticMachine extends Block {
+public class BlockAestheticStructure extends Block {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon icon, iconGlow;
 
-	public BlockAestheticMachine() {
+	public BlockAestheticStructure() {
 		super(Material.rock);
 	}
 
@@ -42,7 +42,7 @@ public class BlockAestheticMachine extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item i, CreativeTabs t, List l) {
-		for (int j = 0; j <= 6; j++)
+		for (int j = 0; j <= 15; j++)
 			l.add(new ItemStack(i, 1, j));
 	}
 }

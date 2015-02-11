@@ -18,9 +18,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityTankPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TankPillarBlock extends BaseBlockContainer
+public class BlockPillarTank extends BlockPillarBase
 {
-	public TankPillarBlock(Material mat)
+	public BlockPillarTank(Material mat)
 	{
 		super(mat);
 	}

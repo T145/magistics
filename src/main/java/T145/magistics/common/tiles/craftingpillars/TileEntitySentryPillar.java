@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import T145.magistics.api.sentry.ISentryBehaviorItem;
-import T145.magistics.api.sentry.SentryBehaviors;
+import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviors;
 
 public class TileEntitySentryPillar extends BaseTileEntity implements IInventory, ISidedInventory
 {

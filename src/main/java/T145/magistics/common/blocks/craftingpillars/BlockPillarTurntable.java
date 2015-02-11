@@ -19,9 +19,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class DiskPlayerPillarBlock extends BaseBlockContainer
+public class BlockPillarTurntable extends BlockPillarBase
 {
-	public DiskPlayerPillarBlock(Material mat)
+	public BlockPillarTurntable(Material mat)
 	{
 		super(mat);
 	}

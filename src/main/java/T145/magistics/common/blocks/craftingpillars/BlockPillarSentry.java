@@ -16,15 +16,15 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import T145.magistics.api.sentry.SentryBehaviors;
+import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviors;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntitySentryPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SentryPillarBlock extends BaseBlockContainer
+public class BlockPillarSentry extends BlockPillarBase
 {
-	public SentryPillarBlock(Material mat)
+	public BlockPillarSentry(Material mat)
 	{
 		super(mat);
 	}

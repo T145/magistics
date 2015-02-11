@@ -10,9 +10,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityExtendPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ExtendPillarBlock extends BaseBlockContainer
+public class BlockPillarExtend extends BlockPillarBase
 {
-	public ExtendPillarBlock(Material mat)
+	public BlockPillarExtend(Material mat)
 	{
 		super(mat);
 	}

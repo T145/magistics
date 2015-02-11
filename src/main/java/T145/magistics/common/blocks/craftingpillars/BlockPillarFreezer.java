@@ -22,9 +22,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityFreezerPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class FreezerPillarBlock extends BaseBlockContainer
+public class BlockPillarFreezer extends BlockPillarBase
 {
-	public FreezerPillarBlock(Material mat)
+	public BlockPillarFreezer(Material mat)
 	{
 		super(mat);
 	}

@@ -1,4 +1,4 @@
-package T145.magistics.api.sentry;
+package T145.magistics.common.blocks.craftingpillars.sentry;
 
 import java.util.Iterator;
 import java.util.List;

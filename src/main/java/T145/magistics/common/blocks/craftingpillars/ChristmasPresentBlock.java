@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityChristmasPresent;
 
-public class ChristmasPresentBlock extends BaseBlockContainer
+public class ChristmasPresentBlock extends BlockPillarBase
 {
 	
 

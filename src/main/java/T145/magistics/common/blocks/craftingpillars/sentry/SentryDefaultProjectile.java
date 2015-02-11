@@ -1,5 +1,6 @@
-package T145.magistics.api.sentry;
+package T145.magistics.common.blocks.craftingpillars.sentry;
 
+import T145.magistics.api.sentry.ISentryBehaviorItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

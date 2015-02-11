@@ -22,10 +22,10 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityBrewingPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BrewingPillarBlock extends BaseBlockContainer
+public class BlockPillarBrewing extends BlockPillarBase
 {
 
-	public BrewingPillarBlock(Material mat)
+	public BlockPillarBrewing(Material mat)
 	{
 		super(mat);
 		float f = 3*1/16F;

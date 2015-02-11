@@ -17,7 +17,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import T145.magistics.api.items.baubles.Baubles;
-import T145.magistics.common.blocks.craftingpillars.BaseBlockContainer;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarBase;
 import T145.magistics.common.config.ConfigObjects;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -51,7 +51,7 @@ public class PillarEventHandler {
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK
 				&& event.entity.isSneaking()
 				&& event.entityPlayer.getCurrentEquippedItem() != null) {
-			if (event.entity.worldObj.getBlock(event.x, event.y, event.z) instanceof BaseBlockContainer
+			if (event.entity.worldObj.getBlock(event.x, event.y, event.z) instanceof BlockPillarBase
 					&& event.face == 1) {
 				event.setCanceled(true);
 			}
@@ -60,7 +60,7 @@ public class PillarEventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		if (event.block instanceof BaseBlockContainer
+		if (event.block instanceof BlockPillarBase
 				&& event.getPlayer().isSneaking()) {
 			event.setCanceled(true);
 			event.block.onBlockClicked(event.world, event.x, event.y, event.z,

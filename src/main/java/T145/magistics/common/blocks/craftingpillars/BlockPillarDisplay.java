@@ -17,9 +17,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityShowOffPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ShowOffPillarBlock extends BaseBlockContainer
+public class BlockPillarDisplay extends BlockPillarBase
 {
-	public ShowOffPillarBlock(Material mat)
+	public BlockPillarDisplay(Material mat)
 	{
 		super(mat);
 	}

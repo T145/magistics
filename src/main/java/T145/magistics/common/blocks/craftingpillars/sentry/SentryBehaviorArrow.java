@@ -1,14 +1,14 @@
-package T145.magistics.api.sentry;
+package T145.magistics.common.blocks.craftingpillars.sentry;
 
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.projectile.EntityEgg;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class SentryBehaviorEgg extends SentryDefaultProjectile
+public class SentryBehaviorArrow extends SentryDefaultProjectile
 {
 	/**
 	 * Return the projectile entity spawned by this Sentry behavior.
@@ -26,8 +26,9 @@ public class SentryBehaviorEgg extends SentryDefaultProjectile
 		int z = blockSource.getZInt();
 
 
-		
-		EntityEgg entityammo = new EntityEgg(world, new FakeSentryPlayer(world));
+		//		EntityArrow entityammo = new EntityArrow(world, x + 0.5F, y + 1.5F, z + 0.5F);
+		EntityArrow entityammo = new EntityArrow(world, new FakeSentryPlayer(world), target, 1.6F, 3F);
+		entityammo.setDamage(entityammo.getDamage() + 1);
 
 		entityammo.setPosition(x + 0.5F, y + 1.5F, z + 0.5F);
 

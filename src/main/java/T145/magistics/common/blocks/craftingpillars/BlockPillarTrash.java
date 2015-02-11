@@ -19,9 +19,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TrashPillarBlock extends BaseBlockContainer
+public class BlockPillarTrash extends BlockPillarBase
 {
-	public TrashPillarBlock(Material mat)
+	public BlockPillarTrash(Material mat)
 	{
 		super(mat);
 		setBlockBounds(0, 0, 0, 1F, 15F / 16F, 1F);

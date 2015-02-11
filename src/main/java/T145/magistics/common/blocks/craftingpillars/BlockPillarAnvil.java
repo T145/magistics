@@ -18,8 +18,8 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityAnvilPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class AnvilPillarBlock extends BaseBlockContainer {
-	public AnvilPillarBlock(Material mat) {
+public class BlockPillarAnvil extends BlockPillarBase {
+	public BlockPillarAnvil(Material mat) {
 		super(mat);
 	}
 

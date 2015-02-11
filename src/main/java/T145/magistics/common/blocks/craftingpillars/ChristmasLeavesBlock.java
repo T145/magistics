@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,10 +15,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ConfigObjects;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
+public class ChristmasLeavesBlock extends Block implements IShearable
 {
 
 	public static IIcon glowing;
@@ -25,7 +27,7 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 
 	public ChristmasLeavesBlock(Material mat)
 	{
-		super(mat, true);
+		super(mat);
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	/**
 	 * Ticks the block if it's been scheduled
 	 */
-	      /*
+	/*
 	@Override
 	public void updateTick(World world, int par2, int par3, int par4, Random par5Random)
 	{
@@ -273,13 +275,6 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 		return meta & 3;
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean isOpaqueCube()
-	{
-		return false;
-	}
-
 	/**
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This
 	 * is the only chance you get to register icons.
@@ -316,5 +311,25 @@ public class ChristmasLeavesBlock extends BaseLeavesBlock implements IShearable
 	public boolean isLeaves(IBlockAccess world, int x, int y, int z)
 	{
 		return true;
+	}
+
+	@Override
+	public boolean isOpaqueCube()
+	{
+		return FMLCommonHandler.instance().getSide().isServer() || !Minecraft.isFancyGraphicsEnabled();
+	}
+
+	@Override
+	public boolean canBeReplacedByLeaves(IBlockAccess world, int x, int y, int z)
+	{
+		return false;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
+	{
+		Block block = world.getBlock(x, y, side);
+		return Minecraft.isFancyGraphicsEnabled() && block == this ? false : super.shouldSideBeRendered(world, x, y, z, side);
 	}
 }

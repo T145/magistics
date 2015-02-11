@@ -17,9 +17,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityCraftingPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class CraftingPillarBlock extends BaseBlockContainer
+public class BlockPillarCrafting extends BlockPillarBase
 {
-	public CraftingPillarBlock(Material mat)
+	public BlockPillarCrafting(Material mat)
 	{
 		super(mat);
 	}

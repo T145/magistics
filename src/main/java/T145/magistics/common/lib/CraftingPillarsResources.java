@@ -1,23 +1,8 @@
 package T145.magistics.common.lib;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class CraftingPillarsResources {
-	public static boolean isAfter(String date) {
-		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date c = new Date();
-			Date v = format.parse(date);
-			return c.after(v);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	public static boolean isWinterTime() {
 		Calendar c = Calendar.getInstance();
 		Calendar b = Calendar.getInstance();

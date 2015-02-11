@@ -18,9 +18,9 @@ import T145.magistics.common.tiles.craftingpillars.TileEntityPumpPillar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class PumpPillarBlock extends BaseBlockContainer
+public class BlockPillarPump extends BlockPillarBase
 {
-	public PumpPillarBlock(Material mat)
+	public BlockPillarPump(Material mat)
 	{
 		super(mat);
 	}
