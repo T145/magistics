@@ -35,9 +35,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 import T145.magistics.api.FreezerRecipes;
+import T145.magistics.client.lib.Blobs;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.lib.Blobs;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarFreezer;
 import T145.magistics.common.tiles.craftingpillars.TileEntityFreezerPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -293,17 +293,17 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 	{
 		this.pillarbottom.render(f);
 		this.BottomTank.render(f);
-		
+
 		this.GlassPane1.render(f);
 		this.GlassPane2.render(f);
 		this.GlassPane4.render(f);
 		this.GlassPane3.render(f);
-		
+
 		this.Corner1.render(f);
 		this.Corner2.render(f);
 		this.Corner3.render(f);
 		this.Corner4.render(f);
-		
+
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation("craftingpillars:textures/models/furnacePillarFrozen.png"));
 		this.Icicle1A.render(f);
 		this.Icicle1B.render(f);
@@ -379,7 +379,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 			glPushMatrix();
 			glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
 			glTranslatef(0F, 1.75F - tank.freezingTime / 150F, 0F);
-			
+
 			citem.hoverStart = 0F;
 			citem.setEntityItemStack(FreezerRecipes.getResultForFluid(tank.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid));
 			this.resultRenderer.render(citem, 0.01F, 0F, 0.01F, false);
@@ -420,7 +420,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 					for (int k = 0; k < 16; k++)
 						if ((int) field[i][j][k] > 0
 								&& (i != 0 && (int) field[i - 1][j][k] != 0 && i != 15 && (int) field[i + 1][j][k] != 0 && j != 0 && (int) field[i][j - 1][k] != 0 && j != 15
-										&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
+								&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
 						{
 							field[i][j][k] = 0F;
 						}
@@ -432,10 +432,10 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 			float xMin = icon.getMinU();
 			float xMax = icon.getMaxU();
 			float yMin = icon.getMinV();
-	       	float yMax = icon.getMaxV();
-	       	
-	       	float iconSize = (xMax-xMin)/16;
-            
+			float yMax = icon.getMaxV();
+
+			float iconSize = (xMax-xMin)/16;
+
 			glBegin(GL_QUADS);
 
 			for (int i = 0; i < 16; i++)
@@ -555,6 +555,6 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.freezerPillarRenderID;
+		return BlockPillarFreezer.renderID;
 	}
 }

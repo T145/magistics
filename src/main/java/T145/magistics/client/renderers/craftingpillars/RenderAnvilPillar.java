@@ -29,7 +29,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarAnvil;
 import T145.magistics.common.tiles.craftingpillars.TileEntityAnvilPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -304,7 +304,7 @@ public class RenderAnvilPillar extends TileEntitySpecialRenderer implements ISim
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
-	
+
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
 	{
@@ -328,65 +328,65 @@ public class RenderAnvilPillar extends TileEntitySpecialRenderer implements ISim
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.anvilPillarRenderID;
+		return BlockPillarAnvil.renderID;
 	}
-	
+
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
 		TileEntityAnvilPillar anvil = (TileEntityAnvilPillar)tile;
-		
+
 		glPushMatrix();
-			glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
-			glRotatef(180F, 1F, 0F, 0F);
-			glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 1), 0F, 1F, 0F);
-			
-			Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_ANVILPILLAR);
-			this.render(tile, 0.0625F);
+		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
+		glRotatef(180F, 1F, 0F, 0F);
+		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 1), 0F, 1F, 0F);
+
+		Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_ANVILPILLAR);
+		this.render(tile, 0.0625F);
 		glPopMatrix();
 
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 		citem.hoverStart = 0F;
-		
+
 		if(anvil.getStackInSlot(0) != null)
 		{
 			glPushMatrix();
-				if(!(anvil.getStackInSlot(0).getItem() instanceof ItemBlock)) //if not block
-				{
-					glTranslated(x + 0.5D, y + 1.024D, z + 0.5D);
-					glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
-					glTranslatef(0, 0, -0.125F);
-					glRotatef(90F, 1F, 0F, 0F);
-				}
-				else
-				{
-					glTranslated(x + 0.5D, y + 1.125D, z + 0.5D);
-					glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
-				}
-				citem.setEntityItemStack(anvil.getStackInSlot(0));
-				this.itemRenderer.render(citem, 0, 0, 0, false);
-				
+			if(!(anvil.getStackInSlot(0).getItem() instanceof ItemBlock)) //if not block
+			{
+				glTranslated(x + 0.5D, y + 1.024D, z + 0.5D);
+				glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
+				glTranslatef(0, 0, -0.125F);
+				glRotatef(90F, 1F, 0F, 0F);
+			}
+			else
+			{
+				glTranslated(x + 0.5D, y + 1.125D, z + 0.5D);
+				glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
+			}
+			citem.setEntityItemStack(anvil.getStackInSlot(0));
+			this.itemRenderer.render(citem, 0, 0, 0, false);
+
 			glPopMatrix();
 			byte cost = 0;
-			
+
 			for(int i = 0; i < 4; i++)
 			{
 				if(anvil.getStackInSlot(i+1) != null)
 					cost++;
 			}
-			
+
 			if(cost > 0 && anvil.showNum)
 			{
 				glPushMatrix();
-					glTranslated(x + 0.5D, y + 0.5D, z + 0.5D);
-					glDisable(GL_LIGHTING);
-					RenderingHelper.renderFloatingTextWithBackground(0, 1, 0, 0.3F, cost + "", 8453920, new Color(0F, 0F, 0F, 0.5F));
-					glEnable(GL_LIGHTING);
-				
+				glTranslated(x + 0.5D, y + 0.5D, z + 0.5D);
+				glDisable(GL_LIGHTING);
+				RenderingHelper.renderFloatingTextWithBackground(0, 1, 0, 0.3F, cost + "", 8453920, new Color(0F, 0F, 0F, 0.5F));
+				glEnable(GL_LIGHTING);
+
 				glPopMatrix();
 			}
 		}
-		
+
 		for(int i = 0; i < anvil.getSizeInventory() - 1; i++)
 		{
 			if(anvil.getStackInSlot(i+1) != null)
@@ -394,45 +394,45 @@ public class RenderAnvilPillar extends TileEntitySpecialRenderer implements ISim
 				if(!(anvil.getStackInSlot(i+1).getItem() instanceof ItemBlock)) //if not block
 				{
 					glPushMatrix();
-						glTranslated(x+0.5D, y + 1.024D, z+0.5D);
-						float scale = 0.5F;
-						glScalef(scale, scale, scale);
-						glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
+					glTranslated(x+0.5D, y + 1.024D, z+0.5D);
+					float scale = 0.5F;
+					glScalef(scale, scale, scale);
+					glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
 
-						//rotate i * pi / 2 rad (i * 90 degree)
-						glRotatef(-i*90, 0, 1, 0);
-						
-						glTranslatef(0.5F, 0F, 0F);
-						glRotatef(90F, 1F, 0F, 0F);
-						
-						glRotatef(90F * 3F, 0, 0, 1F);
-	
-						citem.setEntityItemStack(anvil.getStackInSlot(i+1));
-						this.itemRenderer.render(citem, 0, 0, 0, false);
-					
+					//rotate i * pi / 2 rad (i * 90 degree)
+					glRotatef(-i*90, 0, 1, 0);
+
+					glTranslatef(0.5F, 0F, 0F);
+					glRotatef(90F, 1F, 0F, 0F);
+
+					glRotatef(90F * 3F, 0, 0, 1F);
+
+					citem.setEntityItemStack(anvil.getStackInSlot(i+1));
+					this.itemRenderer.render(citem, 0, 0, 0, false);
+
 					glPopMatrix();
 				}
 				else
 				{
 					glPushMatrix();
-					
-						glTranslated(x+0.5D, y + 1.06D, z+0.5D);
-						float scale = 0.5F;
-						glScalef(scale, scale, scale);
-						glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
 
-						//rotate i * pi / 2 rad (i * 90 degree)
-						glRotatef(-i*90, 0, 1, 0);
-						
-						glTranslatef(0.5F, 0F, 0F);
-						glRotatef(90F, 1F, 0F, 0F);
-						
-						glRotatef(90F * 2F, 0, 0, 1F);
-						glRotatef(90F * 3F, 1, 0, 0);
-						
-						citem.setEntityItemStack(anvil.getStackInSlot(i+1));
-						this.itemRenderer.render(citem, 0, 0, 0, false);
-						
+					glTranslated(x+0.5D, y + 1.06D, z+0.5D);
+					float scale = 0.5F;
+					glScalef(scale, scale, scale);
+					glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord)+2), 0F, 1F, 0F);
+
+					//rotate i * pi / 2 rad (i * 90 degree)
+					glRotatef(-i*90, 0, 1, 0);
+
+					glTranslatef(0.5F, 0F, 0F);
+					glRotatef(90F, 1F, 0F, 0F);
+
+					glRotatef(90F * 2F, 0, 0, 1F);
+					glRotatef(90F * 3F, 1, 0, 0);
+
+					citem.setEntityItemStack(anvil.getStackInSlot(i+1));
+					this.itemRenderer.render(citem, 0, 0, 0, false);
+
 					glPopMatrix();
 				}
 			}

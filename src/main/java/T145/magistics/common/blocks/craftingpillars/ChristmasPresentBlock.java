@@ -9,10 +9,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityChristmasPresent;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ChristmasPresentBlock extends BlockPillarBase
 {
-	
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
 	public ChristmasPresentBlock(Material mat)
 	{
@@ -46,14 +47,14 @@ public class ChristmasPresentBlock extends BlockPillarBase
 			world.spawnEntityInWorld(item);
 			world.setBlockToAir(x, y, z);
 		}
-		
+
 		return super.onBlockActivated(world, x, y, z, player, meta, i, j, k);
 	}		
 
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.PresentRenderID;
+		return renderID;
 	}
 
 	@Override

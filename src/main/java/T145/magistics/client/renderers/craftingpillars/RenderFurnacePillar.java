@@ -27,7 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarFurnace;
 import T145.magistics.common.tiles.craftingpillars.TileEntityFurnacePillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -358,7 +358,7 @@ public class RenderFurnacePillar extends TileEntitySpecialRenderer implements IS
 			{
 				glDisable(GL_LIGHTING);
 				RenderingHelper
-						.renderFloatingTextWithBackground(0, 1.425F, 0, 0.4F, "" + pillarTile.getStackInSlot(0).stackSize, Color.white.getRGB(), new Color(0F, 0F, 0F, 0.5F));
+				.renderFloatingTextWithBackground(0, 1.425F, 0, 0.4F, "" + pillarTile.getStackInSlot(0).stackSize, Color.white.getRGB(), new Color(0F, 0F, 0F, 0.5F));
 				glEnable(GL_LIGHTING);
 			}
 			if (pillarTile.getStackInSlot(1) != null)
@@ -393,9 +393,7 @@ public class RenderFurnacePillar extends TileEntitySpecialRenderer implements IS
 	}
 
 	@Override
-	// No TileEntity here can't use
-			public
-			boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
 	{
 
 		return false;
@@ -410,6 +408,6 @@ public class RenderFurnacePillar extends TileEntitySpecialRenderer implements IS
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.furnacePillarRenderID;
+		return BlockPillarFurnace.renderID;
 	}
 }

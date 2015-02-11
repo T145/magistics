@@ -28,7 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarPot;
 import T145.magistics.common.tiles.craftingpillars.TileEntityPotPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -466,7 +466,7 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 
 				glDisable(GL_LIGHTING);
 				RenderingHelper
-						.renderFloatingTextWithBackground(0, 0.9F, 0, 0.2F, pillarTile.getStackInSlot(0).getDisplayName(), Color.WHITE.getRGB(), new Color(0F, 0F, 0F, 0.5F));
+				.renderFloatingTextWithBackground(0, 0.9F, 0, 0.2F, pillarTile.getStackInSlot(0).getDisplayName(), Color.WHITE.getRGB(), new Color(0F, 0F, 0F, 0.5F));
 				glEnable(GL_LIGHTING);
 
 				glPopMatrix();
@@ -512,7 +512,7 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 
 			if (plantBlock == Blocks.red_flower || plantBlock == Blocks.yellow_flower || plantBlock == Blocks.red_mushroom || plantBlock == Blocks.brown_mushroom)
 				renderScale = 1.0F;
-                
+
 
 			renderer.drawCrossedSquares(plantBlock.getIcon(0, metadata), x, y + 1.2, z, renderScale);
 		}
@@ -560,6 +560,6 @@ public class RenderPotPillar extends TileEntitySpecialRenderer implements ISimpl
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.potPillarRenderID;
+		return BlockPillarPot.renderID;
 	}
 }

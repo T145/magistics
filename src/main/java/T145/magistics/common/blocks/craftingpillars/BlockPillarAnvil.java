@@ -15,17 +15,20 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityAnvilPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarAnvil extends BlockPillarBase {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarAnvil(Material mat) {
 		super(mat);
 	}
 
 	@Override
 	public int getRenderType() {
-		return ConfigObjects.anvilPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -107,10 +110,6 @@ public class BlockPillarAnvil extends BlockPillarBase {
 					for (int i = 0; i < 4; i++) {
 						workTile.setInventorySlotContents(i + 1, inventory[i]);
 					}
-
-					ring = new ItemStack(ConfigObjects.itemRing);
-					ring.stackTagCompound = new NBTTagCompound();
-					workTile.setInventorySlotContents(0, ring);
 
 					world.playAuxSFX(1021, x, y, z, 0);
 				}

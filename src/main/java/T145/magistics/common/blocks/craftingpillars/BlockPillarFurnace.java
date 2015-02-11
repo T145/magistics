@@ -20,14 +20,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityFurnacePillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarFurnace extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarFurnace(Material mat)
 	{
 		super(mat);
@@ -36,7 +38,7 @@ public class BlockPillarFurnace extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.furnacePillarRenderID;
+		return renderID;
 	}
 
 	@Override

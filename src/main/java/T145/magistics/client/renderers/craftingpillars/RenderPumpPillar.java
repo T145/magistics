@@ -37,9 +37,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.client.lib.Blobs;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.lib.Blobs;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarPump;
 import T145.magistics.common.tiles.craftingpillars.TileEntityPumpPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -109,9 +109,9 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 	private ModelRenderer Icicle11A;
 	private ModelRenderer Icicle11B;
 	private ModelRenderer Icicle11C;
-	
+
 	public IModelCustom drill;
-	
+
 	private Random random;
 	private RenderingHelper.ItemRender itemRenderer;
 	private RenderingHelper.ItemRender resultRenderer;
@@ -131,7 +131,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
-	    
+
 		pillarbottom = new ModelRenderer(model, 0, 18);
 		pillarbottom.addBox(-7F, 0F, -7F, 14, 1, 14);
 		pillarbottom.setRotationPoint(0F, 17F, 0F);
@@ -231,7 +231,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 		Edge4.setTextureSize(128, 64);
 		Edge4.mirror = true;
 		setRotation(Edge4, 0F, 0F, 0F);
-		
+
 
 		if (Magistics.proxy.easter)
 		{
@@ -407,7 +407,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 			this.Icicle8D.setTextureSize(128, 64);
 			this.Icicle8D.mirror = true;
 			this.setRotation(this.Icicle8D, 0F, 0F, 0F);
-	
+
 			this.Icicle9A = new ModelRenderer(model, 122, 38);
 			this.Icicle9A.addBox(0F, 0F, 0F, 2, 1, 1);
 			this.Icicle9A.setRotationPoint(3F, 11F, -7F);
@@ -458,7 +458,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 			this.setRotation(this.Icicle11C, 0F, 0F, 0F);
 		}
 	}
-	
+
 	public void render(float f)
 	{
 		if (Magistics.proxy.winter)
@@ -506,26 +506,26 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 			BunnyEar1.render(f);
 			BunnyEar2.render(f);
 		}
-		
+
 		pillarbottom.render(f);
-	    pillartop.render(f);
-	    Corner1.render(f);
-	    Corner2.render(f);
-	    Corner3.render(f);
-	    Corner4.render(f);
-	    BottomTank.render(f);
-	    TopTank.render(f);
-	    GlassPane1.render(f);
-	    GlassPane2.render(f);
-	    GlassPane4.render(f);
-	    GlassPane3.render(f);
-	    Edge1.render(f);
-	    Edge2.render(f);
-	    Edge3.render(f);
-	    Edge4.render(f);
+		pillartop.render(f);
+		Corner1.render(f);
+		Corner2.render(f);
+		Corner3.render(f);
+		Corner4.render(f);
+		BottomTank.render(f);
+		TopTank.render(f);
+		GlassPane1.render(f);
+		GlassPane2.render(f);
+		GlassPane4.render(f);
+		GlassPane3.render(f);
+		Edge1.render(f);
+		Edge2.render(f);
+		Edge3.render(f);
+		Edge4.render(f);
 	}
 
-	
+
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer)
 	{
@@ -536,7 +536,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 		glRotatef(180F, 1F, 0F, 0F);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_PUMPPILLAR);
 		this.render(0.0625F);
-		
+
 		glRotatef(180F, 1F, 0F, 0F);
 
 		glTranslatef(0, -1.5F, 0);
@@ -554,41 +554,41 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f)
 	{
 		TileEntityPumpPillar workTile = (TileEntityPumpPillar) tile;
-		
+
 		glPushMatrix();
-			glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
-			glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
+		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
+		glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
+		glRotatef(180F, 1F, 0F, 0F);
+		Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_PUMPPILLAR);
+		this.render(0.0625F);
+		EntityItem citem = new EntityItem(tile.getWorldObj());
+
+		// Fuel FIXME: NUMBER
+		if (workTile.getStackInSlot(0) != null)
+		{			
 			glRotatef(180F, 1F, 0F, 0F);
-			Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_PUMPPILLAR);
-			this.render(0.0625F);
-			EntityItem citem = new EntityItem(tile.getWorldObj());
+			glRotatef(180F, 0, 1F, 0F);
 
-			// Fuel FIXME: NUMBER
-			if (workTile.getStackInSlot(0) != null)
-			{			
-				glRotatef(180F, 1F, 0F, 0F);
-				glRotatef(180F, 0, 1F, 0F);
+			glTranslated(0D, -0.65D, 0D);
 
-				glTranslated(0D, -0.65D, 0D);
-
-				citem.hoverStart = 0F;
-				citem.setEntityItemStack(workTile.getStackInSlot(0));
-				this.itemRenderer.render(citem, 0F, 0.3F, 0F, workTile.showNum);
-			}
+			citem.hoverStart = 0F;
+			citem.setEntityItemStack(workTile.getStackInSlot(0));
+			this.itemRenderer.render(citem, 0F, 0.3F, 0F, workTile.showNum);
+		}
 		glPopMatrix();
 
 
 		glPushMatrix();
-			glTranslated(x + 0.5F, y + 1.02F, z + 0.5F);
-			glRotatef(workTile.rot, 0, 1, 0);
-			glTranslatef(0, -1F, 0);
-			glScalef(0.025F, 0.025F, 0.025F);
-			glDisable(GL_LIGHTING);
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_DRILL);
-			this.drill.renderAll();
-			glEnable(GL_LIGHTING);
+		glTranslated(x + 0.5F, y + 1.02F, z + 0.5F);
+		glRotatef(workTile.rot, 0, 1, 0);
+		glTranslatef(0, -1F, 0);
+		glScalef(0.025F, 0.025F, 0.025F);
+		glDisable(GL_LIGHTING);
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_DRILL);
+		this.drill.renderAll();
+		glEnable(GL_LIGHTING);
 		glPopMatrix();
-		
+
 
 		if (workTile.getTankInfo(ForgeDirection.UNKNOWN)[0].fluid == null || workTile.isEmpty)
 			return;
@@ -599,10 +599,10 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 			glTranslated(x, y, z);
 			glPushAttrib(GL_ENABLE_BIT);
 			glDisable(GL_LIGHTING);
-			
-//			glEnable(GL_BLEND);
-//			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			
+
+			//			glEnable(GL_BLEND);
+			//			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 			glTranslatef(0.005F, 0.005F, 0.005F);
 			glScalef(0.99F, 0.99F, 0.99F);
 
@@ -612,7 +612,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 					for (int k = 0; k < 16; k++)
 						if ((int) field[i][j][k] > 0
 								&& (i != 0 && (int) field[i - 1][j][k] != 0 && i != 15 && (int) field[i + 1][j][k] != 0 && j != 0 && (int) field[i][j - 1][k] != 0 && j != 15
-										&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
+								&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
 						{
 							field[i][j][k] = 0F;
 						}
@@ -624,10 +624,10 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 			float xMin = icon.getMinU();
 			float xMax = icon.getMaxU();
 			float yMin = icon.getMinV();
-	       	float yMax = icon.getMaxV();
-	       	
-	       	float iconSize = (xMax-xMin)/16;
-            
+			float yMax = icon.getMaxV();
+
+			float iconSize = (xMax-xMin)/16;
+
 			glBegin(GL_QUADS);
 
 			for (int i = 0; i < 16; i++)
@@ -709,7 +709,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 						}
 
 			glEnd();
-//			glDisable(GL_BLEND);
+			//			glDisable(GL_BLEND);
 			glPopAttrib();
 			glPopMatrix();
 		} else
@@ -723,7 +723,7 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 	{
 		return false;
 	}
-	
+
 	@Override
 	public boolean shouldRender3DInInventory(int modelId)
 	{
@@ -733,13 +733,13 @@ public class RenderPumpPillar extends TileEntitySpecialRenderer implements ISimp
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.pumpPillarRenderID;
+		return BlockPillarPump.renderID;
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z)
 	{
 		model.rotateAngleX = x;
-	    model.rotateAngleY = y;
-	    model.rotateAngleZ = z;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
 	}
 }

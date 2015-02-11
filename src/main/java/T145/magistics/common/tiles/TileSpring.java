@@ -1,4 +1,4 @@
-package T145.magistics.common.tiles.aesthetic;
+package T145.magistics.common.tiles;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;

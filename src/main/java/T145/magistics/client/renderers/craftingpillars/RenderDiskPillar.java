@@ -28,11 +28,10 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import T145.magistics.api.CraftingPillarAPI;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
 import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-//import me.dawars.CraftingPillars.api.CraftingPillarAPI;
 
 public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
@@ -409,7 +408,7 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 			BunnyEar1.render(f);
 			BunnyEar2.render(f);
 		}
-		
+
 		this.bottom.render(f);
 		this.pillarbottom.render(f);
 		this.pillar.render(f);
@@ -494,6 +493,6 @@ public class RenderDiskPillar extends TileEntitySpecialRenderer implements ISimp
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.diskPlayerRenderID;
+		return BlockPillarTurntable.renderID;
 	}
 }

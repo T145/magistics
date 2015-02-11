@@ -13,15 +13,15 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ConfigObjects;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ChristmasLeavesBlock extends Block implements IShearable
 {
-
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon glowing;
 	Block[] adjacentTreeBlocks;
 
@@ -33,7 +33,7 @@ public class ChristmasLeavesBlock extends Block implements IShearable
 	@Override
 	public int getRenderType()
 	{
-		return Magistics.proxy.winter ? ConfigObjects.christmasLeavesRenderID : super.getRenderType();
+		return renderID;
 	}
 
 	/**

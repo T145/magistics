@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.blocks.craftingpillars.ChristmasLeavesBlock;
-import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimpleBlockRenderingHandler
@@ -81,8 +80,6 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 
 	@Override
 	public int getRenderId() {
-		return ConfigObjects.christmasLeavesRenderID;
+		return ChristmasLeavesBlock.renderID;
 	}
-
-
 }

@@ -37,7 +37,7 @@ import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
 import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -558,6 +558,6 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 
 	@Override
 	public int getRenderId() {
-		return ConfigObjects.trashPillarRenderID;
+		return BlockPillarTrash.renderID;
 	}
 }

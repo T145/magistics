@@ -23,6 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityCraftingPillar;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -383,7 +384,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		this.bottom.render(f);
 		this.pillarbottom.render(f);
 		this.pillar.render(f);
-		
+
 		if (Magistics.proxy.winter)
 		{
 			this.Icicle1A.render(f);
@@ -421,7 +422,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			this.WreathJ.render(f);
 			this.Bow.render(f);
 		}
-		
+
 
 		this.pillartop.render(f);
 		this.top.render(f);
@@ -492,7 +493,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		{
 			glPushMatrix();
 			citem.hoverStart = 0;
-			
+
 			glColor4f(1, 1, 1, 1);
 			glTranslated(x, y, z);
 			glTranslated(0.5D, 0.5D, 0.5D);
@@ -513,43 +514,43 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 
 			glPopMatrix();
 
-//			if (workTile.getStackInSlot(workTile.getSizeInventory()) != null)
-//			{
-//				glPushMatrix();
-//				glTranslated(x, y + 1F, z);
-//
-//				float r = 0.6F;
-//
-//				AspectList aspectsRecipe = workTile.aspectsForRecipe;
-//
-////				if (aspectsRecipe != null)
-////				{
-//					glDisable(GL_LIGHTING);
-//					for (int i = 0; i < Aspect.getPrimalAspects().size(); i++)
-//					{
-//						Aspect aspect = Aspect.getPrimalAspects().get(i);
-//						for (int j = 0; j < aspectsRecipe.size(); j++)
-//						{
-//							if (aspectsRecipe.getAspects()[j] != null)
-//							{
-//								FMLLog.info("is " + aspectsRecipe.getAspects()[j].getName() + " equals " + aspect.getName());
-////								if (aspectsRecipe.getAspects()[j].getName().equals(aspect.getName()))
-////								{
-//									float theta = 2.0f * 3.1415926f * (float) i / (float) Aspect.getPrimalAspects().size();// get the current angle
-//
-//									float xC = (float) (r * Math.cos(theta));// calculate the x component
-//									float zC = (float) (r * Math.sin(theta));// calculate the z component
-//
-//									RenderingHelper.renderFacingQuad(0.5F + xC, 0.5F, 0.5F + zC, 1F, aspect.getImage(), new Color(aspect.getColor()));
-//									break;
-////								}
-//							}
-//						}
-//					}
-//					glEnable(GL_LIGHTING);
-////				}
-//				glPopMatrix();
-//			}
+			//			if (workTile.getStackInSlot(workTile.getSizeInventory()) != null)
+			//			{
+			//				glPushMatrix();
+			//				glTranslated(x, y + 1F, z);
+			//
+			//				float r = 0.6F;
+			//
+			//				AspectList aspectsRecipe = workTile.aspectsForRecipe;
+			//
+			////				if (aspectsRecipe != null)
+			////				{
+			//					glDisable(GL_LIGHTING);
+			//					for (int i = 0; i < Aspect.getPrimalAspects().size(); i++)
+			//					{
+			//						Aspect aspect = Aspect.getPrimalAspects().get(i);
+			//						for (int j = 0; j < aspectsRecipe.size(); j++)
+			//						{
+			//							if (aspectsRecipe.getAspects()[j] != null)
+			//							{
+			//								FMLLog.info("is " + aspectsRecipe.getAspects()[j].getName() + " equals " + aspect.getName());
+			////								if (aspectsRecipe.getAspects()[j].getName().equals(aspect.getName()))
+			////								{
+			//									float theta = 2.0f * 3.1415926f * (float) i / (float) Aspect.getPrimalAspects().size();// get the current angle
+			//
+			//									float xC = (float) (r * Math.cos(theta));// calculate the x component
+			//									float zC = (float) (r * Math.sin(theta));// calculate the z component
+			//
+			//									RenderingHelper.renderFacingQuad(0.5F + xC, 0.5F, 0.5F + zC, 1F, aspect.getImage(), new Color(aspect.getColor()));
+			//									break;
+			////								}
+			//							}
+			//						}
+			//					}
+			//					glEnable(GL_LIGHTING);
+			////				}
+			//				glPopMatrix();
+			//			}
 		}
 	}
 
@@ -582,6 +583,6 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.craftingPillarRenderID;
+		return BlockPillarCrafting.renderID;
 	}
 }

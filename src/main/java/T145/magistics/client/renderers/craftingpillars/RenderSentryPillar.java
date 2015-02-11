@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntitySentryPillar;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -500,6 +501,6 @@ public class RenderSentryPillar extends TileEntitySpecialRenderer implements ISi
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.sentryPillarRenderID;
+		return BlockPillarSentry.renderID;
 	}
 }

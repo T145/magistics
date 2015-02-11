@@ -12,12 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
 
-public class CustomParticle extends EntityFX
+public class PillarParticle extends EntityFX
 {
 	ResourceLocation resource = null;
 	int brightness = 200;
 
-	public CustomParticle(World world, double x, double y, double z, double mx, double my, double mz)
+	public PillarParticle(World world, double x, double y, double z, double mx, double my, double mz)
 	{
 		super(world, x, y, z, mx, my, mz);
 		this.multipleParticleScaleBy(0.1F);

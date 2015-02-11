@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import T145.magistics.common.lib.Blobs;
+import T145.magistics.client.lib.Blobs;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TileEntityPumpPillar extends BaseTileEntity implements IInventory, ISidedInventory, IFluidHandler

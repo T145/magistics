@@ -31,7 +31,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
 import T145.magistics.common.tiles.craftingpillars.TileEntityBrewingPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -382,7 +382,7 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 				{
 					float subX = 0;
 					float subZ = 0;
-		
+
 					if(rotI == 0)
 						subX = 0.4F;
 					if(rotI == 2)
@@ -391,8 +391,8 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 						subZ = 0.4F;
 					if(rotI == 3)
 						subZ = -0.4F;
-		
-				
+
+
 					glPushMatrix();
 					glTranslatef(subX, 0F, subZ);
 
@@ -441,6 +441,6 @@ public class RenderBrewingPillar extends TileEntitySpecialRenderer implements IS
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.brewingillarRenderID;
+		return BlockPillarBrewing.renderID;
 	}
 }

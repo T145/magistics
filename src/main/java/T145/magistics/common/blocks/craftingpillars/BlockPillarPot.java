@@ -14,13 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityPotPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarPot extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarPot(Material mat)
 	{
 		super(mat);
@@ -30,7 +32,7 @@ public class BlockPillarPot extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.potPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class BlockPillarPot extends BlockPillarBase
 	{
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	/**
@@ -142,30 +144,30 @@ public class BlockPillarPot extends BlockPillarBase
 	}
 
 
-//	@SideOnly(Side.CLIENT)
-//	@Override
-//	/**
-//	 * A randomly called display update to be able to add particles or other items for display
-//	 */
-//	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-//	{
-//		if(rand.nextInt(25) == 0)
-//		{
-//			TileEntityPotPillar tile = (TileEntityPotPillar) world.getTileEntity(x, y, z);
-//			if(tile.getStackInSlot(0) != null && tile.getStackInSlot(0).isItemEqual(new ItemStack(CraftingPillars.blockChristmasTreeSapling)) && tile.christmasTreeState == 0)
-//			{
-//				for (int i = 0; i < 5; ++i)
-//				{
-//					double d0 = rand.nextGaussian() * 0.02D;
-//					double d1 = rand.nextGaussian() * 0.02D;
-//					double d2 = rand.nextGaussian() * 0.02D;
-//					float width = 0.3F;
-//					float height = 0.5F;
-//					world.spawnParticle("happyVillager", x + 0.6F + (double)(rand.nextFloat() * width  * 2.0F) - width, y + 1.2D + rand.nextFloat() * height, z + 0.6F + (double)(rand.nextFloat() * width * 2.0F) - width, d0, d1, d2);
-//				}
-//			}
-//		}
-//	}
+	//	@SideOnly(Side.CLIENT)
+	//	@Override
+	//	/**
+	//	 * A randomly called display update to be able to add particles or other items for display
+	//	 */
+	//	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+	//	{
+	//		if(rand.nextInt(25) == 0)
+	//		{
+	//			TileEntityPotPillar tile = (TileEntityPotPillar) world.getTileEntity(x, y, z);
+	//			if(tile.getStackInSlot(0) != null && tile.getStackInSlot(0).isItemEqual(new ItemStack(CraftingPillars.blockChristmasTreeSapling)) && tile.christmasTreeState == 0)
+	//			{
+	//				for (int i = 0; i < 5; ++i)
+	//				{
+	//					double d0 = rand.nextGaussian() * 0.02D;
+	//					double d1 = rand.nextGaussian() * 0.02D;
+	//					double d2 = rand.nextGaussian() * 0.02D;
+	//					float width = 0.3F;
+	//					float height = 0.5F;
+	//					world.spawnParticle("happyVillager", x + 0.6F + (double)(rand.nextFloat() * width  * 2.0F) - width, y + 1.2D + rand.nextFloat() * height, z + 0.6F + (double)(rand.nextFloat() * width * 2.0F) - width, d0, d1, d2);
+	//				}
+	//			}
+	//		}
+	//	}
 
 	@Override
 	@SideOnly(Side.CLIENT)

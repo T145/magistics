@@ -17,13 +17,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityBrewingPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarBrewing extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
 	public BlockPillarBrewing(Material mat)
 	{
@@ -46,7 +47,7 @@ public class BlockPillarBrewing extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.brewingillarRenderID;
+		return renderID;
 	}
 
 	@Override

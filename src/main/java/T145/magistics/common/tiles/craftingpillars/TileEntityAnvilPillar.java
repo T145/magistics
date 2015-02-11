@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import T145.magistics.api.items.baubles.Baubles;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.items.craftingpillars.ItemRingBase;
 
 public class TileEntityAnvilPillar extends BaseTileEntity implements IInventory, ISidedInventory
 {
@@ -184,11 +183,9 @@ public class TileEntityAnvilPillar extends BaseTileEntity implements IInventory,
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack)
 	{
-		if(i == 0 && itemstack.getItem() instanceof ItemRingBase)
+		if(i > 0 && Baubles.getModifier(itemstack.getItem()) != null)
 			return true;
-		else if(i > 0 && Baubles.getModifier(itemstack.getItem()) != null)
-			return true;
-		
+
 		return false;
 	}
 

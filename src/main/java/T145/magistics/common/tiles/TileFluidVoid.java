@@ -1,4 +1,4 @@
-package T145.magistics.common.tiles.aesthetic;
+package T145.magistics.common.tiles;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;

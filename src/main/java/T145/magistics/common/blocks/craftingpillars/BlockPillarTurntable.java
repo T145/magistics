@@ -14,13 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityDiskPlayerPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarTurntable extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarTurntable(Material mat)
 	{
 		super(mat);
@@ -29,7 +31,7 @@ public class BlockPillarTurntable extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.diskPlayerRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -68,8 +70,8 @@ public class BlockPillarTurntable extends BlockPillarBase
 				ItemStack disk = player.getCurrentEquippedItem();
 				if(disk != null && disk.getItem() instanceof ItemRecord)
 				{
-//					if(disk.isItemEqual(new ItemStack(CraftingPillars.itemDiscElysium)))
-//						player.addStat(CraftingPillars.achievementDisc, 1);
+					//					if(disk.isItemEqual(new ItemStack(CraftingPillars.itemDiscElysium)))
+					//						player.addStat(CraftingPillars.achievementDisc, 1);
 					this.insertRecord(world, x, y, z, player.getCurrentEquippedItem());
 					world.playAuxSFXAtEntity(null, 1005, x, y, z, Item.getIdFromItem(disk.getItem()));
 					if(!player.capabilities.isCreativeMode)

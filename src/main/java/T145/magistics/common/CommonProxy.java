@@ -1,6 +1,7 @@
 package T145.magistics.common;
 
 import java.io.File;
+import java.util.Calendar;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -25,7 +25,6 @@ import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.api.FreezerRecipes;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.config.Log;
-import T145.magistics.common.lib.CraftingPillarsResources;
 import T145.magistics.common.lib.ResearchRecipe;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Loader;
@@ -39,18 +38,66 @@ public class CommonProxy extends Log implements IGuiHandler {
 		"Graphics", "Blocks", "Items"
 	};
 
-	public static boolean winter;
-	public static boolean easter;
-	public static boolean valentine;
-	public static boolean halloween;
-
-	public static final String channelGame = "PillarGameClick";
-	public static final String channelGui = "PillarGuiClick";
-	public static final String channelProps = "PillarProps";
-
-	public static Property checkUpdates;
+	public static boolean winter, easter, valentine, halloween;
 
 	public static Item itemWandThaumcraft;
+
+	public static boolean isWinterTime() {
+		Calendar c = Calendar.getInstance();
+		Calendar b = Calendar.getInstance();
+		b.set(Calendar.MONTH, Calendar.DECEMBER);
+		b.set(Calendar.DAY_OF_MONTH, 1);
+		b.set(Calendar.HOUR_OF_DAY, 0);
+		b.set(Calendar.MINUTE, 0);
+		b.set(Calendar.MILLISECOND, 0);
+		Calendar e = Calendar.getInstance();
+		e.set(Calendar.YEAR, c.get(Calendar.YEAR) + 1);
+		e.set(Calendar.MONTH, Calendar.JANUARY);
+		e.set(Calendar.DAY_OF_MONTH, 15);
+		e.set(Calendar.HOUR_OF_DAY, 0);
+		e.set(Calendar.MINUTE, 0);
+		e.set(Calendar.MILLISECOND, 0);
+		return c.after(b) && c.before(e);
+	}
+
+	public static boolean isEasterTime() {
+		Calendar c = Calendar.getInstance();
+		Calendar b = Calendar.getInstance();
+		b.set(Calendar.MONTH, Calendar.APRIL);
+		b.set(Calendar.DAY_OF_MONTH, 19);
+		b.set(Calendar.HOUR_OF_DAY, 0);
+		b.set(Calendar.MINUTE, 0);
+		b.set(Calendar.MILLISECOND, 0);
+		Calendar e = Calendar.getInstance();
+		e.set(Calendar.MONTH, Calendar.APRIL);
+		e.set(Calendar.DAY_OF_MONTH, 25);
+		e.set(Calendar.HOUR_OF_DAY, 0);
+		e.set(Calendar.MINUTE, 0);
+		e.set(Calendar.MILLISECOND, 0);
+		return c.after(b) && c.before(e);
+	}
+
+	public static boolean isHalloweenTime() {
+		Calendar c = Calendar.getInstance();
+		Calendar b = Calendar.getInstance();
+		b.set(Calendar.MONTH, Calendar.OCTOBER);
+		b.set(Calendar.DAY_OF_MONTH, 24);
+		b.set(Calendar.HOUR_OF_DAY, 0);
+		b.set(Calendar.MINUTE, 0);
+		b.set(Calendar.MILLISECOND, 0);
+		Calendar e = Calendar.getInstance();
+		e.set(Calendar.MONTH, Calendar.NOVEMBER);
+		e.set(Calendar.DAY_OF_MONTH, 7);
+		e.set(Calendar.HOUR_OF_DAY, 0);
+		e.set(Calendar.MINUTE, 0);
+		e.set(Calendar.MILLISECOND, 0);
+		return c.after(b) && c.before(e);
+	}
+
+	public static boolean isValentineTime() {
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) == 14;
+	}
 
 	public void sync() {
 		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
@@ -58,10 +105,10 @@ public class CommonProxy extends Log implements IGuiHandler {
 		colored_names = config.getBoolean(category[0], "Colored Names", false, "Toggles name coloring for some things.");
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
 
-		winter = (CraftingPillarsResources.isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
-		easter = (CraftingPillarsResources.isEasterTime() && config.get("default", "enableEaster", true).getBoolean()) || config.get("default", "forceEaster", false).getBoolean();
-		halloween = (CraftingPillarsResources.isHalloweenTime() && config.get("default", "enableHalloween", true).getBoolean()) || config.get("default", "forceHalloween", false).getBoolean();
-		valentine = CraftingPillarsResources.isValentineTime() || config.get("default", "forceValentine's day", false).getBoolean();
+		winter = (isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
+		easter = (isEasterTime() && config.get("default", "enableEaster", true).getBoolean()) || config.get("default", "forceEaster", false).getBoolean();
+		halloween = (isHalloweenTime() && config.get("default", "enableHalloween", true).getBoolean()) || config.get("default", "forceHalloween", false).getBoolean();
+		valentine = isValentineTime() || config.get("default", "forceValentine's day", false).getBoolean();
 	}
 
 	public void loadConfig(File configFile) {

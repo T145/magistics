@@ -25,7 +25,6 @@ import T145.magistics.api.CraftingPillarAPI;
 import T145.magistics.api.blocks.BlockMagisticsItem;
 import T145.magistics.api.client.renderers.block.ChestItemRenderer;
 import T145.magistics.api.client.renderers.block.ChestRenderer;
-import T145.magistics.api.items.baubles.Baubles;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
 import T145.magistics.client.renderers.craftingpillars.RenderAnvilPillar;
@@ -44,7 +43,6 @@ import T145.magistics.client.renderers.craftingpillars.RenderSentryPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderShowOffPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTankPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTrashPillar;
-import T145.magistics.client.renderers.craftingpillars.RingItemRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
@@ -65,21 +63,21 @@ import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarAnvil;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLeavesBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasLightBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasPresentBlock;
-import T145.magistics.common.blocks.craftingpillars.ChristmasTreeSapling;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarExtend;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFreezer;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarFurnace;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarPot;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarPump;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
+import T145.magistics.common.blocks.craftingpillars.ChristmasLeavesBlock;
+import T145.magistics.common.blocks.craftingpillars.ChristmasLightBlock;
+import T145.magistics.common.blocks.craftingpillars.ChristmasPresentBlock;
+import T145.magistics.common.blocks.craftingpillars.ChristmasTreeSapling;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorArrow;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorEgg;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorFireball;
@@ -93,12 +91,7 @@ import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
-import T145.magistics.common.items.baubles.ModEnderPearl;
-import T145.magistics.common.items.craftingpillars.BaseItem;
-import T145.magistics.common.items.craftingpillars.ItemRingBase;
-import T145.magistics.common.items.craftingpillars.ItemVirgacs;
 import T145.magistics.common.items.craftingpillars.PillarRecord;
-import T145.magistics.common.items.craftingpillars.WinterFood2013;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.lib.handlers.PillarEventHandler;
 import T145.magistics.common.tiles.TileChestHungry;
@@ -149,25 +142,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Item itemResources, itemAmuletDismay, itemAmuletLife, itemBeltCleansing, itemBeltVigor, itemRingSouls, itemCruelMask, itemDawnstone;
 	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
-	// CraftingPillars
-	public static int extendPillarRenderID;
-	public static int showOffPillarRenderID;
-	public static int craftingPillarRenderID;
-	public static int furnacePillarRenderID;
-	public static int anvilPillarRenderID;
-	public static int tankPillarRenderID;
-	public static int brewingillarRenderID;
-	public static int diskPlayerRenderID;
-	public static int freezerPillarRenderID;
-	public static int potPillarRenderID;
-	public static int sentryPillarRenderID;
-	public static int trashPillarRenderID;
-	public static int pumpPillarRenderID;
-
-	public static int PresentRenderID;
-	public static int lightRenderID;
-	public static int christmasLeavesRenderID;
-
 	public static Block blockBasePillar;
 	public static Block blockShowOffPillar;
 	public static Block blockCraftingPillar;
@@ -188,28 +162,10 @@ public class ConfigObjects extends CommonProxy {
 	public static Block blockChristmasLight;
 
 	public static Item itemDiscElysium;
-	// public static Item itemCalendar2013;
-	// public static Item itemElysiumLoreBook;
-	public static Item itemRibbonDiamond;
-	public static Item itemWinterFood2013;
-	public static Item itemVirgacs;
-
-	public static Item itemRing;
-	public static Item itemRingDummy;
 
 	public static ItemStack[] present_loot = new ItemStack[] {
 		new ItemStack(blockChristmasPresent, 1, 0),
 		new ItemStack(blockChristmasPresent, 1, 1),
-		new ItemStack(itemWinterFood2013, 2, 0),
-		new ItemStack(itemWinterFood2013, 3, 1),
-		new ItemStack(itemWinterFood2013, 4, 2),
-		new ItemStack(itemWinterFood2013, 3, 3),
-		new ItemStack(itemWinterFood2013, 5, 4),
-		new ItemStack(itemWinterFood2013, 4, 5),
-		new ItemStack(itemWinterFood2013, 2, 6),
-		new ItemStack(itemWinterFood2013, 1, 7),
-		new ItemStack(itemWinterFood2013, 4, 8),
-		// new ItemStack(itemElysiumLoreBook, 1, 0),
 		new ItemStack(blockCraftingPillar, 1, 0),
 		new ItemStack(blockAnvilPillar, 1, 0),
 		new ItemStack(blockFurnacePillar, 1, 0),
@@ -222,7 +178,6 @@ public class ConfigObjects extends CommonProxy {
 		new ItemStack(blockTankPillar, 1, 0),
 		new ItemStack(blockTrashPillar, 1, 0),
 		new ItemStack(blockBasePillar, 3, 0),
-		new ItemStack(itemRibbonDiamond, 2, 0),
 		new ItemStack(itemDiscElysium, 1, 0)
 	};
 
@@ -238,7 +193,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Achievement achievementCompressingLiquids;
 
 	public static Achievement achievementShowoff;
-	public static Achievement achievementDiamond;
 	public static Achievement achievementDisc;
 	public static Achievement achievementRecursion3;
 
@@ -328,9 +282,6 @@ public class ConfigObjects extends CommonProxy {
 		blocks.put(blockPumpPillar = (new BlockPillarPump(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("pumpPillar"), null);
 
 		if (winter) {
-			items.add(itemWinterFood2013 = new WinterFood2013(5, 0.5F).setUnlocalizedName("WinterFood"));
-			items.add(itemVirgacs = new ItemVirgacs().setUnlocalizedName("Virgacs"));
-
 			blocks.put(blockChristmasLeaves = (new ChristmasLeavesBlock(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("xmasLeaves"), null);
 			blocks.put(blockChristmasTreeSapling = (new ChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("ChristmasTreeSapling"), null);
 			blocks.put(blockChristmasPresent = (new ChristmasPresentBlock(Material.cloth)).setHardness(1.0F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
@@ -338,17 +289,6 @@ public class ConfigObjects extends CommonProxy {
 		}
 
 		items.add(itemDiscElysium = new PillarRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
-
-		//itemCalendar2013 = new AdventCalendar2013().setUnlocalizedName("AdventCalendar2013");
-		//if(!winter)
-		//itemCalendar2013.setCreativeTab(null);
-
-		items.add(itemRibbonDiamond = new BaseItem().setUnlocalizedName("RibbonDiamond"));
-
-		//itemElysiumLoreBook = new BookElysium().setUnlocalizedName("ElysiumLoreBook");
-
-		items.add(itemRing = new ItemRingBase().setUnlocalizedName("ring_base"));
-		items.add(itemRingDummy = new Item().setUnlocalizedName("ring_dummy").setTextureName("craftingpillars:iron_ring"));
 	}
 
 	public static void loadClient() {
@@ -416,24 +356,6 @@ public class ConfigObjects extends CommonProxy {
 		tileRenderers.put(TileEntityChristmasPresent.class, new RenderPresent());
 		tileRenderers.put(TileEntityLight.class, new RenderLight());
 
-		extendPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		showOffPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		craftingPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		furnacePillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		anvilPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		tankPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		brewingillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		diskPlayerRenderID = RenderingRegistry.getNextAvailableRenderId();
-		freezerPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		potPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		sentryPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		trashPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-		pumpPillarRenderID = RenderingRegistry.getNextAvailableRenderId();
-
-		christmasLeavesRenderID = RenderingRegistry.getNextAvailableRenderId();
-		PresentRenderID = RenderingRegistry.getNextAvailableRenderId();
-		lightRenderID = RenderingRegistry.getNextAvailableRenderId();
-
 		RenderingRegistry.registerBlockHandler(new RenderExtendPillar());
 		RenderingRegistry.registerBlockHandler(new RenderShowOffPillar());
 		RenderingRegistry.registerBlockHandler(new RenderCraftingPillar());
@@ -448,16 +370,14 @@ public class ConfigObjects extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(new RenderTrashPillar());
 		RenderingRegistry.registerBlockHandler(new RenderPumpPillar());
 
-		if(winter)
+		if (winter) {
 			RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
-		RenderingRegistry.registerBlockHandler(new RenderPresent());
-		RenderingRegistry.registerBlockHandler(new RenderLight());
-
-		MinecraftForgeClient.registerItemRenderer(itemRing, new RingItemRenderer());
+			RenderingRegistry.registerBlockHandler(new RenderPresent());
+			RenderingRegistry.registerBlockHandler(new RenderLight());
+		}
 	}
 
 	public static void registerHandlers() {
-		//NetworkRegistry.instance().registerGuiHandler(this, this.guiHandler);
 		MinecraftForge.EVENT_BUS.register(new PillarEventHandler());
 		FMLCommonHandler.instance().bus().register(new PillarEventHandler());
 	}
@@ -522,8 +442,6 @@ public class ConfigObjects extends CommonProxy {
 		GameRegistry.addRecipe(new ItemStack(blockPotPillar), new Object[] { "S", "F", "P", Character.valueOf('S'), Blocks.dirt, Character.valueOf('P'), blockBasePillar , Character.valueOf('F'), Items.flower_pot});
 		GameRegistry.addRecipe(new ItemStack(blockChristmasLight, 3), new Object[] { "G", "L", Character.valueOf('G'), Items.gold_ingot, Character.valueOf('L'), Blocks.glowstone});
 		GameRegistry.addRecipe(new ItemStack(blockTrashPillar, 1), new Object[] { "SSS", "SLS", "SSS", Character.valueOf('S'), Blocks.stone, Character.valueOf('L'), Items.ender_pearl});
-		GameRegistry.addRecipe(new ItemStack(itemRing, 1), new Object[] { " S ", "S S", " S ", Character.valueOf('S'), Items.iron_ingot});
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.diamond), new ItemStack(itemRibbonDiamond));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockChristmasTreeSapling), "treeSapling", new ItemStack(blockChristmasLight)));
 	}
 
@@ -537,21 +455,12 @@ public class ConfigObjects extends CommonProxy {
 		achievementCompressingLiquids = new Achievement("achievement.liquids", "liquids", 1, 2, blockFreezerPillar, achievementGettingStarted).registerStat();
 
 		achievementChristmas = new Achievement("achievement.christmaspillar", "christmaspillar", 0, 4, blockChristmasTreeSapling, null).setSpecial().initIndependentStat().registerStat();
-		achievementDiamond = new Achievement("achievement.christmasdiamond", "christmasdiamond", 2, 4, itemRibbonDiamond, achievementChristmas).setSpecial().registerStat();
 		achievementDisc = new Achievement("achievement.elysiandisc", "elysiandisc", 4, 4, itemDiscElysium, achievementChristmas).setSpecial().registerStat();
 
-		if (winter) {
-			achievementPage = new AchievementPage(Magistics.modid,
-					achievementGettingStarted, achievementRecursion,
-					achievementShowoff, achievementCompressingLiquids,
-					achievementRecursion3, achievementChristmas,
-					achievementDiamond, achievementDisc);
-		} else {
-			achievementPage = new AchievementPage(Magistics.modid,
-					achievementGettingStarted, achievementRecursion,
-					achievementShowoff, achievementCompressingLiquids,
-					achievementRecursion3, achievementDisc);
-		}
+		if (winter)
+			achievementPage = new AchievementPage(Magistics.modid, achievementGettingStarted, achievementRecursion, achievementShowoff, achievementCompressingLiquids, achievementRecursion3, achievementChristmas, achievementDisc);
+		else
+			achievementPage = new AchievementPage(Magistics.modid, achievementGettingStarted, achievementRecursion, achievementShowoff, achievementCompressingLiquids, achievementRecursion3, achievementDisc);
 
 		AchievementPage.registerAchievementPage(achievementPage);
 	}
@@ -562,8 +471,7 @@ public class ConfigObjects extends CommonProxy {
 		OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
 	}
 
-	public static void initAPI()
-	{ // post-init
+	public static void initAPI() {
 		CraftingPillarAPI.addDiskTexture(itemDiscElysium, "craftingpillars:textures/models/disk_elysium.png");
 
 		CraftingPillarAPI.addDiskTexture(Items.record_13, "craftingpillars:textures/models/disk_13.png");
@@ -584,9 +492,6 @@ public class ConfigObjects extends CommonProxy {
 		SentryBehaviors.add(Items.fire_charge, new SentryBehaviorFireball());
 		SentryBehaviors.add(Items.potionitem, new SentryBehaviorPotion());
 		SentryBehaviors.add(Items.egg, new SentryBehaviorEgg());
-
-		Baubles.addModifier(Items.ender_pearl, new ModEnderPearl());
-		//		Baubles.addModifier(Item.getItemFromBlock(Blocks.glowstone), new ModGlowStone());
 	}
 
 	static {

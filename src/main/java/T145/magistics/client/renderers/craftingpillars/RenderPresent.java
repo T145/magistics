@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.ChristmasPresentBlock;
 import T145.magistics.common.tiles.craftingpillars.TileEntityChristmasPresent;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -94,7 +94,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 			this.PresentBottom.render(f);
 			this.PresentTop.render(f);
 		}
-		
+
 		Minecraft.getMinecraft().renderEngine.bindTexture(this.TEXTURE_OVERLAY);
 		glColor3f(color2.getRed()/255F, color2.getGreen()/255F, color2.getBlue()/255F);
 		if(model)
@@ -116,7 +116,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 		glPushMatrix();
 		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 		glRotatef(180F, 1F, 0F, 0F);
-		
+
 		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[present.color*2]), new Color(TileEntityChristmasPresent.colors[present.color*2+1]), /*present.model*/present.getBlockMetadata() == 1);
 		glPopMatrix();
 	}
@@ -127,7 +127,7 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 		glPushMatrix();
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_DEPTH_TEST);
-		
+
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 		this.render(0.0625F, new Color(TileEntityChristmasPresent.colors[0]), new Color(TileEntityChristmasPresent.colors[1]), false);
@@ -148,6 +148,6 @@ public class RenderPresent extends TileEntitySpecialRenderer implements ISimpleB
 
 	@Override
 	public int getRenderId() {
-		return ConfigObjects.PresentRenderID;
+		return ChristmasPresentBlock.renderID;
 	}
 }

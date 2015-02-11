@@ -14,13 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityTrashPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarTrash extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarTrash(Material mat)
 	{
 		super(mat);
@@ -30,7 +32,7 @@ public class BlockPillarTrash extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.trashPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class BlockPillarTrash extends BlockPillarBase
 	{
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
 	{
@@ -136,10 +138,7 @@ public class BlockPillarTrash extends BlockPillarBase
 			double d0 = (double) ((float) x + rand.nextFloat());
 			double d1 = (double) ((float) y + 0.8F);
 			double d2 = (double) ((float) z + rand.nextFloat());
-			double d3 = 0.0D;
-			double d4 = 0.0D;
-			double d5 = 0.0D;
-			world.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
+			world.spawnParticle("smoke", d0, d1, d2, 0D, 0D, 0D);
 		}
 
 	}

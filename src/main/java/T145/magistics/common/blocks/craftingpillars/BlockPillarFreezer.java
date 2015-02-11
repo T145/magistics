@@ -17,13 +17,15 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import T145.magistics.api.FreezerRecipes;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityFreezerPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarFreezer extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarFreezer(Material mat)
 	{
 		super(mat);
@@ -32,7 +34,7 @@ public class BlockPillarFreezer extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.freezerPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -78,16 +80,16 @@ public class BlockPillarFreezer extends BlockPillarBase
 				if((tank.tank.getFluid() == null || tank.isEmpty || fluid.isFluidEqual(tank.tank.getFluid())) && FreezerRecipes.getResultForFluid(fluid) != null)
 				{
 					int qty = tank.fill(ForgeDirection.UNKNOWN, fluid, true);
-	
+
 					if (qty != 0 && !entityplayer.capabilities.isCreativeMode)
 					{
 						entityplayer.getCurrentEquippedItem().stackSize--;
-	
+
 						if (current.getItem().getContainerItem(current) != null)
 						{
 							entityplayer.inventory.addItemStackToInventory(current.getItem().getContainerItem(current));
 						}
-	
+
 					}
 					return true;
 				}
@@ -202,7 +204,7 @@ public class BlockPillarFreezer extends BlockPillarBase
 	{
 		return this.blockIcon;
 	}
-	
+
 
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {

@@ -24,7 +24,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.blocks.craftingpillars.ChristmasLightBlock;
 import T145.magistics.common.tiles.craftingpillars.TileEntityLight;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -143,7 +143,7 @@ public class RenderLight extends TileEntitySpecialRenderer implements ISimpleBlo
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.lightRenderID;
+		return ChristmasLightBlock.renderID;
 	}
 
 	public void render(int meta, Color color)

@@ -12,13 +12,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityShowOffPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarDisplay extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarDisplay(Material mat)
 	{
 		super(mat);
@@ -27,7 +29,7 @@ public class BlockPillarDisplay extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.showOffPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class BlockPillarDisplay extends BlockPillarBase
 	{
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
 	{
@@ -75,8 +77,8 @@ public class BlockPillarDisplay extends BlockPillarBase
 			}
 			else if(player.getCurrentEquippedItem() != null)
 			{//put in
-//				if(player.getCurrentEquippedItem().isItemEqual(new ItemStack(this)))
-//					player.addStat(CraftingPillars.achievementShowoff, 1);
+				//				if(player.getCurrentEquippedItem().isItemEqual(new ItemStack(this)))
+				//					player.addStat(CraftingPillars.achievementShowoff, 1);
 				if(pillarTile.getStackInSlot(0) == null)
 				{//slot empty
 					if(!player.capabilities.isCreativeMode)

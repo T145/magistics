@@ -5,11 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityLight;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ChristmasLightBlock extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public ChristmasLightBlock(Material mat)
 	{
 		super(mat);
@@ -60,7 +62,7 @@ public class ChristmasLightBlock extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.lightRenderID;
+		return renderID;
 	}
 
 	@Override

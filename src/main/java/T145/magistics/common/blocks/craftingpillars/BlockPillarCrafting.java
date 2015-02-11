@@ -14,11 +14,14 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityCraftingPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarCrafting extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarCrafting(Material mat)
 	{
 		super(mat);
@@ -27,7 +30,7 @@ public class BlockPillarCrafting extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.craftingPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -182,34 +185,14 @@ public class BlockPillarCrafting extends BlockPillarBase
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int par6)
 	{
-		if (!world.isRemote)
-		{
-			TileEntityCraftingPillar workTile = (TileEntityCraftingPillar) world.getTileEntity(x, y, z);
-			for (int i = 0; i < 3; i++)
-			{
-				for (int k = 0; k < 3; k++)
-				{
-					if (workTile.getStackInSlot(i * 3 + k) != null)
-					{
-						EntityItem itemDropped = new EntityItem(world, x + 0.1875D + i * 0.3125D, y + 1D, z + 0.1875D + k * 0.3125D,
-								workTile.getStackInSlot(i * 3 + k));
-						itemDropped.motionX = itemDropped.motionY = itemDropped.motionZ = 0D;
-
-						if (workTile.getStackInSlot(i * 3 + k).hasTagCompound())
-							itemDropped.getEntityItem().setTagCompound((NBTTagCompound) workTile.getStackInSlot(i * 3 + k).getTagCompound().copy());
-
-						world.spawnEntityInWorld(itemDropped);
-					}
-				}
-			}
-
+		if (!world.isRemote) {
 			TileEntityCraftingPillar pillarTile = (TileEntityCraftingPillar) world.getTileEntity(x, y, z);
 
 			for (int i = 0; i < pillarTile.getSizeInventory() + 2; i++)
 			{
 				if (pillarTile.getStackInSlot(i) != null && i != 9)
 				{
-					EntityItem itemDropped = new EntityItem(world, x + 0.5D, y, z + 0.5D, pillarTile.getStackInSlot(i));
+					EntityItem itemDropped = new EntityItem(world, x + 0.1875D, y + 1D, z + 0.1875D, pillarTile.getStackInSlot(i));
 					itemDropped.motionX = itemDropped.motionY = itemDropped.motionZ = 0D;
 
 					if (pillarTile.getStackInSlot(i).hasTagCompound())
@@ -226,8 +209,7 @@ public class BlockPillarCrafting extends BlockPillarBase
 	@Override
 	public TileEntity createTileEntity(World world, int meta)
 	{
-		TileEntityCraftingPillar tile = new TileEntityCraftingPillar();
-		return tile;
+		return new TileEntityCraftingPillar();
 	}
 
 	@Override

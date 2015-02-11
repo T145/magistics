@@ -13,13 +13,15 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityPumpPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarPump extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarPump(Material mat)
 	{
 		super(mat);
@@ -28,7 +30,7 @@ public class BlockPillarPump extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.pumpPillarRenderID;
+		return renderID;
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class BlockPillarPump extends BlockPillarBase
 	{
 		return MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
 	{

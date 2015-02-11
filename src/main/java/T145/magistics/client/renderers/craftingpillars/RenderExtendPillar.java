@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarExtend;
 import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -365,10 +366,10 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 			this.bottom.render(f);
 			this.bottoms.render(f);
 		}
-		
-		
+
+
 		this.pillar.render(f);
-		
+
 
 		if(bw)
 			this.pillarEast.render(f);
@@ -378,7 +379,7 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 			this.pillarNorth.render(f);
 		if(bn)
 			this.pillarSouth.render(f);
-		
+
 		if(bt)
 		{
 			this.pillarTop.render(f);
@@ -531,6 +532,6 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.extendPillarRenderID;
+		return BlockPillarExtend.renderID;
 	}
 }

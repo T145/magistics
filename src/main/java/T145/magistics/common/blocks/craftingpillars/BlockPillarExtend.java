@@ -5,13 +5,15 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.craftingpillars.TileEntityExtendPillar;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarExtend extends BlockPillarBase
 {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
 	public BlockPillarExtend(Material mat)
 	{
 		super(mat);
@@ -20,7 +22,7 @@ public class BlockPillarExtend extends BlockPillarBase
 	@Override
 	public int getRenderType()
 	{
-		return ConfigObjects.extendPillarRenderID;
+		return renderID;
 	}
 
 	@Override

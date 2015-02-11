@@ -33,9 +33,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.client.lib.Blobs;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.lib.Blobs;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
 import T145.magistics.common.tiles.craftingpillars.TileEntityTankPillar;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -92,10 +92,10 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 
 	public RenderTankPillar()
 	{
-		 if(Magistics.proxy.winter)
-		this.TEXTURE_TANKPILLAR = new ResourceLocation("craftingpillars:textures/models/freezerPillarFrozen.png");
-		 else
-		 this.TEXTURE_TANKPILLAR = new ResourceLocation("craftingpillars:textures/models/freezerPillar.png");
+		if(Magistics.proxy.winter)
+			this.TEXTURE_TANKPILLAR = new ResourceLocation("craftingpillars:textures/models/freezerPillarFrozen.png");
+		else
+			this.TEXTURE_TANKPILLAR = new ResourceLocation("craftingpillars:textures/models/freezerPillar.png");
 
 		this.resultRenderer = new RenderingHelper.ItemRender(false, false);
 
@@ -306,7 +306,7 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 			this.Icicle4B.render(f);
 			FMLClientHandler.instance().getClient().renderEngine.bindTexture(this.TEXTURE_TANKPILLAR);
 		}
-		
+
 		this.pillarbottom.render(f);
 		this.pillartop.render(f);
 		this.Corner1.render(f);
@@ -388,7 +388,7 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 					for (int k = 0; k < 16; k++)
 						if ((int) field[i][j][k] > 0
 								&& (i != 0 && (int) field[i - 1][j][k] != 0 && i != 15 && (int) field[i + 1][j][k] != 0 && j != 0 && (int) field[i][j - 1][k] != 0 && j != 15
-										&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
+								&& (int) field[i][j + 1][k] != 0 && k != 0 && (int) field[i][j][k - 1] != 0 && k != 15 && (int) field[i][j][k + 1] != 0))
 						{
 							field[i][j][k] = 0F;
 						}
@@ -400,10 +400,10 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 			float xMin = icon.getMinU();
 			float xMax = icon.getMaxU();
 			float yMin = icon.getMinV();
-	       	float yMax = icon.getMaxV();
-	       	
-	       	float iconSize = (xMax-xMin)/16;
-            
+			float yMax = icon.getMaxV();
+
+			float iconSize = (xMax-xMin)/16;
+
 			glBegin(GL_QUADS);
 
 			for (int i = 0; i < 16; i++)
@@ -524,6 +524,6 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 	@Override
 	public int getRenderId()
 	{
-		return ConfigObjects.tankPillarRenderID;
+		return BlockPillarTank.renderID;
 	}
 }
