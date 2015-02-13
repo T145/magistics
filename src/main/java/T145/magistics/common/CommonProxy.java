@@ -27,7 +27,6 @@ import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.config.Log;
 import T145.magistics.common.lib.ResearchRecipe;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.server.FMLServerHandler;
 
@@ -111,7 +110,15 @@ public class CommonProxy extends Log implements IGuiHandler {
 		valentine = isValentineTime() || config.get("default", "forceValentine's day", false).getBoolean();
 	}
 
-	public void loadConfig(File configFile) {
+	public void changeConfig(OnConfigChangedEvent e, String modid) {
+		if (e.modID.equals(modid)) {
+			sync();
+			if (config != null && config.hasChanged())
+				config.save();
+		}
+	}
+
+	public void preInit(File configFile) {
 		try {
 			config = new Configuration(configFile);
 			config.load();
@@ -125,28 +132,12 @@ public class CommonProxy extends Log implements IGuiHandler {
 		}
 	}
 
-	public void changeConfig(OnConfigChangedEvent e, String modid) {
-		if (e.modID.equals(modid)) {
-			sync();
-			if (config != null && config.hasChanged())
-				config.save();
-		}
+	public void init() {
+		ConfigObjects.registerObjects();
 	}
 
 	public void postInit() {
-		//		if(modThaumcraft)
-		//		{
-		//			FMLLog.info("Loading Thaumcraft 4 wand...");
-		//
-		//			itemWandThaumcraft = ItemApi.getItem("itemWandCasting", 0).getItem();
-		//			
-		//			if(itemWandThaumcraft == null)
-		//			{
-		//				modThaumcraft = false;
-		//				FMLLog.warning("Thaumcraft compatibility disabled...");
-		//			}
-		//		}
-
+		ConfigObjects.registerRenderers();
 		ConfigObjects.initAPI();
 
 		FreezerRecipes.addRecipe("water", new ItemStack(Blocks.ice));
@@ -168,22 +159,6 @@ public class CommonProxy extends Log implements IGuiHandler {
 		return null;
 	}
 
-	public String getMinecraftVersion() {
-		return Loader.instance().getMinecraftModContainer().getVersion();
-	}
-
-	public Object getClient() {
-		return null;
-	}
-
-	public Object getPlayer() {
-		return null;
-	}
-
-	public World getClientWorld() {
-		return null;
-	}
-
 	public void sendToPlayer(EntityPlayerMP player, Packet packet) {
 		player.playerNetServerHandler.sendPacket(packet);
 	}
@@ -193,19 +168,14 @@ public class CommonProxy extends Log implements IGuiHandler {
 			WorldServer worlds[] = FMLServerHandler.instance().getServer().worldServers;
 			for (int i = 0; i < worlds.length; i++)
 				for (int j = 0; j < worlds[i].playerEntities.size(); j++)
-					this.sendToPlayer((EntityPlayerMP) worlds[i].playerEntities.get(j), packet);
-		} else {
+					sendToPlayer((EntityPlayerMP) worlds[i].playerEntities.get(j), packet);
+		} else
 			for (int i = 0; i < world.playerEntities.size(); i++) {
 				EntityPlayerMP player = (EntityPlayerMP) world.playerEntities.get(i);
 				if (((int) player.posX - x) * ((int) player.posX - x) + ((int) player.posY - y) * ((int) player.posY - y) + ((int) player.posY - y) * ((int) player.posY - y) <= maxDistance * maxDistance)
-					this.sendToPlayer(player, packet);
+					sendToPlayer(player, packet);
 			}
-		}
 	}
 
 	public void sendToServer(Packet packet) {}
-
-	public String playerName() {
-		return "";
-	}
 }

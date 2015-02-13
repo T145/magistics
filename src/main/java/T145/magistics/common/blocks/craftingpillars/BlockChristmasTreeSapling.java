@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import T145.magistics.common.world.gen.WorldGenChristmasTree;
+import T145.magistics.common.lib.world.WorldGenChristmasTree;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

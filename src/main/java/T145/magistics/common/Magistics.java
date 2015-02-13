@@ -1,6 +1,5 @@
 package T145.magistics.common;
 
-import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -24,17 +23,16 @@ public class Magistics {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		proxy.loadConfig(e.getSuggestedConfigurationFile());
+		proxy.preInit(e.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
-		ConfigObjects.registerObjects();
+		proxy.init();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
 		proxy.postInit();
-		ConfigObjects.registerRenderers();
 	}
 }

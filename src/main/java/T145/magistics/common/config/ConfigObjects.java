@@ -8,9 +8,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +21,9 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import T145.magistics.api.CraftingPillarAPI;
@@ -36,6 +41,7 @@ import T145.magistics.client.renderers.craftingpillars.RenderDisplayPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderExtendPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderFreezerPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderFurnacePillar;
+import T145.magistics.client.renderers.craftingpillars.RenderMithrilPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderPotPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderSentryPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTankPillar;
@@ -79,16 +85,34 @@ import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorEgg;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorFireball;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorPotion;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorSnowball;
+import T145.magistics.common.blocks.mithril.MithrilDecoBlock;
+import T145.magistics.common.blocks.mithril.MithrilDecoItemBlock;
+import T145.magistics.common.blocks.mithril.MithrilOre;
+import T145.magistics.common.blocks.mithril.MithrilPillarBlock;
+import T145.magistics.common.blocks.mithril.PillarItemBlock;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
+import T145.magistics.common.items.armor.MithrilArmor;
+import T145.magistics.common.items.baubles.EnderNecklace;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
+import T145.magistics.common.items.baubles.MithrilRing;
+import T145.magistics.common.items.baubles.MithrilWitherRing;
 import T145.magistics.common.items.craftingpillars.PillarRecord;
+import T145.magistics.common.items.equipment.MithrilAxe;
+import T145.magistics.common.items.equipment.MithrilBow;
+import T145.magistics.common.items.equipment.MithrilHoe;
+import T145.magistics.common.items.equipment.MithrilShovel;
+import T145.magistics.common.items.equipment.MithrilSword;
+import T145.magistics.common.items.equipment.MthrilPickaxe;
 import T145.magistics.common.items.relics.ItemDawnstone;
-import T145.magistics.common.lib.handlers.PillarEventHandler;
+import T145.magistics.common.items.relics.MithrilWhistle;
+import T145.magistics.common.lib.events.EventHandlerCraftingPillars;
+import T145.magistics.common.lib.events.EventHandlerMithril;
+import T145.magistics.common.lib.world.MagisticsWorldGenerator;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -104,6 +128,7 @@ import T145.magistics.common.tiles.craftingpillars.TilePillarDisplay;
 import T145.magistics.common.tiles.craftingpillars.TilePillarExtend;
 import T145.magistics.common.tiles.craftingpillars.TilePillarFreezer;
 import T145.magistics.common.tiles.craftingpillars.TilePillarFurnace;
+import T145.magistics.common.tiles.craftingpillars.TilePillarMithril;
 import T145.magistics.common.tiles.craftingpillars.TilePillarPot;
 import T145.magistics.common.tiles.craftingpillars.TilePillarSentry;
 import T145.magistics.common.tiles.craftingpillars.TilePillarTank;
@@ -136,10 +161,35 @@ public class ConfigObjects extends CommonProxy {
 	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
 	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
-
-	public static Block blockChristmasLeaves,  blockChristmasTreeSapling,  blockChristmasPresent, blockChristmasLight;
+	public static Block blockChristmasLeaves, blockChristmasTreeSapling, blockChristmasPresent, blockChristmasLight;
 
 	public static Item itemDiscElysium;
+
+	public static Item itemMithrilSword;
+	public static Item itemMithrilSpade;
+	public static Item itemMithrilPickaxe;
+	public static Item itemMithrilAxe;
+	public static Item itemMithrilHoe;
+	public static Item itemMithrilBow;
+	public static Item itemMithrilIngot;
+	public static Item itemMithrilNugget;
+	public static Item itemQuartzRod;
+	public static Item itemMithrilChest;
+	public static Item itemMithrilHelmet;
+	public static Item itemMithrilPants;
+	public static Item itemMithrilBoots;
+	public static Item itemEnderNecklace;
+	public static Item itemMithrilRing;
+	public static Item itemWitherRing;
+	public static Item itemFlute;
+
+	public static Block blockMithrilOre;
+	public static Block blockMithrilDecoBlock;
+	public static Block blockMithrilPillar;
+
+	public static int mithrilArmorID = RenderingRegistry.addNewArmourRendererPrefix("mithril");
+	public static ToolMaterial ToolMaterialMithril = EnumHelper.addToolMaterial("MITHRIL", 3, 2084, 12.0f, 10.0f, 22);
+	public static ArmorMaterial ArmorMaterialMithril = EnumHelper.addArmorMaterial("MITHRIL", 66, new int[] { 3, 8, 6, 3 }, 25);
 
 	public static ItemStack[] present_loot = new ItemStack[] {
 		new ItemStack(blockChristmasPresent, 1, 0),
@@ -214,6 +264,8 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
+		items.add(itemDiscElysium = new PillarRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
+
 		tiles.add(TilePillarExtend.class);
 		tiles.add(TilePillarDisplay.class);
 		tiles.add(TilePillarCrafting.class);
@@ -248,7 +300,29 @@ public class ConfigObjects extends CommonProxy {
 			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
 		}
 
-		items.add(itemDiscElysium = new PillarRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
+		items.add(itemMithrilSword = new MithrilSword(ToolMaterialMithril).setUnlocalizedName("mithril_katana"));
+		items.add(itemMithrilPickaxe = new MthrilPickaxe(ToolMaterialMithril).setUnlocalizedName("mithril_pickaxe"));
+		items.add(itemMithrilAxe = new MithrilAxe(ToolMaterialMithril).setUnlocalizedName("mithril_halberd").setTextureName("mithril:mithril_halberd"));
+		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("mithril:mithril_spade"));
+		items.add(itemMithrilHoe = new MithrilHoe(ToolMaterialMithril).setUnlocalizedName("mithril_hoe").setTextureName("mithril:mithril_hoe"));
+		items.add(itemMithrilBow = new MithrilBow().setUnlocalizedName("mithril_mithrilBow").setTextureName("mithril:mithril_mithrilBow"));
+		items.add(itemMithrilIngot = new Item().setUnlocalizedName("mithril_ingot").setTextureName("mithril:mithril_ingot"));
+		items.add(itemMithrilNugget = new Item().setUnlocalizedName("mithril_chunk").setTextureName("mithril:mithril_chunk"));
+		items.add(itemQuartzRod = new Item().setUnlocalizedName("quartz_rod").setTextureName("mithril:quartz_rod"));
+		items.add(itemMithrilHelmet = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 0).setUnlocalizedName("mithril_helmet").setTextureName("mithril:mithril_helmet"));
+		items.add(itemMithrilChest = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 1).setUnlocalizedName("mithril_chestplate").setTextureName("mithril:mithril_chestplate"));
+		items.add(itemMithrilPants = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 2).setUnlocalizedName("mithril_pants").setTextureName("mithril:mithril_leggings"));
+		items.add(itemMithrilBoots = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 3).setUnlocalizedName("mithril_boots").setTextureName("mithril:mithril_boots"));
+		items.add(itemEnderNecklace = new EnderNecklace().setUnlocalizedName("ender_amulet").setTextureName("mithril:mithril_accs1"));
+		items.add(itemMithrilRing = new MithrilRing().setUnlocalizedName("mithril_ring").setTextureName("mithril:mithril_ring1"));
+		items.add(itemWitherRing = new MithrilWitherRing().setUnlocalizedName("mithril_wither_ring").setTextureName("mithril:mithril_ring2"));
+		items.add(itemFlute = new MithrilWhistle().setUnlocalizedName("mithril_flute").setTextureName("mithril:mithril_flute"));
+
+		tiles.add(TilePillarMithril.class);
+
+		blocks.put(blockMithrilOre = new MithrilOre(Material.rock).setHardness(50.0f).setResistance(2000.0f).setStepSound(Block.soundTypeStone).setBlockName("mithril_ore"), null);
+		blocks.put(blockMithrilDecoBlock = new MithrilDecoBlock(Material.iron).setHardness(5.0f).setResistance(200.0f).setStepSound(Block.soundTypeMetal).setBlockName("mithril_block").setBlockTextureName("mithril:mithril_block"), (Class)MithrilDecoItemBlock.class);
+		blocks.put(blockMithrilPillar = new MithrilPillarBlock(Material.iron).setHardness(5.0f).setResistance(200.0f).setStepSound(Block.soundTypeMetal).setBlockName("mithril_pillar"), (Class)PillarItemBlock.class);
 	}
 
 	public static void loadClient() {
@@ -353,11 +427,15 @@ public class ConfigObjects extends CommonProxy {
 			tileRenderers.put(TileChristmasLight.class, renderChristmasLight);
 			blockRenderers.add(renderChristmasLight);
 		}
+
+		tileRenderers.put(TilePillarMithril.class, new RenderMithrilPillar());
+		blockRenderers.add(new RenderMithrilPillar());
 	}
 
 	public static void registerHandlers() {
-		MinecraftForge.EVENT_BUS.register(new PillarEventHandler());
-		FMLCommonHandler.instance().bus().register(new PillarEventHandler());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerCraftingPillars());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerMithril());
+		FMLCommonHandler.instance().bus().register(new EventHandlerCraftingPillars());
 	}
 
 	public static void registerObjects() {
@@ -377,9 +455,13 @@ public class ConfigObjects extends CommonProxy {
 			else
 				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), blocks.get(block), block.getLocalizedName());
 
+		writeOreDictionary();
 		addRecipes();
+
+		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
+
 		registerHandlers();
-		addAchievementsAndCreativeTab();
+		addAchievements();
 
 		if (debug) {
 			if (!supportedMods.isEmpty())
@@ -421,9 +503,77 @@ public class ConfigObjects extends CommonProxy {
 		GameRegistry.addRecipe(new ItemStack(blockChristmasLight, 3), new Object[] { "G", "L", Character.valueOf('G'), Items.gold_ingot, Character.valueOf('L'), Blocks.glowstone});
 		GameRegistry.addRecipe(new ItemStack(blockTrashPillar, 1), new Object[] { "SSS", "SLS", "SSS", Character.valueOf('S'), Blocks.stone, Character.valueOf('L'), Items.ender_pearl});
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockChristmasTreeSapling), "treeSapling", new ItemStack(blockChristmasLight)));
+
+		ItemStack mithrilSword = new ItemStack(itemMithrilSword);
+		mithrilSword.addEnchantment(Enchantment.knockback, 3);
+		mithrilSword.addEnchantment(Enchantment.looting, 2);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "L M", " M ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { " LM", " M ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", "LM ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " ML", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " M ", "SL ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " M ", "S L", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack mithrilPick = new ItemStack(itemMithrilPickaxe);
+		mithrilPick.addEnchantment(Enchantment.fortune, 2);
+		mithrilPick.addEnchantment(Enchantment.unbreaking, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack axeStack = new ItemStack(itemMithrilAxe);
+		axeStack.addEnchantment(Enchantment.sharpness, 2);
+		axeStack.addEnchantment(Enchantment.fortune, 3);
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MML", "MS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MSL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MS ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MS ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack mithrilShovel = new ItemStack(itemMithrilSpade);
+		mithrilShovel.addEnchantment(Enchantment.silkTouch, 1);
+		mithrilShovel.addEnchantment(Enchantment.unbreaking, 3);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { "LM ", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " ML", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack hoeStack = new ItemStack(itemMithrilHoe);
+		hoeStack.addEnchantment(Enchantment.unbreaking, 127);
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MML", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ItemStack(itemQuartzRod), new Object[] { "Q", "Q", "Q", 'Q', Items.quartz });
+		ItemStack mithrilBow = new ItemStack(itemMithrilBow);
+		mithrilBow.addEnchantment(Enchantment.sharpness, 8);
+		mithrilBow.addEnchantment(Enchantment.infinity, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilBow, new Object[] { "QMM", "M S", "MSE", 'M', "stickQuartz", 'Q', "ingotMithril", 'E', Items.ender_pearl, 'S', Items.string }));
+		ItemStack helmet = new ItemStack(itemMithrilHelmet);
+		helmet.addEnchantment(Enchantment.respiration, 3);
+		helmet.addEnchantment(Enchantment.aquaAffinity, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(helmet, new Object[] { "LIL", "I I", "DLD", 'D', "gemDiamond", 'I', "ingotMithril", 'L', "leather" }));
+		ItemStack chest = new ItemStack(itemMithrilChest);
+		chest.addEnchantment(Enchantment.thorns, 4);
+		GameRegistry.addRecipe(new ShapedOreRecipe(chest, new Object[] { "I I", "ILI", "LDL", 'D', "gemDiamond", 'I', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilPants), new Object[] { "III", "I I", 'I', "ingotMithril" }));
+		ItemStack boots = new ItemStack(itemMithrilBoots);
+		boots.addEnchantment(Enchantment.featherFalling, 127);
+		GameRegistry.addRecipe(new ShapedOreRecipe(boots, new Object[] { "I I", 'I', "ingotMithril" }));
+		GameRegistry.addSmelting(blockMithrilOre, new ItemStack(itemMithrilIngot), 2.0f);
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemMithrilNugget, 9), new Object[] { "ingotMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemEnderNecklace), new Object[] { "M M", " M ", " E ", 'M', "ingotMithril", 'E', Blocks.dragon_egg }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilRing), new Object[] { " M ", "M M", " M ", 'M', "ingotMithril" }));
+		GameRegistry.addShapelessRecipe(new ItemStack(itemWitherRing), new Object[] { itemMithrilRing, Items.nether_star });
+		GameRegistry.addRecipe(new ShapedOreRecipe(itemFlute, new Object[] { "M  ", " M ", "  M", 'M', "ingotMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilDecoBlock, 1, 0), new Object[] { "II", "II", 'I', "ingotMithril" }));
+		GameRegistry.addShapelessRecipe(new ItemStack(itemMithrilIngot, 4), new Object[] { new ItemStack(blockMithrilDecoBlock, 1, 0) });
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilDecoBlock, 4, 1), new Object[] { "II", "II", 'I', new ItemStack(blockMithrilDecoBlock, 1, 0) }));
+		GameRegistry.addShapelessRecipe(new ItemStack(blockMithrilDecoBlock, 1, 2), new Object[] { new ItemStack(blockMithrilDecoBlock, 1, 1) });
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilPillar, 1, 0), new Object[] { "III", " Q ", "III", 'I', "ingotMithril", 'Q', Items.quartz }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilPillar, 1, 1), new Object[] { "III", " I ", "III", 'I', "ingotMithril" }));
 	}
 
-	public static void addAchievementsAndCreativeTab() {
+	public static void addAchievements() {
 		achievementGettingStarted = new Achievement("achievement.gettingstarted", "gettingstarted", 0, 0, blockBasePillar, null).registerStat();
 
 		achievementRecursion = new Achievement("achievement.recursion", "recursion", 1, 1, blockCraftingPillar, achievementGettingStarted).registerStat();
@@ -445,8 +595,16 @@ public class ConfigObjects extends CommonProxy {
 
 	public static void writeOreDictionary() {
 		OreDictionary.registerOre("record", itemDiscElysium);
-		OreDictionary.registerOre("treeSapling", blockChristmasTreeSapling);
-		OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
+		OreDictionary.registerOre("oreMithril", blockMithrilOre);
+		OreDictionary.registerOre("ingotMithril", itemMithrilIngot);
+		OreDictionary.registerOre("nuggetMithril", itemMithrilNugget);
+		OreDictionary.registerOre("stickQuartz", itemQuartzRod);
+		OreDictionary.registerOre("leather", Items.leather);
+
+		if (winter) {
+			OreDictionary.registerOre("treeSapling", blockChristmasTreeSapling);
+			OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
+		}
 	}
 
 	public static void initAPI() {

@@ -18,7 +18,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.IPlantable;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.world.gen.WorldGenChristmasTree;
+import T145.magistics.common.lib.world.WorldGenChristmasTree;
 
 public class TilePillarPot extends TileBase implements IInventory, ISidedInventory {
 	private ItemStack[] inventory = new ItemStack[getSizeInventory()];
