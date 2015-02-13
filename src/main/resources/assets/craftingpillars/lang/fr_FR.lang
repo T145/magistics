@@ -1,0 +1,47 @@
+tile.extendPillar.name=Pilier de Base
+tile.showOffPillar.name=Pilier-Vitrine
+tile.craftingPillar.name=Pilier de Fabrication
+tile.furnacePillar.name=Pilier de Cuisson
+tile.anvilPillar.name=Pilier-Enclume
+tile.brewingPillar.name=Pilier d'Alchimie
+tile.diskPillar.name=Pilier à musique
+tile.freezerPillar.name=Pilier-Congélateur
+tile.potPillar.name=Pilier-Pot de fleur
+tile.trashPillar.name=Plier-Poubelle
+tile.sentryPillar.name=Pilier-Sentinelle
+tile.christmas_light.name=Lumière de Noël
+
+itemGroup.CraftingPillars=Piliers de Fabrication
+achievement.gettingstarted=Commencer
+achievement.gettingstarted.desc=Fabriquer un Pilier de Base
+
+achievement.recursion=Récursivité I
+achievement.recursion.desc=Frabriquer un Pilier de Fabrication dans un Pilier de Fabrication !
+
+achievement.showoff=Récursivité II
+achievement.showoff.desc=Montre ton Pilier -Vitrine!
+
+achievement.recursion3=Récursivité III
+achievement.recursion3.desc=Obtenez un cadeau venat d'un cadeau!
+
+achievement.christmaspillar=Evènement de Noël
+achievement.christmaspillar.desc=Célèbre Noël avec nous!
+
+achievement.christmasdiamond=La Manie du Diamant
+achievement.christmasdiamond.desc=Déballez un Diamant!
+
+achievement.liquids=Merci liquide!
+achievement.liquids.desc=Stockez du liquide à l'ancienne
+
+achievement.elysiandisc=Se préparer avec de la music ! 
+achievement.elysiandisc.desc=Ecoutez le disque du thème de l'Elysium!
+
+tile.xmasLeaves.spruce.name=Feuilles de Noël
+tile.xmasLeaves.fostimber.name=Feuilles de Noël du Bûcheron gelée
+tile.ChristmasTreeSapling.name=Pousse d'arbre de Noël
+tile.ChristmasPresent.name=Cadeau de Noël
+craftingpillars:UranusParadiseShort=Elysium - Uranus Paradise Short
+itemCalendar2013.name + ".name=Calandrier de l'avant 2013
+
+item.ring_base.name=Anneau modulaire
+item.ring_dummy.name=NE FAIT RIEN

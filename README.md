@@ -3,7 +3,7 @@
 
 **_Adding some logistics to Thaumcraft!_**
 
-[![Codeship Status](https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master)](https://codeship.com/projects/52617)
+<a href="https://codeship.com/projects/52617" target="_blank"><img src="https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master"/></a>
 
 ## Workspace Setup
 Once your deobfuscated copy of Thaumcraft is placed into the lib directory, run one of the scripts contained in the [exec](https://github.com/T145/magistics/tree/master/exec) directory from the root directory. You should be all set now!

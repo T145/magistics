@@ -1,0 +1,47 @@
+tile.extendPillar.name=Базовый Столб
+tile.showOffPillar.name=Столб Демонстрации
+tile.craftingPillar.name=Столб Крафта
+tile.furnacePillar.name=Переплавочный Столб
+tile.anvilPillar.name=Наковальный Столб
+tile.brewingPillar.name=Столб Зельеварения
+tile.diskPillar.name=Столб - Проигрователь
+tile.freezerPillar.name=Столб заморозки
+tile.potPillar.name=Столб - Горшок
+tile.trashPillar.name=Мусорный Столб
+tile.sentryPillar.name=Сторожевой Столб
+tile.christmas_light.name=Рождественские Гирлянды
+
+itemGroup.CraftingPillars=Crafting Pillars
+achievement.gettingstarted=Getting Started
+achievement.gettingstarted.desc=Craft a BasicPillar
+
+achievement.recursion=Recursion I
+achievement.recursion.desc=Craft a CraftingPillar in a CraftingPillar!
+
+achievement.showoff=Recursion II
+achievement.showoff.desc=Show off your Showcase Pillar!
+
+achievement.recursion3=Recursion III
+achievement.recursion3.desc=Get a present from a present!
+
+achievement.christmaspillar=Christmas Event
+achievement.christmaspillar.desc=Celebrate Christmas with us!
+
+achievement.christmasdiamond=Diamond Mania
+achievement.christmasdiamond.desc=Unwrap a Diamond!
+
+achievement.liquids=Liquid Tanks!
+achievement.liquids.desc=Store liquids in an ancient way!
+
+achievement.elysiandisc=Preparing with music!
+achievement.elysiandisc.desc=Listen to the Elysium Theme disc!
+
+tile.xmasLeaves.spruce.name=Рождественские Листья
+tile.xmasLeaves.fostimber.name=Fostimber Christmas Leaves
+tile.ChristmasTreeSapling.name=Саженец Новогоднего Дерева
+tile.ChristmasPresent.name=Рождественский Подарок
+craftingpillars:UranusParadiseShort=Elysium - Uranus Paradise Short
+itemCalendar2013.name + ".name=Новогодний Календарь
+
+item.ring_base.name=Modular Ring
+item.ring_dummy.name=DOES NOTHING
