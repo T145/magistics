@@ -1,4 +1,4 @@
-package T145.magistics.client.lib;
+package T145.magistics.client.lib.craftingpillars;
 
 import java.util.List;
 import java.util.Random;

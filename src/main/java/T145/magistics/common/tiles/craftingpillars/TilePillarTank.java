@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import T145.magistics.api.FreezerRecipes;
-import T145.magistics.client.lib.Blobs;
+import T145.magistics.client.lib.craftingpillars.Blobs;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TilePillarTank extends TileBase implements IFluidHandler {

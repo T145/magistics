@@ -36,69 +36,40 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.client.lib.craftingpillars.RenderingHelper;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
 import T145.magistics.common.tiles.craftingpillars.TilePillarTrash;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
-	public ResourceLocation TEXTURE_TRASHPILLAR;
+	public ResourceLocation texture, frozenTexture;
 
 	public static ModelBase model = new ModelBase() {};
-
-	public ModelRenderer BunnyTail1;
-	public ModelRenderer BunnyTail2;
-	public ModelRenderer BunnyTail3;
-	public ModelRenderer BunnyEar1;
-	public ModelRenderer BunnyEar2;
-
-	public ModelRenderer Icicle1A;
-	public ModelRenderer Icicle1B;
-	public ModelRenderer Icicle1C;
-	public ModelRenderer Icicle2A;
-	public ModelRenderer Icicle2B;
-	public ModelRenderer Icicle2C;
-	public ModelRenderer Icicle3A;
-	public ModelRenderer Icicle3B;
-	public ModelRenderer Icicle4A;
-	public ModelRenderer Icicle4B;
-	public ModelRenderer Icicle5A;
-	public ModelRenderer Icicle5B;
-	public ModelRenderer Icicle5C;
-	public ModelRenderer Icicle6A;
-	public ModelRenderer Icicle6B;
-	public ModelRenderer Icicle6C;
-	public ModelRenderer Icicle7A;
-	public ModelRenderer Icicle7B;
-	public ModelRenderer Icicle7C;
-	public ModelRenderer Icicle8A;
-	public ModelRenderer Icicle8B;
-	public ModelRenderer Icicle8C;
-	public ModelRenderer Icicle8D;
-
-	public ModelRenderer Icicle9A;
-	public ModelRenderer Icicle9B;
-	public ModelRenderer Icicle10A;
-	public ModelRenderer Icicle10B;
-	public ModelRenderer Icicle10C;
-	public ModelRenderer Icicle11A;
-	public ModelRenderer Icicle11B;
-	public ModelRenderer Icicle11C;
+	private ModelRenderer BunnyTail1, BunnyTail2, BunnyTail3, BunnyEar1, BunnyEar2, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B, Icicle2C, Icicle3A, Icicle3B, Icicle4A, Icicle4B, Icicle5A, Icicle5B, Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C, Icicle8D, Icicle9A, Icicle9B, Icicle10A, Icicle10B, Icicle10C, Icicle11A, Icicle11B, Icicle11C;
 
 	public Random random = new Random();
-	public RenderingHelper.ItemRender itemRenderer = new RenderingHelper.ItemRender(false, true);
-	public RenderingHelper.ItemRender resultRenderer = new RenderingHelper.ItemRender(true, true);
+	public RenderingHelper.ItemRender itemRenderer = new RenderingHelper.ItemRender(false, true), resultRenderer = new RenderingHelper.ItemRender(true, true);
+	public IModelCustom trash = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/trashPillar.obj"));;
 
-	public IModelCustom trash;
+	public RenderTrashPillar(String modelTexture) {
+		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
+		renderPillar();
+	}
 
-	public RenderTrashPillar() {
-		if (Magistics.proxy.winter)
-			TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillarFrozen.png");
-		else
-			TEXTURE_TRASHPILLAR = new ResourceLocation("craftingpillars:textures/models/showoffPillar.png");
+	public RenderTrashPillar(String modelTexture, String frozenModelTexture) {
+		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
+		frozenTexture = new ResourceLocation("craftingpillars:textures/models/" + frozenModelTexture + ".png");
+		renderPillar();
+	}
 
-		trash = AdvancedModelLoader.loadModel(new ResourceLocation("craftingpillars:textures/models/trashPillar.obj"));
+	public void renderPillar() {
+		if (Magistics.proxy.winter && frozenTexture != null)
+			texture = frozenTexture;
 
 		model.textureWidth = 128;
 		model.textureHeight = 64;
@@ -382,7 +353,7 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		glTranslated(0.5D, 0, 0.5D);
 		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
 		glRotatef(180F, 1F, 0F, 0F);
-		Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		render(0.0625F);
 
 		glPopMatrix();
@@ -391,8 +362,8 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		glTranslated(x + 0.5F, y, z + 0.5F);
 		float scale = 0.0255F;
 		glScalef(scale, scale, scale);
-		// glDisable(GL_LIGHTING);
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		FMLClientHandler.instance().getClient().renderEngine
+		.bindTexture(texture);
 		trash.renderPart("TrashPillar");
 		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
 
@@ -401,7 +372,6 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		else
 			trash.renderPart("DoorsClosed");
 
-		// glEnable(GL_LIGHTING);
 		glPopMatrix();
 
 		if (Magistics.proxy.easter) {
@@ -421,24 +391,19 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		}
 	}
 
-	public static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
-	public static final ResourceLocation endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
+	public static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png"), endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
 	public static final Random field_110644_e = new Random(31100L);
 	FloatBuffer field_76908_a = GLAllocation.createDirectFloatBuffer(16);
 
 	public void renderEndPortal(double x, double y, double z) {
-		float f1 = (float) field_147501_a.field_147560_j;
-		float f2 = (float) field_147501_a.field_147561_k;
-		float f3 = (float) field_147501_a.field_147558_l;
+		float f1 = (float) field_147501_a.field_147560_j, f2 = (float) field_147501_a.field_147561_k, f3 = (float) field_147501_a.field_147558_l;
 		GL11.glDisable(GL11.GL_LIGHTING);
 		field_110644_e.setSeed(31100L);
 		float f4 = 11F / 16F;
 
-		for (int i = 0; i < 16; ++i) {
+		for (int i = 0; i < 16; i++) {
 			GL11.glPushMatrix();
-			float f5 = (float) (16 - i);
-			float f6 = 0.0625F;
-			float f7 = 1.0F / (f5 + 1.0F);
+			float f5 = (float) (16 - i), f6 = 0.0625F, f7 = 1.0F / (f5 + 1.0F);
 
 			if (i == 0) {
 				bindTexture(enderPortalEndSkyTextures);
@@ -533,7 +498,7 @@ public class RenderTrashPillar extends TileEntitySpecialRenderer implements ISim
 		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_TRASHPILLAR);
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 		render(0.0625F);
 		glRotatef(180F, 1F, 0F, 0F);
 

@@ -6,14 +6,17 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import T145.magistics.client.lib.craftingpillars.BlockRenderingHelper;
 import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimpleBlockRenderingHandler
-{
+@SideOnly(Side.CLIENT)
+public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 		drawBlock(renderer, block, block.getIcon(0, metadata));
 		drawBlock(renderer, block, BlockChristmasLeaves.glowing);
@@ -21,8 +24,7 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
 
@@ -39,31 +41,27 @@ public class RenderChristmasLeaves extends BlockRenderingHelper implements ISimp
 		renderer.renderFaceYNeg(block, x, y, z, tex);
 
 		renderer.clearOverrideBlockTexture();
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 
 		return true;
 	}
 
-	protected static int setBrightness(IBlockAccess blockAccess, int i, int j, int k, Block block) {
+	public static int setBrightness(IBlockAccess blockAccess, int i, int j, int k, Block block) {
 		int brightness = block.getMixedBrightnessForBlock(blockAccess, i, j, k);
 
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess,
-				i, j, k));
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, i, j, k));
 
-		float f = 1.0F;
+		float f = 1F;
 
 		int l = block.colorMultiplier(blockAccess, i, j, k);
-		float f1 = (l >> 16 & 255) / 255.0F;
-		float f2 = (l >> 8 & 255) / 255.0F;
-		float f3 = (l & 255) / 255.0F;
-		float f4;
+		float f1 = (l >> 16 & 255) / 255F, f2 = (l >> 8 & 255) / 255F, f3 = (l & 255) / 255F, f4;
 
 		if (EntityRenderer.anaglyphEnable) {
-			float f5 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
-			f4 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
-			float f6 = (f1 * 30.0F + f3 * 70.0F) / 100.0F;
+			float f5 = (f1 * 30F + f2 * 59F + f3 * 11F) / 100F;
+			f4 = (f1 * 30F + f2 * 70F) / 100F;
+			float f6 = (f1 * 30F + f3 * 70F) / 100F;
 			f1 = f5;
 			f2 = f4;
 			f3 = f6;

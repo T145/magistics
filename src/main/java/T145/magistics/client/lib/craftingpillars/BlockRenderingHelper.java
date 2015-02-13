@@ -1,4 +1,4 @@
-package T145.magistics.client.renderers.craftingpillars;
+package T145.magistics.client.lib.craftingpillars;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.EntityRenderer;

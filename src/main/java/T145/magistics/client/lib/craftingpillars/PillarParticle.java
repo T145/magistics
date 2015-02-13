@@ -1,4 +1,4 @@
-package T145.magistics.client.lib;
+package T145.magistics.client.lib.craftingpillars;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;

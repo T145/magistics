@@ -29,18 +29,18 @@ import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
 import T145.magistics.client.renderers.craftingpillars.RenderBrewingPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderChristmasLeaves;
+import T145.magistics.client.renderers.craftingpillars.RenderChristmasLight;
+import T145.magistics.client.renderers.craftingpillars.RenderChristmasPresent;
 import T145.magistics.client.renderers.craftingpillars.RenderCraftingPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderDiskPillar;
+import T145.magistics.client.renderers.craftingpillars.RenderDisplayPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderExtendPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderFreezerPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderFurnacePillar;
-import T145.magistics.client.renderers.craftingpillars.RenderLight;
 import T145.magistics.client.renderers.craftingpillars.RenderPotPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderPresent;
 import T145.magistics.client.renderers.craftingpillars.RenderSentryPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderShowOffPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTankPillar;
 import T145.magistics.client.renderers.craftingpillars.RenderTrashPillar;
+import T145.magistics.client.renderers.craftingpillars.RenderTurntablePillar;
 import T145.magistics.client.renderers.tile.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
@@ -59,6 +59,10 @@ import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasLight;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasPresent;
+import T145.magistics.common.blocks.craftingpillars.BlockChristmasTreeSapling;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
@@ -70,10 +74,6 @@ import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
 import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasLight;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasPresent;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasTreeSapling;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorArrow;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorEgg;
 import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorFireball;
@@ -135,24 +135,9 @@ public class ConfigObjects extends CommonProxy {
 	public static Item itemResources, itemAmuletDismay, itemAmuletLife, itemBeltCleansing, itemBeltVigor, itemRingSouls, itemCruelMask, itemDawnstone;
 	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
-	public static Block blockBasePillar;
-	public static Block blockShowOffPillar;
-	public static Block blockCraftingPillar;
-	public static Block blockFurnacePillar;
-	public static Block blockAnvilPillar;
-	public static Block blockTankPillar;
-	public static Block blockBrewingPillar;
-	public static Block blockDiskPlayerPillar;
-	public static Block blockFreezerPillar;
-	public static Block blockPotPillar;
-	public static Block blockSentryPillar;
-	public static Block blockTrashPillar;
-	public static Block blockPumpPillar;
+	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
 
-	public static Block blockChristmasLeaves;
-	public static Block blockChristmasTreeSapling;
-	public static Block blockChristmasPresent;
-	public static Block blockChristmasLight;
+	public static Block blockChristmasLeaves,  blockChristmasTreeSapling,  blockChristmasPresent, blockChristmasLight;
 
 	public static Item itemDiscElysium;
 
@@ -163,7 +148,7 @@ public class ConfigObjects extends CommonProxy {
 		new ItemStack(blockAnvilPillar, 1, 0),
 		new ItemStack(blockFurnacePillar, 1, 0),
 		new ItemStack(blockFreezerPillar, 1, 0),
-		new ItemStack(blockShowOffPillar, 1, 0),
+		new ItemStack(blockDisplayPillar, 1, 0),
 		new ItemStack(blockPotPillar, 1, 0),
 		new ItemStack(blockBrewingPillar, 1, 0),
 		new ItemStack(blockDiskPlayerPillar, 1, 0),
@@ -174,20 +159,8 @@ public class ConfigObjects extends CommonProxy {
 		new ItemStack(itemDiscElysium, 1, 0)
 	};
 
-	public static boolean floatingItems = true;
-	public static boolean rayTrace = false;
-	public static boolean renderHitBoxes = true;
-
 	public static AchievementPage achievementPage;
-
-	public static Achievement achievementGettingStarted;
-	public static Achievement achievementChristmas;
-	public static Achievement achievementRecursion;
-	public static Achievement achievementCompressingLiquids;
-
-	public static Achievement achievementShowoff;
-	public static Achievement achievementDisc;
-	public static Achievement achievementRecursion3;
+	public static Achievement achievementGettingStarted, achievementChristmas,  achievementRecursion,  achievementCompressingLiquids, achievementShowoff, achievementDisc, achievementRecursion3;
 
 	public static void loadServer() {
 		items.add(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
@@ -253,25 +226,24 @@ public class ConfigObjects extends CommonProxy {
 		tiles.add(TilePillarSentry.class);
 		tiles.add(TilePillarTrash.class);
 
-		tiles.add(TileChristmasPresent.class);
-		tiles.add(TileChristmasLight.class);
-
-		// Crafting Pillars
 		blocks.put(blockBasePillar = (new BlockPillarExtend(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("extendPillar"), null);
-		blocks.put(blockShowOffPillar = (new BlockPillarDisplay(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("showOffPillar"), null);
+		blocks.put(blockDisplayPillar = (new BlockPillarDisplay(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("displayPillar"), null);
 		blocks.put(blockCraftingPillar = (new BlockPillarCrafting(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("craftingPillar"), null);
 		blocks.put(blockFurnacePillar = (new BlockPillarFurnace(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("furnacePillar"), null);
 		blocks.put(blockTankPillar = (new BlockPillarTank(Material.glass)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("tankPillar"), null);
 		blocks.put(blockBrewingPillar = (new BlockPillarBrewing(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("brewingPillar"), null);
-		blocks.put(blockDiskPlayerPillar = (new BlockPillarTurntable(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("diskPillar"), null);
+		blocks.put(blockDiskPlayerPillar = (new BlockPillarTurntable(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("turntablePillar"), null);
 		blocks.put(blockFreezerPillar = (new BlockPillarFreezer(Material.glass)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("freezerPillar"), null);
 		blocks.put(blockPotPillar = (new BlockPillarPot(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("potPillar"), null);
 		blocks.put(blockSentryPillar = (new BlockPillarSentry(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("sentryPillar"), null);
 		blocks.put(blockTrashPillar = (new BlockPillarTrash(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar"), null);
 
 		if (winter) {
-			blocks.put(blockChristmasLeaves = (new BlockChristmasLeaves(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("xmasLeaves"), null);
-			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("ChristmasTreeSapling"), null);
+			tiles.add(TileChristmasPresent.class);
+			tiles.add(TileChristmasLight.class);
+
+			blocks.put(blockChristmasLeaves = (new BlockChristmasLeaves(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("christmas_tree_leaves"), null);
+			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("christmas_tree_sapling"), null);
 			blocks.put(blockChristmasPresent = (new BlockChristmasPresent(Material.cloth)).setHardness(1.0F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
 			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
 		}
@@ -327,37 +299,59 @@ public class ConfigObjects extends CommonProxy {
 			}
 		}
 
-		tileRenderers.put(TilePillarExtend.class, new RenderExtendPillar());
-		tileRenderers.put(TilePillarDisplay.class, new RenderShowOffPillar());
-		tileRenderers.put(TilePillarCrafting.class, new RenderCraftingPillar());
-		tileRenderers.put(TilePillarFurnace.class, new RenderFurnacePillar());
-		tileRenderers.put(TilePillarTank.class, new RenderTankPillar());
-		tileRenderers.put(TilePillarBrewing.class, new RenderBrewingPillar());
-		tileRenderers.put(TilePillarTurntable.class, new RenderDiskPillar());
-		tileRenderers.put(TilePillarFreezer.class, new RenderFreezerPillar());
-		tileRenderers.put(TilePillarPot.class, new RenderPotPillar());
-		tileRenderers.put(TilePillarSentry.class, new RenderSentryPillar());
-		tileRenderers.put(TilePillarTrash.class, new RenderTrashPillar());
+		RenderExtendPillar renderExtendPillar = new RenderExtendPillar("extendPillar", "frozenExtendPillar");
+		tileRenderers.put(TilePillarExtend.class, renderExtendPillar);
+		blockRenderers.add(renderExtendPillar);
 
-		tileRenderers.put(TileChristmasPresent.class, new RenderPresent());
-		tileRenderers.put(TileChristmasLight.class, new RenderLight());
+		RenderDisplayPillar renderDisplayPillar = new RenderDisplayPillar("displayPillar", "displayPillarFrozen");
+		tileRenderers.put(TilePillarDisplay.class, renderDisplayPillar);
+		blockRenderers.add(renderDisplayPillar);
 
-		RenderingRegistry.registerBlockHandler(new RenderExtendPillar());
-		RenderingRegistry.registerBlockHandler(new RenderShowOffPillar());
-		RenderingRegistry.registerBlockHandler(new RenderCraftingPillar());
-		RenderingRegistry.registerBlockHandler(new RenderFurnacePillar());
-		RenderingRegistry.registerBlockHandler(new RenderTankPillar());
-		RenderingRegistry.registerBlockHandler(new RenderBrewingPillar());
-		RenderingRegistry.registerBlockHandler(new RenderDiskPillar());
-		RenderingRegistry.registerBlockHandler(new RenderFreezerPillar());
-		RenderingRegistry.registerBlockHandler(new RenderPotPillar());
-		RenderingRegistry.registerBlockHandler(new RenderSentryPillar());
-		RenderingRegistry.registerBlockHandler(new RenderTrashPillar());
+		RenderCraftingPillar renderCraftingPillar = new RenderCraftingPillar("craftingPillar", "craftingPillarFrozen");
+		tileRenderers.put(TilePillarCrafting.class, renderCraftingPillar);
+		blockRenderers.add(renderCraftingPillar);
+
+		RenderFurnacePillar renderFurnacePillar = new RenderFurnacePillar("furnacePillar", "frozenFurnacePillar");
+		tileRenderers.put(TilePillarFurnace.class, renderFurnacePillar);
+		blockRenderers.add(renderFurnacePillar);
+
+		RenderTankPillar renderTankPillar = new RenderTankPillar("freezerPillar", "freezerPillarFrozen");
+		tileRenderers.put(TilePillarTank.class, renderTankPillar);
+		blockRenderers.add(renderTankPillar);
+
+		RenderBrewingPillar renderBrewingPillar = new RenderBrewingPillar("brewingPillar", "brewingPillarFrozen");
+		tileRenderers.put(TilePillarBrewing.class, renderBrewingPillar);
+		blockRenderers.add(renderBrewingPillar);
+
+		RenderTurntablePillar renderTurntablePillar = new RenderTurntablePillar("diskPillar", "diskPillarFrozen");
+		tileRenderers.put(TilePillarTurntable.class, renderTurntablePillar);
+		blockRenderers.add(renderTurntablePillar);
+
+		RenderFreezerPillar renderFreezerPillar = new RenderFreezerPillar("freezerPillarFrozen");
+		tileRenderers.put(TilePillarFreezer.class, renderFreezerPillar);
+		blockRenderers.add(renderFreezerPillar);
+
+		RenderPotPillar renderPotPillar = new RenderPotPillar("displayPillar", "frozenDisplayPillar");
+		tileRenderers.put(TilePillarPot.class, renderPotPillar);
+		blockRenderers.add(renderPotPillar);
+
+		RenderSentryPillar renderSentryPillar = new RenderSentryPillar("sentryPillar", "frozenSentryPillar");
+		tileRenderers.put(TilePillarSentry.class, renderSentryPillar);
+		blockRenderers.add(renderSentryPillar);
+
+		RenderTrashPillar renderTrashPillar = new RenderTrashPillar("displayPillar", "frozenDisplayPillar");
+		tileRenderers.put(TilePillarTrash.class, renderTrashPillar);
+		blockRenderers.add(renderTrashPillar);
+
+		RenderChristmasPresent renderChristmasPresent = new RenderChristmasPresent();
+		RenderChristmasLight renderChristmasLight = new RenderChristmasLight();
 
 		if (winter) {
-			RenderingRegistry.registerBlockHandler(new RenderChristmasLeaves());
-			RenderingRegistry.registerBlockHandler(new RenderPresent());
-			RenderingRegistry.registerBlockHandler(new RenderLight());
+			blockRenderers.add(new RenderChristmasLeaves());
+			tileRenderers.put(TileChristmasPresent.class, renderChristmasPresent);
+			blockRenderers.add(renderChristmasPresent);
+			tileRenderers.put(TileChristmasLight.class, renderChristmasLight);
+			blockRenderers.add(renderChristmasLight);
 		}
 	}
 
@@ -416,7 +410,7 @@ public class ConfigObjects extends CommonProxy {
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(blockBasePillar), new Object[] { "SSS", " S ", "SSS", Character.valueOf('S'), Blocks.stone });
 		GameRegistry.addRecipe(new ItemStack(blockFreezerPillar), new Object[] { "SSS", "GPG", "SSS", Character.valueOf('S'), Blocks.snow, Character.valueOf('P'), blockBasePillar, Character.valueOf('G'), Blocks.glass_pane});
-		GameRegistry.addShapelessRecipe(new ItemStack(blockShowOffPillar), new ItemStack(Items.item_frame), new ItemStack(blockBasePillar));
+		GameRegistry.addShapelessRecipe(new ItemStack(blockDisplayPillar), new ItemStack(Items.item_frame), new ItemStack(blockBasePillar));
 		GameRegistry.addShapelessRecipe(new ItemStack(blockCraftingPillar), new ItemStack(Blocks.crafting_table), new ItemStack(blockBasePillar));
 		GameRegistry.addShapelessRecipe(new ItemStack(blockFurnacePillar), new ItemStack(Blocks.furnace), new ItemStack(blockBasePillar));
 		GameRegistry.addShapelessRecipe(new ItemStack(blockBrewingPillar), new ItemStack(Items.brewing_stand), new ItemStack(blockBasePillar));
@@ -433,7 +427,7 @@ public class ConfigObjects extends CommonProxy {
 		achievementGettingStarted = new Achievement("achievement.gettingstarted", "gettingstarted", 0, 0, blockBasePillar, null).registerStat();
 
 		achievementRecursion = new Achievement("achievement.recursion", "recursion", 1, 1, blockCraftingPillar, achievementGettingStarted).registerStat();
-		achievementShowoff = new Achievement("achievement.showoff", "showoff", 3, 1, blockShowOffPillar, achievementRecursion).registerStat();
+		achievementShowoff = new Achievement("achievement.showoff", "showoff", 3, 1, blockDisplayPillar, achievementRecursion).registerStat();
 		achievementRecursion3 = new Achievement("achievement.recursion3", "recursion3", 5, 1, blockChristmasPresent, achievementShowoff).registerStat();
 
 		achievementCompressingLiquids = new Achievement("achievement.liquids", "liquids", 1, 2, blockFreezerPillar, achievementGettingStarted).registerStat();

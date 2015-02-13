@@ -2,16 +2,18 @@ package T145.magistics.client.renderers.craftingpillars;
 
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
-import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glPopAttrib;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushAttrib;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glTranslatef;
+
+import java.awt.Color;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -24,27 +26,27 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import T145.magistics.client.lib.craftingpillars.RenderingHelper;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
-import T145.magistics.common.tiles.craftingpillars.TilePillarCrafting;
+import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
+import T145.magistics.common.tiles.craftingpillars.TilePillarDisplay;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCraftingPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
-	public ResourceLocation texture, frozenTexture;
+public class RenderDisplayPillar extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
+	private ResourceLocation texture, frozenTexture;
 
 	public static ModelBase model = new ModelBase() {};
-	private ModelRenderer bottom, pillarbottom, pillar, pillartop, top, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B, Icicle2C, Icicle3A, Icicle3B,  Icicle4A,  Icicle4B, Icicle5A, Icicle5B, Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C, Icicle8D, WreathA,  WreathB,  WreathC, WreathD, WreathE,  WreathF, WreathG, WreathH, WreathI, WreathJ, Bow, BunnyTail1, BunnyTail2, BunnyTail3, BunnyEar1, BunnyEar2,  pillarBottom;
-	private static final RenderingHelper.ItemRender itemRenderer = new RenderingHelper.ItemRender(false, true), resultRenderer = new RenderingHelper.ItemRender(true, true);
+	private ModelRenderer bottom, pillarbottom, pillar, pillartop, top, pillarBottom, BunnyTail1, BunnyTail2,  BunnyTail3, BunnyEar1, BunnyEar2, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B,  Icicle2C, Icicle3A, Icicle3B, Icicle4A, Icicle4B, Icicle5A, Icicle5B,  Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C,  Icicle8D, Icicle9A, Icicle9B, Icicle10A, Icicle10B, Icicle10C, Icicle11A, Icicle11B, Icicle11C;
+	private RenderingHelper.ItemRender resultRenderer = new RenderingHelper.ItemRender(true, true);
 
-	public RenderCraftingPillar(String modelTexture) {
+	public RenderDisplayPillar(String modelTexture) {
 		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
 		renderPillar();
 	}
 
-	public RenderCraftingPillar(String modelTexture, String frozenModelTexture) {
+	public RenderDisplayPillar(String modelTexture, String frozenModelTexture) {
 		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
 		frozenTexture = new ResourceLocation("craftingpillars:textures/models/" + frozenModelTexture + ".png");
 		renderPillar();
@@ -128,7 +130,6 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			setRotation(BunnyEar2, 0F, 0F, 0F);
 		}
 
-		// Winter
 		Icicle1A = new ModelRenderer(model, 122, 60);
 		Icicle1A.addBox(0F, 0F, 0F, 1, 2, 2);
 		Icicle1A.setRotationPoint(6F, 11F, -5F);
@@ -267,79 +268,58 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		Icicle8D.setTextureSize(128, 64);
 		Icicle8D.mirror = true;
 		setRotation(Icicle8D, 0F, 0F, 0F);
-		WreathA = new ModelRenderer(model, 86, 62);
-		WreathA.addBox(0F, 0F, 0F, 4, 1, 1);
-		WreathA.setRotationPoint(-2F, 12F, -7F);
-		WreathA.setTextureSize(128, 64);
-		WreathA.mirror = true;
-		setRotation(WreathA, 0F, 0F, 0F);
-		WreathB = new ModelRenderer(model, 82, 60);
-		WreathB.addBox(0F, 0F, 0F, 6, 1, 1);
-		WreathB.setRotationPoint(-3F, 13F, -7F);
-		WreathB.setTextureSize(128, 64);
-		WreathB.mirror = true;
-		setRotation(WreathB, 0F, 0F, 0F);
-		WreathC = new ModelRenderer(model, 88, 51);
-		WreathC.addBox(0F, 0F, 0F, 2, 4, 1);
-		WreathC.setRotationPoint(-4F, 14F, -7F);
-		WreathC.setTextureSize(128, 64);
-		WreathC.mirror = true;
-		setRotation(WreathC, 0F, 0F, 0F);
-		WreathD = new ModelRenderer(model, 90, 54);
-		WreathD.addBox(0F, 0F, 0F, 2, 4, 1);
-		WreathD.setRotationPoint(2F, 14F, -7F);
-		WreathD.setTextureSize(128, 64);
-		WreathD.mirror = true;
-		setRotation(WreathD, 0F, 0F, 0F);
-		WreathE = new ModelRenderer(model, 82, 46);
-		WreathE.addBox(0F, 0F, 0F, 6, 1, 1);
-		WreathE.setRotationPoint(-3F, 18F, -7F);
-		WreathE.setTextureSize(128, 64);
-		WreathE.mirror = true;
-		setRotation(WreathE, 0F, 0F, 0F);
-		WreathF = new ModelRenderer(model, 86, 49);
-		WreathF.addBox(0F, 0F, 0F, 4, 1, 1);
-		WreathF.setRotationPoint(-2F, 19F, -7F);
-		WreathF.setTextureSize(128, 64);
-		WreathF.mirror = true;
-		setRotation(WreathF, 0F, 0F, 0F);
-		WreathG = new ModelRenderer(model, 88, 38);
-		WreathG.addBox(0F, 0F, 0F, 1, 1, 1);
-		WreathG.setRotationPoint(-2F, 14F, -7F);
-		WreathG.setTextureSize(128, 64);
-		WreathG.mirror = true;
-		setRotation(WreathG, 0F, 0F, 0F);
-		WreathH = new ModelRenderer(model, 88, 38);
-		WreathH.addBox(0F, 0F, 0F, 1, 1, 1);
-		WreathH.setRotationPoint(1F, 14F, -7F);
-		WreathH.setTextureSize(128, 64);
-		WreathH.mirror = true;
-		setRotation(WreathH, 0F, 0F, 0F);
-		WreathI = new ModelRenderer(model, 88, 38);
-		WreathI.addBox(0F, 0F, 0F, 1, 1, 1);
-		WreathI.setRotationPoint(-2F, 17F, -7F);
-		WreathI.setTextureSize(128, 64);
-		WreathI.mirror = true;
-		setRotation(WreathI, 0F, 0F, 0F);
-		WreathJ = new ModelRenderer(model, 88, 38);
-		WreathJ.addBox(0F, 0F, 0F, 1, 1, 1);
-		WreathJ.setRotationPoint(1F, 17F, -7F);
-		WreathJ.setTextureSize(128, 64);
-		WreathJ.mirror = true;
-		setRotation(WreathJ, 0F, 0F, 0F);
-		Bow = new ModelRenderer(model, 120, 28);
-		Bow.addBox(0F, -1F, -2F, 2, 2, 2);
-		Bow.setRotationPoint(-1F, 14F, -6F);
-		Bow.setTextureSize(128, 64);
-		Bow.mirror = true;
-		setRotation(Bow, 0F, 0F, 0F);
+
+		Icicle9A = new ModelRenderer(model, 122, 38);
+		Icicle9A.addBox(0F, 0F, 0F, 2, 1, 1);
+		Icicle9A.setRotationPoint(3F, 11F, -7F);
+		Icicle9A.setTextureSize(128, 64);
+		Icicle9A.mirror = true;
+		setRotation(Icicle9A, 0F, 0F, 0F);
+		Icicle9B = new ModelRenderer(model, 124, 36);
+		Icicle9B.addBox(0F, 0F, 0F, 1, 1, 1);
+		Icicle9B.setRotationPoint(4F, 12F, -7F);
+		Icicle9B.setTextureSize(128, 64);
+		Icicle9B.mirror = true;
+		setRotation(Icicle9B, 0F, 0F, 0F);
+		Icicle10A = new ModelRenderer(model, 114, 61);
+		Icicle10A.addBox(0F, 0F, 0F, 3, 2, 1);
+		Icicle10A.setRotationPoint(-1F, 11F, -7F);
+		Icicle10A.setTextureSize(128, 64);
+		Icicle10A.mirror = true;
+		setRotation(Icicle10A, 0F, 0F, 0F);
+		Icicle10B = new ModelRenderer(model, 116, 59);
+		Icicle10B.addBox(0F, 0F, 0F, 2, 1, 1);
+		Icicle10B.setRotationPoint(-1F, 13F, -7F);
+		Icicle10B.setTextureSize(128, 64);
+		Icicle10B.mirror = true;
+		setRotation(Icicle10B, 0F, 0F, 0F);
+		Icicle10C = new ModelRenderer(model, 120, 56);
+		Icicle10C.addBox(0F, 0F, 0F, 1, 2, 1);
+		Icicle10C.setRotationPoint(0F, 14F, -7F);
+		Icicle10C.setTextureSize(128, 64);
+		Icicle10C.mirror = true;
+		setRotation(Icicle10C, 0F, 0F, 0F);
+		Icicle11A = new ModelRenderer(model, 114, 54);
+		Icicle11A.addBox(0F, 0F, 0F, 4, 1, 1);
+		Icicle11A.setRotationPoint(-5F, 11F, -7F);
+		Icicle11A.setTextureSize(128, 64);
+		Icicle11A.mirror = true;
+		setRotation(Icicle11A, 0F, 0F, 0F);
+		Icicle11B = new ModelRenderer(model, 116, 52);
+		Icicle11B.addBox(0F, 0F, 0F, 2, 1, 1);
+		Icicle11B.setRotationPoint(-4F, 12F, -7F);
+		Icicle11B.setTextureSize(128, 64);
+		Icicle11B.mirror = true;
+		setRotation(Icicle11B, 0F, 0F, 0F);
+		Icicle11C = new ModelRenderer(model, 118, 50);
+		Icicle11C.addBox(0F, 0F, 0F, 1, 1, 1);
+		Icicle11C.setRotationPoint(-4F, 13F, -7F);
+		Icicle11C.setTextureSize(128, 64);
+		Icicle11C.mirror = true;
+		setRotation(Icicle11C, 0F, 0F, 0F);
 	}
 
 	public void render(float f) {
-		bottom.render(f);
-		pillarbottom.render(f);
-		pillar.render(f);
-
 		if (Magistics.proxy.winter) {
 			Icicle1A.render(f);
 			Icicle1B.render(f);
@@ -364,19 +344,20 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 			Icicle8B.render(f);
 			Icicle8C.render(f);
 			Icicle8D.render(f);
-			WreathA.render(f);
-			WreathB.render(f);
-			WreathC.render(f);
-			WreathD.render(f);
-			WreathE.render(f);
-			WreathF.render(f);
-			WreathG.render(f);
-			WreathH.render(f);
-			WreathI.render(f);
-			WreathJ.render(f);
-			Bow.render(f);
+
+			Icicle9A.render(f);
+			Icicle9B.render(f);
+			Icicle10A.render(f);
+			Icicle10B.render(f);
+			Icicle10C.render(f);
+			Icicle11A.render(f);
+			Icicle11B.render(f);
+			Icicle11C.render(f);
 		}
 
+		bottom.render(f);
+		pillarbottom.render(f);
+		pillar.render(f);
 		pillartop.render(f);
 		top.render(f);
 	}
@@ -392,11 +373,12 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		glPushMatrix();
 		glTranslated(x + 0.5D, y + 1.5D, z + 0.5D);
 		glRotatef(180F, 1F, 0F, 0F);
-		glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
-
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		render(0.0625F);
+
 		if (Magistics.proxy.easter) {
+			glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
+
 			f = 0.0625F;
 			BunnyTail1.render(f);
 			BunnyTail2.render(f);
@@ -406,57 +388,29 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		}
 		glPopMatrix();
 
-		TilePillarCrafting workTile = (TilePillarCrafting) tile;
+		TilePillarDisplay workTile = (TilePillarDisplay) tile;
 		EntityItem citem = new EntityItem(tile.getWorldObj());
 		citem.hoverStart = Magistics.proxy.low_gfx ? 0F : workTile.rot;
 
 		glPushMatrix();
-		glTranslated(x, y, z);
-		for (int i = 0; i < 3; i++)
-			for (int k = 0; k < 3; k++)
-				if (workTile.getStackInSlot(i * 3 + k) != null) {
-					citem.setEntityItemStack(workTile.getStackInSlot(i * 3 + k));
-					glPushMatrix();
-					glTranslated(0.1875D + i * 0.3125D, 1D + 0.1875D / 3D, 0.1875D + k * 0.3125D);
-					glScalef(0.5F, 0.5F, 0.5F);
-					RenderCraftingPillar.itemRenderer.render(citem, 0F, 0F, 0F, workTile.showNum);
-					glPopMatrix();
-				}
 
-		if (workTile.getStackInSlot(workTile.getSizeInventory()) != null) {
+		glTranslated(x, y, z);
+
+		if (workTile.getStackInSlot(0) != null) {
 			glPushMatrix();
 			citem.hoverStart = -workTile.rot;
-			citem.setEntityItemStack(workTile.getStackInSlot(workTile.getSizeInventory()));
-			RenderCraftingPillar.resultRenderer.render(citem, 0.5F, 1.5F, 0.5F, workTile.showNum);
+			citem.setEntityItemStack(workTile.getStackInSlot(0));
+			resultRenderer.render(citem, 0.5F, 1.3F, 0.5F, false);
 			glPopMatrix();
-		}
 
+			if (workTile.getStackInSlot(0) != null)
+				if (workTile.showNum) {
+					glDisable(GL_LIGHTING);
+					RenderingHelper.renderFloatingTextWithBackground(0.5F, 1.9F, 0.5F, 0.2F, workTile.getStackInSlot(0).getDisplayName(), Color.WHITE.getRGB(), new Color(0F, 0F, 0F, 0.5F));
+					glEnable(GL_LIGHTING);
+				}
+		}
 		glPopMatrix();
-
-		if (workTile.getStackInSlot(10) != null) {
-			glPushMatrix();
-			citem.hoverStart = 0;
-
-			glColor4f(1, 1, 1, 1);
-			glTranslated(x, y, z);
-			glTranslated(0.5D, 0.5D, 0.5D);
-			glRotatef(-90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
-
-			if (Magistics.proxy.winter)
-				glTranslatef(0, -0.05F, 0.47F);
-			else
-				glTranslatef(0, 0, 0.4F);
-
-			glRotatef(-45, 0, 0, 1);
-			glScalef(1.1F, 1.1F, 1.1F);
-
-			glTranslatef(0, -0.28F, 0);
-
-			citem.setEntityItemStack(workTile.getStackInSlot(10));
-			RenderCraftingPillar.resultRenderer.render(citem, 0F, 0F, 0F, false);
-
-			glPopMatrix();
-		}
 	}
 
 	@Override
@@ -464,7 +418,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 		glPushMatrix();
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_DEPTH_TEST);
-		glTranslated(0, 1D, 0);
+		glTranslated(0, 1.0D, 0);
 		glRotatef(180F, 1F, 0F, 0F);
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 		render(0.0625F);
@@ -474,7 +428,7 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -484,6 +438,6 @@ public class RenderCraftingPillar extends TileEntitySpecialRenderer implements I
 
 	@Override
 	public int getRenderId() {
-		return BlockPillarCrafting.renderID;
+		return BlockPillarDisplay.renderID;
 	}
 }
