@@ -19,7 +19,6 @@ import static org.lwjgl.opengl.GL11.glVertex3d;
 import java.nio.FloatBuffer;
 import java.util.Random;
 
-
 //import me.dawars.CraftingPillars.api.CraftingPillarAPI;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -37,9 +36,9 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
-import T145.magistics.client.lib.craftingpillars.ExternalRenderer;
+import T145.magistics.client.lib.pillars.ExternalRenderer;
 import T145.magistics.common.Magistics;
-import T145.magistics.common.blocks.BlockPillarTrash;
+import T145.magistics.common.blocks.pillars.BlockPillarTrash;
 import T145.magistics.common.tiles.pillars.TilePillarTrash;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;

@@ -1,6 +1,4 @@
-package T145.magistics.common.blocks;
-
-import java.util.Random;
+package T145.magistics.common.blocks.pillars;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,17 +12,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.tiles.pillars.TilePillarPot;
+import T145.magistics.common.tiles.pillars.TilePillarDisplay;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockPillarPot extends BlockPillarBase {
+public class BlockPillarDisplay extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public BlockPillarPot(Material mat) {
+	public BlockPillarDisplay(Material mat) {
 		super(mat);
-		setTickRandomly(true);
 	}
 
 	@Override
@@ -52,17 +49,12 @@ public class BlockPillarPot extends BlockPillarBase {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean isFlowerPot() {
-		return true;
-	}
-
-	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (world.isRemote)
 			return true;
 
-		TilePillarPot pillarTile = (TilePillarPot) world.getTileEntity(x, y, z);
+		TilePillarDisplay pillarTile = (TilePillarDisplay) world.getTileEntity(
+				x, y, z);
 
 		if (hitY < 1F && !player.isSneaking()) {
 			pillarTile.showNum = !pillarTile.showNum;
@@ -74,15 +66,19 @@ public class BlockPillarPot extends BlockPillarBase {
 				pillarTile.dropItemFromSlot(0, 1, player);
 			else if (player.getCurrentEquippedItem() != null) {
 				if (pillarTile.getStackInSlot(0) == null) {
-					if (pillarTile.isItemValidForSlot(0,
-							player.getCurrentEquippedItem())) {
-						if (!player.capabilities.isCreativeMode)
-							player.getCurrentEquippedItem().stackSize--;
+					if (!player.capabilities.isCreativeMode)
+						player.getCurrentEquippedItem().stackSize--;
 
-						ItemStack in = player.getCurrentEquippedItem().copy();
-						in.stackSize = 1;
-						pillarTile.setInventorySlotContents(0, in);
-					}
+					ItemStack in = player.getCurrentEquippedItem().copy();
+					in.stackSize = 1;
+					pillarTile.setInventorySlotContents(0, in);
+				} else if ((pillarTile.getStackInSlot(0).isItemEqual(player.getCurrentEquippedItem()))
+						&& (pillarTile.getStackInSlot(0).stackSize < pillarTile.getStackInSlot(0).getMaxStackSize())) {
+					if (!player.capabilities.isCreativeMode)
+						player.getCurrentEquippedItem().stackSize--;
+
+					pillarTile.decrStackSize(0, -1);
+					pillarTile.onInventoryChanged();
 				}
 			}
 		}
@@ -90,9 +86,10 @@ public class BlockPillarPot extends BlockPillarBase {
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
+	public void breakBlock(World world, int x, int y, int z, Block block,
+			int par6) {
 		if (!world.isRemote) {
-			TilePillarPot workTile = (TilePillarPot) world.getTileEntity(x, y, z);
+			TilePillarDisplay workTile = (TilePillarDisplay) world.getTileEntity(x, y, z);
 
 			if (workTile.getStackInSlot(0) != null) {
 				EntityItem itemDropped = new EntityItem(world, x + 0.1875D, y + 1D, z + 0.1875D, workTile.getStackInSlot(0));
@@ -110,13 +107,7 @@ public class BlockPillarPot extends BlockPillarBase {
 
 	@Override
 	public TileEntity createTileEntity(World world, int meta) {
-		return new TilePillarPot();
-	}
-
-	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
-		if (!world.isRemote)
-			((TilePillarPot) world.getTileEntity(x, y, z)).onBlockUpdate(rand);
+		return new TilePillarDisplay();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package T145.magistics.common.blocks;
+package T145.magistics.common.blocks.pillars;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

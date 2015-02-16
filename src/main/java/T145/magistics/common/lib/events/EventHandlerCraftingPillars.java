@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import T145.magistics.common.blocks.BlockPillarBase;
+import T145.magistics.common.blocks.pillars.BlockPillarBase;
 import T145.magistics.common.config.ConfigObjects;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

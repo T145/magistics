@@ -1,4 +1,4 @@
-package T145.magistics.common.blocks;
+package T145.magistics.common.blocks.pillars;
 
 import java.util.List;
 

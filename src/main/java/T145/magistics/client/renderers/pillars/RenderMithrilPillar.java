@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import T145.magistics.common.blocks.BlockMithrilPillar;
+import T145.magistics.common.blocks.pillars.BlockMithrilPillar;
 import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import T145.magistics.common.blocks.pillars.BlockPillarBase;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.pillars.TileChristmasPresent;
 import cpw.mods.fml.client.registry.RenderingRegistry;
