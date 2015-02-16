@@ -8,9 +8,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.ResourceLocation;
@@ -18,29 +21,38 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import thaumcraft.api.ThaumcraftApi;
 import T145.magistics.api.CraftingPillarAPI;
 import T145.magistics.api.blocks.BlockMagisticsItem;
 import T145.magistics.api.client.renderers.block.ChestItemRenderer;
 import T145.magistics.api.client.renderers.block.ChestRenderer;
+import T145.magistics.api.sentry.SentryBehaviorArrow;
+import T145.magistics.api.sentry.SentryBehaviorEgg;
+import T145.magistics.api.sentry.SentryBehaviorFireball;
+import T145.magistics.api.sentry.SentryBehaviorPotion;
+import T145.magistics.api.sentry.SentryBehaviorRegistry;
+import T145.magistics.api.sentry.SentryBehaviorSnowball;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
-import T145.magistics.client.renderers.craftingpillars.RenderBrewingPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderChristmasLeaves;
-import T145.magistics.client.renderers.craftingpillars.RenderChristmasLight;
-import T145.magistics.client.renderers.craftingpillars.RenderChristmasPresent;
-import T145.magistics.client.renderers.craftingpillars.RenderCraftingPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderDisplayPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderExtendPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderFreezerPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderFurnacePillar;
-import T145.magistics.client.renderers.craftingpillars.RenderPotPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderSentryPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderTankPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderTrashPillar;
-import T145.magistics.client.renderers.craftingpillars.RenderTurntablePillar;
+import T145.magistics.client.renderers.pillars.RenderBrewingPillar;
+import T145.magistics.client.renderers.pillars.RenderChristmasLeaves;
+import T145.magistics.client.renderers.pillars.RenderChristmasLight;
+import T145.magistics.client.renderers.pillars.RenderChristmasPresent;
+import T145.magistics.client.renderers.pillars.RenderCraftingPillar;
+import T145.magistics.client.renderers.pillars.RenderDisplayPillar;
+import T145.magistics.client.renderers.pillars.RenderExtendPillar;
+import T145.magistics.client.renderers.pillars.RenderFreezerPillar;
+import T145.magistics.client.renderers.pillars.RenderFurnacePillar;
+import T145.magistics.client.renderers.pillars.RenderMithrilPillar;
+import T145.magistics.client.renderers.pillars.RenderPotPillar;
+import T145.magistics.client.renderers.pillars.RenderSentryPillar;
+import T145.magistics.client.renderers.pillars.RenderTankPillar;
+import T145.magistics.client.renderers.pillars.RenderTrashPillar;
+import T145.magistics.client.renderers.pillars.RenderTurntablePillar;
 import T145.magistics.client.renderers.tile.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tile.TileChestHungryMetalRenderer;
@@ -55,40 +67,53 @@ import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockChristmasLeaves;
+import T145.magistics.common.blocks.BlockChristmasLight;
+import T145.magistics.common.blocks.BlockChristmasPresent;
+import T145.magistics.common.blocks.BlockChristmasTreeSapling;
+import T145.magistics.common.blocks.BlockMithrilOre;
+import T145.magistics.common.blocks.BlockMithrilStorage;
+import T145.magistics.common.blocks.BlockMithrilStorageItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasLeaves;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasLight;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasPresent;
-import T145.magistics.common.blocks.craftingpillars.BlockChristmasTreeSapling;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarBrewing;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarCrafting;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarDisplay;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarExtend;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarFreezer;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarFurnace;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarPot;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarSentry;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarTank;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarTrash;
-import T145.magistics.common.blocks.craftingpillars.BlockPillarTurntable;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorArrow;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorEgg;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorFireball;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorPotion;
-import T145.magistics.common.blocks.craftingpillars.sentry.SentryBehaviorSnowball;
+import T145.magistics.common.blocks.pillars.BlockMithrilPillar;
+import T145.magistics.common.blocks.pillars.BlockMithrilPillarItem;
+import T145.magistics.common.blocks.pillars.BlockPillarBrewing;
+import T145.magistics.common.blocks.pillars.BlockPillarCrafting;
+import T145.magistics.common.blocks.pillars.BlockPillarDisplay;
+import T145.magistics.common.blocks.pillars.BlockPillarExtend;
+import T145.magistics.common.blocks.pillars.BlockPillarFreezer;
+import T145.magistics.common.blocks.pillars.BlockPillarFurnace;
+import T145.magistics.common.blocks.pillars.BlockPillarPot;
+import T145.magistics.common.blocks.pillars.BlockPillarSentry;
+import T145.magistics.common.blocks.pillars.BlockPillarTank;
+import T145.magistics.common.blocks.pillars.BlockPillarTrash;
+import T145.magistics.common.blocks.pillars.BlockPillarTurntable;
+import T145.magistics.common.items.ElysiumRecord;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
+import T145.magistics.common.items.armor.MithrilArmor;
+import T145.magistics.common.items.baubles.EnderNecklace;
 import T145.magistics.common.items.baubles.ItemAmuletDismay;
 import T145.magistics.common.items.baubles.ItemAmuletLife;
 import T145.magistics.common.items.baubles.ItemBeltCleansing;
 import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
-import T145.magistics.common.items.craftingpillars.PillarRecord;
+import T145.magistics.common.items.baubles.MithrilRing;
+import T145.magistics.common.items.baubles.MithrilWitherRing;
+import T145.magistics.common.items.equipment.MithrilAxe;
+import T145.magistics.common.items.equipment.MithrilBow;
+import T145.magistics.common.items.equipment.MithrilHoe;
+import T145.magistics.common.items.equipment.MithrilShovel;
+import T145.magistics.common.items.equipment.MithrilSword;
+import T145.magistics.common.items.equipment.MthrilPickaxe;
 import T145.magistics.common.items.relics.ItemDawnstone;
-import T145.magistics.common.lib.handlers.PillarEventHandler;
+import T145.magistics.common.items.relics.MithrilFlute;
+import T145.magistics.common.lib.events.EventHandlerCraftingPillars;
+import T145.magistics.common.lib.events.EventHandlerMithril;
+import T145.magistics.common.lib.world.MagisticsWorldGenerator;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -96,19 +121,20 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
-import T145.magistics.common.tiles.craftingpillars.TileChristmasLight;
-import T145.magistics.common.tiles.craftingpillars.TileChristmasPresent;
-import T145.magistics.common.tiles.craftingpillars.TilePillarBrewing;
-import T145.magistics.common.tiles.craftingpillars.TilePillarCrafting;
-import T145.magistics.common.tiles.craftingpillars.TilePillarDisplay;
-import T145.magistics.common.tiles.craftingpillars.TilePillarExtend;
-import T145.magistics.common.tiles.craftingpillars.TilePillarFreezer;
-import T145.magistics.common.tiles.craftingpillars.TilePillarFurnace;
-import T145.magistics.common.tiles.craftingpillars.TilePillarPot;
-import T145.magistics.common.tiles.craftingpillars.TilePillarSentry;
-import T145.magistics.common.tiles.craftingpillars.TilePillarTank;
-import T145.magistics.common.tiles.craftingpillars.TilePillarTrash;
-import T145.magistics.common.tiles.craftingpillars.TilePillarTurntable;
+import T145.magistics.common.tiles.pillars.TileChristmasLight;
+import T145.magistics.common.tiles.pillars.TileChristmasPresent;
+import T145.magistics.common.tiles.pillars.TilePillarBrewing;
+import T145.magistics.common.tiles.pillars.TilePillarCrafting;
+import T145.magistics.common.tiles.pillars.TilePillarDisplay;
+import T145.magistics.common.tiles.pillars.TilePillarExtend;
+import T145.magistics.common.tiles.pillars.TilePillarFreezer;
+import T145.magistics.common.tiles.pillars.TilePillarFurnace;
+import T145.magistics.common.tiles.pillars.TilePillarMithril;
+import T145.magistics.common.tiles.pillars.TilePillarPot;
+import T145.magistics.common.tiles.pillars.TilePillarSentry;
+import T145.magistics.common.tiles.pillars.TilePillarTank;
+import T145.magistics.common.tiles.pillars.TilePillarTrash;
+import T145.magistics.common.tiles.pillars.TilePillarTurntable;
 
 import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
@@ -135,11 +161,16 @@ public class ConfigObjects extends CommonProxy {
 	public static Item itemResources, itemAmuletDismay, itemAmuletLife, itemBeltCleansing, itemBeltVigor, itemRingSouls, itemCruelMask, itemDawnstone;
 	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
-	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
-
-	public static Block blockChristmasLeaves,  blockChristmasTreeSapling,  blockChristmasPresent, blockChristmasLight;
-
 	public static Item itemDiscElysium;
+	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
+	public static Block blockChristmasLeaves, blockChristmasTreeSapling, blockChristmasPresent, blockChristmasLight;
+
+	public static Item itemMithrilSword, itemMithrilSpade, itemMithrilPickaxe, itemMithrilAxe, itemMithrilHoe, itemMithrilBow, itemMithrilIngot, itemMithrilNugget, itemQuartzRod, itemMithrilChest, itemMithrilHelmet, itemMithrilPants, itemMithrilBoots, itemEnderNecklace, itemMithrilRing, itemWitherRing, itemFlute;
+	public static Block blockMithrilOre, blockMithrilStorage, blockMithrilPillar;
+
+	public static int mithrilArmorID = RenderingRegistry.addNewArmourRendererPrefix("mithril");
+	public static ToolMaterial ToolMaterialMithril = EnumHelper.addToolMaterial("MITHRIL", 3, 2084, 12F, 10F, 22);
+	public static ArmorMaterial ArmorMaterialMithril = EnumHelper.addArmorMaterial("MITHRIL", 66, new int[] { 3, 8, 6, 3 }, 25);
 
 	public static ItemStack[] present_loot = new ItemStack[] {
 		new ItemStack(blockChristmasPresent, 1, 0),
@@ -214,6 +245,8 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
+		items.add(itemDiscElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
+
 		tiles.add(TilePillarExtend.class);
 		tiles.add(TilePillarDisplay.class);
 		tiles.add(TilePillarCrafting.class);
@@ -226,29 +259,51 @@ public class ConfigObjects extends CommonProxy {
 		tiles.add(TilePillarSentry.class);
 		tiles.add(TilePillarTrash.class);
 
-		blocks.put(blockBasePillar = (new BlockPillarExtend(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("extendPillar"), null);
-		blocks.put(blockDisplayPillar = (new BlockPillarDisplay(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("displayPillar"), null);
-		blocks.put(blockCraftingPillar = (new BlockPillarCrafting(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("craftingPillar"), null);
-		blocks.put(blockFurnacePillar = (new BlockPillarFurnace(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("furnacePillar"), null);
-		blocks.put(blockTankPillar = (new BlockPillarTank(Material.glass)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("tankPillar"), null);
-		blocks.put(blockBrewingPillar = (new BlockPillarBrewing(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("brewingPillar"), null);
-		blocks.put(blockDiskPlayerPillar = (new BlockPillarTurntable(Material.iron)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("turntablePillar"), null);
-		blocks.put(blockFreezerPillar = (new BlockPillarFreezer(Material.glass)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("freezerPillar"), null);
-		blocks.put(blockPotPillar = (new BlockPillarPot(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("potPillar"), null);
-		blocks.put(blockSentryPillar = (new BlockPillarSentry(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("sentryPillar"), null);
-		blocks.put(blockTrashPillar = (new BlockPillarTrash(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar"), null);
+		blocks.put(blockBasePillar = (new BlockPillarExtend(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("extendPillar"), null);
+		blocks.put(blockDisplayPillar = (new BlockPillarDisplay(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("displayPillar"), null);
+		blocks.put(blockCraftingPillar = (new BlockPillarCrafting(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("craftingPillar"), null);
+		blocks.put(blockFurnacePillar = (new BlockPillarFurnace(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("furnacePillar"), null);
+		blocks.put(blockTankPillar = (new BlockPillarTank(Material.glass)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("tankPillar"), null);
+		blocks.put(blockBrewingPillar = (new BlockPillarBrewing(Material.iron)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("brewingPillar"), null);
+		blocks.put(blockDiskPlayerPillar = (new BlockPillarTurntable(Material.iron)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("turntablePillar"), null);
+		blocks.put(blockFreezerPillar = (new BlockPillarFreezer(Material.glass)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("freezerPillar"), null);
+		blocks.put(blockPotPillar = (new BlockPillarPot(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("potPillar"), null);
+		blocks.put(blockSentryPillar = (new BlockPillarSentry(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("sentryPillar"), null);
+		blocks.put(blockTrashPillar = (new BlockPillarTrash(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar"), null);
 
 		if (winter) {
 			tiles.add(TileChristmasPresent.class);
 			tiles.add(TileChristmasLight.class);
 
 			blocks.put(blockChristmasLeaves = (new BlockChristmasLeaves(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("christmas_tree_leaves"), null);
-			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("christmas_tree_sapling"), null);
-			blocks.put(blockChristmasPresent = (new BlockChristmasPresent(Material.cloth)).setHardness(1.0F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
+			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("christmas_tree_sapling"), null);
+			blocks.put(blockChristmasPresent = (new BlockChristmasPresent(Material.cloth)).setHardness(1F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
 			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
 		}
 
-		items.add(itemDiscElysium = new PillarRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
+		items.add(itemMithrilSword = new MithrilSword(ToolMaterialMithril).setUnlocalizedName("mithril_sword"));
+		items.add(itemMithrilPickaxe = new MthrilPickaxe(ToolMaterialMithril).setUnlocalizedName("mithril_pickaxe"));
+		items.add(itemMithrilAxe = new MithrilAxe(ToolMaterialMithril).setUnlocalizedName("mithril_axe").setTextureName("mithril:mithril_axe"));
+		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("mithril:mithril_spade"));
+		items.add(itemMithrilHoe = new MithrilHoe(ToolMaterialMithril).setUnlocalizedName("mithril_hoe").setTextureName("mithril:mithril_hoe"));
+		items.add(itemMithrilBow = new MithrilBow().setUnlocalizedName("mithril_mithrilBow").setTextureName("mithril:mithril_mithrilBow"));
+		items.add(itemMithrilIngot = new Item().setUnlocalizedName("mithril_ingot").setTextureName("mithril:mithril_ingot"));
+		items.add(itemMithrilNugget = new Item().setUnlocalizedName("mithril_chunk").setTextureName("mithril:mithril_chunk"));
+		items.add(itemQuartzRod = new Item().setUnlocalizedName("quartz_rod").setTextureName("mithril:quartz_rod"));
+		items.add(itemMithrilHelmet = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 0).setUnlocalizedName("mithril_helmet").setTextureName("mithril:mithril_helmet"));
+		items.add(itemMithrilChest = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 1).setUnlocalizedName("mithril_chestplate").setTextureName("mithril:mithril_chestplate"));
+		items.add(itemMithrilPants = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 2).setUnlocalizedName("mithril_pants").setTextureName("mithril:mithril_leggings"));
+		items.add(itemMithrilBoots = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 3).setUnlocalizedName("mithril_boots").setTextureName("mithril:mithril_boots"));
+		items.add(itemEnderNecklace = new EnderNecklace().setUnlocalizedName("ender_amulet").setTextureName("mithril:mithril_accs1"));
+		items.add(itemMithrilRing = new MithrilRing().setUnlocalizedName("mithril_ring").setTextureName("mithril:mithril_ring1"));
+		items.add(itemWitherRing = new MithrilWitherRing().setUnlocalizedName("mithril_wither_ring").setTextureName("mithril:mithril_ring2"));
+		items.add(itemFlute = new MithrilFlute().setUnlocalizedName("mithril_flute").setTextureName("mithril:mithril_flute"));
+
+		tiles.add(TilePillarMithril.class);
+
+		blocks.put(blockMithrilOre = new BlockMithrilOre(Material.rock).setHardness(50F).setResistance(2000F).setStepSound(Block.soundTypeStone).setBlockName("mithril_ore"), null);
+		blocks.put(blockMithrilStorage = new BlockMithrilStorage(Material.iron).setHardness(5F).setResistance(200F).setStepSound(Block.soundTypeMetal).setBlockName("mithril_block").setBlockTextureName("mithril:mithril_block"), (Class)BlockMithrilStorageItem.class);
+		blocks.put(blockMithrilPillar = new BlockMithrilPillar(Material.iron).setHardness(5F).setResistance(200F).setStepSound(Block.soundTypeMetal).setBlockName("mithril_pillar"), (Class)BlockMithrilPillarItem.class);
 	}
 
 	public static void loadClient() {
@@ -353,11 +408,15 @@ public class ConfigObjects extends CommonProxy {
 			tileRenderers.put(TileChristmasLight.class, renderChristmasLight);
 			blockRenderers.add(renderChristmasLight);
 		}
+
+		tileRenderers.put(TilePillarMithril.class, new RenderMithrilPillar());
+		blockRenderers.add(new RenderMithrilPillar());
 	}
 
 	public static void registerHandlers() {
-		MinecraftForge.EVENT_BUS.register(new PillarEventHandler());
-		FMLCommonHandler.instance().bus().register(new PillarEventHandler());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerCraftingPillars());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerMithril());
+		FMLCommonHandler.instance().bus().register(new EventHandlerCraftingPillars());
 	}
 
 	public static void registerObjects() {
@@ -377,9 +436,13 @@ public class ConfigObjects extends CommonProxy {
 			else
 				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), blocks.get(block), block.getLocalizedName());
 
+		writeOreDictionary();
 		addRecipes();
+
+		GameRegistry.registerWorldGenerator(new MagisticsWorldGenerator(), 0);
+
 		registerHandlers();
-		addAchievementsAndCreativeTab();
+		addAchievements();
 
 		if (debug) {
 			if (!supportedMods.isEmpty())
@@ -421,9 +484,78 @@ public class ConfigObjects extends CommonProxy {
 		GameRegistry.addRecipe(new ItemStack(blockChristmasLight, 3), new Object[] { "G", "L", Character.valueOf('G'), Items.gold_ingot, Character.valueOf('L'), Blocks.glowstone});
 		GameRegistry.addRecipe(new ItemStack(blockTrashPillar, 1), new Object[] { "SSS", "SLS", "SSS", Character.valueOf('S'), Blocks.stone, Character.valueOf('L'), Items.ender_pearl});
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockChristmasTreeSapling), "treeSapling", new ItemStack(blockChristmasLight)));
+
+		ItemStack mithrilSword = new ItemStack(itemMithrilSword);
+		mithrilSword.addEnchantment(Enchantment.knockback, 3);
+		mithrilSword.addEnchantment(Enchantment.looting, 2);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "L M", " M ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { " LM", " M ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", "LM ", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " ML", "S  ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " M ", "SL ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilSword, new Object[] { "  M", " M ", "S L", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack mithrilPick = new ItemStack(itemMithrilPickaxe);
+		mithrilPick.addEnchantment(Enchantment.fortune, 2);
+		mithrilPick.addEnchantment(Enchantment.unbreaking, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilPick, new Object[] { "MMM", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack axeStack = new ItemStack(itemMithrilAxe);
+		axeStack.addEnchantment(Enchantment.sharpness, 2);
+		axeStack.addEnchantment(Enchantment.fortune, 3);
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MML", "MS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MSL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MS ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(axeStack, new Object[] { "MM ", "MS ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack mithrilShovel = new ItemStack(itemMithrilSpade);
+		mithrilShovel.addEnchantment(Enchantment.silkTouch, 1);
+		mithrilShovel.addEnchantment(Enchantment.unbreaking, 3);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { "LM ", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " ML", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilShovel, new Object[] { " M ", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		ItemStack hoeStack = new ItemStack(itemMithrilHoe);
+		hoeStack.addEnchantment(Enchantment.unbreaking, 127);
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MML", " S ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", "LS ", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " SL", " S ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " S ", "LS ", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(hoeStack, new Object[] { "MM ", " S ", " SL", 'S', "stickQuartz", 'M', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ItemStack(itemQuartzRod), new Object[] { "Q", "Q", "Q", 'Q', Items.quartz });
+		ItemStack mithrilBow = new ItemStack(itemMithrilBow);
+		mithrilBow.addEnchantment(Enchantment.sharpness, 8);
+		mithrilBow.addEnchantment(Enchantment.infinity, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(mithrilBow, new Object[] { "QMM", "M S", "MSE", 'M', "stickQuartz", 'Q', "ingotMithril", 'E', Items.ender_pearl, 'S', Items.string }));
+		ItemStack helmet = new ItemStack(itemMithrilHelmet);
+		helmet.addEnchantment(Enchantment.respiration, 3);
+		helmet.addEnchantment(Enchantment.aquaAffinity, 1);
+		GameRegistry.addRecipe(new ShapedOreRecipe(helmet, new Object[] { "LIL", "I I", "DLD", 'D', "gemDiamond", 'I', "ingotMithril", 'L', "leather" }));
+		ItemStack chest = new ItemStack(itemMithrilChest);
+		chest.addEnchantment(Enchantment.thorns, 4);
+		GameRegistry.addRecipe(new ShapedOreRecipe(chest, new Object[] { "I I", "ILI", "LDL", 'D', "gemDiamond", 'I', "ingotMithril", 'L', "leather" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilPants), new Object[] { "III", "I I", 'I', "ingotMithril" }));
+		ItemStack boots = new ItemStack(itemMithrilBoots);
+		boots.addEnchantment(Enchantment.featherFalling, 127);
+		GameRegistry.addRecipe(new ShapedOreRecipe(boots, new Object[] { "I I", "I I", 'I', "ingotMithril" }));
+		GameRegistry.addSmelting(blockMithrilOre, new ItemStack(itemMithrilIngot), 2F);
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemMithrilNugget, 9), new Object[] { "ingotMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilIngot), new Object[] { "AAA", "AAA", "AAA", 'A', "nuggetMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemEnderNecklace), new Object[] { "M M", " M ", " E ", 'M', "ingotMithril", 'E', Blocks.dragon_egg }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilRing), new Object[] { " M ", "M M", " M ", 'M', "ingotMithril" }));
+		GameRegistry.addShapelessRecipe(new ItemStack(itemWitherRing), new Object[] { itemMithrilRing, Items.nether_star });
+		GameRegistry.addRecipe(new ShapedOreRecipe(itemFlute, new Object[] { "M  ", " M ", "  M", 'M', "ingotMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilStorage, 1, 0), new Object[] { "II", "II", 'I', "ingotMithril" }));
+		GameRegistry.addShapelessRecipe(new ItemStack(itemMithrilIngot, 4), new Object[] { new ItemStack(blockMithrilStorage, 1, 0) });
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilStorage, 4, 1), new Object[] { "II", "II", 'I', new ItemStack(blockMithrilStorage, 1, 0) }));
+		GameRegistry.addShapelessRecipe(new ItemStack(blockMithrilStorage, 1, 2), new Object[] { new ItemStack(blockMithrilStorage, 1, 1) });
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilPillar, 1, 0), new Object[] { "III", " Q ", "III", 'I', "ingotMithril", 'Q', Items.quartz }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockMithrilPillar, 1, 1), new Object[] { "III", " I ", "III", 'I', "ingotMithril" }));
 	}
 
-	public static void addAchievementsAndCreativeTab() {
+	public static void addAchievements() {
 		achievementGettingStarted = new Achievement("achievement.gettingstarted", "gettingstarted", 0, 0, blockBasePillar, null).registerStat();
 
 		achievementRecursion = new Achievement("achievement.recursion", "recursion", 1, 1, blockCraftingPillar, achievementGettingStarted).registerStat();
@@ -445,8 +577,16 @@ public class ConfigObjects extends CommonProxy {
 
 	public static void writeOreDictionary() {
 		OreDictionary.registerOre("record", itemDiscElysium);
-		OreDictionary.registerOre("treeSapling", blockChristmasTreeSapling);
-		OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
+		OreDictionary.registerOre("oreMithril", blockMithrilOre);
+		OreDictionary.registerOre("ingotMithril", itemMithrilIngot);
+		OreDictionary.registerOre("nuggetMithril", itemMithrilNugget);
+		OreDictionary.registerOre("stickQuartz", itemQuartzRod);
+		OreDictionary.registerOre("leather", Items.leather);
+
+		if (winter) {
+			OreDictionary.registerOre("treeSapling", blockChristmasTreeSapling);
+			OreDictionary.registerOre("treeLeaves",  blockChristmasLeaves);
+		}
 	}
 
 	public static void initAPI() {
@@ -465,11 +605,11 @@ public class ConfigObjects extends CommonProxy {
 		CraftingPillarAPI.addDiskTexture(Items.record_11, "craftingpillars:textures/models/disk_11.png");
 		CraftingPillarAPI.addDiskTexture(Items.record_wait, "craftingpillars:textures/models/disk_wait.png");
 
-		BlockPillarSentry.addBehavior(Items.arrow, new SentryBehaviorArrow());
-		BlockPillarSentry.addBehavior(Items.snowball, new SentryBehaviorSnowball());
-		BlockPillarSentry.addBehavior(Items.fire_charge, new SentryBehaviorFireball());
-		BlockPillarSentry.addBehavior(Items.potionitem, new SentryBehaviorPotion());
-		BlockPillarSentry.addBehavior(Items.egg, new SentryBehaviorEgg());
+		SentryBehaviorRegistry.addBehavior(Items.arrow, new SentryBehaviorArrow());
+		SentryBehaviorRegistry.addBehavior(Items.snowball, new SentryBehaviorSnowball());
+		SentryBehaviorRegistry.addBehavior(Items.fire_charge, new SentryBehaviorFireball());
+		SentryBehaviorRegistry.addBehavior(Items.potionitem, new SentryBehaviorPotion());
+		SentryBehaviorRegistry.addBehavior(Items.egg, new SentryBehaviorEgg());
 	}
 
 	static {

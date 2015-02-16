@@ -1,0 +1,36 @@
+item.mithril_ingot.name=Mithril Ingot
+item.mithril_chunk.name=Mithril Chunk
+item.mithril_chunkcombined.name=Mithril Large Chunk
+item.mithril_sword.name=Mithril Sword
+item.mithril_axe.name=Mithril Axe
+item.mithril_pickaxe.name=Mithril Pickaxe
+item.mithril_spade.name=Mithril Shovel
+item.mithril_hoe.name=Mithril Hoe
+item.mithril_bow.name=Mithril Bow
+item.mithril_helmet.name=Mithril Goggles
+item.mithril_chestplate.name=Mithril Shoulder Armor
+item.mithril_pants.name=Mithril Short Leggings
+item.mithril_boots.name=Mithril Boots
+item.ender_amulet.name=Dragon Amulet
+item.mithril_ring.name=Mithril Ring
+item.mithril_wither_ring.name=Wither Ring
+item.quartz_rod.name=Quartz Rod
+item.mithril_flute.name=Mithril Flute
+tile.mithril_ore.name=Mithril Ore
+tile.mithril_chunk_block.name=Mithril Chunk
+tile.mithril_block.normal.name=Mithril Block
+tile.mithril_block.brick.name=Mithril Brick
+tile.mithril_block.carved.name=Chiseled Mithril Block
+tile.mithril_pillar.base.name=Mithril Pillar
+tile.mithril_pillar.quartz.name=Mithril Quartz Pillar
+
+enchantment.level.127=Infinite
+
+flute.tips.0=Hmm... looks like a musical instrument
+flute.tips.1=Its sound could be heard from a long distance...
+flute.tips.2=Sorry, I can't use it now!
+
+flute.dragonExist.0=Looks like there is a dragon somewhere...
+flute.dragonExist.1=Oh! There is the Ender Dragon!
+flute.dragonExist.2=There can't be more dragons in this dimension...
+flute.dragonExist.3=There should be a dragon somewhere here...
