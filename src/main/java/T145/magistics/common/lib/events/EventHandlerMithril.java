@@ -12,16 +12,9 @@ import T145.magistics.common.config.ConfigObjects;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 
 public class EventHandlerMithril {
 	Random random = new Random();
-
-	@SubscribeEvent
-	public void playerTickEvent(TickEvent.PlayerTickEvent event) {
-		if (event.phase == TickEvent.Phase.END && event.player.getCurrentArmor(3) != null && event.player.getCurrentArmor(3).getItem() == ConfigObjects.itemMithrilHelmet)
-			event.player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 9, 1));
-	}
 
 	@SubscribeEvent
 	public void onPlayerGetHurt(LivingHurtEvent event) {

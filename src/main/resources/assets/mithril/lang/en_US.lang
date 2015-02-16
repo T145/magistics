@@ -1,8 +1,8 @@
 item.mithril_ingot.name=Mithril Ingot
 item.mithril_chunk.name=Mithril Chunk
 item.mithril_chunkcombined.name=Mithril Large Chunk
-item.mithril_katana.name=Mithril Sword
-item.mithril_halberd.name=Mithril Axe
+item.mithril_sword.name=Mithril Sword
+item.mithril_axe.name=Mithril Axe
 item.mithril_pickaxe.name=Mithril Pickaxe
 item.mithril_spade.name=Mithril Shovel
 item.mithril_hoe.name=Mithril Hoe
