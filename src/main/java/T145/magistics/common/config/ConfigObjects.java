@@ -39,9 +39,6 @@ import T145.magistics.api.sentry.SentryBehaviorSnowball;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
 import T145.magistics.client.renderers.pillars.RenderBrewingPillar;
-import T145.magistics.client.renderers.pillars.RenderChristmasLeaves;
-import T145.magistics.client.renderers.pillars.RenderChristmasLight;
-import T145.magistics.client.renderers.pillars.RenderChristmasPresent;
 import T145.magistics.client.renderers.pillars.RenderCraftingPillar;
 import T145.magistics.client.renderers.pillars.RenderDisplayPillar;
 import T145.magistics.client.renderers.pillars.RenderExtendPillar;
@@ -67,10 +64,6 @@ import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
-import T145.magistics.common.blocks.BlockChristmasLeaves;
-import T145.magistics.common.blocks.BlockChristmasLight;
-import T145.magistics.common.blocks.BlockChristmasPresent;
-import T145.magistics.common.blocks.BlockChristmasTreeSapling;
 import T145.magistics.common.blocks.BlockMithrilOre;
 import T145.magistics.common.blocks.BlockMithrilStorage;
 import T145.magistics.common.blocks.BlockMithrilStorageItem;
@@ -121,8 +114,6 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
-import T145.magistics.common.tiles.pillars.TileChristmasLight;
-import T145.magistics.common.tiles.pillars.TileChristmasPresent;
 import T145.magistics.common.tiles.pillars.TilePillarBrewing;
 import T145.magistics.common.tiles.pillars.TilePillarCrafting;
 import T145.magistics.common.tiles.pillars.TilePillarDisplay;
@@ -271,20 +262,10 @@ public class ConfigObjects extends CommonProxy {
 		blocks.put(blockSentryPillar = (new BlockPillarSentry(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("sentryPillar"), null);
 		blocks.put(blockTrashPillar = (new BlockPillarTrash(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("trashPillar"), null);
 
-		if (winter) {
-			tiles.add(TileChristmasPresent.class);
-			tiles.add(TileChristmasLight.class);
-
-			blocks.put(blockChristmasLeaves = (new BlockChristmasLeaves(Material.leaves)).setHardness(0.2F).setLightOpacity(1).setStepSound(Block.soundTypeGrass).setBlockName("christmas_tree_leaves"), null);
-			blocks.put(blockChristmasTreeSapling = (new BlockChristmasTreeSapling()).setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("sapling").setBlockName("christmas_tree_sapling"), null);
-			blocks.put(blockChristmasPresent = (new BlockChristmasPresent(Material.cloth)).setHardness(1F).setStepSound(Block.soundTypeCloth).setBlockName("present"), null);
-			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
-		}
-
 		items.add(itemMithrilSword = new MithrilSword(ToolMaterialMithril).setUnlocalizedName("mithril_sword").setTextureName("magistics:mithril/sword"));
 		items.add(itemMithrilPickaxe = new MthrilPickaxe(ToolMaterialMithril).setUnlocalizedName("mithril_pickaxe").setTextureName("magistics:mithril/pickaxe"));
 		items.add(itemMithrilAxe = new MithrilAxe(ToolMaterialMithril).setUnlocalizedName("mithril_axe").setTextureName("magistics:mithril/axe"));
-		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("magistics:mithril/shovel"));
+		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("magistics:mithril/spade"));
 		items.add(itemMithrilHoe = new MithrilHoe(ToolMaterialMithril).setUnlocalizedName("mithril_hoe").setTextureName("magistics:mithril/hoe"));
 		items.add(itemMithrilBow = new MithrilBow().setUnlocalizedName("mithril_mithrilBow"));
 		items.add(itemMithrilIngot = new Item().setUnlocalizedName("mithril_ingot").setTextureName("magistics:mithril/ingot"));
@@ -397,17 +378,6 @@ public class ConfigObjects extends CommonProxy {
 		RenderTrashPillar renderTrashPillar = new RenderTrashPillar("pillar_display", "pillar_display_frozen");
 		tileRenderers.put(TilePillarTrash.class, renderTrashPillar);
 		blockRenderers.add(renderTrashPillar);
-
-		RenderChristmasPresent renderChristmasPresent = new RenderChristmasPresent();
-		RenderChristmasLight renderChristmasLight = new RenderChristmasLight();
-
-		if (winter) {
-			blockRenderers.add(new RenderChristmasLeaves());
-			tileRenderers.put(TileChristmasPresent.class, renderChristmasPresent);
-			blockRenderers.add(renderChristmasPresent);
-			tileRenderers.put(TileChristmasLight.class, renderChristmasLight);
-			blockRenderers.add(renderChristmasLight);
-		}
 
 		tileRenderers.put(TilePillarMithril.class, new RenderMithrilPillar());
 		blockRenderers.add(new RenderMithrilPillar());

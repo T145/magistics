@@ -1,7 +1,5 @@
 package T145.magistics.common.blocks.pillars;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -109,11 +107,5 @@ public class BlockPillarPot extends BlockPillarBase {
 	@Override
 	public TileEntity createTileEntity(World world, int meta) {
 		return new TilePillarPot();
-	}
-
-	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
-		if (!world.isRemote)
-			((TilePillarPot) world.getTileEntity(x, y, z)).onBlockUpdate(rand);
 	}
 }
