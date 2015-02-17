@@ -17,12 +17,12 @@ public class MithrilWitherRing extends MithrilRing {
 	Random random = new Random();
 
 	@Override
-	public void onWornTick(final ItemStack itemstack, final EntityLivingBase player) {
+	public void onWornTick(ItemStack is, EntityLivingBase player) {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 			return;
 		if (random.nextInt(60) == 2)
-			for (int i = 0; i < ((Entity) player).worldObj.loadedEntityList.size(); i++) {
-				final Entity entity = (Entity) player.worldObj.loadedEntityList.get(i);
+			for (int i = 0; i < player.worldObj.loadedEntityList.size(); i++) {
+				Entity entity = (Entity) player.worldObj.loadedEntityList.get(i);
 				if ((entity instanceof EntityMob || entity instanceof EntityLiving) && entity.getDistanceSqToEntity((Entity) player) < 256.0 && random.nextInt(3) != 0) {
 					System.out.println("[Mithril mod] Entity withered: " + entity.getCommandSenderName());
 					((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.wither.getId(), 200, 1));
@@ -32,7 +32,7 @@ public class MithrilWitherRing extends MithrilRing {
 	}
 
 	@Override
-	public EnumRarity getRarity(final ItemStack par1ItemStack) {
+	public EnumRarity getRarity(ItemStack is) {
 		return EnumRarity.epic;
 	}
 }

@@ -1,16 +1,12 @@
 package T145.magistics.common.items.relics;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import T145.magistics.common.Magistics;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDawnstone extends Item {
 	@Override
@@ -19,18 +15,6 @@ public class ItemDawnstone extends Item {
 			return EnumRarity.uncommon;
 		else
 			return EnumRarity.common;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister r) {
-		itemIcon = r.registerIcon("magistics:dawnstone");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int meta) {
-		return itemIcon;
 	}
 
 	@Override

@@ -195,13 +195,13 @@ public class ConfigObjects extends CommonProxy {
 
 	public static void loadServer() {
 		items.add(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
-		items.add(itemAmuletDismay = new ItemAmuletDismay().setUnlocalizedName("bauble.amulet_dismay"));
-		items.add(itemAmuletLife = new ItemAmuletLife().setUnlocalizedName("bauble.amulet_life"));
-		items.add(itemBeltCleansing = new ItemBeltCleansing().setUnlocalizedName("bauble.belt_cleansing"));
-		items.add(itemBeltVigor = new ItemBeltVigor().setUnlocalizedName("bauble.belt_vigor"));
-		items.add(itemRingSouls = new ItemRingSouls().setUnlocalizedName("bauble.ring_souls"));
-		items.add(itemCruelMask = new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setUnlocalizedName("cruel_mask"));
-		items.add(itemDawnstone = new ItemDawnstone().setUnlocalizedName("dawnstone"));
+		items.add(itemAmuletDismay = new ItemAmuletDismay().setTextureName("magistics:bauble_amulet_dismay").setUnlocalizedName("bauble.amulet_dismay"));
+		items.add(itemAmuletLife = new ItemAmuletLife().setTextureName("magistics:bauble_amulet_life").setUnlocalizedName("bauble.amulet_life"));
+		items.add(itemBeltCleansing = new ItemBeltCleansing().setTextureName("magistics:bauble_belt_cleansing").setUnlocalizedName("bauble.belt_cleansing"));
+		items.add(itemBeltVigor = new ItemBeltVigor().setTextureName("magistics:bauble_belt_vigor").setUnlocalizedName("bauble.belt_vigor"));
+		items.add(itemRingSouls = new ItemRingSouls().setTextureName("magistics:bauble_ring_souls").setUnlocalizedName("bauble.ring_souls"));
+		items.add(itemCruelMask = new ItemCruelMask(ThaumcraftApi.armorMatThaumium, 2, 0).setMaxDamage(100).setMaxStackSize(1).setTextureName("magistics:cruel_mask").setUnlocalizedName("cruel_mask"));
+		items.add(itemDawnstone = new ItemDawnstone().setTextureName("magistics:dawnstone").setUnlocalizedName("dawnstone"));
 
 		blocks.put(blockAestheticStructure = new BlockAestheticStructure().setBlockName("aesthetic_structure"), BlockMagisticsItem.class);
 

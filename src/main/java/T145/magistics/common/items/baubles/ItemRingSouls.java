@@ -3,35 +3,19 @@ package T145.magistics.common.items.baubles;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import thaumcraft.common.Thaumcraft;
 import T145.magistics.api.items.baubles.ItemBauble;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.items.ItemResources;
 import baubles.api.BaubleType;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemRingSouls extends ItemBauble {
 	private Random rand = new Random();
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister r) {
-		itemIcon = r.registerIcon("magistics:bauble_ring_souls");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int meta) {
-		return itemIcon;
-	}
 
 	@Override
 	public BaubleType getBaubleType(ItemStack is) {

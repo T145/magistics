@@ -1,6 +1,5 @@
 package T145.magistics.common.items.armor;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,27 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.EntityUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemCruelMask extends ItemArmor {
 	public ItemCruelMask(ArmorMaterial m, int i, int j) {
 		super(m, i, j);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister r) {
-		itemIcon = r.registerIcon("magistics:cruel_mask");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int meta) {
-		return itemIcon;
 	}
 
 	@Override
