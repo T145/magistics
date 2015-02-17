@@ -109,8 +109,8 @@ public class BlockChristmasLeaves extends Block implements IShearable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("craftingpillars:ChristmasTreeLeaves");
-		BlockChristmasLeaves.glowing = r.registerIcon("craftingpillars:ChristmasTreeLeavesOverlay");
+		blockIcon = r.registerIcon("magistics:christmas_leaves");
+		BlockChristmasLeaves.glowing = r.registerIcon("magistics:christmas_leaves_overlay");
 	}
 
 	@Override

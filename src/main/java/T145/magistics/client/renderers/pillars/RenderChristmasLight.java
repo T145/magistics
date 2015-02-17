@@ -113,7 +113,7 @@ public class RenderChristmasLight extends TileEntitySpecialRenderer implements I
 		}
 	}
 
-	ResourceLocation texture = new ResourceLocation("craftingpillars:textures/models/christmas_lights.png");
+	ResourceLocation texture = new ResourceLocation("magistics:textures/models/christmas_lights.png");
 	Box b1, b2;
 
 	public RenderChristmasLight() {

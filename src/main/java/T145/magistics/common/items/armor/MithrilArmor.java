@@ -19,8 +19,8 @@ public class MithrilArmor extends ItemArmor {
 
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
 		if (stack.getItem() == ConfigObjects.itemMithrilHelmet || stack.getItem() == ConfigObjects.itemMithrilChest || stack.getItem() == ConfigObjects.itemMithrilBoots)
-			return "mithril:textures/models/armor/mithril_layer_1.png";
-		return "mithril:textures/models/armor/mithril_layer_2.png";
+			return "magistics:textures/models/armor/mithril_layer_1.png";
+		return "magistics:textures/models/armor/mithril_layer_2.png";
 	}
 
 	@SideOnly(Side.CLIENT)

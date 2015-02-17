@@ -50,7 +50,7 @@ public class BlockMithrilStorage extends Block {
 	public void registerBlockIcons(IIconRegister r) {
 		icons = new IIcon[BlockMithrilStorage.types.length];
 		for (int i = 0; i < icons.length; i++)
-			icons[i] = r.registerIcon(getTextureName() + "_" + BlockMithrilStorage.types[i]);
-		icon_top = r.registerIcon(getTextureName() + "_top");
+			icons[i] = r.registerIcon("magistics:mithril/block_" + BlockMithrilStorage.types[i]);
+		icon_top = r.registerIcon("magistics:mithril/block_top");
 	}
 }

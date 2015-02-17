@@ -2,7 +2,6 @@ package T145.magistics.common.blocks.pillars;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,14 +10,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.pillars.TilePillarTurntable;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarTurntable extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
@@ -135,17 +131,5 @@ public class BlockPillarTurntable extends BlockPillarBase {
 	public int getComparatorInputOverride(World world, int x, int y, int p_149736_4_, int z) {
 		ItemStack itemstack = ((TilePillarTurntable) world.getTileEntity(x, y, z)).getDisk();
 		return itemstack == null ? 0 : Item.getIdFromItem(itemstack.getItem()) + 1 - Item.getIdFromItem(Items.record_13);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("craftingpillars:craftingPillar_side");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int par1, int par2) {
-		return blockIcon;
 	}
 }

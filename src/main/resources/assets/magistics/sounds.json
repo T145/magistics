@@ -1,0 +1,10 @@
+{
+	"UranusParadise": { "category": "master", "sounds": [{
+		"name": "UranusParadise",
+		"stream": true
+		}] },
+	"flute": { "category": "master", "sounds": [{
+		"name": "flute",
+		"stream": false
+		}] }
+}

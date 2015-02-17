@@ -52,12 +52,28 @@ item.bauble.belt_cleansing.name=Belt of Cleansing
 item.bauble.belt_vigor.name=Belt of Vigor
 item.bauble.ring_souls.name=Ring of Souls
 
+item.mithril_ingot.name=Mithril Ingot
+item.mithril_chunk.name=Mithril Chunk
+item.mithril_chunkcombined.name=Mithril Large Chunk
+item.mithril_sword.name=Mithril Sword
+item.mithril_axe.name=Mithril Axe
+item.mithril_pickaxe.name=Mithril Pickaxe
+item.mithril_spade.name=Mithril Shovel
+item.mithril_hoe.name=Mithril Hoe
+item.mithril_bow.name=Mithril Bow
+item.mithril_helmet.name=Mithril Goggles
+item.mithril_chestplate.name=Mithril Shoulder Armor
+item.mithril_leggings.name=Mithril Leggings
+item.mithril_boots.name=Mithril Boots
+item.ender_amulet.name=Dragon Amulet
+item.mithril_ring.name=Mithril Ring
+item.mithril_wither_ring.name=Wither Ring
+item.quartz_rod.name=Quartz Rod
+item.mithril_flute.name=Mithril Flute
+
 ####
 # Blocks
 ###
-
-tile.eridium.0.name=Eridium Ore
-tile.eridium.1.name=Block of Eridium
 
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest
@@ -102,5 +118,77 @@ tile.aesthetic_structure.13.name=Magenta Crystal Structure
 tile.aesthetic_structure.14.name=Orange Crystal Structure
 tile.aesthetic_structure.15.name=White Crystal Structure
 
+tile.extendPillar.name=Base Pillar
+tile.displayPillar.name=Display Pillar
+tile.craftingPillar.name=Crafting Pillar
+tile.furnacePillar.name=Smelting Pillar
+tile.anvilPillar.name=Anvil Pillar
+tile.brewingPillar.name=Brewing Pillar
+tile.turntablePillar.name=Turntable Pillar
+tile.freezerPillar.name=Freezer Pillar
+tile.tankPillar.name=Tank Pillar
+tile.potPillar.name=Pot Pillar
+tile.trashPillar.name=Trash Pillar
+tile.sentryPillar.name=Sentry Pillar
+tile.christmas_light.name=Christmas Lights
+
+tile.christmas_tree_leaves.name=Christmas Leaves
+tile.christmas_tree_sapling.name=Christmas Tree Sapling
+tile.present.name=Christmas Present
+magistics:UranusParadise=Elysium - Uranus Paradise Short
+
+tile.mithril_ore.name=Mithril Ore
+tile.mithril_chunk_block.name=Mithril Chunk
+tile.mithril_block.normal.name=Mithril Block
+tile.mithril_block.brick.name=Mithril Brick
+tile.mithril_block.carved.name=Chiseled Mithril Block
+tile.mithril_pillar.base.name=Mithril Pillar
+tile.mithril_pillar.quartz.name=Mithril Quartz Pillar
+
 tile.infusion_workbench.base.name=Reinforced Arcane Stone
 tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks
+
+####
+# Enchantments
+###
+
+enchantment.level.127=Infinite
+
+####
+# Achievements
+###
+
+itemGroup.CraftingPillars=Crafting Pillars
+achievement.gettingstarted=Getting Started
+achievement.gettingstarted.desc=Craft a Basic Pillar
+
+achievement.recursion=Recursion I
+achievement.recursion.desc=Craft a CraftingPillar in a CraftingPillar!
+
+achievement.showoff=Recursion II
+achievement.showoff.desc=Show off your Showcase Pillar!
+
+achievement.recursion3=Recursion III
+achievement.recursion3.desc=Get a present from a present!
+
+achievement.christmaspillar=Christmas Event
+achievement.christmaspillar.desc=Celebrate Christmas with us!
+
+achievement.liquids=Tanked!
+achievement.liquids.desc=Store liquids in an ancient way!
+
+achievement.elysiandisc=Preparing with music!
+achievement.elysiandisc.desc=Listen to the Elysium Theme disc!
+
+####
+# Messages
+###
+
+flute.tips.0=Hmm... looks like a musical instrument
+flute.tips.1=Its sound could be heard from a long distance...
+flute.tips.2=Sorry, I can't use it now!
+
+flute.dragonExist.0=Looks like there is a dragon somewhere...
+flute.dragonExist.1=Oh! There is the Ender Dragon!
+flute.dragonExist.2=There can't be more dragons in this dimension...
+flute.dragonExist.3=There should be a dragon somewhere here...

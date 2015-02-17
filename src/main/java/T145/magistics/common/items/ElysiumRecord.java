@@ -12,7 +12,6 @@ public class ElysiumRecord extends ItemRecord {
 	public ElysiumRecord(String recordName) {
 		super(recordName);
 		maxStackSize = 1;
-
 	}
 
 	@Override
@@ -27,6 +26,6 @@ public class ElysiumRecord extends ItemRecord {
 
 	@Override
 	public ResourceLocation getRecordResource(String name) {
-		return new ResourceLocation("craftingpillars:" + name.substring(8));
+		return new ResourceLocation("magistics:UranusParadise");
 	}
 }

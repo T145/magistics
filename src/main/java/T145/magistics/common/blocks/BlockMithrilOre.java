@@ -22,7 +22,7 @@ public class BlockMithrilOre extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		super.blockIcon = r.registerIcon("mithril:" + getUnlocalizedName().substring(5));
+		blockIcon = r.registerIcon("magistics:mithril/ore");
 	}
 
 	@Override

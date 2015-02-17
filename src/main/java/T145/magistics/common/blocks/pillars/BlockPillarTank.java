@@ -1,12 +1,10 @@
 package T145.magistics.common.blocks.pillars;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -15,8 +13,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import T145.magistics.common.tiles.pillars.TilePillarTank;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockPillarTank extends BlockPillarBase {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
@@ -100,18 +96,6 @@ public class BlockPillarTank extends BlockPillarBase {
 	@Override
 	public TileEntity createTileEntity(World world, int meta) {
 		return new TilePillarTank();
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("craftingpillars:craftingPillar_side");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta) {
-		return blockIcon;
 	}
 
 	@Override

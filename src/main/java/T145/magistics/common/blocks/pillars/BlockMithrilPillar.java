@@ -61,13 +61,13 @@ public class BlockMithrilPillar extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister itemIcon) {
-		super.blockIcon = itemIcon.registerIcon("mithril:mithril_pillar_side");
+		blockIcon = itemIcon.registerIcon("magistics:mithril/pillar_side");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return super.blockIcon;
+		return blockIcon;
 	}
 
 	@Override

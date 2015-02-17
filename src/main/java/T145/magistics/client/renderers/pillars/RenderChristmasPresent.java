@@ -30,7 +30,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderChristmasPresent extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
-	private ResourceLocation texture = new ResourceLocation("craftingpillars:textures/models/present.png"), overlay = new ResourceLocation("craftingpillars:textures/models/presentOverlay.png");
+	private ResourceLocation texture = new ResourceLocation("magistics:textures/models/present.png"), overlay = new ResourceLocation("magistics:textures/models/present_overlay.png");
 
 	public static ModelBase model = new ModelBase() {};
 	private ModelRenderer PresentTop, PresentBottom, PresentTop2, PresentBottom2;

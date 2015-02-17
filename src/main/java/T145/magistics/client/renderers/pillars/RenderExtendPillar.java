@@ -35,13 +35,13 @@ public class RenderExtendPillar extends TileEntitySpecialRenderer implements ISi
 	private ModelRenderer bottom, bottoms, tops,top, pillar, pillarTop, pillarBottom, pillarEast, pillarWest, pillarNorth, pillarSouth, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B, Icicle2C, Icicle3A, Icicle3B, Icicle4A, Icicle4B, Icicle5A, Icicle5B, Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C, Icicle8D, Icicle9A, Icicle9B, Icicle10A, Icicle10B, Icicle10C,  Icicle11A, Icicle11B, Icicle11C;
 
 	public RenderExtendPillar(String modelTexture) {
-		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/" + modelTexture + ".png");
 		renderPillar();
 	}
 
 	public RenderExtendPillar(String modelTexture, String frozenModelTexture) {
-		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
-		frozenTexture = new ResourceLocation("craftingpillars:textures/models/" + frozenModelTexture + ".png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/" + modelTexture + ".png");
+		frozenTexture = new ResourceLocation("magistics:textures/models/pillars/" + frozenModelTexture + ".png");
 		renderPillar();
 	}
 

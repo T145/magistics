@@ -165,7 +165,7 @@ public class ConfigObjects extends CommonProxy {
 	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
 	public static Block blockChristmasLeaves, blockChristmasTreeSapling, blockChristmasPresent, blockChristmasLight;
 
-	public static Item itemMithrilSword, itemMithrilSpade, itemMithrilPickaxe, itemMithrilAxe, itemMithrilHoe, itemMithrilBow, itemMithrilIngot, itemMithrilNugget, itemQuartzRod, itemMithrilChest, itemMithrilHelmet, itemMithrilPants, itemMithrilBoots, itemEnderNecklace, itemMithrilRing, itemWitherRing, itemFlute;
+	public static Item itemMithrilSword, itemMithrilSpade, itemMithrilPickaxe, itemMithrilAxe, itemMithrilHoe, itemMithrilBow, itemMithrilIngot, itemMithrilNugget, itemQuartzRod, itemMithrilChest, itemMithrilHelmet, itemMithrilLeggings, itemMithrilBoots, itemEnderNecklace, itemMithrilRing, itemWitherRing, itemFlute;
 	public static Block blockMithrilOre, blockMithrilStorage, blockMithrilPillar;
 
 	public static int mithrilArmorID = RenderingRegistry.addNewArmourRendererPrefix("mithril");
@@ -245,7 +245,7 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
-		items.add(itemDiscElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("craftingpillars:ElysiumDisk"));
+		items.add(itemDiscElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("magistics:elysium_disk"));
 
 		tiles.add(TilePillarExtend.class);
 		tiles.add(TilePillarDisplay.class);
@@ -281,23 +281,23 @@ public class ConfigObjects extends CommonProxy {
 			blocks.put(blockChristmasLight = (new BlockChristmasLight(Material.glass)).setHardness(0.1F).setStepSound(Block.soundTypeGlass).setBlockName("christmas_light"), null);
 		}
 
-		items.add(itemMithrilSword = new MithrilSword(ToolMaterialMithril).setUnlocalizedName("mithril_sword"));
-		items.add(itemMithrilPickaxe = new MthrilPickaxe(ToolMaterialMithril).setUnlocalizedName("mithril_pickaxe"));
-		items.add(itemMithrilAxe = new MithrilAxe(ToolMaterialMithril).setUnlocalizedName("mithril_axe").setTextureName("mithril:mithril_axe"));
-		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("mithril:mithril_spade"));
-		items.add(itemMithrilHoe = new MithrilHoe(ToolMaterialMithril).setUnlocalizedName("mithril_hoe").setTextureName("mithril:mithril_hoe"));
-		items.add(itemMithrilBow = new MithrilBow().setUnlocalizedName("mithril_mithrilBow").setTextureName("mithril:mithril_mithrilBow"));
-		items.add(itemMithrilIngot = new Item().setUnlocalizedName("mithril_ingot").setTextureName("mithril:mithril_ingot"));
-		items.add(itemMithrilNugget = new Item().setUnlocalizedName("mithril_chunk").setTextureName("mithril:mithril_chunk"));
-		items.add(itemQuartzRod = new Item().setUnlocalizedName("quartz_rod").setTextureName("mithril:quartz_rod"));
-		items.add(itemMithrilHelmet = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 0).setUnlocalizedName("mithril_helmet").setTextureName("mithril:mithril_helmet"));
-		items.add(itemMithrilChest = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 1).setUnlocalizedName("mithril_chestplate").setTextureName("mithril:mithril_chestplate"));
-		items.add(itemMithrilPants = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 2).setUnlocalizedName("mithril_pants").setTextureName("mithril:mithril_leggings"));
-		items.add(itemMithrilBoots = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 3).setUnlocalizedName("mithril_boots").setTextureName("mithril:mithril_boots"));
-		items.add(itemEnderNecklace = new EnderNecklace().setUnlocalizedName("ender_amulet").setTextureName("mithril:mithril_accs1"));
-		items.add(itemMithrilRing = new MithrilRing().setUnlocalizedName("mithril_ring").setTextureName("mithril:mithril_ring1"));
-		items.add(itemWitherRing = new MithrilWitherRing().setUnlocalizedName("mithril_wither_ring").setTextureName("mithril:mithril_ring2"));
-		items.add(itemFlute = new MithrilFlute().setUnlocalizedName("mithril_flute").setTextureName("mithril:mithril_flute"));
+		items.add(itemMithrilSword = new MithrilSword(ToolMaterialMithril).setUnlocalizedName("mithril_sword").setTextureName("magistics:mithril/sword"));
+		items.add(itemMithrilPickaxe = new MthrilPickaxe(ToolMaterialMithril).setUnlocalizedName("mithril_pickaxe").setTextureName("magistics:mithril/pickaxe"));
+		items.add(itemMithrilAxe = new MithrilAxe(ToolMaterialMithril).setUnlocalizedName("mithril_axe").setTextureName("magistics:mithril/axe"));
+		items.add(itemMithrilSpade = new MithrilShovel(ToolMaterialMithril).setUnlocalizedName("mithril_spade").setTextureName("magistics:mithril/shovel"));
+		items.add(itemMithrilHoe = new MithrilHoe(ToolMaterialMithril).setUnlocalizedName("mithril_hoe").setTextureName("magistics:mithril/hoe"));
+		items.add(itemMithrilBow = new MithrilBow().setUnlocalizedName("mithril_mithrilBow"));
+		items.add(itemMithrilIngot = new Item().setUnlocalizedName("mithril_ingot").setTextureName("magistics:mithril/ingot"));
+		items.add(itemMithrilNugget = new Item().setUnlocalizedName("mithril_chunk").setTextureName("magistics:mithril/nugget"));
+		items.add(itemQuartzRod = new Item().setUnlocalizedName("quartz_rod").setTextureName("magistics:mithril/quartz_rod"));
+		items.add(itemMithrilHelmet = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 0).setUnlocalizedName("mithril_helmet").setTextureName("magistics:mithril/helmet"));
+		items.add(itemMithrilChest = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 1).setUnlocalizedName("mithril_chestplate").setTextureName("magistics:mithril/chestplate"));
+		items.add(itemMithrilLeggings = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 2).setUnlocalizedName("mithril_leggings").setTextureName("magistics:mithril/leggings"));
+		items.add(itemMithrilBoots = new MithrilArmor(ArmorMaterialMithril, mithrilArmorID, 3).setUnlocalizedName("mithril_boots").setTextureName("magistics:mithril/boots"));
+		items.add(itemEnderNecklace = new EnderNecklace().setUnlocalizedName("ender_amulet").setTextureName("magistics:mithril/ender_necklace"));
+		items.add(itemMithrilRing = new MithrilRing().setUnlocalizedName("mithril_ring").setTextureName("magistics:mithril/ring1"));
+		items.add(itemWitherRing = new MithrilWitherRing().setUnlocalizedName("mithril_wither_ring").setTextureName("magistics:mithril/ring2"));
+		items.add(itemFlute = new MithrilFlute().setUnlocalizedName("mithril_flute").setTextureName("magistics:mithril/flute"));
 
 		tiles.add(TilePillarMithril.class);
 
@@ -354,47 +354,47 @@ public class ConfigObjects extends CommonProxy {
 			}
 		}
 
-		RenderExtendPillar renderExtendPillar = new RenderExtendPillar("extendPillar", "frozenExtendPillar");
+		RenderExtendPillar renderExtendPillar = new RenderExtendPillar("pillar_extend", "pillar_frozen_extend");
 		tileRenderers.put(TilePillarExtend.class, renderExtendPillar);
 		blockRenderers.add(renderExtendPillar);
 
-		RenderDisplayPillar renderDisplayPillar = new RenderDisplayPillar("displayPillar", "displayPillarFrozen");
+		RenderDisplayPillar renderDisplayPillar = new RenderDisplayPillar("pillar_display", "pillar_frozen_display");
 		tileRenderers.put(TilePillarDisplay.class, renderDisplayPillar);
 		blockRenderers.add(renderDisplayPillar);
 
-		RenderCraftingPillar renderCraftingPillar = new RenderCraftingPillar("craftingPillar", "craftingPillarFrozen");
+		RenderCraftingPillar renderCraftingPillar = new RenderCraftingPillar("pillar_crafting", "pillar_frozen_crafting");
 		tileRenderers.put(TilePillarCrafting.class, renderCraftingPillar);
 		blockRenderers.add(renderCraftingPillar);
 
-		RenderFurnacePillar renderFurnacePillar = new RenderFurnacePillar("furnacePillar", "frozenFurnacePillar");
+		RenderFurnacePillar renderFurnacePillar = new RenderFurnacePillar("pillar_furnace", "pillar_frozen_furnace");
 		tileRenderers.put(TilePillarFurnace.class, renderFurnacePillar);
 		blockRenderers.add(renderFurnacePillar);
 
-		RenderTankPillar renderTankPillar = new RenderTankPillar("freezerPillar", "freezerPillarFrozen");
+		RenderTankPillar renderTankPillar = new RenderTankPillar("pillar_freezer", "pillar_frozen_freezer");
 		tileRenderers.put(TilePillarTank.class, renderTankPillar);
 		blockRenderers.add(renderTankPillar);
 
-		RenderBrewingPillar renderBrewingPillar = new RenderBrewingPillar("brewingPillar", "brewingPillarFrozen");
+		RenderBrewingPillar renderBrewingPillar = new RenderBrewingPillar("pillar_brewing", "pillar_frozen_brewing");
 		tileRenderers.put(TilePillarBrewing.class, renderBrewingPillar);
 		blockRenderers.add(renderBrewingPillar);
 
-		RenderTurntablePillar renderTurntablePillar = new RenderTurntablePillar("diskPillar", "diskPillarFrozen");
+		RenderTurntablePillar renderTurntablePillar = new RenderTurntablePillar("pillar_turntable", "pillar_frozen_turntable");
 		tileRenderers.put(TilePillarTurntable.class, renderTurntablePillar);
 		blockRenderers.add(renderTurntablePillar);
 
-		RenderFreezerPillar renderFreezerPillar = new RenderFreezerPillar("freezerPillarFrozen");
+		RenderFreezerPillar renderFreezerPillar = new RenderFreezerPillar("pillar_frozen_freezer");
 		tileRenderers.put(TilePillarFreezer.class, renderFreezerPillar);
 		blockRenderers.add(renderFreezerPillar);
 
-		RenderPotPillar renderPotPillar = new RenderPotPillar("displayPillar", "frozenDisplayPillar");
+		RenderPotPillar renderPotPillar = new RenderPotPillar("pillar_display", "pillar_frozen_display");
 		tileRenderers.put(TilePillarPot.class, renderPotPillar);
 		blockRenderers.add(renderPotPillar);
 
-		RenderSentryPillar renderSentryPillar = new RenderSentryPillar("sentryPillar", "frozenSentryPillar");
+		RenderSentryPillar renderSentryPillar = new RenderSentryPillar("pillar_sentry", "pillar_frozen_sentry");
 		tileRenderers.put(TilePillarSentry.class, renderSentryPillar);
 		blockRenderers.add(renderSentryPillar);
 
-		RenderTrashPillar renderTrashPillar = new RenderTrashPillar("displayPillar", "frozenDisplayPillar");
+		RenderTrashPillar renderTrashPillar = new RenderTrashPillar("pillar_display", "pillar_display_frozen");
 		tileRenderers.put(TilePillarTrash.class, renderTrashPillar);
 		blockRenderers.add(renderTrashPillar);
 
@@ -536,7 +536,7 @@ public class ConfigObjects extends CommonProxy {
 		ItemStack chest = new ItemStack(itemMithrilChest);
 		chest.addEnchantment(Enchantment.thorns, 4);
 		GameRegistry.addRecipe(new ShapedOreRecipe(chest, new Object[] { "I I", "ILI", "LDL", 'D', "gemDiamond", 'I', "ingotMithril", 'L', "leather" }));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilPants), new Object[] { "III", "I I", 'I', "ingotMithril" }));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemMithrilLeggings), new Object[] { "III", "I I", 'I', "ingotMithril" }));
 		ItemStack boots = new ItemStack(itemMithrilBoots);
 		boots.addEnchantment(Enchantment.featherFalling, 127);
 		GameRegistry.addRecipe(new ShapedOreRecipe(boots, new Object[] { "I I", "I I", 'I', "ingotMithril" }));
@@ -590,20 +590,20 @@ public class ConfigObjects extends CommonProxy {
 	}
 
 	public static void initAPI() {
-		CraftingPillarAPI.addDiskTexture(itemDiscElysium, "craftingpillars:textures/models/disk_elysium.png");
+		CraftingPillarAPI.addDiskTexture(itemDiscElysium, "magistics:textures/models/pillars/disk_elysium.png");
 
-		CraftingPillarAPI.addDiskTexture(Items.record_13, "craftingpillars:textures/models/disk_13.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_cat, "craftingpillars:textures/models/disk_cat.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_blocks, "craftingpillars:textures/models/disk_blocks.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_chirp, "craftingpillars:textures/models/disk_chirp.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_far, "craftingpillars:textures/models/disk_far.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_mall, "craftingpillars:textures/models/disk_mall.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_mellohi, "craftingpillars:textures/models/disk_mellohi.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_stal, "craftingpillars:textures/models/disk_stal.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_strad, "craftingpillars:textures/models/disk_strad.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_ward, "craftingpillars:textures/models/disk_ward.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_11, "craftingpillars:textures/models/disk_11.png");
-		CraftingPillarAPI.addDiskTexture(Items.record_wait, "craftingpillars:textures/models/disk_wait.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_13, "magistics:textures/models/pillars/disk_13.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_cat, "magistics:textures/models/pillars/disk_cat.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_blocks, "magistics:textures/models/pillars/disk_blocks.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_chirp, "magistics:textures/models/pillars/disk_chirp.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_far, "magistics:textures/models/pillars/disk_far.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_mall, "magistics:textures/models/pillars/disk_mall.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_mellohi, "magistics:textures/models/pillars/disk_mellohi.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_stal, "magistics:textures/models/pillars/disk_stal.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_strad, "magistics:textures/models/pillars/disk_strad.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_ward, "magistics:textures/models/pillars/disk_ward.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_11, "magistics:textures/models/pillars/disk_11.png");
+		CraftingPillarAPI.addDiskTexture(Items.record_wait, "magistics:textures/models/pillars/disk_wait.png");
 
 		SentryBehaviorRegistry.addBehavior(Items.arrow, new SentryBehaviorArrow());
 		SentryBehaviorRegistry.addBehavior(Items.snowball, new SentryBehaviorSnowball());
@@ -623,6 +623,6 @@ public class ConfigObjects extends CommonProxy {
 			public boolean hasSearchBar() {
 				return true;
 			}
-		}.setBackgroundImageName("magistics.png");
+		}.setBackgroundImageName("magistics.png").setNoTitle();
 	}
 }

@@ -54,7 +54,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 	private ExternalRenderer itemRenderer = new ExternalRenderer(false, true), resultRenderer = new ExternalRenderer(false, false);
 
 	public RenderFreezerPillar(String modelTexture) {
-		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/" + modelTexture + ".png");
 		renderPillar();
 	}
 
@@ -257,7 +257,7 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		Corner3.render(f);
 		Corner4.render(f);
 
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation("craftingpillars:textures/models/furnacePillarFrozen.png"));
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 		Icicle1A.render(f);
 		Icicle1B.render(f);
 		Icicle1C.render(f);
@@ -270,11 +270,9 @@ public class RenderFreezerPillar extends TileEntitySpecialRenderer implements IS
 		Icicle3D.render(f);
 		Icicle4A.render(f);
 		Icicle4B.render(f);
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
 
 		pillartop.render(f);
 		TopTank.render(f);
-
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

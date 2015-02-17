@@ -3,8 +3,6 @@ package T145.magistics.common.items.relics;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -27,7 +25,7 @@ public class MithrilFlute extends Item {
 	public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer entity) {
 		if (!world.isRemote && (System.currentTimeMillis() - lastPlay) / 1000L > getMaxItemUseDuration(is) / 20) {
 			lastPlay = System.currentTimeMillis();
-			world.playSoundAtEntity((Entity) entity, "mythril:flute", 1F, 1F);
+			world.playSoundAtEntity(entity, "magistics:flute", 1F, 1F);
 			if (world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd) {
 				if (isDragonAlive(world) >= 1)
 					entity.addChatMessage(new ChatComponentText(LanguageRegistry.instance().getStringLocalization("flute.dragonExist." + MithrilFlute.rand.nextInt(4))));
@@ -40,20 +38,20 @@ public class MithrilFlute extends Item {
 
 	private int isDragonAlive(World world) {
 		List list = world.loadedEntityList;
-		int dragonNum = 0;
+		int dragons = 0;
 		for (int i = 0; i < list.size(); i++)
 			if (list.get(i) instanceof EntityDragon)
-				++dragonNum;
-		return dragonNum;
+				dragons++;
+		return dragons;
 	}
 
 	@Override
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer entity) {
 		if (!world.isRemote && world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd && isDragonAlive(world) < 1) {
-			is.damageItem(2, (EntityLivingBase) entity);
+			is.damageItem(2, entity);
 			EntityDragon entitydragon = new EntityDragon(world);
 			entitydragon.setLocationAndAngles(0, 128, 0, MithrilFlute.rand.nextFloat() * 360F, 0F);
-			world.spawnEntityInWorld((Entity) entitydragon);
+			world.spawnEntityInWorld(entitydragon);
 		}
 		return is;
 	}

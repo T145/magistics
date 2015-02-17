@@ -23,8 +23,8 @@ public class RenderMithrilPillar extends TileEntitySpecialRenderer implements IS
 	private ModelRenderer bottom, bottoms, tops, top, pillar, pillarTop, pillarBottom, pillarEast, pillarWest, pillarNorth, pillarSouth;
 
 	public RenderMithrilPillar() {
-		texture = new ResourceLocation("mithril:textures/models/mithril_pillar.png");
-		texture_chisel = new ResourceLocation("mithril:textures/models/mithril_pillar_qartz.png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/pillar_mithril.png");
+		texture_chisel = new ResourceLocation("magistics:textures/models/pillars/pillar_mithril_qartz.png");
 		RenderMithrilPillar.model.textureWidth = 128;
 		RenderMithrilPillar.model.textureHeight = 64;
 		(bottom = new ModelRenderer(RenderMithrilPillar.model, 0, 0)).addBox(0F, 0F, 0F, 16, 2, 16);

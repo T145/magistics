@@ -30,7 +30,7 @@ public class BlockChristmasTreeSapling extends BlockSapling {
 
 	@Override
 	public Block setBlockTextureName(String texture) {
-		textureName = "craftingpillars:" + texture;
+		textureName = "magistics:" + texture;
 		return this;
 	}
 

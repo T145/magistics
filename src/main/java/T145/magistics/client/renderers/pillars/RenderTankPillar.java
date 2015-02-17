@@ -52,13 +52,13 @@ public class RenderTankPillar extends TileEntitySpecialRenderer implements ISimp
 	private ExternalRenderer resultRenderer = new ExternalRenderer(false, false);
 
 	public RenderTankPillar(String modelTexture) {
-		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/" + modelTexture + ".png");
 		renderPillar();
 	}
 
 	public RenderTankPillar(String modelTexture, String frozenModelTexture) {
-		texture = new ResourceLocation("craftingpillars:textures/models/" + modelTexture + ".png");
-		frozenTexture = new ResourceLocation("craftingpillars:textures/models/" + frozenModelTexture + ".png");
+		texture = new ResourceLocation("magistics:textures/models/pillars/" + modelTexture + ".png");
+		frozenTexture = new ResourceLocation("magistics:textures/models/pillars/" + frozenModelTexture + ".png");
 		renderPillar();
 	}
 
