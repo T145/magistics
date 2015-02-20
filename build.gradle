@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+    	jcenter()
         mavenCentral()
         maven {
             name = 'forge'
@@ -10,7 +11,8 @@ buildscript {
             url = 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
     }
-    dependencies {
+    dependencies { // Oh the version irony!
+    	classpath 'de.undercouch:gradle-download-task:1.2'
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
@@ -35,7 +37,10 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.3';
 }
 
+apply plugin: 'de.undercouch.download'
 apply plugin: 'forge'
+
+import de.undercouch.gradle.tasks.download.Download
 
 version = project_version
 group = 'T145.magistics'
@@ -102,6 +107,22 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 	version = release_title
 }
 
+// add a backup for all of the project source
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+	classifier = 'src'
+	version = release_title
+}
+
+// add an archive for the mod's API
+task apiZip(type: Zip) {
+	from (sourceSets.main.java) {
+		include 'T145/magistics/api/**'
+	}
+	classifier = 'api'
+	version = release_title
+}
+
 artifacts {
-	archives deobfJar, javadocJar
+	archives deobfJar, javadocJar, sourceJar, apiZip
 }
