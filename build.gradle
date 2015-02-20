@@ -31,6 +31,10 @@ repositories {
     }
 }
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3';
+}
+
 apply plugin: 'forge'
 
 version = project_version
