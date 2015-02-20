@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# only build if changes are made to the src directory
-if [[ $(git log -m -n 1 --name-only --pretty=format:"" | grep -e "src" -c) -gt 0 ]]; then
-bash exec/setup
-cd lib && { curl -LOk https://www.dropbox.com/s/tcfrj8q47oov5ma/Thaumcraft-deobf-1.7.10-4.2.3.4.jar ; cd -; }
-gradle build
-rm -rf lib/Thaumcraft-deobf*.jar
-fi
