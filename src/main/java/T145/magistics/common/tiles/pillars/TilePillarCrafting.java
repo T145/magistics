@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.AchievementList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import thaumcraft.common.config.ConfigItems;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.containers.ContainerCraftingPillar;
@@ -273,7 +274,7 @@ public class TilePillarCrafting extends TileBase implements IInventory, ISidedIn
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-		return slot == 10 && itemstack.getItem() == ConfigObjects.itemWandThaumcraft;
+		return slot == 10 && itemstack.getItem() == ConfigItems.itemWandCasting;
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.pillars.TilePillarCrafting;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -46,13 +45,7 @@ public class BlockPillarCrafting extends BlockPillarBase {
 					workTile.craftItem(player);
 			else if (workTile.getStackInSlot(workTile.getSizeInventory()) != null)
 				workTile.craftItem(player);
-		} else if (ConfigObjects.valentine)
-			for (int i = 0; i < 7; ++i) {
-				double d0 = world.rand.nextGaussian() * 0.02D;
-				double d1 = world.rand.nextGaussian() * 0.02D;
-				double d2 = world.rand.nextGaussian() * 0.02D;
-				world.spawnParticle("heart", x + (double) (world.rand.nextFloat()), y + 1, z + (double) (world.rand.nextFloat()), d0, d1, d2);
-			}
+		}
 	}
 
 	@Override

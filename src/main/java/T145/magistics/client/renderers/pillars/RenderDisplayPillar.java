@@ -38,7 +38,7 @@ public class RenderDisplayPillar extends TileEntitySpecialRenderer implements IS
 	private ResourceLocation texture, frozenTexture;
 
 	public static ModelBase model = new ModelBase() {};
-	private ModelRenderer bottom, pillarbottom, pillar, pillartop, top, pillarBottom, BunnyTail1, BunnyTail2,  BunnyTail3, BunnyEar1, BunnyEar2, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B,  Icicle2C, Icicle3A, Icicle3B, Icicle4A, Icicle4B, Icicle5A, Icicle5B,  Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C,  Icicle8D, Icicle9A, Icicle9B, Icicle10A, Icicle10B, Icicle10C, Icicle11A, Icicle11B, Icicle11C;
+	private ModelRenderer bottom, pillarbottom, pillar, pillartop, top, pillarBottom, Icicle1A, Icicle1B, Icicle1C, Icicle2A, Icicle2B,  Icicle2C, Icicle3A, Icicle3B, Icicle4A, Icicle4B, Icicle5A, Icicle5B,  Icicle5C, Icicle6A, Icicle6B, Icicle6C, Icicle7A, Icicle7B, Icicle7C, Icicle8A, Icicle8B, Icicle8C,  Icicle8D, Icicle9A, Icicle9B, Icicle10A, Icicle10B, Icicle10C, Icicle11A, Icicle11B, Icicle11C;
 	private ExternalRenderer resultRenderer = new ExternalRenderer(true, true);
 
 	public RenderDisplayPillar(String modelTexture) {
@@ -96,39 +96,6 @@ public class RenderDisplayPillar extends TileEntitySpecialRenderer implements IS
 		top.setTextureSize(128, 64);
 		top.mirror = true;
 		setRotation(top, 0F, 0F, 0F);
-
-		if (Magistics.proxy.easter) {
-			BunnyTail1 = new ModelRenderer(model, 0, 35);
-			BunnyTail1.addBox(0F, 0F, 0F, 2, 4, 2);
-			BunnyTail1.setRotationPoint(-1F, 18F, 7F);
-			BunnyTail1.setTextureSize(128, 64);
-			BunnyTail1.mirror = true;
-			setRotation(BunnyTail1, 0F, 0F, 0F);
-			BunnyTail2 = new ModelRenderer(model, 0, 33);
-			BunnyTail2.addBox(0F, 0F, 0F, 4, 2, 2);
-			BunnyTail2.setRotationPoint(-2F, 19F, 7F);
-			BunnyTail2.setTextureSize(128, 64);
-			BunnyTail2.mirror = true;
-			setRotation(BunnyTail2, 0F, 0F, 0F);
-			BunnyTail3 = new ModelRenderer(model, 0, 36);
-			BunnyTail3.addBox(0F, 0F, 0F, 2, 2, 4);
-			BunnyTail3.setRotationPoint(-1F, 19F, 6F);
-			BunnyTail3.setTextureSize(128, 64);
-			BunnyTail3.mirror = true;
-			setRotation(BunnyTail3, 0F, 0F, 0F);
-			BunnyEar1 = new ModelRenderer(model, 1, 18);
-			BunnyEar1.addBox(-1.5F, -9F, -1F, 3, 10, 1);
-			BunnyEar1.setRotationPoint(3.5F, 9F, 9F);
-			BunnyEar1.setTextureSize(128, 64);
-			BunnyEar1.mirror = true;
-			setRotation(BunnyEar1, 0F, 0F, 0F);
-			BunnyEar2 = new ModelRenderer(model, 1, 18);
-			BunnyEar2.addBox(-1.5F, -9F, -1F, 3, 10, 1);
-			BunnyEar2.setRotationPoint(-3.5F, 9F, 9F);
-			BunnyEar2.setTextureSize(128, 64);
-			BunnyEar2.mirror = true;
-			setRotation(BunnyEar2, 0F, 0F, 0F);
-		}
 
 		Icicle1A = new ModelRenderer(model, 122, 60);
 		Icicle1A.addBox(0F, 0F, 0F, 1, 2, 2);
@@ -375,17 +342,6 @@ public class RenderDisplayPillar extends TileEntitySpecialRenderer implements IS
 		glRotatef(180F, 1F, 0F, 0F);
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		render(0.0625F);
-
-		if (Magistics.proxy.easter) {
-			glRotatef(90F * (tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord) - 2), 0F, 1F, 0F);
-
-			f = 0.0625F;
-			BunnyTail1.render(f);
-			BunnyTail2.render(f);
-			BunnyTail3.render(f);
-			BunnyEar1.render(f);
-			BunnyEar2.render(f);
-		}
 		glPopMatrix();
 
 		TilePillarDisplay workTile = (TilePillarDisplay) tile;

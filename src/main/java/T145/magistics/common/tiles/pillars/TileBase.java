@@ -8,17 +8,10 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import T145.magistics.common.Magistics;
 
 public abstract class TileBase extends TileEntity {
-	public Random rand;
-
-	@Override
-	public void setWorldObj(World world) {
-		worldObj = world;
-		rand = new Random(worldObj.getSeed());
-	}
+	public Random rand = new Random(worldObj.getSeed());
 
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) < 6;

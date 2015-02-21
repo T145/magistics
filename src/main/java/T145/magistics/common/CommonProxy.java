@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.util.ResourceLocation;
@@ -37,9 +36,7 @@ public class CommonProxy extends Log implements IGuiHandler {
 		"Graphics", "Blocks", "Items"
 	};
 
-	public static boolean winter, easter, valentine, halloween;
-
-	public static Item itemWandThaumcraft;
+	public static boolean winter;
 
 	public static boolean isWinterTime() {
 		Calendar c = Calendar.getInstance();
@@ -59,55 +56,12 @@ public class CommonProxy extends Log implements IGuiHandler {
 		return c.after(b) && c.before(e);
 	}
 
-	public static boolean isEasterTime() {
-		Calendar c = Calendar.getInstance();
-		Calendar b = Calendar.getInstance();
-		b.set(Calendar.MONTH, Calendar.APRIL);
-		b.set(Calendar.DAY_OF_MONTH, 19);
-		b.set(Calendar.HOUR_OF_DAY, 0);
-		b.set(Calendar.MINUTE, 0);
-		b.set(Calendar.MILLISECOND, 0);
-		Calendar e = Calendar.getInstance();
-		e.set(Calendar.MONTH, Calendar.APRIL);
-		e.set(Calendar.DAY_OF_MONTH, 25);
-		e.set(Calendar.HOUR_OF_DAY, 0);
-		e.set(Calendar.MINUTE, 0);
-		e.set(Calendar.MILLISECOND, 0);
-		return c.after(b) && c.before(e);
-	}
-
-	public static boolean isHalloweenTime() {
-		Calendar c = Calendar.getInstance();
-		Calendar b = Calendar.getInstance();
-		b.set(Calendar.MONTH, Calendar.OCTOBER);
-		b.set(Calendar.DAY_OF_MONTH, 24);
-		b.set(Calendar.HOUR_OF_DAY, 0);
-		b.set(Calendar.MINUTE, 0);
-		b.set(Calendar.MILLISECOND, 0);
-		Calendar e = Calendar.getInstance();
-		e.set(Calendar.MONTH, Calendar.NOVEMBER);
-		e.set(Calendar.DAY_OF_MONTH, 7);
-		e.set(Calendar.HOUR_OF_DAY, 0);
-		e.set(Calendar.MINUTE, 0);
-		e.set(Calendar.MILLISECOND, 0);
-		return c.after(b) && c.before(e);
-	}
-
-	public static boolean isValentineTime() {
-		Calendar c = Calendar.getInstance();
-		return c.get(Calendar.MONTH) == Calendar.FEBRUARY && c.get(Calendar.DAY_OF_MONTH) == 14;
-	}
-
 	public void sync() {
 		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
 		hungry_chest_override = config.getBoolean(config.CATEGORY_GENERAL, "Hungry Chest Override", true, "Replaces Thaumcraft's Hungry Chest w/ a modified version.");
 		colored_names = config.getBoolean(category[0], "Colored Names", false, "Toggles name coloring for some things.");
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
-
 		winter = (isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
-		easter = (isEasterTime() && config.get("default", "enableEaster", true).getBoolean()) || config.get("default", "forceEaster", false).getBoolean();
-		halloween = (isHalloweenTime() && config.get("default", "enableHalloween", true).getBoolean()) || config.get("default", "forceHalloween", false).getBoolean();
-		valentine = isValentineTime() || config.get("default", "forceValentine's day", false).getBoolean();
 	}
 
 	public void changeConfig(OnConfigChangedEvent e, String modid) {
