@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 import java.util.Random;
 
@@ -15,20 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockLeaves extends BlockLeaves
 {
 	public static final String[] name = new String[] {"fostimber", "gilbensilv"};
-
-	public ElysiumBlockLeaves()
-	{
-		super();
-		this.setCreativeTab(Elysium.tabElysium);
-
-	}
-
 
 	@Override
 	public int getRenderType()
@@ -39,7 +30,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
 	@Override
 	public Block setBlockTextureName(String texture)
 	{
-		this.textureName = Elysium.ID + ":" + texture;
+		this.textureName = "elysium:" + texture;
 		return this;
 	}
 
@@ -68,7 +59,7 @@ public class ElysiumBlockLeaves extends BlockLeaves
 	@Override
 	public Item getItemDropped(int p_149650_1_, Random rand, int p_149650_3_)
 	{
-		return Item.getItemFromBlock(Elysium.blockSapling);
+		return Item.getItemFromBlock(ConfigObjects.blockSapling);
 	}
 
 	/**

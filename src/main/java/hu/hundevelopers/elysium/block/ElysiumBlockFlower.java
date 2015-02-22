@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -11,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -21,14 +20,12 @@ public class ElysiumBlockFlower extends BlockFlower {
 	public ElysiumBlockFlower() {
 		super(0);
 		float f = 0.2F;
-		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F,
-				0.5F + f);
-		this.setCreativeTab(Elysium.tabElysium);
+		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
 	}
 
 	@Override
 	public Block setBlockTextureName(String texture) {
-		this.textureName = Elysium.ID + ":" + texture;
+		this.textureName = "elysium:" + texture;
 		return this;
 	}
 
@@ -37,8 +34,7 @@ public class ElysiumBlockFlower extends BlockFlower {
 	 */
 	@Override
 	protected boolean canPlaceBlockOn(Block block) {
-		return super.canPlaceBlockOn(block) || block == Elysium.blockDirt
-				|| block == Elysium.blockGrass;
+		return super.canPlaceBlockOn(block) || block == ConfigObjects.blockDirt || block == ConfigObjects.blockGrass;
 	}
 
 	/**

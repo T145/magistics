@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.heat.HeatManager;
 import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumItemDebug extends ElysiumItem
 {
@@ -42,13 +42,13 @@ public class ElysiumItemDebug extends ElysiumItem
 		if(player.isSneaking() && (player instanceof EntityPlayerMP))
 		{
 			EntityPlayerMP playermp = (EntityPlayerMP)player;
-			if(playermp.dimension == Elysium.dimensionID)
+			if(playermp.dimension == ConfigObjects.dimensionID)
 			{
 				playermp.mcServer.getConfigurationManager().transferPlayerToDimension(playermp, 0, new ElysiumTeleporter(playermp.mcServer.worldServerForDimension(0)));
 			}
 			else
 			{
-				playermp.mcServer.getConfigurationManager().transferPlayerToDimension(playermp, Elysium.dimensionID, new ElysiumTeleporter(playermp.mcServer.worldServerForDimension(Elysium.dimensionID)));
+				playermp.mcServer.getConfigurationManager().transferPlayerToDimension(playermp, ConfigObjects.dimensionID, new ElysiumTeleporter(playermp.mcServer.worldServerForDimension(ConfigObjects.dimensionID)));
 			}
 		}
 		return stack;

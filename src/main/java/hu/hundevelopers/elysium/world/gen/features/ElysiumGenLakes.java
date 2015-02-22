@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumBlock;
 
 import java.util.Random;
@@ -186,11 +185,11 @@ public class ElysiumGenLakes extends WorldGenerator
 		{
 			if(random.nextInt(2) == 0)
 			{
-				new ElysiumGenSand(Elysium.blockSand, 7).generate(world, random, x+8, y+4, z+8);
+				new ElysiumGenSand(ConfigObjects.blockSand, 7).generate(world, random, x+8, y+4, z+8);
 			}
 			if(random.nextInt(2) == 0)
 			{
-				new ElysiumGenSand(Elysium.blockRilt, 3).generate(world, random, x+8, y+4, z+8);
+				new ElysiumGenSand(ConfigObjects.blockRilt, 3).generate(world, random, x+8, y+4, z+8);
 			}
 			if(random.nextInt(3) == 0)
 			{

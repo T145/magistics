@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityHero;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -192,29 +191,29 @@ public class ModelHero extends ModelBiped
 	}
 	
 	private static final ResourceLocation TEXTURE_EYE[] = {
-			new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_eye_1.png"),
-			new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_eye_2.png"),
-			new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_eye_3.png")
+			new ResourceLocation("elysium:textures/mobs/heroes/hero_eye_1.png"),
+			new ResourceLocation("elysium:textures/mobs/heroes/hero_eye_2.png"),
+			new ResourceLocation("elysium:textures/mobs/heroes/hero_eye_3.png")
 		};
 	
 	private static final ResourceLocation TEXTURE_HEAD[] = {
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_head_1.png"),
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_head_2.png"),
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_head_3.png")
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_head_1.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_head_2.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_head_3.png")
 	};
 	private static final ResourceLocation TEXTURE_HAIR[] = {
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_hair_1.png"),
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_hair_2.png"),
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_hair_3.png")
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_hair_1.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_hair_2.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_hair_3.png")
 	};
 	private static final ResourceLocation TEXTURE_SKIN[] ={
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_skin_1.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_skin_1.png"),
 	};
-	private static final ResourceLocation TEXTURE_SHIRT = new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_shirt.png");
-	private static final ResourceLocation TEXTURE_JEANS = new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_jeans.png");
+	private static final ResourceLocation TEXTURE_SHIRT = new ResourceLocation("elysium:textures/mobs/heroes/hero_shirt.png");
+	private static final ResourceLocation TEXTURE_JEANS = new ResourceLocation("elysium:textures/mobs/heroes/hero_jeans.png");
 	private static final ResourceLocation TEXTURE_ACCESSORIES[] ={
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_accessories_1.png"),
-		new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_accessories_2.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_accessories_1.png"),
+		new ResourceLocation("elysium:textures/mobs/heroes/hero_accessories_2.png"),
 	};
 
 	

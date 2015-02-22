@@ -8,11 +8,8 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.RenderingHelper;
 
-import java.awt.Desktop;
-import java.net.URI;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
@@ -32,10 +29,10 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ElysiumGuiMainMenu extends ElysiumGui
 {
-	public ResourceLocation imgBackground = new ResourceLocation(Elysium.ID + ":textures/gui/menu/menu.png");
-	public ResourceLocation imgTitle = new ResourceLocation(Elysium.ID + ":textures/gui/menu/title.png");
-//	public ResourceLocation imgPatreon = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon.png");
-//	public ResourceLocation imgPatreonHover = new ResourceLocation(Elysium.ID + ":textures/gui/menu/patreon_hover.png");
+	public ResourceLocation imgBackground = new ResourceLocation("elysium:textures/gui/menu/menu.png");
+	public ResourceLocation imgTitle = new ResourceLocation("elysium:textures/gui/menu/title.png");
+//	public ResourceLocation imgPatreon = new ResourceLocation("elysium:textures/gui/menu/patreon.png");
+//	public ResourceLocation imgPatreonHover = new ResourceLocation("elysium:textures/gui/menu/patreon_hover.png");
 	public ElysiumGuiButton btnSingle, btnMulti, btnMods, btnOptions, btnQuit;
 	public ElysiumGui subGui;
 

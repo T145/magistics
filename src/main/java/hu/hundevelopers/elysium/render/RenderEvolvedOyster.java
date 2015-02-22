@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.model.ModelEvolvedOyster;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -8,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEvolvedOyster extends RenderLiving
 {
-    private static final ResourceLocation TEXTURE_OYSTER = new ResourceLocation(Elysium.ID + ":textures/mobs/EvolvedOyster.png");
+    private static final ResourceLocation TEXTURE_OYSTER = new ResourceLocation("elysium:textures/mobs/EvolvedOyster.png");
 	private ModelEvolvedOyster model;
 
     public RenderEvolvedOyster()

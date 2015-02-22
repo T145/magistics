@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -9,9 +7,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBlockOre extends ElysiumBlockHeatable
 {
@@ -24,8 +22,8 @@ public class ElysiumBlockOre extends ElysiumBlockHeatable
 	@Override
 	public Item getItemDropped(int p_149650_1_, Random rand, int p_149650_3_)
 	{
-		return this == Elysium.oreSulphure ? Elysium.itemSulphur : (this == Elysium.oreTourmaline ? Elysium.itemTourmaline : (this == Elysium.oreJade ? Elysium.itemJade
-				: (this == Elysium.oreBeryl ? Elysium.itemBeryl : Item.getItemFromBlock(this))));
+		return this == ConfigObjects.oreSulphure ? ConfigObjects.itemSulphur : (this == ConfigObjects.oreTourmaline ? ConfigObjects.itemTourmaline : (this == ConfigObjects.oreJade ? ConfigObjects.itemJade
+				: (this == ConfigObjects.oreBeryl ? ConfigObjects.itemBeryl : Item.getItemFromBlock(this))));
 	}
 
 	/**
@@ -33,7 +31,7 @@ public class ElysiumBlockOre extends ElysiumBlockHeatable
 	 */
 	@Override
 	public int quantityDropped(Random par1Random) {
-		return this == Elysium.oreBeryl ? 4 + par1Random.nextInt(5) : 1;
+		return this == ConfigObjects.oreBeryl ? 4 + par1Random.nextInt(5) : 1;
 	}
 
 	@Override
@@ -66,13 +64,13 @@ public class ElysiumBlockOre extends ElysiumBlockHeatable
 		if (getItemDropped(par5, world.rand, par7) != Item.getItemFromBlock(this)) {
 			int j1 = 0;
 
-			if (this == Elysium.oreSulphure) {
+			if (this == ConfigObjects.oreSulphure) {
 				j1 = MathHelper.getRandomIntegerInRange(world.rand, 0, 2);
-			} else if (this == Elysium.oreTourmaline) {
+			} else if (this == ConfigObjects.oreTourmaline) {
 				j1 = MathHelper.getRandomIntegerInRange(world.rand, 3, 7);
-			} else if (this == Elysium.oreBeryl) {
+			} else if (this == ConfigObjects.oreBeryl) {
 				j1 = MathHelper.getRandomIntegerInRange(world.rand, 3, 7);
-			} else if (this == Elysium.oreJade) {
+			} else if (this == ConfigObjects.oreJade) {
 				j1 = MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
 			}
 

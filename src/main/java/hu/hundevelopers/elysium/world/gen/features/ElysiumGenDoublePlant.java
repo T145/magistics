@@ -1,13 +1,11 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumGenDoublePlant extends WorldGenerator
 {
@@ -42,7 +40,7 @@ public class ElysiumGenDoublePlant extends WorldGenerator
             int j1 = par4 + par2Random.nextInt(8) - par2Random.nextInt(8);
             int k1 = par5 + par2Random.nextInt(8) - par2Random.nextInt(8);
 
-            if (par1World.isAirBlock(i1, j1, k1) && par1World.getBlock(i1, j1-1, k1) == Elysium.blockGrass)
+            if (par1World.isAirBlock(i1, j1, k1) && par1World.getBlock(i1, j1-1, k1) == ConfigObjects.blockGrass)
             {
                 par1World.setBlock(i1, j1, k1, this.block, this.bottom, 2);
                 par1World.setBlock(i1, j1+1, k1, this.block, this.top, 2);

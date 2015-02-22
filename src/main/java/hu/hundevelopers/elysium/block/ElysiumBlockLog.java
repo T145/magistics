@@ -3,27 +3,20 @@ package hu.hundevelopers.elysium.block;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockLog extends BlockLog
 {
 	public static final String[] names = new String[] {"fostimber", "forest", "corrupt"};
-	
-	public ElysiumBlockLog()
-	{
-		this.setCreativeTab(Elysium.tabElysium);
-	}
 
 	/**
      * The type of render function that is called for this block
@@ -65,7 +58,7 @@ public class ElysiumBlockLog extends BlockLog
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.ID  + ":" + texture;
+        this.textureName = "elysium:" + texture;
         return this;
     }
 

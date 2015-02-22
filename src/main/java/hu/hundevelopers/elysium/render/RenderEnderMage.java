@@ -2,7 +2,6 @@ package hu.hundevelopers.elysium.render;
 
 import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.BLOCK_3D;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityEnderMage;
 import hu.hundevelopers.elysium.model.ModelEnderMage;
 import net.minecraft.block.Block;
@@ -19,6 +18,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.common.config.ConfigObjects;
+
 public class RenderEnderMage extends RenderBiped
 {
 	private ModelEnderMage model;
@@ -33,7 +34,7 @@ public class RenderEnderMage extends RenderBiped
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity)
 	{
-		return new ResourceLocation(Elysium.ID + ":textures/mobs/EnderMage.png");
+		return new ResourceLocation("elysium:textures/mobs/EnderMage.png");
 	}
 
 	protected void renderEquippedItems(EntityEnderMage entity, float par2)
@@ -63,7 +64,7 @@ public class RenderEnderMage extends RenderBiped
                 GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glScalef(-f1, -f1, f1);
             }
-            else if (item == Elysium.itemStaff)
+            else if (item == ConfigObjects.itemStaff)
             {
                 f1 = 0.625F;
                 GL11.glTranslatef(0.0F, 0.125F, 0.3125F);

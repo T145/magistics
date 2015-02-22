@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.world.biome;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenDefenceTowerCorrupted;
 
 import java.util.Random;
@@ -8,6 +7,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBiomeGenPlainCorrupted extends ElysiumBiomeBase
 {
@@ -27,7 +27,7 @@ public class ElysiumBiomeGenPlainCorrupted extends ElysiumBiomeBase
 	@Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand)
     {
-		return new WorldGenTallGrass(Elysium.blockTallGrass, 0);
+		return new WorldGenTallGrass(ConfigObjects.blockTallGrass, 0);
     }
 	
     @Override

@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -27,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 
 public class EntityHero extends EntityAgeable implements IRangedAttackMob
 {
@@ -38,8 +38,8 @@ public class EntityHero extends EntityAgeable implements IRangedAttackMob
 	public int colorMetal;//belt, bracelet
 
 	private static final ItemStack heroWeapons[] = {
-		new ItemStack(Elysium.itemSwordFostimber),
-		new ItemStack(Elysium.itemSwordPalestone),
+		new ItemStack(ConfigObjects.itemSwordFostimber),
+		new ItemStack(ConfigObjects.itemSwordPalestone),
 		new ItemStack(Items.bow)
 	};
 
@@ -178,13 +178,13 @@ public class EntityHero extends EntityAgeable implements IRangedAttackMob
     {
         super.addRandomArmor();
         if(rand.nextBoolean())
-        	this.setCurrentItemOrArmor(1, new ItemStack(Elysium.itemArmorToothHelmet));
+        	this.setCurrentItemOrArmor(1, new ItemStack(ConfigObjects.itemArmorToothHelmet));
     	if(rand.nextBoolean())
-	    	this.setCurrentItemOrArmor(2, new ItemStack(Elysium.itemArmorToothChestplate));
+	    	this.setCurrentItemOrArmor(2, new ItemStack(ConfigObjects.itemArmorToothChestplate));
 	    if(rand.nextBoolean())
-	    	this.setCurrentItemOrArmor(3, new ItemStack(Elysium.itemArmorToothLeggings));
+	    	this.setCurrentItemOrArmor(3, new ItemStack(ConfigObjects.itemArmorToothLeggings));
 	    if(rand.nextBoolean())
-	    	this.setCurrentItemOrArmor(4, new ItemStack(Elysium.itemArmorToothBoots));
+	    	this.setCurrentItemOrArmor(4, new ItemStack(ConfigObjects.itemArmorToothBoots));
     }
 
 	protected void setWatchableBoolean(int par1, boolean par2)

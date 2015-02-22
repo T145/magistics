@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.projectile.EntityEnderRandomProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -18,6 +17,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import T145.magistics.common.config.ConfigObjects;
 
 public class EntityVoidSpecter extends EntityGhast {
 	public int courseChangeCooldown;
@@ -383,7 +383,7 @@ public class EntityVoidSpecter extends EntityGhast {
 		int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
 
 		for (int k = 0; k < j; ++k) {
-			this.dropItem(Elysium.itemHardPaw, 1);
+			this.dropItem(ConfigObjects.itemHardPaw, 1);
 		}
 
 		this.dropItem(getDropItem(), 1);

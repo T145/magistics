@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 
 public class EntityDeer extends EntityAnimal
 {
@@ -132,7 +132,7 @@ public class EntityDeer extends EntityAnimal
 
                 Block block = this.worldObj.getBlock(i, j - 1, k);
 
-                if (block == Elysium.blockGrass || block == Blocks.snow_layer || block == Blocks.snow)
+                if (block == ConfigObjects.blockGrass || block == Blocks.snow_layer || block == Blocks.snow)
                 {
                     return true;
                 }
@@ -145,7 +145,7 @@ public class EntityDeer extends EntityAnimal
 	@Override
     protected Item getDropItem()
     {
-        return Elysium.itemAntler;
+        return ConfigObjects.itemAntler;
     }
 
     /**
@@ -160,11 +160,11 @@ public class EntityDeer extends EntityAnimal
 
         for (int k = 0; k < j; ++k)
         {
-            this.dropItem(Elysium.itemDeerPelt, 1);
+            this.dropItem(ConfigObjects.itemDeerPelt, 1);
         }
         
-        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
-        this.dropItem(Elysium.itemAntler, 1);
+        this.dropItem(Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), 1);
+        this.dropItem(ConfigObjects.itemAntler, 1);
     }
 
 	@Override

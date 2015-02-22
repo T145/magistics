@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
 import net.minecraft.init.Blocks;
@@ -16,7 +15,6 @@ public class ElysiumBlockQuartzGate extends BlockFenceGate
         this.setHardness(2);
         this.setResistance(3.0F);
         this.setStepSound(Block.soundTypePiston);
-		this.setCreativeTab(Elysium.tabElysium);
 	}
 	
 	/**

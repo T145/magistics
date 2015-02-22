@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import hu.hundevelopers.elysium.world.ElysiumTeleporter;
@@ -14,6 +13,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 {
@@ -62,13 +62,13 @@ public class ElysiumBlockPortalCore extends ElysiumBlockContainer
 				{
 					tile.timebeforetp = -1;
 
-					if(player.dimension == Elysium.dimensionID)
+					if(player.dimension == ConfigObjects.dimensionID)
 					{
 						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new ElysiumTeleporter(player.mcServer.worldServerForDimension(0)));
 					}
 					else
 					{
-						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, Elysium.dimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(Elysium.dimensionID)));
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, ConfigObjects.dimensionID, new ElysiumTeleporter(player.mcServer.worldServerForDimension(ConfigObjects.dimensionID)));
 					}
 				}
 				else if(player.prevPosY == player.posY)

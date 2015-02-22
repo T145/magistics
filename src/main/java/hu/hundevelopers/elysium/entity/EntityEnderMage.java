@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.entity.Entity;
@@ -28,6 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import T145.magistics.api.sentry.ISentryBehaviorItem;
 import T145.magistics.api.sentry.SentryBehaviorRegistry;
+import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.tiles.pillars.TilePillarSentry;
 
 public class EntityEnderMage extends EntityMob implements IRangedAttackMob
@@ -59,7 +59,7 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
 //    	 System.out.println("Spawned Mage type: " + type);
        
          this.setMageType(type);
-         this.setCurrentItemOrArmor(0, new ItemStack(Elysium.itemStaff, type));
+         this.setCurrentItemOrArmor(0, new ItemStack(ConfigObjects.itemStaff, type));
          this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
 	}
 
@@ -330,10 +330,10 @@ public class EntityEnderMage extends EntityMob implements IRangedAttackMob
      */
     protected void dropFewItems(boolean par1, int par2)
     {
-        this.entityDropItem(new ItemStack(Elysium.itemStaff, 1, this.getMageType()), 0.0F);
+        this.entityDropItem(new ItemStack(ConfigObjects.itemStaff, 1, this.getMageType()), 0.0F);
         int num = this.rand.nextInt(4);
         if(num > 0)
-        	this.entityDropItem(new ItemStack(Elysium.itemHardPaw, num), 0.0F);
+        	this.entityDropItem(new ItemStack(ConfigObjects.itemHardPaw, num), 0.0F);
     }
     /**
      * Returns the Y Offset of this entity.

@@ -1,17 +1,6 @@
 package hu.hundevelopers.elysium.thaumcraft;
 
-import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.thaumcraft.research.ElysiumResearchItem;
-
 import java.util.HashMap;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
-import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchPage;
 
 public class ElysiumResearch {
 	public static HashMap recipes = new HashMap();

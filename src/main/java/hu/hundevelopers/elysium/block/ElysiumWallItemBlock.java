@@ -1,15 +1,15 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemMultiTexture;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumWallItemBlock extends ItemMultiTexture
 {
 
 	public ElysiumWallItemBlock(Block block)
 	{
-		super(block, Elysium.blockQuartzWall, new String[]{"clean", "mossy"});
+		super(block, ConfigObjects.blockQuartzWall, new String[]{"clean", "mossy"});
 	}
 
 

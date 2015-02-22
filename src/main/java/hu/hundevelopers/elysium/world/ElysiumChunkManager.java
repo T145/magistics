@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.world;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +14,7 @@ import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.WorldTypeEvent;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -33,14 +32,14 @@ public class ElysiumChunkManager extends WorldChunkManager
 	{
 		this.allowedBiomes.clear();
 
-		this.allowedBiomes.add(Elysium.biomePlain);
-		this.allowedBiomes.add(Elysium.biomeForest);
-		this.allowedBiomes.add(Elysium.biomeCorruption);
-		this.allowedBiomes.add(Elysium.biomeOcean);
-//		this.allowedBiomes.add(Elysium.biomeDeepOcean);
-		this.allowedBiomes.add(Elysium.biomeRiver);
-		this.allowedBiomes.add(Elysium.biomeDesert);
-//		this.allowedBiomes.add(Elysium.biomeBeach);
+		this.allowedBiomes.add(ConfigObjects.biomePlain);
+		this.allowedBiomes.add(ConfigObjects.biomeForest);
+		this.allowedBiomes.add(ConfigObjects.biomeCorruption);
+		this.allowedBiomes.add(ConfigObjects.biomeOcean);
+//		this.allowedBiomes.add(ConfigObjects.biomeDeepOcean);
+		this.allowedBiomes.add(ConfigObjects.biomeRiver);
+		this.allowedBiomes.add(ConfigObjects.biomeDesert);
+//		this.allowedBiomes.add(ConfigObjects.biomeBeach);
 		this.biomeCache = new BiomeCache(this);
 		this.biomesToSpawnIn = new ArrayList();
 		this.biomesToSpawnIn.addAll(allowedBiomes);

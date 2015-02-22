@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 import java.util.Random;
 
@@ -39,7 +37,7 @@ public class ElysiumItemWhistle extends ElysiumItem
     		{
 	    		lastPlay = System.currentTimeMillis();
     			
-				world.playSoundAtEntity(entity, Elysium.ID + ":flute", 1F, 1F);
+				world.playSoundAtEntity(entity, "elysium:flute", 1F, 1F);
 		    	if(world.getWorldChunkManager().getBiomeGenAt(0, 0) instanceof BiomeGenEnd )
 		    	{
 		    		if(isDragonAlive(world) >= 1/*Elysium.MaxDragon*/)

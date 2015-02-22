@@ -1,14 +1,11 @@
 package hu.hundevelopers.elysium.block;
 
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
+import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
+
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenCorruptFostimber;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenDarkFostimber;
-import hu.hundevelopers.elysium.world.gen.features.ElysiumGenFostimber;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,15 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenBigTree;
-import net.minecraft.world.gen.feature.WorldGenCanopyTree;
-import net.minecraft.world.gen.feature.WorldGenForest;
-import net.minecraft.world.gen.feature.WorldGenMegaJungle;
-import net.minecraft.world.gen.feature.WorldGenMegaPineTree;
-import net.minecraft.world.gen.feature.WorldGenSavannaTree;
-import net.minecraft.world.gen.feature.WorldGenTaiga2;
-import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockSapling extends BlockSapling
 {
@@ -37,8 +29,6 @@ public class ElysiumBlockSapling extends BlockSapling
 	public ElysiumBlockSapling()
 	{
 		super();
-		this.setCreativeTab(Elysium.tabElysium);
-		
 		float f = 0.2F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 1F - f, 0.5F + f);
 	}
@@ -46,7 +36,7 @@ public class ElysiumBlockSapling extends BlockSapling
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.ID  + ":" + texture;
+        this.textureName = "elysium:" + texture;
         return this;
     }
 	
@@ -133,14 +123,14 @@ public class ElysiumBlockSapling extends BlockSapling
         WorldGenerator treeGenerator;
         switch (meta) {
 	        case 0:
-				treeGenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, true);
+				treeGenerator = new ElysiumGenFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, true);
 			break;
 	        case 1:
-				treeGenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, true, false);
+				treeGenerator = new ElysiumGenDarkFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, 1, 1, true, false);
 			break;
 
 			default:
-				treeGenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, true);
+				treeGenerator = new ElysiumGenFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, true);
 			break;
 		}
 
@@ -181,6 +171,6 @@ public class ElysiumBlockSapling extends BlockSapling
     @Override
     protected boolean canPlaceBlockOn(Block block)
     {
-        return super.canPlaceBlockOn(block) || block == Elysium.blockDirt || block == Elysium.blockGrass;
+        return super.canPlaceBlockOn(block) || block == ConfigObjects.blockDirt || block == ConfigObjects.blockGrass;
     }
 }

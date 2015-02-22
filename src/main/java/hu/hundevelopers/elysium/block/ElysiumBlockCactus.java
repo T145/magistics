@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -10,6 +9,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBlockCactus extends ElysiumBlockBush
 {
@@ -17,12 +17,11 @@ public class ElysiumBlockCactus extends ElysiumBlockBush
 	{
 		float f = 0.2F;
         this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
-		this.setCreativeTab(Elysium.tabElysium);
 	}
 	@Override
     public Block setBlockTextureName(String texture)
     {
-        this.textureName = Elysium.ID + ":" + texture;
+        this.textureName = "elysium:" + texture;
         return this;
     }
 	
@@ -32,7 +31,7 @@ public class ElysiumBlockCactus extends ElysiumBlockBush
 	@Override
     public boolean canPlaceBlockOn(Block block)
     {
-        return block == Elysium.blockSand;
+        return block == ConfigObjects.blockSand;
     }
     
     @Override

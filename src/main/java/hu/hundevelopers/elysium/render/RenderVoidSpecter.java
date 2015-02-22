@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
 import hu.hundevelopers.elysium.model.ModelVoidSpecter;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -95,7 +94,7 @@ public class RenderVoidSpecter extends RenderLiving
     }
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.ID + ":textures/mobs/VoidSpecter.png");
+		return new ResourceLocation("elysium:textures/mobs/VoidSpecter.png");
 	}
 
 }

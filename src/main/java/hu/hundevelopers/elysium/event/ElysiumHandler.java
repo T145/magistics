@@ -1,7 +1,6 @@
 package hu.hundevelopers.elysium.event;
 
 import hu.hundevelopers.elysium.Configs;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
 
 import java.util.HashMap;
@@ -18,6 +17,7 @@ import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.BlockEvent;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -27,7 +27,7 @@ public class ElysiumHandler implements IFuelHandler {
 	@Override
 	public int getBurnTime(ItemStack fuel)
 	{
-		if(fuel.getItem() == Elysium.itemSulphur)
+		if(fuel.getItem() == ConfigObjects.itemSulphur)
 		{
 			return 1600;
 		}
@@ -70,7 +70,7 @@ public class ElysiumHandler implements IFuelHandler {
 	{
 		if(!event.getPlayer().capabilities.isCreativeMode &&  event.world.provider instanceof ElysiumWorldProvider && event.y <= Configs.labyrinthTop && event.y >= Configs.labyrinthBottom)
 		{
-			if(event.block == Blocks.quartz_block || event.block == Elysium.blockQuartzBlock || event.block == Elysium.blockEnergyCrystal || event.block == Blocks.trapdoor)
+			if(event.block == Blocks.quartz_block || event.block == ConfigObjects.blockQuartzBlock || event.block == ConfigObjects.blockEnergyCrystal || event.block == Blocks.trapdoor)
 				event.setCanceled(true);
 		}
 	}
@@ -78,7 +78,7 @@ public class ElysiumHandler implements IFuelHandler {
 //    if(world.getBlock(x, y, z) == Blocks.dragon_egg)
 //	{
 //		world.createExplosion(player, x+0.5D, y+0.5D, z+0.5D, 2F, true);
-//		world.setBlock(x, y, z, Elysium.blockPortalCore);
+//		world.setBlock(x, y, z, ConfigObjects.blockPortalCore);
 //		if(!player.capabilities.isCreativeMode)
 //			stack.stackSize--;
 //		//return true;
@@ -93,7 +93,7 @@ public class ElysiumHandler implements IFuelHandler {
     				event.world.getBlock(event.x, event.y, event.z) == Blocks.dragon_egg)
     		{
     			event.world.createExplosion(event.entityPlayer, event.x+0.5D, event.y+0.5D, event.z+0.5D, 2F, true);
-    			event.world.setBlock(event.x, event.y, event.z, Elysium.blockPortalCore);
+    			event.world.setBlock(event.x, event.y, event.z, ConfigObjects.blockPortalCore);
 				if(!event.entityPlayer.capabilities.isCreativeMode)
 					event.entityPlayer.getCurrentEquippedItem().stackSize--;
 				

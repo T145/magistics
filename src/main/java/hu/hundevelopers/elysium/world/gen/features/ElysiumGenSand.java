@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -9,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumGenSand extends WorldGenerator
 {
@@ -50,23 +49,23 @@ public class ElysiumGenSand extends WorldGenerator
                         {
                             Block block = world.getBlock(cx, cy, cz);
 
-                            if (block == Elysium.blockDirt || block == Elysium.blockGrass)
+                            if (block == ConfigObjects.blockDirt || block == ConfigObjects.blockGrass)
                             {
                                 world.setBlock(cx, cy, cz, this.sand, 0, 2);
                                 placedSand = true;
                             }
                             
-                            if((block == Elysium.blockGrass) && (this.sand == Elysium.blockSand) && (world.getBlock(cx, cy+1, cz) == Blocks.air) &&
+                            if((block == ConfigObjects.blockGrass) && (this.sand == ConfigObjects.blockSand) && (world.getBlock(cx, cy+1, cz) == Blocks.air) &&
                             		(world.getBlock(cx+1, cy+1, cz) == Blocks.air) && (world.getBlock(cx-1, cy+1, cz) == Blocks.air) && (world.getBlock(cx, cy+1, cz+1) == Blocks.air) && 
                             		(world.getBlock(cx, cy+1, cz-1) == Blocks.air) && (random.nextInt(8) == 0))
                             {
                             	if(random.nextInt(2) == 0)
                             	{
-                            		world.setBlock(cx, cy+1, cz, Elysium.blockFloatingConch);
+                            		world.setBlock(cx, cy+1, cz, ConfigObjects.blockFloatingConch);
                             	}
                             	else
                             	{
-                            		world.setBlock(cx, cy+1, cz, Elysium.blockFloatingShell);
+                            		world.setBlock(cx, cy+1, cz, ConfigObjects.blockFloatingShell);
                             	}
                             }
                         }

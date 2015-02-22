@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.structures;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -30,7 +28,7 @@ public class ElysiumGenDefenceTowerCorrupted extends WorldGenerator
 		
 		for(int j = 1; j <= height; j++)
 		{
-			world.setBlock(x, y+j, z, rand.nextBoolean() ? Blocks.quartz_block : Elysium.blockQuartzBlock, 2, 1);
+			world.setBlock(x, y+j, z, rand.nextBoolean() ? Blocks.quartz_block : ConfigObjects.blockQuartzBlock, 2, 1);
 
 			if(j == 1)
 			{

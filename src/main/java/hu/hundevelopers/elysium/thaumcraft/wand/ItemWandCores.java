@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.thaumcraft.wand;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -13,6 +11,7 @@ import thaumcraft.api.ItemApi;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,7 +31,7 @@ public class ItemWandCores extends Item {
 	public void registerIcons(IIconRegister ir) {
 		icon = new IIcon[types.length];
 		for (int x = 0; x < types.length; x++)
-			this.icon[x] = ir.registerIcon(Elysium.ID + ":wand_rod_" + types[x]);
+			this.icon[x] = ir.registerIcon("elysium:wand_rod_" + types[x]);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.block.BlockQuartz;
@@ -18,22 +16,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ElysiumBlockQuartz extends BlockQuartz
 {
     public static final String[] field_150191_a = new String[] {"default", "chiseled", "lines"};
-    @SideOnly(Side.CLIENT)
     private IIcon iconChiseled;
-    @SideOnly(Side.CLIENT)
     private IIcon iconChiseledTop;
-    @SideOnly(Side.CLIENT)
     private IIcon iconLinesTop;
-    @SideOnly(Side.CLIENT)
     private IIcon iconDefault;
-    @SideOnly(Side.CLIENT)
     private IIcon iconLinesSide;
-
-    public ElysiumBlockQuartz()
-    {
-        super();
-        this.setCreativeTab(Elysium.tabElysium);
-    }
 
     /**
      * Gets the block's texture. Args: side, meta

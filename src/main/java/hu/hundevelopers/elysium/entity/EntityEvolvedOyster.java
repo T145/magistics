@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -11,6 +10,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 
 public class EntityEvolvedOyster extends EntityAnimal
 {
@@ -20,7 +20,7 @@ public class EntityEvolvedOyster extends EntityAnimal
         
         this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.getItemFromBlock(Elysium.blockEnergyCrystal), false));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), false));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         this.setSize(0.3F, 0.3F);
@@ -49,7 +49,7 @@ public class EntityEvolvedOyster extends EntityAnimal
     @Override
     protected Item getDropItem()
     {
-        return Item.getItemFromBlock(Elysium.blockEnergyCrystal);
+        return Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal);
     }
     
     /**
@@ -60,8 +60,8 @@ public class EntityEvolvedOyster extends EntityAnimal
     protected void dropFewItems(boolean par1, int par2)
     {
 
-    	this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 3);
-        this.dropItem(Item.getItemFromBlock(this.rand.nextBoolean() ? Elysium.blockFloatingShell : Elysium.blockFloatingConch), 1);
+    	this.dropItem(Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), 3);
+        this.dropItem(Item.getItemFromBlock(this.rand.nextBoolean() ? ConfigObjects.blockFloatingShell : ConfigObjects.blockFloatingConch), 1);
     }
     
     /**
@@ -83,7 +83,7 @@ public class EntityEvolvedOyster extends EntityAnimal
         int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.boundingBox.minY);
         int k = MathHelper.floor_double(this.posZ);
-        return (this.worldObj.getBlock(i, j - 1, k) == Elysium.blockSand || this.worldObj.getBlock(i, j - 1, k) == Elysium.blockGrass) && super.getCanSpawnHere();
+        return (this.worldObj.getBlock(i, j - 1, k) == ConfigObjects.blockSand || this.worldObj.getBlock(i, j - 1, k) == ConfigObjects.blockGrass) && super.getCanSpawnHere();
     }
 
 	@Override

@@ -1,13 +1,11 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumGenLakePillar extends WorldGenerator
 {
@@ -23,13 +21,13 @@ public class ElysiumGenLakePillar extends WorldGenerator
 	{
 		y = world.getTopSolidOrLiquidBlock(x, z);
 
-		if(world.getBlock(x, y, z) != Elysium.blockElysiumWater)
+		if(world.getBlock(x, y, z) != ConfigObjects.blockElysiumWater)
 			return false;
 
 		int h = y + random.nextInt(6)+1;
 
 		int j;
-		for(j = y; world.getBlock(x, j, z) == Elysium.blockElysiumWater; j--)
+		for(j = y; world.getBlock(x, j, z) == ConfigObjects.blockElysiumWater; j--)
 		{
 			world.setBlock(x, j, z, pillarBlock);
 			world.setBlockMetadataWithNotify(x, j, z, 0, 1);

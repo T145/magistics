@@ -1,12 +1,9 @@
 package hu.hundevelopers.elysium.block;
 
+import hu.hundevelopers.elysium.render.EntityDropParticleFX;
+
 import java.util.Random;
 
-import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.render.EntityDropParticleFX;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,6 +12,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumEnergyLiquid extends BlockFluidClassic
 {
@@ -28,7 +28,7 @@ public class ElysiumEnergyLiquid extends BlockFluidClassic
 	@Override
 	public void registerBlockIcons(IIconRegister register)
 	{
-		this.blockIcon = register.registerIcon(Elysium.ID + ":energy_liquid");
+		this.blockIcon = register.registerIcon("elysium:energy_liquid");
 	}
      
      @Override
@@ -78,7 +78,7 @@ public class ElysiumEnergyLiquid extends BlockFluidClassic
     	 if (rand.nextInt(2000) == 0)
     	 {
     		 System.out.println("Sound");
-    		 world.playSound((double)x, (double)y, (double)z, Elysium.ID + ":liquidCrystal", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+    		 world.playSound((double)x, (double)y, (double)z, "elysium:liquidCrystal", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
     	 }
      }
 }

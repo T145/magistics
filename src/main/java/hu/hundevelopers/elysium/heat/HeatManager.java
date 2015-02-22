@@ -1,12 +1,8 @@
 package hu.hundevelopers.elysium.heat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -20,12 +16,12 @@ public class HeatManager {
 	private HashMap map = new HashMap<Block, Float>();
 	
 	public void registerBlock(Block block, float heat) {
-		this.map.put(block, new Float(heat));
+		map.put(block, new Float(heat));
 	}
 	
 	public float getBlockHeat(Block block) {
-		if(this.map.containsKey(block))
-			return ((Float)this.map.get(block)).floatValue();
+		if(map.containsKey(block))
+			return ((Float)map.get(block)).floatValue();
 		else
 			return 0F;
 	}
@@ -40,7 +36,7 @@ public class HeatManager {
 		if(b instanceof IHeatable)
 			heat += ((IHeatable)b).getHeatAt(blockAccess, x, y, z);
 		else
-			heat += this.getBlockHeat(b);
+			heat += getBlockHeat(b);
 		return heat;
 	}
 }

@@ -1,8 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,8 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
-import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -44,7 +40,7 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
 		
 		for (int i = 0; i < this.names.length; ++i)
 		{
-            this.icons[i] = register.registerIcon(Elysium.ID + ":grapes_" + names[i]);
+            this.icons[i] = register.registerIcon("elysium:grapes_" + names[i]);
         }
 	}
 	
@@ -69,7 +65,7 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
     		if(meta > 1 && player.getCurrentEquippedItem() == null)
     		{
 	        	world.setBlockMetadataWithNotify(x, y, z, 1, 3);
-	        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(Elysium.itemGrapes, 1, meta == 2 ? 0 : 1));
+	        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(ConfigObjects.itemGrapes, 1, meta == 2 ? 0 : 1));
 				world.spawnEntityInWorld(entityitem);
     		}
     	}
@@ -86,7 +82,7 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
     	if(!world.isRemote && meta > 1)
     	{
     		world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(Elysium.itemGrapes, 1, meta == 2 ? 0 : 1));
+        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(ConfigObjects.itemGrapes, 1, meta == 2 ? 0 : 1));
 			world.spawnEntityInWorld(entityitem);
     	}
     }
@@ -97,7 +93,7 @@ public class ElysiumGrapesBush extends ElysiumBlockBush implements IGrowable
 	@Override
     public boolean canPlaceBlockOn(Block block)
     {
-        return block == Elysium.blockGrass || block == Elysium.blockDirt;
+        return block == ConfigObjects.blockGrass || block == ConfigObjects.blockDirt;
     }
 	
 	/**

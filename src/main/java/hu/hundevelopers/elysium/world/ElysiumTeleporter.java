@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.world;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 
@@ -14,6 +13,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumTeleporter extends Teleporter
 {
@@ -79,7 +79,7 @@ public class ElysiumTeleporter extends Teleporter
 				for(int b=-2; b <= 2; b++)
 				{
 					Block block = worldServer.getBlock(x+a, y, z+b);
-					if(block.isAir(worldServer, x+a, y, z+b) || block == Blocks.water || /*id == Elysium.waterStill.blockID || id == Elysium.waterMoving.blockID ||*/ block == Blocks.quartz_block)
+					if(block.isAir(worldServer, x+a, y, z+b) || block == Blocks.water || /*id == ConfigObjects.waterStill.blockID || id == ConfigObjects.waterMoving.blockID ||*/ block == Blocks.quartz_block)
 						waterBellow++;
 
 				}
@@ -119,8 +119,8 @@ public class ElysiumTeleporter extends Teleporter
 							}
 							else
 							{
-								if(worldServer.provider.dimensionId == Elysium.dimensionID)
-									worldServer.setBlock(x+i, j, z+k, Elysium.blockDirt);
+								if(worldServer.provider.dimensionId == ConfigObjects.dimensionID)
+									worldServer.setBlock(x+i, j, z+k, ConfigObjects.blockDirt);
 								else
 									worldServer.setBlock(x+i, j, z+k, Blocks.dirt);
 							}
@@ -129,26 +129,26 @@ public class ElysiumTeleporter extends Teleporter
 				}
 			}
 
-			worldServer.setBlock(x, y+9, z, Elysium.blockPortalCore);
+			worldServer.setBlock(x, y+9, z, ConfigObjects.blockPortalCore);
 			worldServer.setBlockMetadataWithNotify(x, y+9, z, 1, 0);
 
 			for(int i=-1; i <= 1; i++)
 			{
 				for(int j=-1; j <= 1; j++)
 				{
-					worldServer.setBlock(x+i, y+8, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+8, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+8, z+j, 1, 0);
 
-					worldServer.setBlock(x+i, y+6, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+6, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+6, z+j, 2, 0);
-					worldServer.setBlock(x+i, y+5, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+5, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+5, z+j, 2, 0);
 
 					worldServer.setBlock(x+i, y+4, z+j, Blocks.gold_block);
 
-					worldServer.setBlock(x+i, y+3, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+3, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+3, z+j, 2, 0);
-					worldServer.setBlock(x+i, y+2, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+2, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 					worldServer.setBlockMetadataWithNotify(x+i, y+2, z+j, 2, 0);
 				}
 			}
@@ -156,8 +156,8 @@ public class ElysiumTeleporter extends Teleporter
 			{
 				for(int j=-2; j <= 2; j++)
 				{
-					worldServer.setBlock(x+i, y+7, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
-					worldServer.setBlock(x+i, y+1, z+j, isCorrupt && this.random.nextInt(3) == 0 ? Elysium.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+7, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
+					worldServer.setBlock(x+i, y+1, z+j, isCorrupt && this.random.nextInt(3) == 0 ? ConfigObjects.blockQuartzBlock : Blocks.quartz_block);
 				}
 			}
 

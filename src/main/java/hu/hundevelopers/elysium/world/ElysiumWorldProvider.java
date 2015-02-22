@@ -1,17 +1,16 @@
 package hu.hundevelopers.elysium.world;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.CloudRendererElysium;
 import hu.hundevelopers.elysium.render.SkyRendererElysium;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
 import hu.hundevelopers.elysium.world.gen.ChunkProviderElysium;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -23,7 +22,7 @@ public class ElysiumWorldProvider extends WorldProvider
 	public void registerWorldChunkManager()
 	{
 		this.worldChunkMgr = new ElysiumChunkManager(this.worldObj);
-		this.dimensionId = Elysium.dimensionID;
+		this.dimensionId = ConfigObjects.dimensionID;
 		this.hasNoSky = false;
 
 		if(worldObj.isRemote)
@@ -109,7 +108,7 @@ public class ElysiumWorldProvider extends WorldProvider
 	@Override
     public boolean canCoordinateBeSpawn(int par1, int par2)
     {
-        return this.worldObj.getBiomeGenForCoords(par1, par2) instanceof ElysiumBiomeGenPlain && this.worldObj.getTopBlock(par1, par2) == Elysium.blockGrass;
+        return this.worldObj.getBiomeGenForCoords(par1, par2) instanceof ElysiumBiomeGenPlain && this.worldObj.getTopBlock(par1, par2) == ConfigObjects.blockGrass;
     }
 
 	@Override

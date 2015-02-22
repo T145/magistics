@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -12,6 +11,7 @@ import net.minecraftforge.client.IRenderHandler;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,8 +26,8 @@ public class CloudRendererElysium extends IRenderHandler {
 	@SideOnly(Side.CLIENT)
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		tick++;
-		if (world.provider.dimensionId == Elysium.dimensionID){
-//			if(!Elysium.isHeatWave()){ 
+		if (world.provider.dimensionId == ConfigObjects.dimensionID){
+//			if(!ConfigObjects.isHeatWave()){ 
 				if (mc.gameSettings.fancyGraphics)
 		         {
 		             this.renderCloudsFancy(partialTicks, world, mc);

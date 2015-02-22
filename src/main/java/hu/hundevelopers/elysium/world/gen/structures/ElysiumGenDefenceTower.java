@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.structures;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -66,10 +64,10 @@ public class ElysiumGenDefenceTower extends WorldGenerator
 		new ItemStack(Items.arrow, 64),
 		new ItemStack(Items.snowball, 64),
 		new ItemStack(Items.fire_charge, 64),
-		new ItemStack(Elysium.itemStaff, 1, 0),
-		new ItemStack(Elysium.itemStaff, 1, 1),
-		new ItemStack(Elysium.itemStaff, 1, 2),
-		new ItemStack(Elysium.itemStaff, 1, 3)
+		new ItemStack(ConfigObjects.itemStaff, 1, 0),
+		new ItemStack(ConfigObjects.itemStaff, 1, 1),
+		new ItemStack(ConfigObjects.itemStaff, 1, 2),
+		new ItemStack(ConfigObjects.itemStaff, 1, 3)
 	};
 	
 	private static ItemStack getRandomWeapon(Random rand)

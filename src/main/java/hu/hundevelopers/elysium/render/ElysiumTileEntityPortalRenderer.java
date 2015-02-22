@@ -1,11 +1,27 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glVertex3d;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import static org.lwjgl.opengl.GL11.*;
 
 public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
@@ -18,7 +34,7 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glColor4f(1, 1, 1, tile.alpha);
-		this.bindTexture(new ResourceLocation(Elysium.ID + ":textures/misc/beam.png"));
+		this.bindTexture(new ResourceLocation("elysium:textures/misc/beam.png"));
 
 		int faces = 16;
 		glBegin(GL_QUADS);

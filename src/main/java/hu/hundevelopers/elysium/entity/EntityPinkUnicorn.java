@@ -1,11 +1,7 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Iterator;
 import java.util.List;
-
-import thaumcraft.api.ItemApi;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -40,6 +36,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import thaumcraft.api.ItemApi;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -418,7 +416,7 @@ public class EntityPinkUnicorn extends EntityHorse
     @Override
     protected Item getDropItem()
     {
-        return Item.getItemFromBlock(Elysium.blockEnergyCrystal);
+        return Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal);
     }
 
     /**
@@ -636,19 +634,19 @@ public class EntityPinkUnicorn extends EntityHorse
                     short short1 = 0;
                     byte b1 = 0;
 
-                    if (itemstack.getItem() == Elysium.itemRaspberry)
+                    if (itemstack.getItem() == ConfigObjects.itemRaspberry)
                     {
                         f = 2.0F;
                         short1 = 60;
                         b1 = 3;
                     }
-                    else if (itemstack.getItem() == Elysium.itemGrapes)
+                    else if (itemstack.getItem() == ConfigObjects.itemGrapes)
                     {
                         f = 1.0F;
                         short1 = 30;
                         b1 = 3;
                     }
-                    else if (itemstack.getItem() == Elysium.itemAsphodelPetals)
+                    else if (itemstack.getItem() == ConfigObjects.itemAsphodelPetals)
                     {
                         f = 4.0F;
                         short1 = 60;
@@ -760,7 +758,7 @@ public class EntityPinkUnicorn extends EntityHorse
     @Override
     public boolean isBreedingItem(ItemStack item)
     {
-        return item != null && item.getItem() == Elysium.itemAsphodelPetals;
+        return item != null && item.getItem() == ConfigObjects.itemAsphodelPetals;
     }
 
     private void func_110210_cH()
@@ -798,7 +796,7 @@ public class EntityPinkUnicorn extends EntityHorse
                 this.heal(1.0F);
             }
 
-            if (!this.isEatingHaystack() && this.riddenByEntity == null && this.rand.nextInt(300) == 0 && this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)) == Elysium.blockGrass)
+            if (!this.isEatingHaystack() && this.riddenByEntity == null && this.rand.nextInt(300) == 0 && this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)) == ConfigObjects.blockGrass)
             {
                 this.setEatingHaystack(true);
             }
@@ -1328,8 +1326,8 @@ public class EntityPinkUnicorn extends EntityHorse
     @Override
     protected void dropFewItems(boolean par1, int par2)
     {
-        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
-        this.dropItem(Elysium.wandCore, 1);
+        this.dropItem(Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), 1);
+        this.dropItem(ConfigObjects.wandCore, 1);
     }
     
     

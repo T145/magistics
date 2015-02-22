@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -15,6 +13,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -31,8 +30,8 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
     @Override
     public void registerBlockIcons(IIconRegister register)
     {
-    	icons[0] = register.registerIcon(Elysium.ID + ":raspberrybushwithoutberries");
-    	icons[1] = register.registerIcon(Elysium.ID + ":raspberrybushwithberries");
+    	icons[0] = register.registerIcon("elysium:raspberrybushwithoutberries");
+    	icons[1] = register.registerIcon("elysium:raspberrybushwithberries");
     }
 
     /**
@@ -58,7 +57,7 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
     	if(!world.isRemote && world.getBlockMetadata(x, y, z) == 1 && player.getCurrentEquippedItem() == null)
     	{
         	world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(Elysium.itemRaspberry));
+        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(ConfigObjects.itemRaspberry));
 			world.spawnEntityInWorld(entityitem);
     	}
 
@@ -74,7 +73,7 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
     	if(!world.isRemote && meta == 1)
     	{
     		world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(Elysium.itemRaspberry));
+        	EntityItem entityitem = new EntityItem(world, x, y, z, new ItemStack(ConfigObjects.itemRaspberry));
 			world.spawnEntityInWorld(entityitem);
     	}
     }
@@ -105,7 +104,7 @@ public class ElysiumRaspberryBush extends ElysiumBlockBush  implements IGrowable
 	@Override
     public boolean canPlaceBlockOn(Block block)
     {
-        return block == Elysium.blockGrass || block == Elysium.blockDirt;
+        return block == ConfigObjects.blockGrass || block == ConfigObjects.blockDirt;
     }
     
     @Override

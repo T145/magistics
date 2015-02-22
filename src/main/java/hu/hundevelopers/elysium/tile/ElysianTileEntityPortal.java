@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.tile;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.Configs;
 import hu.hundevelopers.elysium.world.ElysiumPortalPosition;
 import hu.hundevelopers.elysium.world.ElysiumTeleporter;
@@ -9,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysianTileEntityPortal extends TileEntity
 {
@@ -92,9 +92,9 @@ public class ElysianTileEntityPortal extends TileEntity
 		{
 			for(int j=-2; j<=2; j++)
 			{
-				if(worldObj.getBlock(xCoord+i, yCoord-2, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-2, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-2, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-2, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-2, zCoord+j) != 0) ret = false;
-				if(worldObj.getBlock(xCoord+i, yCoord-8, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-8, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-8, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-8, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-8, zCoord+j) != 0) ret = false;
 			}
 		}
@@ -102,19 +102,19 @@ public class ElysianTileEntityPortal extends TileEntity
 		{
 			for(int j=-1; j<=1; j++)
 			{
-				if(worldObj.getBlock(xCoord+i, yCoord-1, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-1, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-1, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-1, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-1, zCoord+j) != 1) ret = false;
 
-				if(worldObj.getBlock(xCoord+i, yCoord-3, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-3, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-3, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-3, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-3, zCoord+j) != 2) ret = false;
-				if(worldObj.getBlock(xCoord+i, yCoord-4, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-4, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-4, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-4, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-4, zCoord+j) != 2) ret = false;
 
 				if(worldObj.getBlock(xCoord+i, yCoord-5, zCoord+j) != Blocks.gold_block) ret = false;
 
-				if(worldObj.getBlock(xCoord+i, yCoord-6, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-6, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-6, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-6, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-6, zCoord+j) != 2) ret = false;
-				if(worldObj.getBlock(xCoord+i, yCoord-7, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-7, zCoord+j) != Elysium.blockQuartzBlock) ret = false;
+				if(worldObj.getBlock(xCoord+i, yCoord-7, zCoord+j) != Blocks.quartz_block && worldObj.getBlock(xCoord+i, yCoord-7, zCoord+j) != ConfigObjects.blockQuartzBlock) ret = false;
 				if(worldObj.getBlockMetadata(xCoord+i, yCoord-7, zCoord+j) != 2) ret = false;
 			}
 		}

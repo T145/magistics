@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -38,7 +38,7 @@ public class EntitySwan extends EntityAnimal
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.0D, Elysium.itemSeedsPepper, false));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.0D, ConfigObjects.itemSeedsPepper, false));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1.1D));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -71,7 +71,7 @@ public class EntitySwan extends EntityAnimal
         {
             this.dropItem(Items.feather, 1);
         }
-        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
+        this.dropItem(Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), 1);
     }
 
 	/**
@@ -208,6 +208,6 @@ public class EntitySwan extends EntityAnimal
 	@Override
     public boolean isBreedingItem(ItemStack stack)
     {
-        return stack != null && stack.getItem() == Elysium.itemSeedsPepper;
+        return stack != null && stack.getItem() == ConfigObjects.itemSeedsPepper;
     }
 }

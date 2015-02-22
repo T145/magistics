@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 
@@ -15,7 +14,7 @@ public class ElysiumItemAxe extends ItemAxe
 	@Override
     public Item setTextureName(String name)
     {
-        this.iconString = Elysium.ID + ":" + name;
+        this.iconString = "elysium:" + name;
         return this;
     }
 }

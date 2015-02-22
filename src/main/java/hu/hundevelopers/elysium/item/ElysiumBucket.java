@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -12,14 +11,13 @@ public class ElysiumBucket extends ItemBucket
 	{
 		super(block);
 		this.setContainerItem(Items.bucket);
-		this.setCreativeTab(Elysium.tabElysium);
 
 	}
 
 	@Override
     public Item setTextureName(String name)
     {
-        this.iconString = Elysium.ID + ":" + name;
+        this.iconString = "elysium:" + name;
         return this;
     }
 }

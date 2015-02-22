@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -10,6 +8,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumGenCorruptFostimber extends WorldGenerator
 {
@@ -33,7 +32,7 @@ public class ElysiumGenCorruptFostimber extends WorldGenerator
 	{
 
 		Block top = world.getBlock(x, y + 1, z);
-		if(top.getMaterial().isLiquid() || top == Elysium.blockLeaves || top == Elysium.blockLog)
+		if(top.getMaterial().isLiquid() || top == ConfigObjects.blockLeaves || top == ConfigObjects.blockLog)
 			return false;
 		
 		int treeHeight = 5 + random.nextInt(7);

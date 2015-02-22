@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.render.EntityDropParticleFX;
 
 import java.util.Random;
@@ -31,7 +30,6 @@ public class ElysiumWaterBlock extends BlockFluidClassic
 	public ElysiumWaterBlock(Fluid fluid, Material material)
 	{
 		super(fluid, material);
-		this.setCreativeTab(Elysium.tabElysium);
 	}
 	
 	@Override
@@ -54,8 +52,8 @@ public class ElysiumWaterBlock extends BlockFluidClassic
      @Override
      public void registerBlockIcons(IIconRegister register)
      {
-         stillIcon = register.registerIcon(Elysium.ID + ":elysian_water_still");
-         flowingIcon = register.registerIcon(Elysium.ID + ":elysian_water_flow");
+         stillIcon = register.registerIcon("elysium:elysian_water_still");
+         flowingIcon = register.registerIcon("elysium:elysian_water_flow");
      }
      
      @Override

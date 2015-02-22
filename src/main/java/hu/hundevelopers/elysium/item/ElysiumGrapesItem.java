@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 
 import java.util.List;

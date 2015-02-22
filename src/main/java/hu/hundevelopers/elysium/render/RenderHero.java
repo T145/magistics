@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityHero;
 import hu.hundevelopers.elysium.model.ModelHero;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -10,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderHero extends RenderBiped
 {
-    private static final ResourceLocation TEXTURE_MALE = new ResourceLocation(Elysium.ID + ":textures/mobs/heroes/hero_male.png");
+    private static final ResourceLocation TEXTURE_MALE = new ResourceLocation("elysium:textures/mobs/heroes/hero_male.png");
 	private ModelHero model;
 
     public RenderHero()

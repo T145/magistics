@@ -1,17 +1,12 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.api.Plants;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +15,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
+import T145.magistics.common.config.ConfigObjects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ElysiumBlockTallGrass extends ElysiumBlockFlower
 {
@@ -55,7 +52,7 @@ public class ElysiumBlockTallGrass extends ElysiumBlockFlower
 	@Override
     protected boolean canPlaceBlockOn(Block block)
     {
-        return block == Elysium.blockDirt || block == Elysium.blockGrass;
+        return block == ConfigObjects.blockDirt || block == ConfigObjects.blockGrass;
     }
 	
 	/**

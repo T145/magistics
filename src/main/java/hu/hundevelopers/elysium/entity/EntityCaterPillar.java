@@ -1,9 +1,6 @@
 package hu.hundevelopers.elysium.entity;
 
-import hu.hundevelopers.elysium.Elysium;
-import hu.hundevelopers.elysium.api.ElysiumApi;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -14,8 +11,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.Item;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import T145.magistics.common.config.ConfigObjects;
 
 public class EntityCaterPillar extends EntityAnimal
 {
@@ -30,7 +26,7 @@ public class EntityCaterPillar extends EntityAnimal
         this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.getItemFromBlock(Elysium.blockPalestone), false));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.getItemFromBlock(ConfigObjects.blockPalestone), false));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAILookIdle(this));
     }
@@ -133,7 +129,7 @@ public class EntityCaterPillar extends EntityAnimal
     @Override
     protected Item getDropItem()
     {
-        return Item.getItemFromBlock(Elysium.blockPalestone);
+        return Item.getItemFromBlock(ConfigObjects.blockPalestone);
     }
     
     /**
@@ -149,7 +145,7 @@ public class EntityCaterPillar extends EntityAnimal
         {
             this.dropItem(this.getDropItem(), 1);
         }
-        this.dropItem(Item.getItemFromBlock(Elysium.blockEnergyCrystal), 1);
+        this.dropItem(Item.getItemFromBlock(ConfigObjects.blockEnergyCrystal), 1);
     }
     
     /**
@@ -171,7 +167,7 @@ public class EntityCaterPillar extends EntityAnimal
         int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.boundingBox.minY);
         int k = MathHelper.floor_double(this.posZ);
-        return this.worldObj.getBlock(i, j - 1, k) == Elysium.blockGrass && super.getCanSpawnHere();
+        return this.worldObj.getBlock(i, j - 1, k) == ConfigObjects.blockGrass && super.getCanSpawnHere();
     }
 
 	@Override

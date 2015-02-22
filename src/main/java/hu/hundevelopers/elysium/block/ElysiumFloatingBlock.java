@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -13,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -87,7 +86,7 @@ public class ElysiumFloatingBlock extends ElysiumBlockFlower {
 	 * Can this block stay at this position.  Similar to canPlaceBlockAt except gets checked often with plants.
 	 */
 	public boolean canBlockStay(World world, int i, int j, int k) {
-		return world.getBlock(i, j - 1, k) == Elysium.blockSand;
+		return world.getBlock(i, j - 1, k) == ConfigObjects.blockSand;
 	}
 
 	@Override

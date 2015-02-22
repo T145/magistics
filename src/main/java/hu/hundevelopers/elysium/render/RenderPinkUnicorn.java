@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -13,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderPinkUnicorn extends RenderLiving
 {
-    private static final ResourceLocation pinkUnicornTexture = new ResourceLocation(Elysium.ID + ":textures/mobs/Unicorn.png");
+    private static final ResourceLocation pinkUnicornTexture = new ResourceLocation("elysium:textures/mobs/Unicorn.png");
 
     public RenderPinkUnicorn(ModelBase par1ModelBase)
     {

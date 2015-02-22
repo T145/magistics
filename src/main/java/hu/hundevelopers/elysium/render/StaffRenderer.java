@@ -7,7 +7,6 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.api.Staff;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -40,10 +39,10 @@ public class StaffRenderer implements IItemRenderer
     ModelRenderer gem;
 
     private ResourceLocation TEXTURE_STAFF[] = {
-    		new ResourceLocation(Elysium.ID + ":textures/models/staff1.png"),
-    		new ResourceLocation(Elysium.ID + ":textures/models/staff2.png"),
-    		new ResourceLocation(Elysium.ID + ":textures/models/staff3.png"),
-    		new ResourceLocation(Elysium.ID + ":textures/models/staff4.png")
+    		new ResourceLocation("elysium:textures/models/staff1.png"),
+    		new ResourceLocation("elysium:textures/models/staff2.png"),
+    		new ResourceLocation("elysium:textures/models/staff3.png"),
+    		new ResourceLocation("elysium:textures/models/staff4.png")
 		};
 
 	public static ModelBase model = new ModelBase()

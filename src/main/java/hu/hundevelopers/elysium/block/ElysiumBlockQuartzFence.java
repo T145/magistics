@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.block;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -12,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -26,7 +25,6 @@ public class ElysiumBlockQuartzFence extends BlockFence
         this.setHardness(2);
         this.setResistance(3.0F);
         this.setStepSound(block.stepSound);
-		this.setCreativeTab(Elysium.tabElysium);
 	}
 
     /**
@@ -36,7 +34,7 @@ public class ElysiumBlockQuartzFence extends BlockFence
     @Override
     public IIcon getIcon(int side, int meta)
     {
-        return meta == 1 ? Elysium.blockQuartzBlock.getBlockTextureFromSide(side) : Blocks.quartz_block.getBlockTextureFromSide(side);
+        return meta == 1 ? ConfigObjects.blockQuartzBlock.getBlockTextureFromSide(side) : Blocks.quartz_block.getBlockTextureFromSide(side);
     }
     
     /**
@@ -46,7 +44,7 @@ public class ElysiumBlockQuartzFence extends BlockFence
     public boolean canConnectFenceTo(IBlockAccess world, int x, int y, int z)
     {
         Block block = world.getBlock(x, y, z);
-        return super.canConnectFenceTo(world, x, y, z) || block == Elysium.blockQuartzGate;
+        return super.canConnectFenceTo(world, x, y, z) || block == ConfigObjects.blockQuartzGate;
     }
     
     /**

@@ -1,8 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import org.lwjgl.opengl.GL11;
-
-import hu.hundevelopers.elysium.Elysium;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,21 +8,25 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IRenderHandler;
+
+import org.lwjgl.opengl.GL11;
+
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class SkyRendererElysium extends IRenderHandler
 {
-	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation(Elysium.ID + ":textures/misc/space.png");
+	private static final ResourceLocation TEXTURE_SKY = new ResourceLocation("elysium:textures/misc/space.png");
 	private static final ResourceLocation TEXTURE_MOON = new ResourceLocation("textures/environment/moon_phases.png");
-	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation(Elysium.ID + ":textures/misc/sun.png");
-	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation(Elysium.ID + ":textures/misc/heatbuff.png");
+	private static final ResourceLocation TEXTURE_SUN = new ResourceLocation("elysium:textures/misc/sun.png");
+	private static final ResourceLocation TEXTURE_SUN_HEATBUFF = new ResourceLocation("elysium:textures/misc/heatbuff.png");
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
-		if(world.provider.dimensionId == Elysium.dimensionID)
+		if(world.provider.dimensionId == ConfigObjects.dimensionID)
 		{
 			float f18 = world.getStarBrightness(partialTicks) * (1.0F - world.getRainStrength(partialTicks));
 
@@ -123,7 +124,7 @@ public class SkyRendererElysium extends IRenderHandler
 			GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
 			f10 = 30.0F;
-//			if(Elysium.isHeatWave())
+//			if(ConfigObjects.isHeatWave())
 //				FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_SUN_HEATBUFF);
 //			else
 				FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_SUN);
@@ -210,7 +211,7 @@ public class SkyRendererElysium extends IRenderHandler
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE_SKY);
 		Tessellator tessellator = Tessellator.instance;
 
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, (Elysium.proxy.getClientWorld().getStarBrightness(partialTicks)) * (1.0F - Elysium.proxy.getClientWorld().getRainStrength(partialTicks)));
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, (FMLClientHandler.instance().getClient().theWorld.getStarBrightness(partialTicks)) * (1.0F - FMLClientHandler.instance().getClient().theWorld.getRainStrength(partialTicks)));
 //		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0F);
 
 		for (int i = 0; i < 6; ++i)

@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.proxy;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.entity.EntityCaterPillar;
 import hu.hundevelopers.elysium.entity.EntityDeer;
 import hu.hundevelopers.elysium.entity.EntityEnderMage;
@@ -32,6 +31,7 @@ import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -50,11 +50,9 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerRenderers()
 	{
-		Elysium.pipeStoneReinderingID = RenderingRegistry.getNextAvailableRenderId();
-
 		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysiumTileEntityPortalRenderer());
 
-		MinecraftForgeClient.registerItemRenderer(Elysium.itemStaff, new StaffRenderer());
+		MinecraftForgeClient.registerItemRenderer(ConfigObjects.itemStaff, new StaffRenderer());
 
 		
 //		RenderingRegistry.registerBlockHandler(new CrystalBlockRendererOBJ());

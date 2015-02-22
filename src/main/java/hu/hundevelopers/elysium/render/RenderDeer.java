@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.model.ModelDeer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -19,7 +18,7 @@ public class RenderDeer extends RenderLiving
     
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return new ResourceLocation(Elysium.ID + ":textures/mobs/Deer.png");
+		return new ResourceLocation("elysium:textures/mobs/Deer.png");
 	}
 
 }

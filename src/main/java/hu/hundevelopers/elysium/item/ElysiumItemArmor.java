@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.model.ModelToothArmor;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
@@ -18,13 +17,12 @@ public class ElysiumItemArmor extends ItemArmor
 	public ElysiumItemArmor(ArmorMaterial armorMat, int renderIndex, int armorType)
 	{
 		super(armorMat, renderIndex, armorType);
-		this.setCreativeTab(Elysium.tabElysium);
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
 	{
-		return Elysium.ID + ":textures/models/tooth_armor.png";
+		return "elysium:textures/models/tooth_armor.png";
 	}
 
 	@Override

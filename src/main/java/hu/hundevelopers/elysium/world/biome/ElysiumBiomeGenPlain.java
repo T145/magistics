@@ -1,7 +1,6 @@
 package hu.hundevelopers.elysium.world.biome;
 
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FLOWERS;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
 import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenDefenceTower;
 
@@ -9,6 +8,7 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
 {
@@ -51,7 +51,7 @@ public class ElysiumBiomeGenPlain extends ElysiumBiomeBase
             
             String s = this.func_150572_a(rand, k, i1, l);
 
-            this.theBiomeDecorator.yellowFlowerGen.func_150550_a(Elysium.blockFlower, ElysiumBlockFlower.getMetaFromName(s));
+            this.theBiomeDecorator.yellowFlowerGen.func_150550_a(ConfigObjects.blockFlower, ElysiumBlockFlower.getMetaFromName(s));
             this.theBiomeDecorator.yellowFlowerGen.generate(world, rand, k, i1, l);
         }
 		

@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.world.gen.features;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
 
 import java.util.Random;
@@ -11,6 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumGenFostimber extends WorldGenerator
 {
@@ -44,7 +44,7 @@ public class ElysiumGenFostimber extends WorldGenerator
 	
 		int treeHeight = trunk + minTreeHeight;
 	
-		if(!((ElysiumBlockSapling)Elysium.blockSapling).canBlockStay(world, x, y-1, z))
+		if(!((ElysiumBlockSapling)ConfigObjects.blockSapling).canBlockStay(world, x, y-1, z))
 			return false;
 	
 		if(fromSapling)

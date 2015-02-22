@@ -6,7 +6,6 @@ import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import hu.hundevelopers.elysium.Configs;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.api.Staff;
 import hu.hundevelopers.elysium.client.gui.ElysiumGuiEmulator;
 import hu.hundevelopers.elysium.client.gui.ElysiumGuiMainMenu;
@@ -33,6 +32,7 @@ import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 import T145.magistics.client.lib.pillars.ExternalRenderer;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -44,7 +44,7 @@ public class ElysiumClientHandler
 {
 	@SubscribeEvent
 	public void guiOpen(GuiOpenEvent event) {
-		if (event.gui instanceof GuiMainMenu && Elysium.isMenuEnabled) {
+		if (event.gui instanceof GuiMainMenu && ConfigObjects.isMenuEnabled) {
 			Minecraft.getMinecraft().displayGuiScreen(new ElysiumGuiEmulator(new ElysiumGuiMainMenu(null)));
 			event.setCanceled(true);
 		}
@@ -88,33 +88,33 @@ public class ElysiumClientHandler
 				{
 					if(player.posY <= Configs.labyrinthTop)
 					{
-						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumLabyrinth"));
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumLabyrinth"));
 						lastPlayed = System.currentTimeMillis();
 
 					} else if(biomeGenBase instanceof ElysiumBiomeGenForest)
 					{
-						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumForest"));
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumForest"));
 						lastPlayed = System.currentTimeMillis();
 
 					} else if(biomeGenBase instanceof ElysiumBiomeGenPlain)
 					{
 						if(world.rand.nextInt(3) == 0 )
-							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysium"));
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysium"));
 						else
-							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumMenu"));
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumMenu"));
 						lastPlayed = System.currentTimeMillis();
 
 					} else if(biomeGenBase instanceof ElysiumBiomeGenCorruption)
 					{
-						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumShadow"));
+						event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumShadow"));
 						lastPlayed = System.currentTimeMillis();
 
 					} else if(!(biomeGenBase instanceof ElysiumBiomeGenDesert))
 					{
 						if(world.rand.nextInt(3) == 0 )
-							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumShadow"));
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumShadow"));
 						else
-							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumLabyrinth"));
+							event.result = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumLabyrinth"));
 						lastPlayed = System.currentTimeMillis();
 
 					} else
@@ -130,9 +130,9 @@ public class ElysiumClientHandler
 				//DO NOT RESET TIME HERE!
 			}
 		}
-		else if(world == null && Elysium.isMenuEnabled)
+		else if(world == null && ConfigObjects.isMenuEnabled)
 		{
-			ISound menuSong = PositionedSoundRecord.func_147673_a(new ResourceLocation(Elysium.ID + ":elysiumMenu"));
+			ISound menuSong = PositionedSoundRecord.func_147673_a(new ResourceLocation("elysium:elysiumMenu"));
 			if(event.category == SoundCategory.MUSIC)
 			{
 				if(System.currentTimeMillis() - lastPlayed > 180000)

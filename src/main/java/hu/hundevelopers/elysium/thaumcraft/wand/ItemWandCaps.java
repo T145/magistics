@@ -1,7 +1,5 @@
 package hu.hundevelopers.elysium.thaumcraft.wand;
 
-import hu.hundevelopers.elysium.Elysium;
-
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -31,8 +29,7 @@ public class ItemWandCaps extends Item
 		icon = new IIcon[types.length];
 		for(int x = 0; x < types.length; x++)
 		{
-			this.icon[x] = ir.registerIcon(Elysium.ID + ":wand_cap_" + types[x]);
-			System.out.println("Icon loading: " + Elysium.ID + ":wand_cap_" + types[x]);
+			this.icon[x] = ir.registerIcon("elysium:wand_cap_" + types[x]);
 		}
 	}
 

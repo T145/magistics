@@ -1,6 +1,5 @@
 package hu.hundevelopers.elysium.world.biome;
 
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenDefenceTowerCorrupted;
 import hu.hundevelopers.elysium.world.gen.structures.ElysiumGenEnderPyramid;
 
@@ -9,6 +8,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import T145.magistics.common.config.ConfigObjects;
 
 public class ElysiumBiomeGenDesert extends ElysiumBiomeBase
 {
@@ -17,8 +17,8 @@ public class ElysiumBiomeGenDesert extends ElysiumBiomeBase
 	{
 		super(id);
 		
-		this.topBlock = Elysium.blockSand;
-        this.fillerBlock = Elysium.blockSand;
+		this.topBlock = ConfigObjects.blockSand;
+        this.fillerBlock = ConfigObjects.blockSand;
         this.theBiomeDecorator.deadBushPerChunk = -10;
         this.theBiomeDecorator.grassPerChunk = 1;
         this.theBiomeDecorator.reedsPerChunk = -10;
@@ -31,7 +31,7 @@ public class ElysiumBiomeGenDesert extends ElysiumBiomeBase
 	@Override
     public WorldGenerator getRandomWorldGenForGrass(Random rand)
     {
-		return new WorldGenTallGrass(Elysium.blockCactus, 0);
+		return new WorldGenTallGrass(ConfigObjects.blockCactus, 0);
     }
 
 	public void decorate(World world, Random rand, int chunkX, int chunkZ)

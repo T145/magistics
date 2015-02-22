@@ -3,7 +3,6 @@ package hu.hundevelopers.elysium.world.gen;
 import static net.minecraftforge.common.ChestGenHooks.DUNGEON_CHEST;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import hu.hundevelopers.elysium.Configs;
-import hu.hundevelopers.elysium.Elysium;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
 import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
@@ -50,6 +49,7 @@ import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import T145.magistics.common.config.ConfigObjects;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ChunkProviderElysium implements IChunkProvider
@@ -94,18 +94,18 @@ public class ChunkProviderElysium implements IChunkProvider
 
     ElysiumGenCrystalSpikes crystalEnergyGen = new ElysiumGenCrystalSpikes(0);
     ElysiumGenCrystalSpikes crystalCorruptGen = new ElysiumGenCrystalSpikes(1);
-	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(Elysium.blockElysiumWater);
-	ElysiumGenSand sandgenerator = new ElysiumGenSand(Elysium.blockSand, 7);
-	ElysiumGenSand riltgenerator = new ElysiumGenSand(Elysium.blockRilt, 3);
-	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(Elysium.blockLeaves, Elysium.blockLog, false);
-	ElysiumGenCorruptFostimber corrupttreegenerator = new ElysiumGenCorruptFostimber(Elysium.blockLog, 2);
-	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false, false);
-	ElysiumGenDarkFostimber darkcorruptedtreegenerator = new ElysiumGenDarkFostimber(Elysium.blockLeaves, Elysium.blockLog, 1, 1, false, true);
+	ElysiumGenLakes lakegenerator = new ElysiumGenLakes(ConfigObjects.blockElysiumWater);
+	ElysiumGenSand sandgenerator = new ElysiumGenSand(ConfigObjects.blockSand, 7);
+	ElysiumGenSand riltgenerator = new ElysiumGenSand(ConfigObjects.blockRilt, 3);
+	ElysiumGenFostimber treegenerator = new ElysiumGenFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, false);
+	ElysiumGenCorruptFostimber corrupttreegenerator = new ElysiumGenCorruptFostimber(ConfigObjects.blockLog, 2);
+	ElysiumGenDarkFostimber darktreegenerator = new ElysiumGenDarkFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, 1, 1, false, false);
+	ElysiumGenDarkFostimber darkcorruptedtreegenerator = new ElysiumGenDarkFostimber(ConfigObjects.blockLeaves, ConfigObjects.blockLog, 1, 1, false, true);
 
-	WorldGenFlowers flowergenerator = new WorldGenFlowers(Elysium.blockFlower);
+	WorldGenFlowers flowergenerator = new WorldGenFlowers(ConfigObjects.blockFlower);
 	
     {
-    	flowergenerator.func_150550_a(Elysium.blockFlower, 0);
+    	flowergenerator.func_150550_a(ConfigObjects.blockFlower, 0);
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, InitMapGenEvent.EventType.CAVE);
 //        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
 //        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
@@ -205,11 +205,11 @@ public class ChunkProviderElysium implements IChunkProvider
                             {
                                 if ((d15 += d16) > 0.0D)
                                 {
-                                    p_147424_3_[j3 += short1] = Elysium.blockPalestone;
+                                    p_147424_3_[j3 += short1] = ConfigObjects.blockPalestone;
                                 }
                                 else if (k2 * 8 + l2 < seeLevel)
                                 {
-                                    p_147424_3_[j3 += short1] = Elysium.blockElysiumWater;
+                                    p_147424_3_[j3 += short1] = ConfigObjects.blockElysiumWater;
                                 }
                                 else
                                 {
@@ -284,7 +284,7 @@ public class ChunkProviderElysium implements IChunkProvider
 
                         if (block2 != null && block2.getMaterial() != Material.air)
                         {
-                            if (block2 == Elysium.blockPalestone)
+                            if (block2 == ConfigObjects.blockPalestone)
                             {
                                 if (k == -1)
                                 {
@@ -292,7 +292,7 @@ public class ChunkProviderElysium implements IChunkProvider
                                     {
                                         topBlock = null;
                                         b0 = 0;
-                                        fillerBlock = Elysium.blockPalestone;
+                                        fillerBlock = ConfigObjects.blockPalestone;
                                     }
                                     else if (y >= 59 && y <= 64)
                                     {
@@ -310,7 +310,7 @@ public class ChunkProviderElysium implements IChunkProvider
                                         }
                                         else
                                         {
-                                            topBlock = Elysium.blockElysiumWater;
+                                            topBlock = ConfigObjects.blockElysiumWater;
                                             b0 = 0;
                                         }
                                     }
@@ -325,8 +325,8 @@ public class ChunkProviderElysium implements IChunkProvider
                                     else if (y < 56 - l)
                                     {
                                         topBlock = null;
-                                        fillerBlock = Elysium.blockPalestone;
-                                        blockArray[index] = Elysium.blockSand;//gravel
+                                        fillerBlock = ConfigObjects.blockPalestone;
+                                        blockArray[index] = ConfigObjects.blockSand;//gravel
                                     }
                                     else
                                     {
@@ -365,7 +365,7 @@ public class ChunkProviderElysium implements IChunkProvider
 		    	                    		else
 		    	                    		{
 		    	            					if(this.rand.nextInt(3) < 2)
-		    	            						blockArray[index] = Elysium.blockQuartzBlock;
+		    	            						blockArray[index] = ConfigObjects.blockQuartzBlock;
 		    	            					else
 		    	            						blockArray[index] = Configs.labyrinthWall;
 		    	                    		}
@@ -388,14 +388,14 @@ public class ChunkProviderElysium implements IChunkProvider
 	                    		} else {
 
 	            					if(this.rand.nextInt(3) < 2 && (biomegenbase instanceof ElysiumBiomeGenCorruption || biomegenbase instanceof ElysiumBiomeGenDesert))
-	            						blockArray[index] = Elysium.blockQuartzBlock;
+	            						blockArray[index] = ConfigObjects.blockQuartzBlock;
 	            					else
 	            						blockArray[index] = Configs.labyrinthWall;
 	                    		}
 	                    	} else {
 
             					if(this.rand.nextInt(3) < 2 && (biomegenbase instanceof ElysiumBiomeGenCorruption || biomegenbase instanceof ElysiumBiomeGenDesert))
-            						blockArray[index] = Elysium.blockQuartzBlock;
+            						blockArray[index] = ConfigObjects.blockQuartzBlock;
             					else
             						blockArray[index] = Configs.labyrinthWall;
 	                    	}
@@ -684,7 +684,7 @@ public class ChunkProviderElysium implements IChunkProvider
                         	worldObj.setTileEntity(k + i, y, l + j, tileentitychest);
 					} else if(worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenCorruption || worldObj.getBiomeGenForCoords(chunkX * 16, chunkZ * 16) instanceof ElysiumBiomeGenDesert)
 					{
-						if(temp == Elysium.blockEnergyCrystal)
+						if(temp == ConfigObjects.blockEnergyCrystal)
 						{
 	                        if(worldObj.blockExists(k + i, y, l + j))
 	                        	this.worldObj.setBlockMetadataWithNotify(k + i, y, l + j, 1, 2);
@@ -706,7 +706,7 @@ public class ChunkProviderElysium implements IChunkProvider
 		boolean doGen = TerrainGen.populate(par1IChunkProvider, worldObj, rand, chunkX, chunkZ, flag, ICE);
 
 		//TODO structures
-		if(biomegenbase != Elysium.biomeOcean && biomegenbase != Elysium.biomeDeepOcean && biomegenbase != Elysium.biomeRiver)
+		if(biomegenbase != ConfigObjects.biomeOcean && biomegenbase != ConfigObjects.biomeDeepOcean && biomegenbase != ConfigObjects.biomeRiver)
 		{
 			this.lakegenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), rand.nextInt(128), l+this.rand.nextInt(16));
 			this.sandgenerator.generate(this.worldObj, this.rand, k+this.rand.nextInt(16), 0, l+this.rand.nextInt(16));
