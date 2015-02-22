@@ -2,12 +2,12 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = 'forge'
+            url = 'http://files.minecraftforge.net/maven'
         }
         maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            name = 'sonatype'
+            url = 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
     }
     dependencies {
@@ -18,16 +18,20 @@ buildscript {
 repositories {
     mavenCentral()
     maven {
-        name = 'ChickenBones Repo'
-        url = 'http://chickenbones.net/maven'
+        name 'ChickenBones Repo'
+        url 'http://chickenbones.net/maven'
     }
     maven {
-        name = 'IC2 Repo'
-        url = 'http://maven.ic2.player.to/'
+        name 'IC2 Repo'
+        url 'http://maven.ic2.player.to/'
     }
     maven {
         name 'Mobius Repo'
         url 'http://mobiusstrip.eu/maven'
+    }
+    maven {
+        name 'ColoredLights'
+        url 'http://coloredlightscore.us.to/maven/clc/'
     }
 }
 
@@ -39,11 +43,11 @@ apply plugin: 'forge'
 
 version = project_version
 group = 'T145.magistics'
-archivesBaseName = "Magistics"
+archivesBaseName = 'Magistics'
 
 minecraft {
     version = forge_version
-    runDir = "eclipse"
+    runDir = 'eclipse'
 }
 
 dependencies {
@@ -51,6 +55,7 @@ dependencies {
     compile 'com.mod-buildcraft:buildcraft:6.3.4:dev'
     compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.374:dev'
     compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+    compile 'coloredlightscore:ColoredLightsCore:1.3.7.35:api'
 
     compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev'
     compile 'codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev'
@@ -81,32 +86,29 @@ processResources {
     }
 }
 
-String release_title = project.minecraft.version + '-' + project.version
+String title = project.minecraft.version + '-' + project.version
 
 // modifies the actual release
 jar {
-    version = release_title
+    version = title
 }
 
 // add a developer release
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'dev'
-    version = release_title
 }
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from 'build/docs/javadoc'
     classifier = 'javadoc'
-    version = release_title
 }
 
 // add a backup for all of the project source
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
     classifier = 'src'
-    version = release_title
 }
 
 // add an archive for the mod's API
@@ -115,7 +117,6 @@ task apiZip(type: Zip) {
         include 'T145/magistics/api/**'
     }
     classifier = 'api'
-    version = release_title
 }
 
 artifacts {

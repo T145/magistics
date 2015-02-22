@@ -1,0 +1,10 @@
+{
+   "flute": {"category": "master", "sounds": [{"name": "flute","stream": false}]},
+   "liquidCrystal": {"category": "master", "sounds": [{"name": "liquidCrystal","stream": false}]},
+   "elysiumShadow": {"category": "ambient", "sounds": [{"name": "Elysian-Shadow","stream": true}]},
+   "elysium": {"category": "ambient", "sounds": [{"name": "Elysium","stream": true}]},
+   "elysiumForest": {"category": "music", "sounds": [{"name": "elysiumForest", "stream": true}]},
+   "elysiumMenu": {"category": "music", "sounds": [{"name": "MissiveOfSol", "stream": true}]},
+   "elysiumLabyrinth": {"category": "ambient", "sounds": [{"name": "elysiumLabyrinth", "stream": true}]}
+   
+}
