@@ -42,27 +42,33 @@ repositories {
     }
 }
 
+def eclipseDir = new File('eclipse')
+
+task resources << {
+	eclipseDir.mkdirs()
+}
+
 // the setup command
-task setupWorkspace(type: Download) {
-	def destination = new File(System.getProperty('user.dir'), 'forge.zip');
+task setupWorkspace(type: Download, dependsOn: 'resources') {
+	if (eclipseDir.isDirectory()) { // be sure we have the eclipse directory
+		def destination = new File(System.getProperty('user.dir'), 'forge.zip');
 
-	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
-	dest destination
+		src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
+		dest destination
 
-	doLast {
-		project.copy {
-			from zipTree(destination)
-			into 'forge'
+		println 'Eclipse directory detected; injecting project metadata...'
+		doLast {
+			project.copy {
+				from zipTree(destination)
+				into 'forge'
+			}
+
+			// move the eclipse metadata into our workspace
+			project.file('forge/eclipse').renameTo(project.file('eclipse'))
+
+			project.file('forge').deleteDir()
+			project.file('forge.zip').delete()
 		}
-
-		// move the eclipse metadata into our workspace
-		project.file('forge/eclipse').renameTo(project.file('eclipse'))
-
-		project.file('forge').deleteDir()
-		project.file('forge.zip').delete()
-
-		// execute the build command (should be multi-platform)
-		//commandLine 'gradle setupDecompWorkspace eclipse'
 	}
 }
 
@@ -118,43 +124,38 @@ String title = project.minecraft.version + '-' + project.version
 // modifies the actual release
 jar {
     version = title
-    into System.getProperty('user.dir') + 'pkg'
 }
 
 // add a developer release
 task deobfJar(type: Jar) {
-	classifier = 'dev'
-	version = title
     from sourceSets.main.output
-    into System.getProperty('user.dir') + 'pkg'
+    classifier = 'dev'
+	version = title
 }
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = 'javadoc'
-	version = title
     from 'build/docs/javadoc'
-    into System.getProperty('user.dir') + 'pkg'
+    classifier = 'javadoc'
+	version = title
 }
 
 // add a backup for all of the project source
 task sourceJar(type: Jar) {
-	classifier = 'src'
-	version = title
     from sourceSets.main.allJava
-    into System.getProperty('user.dir') + 'pkg'
+    classifier = 'src'
+	version = title
 }
 
 // add an archive for the mod's API
 task apiZip(type: Zip) {
-	classifier = 'api'
-	version = title
     from (sourceSets.main.java) {
         include 'T145/magistics/api/**'
     }
-    into System.getProperty('user.dir') + 'pkg'
+    classifier = 'api'
+	version = title
 }
 
 artifacts {
-    archives deobfJar, javadocJar, sourceJar, apiZip
+    archives deobfJar, sourceJar, apiZip
 }
