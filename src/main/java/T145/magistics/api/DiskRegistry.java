@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 
-public class CraftingPillarAPI {
+public class DiskRegistry {
 	private static Map<Item, String> diskTextures = new HashMap<Item, String>();
 
 	public static void addDiskTexture(Item item, String url) {
@@ -13,6 +13,6 @@ public class CraftingPillarAPI {
 	}
 
 	public static String getDiskTexture(Item item) {
-		return (String) (diskTextures.get(item) != null ? diskTextures.get(item) : "craftingpillars:textures/models/disk_unknown.png");
+		return diskTextures.get(item) != null ? diskTextures.get(item) : "magistics:textures/models/pillars/disk_unknown.png";
 	}
 }

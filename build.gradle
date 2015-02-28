@@ -56,7 +56,6 @@ task setupWorkspace(type: Download, dependsOn: 'resources') {
 		src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
 		dest destination
 
-		println 'Eclipse directory detected; injecting project metadata...'
 		doLast {
 			project.copy {
 				from zipTree(destination)
@@ -106,8 +105,8 @@ dependencies {
 
 processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
+    inputs.property 'mcversion', project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
