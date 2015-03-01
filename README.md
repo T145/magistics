@@ -7,9 +7,10 @@
 
 ## Workspace Setup
 Simply follow these steps and you too can be working on Magistics like a boss!
-1) Plop your deobfuscated copy of Thaumcraft into the lib directory
-2) Make a directory named "eclipse"
-3) Run these commands:
+
+1. Plop your deobfuscated copy of Thaumcraft into the lib directory
+2. Make a directory named "eclipse"
+3. Run these commands:
 ``` bash
 gradle setupWorkspace
 gradle setupDecompWorkspace eclipse
