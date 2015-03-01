@@ -45,7 +45,10 @@ repositories {
 // the setup command
 task setupWorkspace(type: Download) {
     def eclipseDir = new File('eclipse')
-    eclipseDir.mkdirs() // be sure we have the eclipse directory
+
+    if (!eclipseDir.isDirectory()) {
+        eclipseDir.mkdirs() // be sure we have the eclipse directory
+    }
 
     def destination = new File(System.getProperty('user.dir'), 'forge.zip');
 
