@@ -42,32 +42,28 @@ repositories {
     }
 }
 
-def eclipseDir = new File('eclipse')
-
-task resources << {
-	eclipseDir.mkdirs()
-}
-
 // the setup command
-task setupWorkspace(type: Download, dependsOn: 'resources') {
-	if (eclipseDir.isDirectory()) { // be sure we have the eclipse directory
-		def destination = new File(System.getProperty('user.dir'), 'forge.zip');
+task setupWorkspace(type: Download) {
+    def eclipseDir = new File('eclipse')
+    eclipseDir.mkdirs() // be sure we have the eclipse directory
 
-		src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
-		dest destination
+    def destination = new File(System.getProperty('user.dir'), 'forge.zip');
 
-		doLast {
-			project.copy {
-				from zipTree(destination)
-				into 'forge'
-			}
+    src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
+    dest destination
 
-			// move the eclipse metadata into our workspace
-			project.file('forge/eclipse').renameTo(project.file('eclipse'))
+    doLast {
+        project.copy {
+            from zipTree(destination)
+            into 'forge'
+        }
 
-			project.file('forge').deleteDir()
-			project.file('forge.zip').delete()
-		}
+        // move the eclipse metadata into our workspace
+        project.file('forge/eclipse').renameTo(project.file('eclipse'))
+
+        // delete all of the forge stuff
+        project.file('forge').deleteDir()
+        project.file('forge.zip').delete()
 	}
 }
 
