@@ -54,17 +54,26 @@ import hu.hundevelopers.elysium.item.ElysiumItemArmor;
 import hu.hundevelopers.elysium.item.ElysiumItemAxe;
 import hu.hundevelopers.elysium.item.ElysiumItemDebug;
 import hu.hundevelopers.elysium.item.ElysiumItemHoe;
-import hu.hundevelopers.elysium.item.ElysiumItemOverkill;
 import hu.hundevelopers.elysium.item.ElysiumItemPickaxe;
 import hu.hundevelopers.elysium.item.ElysiumItemRaspberry;
 import hu.hundevelopers.elysium.item.ElysiumItemShovel;
 import hu.hundevelopers.elysium.item.ElysiumItemSword;
 import hu.hundevelopers.elysium.item.ElysiumStaffItem;
+import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
+import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
+import hu.hundevelopers.elysium.render.RenderBlockProjectile;
+import hu.hundevelopers.elysium.render.RenderCaterPillar;
+import hu.hundevelopers.elysium.render.RenderDeer;
+import hu.hundevelopers.elysium.render.RenderEnderMage;
+import hu.hundevelopers.elysium.render.RenderEvolvedOyster;
+import hu.hundevelopers.elysium.render.RenderFireballProjectile;
+import hu.hundevelopers.elysium.render.RenderHero;
+import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
+import hu.hundevelopers.elysium.render.RenderSwan;
+import hu.hundevelopers.elysium.render.RenderVoidSpecter;
+import hu.hundevelopers.elysium.render.StaffRenderer;
 import hu.hundevelopers.elysium.thaumcraft.ElysiumAspects;
-import hu.hundevelopers.elysium.thaumcraft.ElysiumRecipes;
 import hu.hundevelopers.elysium.thaumcraft.ElysiumResearch;
-import hu.hundevelopers.elysium.thaumcraft.wand.ElysiumWandCap;
-import hu.hundevelopers.elysium.thaumcraft.wand.ElysiumWandRod;
 import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCaps;
 import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCores;
 import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
@@ -81,19 +90,15 @@ import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -101,27 +106,17 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase.Height;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -182,7 +177,6 @@ import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.blocks.pillars.BlockMithrilPillar;
 import T145.magistics.common.blocks.pillars.BlockMithrilPillarItem;
-import T145.magistics.common.blocks.pillars.BlockPillarBase;
 import T145.magistics.common.blocks.pillars.BlockPillarBrewing;
 import T145.magistics.common.blocks.pillars.BlockPillarCrafting;
 import T145.magistics.common.blocks.pillars.BlockPillarDisplay;
@@ -214,6 +208,8 @@ import T145.magistics.common.items.equipment.MithrilSword;
 import T145.magistics.common.items.equipment.MthrilPickaxe;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.items.relics.MithrilFlute;
+import T145.magistics.common.lib.events.EventHandlerClient;
+import T145.magistics.common.lib.events.EventHandlerPlayer;
 import T145.magistics.common.lib.world.MagisticsWorldGenerator;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
@@ -234,7 +230,6 @@ import T145.magistics.common.tiles.pillars.TilePillarSentry;
 import T145.magistics.common.tiles.pillars.TilePillarTank;
 import T145.magistics.common.tiles.pillars.TilePillarTrash;
 import T145.magistics.common.tiles.pillars.TilePillarTurntable;
-import baubles.api.BaublesApi;
 import coloredlightscore.src.api.CLApi;
 
 import com.dynious.refinedrelocation.lib.Resources;
@@ -245,17 +240,11 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ConfigObjects extends CommonProxy {
-	public static ConfigObjects INSTANCE;
-	public static Random rand = new Random();
-
 	public static CreativeTabs tabMagistics;
 	public static List<String> supportedMods = new ArrayList<String>();
 
@@ -283,8 +272,8 @@ public class ConfigObjects extends CommonProxy {
 	public static Fluid fluidElysiumWater;
 	public static Fluid fluidElysiumEnergy;
 
-	private static Fluid elysiumFluidWater;
-	private static Fluid elysiumFluidEnergy;
+	public static Fluid elysiumFluidWater;
+	public static Fluid elysiumFluidEnergy;
 
 	//Rendering Ids
 	public static int pipeStoneReinderingID;
@@ -527,7 +516,7 @@ public class ConfigObjects extends CommonProxy {
 
 		if (fluidElysiumWater.getBlock() == null)
 		{
-			blocks.put(blockElysiumWater = new ElysiumWaterBlock(fluidElysiumWater, Material.water).setHardness(100.0F).setLightOpacity(3).setBlockName("elysium_water"), null);
+			blocks.put(blockElysiumWater = new ElysiumWaterBlock(fluidElysiumWater, Material.water).setHardness(100F).setLightOpacity(3).setBlockName("elysium_water"), null);
 			fluidElysiumWater.setBlock(blockElysiumWater);
 		} else {
 			blockElysiumWater = fluidElysiumWater.getBlock();
@@ -547,7 +536,7 @@ public class ConfigObjects extends CommonProxy {
 
 		if (fluidElysiumEnergy.getBlock() == null)
 		{
-			blocks.put(blockElysiumEnergyLiquid = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100.0F).setLightOpacity(3).setBlockName("elysium_energy"), null);
+			blocks.put(blockElysiumEnergyLiquid = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100F).setLightOpacity(3).setBlockName("elysium_energy"), null);
 			fluidElysiumEnergy.setBlock(blockElysiumEnergyLiquid);
 		} else {
 			blockElysiumEnergyLiquid = fluidElysiumEnergy.getBlock();
@@ -559,13 +548,13 @@ public class ConfigObjects extends CommonProxy {
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumWater, itemWaterBucket);
 		ElysiumHandler.INSTANCE.buckets.put(blockElysiumEnergyLiquid, itemEnergyBucket);
 
-		blocks.put(blockPalestone = (new ElysiumBlock(Material.rock)).setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone").setBlockTextureName("palestone"), null);
+		blocks.put(blockPalestone = (new ElysiumBlock(Material.rock)).setHardness(1.5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone").setBlockTextureName("palestone"), null);
 		blocks.put(blockDirt = (new ElysiumBlock(Material.ground)).setHardness(0.5F).setStepSound(Block.soundTypeGravel).setBlockName("elysium_dirt").setBlockTextureName("dirt"), null);
 		blocks.put(blockGrass = (new ElysiumBlockGrass(Material.ground)).setHardness(0.6F).setStepSound(Block.soundTypeGrass).setBlockName("elysium_grass").setBlockTextureName("grass"), null);
 		blocks.put(blockSand = (new ElysiumBlockFalling(Material.sand)).setHardness(0.5F).setStepSound(Block.soundTypeSand).setBlockName("leucosand").setBlockTextureName("sand"), null);
 		blocks.put(blockRilt = (new ElysiumBlockRilt(Material.sand)).setHardness(0.6F).setStepSound(Block.soundTypeGravel).setBlockTextureName("rilt").setBlockName("rilt"), null);
 		blocks.put(blockSapling = (new ElysiumBlockSapling()).setHardness(0F).setBlockTextureName("elysium_sapling").setBlockName("elysium_sapling"), null);
-		blocks.put(blockLog = (new ElysiumBlockLog()).setHardness(2.0F).setBlockTextureName("elysium_log").setBlockName("elysium_log"), null);
+		blocks.put(blockLog = (new ElysiumBlockLog()).setHardness(2F).setBlockTextureName("elysium_log").setBlockName("elysium_log"), null);
 		blocks.put(blockLeaves = (new ElysiumBlockLeaves()).setLightOpacity(1).setHardness(0.2F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_leaves").setBlockName("elysium_leaves"), null);
 		blocks.put(blockPlanks = (new ElysiumBlockWood()).setHardness(0.2F).setStepSound(Block.soundTypeWood).setBlockTextureName("elysium_planks").setBlockName("elysium_planks"), ElysiumPlanksItemBlock.class);
 		//registerBlock(blockPlanks, ElysiumPlanksItemBlock.class);
@@ -573,113 +562,112 @@ public class ConfigObjects extends CommonProxy {
 		//blockGastroShell = (new ElysiumBlockGastroShell(idGastroShellBlock.getInt(), Material.rock)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setBlockName("gastroshell");
 		//registerBlock(blockGastroShell, "Gastro Shell");
 
-		blocks.put(blockFlower = (new ElysiumBlockFlower()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_flower").setBlockName("elysium_flower"), ElysiumFlowerItemBlock.class);
-		blocks.put(blockTallGrass = new ElysiumBlockTallGrass().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_tallgrass").setBlockName("elysium_tallgrass"), ElysiumTallGrassItemBlock.class);
+		blocks.put(blockFlower = (new ElysiumBlockFlower()).setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_flower").setBlockName("elysium_flower"), ElysiumFlowerItemBlock.class);
+		blocks.put(blockTallGrass = new ElysiumBlockTallGrass().setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_tallgrass").setBlockName("elysium_tallgrass"), ElysiumTallGrassItemBlock.class);
 
-		blocks.put(oreSulphure = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSulphur").setBlockName("oreSulphur"), null);
-		blocks.put(oreBeryl = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setLightLevel(1F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreBeryl").setBlockName("oreBeryl"), null);
-		blocks.put(oreCobalt = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreCobalt").setBlockName("oreCobalt"), null);
-		blocks.put(oreIridium = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreIridium").setBlockName("oreIridium"), null);
-		blocks.put(oreSilicon = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSilicon").setBlockName("oreSilicon"), null);
-		blocks.put(oreJade = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreJade").setBlockName("oreJade"), null);
-		blocks.put(oreTourmaline = new ElysiumBlockOre().setHardness(3.0F).setResistance(5.0F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreTourmaline").setBlockName("oreTourmaline"), null);
+		blocks.put(oreSulphure = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSulphur").setBlockName("oreSulphur"), null);
+		blocks.put(oreBeryl = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setLightLevel(1F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreBeryl").setBlockName("oreBeryl"), null);
+		blocks.put(oreCobalt = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreCobalt").setBlockName("oreCobalt"), null);
+		blocks.put(oreIridium = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreIridium").setBlockName("oreIridium"), null);
+		blocks.put(oreSilicon = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreSilicon").setBlockName("oreSilicon"), null);
+		blocks.put(oreJade = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreJade").setBlockName("oreJade"), null);
+		blocks.put(oreTourmaline = new ElysiumBlockOre().setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("oreTourmaline").setBlockName("oreTourmaline"), null);
 		blocks.put(blockPortalCore = new ElysiumBlockPortalCore(Material.glass).setHardness(5F).setStepSound(Block.soundTypeGlass).setBlockName("portalCore"), null);
-		blocks.put(blockFloatingConch = new ElysiumFloatingBlock("conch").setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_conch").setBlockName("floating_block_conch"), null);
-		blocks.put(blockFloatingShell = new ElysiumFloatingBlock("shell").setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_shell").setBlockName("floating_block_shell"), null);
+		blocks.put(blockFloatingConch = new ElysiumFloatingBlock("conch").setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_conch").setBlockName("floating_block_conch"), null);
+		blocks.put(blockFloatingShell = new ElysiumFloatingBlock("shell").setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_shell").setBlockName("floating_block_shell"), null);
 		/*
-		blockPalestoneBrick = (new ElysiumBlockHeatable(idPalestoneBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick");
+		blockPalestoneBrick = (new ElysiumBlockHeatable(idPalestoneBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick");
 		registerBlock(blockPalestoneBrick, "Palestone Brick");
 
-		blockPalestoneBrickCracked = (new ElysiumBlockHeatable(idPalestoneBrickCrackedBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_cracked");
+		blockPalestoneBrickCracked = (new ElysiumBlockHeatable(idPalestoneBrickCrackedBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_cracked");
 		registerBlock(blockPalestoneBrickCracked, "Cracked Palestone Brick");
 
-		blockPalestoneBrickMossy = (new ElysiumBlockHeatable(idPalestoneBrickMossyBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_mossy");
+		blockPalestoneBrickMossy = (new ElysiumBlockHeatable(idPalestoneBrickMossyBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_mossy");
 		registerBlock(blockPalestoneBrickMossy, "Mossy Palestone Brick");
 
-		blockPalestoneBrickChiseld = (new ElysiumBlockHeatable(idPalestoneChiseldBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_chiseld");
+		blockPalestoneBrickChiseld = (new ElysiumBlockHeatable(idPalestoneChiseldBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_chiseld");
 		registerBlock(blockPalestoneBrickChiseld, "Chiseld Palestone Brick");
 
-		blockPalestonePillar = (new ElysiumBlockPalestonePillar(idPalestonePillarBlock.getInt(), Material.rock)).setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypeStone).setBlockName("palestone_pillar");
+		blockPalestonePillar = (new ElysiumBlockPalestonePillar(idPalestonePillarBlock.getInt(), Material.rock)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_pillar");
 		registerBlock(blockPalestonePillar, "Palestone Pillar");
 		 */
 
-		blockSulphure = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockSulphur").setBlockName("blockSulphur");
-		blockBeryl = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setLightLevel(0.5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockBeryl").setBlockName("blockBeryl");
-		blockCobalt = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockCobalt").setBlockName("blockCobalt");
-		blockIridium = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockIridium").setBlockName("blockIridium");
-		blockSilicon = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockSilicon").setBlockName("blockSilicon");
-		blockJade = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockJade").setBlockName("blockJade");
-		blockTourmaline = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockTourmaline").setBlockName("blockTourmaline");
-		blockEnergyCrystal = new ElysiumEnergyCrystalBlock(Material.glass).setHardness(3F).setResistance(4F).setStepSound(Block.soundTypeGlass).setLightLevel(1.0F).setBlockTextureName("energy_crystal").setBlockName("energy_crystal");
+		blocks.put(blockSulphure = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockSulphur").setBlockName("blockSulphur"), null);
+		blocks.put(blockBeryl = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setLightLevel(0.5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockBeryl").setBlockName("blockBeryl"), null);
+		blocks.put(blockCobalt = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockCobalt").setBlockName("blockCobalt"), null);
+		blocks.put(blockIridium = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockIridium").setBlockName("blockIridium"), null);
+		blocks.put(blockSilicon = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockSilicon").setBlockName("blockSilicon"), null);
+		blocks.put(blockJade = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockJade").setBlockName("blockJade"), null);
+		blocks.put(blockTourmaline = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockTourmaline").setBlockName("blockTourmaline"), null);
+		blocks.put(blockEnergyCrystal = new ElysiumEnergyCrystalBlock(Material.glass).setHardness(3F).setResistance(4F).setStepSound(Block.soundTypeGlass).setLightLevel(1F).setBlockTextureName("energy_crystal").setBlockName("energy_crystal"), null);
 
-		blockCactus = new ElysiumBlockCactus().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("hallowedcactus").setBlockName("blockCactus");
-		blockRaspberryBush = new ElysiumRaspberryBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("raspberrybushwithoutberries").setBlockName("blockRaspberryBush");
-		blockGrapesBush = new ElysiumGrapesBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("grapes_empty").setBlockName("blockGrapes");
+		blocks.put(blockCactus = new ElysiumBlockCactus().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("hallowedcactus").setBlockName("blockCactus"), null);
+		blocks.put(blockRaspberryBush = new ElysiumRaspberryBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("raspberrybushwithoutberries").setBlockName("blockRaspberryBush"), null);
+		blocks.put(blockGrapesBush = new ElysiumGrapesBush().setHardness(0F).setResistance(1F).setStepSound(Block.soundTypeGrass).setBlockTextureName("grapes_empty").setBlockName("blockGrapes"), null);
 
-		blocks.put(blockQuartzBlock = new ElysiumBlockQuartz().setHardness(2.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setBlockTextureName("elysium:quartz_block").setBlockName("quartz_mossy"), ElysiumQuartzItemBlock.class);
+		blocks.put(blockQuartzBlock = new ElysiumBlockQuartz().setHardness(2F).setResistance(10F).setStepSound(Block.soundTypePiston).setBlockTextureName("elysium:quartz_block").setBlockName("quartz_mossy"), ElysiumQuartzItemBlock.class);
 		blocks.put(blockQuartzFence = new ElysiumBlockQuartzFence(blockQuartzBlock).setBlockName("quartzFence"), ElysiumFenceItemBlock.class);
 		blocks.put(blockQuartzWall = new ElysiumBlockQuartzWall(blockQuartzBlock).setBlockName("quartzWall"), ElysiumWallItemBlock.class);
 		blocks.put(blockQuartzGate = new ElysiumBlockQuartzGate().setBlockName("quartzGate"), null);
 
+		Blocks.dragon_egg.setCreativeTab(tabMagistics);
+
 		//Items
 		// Added by the Mithril part
 		//itemWhistle = new ElysiumItemWhistle().setTextureName("enderflute").setUnlocalizedName("enderflute");
-		itemSeedsPepper = new ElysiumItem().setTextureName("seeds_pepper").setUnlocalizedName("seeds_pepper");
-		itemOverKill = new ElysiumItemOverkill().setTextureName("overkill").setUnlocalizedName("overkill").setCreativeTab(null);
-		itemAsphodelPetals = new ElysiumItem().setTextureName("asphodelpetal").setUnlocalizedName("asphodelpetal");
-		itemDebug = new ElysiumItemDebug().setTextureName("debug").setUnlocalizedName("debug");
-		itemBeryl = new ElysiumItem().setTextureName("beryl").setUnlocalizedName("beryl");
-		itemIngotCobalt = new ElysiumItem().setTextureName("ingotCobalt").setUnlocalizedName("ingotCobalt");
-		itemIngotIridium = new ElysiumItem().setTextureName("ingotIridium").setUnlocalizedName("ingotIridium");
-		itemJade = new ElysiumItem().setTextureName("jade").setUnlocalizedName("jade");
-		itemSiliconChunk = new ElysiumItem().setTextureName("siliconchunk").setUnlocalizedName("siliconchunk");
-		itemSulphur = new ElysiumItem().setTextureName("sulphur").setUnlocalizedName("elysium_sulphur");
-		itemTourmaline = new ElysiumItem().setTextureName("tourmaline").setUnlocalizedName("tourmaline");
-		itemSturdyHide = new ElysiumItem().setTextureName("sturdyHide").setUnlocalizedName("sturdyHide");
+		items.add(itemSeedsPepper = new ElysiumItem().setTextureName("seeds_pepper").setUnlocalizedName("seeds_pepper"));
+		//itemOverKill = new ElysiumItemOverkill().setTextureName("overkill").setUnlocalizedName("overkill").setCreativeTab(null);
+		items.add(itemAsphodelPetals = new ElysiumItem().setTextureName("asphodelpetal").setUnlocalizedName("asphodelpetal"));
+		items.add(itemDebug = new ElysiumItemDebug().setTextureName("debug").setUnlocalizedName("debug"));
+		items.add(itemBeryl = new ElysiumItem().setTextureName("beryl").setUnlocalizedName("beryl"));
+		items.add(itemIngotCobalt = new ElysiumItem().setTextureName("ingotCobalt").setUnlocalizedName("ingotCobalt"));
+		items.add(itemIngotIridium = new ElysiumItem().setTextureName("ingotIridium").setUnlocalizedName("ingotIridium"));
+		items.add(itemJade = new ElysiumItem().setTextureName("jade").setUnlocalizedName("jade"));
+		items.add(itemSiliconChunk = new ElysiumItem().setTextureName("siliconchunk").setUnlocalizedName("siliconchunk"));
+		items.add(itemSulphur = new ElysiumItem().setTextureName("sulphur").setUnlocalizedName("elysium_sulphur"));
+		items.add(itemTourmaline = new ElysiumItem().setTextureName("tourmaline").setUnlocalizedName("tourmaline"));
+		items.add(itemSturdyHide = new ElysiumItem().setTextureName("sturdyHide").setUnlocalizedName("sturdyHide"));
 
-		itemStaff = new ElysiumStaffItem().setTextureName("staff").setUnlocalizedName("staff");
-		itemAntler = new ElysiumItem().setTextureName("antler").setUnlocalizedName("antler");
-		itemDeerPelt = new ElysiumItem().setTextureName("deer_pelt").setUnlocalizedName("deer_pelt");
-		itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes");
-		itemRaspberry = new ElysiumItemRaspberry(2).setTextureName("raspberry").setUnlocalizedName("raspberry");
-		itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw");
-		itemKnife = new ElysiumItem().setTextureName("knife").setMaxStackSize(1).setUnlocalizedName("knife");
-		itemToothIngot = new ElysiumItem().setTextureName("ingotTooth").setUnlocalizedName("ingotTooth");
+		items.add(itemStaff = new ElysiumStaffItem().setTextureName("staff").setUnlocalizedName("staff"));
+		items.add(itemAntler = new ElysiumItem().setTextureName("antler").setUnlocalizedName("antler"));
+		items.add(itemDeerPelt = new ElysiumItem().setTextureName("deer_pelt").setUnlocalizedName("deer_pelt"));
+		items.add(itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes"));
+		items.add(itemRaspberry = new ElysiumItemRaspberry(2).setTextureName("raspberry").setUnlocalizedName("raspberry"));
+		items.add(itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw"));
+		items.add(itemKnife = new ElysiumItem().setTextureName("knife").setMaxStackSize(1).setUnlocalizedName("knife"));
+		items.add(itemToothIngot = new ElysiumItem().setTextureName("ingotTooth").setUnlocalizedName("ingotTooth"));
 
 		//Tool Registering
 
-		Item.ToolMaterial FOSTIMBER_MAT = EnumHelper.addToolMaterial("FOSTIMBER", 0, 59, 2.0F, 0, 15);
+		Item.ToolMaterial FOSTIMBER_MAT = EnumHelper.addToolMaterial("FOSTIMBER", 0, 59, 2F, 0, 15);
 
-		itemSwordFostimber = new ElysiumItemSword(FOSTIMBER_MAT).setTextureName("swordFostimber").setUnlocalizedName("swordFostimber");
-		itemPickaxeFostimber = new ElysiumItemPickaxe(FOSTIMBER_MAT).setTextureName("pickaxeFostimber").setUnlocalizedName("pickaxeFostimber");
-		itemAxeFostimber = new ElysiumItemAxe(FOSTIMBER_MAT).setTextureName("axeFostimber").setUnlocalizedName("axeFostimber");
-		itemShovelFostimber = new ElysiumItemShovel(FOSTIMBER_MAT).setTextureName("shovelFostimber").setUnlocalizedName("shovelFostimber");
-		itemHoeFostimber = new ElysiumItemHoe(FOSTIMBER_MAT).setTextureName("hoeFostimber").setUnlocalizedName("hoeFostimber");
-		Item.ToolMaterial STONE_MAT = EnumHelper.addToolMaterial("PALESTONE", 1, 131, 4.0F, 1, 5);
+		items.add(itemSwordFostimber = new ElysiumItemSword(FOSTIMBER_MAT).setTextureName("swordFostimber").setUnlocalizedName("swordFostimber"));
+		items.add(itemPickaxeFostimber = new ElysiumItemPickaxe(FOSTIMBER_MAT).setTextureName("pickaxeFostimber").setUnlocalizedName("pickaxeFostimber"));
+		items.add(itemAxeFostimber = new ElysiumItemAxe(FOSTIMBER_MAT).setTextureName("axeFostimber").setUnlocalizedName("axeFostimber"));
+		items.add(itemShovelFostimber = new ElysiumItemShovel(FOSTIMBER_MAT).setTextureName("shovelFostimber").setUnlocalizedName("shovelFostimber"));
+		items.add(itemHoeFostimber = new ElysiumItemHoe(FOSTIMBER_MAT).setTextureName("hoeFostimber").setUnlocalizedName("hoeFostimber"));
+		Item.ToolMaterial STONE_MAT = EnumHelper.addToolMaterial("PALESTONE", 1, 131, 4F, 1, 5);
 
-		itemSwordPalestone = new ElysiumItemSword(STONE_MAT).setTextureName("swordPalestone").setUnlocalizedName("swordPalestone");
-		itemPickaxePalestone = new ElysiumItemPickaxe(STONE_MAT).setTextureName("pickaxePalestone").setUnlocalizedName("pickaxePalestone");
-		itemAxePalestone = new ElysiumItemAxe(STONE_MAT).setTextureName("axePalestone").setUnlocalizedName("axePalestone");
-		itemSpadePalestone = new ElysiumItemShovel(STONE_MAT).setTextureName("shovelPalestone").setUnlocalizedName("shovelPalestone");
-		itemHoePalestone = new ElysiumItemHoe(STONE_MAT).setTextureName("hoePalestone").setUnlocalizedName("hoePalestone");
+		items.add(itemSwordPalestone = new ElysiumItemSword(STONE_MAT).setTextureName("swordPalestone").setUnlocalizedName("swordPalestone"));
+		items.add(itemPickaxePalestone = new ElysiumItemPickaxe(STONE_MAT).setTextureName("pickaxePalestone").setUnlocalizedName("pickaxePalestone"));
+		items.add(itemAxePalestone = new ElysiumItemAxe(STONE_MAT).setTextureName("axePalestone").setUnlocalizedName("axePalestone"));
+		items.add(itemSpadePalestone = new ElysiumItemShovel(STONE_MAT).setTextureName("shovelPalestone").setUnlocalizedName("shovelPalestone"));
+		items.add(itemHoePalestone = new ElysiumItemHoe(STONE_MAT).setTextureName("hoePalestone").setUnlocalizedName("hoePalestone"));
 
 		ArmorMaterial TOOTH_ARMORMAT = EnumHelper.addArmorMaterial("TOOTH", 25, new int[] { 2, 6, 5, 2 }, 25);
 
-		itemArmorToothHelmet = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 0).setTextureName("elysium:sceptertoothhelmet").setUnlocalizedName("toothHelmet");
-		itemArmorToothChestplate = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 1).setTextureName("elysium:sceptertoothchestplate").setUnlocalizedName("toothChestplate");
-		itemArmorToothLeggings = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 2).setTextureName("elysium:sceptertoothlegs").setUnlocalizedName("toothLeggings");
-		itemArmorToothBoots = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 3).setTextureName("elysium:sceptertoothboots").setUnlocalizedName("toothBoots");
-		wandCore = new ItemWandCores().setUnlocalizedName("WandCores");
-		wandCap = new ItemWandCaps().setUnlocalizedName("WandCaps");
+		items.add(itemArmorToothHelmet = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 0).setTextureName("elysium:sceptertoothhelmet").setUnlocalizedName("toothHelmet"));
+		items.add(itemArmorToothChestplate = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 1).setTextureName("elysium:sceptertoothchestplate").setUnlocalizedName("toothChestplate"));
+		items.add(itemArmorToothLeggings = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 2).setTextureName("elysium:sceptertoothlegs").setUnlocalizedName("toothLeggings"));
+		items.add(itemArmorToothBoots = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 3).setTextureName("elysium:sceptertoothboots").setUnlocalizedName("toothBoots"));
+		items.add(wandCore = new ItemWandCores().setUnlocalizedName("WandCores"));
+		items.add(wandCap = new ItemWandCaps().setUnlocalizedName("WandCaps"));
 
-		wandCap.setCreativeTab(tabMagistics);
-		wandCore.setCreativeTab(tabMagistics);
-
-		WAND_ROD_HORN = new ElysiumWandRod("horn", 100, new ItemStack(wandCore, 1, 0), 12, new ResourceLocation("elysium", "textures/models/wand_rod_horn.png"));
+		//WAND_ROD_HORN = new ElysiumWandRod("horn", 100, new ItemStack(wandCore, 1, 0), 12, new ResourceLocation("elysium", "textures/models/wand_rod_horn.png"));
 
 		//STAFF_ROD_HORN = new StaffRod("horn", 50, new ItemStack(wandCore, 1, 0 + 1), 24, new HornStaffUpdate(), new ResourceLocation(MODID, "textures/models/wand_rod_horn.png"));
-		WAND_CAP_PURE = new ElysiumWandCap("pure", 0.0F, new ItemStack(wandCap, 1, 0), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_pure.png"));
-		WAND_CAP_CORRUPTED = new ElysiumWandCap("corrupted", 0.0F, new ItemStack(wandCap, 1, 1), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_corrupted.png"));
+		//WAND_CAP_PURE = new ElysiumWandCap("pure", 0F, new ItemStack(wandCap, 1, 0), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_pure.png"));
+		//WAND_CAP_CORRUPTED = new ElysiumWandCap("corrupted", 0F, new ItemStack(wandCap, 1, 1), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_corrupted.png"));
 		//WandCap WAND_CAP_IRON = new WandCap("iron", 1.1f, Arrays.asList(Aspect.ORDER),1, new ItemStack(ConfigItems.itemWandCap,1,0),1);
 
 		oreSulphure.setHarvestLevel("pickaxe", 0);
@@ -705,30 +693,31 @@ public class ConfigObjects extends CommonProxy {
 		blockLog.setHarvestLevel("axe", 0);
 		blockPlanks.setHarvestLevel("axe", 0);
 
-		GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
+		tiles.add(ElysianTileEntityPortal.class);
+		//GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 
 		DimensionManager.registerProviderType(dimensionID, ElysiumWorldProvider.class, false);
 		DimensionManager.registerDimension(dimensionID, dimensionID);
 
 		biomePlain = new ElysiumBiomeGenPlain(biomeIdPlains).setHeight(new Height(0.25F, 0.3F)).setColor(0x8ec435).setBiomeName("Elysium Plain");
-		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.15F, 0.2F)).setColor(0x93a66f).setEnableSnow().setTemperatureRainfall(0.0F, 0.5F).setBiomeName("Elysium Forest");
+		biomeForest = new ElysiumBiomeGenForest(biomeIdForest).setHeight(new Height(0.15F, 0.2F)).setColor(0x93a66f).setEnableSnow().setTemperatureRainfall(0F, 0.5F).setBiomeName("Elysium Forest");
 		biomeCorruption = new ElysiumBiomeGenCorruption(biomeIdPlainsCorrupt).setHeight(new Height(0.05F, 0.1F)).setColor(0x987497).func_76733_a(9154376).setTemperatureRainfall(0.8F, 0.9F).setBiomeName("Elysium Corruption");
 
-		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1.0F, 0.1F)).setColor(0x73c6db).setBiomeName("Elysium Ocean");
-		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0.0F)).setColor(0x73c6db).setBiomeName("Elysium River");
-		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.3F, 0.1F)).setTemperatureRainfall(2.0F, 0.2F).setColor(0xc9c8ce).setBiomeName("Elysium Desert");
-		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0.0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
+		biomeOcean = new ElysiumBiomeGenOcean(biomeIdOcean).setHeight(new Height(-1F, 0.1F)).setColor(0x73c6db).setBiomeName("Elysium Ocean");
+		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0F)).setColor(0x73c6db).setBiomeName("Elysium River");
+		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.3F, 0.1F)).setTemperatureRainfall(2F, 0.2F).setColor(0xc9c8ce).setBiomeName("Elysium Desert");
+		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
 
 		if(ConfigObjects.winter)
 		{
-			biomePlain.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeForest.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeCorruption.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+			biomePlain.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
+			biomeForest.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
+			biomeCorruption.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
 
-			biomeOcean.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeRiver.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeDesert.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
-			biomeBeach.setEnableSnow().setTemperatureRainfall(0.0F, 0.5F);
+			biomeOcean.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
+			biomeRiver.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
+			biomeDesert.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
+			biomeBeach.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
 		}
 
 		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
@@ -803,11 +792,11 @@ public class ConfigObjects extends CommonProxy {
 		//EntityRegistry.addSpawn(EntityHero.class, 1, 1, 1, EnumCreatureType.monster, biomePlain, biomeForest, biomeCorruption, biomeDesert, biomeOcean);
 
 		//Fire Info
-		Blocks.fire.setFireInfo(blockLog, 2, 2);
+		/*Blocks.fire.setFireInfo(blockLog, 2, 2);
 		Blocks.fire.setFireInfo(blockPlanks, 2, 10);
 		Blocks.fire.setFireInfo(blockLeaves, 15, 30);
 		Blocks.fire.setFireInfo(oreSulphure, 2, 2);
-		Blocks.fire.setFireInfo(blockSulphure, 5, 5);
+		Blocks.fire.setFireInfo(blockSulphure, 5, 5);*/
 
 		HeatManager.getInstance().registerBlock(Blocks.lava, 5000F);
 		HeatManager.getInstance().registerBlock(Blocks.water, 10F);
@@ -928,162 +917,35 @@ public class ConfigObjects extends CommonProxy {
 
 		tileRenderers.put(TilePillarMithril.class, new RenderMithrilPillar());
 		blockRenderers.add(new RenderMithrilPillar());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysiumTileEntityPortalRenderer());
+
+		MinecraftForgeClient.registerItemRenderer(ConfigObjects.itemStaff, new StaffRenderer());
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityCaterPillar.class, new RenderCaterPillar());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySwan.class, new RenderSwan());
+		RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, new RenderDeer());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEvolvedOyster.class, new RenderEvolvedOyster());
+		RenderingRegistry.registerEntityRenderingHandler(EntityPinkUnicorn.class, new RenderPinkUnicorn(new ModelPinkUnicorn()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidSpecter.class, new RenderVoidSpecter());
+		RenderingRegistry.registerEntityRenderingHandler(EntityEnderMage.class, new RenderEnderMage());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHero.class, new RenderHero());
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlockProjectile.class, new RenderBlockProjectile());
+		RenderingRegistry.registerEntityRenderingHandler(EntityIceProjectile.class, new RenderSnowball(Items.snowball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFireballProjectile.class, new RenderFireballProjectile(0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEnderRandomProjectile.class, new RenderSnowball(Items.ender_pearl));
 	}
 
 	public static void registerHandlers() {
-		MinecraftForge.EVENT_BUS.register(INSTANCE);
-		//FMLCommonHandler.instance().bus().register(INSTANCE);
+		MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerPlayer());
 
 		GameRegistry.registerFuelHandler(ElysiumHandler.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(ElysiumHandler.INSTANCE);
 		FMLCommonHandler.instance().bus().register(ElysiumHandler.INSTANCE);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 			MinecraftForge.EVENT_BUS.register(new ElysiumClientHandler());
-	}
-
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public void textureHook(TextureStitchEvent.Post event) {
-		if (event.map.getTextureType() == 0) {
-			elysiumFluidWater.setIcons(
-					blockElysiumWater.getBlockTextureFromSide(1),
-					blockElysiumWater.getBlockTextureFromSide(2));
-			elysiumFluidEnergy.setIcons(
-					blockElysiumEnergyLiquid.getBlockTextureFromSide(1),
-					blockElysiumEnergyLiquid.getBlockTextureFromSide(2));
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-		if (event.crafting != null) {
-			if (event.crafting.isItemEqual(new ItemStack(blockBasePillar)))
-				event.player.addStat(achievementGettingStarted, 1);
-			if (event.crafting.isItemEqual(new ItemStack(blockTankPillar)))
-				event.player.addStat(achievementCompressingLiquids, 1);
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerInterract(PlayerInteractEvent event) {
-		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && event.entity.isSneaking() && event.entityPlayer.getCurrentEquippedItem() != null)
-			if (event.entity.worldObj.getBlock(event.x, event.y, event.z) instanceof BlockPillarBase && event.face == 1)
-				event.setCanceled(true);
-	}
-
-	@SubscribeEvent
-	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		if (event.block instanceof BlockPillarBase && event.getPlayer().isSneaking()) {
-			event.setCanceled(true);
-			event.block.onBlockClicked(event.world, event.x, event.y, event.z, event.getPlayer());
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerAttacked(AttackEntityEvent event) {
-		if (event.target instanceof EntityPlayer) {
-			ItemStack slot1 = BaublesApi.getBaubles(event.entityPlayer).getStackInSlot(1), slot2 = BaublesApi.getBaubles(event.entityPlayer).getStackInSlot(2);
-			if (((slot1 != null && slot1.getItem() == itemWitherRing) || (slot2 != null && slot2.getItem() == itemWitherRing)) && rand.nextInt(3) == 0)
-				((EntityPlayer) event.target).addPotionEffect(new PotionEffect(Potion.wither.getId(), 200, 2));
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerGetHurt(LivingHurtEvent event) {
-		if (event.entity.worldObj.isRemote)
-			return;
-		if (event.entityLiving instanceof EntityPlayer && FMLCommonHandler.instance().getSide().isServer()) {
-			ItemStack slot = BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(0);
-			if (slot != null && slot.getItem() == itemEnderNecklace)
-				event.entityLiving.addPotionEffect(new PotionEffect(Potion.invisibility.getId(), 300, 2));
-		}
-		if (event.entityLiving instanceof EntityPlayer && event.source != DamageSource.fall) {
-			if (BaublesApi.getBaubles((EntityPlayer) event.entityLiving) != null) {
-				ItemStack stack1 = BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(1);
-				ItemStack stack2 = BaublesApi.getBaubles((EntityPlayer) event.entityLiving).getStackInSlot(2);
-
-				boolean isRing1 = false;
-				boolean isRing2 = false;
-
-				if (isRing1 || isRing2) {
-					double d0 = event.entityLiving.posX + (rand.nextDouble() - 0.5D) * 64.0D;
-					double d1 = event.entityLiving.posY + (double) (rand.nextInt(64) - 32);
-					double d2 = event.entityLiving.posZ + (rand.nextDouble() - 0.5D) * 64.0D;
-					teleportTo(event.entity, d0, d1, d2);
-				}
-			}
-		}
-	}
-
-	private boolean teleportTo(Entity entity, double targetX, double targetY, double targetZ) {
-		double d3 = entity.posX;
-		double d4 = entity.posY;
-		double d5 = entity.posZ;
-		entity.posX = targetX;
-		entity.posY = targetY;
-		entity.posZ = targetZ;
-		boolean flag = false;
-		int i = MathHelper.floor_double(entity.posX);
-		int j = MathHelper.floor_double(entity.posY);
-		int k = MathHelper.floor_double(entity.posZ);
-
-		if (entity.worldObj.blockExists(i, j, k)) {
-			boolean flag1 = false;
-
-			while (!flag1 && j > 0) {
-				Block block = entity.worldObj.getBlock(i, j - 1, k);
-
-				if (block.getMaterial().blocksMovement())
-					flag1 = true;
-				else {
-					--entity.posY;
-					--j;
-				}
-			}
-
-			if (flag1) {
-				setPositionEntity(entity, entity.posX, entity.posY, entity.posZ);
-
-				if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() && !entity.worldObj.isAnyLiquid(entity.boundingBox))
-					flag = true;
-			}
-		}
-
-		if (!flag) {
-			setPositionEntity(entity, d3, d4, d5);
-			return false;
-		} else {
-			short short1 = 128;
-
-			for (int l = 0; l < short1; ++l) {
-				double d6 = (double) l / ((double) short1 - 1.0D);
-				float f = (rand.nextFloat() - 0.5F) * 0.2F;
-				float f1 = (rand.nextFloat() - 0.5F) * 0.2F;
-				float f2 = (rand.nextFloat() - 0.5F) * 0.2F;
-				double d7 = d3 + (entity.posX - d3) * d6 + (rand.nextDouble() - 0.5D) * (double) entity.width * 2.0D;
-				double d8 = d4 + (entity.posY - d4) * d6 + rand.nextDouble() * (double) entity.height;
-				double d9 = d5 + (entity.posZ - d5) * d6 + (rand.nextDouble() - 0.5D) * (double) entity.width * 2.0D;
-				entity.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
-			}
-
-			entity.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
-			entity.playSound("mob.endermen.portal", 1.0F, 1.0F);
-			return true;
-		}
-	}
-
-	private void setPositionEntity(Entity entity, double posX, double posY, double posZ) {
-		EntityPlayerMP entityplayermp = (EntityPlayerMP) entity;
-		if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen()) {
-			EnderTeleportEvent event2 = new EnderTeleportEvent(entityplayermp, posX, posY, posZ, 5.0F);
-			if (!MinecraftForge.EVENT_BUS.post(event2)) {
-				if (entityplayermp.isRiding())
-					entityplayermp.mountEntity((Entity) null);
-
-				((EntityLivingBase) entity).setPositionAndUpdate(event2.targetX, event2.targetY, event2.targetZ);
-				entity.fallDistance = 0.0F;
-			}
-		}
 	}
 
 	public static void registerObjects() {
@@ -1299,7 +1161,7 @@ public class ConfigObjects extends CommonProxy {
 		GameRegistry.addRecipe(new ItemStack(blockQuartzGate, 1), new Object[] { "SQS", "SQS", Character.valueOf('Q'), blockQuartzBlock, Character.valueOf('S'), Items.quartz});
 
 		GameRegistry.addSmelting(oreCobalt, new ItemStack(itemIngotCobalt), 0.7F);
-		GameRegistry.addSmelting(oreIridium, new ItemStack(itemIngotIridium), 1.0F);
+		GameRegistry.addSmelting(oreIridium, new ItemStack(itemIngotIridium), 1F);
 	}
 
 	public static void addAchievements() {
@@ -1408,7 +1270,7 @@ public class ConfigObjects extends CommonProxy {
 		ThaumcraftApi.addShapelessArcaneCraftingRecipe("", new ItemStack(itemToothIngot, 1, 0), new AspectList().add(Aspect.FIRE, 10), new Object[] {new ItemStack(itemHardPaw), ItemApi.getItem("itemResource", 2)});
 
 		ElysiumAspects.addAspects();
-		ElysiumRecipes.addRecipes();
+		//ElysiumRecipes.addRecipes();
 		ElysiumResearch.addResearch();
 
 		if(Loader.isModLoaded("coloredlightscore"))
