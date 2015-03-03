@@ -5,11 +5,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fluids.IFluidBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraftforge.fluids.IFluidBlock;
 
 @SideOnly(Side.CLIENT)
 public class EntityDropParticleFX extends EntityFX 

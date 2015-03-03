@@ -1,11 +1,11 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import T145.magistics.common.entities.EntityPinkUnicorn;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

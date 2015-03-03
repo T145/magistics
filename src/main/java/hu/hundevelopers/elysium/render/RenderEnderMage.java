@@ -2,7 +2,6 @@ package hu.hundevelopers.elysium.render;
 
 import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.BLOCK_3D;
-import hu.hundevelopers.elysium.entity.EntityEnderMage;
 import hu.hundevelopers.elysium.model.ModelEnderMage;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -19,6 +18,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.entities.EntityEnderMage;
 
 public class RenderEnderMage extends RenderBiped
 {

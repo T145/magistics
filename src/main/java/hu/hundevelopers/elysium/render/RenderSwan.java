@@ -1,12 +1,12 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.entity.EntitySwan;
 import hu.hundevelopers.elysium.model.ModelSwan;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import T145.magistics.common.entities.EntitySwan;
 
 public class RenderSwan extends RenderLiving
 {

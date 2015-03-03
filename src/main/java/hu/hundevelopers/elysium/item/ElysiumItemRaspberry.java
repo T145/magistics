@@ -1,9 +1,9 @@
 package hu.hundevelopers.elysium.item;
 
-import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import T145.magistics.common.entities.EntityPinkUnicorn;
 
 public class ElysiumItemRaspberry extends ElysiumEdibleItem
 {

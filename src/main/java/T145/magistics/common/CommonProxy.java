@@ -1,7 +1,5 @@
 package T145.magistics.common;
 
-import hu.hundevelopers.elysium.Configs;
-
 import java.io.File;
 import java.util.Calendar;
 
@@ -15,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.oredict.OreDictionary;
@@ -39,22 +36,35 @@ import cpw.mods.fml.server.FMLServerHandler;
 public class CommonProxy extends Log implements IGuiHandler {
 	public static Configuration config;
 	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
-	public static final String category[] = {
+	public static String category[] = {
 		"Graphics", "Blocks", "Items"
 	};
 
-	public static int dimensionID, maxDragon;
-	public static boolean isMenuEnabled, isMobCrystals, winter;
+	public static int MAX_DRAGON_IN_END = 1;
 
-	public static BiomeGenBase biomePlain = null;
-	public static BiomeGenBase biomeForest = null;
-	public static BiomeGenBase biomeCorruption = null;
-	public static BiomeGenBase biomeForestCorrupt = null;
-	public static BiomeGenBase biomeOcean = null;
-	public static BiomeGenBase biomeRiver = null;
-	public static BiomeGenBase biomeDesert = null;
-	public static BiomeGenBase biomeBeach = null;
-	public static BiomeGenBase biomeDeepOcean = null;
+	public static int BIOME_PLAIN = 125;
+	public static int BIOME_FOREST = 126;
+	public static int BIOME_PLAIN_CORRUPT = 127;
+	public static int ELYSIUM_DEEP_OCEAN = 128;
+	public static int BIOME_OCEAN = 129;
+	public static int BIOME_RIVER = 130;
+	public static int BIOME_BEACH = 131;
+	public static int BIOME_DESERT = 132;
+
+	// Settings
+	public static int maxportaldistance = 64;
+	public static byte ticksbeforeportalcheck = 5;
+	public static byte ticksbeforeportalteleport = 20 * 5;
+
+	public static int labyrinthBottom = 5, labyrinthTop = labyrinthBottom + 4;
+
+	public static int mazeRoomRarity = 6;
+
+	public static boolean customGui = true, isMobCrystals = true, winter;
+
+	public static int dimensionID, maxDragon;
+
+	public static BiomeGenBase biomePlain, biomeForest, biomeCorruption, biomeForestCorrupt, biomeOcean, biomeRiver, biomeDesert, biomeBeach, biomeDeepOcean;
 
 	protected static int biomeIdPlains, biomeIdForest, biomeIdPlainsCorrupt, biomeIdForestCorrupt, biomeIdOcean, biomeIdDeepOcean, biomeIdRiver,  biomeIdDesert, biomeIdBeach;
 
@@ -83,38 +93,37 @@ public class CommonProxy extends Log implements IGuiHandler {
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
 		winter = (isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
 
-		Property ELYSIUM_PLAINS = config.get("biomeIds", "ELYSIUM_PLAINS", Configs.BIOME_PLAIN);
+		/*Property ELYSIUM_PLAINS = config.get("biomeIds", "ELYSIUM_PLAINS", BIOME_PLAIN);
 		biomeIdPlains = ELYSIUM_PLAINS.getInt();
 
-		Property ELYSIUM_FOREST = config.get("biomeIds", "ELYSIUM_FOREST", Configs.BIOME_FOREST);
+		Property ELYSIUM_FOREST = config.get("biomeIds", "ELYSIUM_FOREST", BIOME_FOREST);
 		biomeIdForest = ELYSIUM_FOREST.getInt();
 
-		Property ELYSIUM_PLAINS_CORRUPT = config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", Configs.BIOME_PLAIN_CORRUPT);
+		Property ELYSIUM_PLAINS_CORRUPT = config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", BIOME_PLAIN_CORRUPT);
 		biomeIdPlainsCorrupt = ELYSIUM_PLAINS_CORRUPT.getInt();
 
-		Property ELYSIUM_DEEP_OCEAN = config.get("biomeIds", "ELYSIUM_DEEP_OCEAN", Configs.ELYSIUM_DEEP_OCEAN);
+		Property ELYSIUM_DEEP_OCEAN = config.get("biomeIds", "ELYSIUM_DEEP_OCEAN", ELYSIUM_DEEP_OCEAN);
 		biomeIdDeepOcean = ELYSIUM_DEEP_OCEAN.getInt();
 
-		Property ELYSIUM_OCEAN = config.get("biomeIds", "ELYSIUM_OCEAN", Configs.BIOME_OCEAN);
+		Property ELYSIUM_OCEAN = config.get("biomeIds", "ELYSIUM_OCEAN", BIOME_OCEAN);
 		biomeIdOcean = ELYSIUM_OCEAN.getInt();
 
-		Property ELYSIUM_RIVER = config.get("biomeIds", "ELYSIUM_RIVER", Configs.BIOME_RIVER);
+		Property ELYSIUM_RIVER = config.get("biomeIds", "ELYSIUM_RIVER", BIOME_RIVER);
 		biomeIdRiver = ELYSIUM_RIVER.getInt();
 
-		Property ELYSIUM_DESERT = config.get("biomeIds", "ELYSIUM_DESERT", Configs.BIOME_DESERT);
+		Property ELYSIUM_DESERT = config.get("biomeIds", "ELYSIUM_DESERT", BIOME_DESERT);
 		biomeIdDesert = ELYSIUM_DESERT.getInt();
 
-		Property ELYSIUM_BEACH = config.get("biomeIds", "ELYSIUM_BEACH", Configs.BIOME_BEACH);
+		Property ELYSIUM_BEACH = config.get("biomeIds", "ELYSIUM_BEACH", BIOME_BEACH);
 		biomeIdBeach = ELYSIUM_BEACH.getInt();
 
 		Property ELYSIUM_ID = config.get("other", "ELYSIUM_ID", DimensionManager.getNextFreeDimId());
 		dimensionID = ELYSIUM_ID.getInt();
 
-		Property MAX_DRAGON_IN_END = config.get("other", "MAX_DRAGON_IN_END", Configs.MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
-		maxDragon = MAX_DRAGON_IN_END.getInt();
+		//Property MAX_DRAGON_IN_END = config.get("other", "MAX_DRAGON_IN_END", MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
+		Property MAX_END_DRAGON = config.getInt("MAX_DRAGON_IN_END", "other", MAX_DRAGON_IN_END, 1, 9, "How many dragons can be spawned to the End at the same time!");*/
 
-		Property MENU_ENABLED = config.get("other", "isMenuEnabled", Configs.customGui, "If you want to see the custom The Elysium menu instead of the regular Minecraft menu");
-		isMenuEnabled = MENU_ENABLED.getBoolean();
+		Property MENU_ENABLED = config.get("other", "isMenuEnabled", customGui, "If you want to see the custom The Elysium menu instead of the regular Minecraft menu");
 	}
 
 	public void changeConfig(OnConfigChangedEvent e, String modid) {

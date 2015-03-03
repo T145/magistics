@@ -1,11 +1,11 @@
 package hu.hundevelopers.elysium.render;
 
-import hu.hundevelopers.elysium.entity.EntityHero;
 import hu.hundevelopers.elysium.model.ModelHero;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import T145.magistics.common.entities.EntityHero;
 
 public class RenderHero extends RenderBiped
 {

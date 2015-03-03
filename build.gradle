@@ -71,7 +71,7 @@ task setupWorkspace(type: Download) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = gradle_version
 }
 
 apply plugin: 'forge'

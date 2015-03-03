@@ -54,7 +54,7 @@ public class BlockPillarTurntable extends BlockPillarBase {
 			if (side == 1) {
 				ItemStack disk = player.getCurrentEquippedItem();
 				if (disk != null && disk.getItem() instanceof ItemRecord) {
-					if (disk.isItemEqual(new ItemStack(ConfigObjects.itemDiscElysium)))
+					if (disk.isItemEqual(new ItemStack(ConfigObjects.itemRecordElysium)))
 						player.addStat(ConfigObjects.achievementDisc, 1);
 					insertRecord(world, x, y, z, player.getCurrentEquippedItem());
 					world.playAuxSFXAtEntity(null, 1005, x, y, z, Item.getIdFromItem(disk.getItem()));

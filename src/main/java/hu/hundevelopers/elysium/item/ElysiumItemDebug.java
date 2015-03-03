@@ -1,13 +1,13 @@
 package hu.hundevelopers.elysium.item;
 
 import hu.hundevelopers.elysium.heat.HeatManager;
-import hu.hundevelopers.elysium.world.ElysiumTeleporter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.lib.world.dim.ElysiumTeleporter;
 
 public class ElysiumItemDebug extends ElysiumItem
 {

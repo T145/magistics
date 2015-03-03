@@ -18,15 +18,15 @@ import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glVertex3d;
-import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import T145.magistics.common.tiles.TileElysianPortal;
 
 public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 {
 
-	public void renderTileEntityPortalAt(ElysianTileEntityPortal tile)
+	public void renderTileEntityPortalAt(TileElysianPortal tile)
 	{
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
@@ -59,7 +59,7 @@ public class ElysiumTileEntityPortalRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float par8)
 	{
-		ElysianTileEntityPortal portalTile = (ElysianTileEntityPortal) tile;
+		TileElysianPortal portalTile = (TileElysianPortal) tile;
 
 		if(portalTile.canstay)
 		{

@@ -1,64 +1,11 @@
 package T145.magistics.common.config;
 
-import hu.hundevelopers.elysium.api.Plants;
-import hu.hundevelopers.elysium.api.Staff;
-import hu.hundevelopers.elysium.block.ElysiumBlock;
-import hu.hundevelopers.elysium.block.ElysiumBlockCactus;
-import hu.hundevelopers.elysium.block.ElysiumBlockFalling;
-import hu.hundevelopers.elysium.block.ElysiumBlockFlower;
-import hu.hundevelopers.elysium.block.ElysiumBlockGrass;
-import hu.hundevelopers.elysium.block.ElysiumBlockLeaves;
-import hu.hundevelopers.elysium.block.ElysiumBlockLog;
-import hu.hundevelopers.elysium.block.ElysiumBlockOre;
-import hu.hundevelopers.elysium.block.ElysiumBlockPortalCore;
-import hu.hundevelopers.elysium.block.ElysiumBlockQuartz;
-import hu.hundevelopers.elysium.block.ElysiumBlockQuartzFence;
-import hu.hundevelopers.elysium.block.ElysiumBlockQuartzGate;
-import hu.hundevelopers.elysium.block.ElysiumBlockQuartzWall;
-import hu.hundevelopers.elysium.block.ElysiumBlockRilt;
-import hu.hundevelopers.elysium.block.ElysiumBlockSapling;
-import hu.hundevelopers.elysium.block.ElysiumBlockTallGrass;
-import hu.hundevelopers.elysium.block.ElysiumBlockWood;
-import hu.hundevelopers.elysium.block.ElysiumEnergyCrystalBlock;
-import hu.hundevelopers.elysium.block.ElysiumEnergyLiquid;
-import hu.hundevelopers.elysium.block.ElysiumFenceItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumFloatingBlock;
-import hu.hundevelopers.elysium.block.ElysiumFlowerItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumGrapesBush;
-import hu.hundevelopers.elysium.block.ElysiumPlanksItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumQuartzItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumRaspberryBush;
-import hu.hundevelopers.elysium.block.ElysiumTallGrassItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumWallItemBlock;
-import hu.hundevelopers.elysium.block.ElysiumWaterBlock;
-import hu.hundevelopers.elysium.entity.EntityCaterPillar;
-import hu.hundevelopers.elysium.entity.EntityDeer;
-import hu.hundevelopers.elysium.entity.EntityEnderMage;
-import hu.hundevelopers.elysium.entity.EntityEvolvedOyster;
-import hu.hundevelopers.elysium.entity.EntityHero;
-import hu.hundevelopers.elysium.entity.EntityPinkUnicorn;
-import hu.hundevelopers.elysium.entity.EntitySwan;
-import hu.hundevelopers.elysium.entity.EntityVoidSpecter;
-import hu.hundevelopers.elysium.entity.projectile.EntityBlockProjectile;
-import hu.hundevelopers.elysium.entity.projectile.EntityEnderRandomProjectile;
-import hu.hundevelopers.elysium.entity.projectile.EntityFireballProjectile;
-import hu.hundevelopers.elysium.entity.projectile.EntityIceProjectile;
-import hu.hundevelopers.elysium.entity.projectile.SentryBehaviorStaff;
-import hu.hundevelopers.elysium.event.ElysiumClientHandler;
-import hu.hundevelopers.elysium.event.ElysiumHandler;
 import hu.hundevelopers.elysium.heat.HeatManager;
 import hu.hundevelopers.elysium.item.ElysiumBucket;
 import hu.hundevelopers.elysium.item.ElysiumGrapesItem;
 import hu.hundevelopers.elysium.item.ElysiumItem;
-import hu.hundevelopers.elysium.item.ElysiumItemArmor;
-import hu.hundevelopers.elysium.item.ElysiumItemAxe;
 import hu.hundevelopers.elysium.item.ElysiumItemDebug;
-import hu.hundevelopers.elysium.item.ElysiumItemHoe;
-import hu.hundevelopers.elysium.item.ElysiumItemPickaxe;
 import hu.hundevelopers.elysium.item.ElysiumItemRaspberry;
-import hu.hundevelopers.elysium.item.ElysiumItemShovel;
-import hu.hundevelopers.elysium.item.ElysiumItemSword;
-import hu.hundevelopers.elysium.item.ElysiumStaffItem;
 import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
 import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
 import hu.hundevelopers.elysium.render.RenderBlockProjectile;
@@ -76,16 +23,6 @@ import hu.hundevelopers.elysium.thaumcraft.ElysiumAspects;
 import hu.hundevelopers.elysium.thaumcraft.ElysiumResearch;
 import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCaps;
 import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCores;
-import hu.hundevelopers.elysium.tile.ElysianTileEntityPortal;
-import hu.hundevelopers.elysium.world.ElysiumWorldProvider;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenBeach;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenCorruption;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenDesert;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenForest;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenOcean;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenPlain;
-import hu.hundevelopers.elysium.world.biome.ElysiumBiomeGenRiver;
-import hu.hundevelopers.elysium.world.gen.WorldGenElysium;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -130,6 +67,8 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.WandCap;
 import thaumcraft.api.wands.WandRod;
 import T145.magistics.api.DiskRegistry;
+import T145.magistics.api.ElysiumPlants;
+import T145.magistics.api.ElysiumStaff;
 import T145.magistics.api.FreezerRecipes;
 import T145.magistics.api.blocks.BlockMagisticsItem;
 import T145.magistics.api.client.renderers.block.ChestItemRenderer;
@@ -140,6 +79,7 @@ import T145.magistics.api.sentry.SentryBehaviorFireball;
 import T145.magistics.api.sentry.SentryBehaviorPotion;
 import T145.magistics.api.sentry.SentryBehaviorRegistry;
 import T145.magistics.api.sentry.SentryBehaviorSnowball;
+import T145.magistics.api.sentry.SentryBehaviorStaff;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
 import T145.magistics.client.renderers.pillars.RenderBrewingPillar;
@@ -175,6 +115,35 @@ import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
+import T145.magistics.common.blocks.elysium.ElysiumBlock;
+import T145.magistics.common.blocks.elysium.ElysiumBlockCactus;
+import T145.magistics.common.blocks.elysium.ElysiumBlockFalling;
+import T145.magistics.common.blocks.elysium.ElysiumBlockFlower;
+import T145.magistics.common.blocks.elysium.ElysiumBlockGrass;
+import T145.magistics.common.blocks.elysium.ElysiumBlockLeaves;
+import T145.magistics.common.blocks.elysium.ElysiumBlockLog;
+import T145.magistics.common.blocks.elysium.ElysiumBlockOre;
+import T145.magistics.common.blocks.elysium.ElysiumBlockPortalCore;
+import T145.magistics.common.blocks.elysium.ElysiumBlockQuartz;
+import T145.magistics.common.blocks.elysium.ElysiumBlockQuartzFence;
+import T145.magistics.common.blocks.elysium.ElysiumBlockQuartzGate;
+import T145.magistics.common.blocks.elysium.ElysiumBlockQuartzWall;
+import T145.magistics.common.blocks.elysium.ElysiumBlockRilt;
+import T145.magistics.common.blocks.elysium.ElysiumBlockSapling;
+import T145.magistics.common.blocks.elysium.ElysiumBlockTallGrass;
+import T145.magistics.common.blocks.elysium.ElysiumBlockWood;
+import T145.magistics.common.blocks.elysium.ElysiumEnergyCrystalBlock;
+import T145.magistics.common.blocks.elysium.ElysiumEnergyLiquid;
+import T145.magistics.common.blocks.elysium.ElysiumFenceItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumFloatingBlock;
+import T145.magistics.common.blocks.elysium.ElysiumFlowerItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumGrapesBush;
+import T145.magistics.common.blocks.elysium.ElysiumPlanksItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumQuartzItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumRaspberryBush;
+import T145.magistics.common.blocks.elysium.ElysiumTallGrassItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumWallItemBlock;
+import T145.magistics.common.blocks.elysium.ElysiumWaterBlock;
 import T145.magistics.common.blocks.pillars.BlockMithrilPillar;
 import T145.magistics.common.blocks.pillars.BlockMithrilPillarItem;
 import T145.magistics.common.blocks.pillars.BlockPillarBrewing;
@@ -188,7 +157,19 @@ import T145.magistics.common.blocks.pillars.BlockPillarSentry;
 import T145.magistics.common.blocks.pillars.BlockPillarTank;
 import T145.magistics.common.blocks.pillars.BlockPillarTrash;
 import T145.magistics.common.blocks.pillars.BlockPillarTurntable;
-import T145.magistics.common.items.ElysiumRecord;
+import T145.magistics.common.entities.EntityCaterPillar;
+import T145.magistics.common.entities.EntityDeer;
+import T145.magistics.common.entities.EntityEnderMage;
+import T145.magistics.common.entities.EntityEvolvedOyster;
+import T145.magistics.common.entities.EntityHero;
+import T145.magistics.common.entities.EntityPinkUnicorn;
+import T145.magistics.common.entities.EntitySwan;
+import T145.magistics.common.entities.EntityVoidSpecter;
+import T145.magistics.common.entities.projectiles.EntityBlockProjectile;
+import T145.magistics.common.entities.projectiles.EntityEnderRandomProjectile;
+import T145.magistics.common.entities.projectiles.EntityFireballProjectile;
+import T145.magistics.common.entities.projectiles.EntityIceProjectile;
+import T145.magistics.common.items.ItemMagisticsRecord;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
 import T145.magistics.common.items.armor.MithrilArmor;
@@ -200,6 +181,12 @@ import T145.magistics.common.items.baubles.ItemBeltVigor;
 import T145.magistics.common.items.baubles.ItemRingSouls;
 import T145.magistics.common.items.baubles.MithrilRing;
 import T145.magistics.common.items.baubles.MithrilWitherRing;
+import T145.magistics.common.items.equipment.ElysiumItemArmor;
+import T145.magistics.common.items.equipment.ElysiumItemAxe;
+import T145.magistics.common.items.equipment.ElysiumItemHoe;
+import T145.magistics.common.items.equipment.ElysiumItemPickaxe;
+import T145.magistics.common.items.equipment.ElysiumItemShovel;
+import T145.magistics.common.items.equipment.ElysiumItemSword;
 import T145.magistics.common.items.equipment.MithrilAxe;
 import T145.magistics.common.items.equipment.MithrilBow;
 import T145.magistics.common.items.equipment.MithrilHoe;
@@ -207,14 +194,26 @@ import T145.magistics.common.items.equipment.MithrilShovel;
 import T145.magistics.common.items.equipment.MithrilSword;
 import T145.magistics.common.items.equipment.MthrilPickaxe;
 import T145.magistics.common.items.relics.ItemDawnstone;
+import T145.magistics.common.items.relics.ItemElysiumStaff;
 import T145.magistics.common.items.relics.MithrilFlute;
+import T145.magistics.common.lib.events.ElysiumClientHandler;
+import T145.magistics.common.lib.events.ElysiumHandler;
 import T145.magistics.common.lib.events.EventHandlerClient;
 import T145.magistics.common.lib.events.EventHandlerPlayer;
 import T145.magistics.common.lib.world.MagisticsWorldGenerator;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenBeach;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenCorruption;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenDesert;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenForest;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenOcean;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenPlain;
+import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenRiver;
+import T145.magistics.common.lib.world.dim.ElysiumWorldProvider;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileElysianPortal;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
@@ -259,7 +258,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Item itemResources, itemAmuletDismay, itemAmuletLife, itemBeltCleansing, itemBeltVigor, itemRingSouls, itemCruelMask, itemDawnstone;
 	public static Block blockAesthetic, blockAestheticStructure, blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockArcaneRedstoneLamp;
 
-	public static Item itemDiscElysium;
 	public static Block blockBasePillar, blockDisplayPillar, blockCraftingPillar, blockFurnacePillar, blockAnvilPillar, blockTankPillar, blockBrewingPillar, blockDiskPlayerPillar, blockFreezerPillar, blockPotPillar, blockSentryPillar, blockTrashPillar, blockPumpPillar;
 
 	public static Item itemMithrilSword, itemMithrilSpade, itemMithrilPickaxe, itemMithrilAxe, itemMithrilHoe, itemMithrilBow, itemMithrilIngot, itemMithrilNugget, itemQuartzRod, itemMithrilChest, itemMithrilHelmet, itemMithrilLeggings, itemMithrilBoots, itemEnderNecklace, itemMithrilRing, itemWitherRing, itemFlute;
@@ -318,8 +316,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Block blockJade;
 	public static Block blockTourmaline;
 	public static Block blockBeryl;
-
-	public static Block blockPipe;
 
 	public static Block blockCactus;
 	public static Block blockRaspberryBush;
@@ -389,6 +385,8 @@ public class ConfigObjects extends CommonProxy {
 
 	public static final String LABYRINTH_LOOT = "labirinthLootChest";
 
+	public static Item itemRecordElysium;
+
 	public static ItemStack[] present_loot = new ItemStack[] {
 		new ItemStack(blockCraftingPillar, 1, 0),
 		new ItemStack(blockAnvilPillar, 1, 0),
@@ -402,7 +400,7 @@ public class ConfigObjects extends CommonProxy {
 		new ItemStack(blockTankPillar, 1, 0),
 		new ItemStack(blockTrashPillar, 1, 0),
 		new ItemStack(blockBasePillar, 3, 0),
-		new ItemStack(itemDiscElysium, 1, 0)
+		new ItemStack(itemRecordElysium, 1, 0)
 	};
 
 	public static AchievementPage achievementPage;
@@ -460,7 +458,8 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
-		items.add(itemDiscElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("magistics:elysium_disk"));
+		//items.add(itemRecordElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("magistics:elysium_disk"));
+		items.add(itemRecordElysium = new ItemMagisticsRecord("UranusParadise").setUnlocalizedName("record.elysium").setTextureName("magistics:record_elysium"));
 
 		tiles.add(TilePillarExtend.class);
 		tiles.add(TilePillarDisplay.class);
@@ -628,7 +627,7 @@ public class ConfigObjects extends CommonProxy {
 		items.add(itemTourmaline = new ElysiumItem().setTextureName("tourmaline").setUnlocalizedName("tourmaline"));
 		items.add(itemSturdyHide = new ElysiumItem().setTextureName("sturdyHide").setUnlocalizedName("sturdyHide"));
 
-		items.add(itemStaff = new ElysiumStaffItem().setTextureName("staff").setUnlocalizedName("staff"));
+		items.add(itemStaff = new ItemElysiumStaff().setTextureName("staff").setUnlocalizedName("staff"));
 		items.add(itemAntler = new ElysiumItem().setTextureName("antler").setUnlocalizedName("antler"));
 		items.add(itemDeerPelt = new ElysiumItem().setTextureName("deer_pelt").setUnlocalizedName("deer_pelt"));
 		items.add(itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes"));
@@ -693,7 +692,7 @@ public class ConfigObjects extends CommonProxy {
 		blockLog.setHarvestLevel("axe", 0);
 		blockPlanks.setHarvestLevel("axe", 0);
 
-		tiles.add(ElysianTileEntityPortal.class);
+		tiles.add(TileElysianPortal.class);
 		//GameRegistry.registerTileEntity(ElysianTileEntityPortal.class, "ElysianTileEntityPortal");
 
 		DimensionManager.registerProviderType(dimensionID, ElysiumWorldProvider.class, false);
@@ -707,20 +706,6 @@ public class ConfigObjects extends CommonProxy {
 		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0F)).setColor(0x73c6db).setBiomeName("Elysium River");
 		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.3F, 0.1F)).setTemperatureRainfall(2F, 0.2F).setColor(0xc9c8ce).setBiomeName("Elysium Desert");
 		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
-
-		if(ConfigObjects.winter)
-		{
-			biomePlain.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-			biomeForest.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-			biomeCorruption.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-
-			biomeOcean.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-			biomeRiver.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-			biomeDesert.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-			biomeBeach.setEnableSnow().setTemperatureRainfall(0F, 0.5F);
-		}
-
-		GameRegistry.registerWorldGenerator(new WorldGenElysium(), 0);
 
 		ElysiumAspects.initAspects();
 
@@ -918,7 +903,7 @@ public class ConfigObjects extends CommonProxy {
 		tileRenderers.put(TilePillarMithril.class, new RenderMithrilPillar());
 		blockRenderers.add(new RenderMithrilPillar());
 
-		ClientRegistry.bindTileEntitySpecialRenderer(ElysianTileEntityPortal.class, new ElysiumTileEntityPortalRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileElysianPortal.class, new ElysiumTileEntityPortalRenderer());
 
 		MinecraftForgeClient.registerItemRenderer(ConfigObjects.itemStaff, new StaffRenderer());
 
@@ -1171,7 +1156,7 @@ public class ConfigObjects extends CommonProxy {
 		achievementShowoff = new Achievement("achievement.showoff", "showoff", 3, 1, blockDisplayPillar, achievementRecursion).registerStat();
 		//achievementRecursion3 = new Achievement("achievement.recursion3", "recursion3", 5, 1, blockChristmasPresent, achievementShowoff).registerStat();
 		achievementCompressingLiquids = new Achievement("achievement.liquids", "liquids", 1, 2, blockFreezerPillar, achievementGettingStarted).registerStat();
-		achievementDisc = new Achievement("achievement.elysiandisc", "elysiandisc", 4, 4, itemDiscElysium, achievementChristmas).setSpecial().registerStat();
+		achievementDisc = new Achievement("achievement.elysiandisc", "elysiandisc", 4, 4, itemRecordElysium, achievementChristmas).setSpecial().registerStat();
 
 		if (winter)
 			achievementPage = new AchievementPage(Magistics.modid, achievementGettingStarted, achievementRecursion, achievementShowoff, achievementCompressingLiquids, achievementRecursion3, achievementChristmas, achievementDisc);
@@ -1182,7 +1167,7 @@ public class ConfigObjects extends CommonProxy {
 	}
 
 	public static void writeOreDictionary() {
-		OreDictionary.registerOre("record", itemDiscElysium);
+		OreDictionary.registerOre("record", itemRecordElysium);
 		OreDictionary.registerOre("oreMithril", blockMithrilOre);
 		OreDictionary.registerOre("ingotMithril", itemMithrilIngot);
 		OreDictionary.registerOre("nuggetMithril", itemMithrilNugget);
@@ -1212,7 +1197,7 @@ public class ConfigObjects extends CommonProxy {
 	}
 
 	public static void initAPI() {
-		DiskRegistry.addDiskTexture(itemDiscElysium, "magistics:textures/models/pillars/disk_elysium.png");
+		DiskRegistry.addDiskTexture(itemRecordElysium, "magistics:textures/models/pillars/disk_elysium.png");
 
 		DiskRegistry.addDiskTexture(Items.record_13, "magistics:textures/models/pillars/disk_13.png");
 		DiskRegistry.addDiskTexture(Items.record_cat, "magistics:textures/models/pillars/disk_cat.png");
@@ -1233,35 +1218,35 @@ public class ConfigObjects extends CommonProxy {
 		SentryBehaviorRegistry.addBehavior(Items.potionitem, new SentryBehaviorPotion());
 		SentryBehaviorRegistry.addBehavior(Items.egg, new SentryBehaviorEgg());
 
-		Plants.addGrassPlant(blockTallGrass, 0, 30);
-		Plants.addGrassPlant(blockFlower, 0, 10);
-		Plants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
+		ElysiumPlants.addGrassPlant(blockTallGrass, 0, 30);
+		ElysiumPlants.addGrassPlant(blockFlower, 0, 10);
+		ElysiumPlants.addGrassSeed(new ItemStack(itemSeedsPepper), 10);
 
-		Staff.registerThrowableBlock(Blocks.snow, 1F);
-		Staff.registerThrowableBlock(Blocks.dirt, 2F);
-		Staff.registerThrowableBlock(Blocks.grass, 2F);
-		Staff.registerThrowableBlock(Blocks.mycelium, 2F);
-		Staff.registerThrowableBlock(Blocks.sand, 2F);
-		Staff.registerThrowableBlock(Blocks.soul_sand, 2F);
-		Staff.registerThrowableBlock(Blocks.gravel, 2F);
-		Staff.registerThrowableBlock(Blocks.clay, 2F);
-		Staff.registerThrowableBlock(Blocks.netherrack, 2F);
-		Staff.registerThrowableBlock(Blocks.sandstone, 3F);
-		Staff.registerThrowableBlock(Blocks.mossy_cobblestone, 3F);
-		Staff.registerThrowableBlock(Blocks.stained_hardened_clay, 3F);
-		Staff.registerThrowableBlock(Blocks.cobblestone, 4F);
-		Staff.registerThrowableBlock(Blocks.end_stone, 4F);
-		Staff.registerThrowableBlock(Blocks.stone, 4F);
-		Staff.registerThrowableBlock(Blocks.ice, 4F);
-		Staff.registerThrowableBlock(Blocks.packed_ice, 6F);
-		Staff.registerThrowableBlock(Blocks.obsidian, 8F);
+		ElysiumStaff.registerThrowableBlock(Blocks.snow, 1F);
+		ElysiumStaff.registerThrowableBlock(Blocks.dirt, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.grass, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.mycelium, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.sand, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.soul_sand, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.gravel, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.clay, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.netherrack, 2F);
+		ElysiumStaff.registerThrowableBlock(Blocks.sandstone, 3F);
+		ElysiumStaff.registerThrowableBlock(Blocks.mossy_cobblestone, 3F);
+		ElysiumStaff.registerThrowableBlock(Blocks.stained_hardened_clay, 3F);
+		ElysiumStaff.registerThrowableBlock(Blocks.cobblestone, 4F);
+		ElysiumStaff.registerThrowableBlock(Blocks.end_stone, 4F);
+		ElysiumStaff.registerThrowableBlock(Blocks.stone, 4F);
+		ElysiumStaff.registerThrowableBlock(Blocks.ice, 4F);
+		ElysiumStaff.registerThrowableBlock(Blocks.packed_ice, 6F);
+		ElysiumStaff.registerThrowableBlock(Blocks.obsidian, 8F);
 
-		Staff.registerThrowableBlock(blockDirt, 2F);
-		Staff.registerThrowableBlock(blockGrass, 2F);
-		Staff.registerThrowableBlock(blockRilt, 3F);
-		Staff.registerThrowableBlock(blockSand, 2F);
-		Staff.registerThrowableBlock(blockPalestone, 4F);
-		Staff.registerThrowableBlock(blockEnergyCrystal, 10F);
+		ElysiumStaff.registerThrowableBlock(blockDirt, 2F);
+		ElysiumStaff.registerThrowableBlock(blockGrass, 2F);
+		ElysiumStaff.registerThrowableBlock(blockRilt, 3F);
+		ElysiumStaff.registerThrowableBlock(blockSand, 2F);
+		ElysiumStaff.registerThrowableBlock(blockPalestone, 4F);
+		ElysiumStaff.registerThrowableBlock(blockEnergyCrystal, 10F);
 
 		SentryBehaviorRegistry.addBehavior(itemStaff, new SentryBehaviorStaff());
 

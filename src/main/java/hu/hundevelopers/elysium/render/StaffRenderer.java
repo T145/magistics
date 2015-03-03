@@ -7,7 +7,6 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import hu.hundevelopers.elysium.api.Staff;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -20,6 +19,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import T145.magistics.api.ElysiumStaff;
 import T145.magistics.client.lib.pillars.ExternalRenderer;
 import cpw.mods.fml.client.FMLClientHandler;
 
@@ -219,7 +219,7 @@ public class StaffRenderer implements IItemRenderer
 		{
 			if(item.getItemDamage() == 0)
 			{
-				Block block = Staff.getBlockHolding(item); 
+				Block block = ElysiumStaff.getBlockHolding(item); 
 				if(block != null)
 				{
 					glPushMatrix();
