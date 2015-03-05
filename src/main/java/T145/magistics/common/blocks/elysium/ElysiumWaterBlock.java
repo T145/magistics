@@ -1,9 +1,8 @@
 package T145.magistics.common.blocks.elysium;
 
-import hu.hundevelopers.elysium.render.EntityDropParticleFX;
-
 import java.util.Random;
 
+import T145.magistics.client.renderers.elysium.EntityDropParticleFX;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;

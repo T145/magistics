@@ -1,6 +1,6 @@
 package T145.magistics.common.items.equipment;
 
-import hu.hundevelopers.elysium.model.ModelToothArmor;
+import T145.magistics.client.renderers.entity.ModelToothArmor;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

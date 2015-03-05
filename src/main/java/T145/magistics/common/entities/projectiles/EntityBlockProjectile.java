@@ -1,6 +1,5 @@
 package T145.magistics.common.entities.projectiles;
 
-import hu.hundevelopers.elysium.render.ElysiumEffectRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import T145.magistics.api.ElysiumStaff;
+import T145.magistics.client.renderers.elysium.ElysiumEffectRenderer;
 
 public class EntityBlockProjectile extends EntityThrowable
 {

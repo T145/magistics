@@ -1,8 +1,8 @@
 package T145.magistics.client.gui.menu;
 
-import hu.hundevelopers.elysium.render.RenderingHelper;
-
 import java.awt.Color;
+
+import T145.magistics.client.renderers.elysium.RenderingHelper;
 
 public class ElysiumGuiButton extends ElysiumGui {
 	public String text;

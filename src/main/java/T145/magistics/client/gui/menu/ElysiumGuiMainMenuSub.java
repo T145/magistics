@@ -1,6 +1,6 @@
 package T145.magistics.client.gui.menu;
 
-import hu.hundevelopers.elysium.render.RenderingHelper;
+import T145.magistics.client.renderers.elysium.RenderingHelper;
 
 public class ElysiumGuiMainMenuSub extends ElysiumGui {
 	public ElysiumGuiButton btnBack;

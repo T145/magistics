@@ -1,7 +1,7 @@
 package T145.magistics.common.blocks.elysium;
 
-import hu.hundevelopers.elysium.heat.HeatManager;
-import hu.hundevelopers.elysium.heat.IHeatable;
+import T145.magistics.common.lib.world.dim.HeatManager;
+import T145.magistics.common.lib.world.dim.IHeatable;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;

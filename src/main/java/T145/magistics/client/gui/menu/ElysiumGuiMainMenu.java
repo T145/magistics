@@ -8,7 +8,6 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
-import hu.hundevelopers.elysium.render.RenderingHelper;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import T145.magistics.client.renderers.elysium.RenderingHelper;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;

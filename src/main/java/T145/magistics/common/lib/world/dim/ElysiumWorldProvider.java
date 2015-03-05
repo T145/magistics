@@ -1,13 +1,13 @@
 package T145.magistics.common.lib.world.dim;
 
-import hu.hundevelopers.elysium.render.CloudRendererElysium;
-import hu.hundevelopers.elysium.render.SkyRendererElysium;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import T145.magistics.client.renderers.elysium.CloudRendererElysium;
+import T145.magistics.client.renderers.elysium.SkyRendererElysium;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenPlain;
 import cpw.mods.fml.relauncher.Side;

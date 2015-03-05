@@ -1,7 +1,5 @@
 package T145.magistics.common.items.relics;
 
-import hu.hundevelopers.elysium.item.ElysiumItem;
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -23,7 +21,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemElysiumStaff extends ElysiumItem
+public class ItemElysiumStaff extends Item
 {
 	public ItemElysiumStaff()
 	{

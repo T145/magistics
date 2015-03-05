@@ -1,29 +1,5 @@
 package T145.magistics.common.config;
 
-import hu.hundevelopers.elysium.heat.HeatManager;
-import hu.hundevelopers.elysium.item.ElysiumBucket;
-import hu.hundevelopers.elysium.item.ElysiumGrapesItem;
-import hu.hundevelopers.elysium.item.ElysiumItem;
-import hu.hundevelopers.elysium.item.ElysiumItemDebug;
-import hu.hundevelopers.elysium.item.ElysiumItemRaspberry;
-import hu.hundevelopers.elysium.model.ModelPinkUnicorn;
-import hu.hundevelopers.elysium.render.ElysiumTileEntityPortalRenderer;
-import hu.hundevelopers.elysium.render.RenderBlockProjectile;
-import hu.hundevelopers.elysium.render.RenderCaterPillar;
-import hu.hundevelopers.elysium.render.RenderDeer;
-import hu.hundevelopers.elysium.render.RenderEnderMage;
-import hu.hundevelopers.elysium.render.RenderEvolvedOyster;
-import hu.hundevelopers.elysium.render.RenderFireballProjectile;
-import hu.hundevelopers.elysium.render.RenderHero;
-import hu.hundevelopers.elysium.render.RenderPinkUnicorn;
-import hu.hundevelopers.elysium.render.RenderSwan;
-import hu.hundevelopers.elysium.render.RenderVoidSpecter;
-import hu.hundevelopers.elysium.render.StaffRenderer;
-import hu.hundevelopers.elysium.thaumcraft.ElysiumAspects;
-import hu.hundevelopers.elysium.thaumcraft.ElysiumResearch;
-import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCaps;
-import hu.hundevelopers.elysium.thaumcraft.wand.ItemWandCores;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -82,6 +58,19 @@ import T145.magistics.api.sentry.SentryBehaviorSnowball;
 import T145.magistics.api.sentry.SentryBehaviorStaff;
 import T145.magistics.client.lib.TextureHelper;
 import T145.magistics.client.renderers.block.BlockAestheticStructureRenderer;
+import T145.magistics.client.renderers.elysium.ElysiumTileEntityPortalRenderer;
+import T145.magistics.client.renderers.elysium.RenderBlockProjectile;
+import T145.magistics.client.renderers.elysium.RenderCaterPillar;
+import T145.magistics.client.renderers.elysium.RenderDeer;
+import T145.magistics.client.renderers.elysium.RenderEnderMage;
+import T145.magistics.client.renderers.elysium.RenderEvolvedOyster;
+import T145.magistics.client.renderers.elysium.RenderFireballProjectile;
+import T145.magistics.client.renderers.elysium.RenderHero;
+import T145.magistics.client.renderers.elysium.RenderPinkUnicorn;
+import T145.magistics.client.renderers.elysium.RenderSwan;
+import T145.magistics.client.renderers.elysium.RenderVoidSpecter;
+import T145.magistics.client.renderers.elysium.StaffRenderer;
+import T145.magistics.client.renderers.entity.ModelPinkUnicorn;
 import T145.magistics.client.renderers.pillars.RenderBrewingPillar;
 import T145.magistics.client.renderers.pillars.RenderCraftingPillar;
 import T145.magistics.client.renderers.pillars.RenderDisplayPillar;
@@ -169,6 +158,9 @@ import T145.magistics.common.entities.projectiles.EntityBlockProjectile;
 import T145.magistics.common.entities.projectiles.EntityEnderRandomProjectile;
 import T145.magistics.common.entities.projectiles.EntityFireballProjectile;
 import T145.magistics.common.entities.projectiles.EntityIceProjectile;
+import T145.magistics.common.items.ElysiumBucket;
+import T145.magistics.common.items.ElysiumGrapesItem;
+import T145.magistics.common.items.ElysiumItemRaspberry;
 import T145.magistics.common.items.ItemMagisticsRecord;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.items.armor.ItemCruelMask;
@@ -209,6 +201,7 @@ import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenOcean;
 import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenPlain;
 import T145.magistics.common.lib.world.biomes.ElysiumBiomeGenRiver;
 import T145.magistics.common.lib.world.dim.ElysiumWorldProvider;
+import T145.magistics.common.lib.world.dim.HeatManager;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -273,9 +266,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Fluid elysiumFluidWater;
 	public static Fluid elysiumFluidEnergy;
 
-	//Rendering Ids
-	public static int pipeStoneReinderingID;
-
 	//Blocks
 	public static Block blockPalestone;
 
@@ -328,8 +318,6 @@ public class ConfigObjects extends CommonProxy {
 
 	//Items
 
-	public static Item itemWhistle;
-
 	public static Item itemSeedsPepper;
 	public static Item itemAsphodelPetals;
 
@@ -365,8 +353,6 @@ public class ConfigObjects extends CommonProxy {
 	public static Item itemSpadePalestone;
 	public static Item itemHoePalestone;
 
-	public static Item itemOverKill;
-	public static Item itemDebug;
 	public static Item itemWaterBucket;
 	public static Item itemEnergyBucket;
 
@@ -458,7 +444,6 @@ public class ConfigObjects extends CommonProxy {
 			supportedMods.add("RefinedRelocation");
 		}
 
-		//items.add(itemRecordElysium = new ElysiumRecord("UranusParadise").setUnlocalizedName("record").setTextureName("magistics:elysium_disk"));
 		items.add(itemRecordElysium = new ItemMagisticsRecord("UranusParadise").setUnlocalizedName("record.elysium").setTextureName("magistics:record_elysium"));
 
 		tiles.add(TilePillarExtend.class);
@@ -513,33 +498,27 @@ public class ConfigObjects extends CommonProxy {
 		FluidRegistry.registerFluid(elysiumFluidWater);
 		fluidElysiumWater = FluidRegistry.getFluid("elysium_water");
 
-		if (fluidElysiumWater.getBlock() == null)
-		{
+		if (fluidElysiumWater.getBlock() == null) {
 			blocks.put(blockElysiumWater = new ElysiumWaterBlock(fluidElysiumWater, Material.water).setHardness(100F).setLightOpacity(3).setBlockName("elysium_water"), null);
 			fluidElysiumWater.setBlock(blockElysiumWater);
-		} else {
+		} else
 			blockElysiumWater = fluidElysiumWater.getBlock();
-		}
 
 		if (blockElysiumWater != null) {
 			items.add(itemWaterBucket = new ElysiumBucket(blockElysiumWater).setTextureName("elysium_bucket_water").setUnlocalizedName("elysium_bucket_water").setContainerItem(Items.bucket));
 			FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("elysium_water", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(itemWaterBucket), new ItemStack(Items.bucket));
 		}
 
-		//Liquids
-
 		elysiumFluidEnergy = new Fluid("elysium_energy");
 		elysiumFluidEnergy.setDensity(2000).setLuminosity(15).setTemperature(500);
 		FluidRegistry.registerFluid(elysiumFluidEnergy);
 		fluidElysiumEnergy = FluidRegistry.getFluid("elysium_energy");
 
-		if (fluidElysiumEnergy.getBlock() == null)
-		{
+		if (fluidElysiumEnergy.getBlock() == null) {
 			blocks.put(blockElysiumEnergyLiquid = new ElysiumEnergyLiquid(fluidElysiumEnergy, Material.water).setHardness(100F).setLightOpacity(3).setBlockName("elysium_energy"), null);
 			fluidElysiumEnergy.setBlock(blockElysiumEnergyLiquid);
-		} else {
+		} else
 			blockElysiumEnergyLiquid = fluidElysiumEnergy.getBlock();
-		}
 
 		items.add(itemEnergyBucket = new ElysiumBucket(blockElysiumEnergyLiquid).setTextureName("elysium_bucket_energy").setUnlocalizedName("elysium_bucket_energy").setContainerItem(Items.bucket));
 		FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("elysium_energy", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(itemEnergyBucket), new ItemStack(Items.bucket));
@@ -556,10 +535,6 @@ public class ConfigObjects extends CommonProxy {
 		blocks.put(blockLog = (new ElysiumBlockLog()).setHardness(2F).setBlockTextureName("elysium_log").setBlockName("elysium_log"), null);
 		blocks.put(blockLeaves = (new ElysiumBlockLeaves()).setLightOpacity(1).setHardness(0.2F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_leaves").setBlockName("elysium_leaves"), null);
 		blocks.put(blockPlanks = (new ElysiumBlockWood()).setHardness(0.2F).setStepSound(Block.soundTypeWood).setBlockTextureName("elysium_planks").setBlockName("elysium_planks"), ElysiumPlanksItemBlock.class);
-		//registerBlock(blockPlanks, ElysiumPlanksItemBlock.class);
-
-		//blockGastroShell = (new ElysiumBlockGastroShell(idGastroShellBlock.getInt(), Material.rock)).setHardness(0.2F).setStepSound(Block.soundGrassFootstep).setBlockName("gastroshell");
-		//registerBlock(blockGastroShell, "Gastro Shell");
 
 		blocks.put(blockFlower = (new ElysiumBlockFlower()).setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_flower").setBlockName("elysium_flower"), ElysiumFlowerItemBlock.class);
 		blocks.put(blockTallGrass = new ElysiumBlockTallGrass().setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("elysium_tallgrass").setBlockName("elysium_tallgrass"), ElysiumTallGrassItemBlock.class);
@@ -574,22 +549,6 @@ public class ConfigObjects extends CommonProxy {
 		blocks.put(blockPortalCore = new ElysiumBlockPortalCore(Material.glass).setHardness(5F).setStepSound(Block.soundTypeGlass).setBlockName("portalCore"), null);
 		blocks.put(blockFloatingConch = new ElysiumFloatingBlock("conch").setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_conch").setBlockName("floating_block_conch"), null);
 		blocks.put(blockFloatingShell = new ElysiumFloatingBlock("shell").setHardness(0F).setStepSound(Block.soundTypeGrass).setBlockTextureName("floating_block_shell").setBlockName("floating_block_shell"), null);
-		/*
-		blockPalestoneBrick = (new ElysiumBlockHeatable(idPalestoneBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick");
-		registerBlock(blockPalestoneBrick, "Palestone Brick");
-
-		blockPalestoneBrickCracked = (new ElysiumBlockHeatable(idPalestoneBrickCrackedBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_cracked");
-		registerBlock(blockPalestoneBrickCracked, "Cracked Palestone Brick");
-
-		blockPalestoneBrickMossy = (new ElysiumBlockHeatable(idPalestoneBrickMossyBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_mossy");
-		registerBlock(blockPalestoneBrickMossy, "Mossy Palestone Brick");
-
-		blockPalestoneBrickChiseld = (new ElysiumBlockHeatable(idPalestoneChiseldBrickBlock.getInt(), Material.rock, -273, 300)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_brick_chiseld");
-		registerBlock(blockPalestoneBrickChiseld, "Chiseld Palestone Brick");
-
-		blockPalestonePillar = (new ElysiumBlockPalestonePillar(idPalestonePillarBlock.getInt(), Material.rock)).setHardness(2F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("palestone_pillar");
-		registerBlock(blockPalestonePillar, "Palestone Pillar");
-		 */
 
 		blocks.put(blockSulphure = new ElysiumBlock(Material.rock).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockTextureName("blockSulphur").setBlockName("blockSulphur"), null);
 		blocks.put(blockBeryl = new ElysiumBlock(Material.iron).setHardness(3F).setResistance(5F).setLightLevel(0.5F).setStepSound(Block.soundTypeMetal).setBlockTextureName("blockBeryl").setBlockName("blockBeryl"), null);
@@ -612,29 +571,25 @@ public class ConfigObjects extends CommonProxy {
 		Blocks.dragon_egg.setCreativeTab(tabMagistics);
 
 		//Items
-		// Added by the Mithril part
-		//itemWhistle = new ElysiumItemWhistle().setTextureName("enderflute").setUnlocalizedName("enderflute");
-		items.add(itemSeedsPepper = new ElysiumItem().setTextureName("seeds_pepper").setUnlocalizedName("seeds_pepper"));
-		//itemOverKill = new ElysiumItemOverkill().setTextureName("overkill").setUnlocalizedName("overkill").setCreativeTab(null);
-		items.add(itemAsphodelPetals = new ElysiumItem().setTextureName("asphodelpetal").setUnlocalizedName("asphodelpetal"));
-		items.add(itemDebug = new ElysiumItemDebug().setTextureName("debug").setUnlocalizedName("debug"));
-		items.add(itemBeryl = new ElysiumItem().setTextureName("beryl").setUnlocalizedName("beryl"));
-		items.add(itemIngotCobalt = new ElysiumItem().setTextureName("ingotCobalt").setUnlocalizedName("ingotCobalt"));
-		items.add(itemIngotIridium = new ElysiumItem().setTextureName("ingotIridium").setUnlocalizedName("ingotIridium"));
-		items.add(itemJade = new ElysiumItem().setTextureName("jade").setUnlocalizedName("jade"));
-		items.add(itemSiliconChunk = new ElysiumItem().setTextureName("siliconchunk").setUnlocalizedName("siliconchunk"));
-		items.add(itemSulphur = new ElysiumItem().setTextureName("sulphur").setUnlocalizedName("elysium_sulphur"));
-		items.add(itemTourmaline = new ElysiumItem().setTextureName("tourmaline").setUnlocalizedName("tourmaline"));
-		items.add(itemSturdyHide = new ElysiumItem().setTextureName("sturdyHide").setUnlocalizedName("sturdyHide"));
+		items.add(itemSeedsPepper = new Item().setTextureName("elysium:seeds_pepper").setUnlocalizedName("seeds_pepper"));
+		items.add(itemAsphodelPetals = new Item().setTextureName("elysium:asphodelpetal").setUnlocalizedName("asphodelpetal"));
+		items.add(itemBeryl = new Item().setTextureName("elysium:beryl").setUnlocalizedName("beryl"));
+		items.add(itemIngotCobalt = new Item().setTextureName("elysium:ingotCobalt").setUnlocalizedName("ingotCobalt"));
+		items.add(itemIngotIridium = new Item().setTextureName("elysium:ingotIridium").setUnlocalizedName("ingotIridium"));
+		items.add(itemJade = new Item().setTextureName("elysium:jade").setUnlocalizedName("jade"));
+		items.add(itemSiliconChunk = new Item().setTextureName("elysium:siliconchunk").setUnlocalizedName("siliconchunk"));
+		items.add(itemSulphur = new Item().setTextureName("elysium:sulphur").setUnlocalizedName("elysium_sulphur"));
+		items.add(itemTourmaline = new Item().setTextureName("elysium:tourmaline").setUnlocalizedName("tourmaline"));
+		items.add(itemSturdyHide = new Item().setTextureName("elysium:sturdyHide").setUnlocalizedName("sturdyHide"));
 
-		items.add(itemStaff = new ItemElysiumStaff().setTextureName("staff").setUnlocalizedName("staff"));
-		items.add(itemAntler = new ElysiumItem().setTextureName("antler").setUnlocalizedName("antler"));
-		items.add(itemDeerPelt = new ElysiumItem().setTextureName("deer_pelt").setUnlocalizedName("deer_pelt"));
-		items.add(itemGrapes = new ElysiumGrapesItem().setTextureName("grapes").setUnlocalizedName("grapes"));
-		items.add(itemRaspberry = new ElysiumItemRaspberry(2).setTextureName("raspberry").setUnlocalizedName("raspberry"));
-		items.add(itemHardPaw = new ElysiumItem().setTextureName("hard_paw").setUnlocalizedName("hard_paw"));
-		items.add(itemKnife = new ElysiumItem().setTextureName("knife").setMaxStackSize(1).setUnlocalizedName("knife"));
-		items.add(itemToothIngot = new ElysiumItem().setTextureName("ingotTooth").setUnlocalizedName("ingotTooth"));
+		items.add(itemStaff = new ItemElysiumStaff().setTextureName("elysium:staff").setUnlocalizedName("staff"));
+		items.add(itemAntler = new Item().setTextureName("elysium:antler").setUnlocalizedName("antler"));
+		items.add(itemDeerPelt = new Item().setTextureName("elysium:deer_pelt").setUnlocalizedName("deer_pelt"));
+		items.add(itemGrapes = new ElysiumGrapesItem().setTextureName("elysium:grapes").setUnlocalizedName("grapes"));
+		items.add(itemRaspberry = new ElysiumItemRaspberry(2).setTextureName("elysium:raspberry").setUnlocalizedName("raspberry"));
+		items.add(itemHardPaw = new Item().setTextureName("elysium:hard_paw").setUnlocalizedName("hard_paw"));
+		items.add(itemKnife = new Item().setTextureName("elysium:knife").setMaxStackSize(1).setUnlocalizedName("knife"));
+		items.add(itemToothIngot = new Item().setTextureName("elysium:ingotTooth").setUnlocalizedName("ingotTooth"));
 
 		//Tool Registering
 
@@ -659,15 +614,6 @@ public class ConfigObjects extends CommonProxy {
 		items.add(itemArmorToothChestplate = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 1).setTextureName("elysium:sceptertoothchestplate").setUnlocalizedName("toothChestplate"));
 		items.add(itemArmorToothLeggings = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 2).setTextureName("elysium:sceptertoothlegs").setUnlocalizedName("toothLeggings"));
 		items.add(itemArmorToothBoots = new ElysiumItemArmor(TOOTH_ARMORMAT, 4, 3).setTextureName("elysium:sceptertoothboots").setUnlocalizedName("toothBoots"));
-		items.add(wandCore = new ItemWandCores().setUnlocalizedName("WandCores"));
-		items.add(wandCap = new ItemWandCaps().setUnlocalizedName("WandCaps"));
-
-		//WAND_ROD_HORN = new ElysiumWandRod("horn", 100, new ItemStack(wandCore, 1, 0), 12, new ResourceLocation("elysium", "textures/models/wand_rod_horn.png"));
-
-		//STAFF_ROD_HORN = new StaffRod("horn", 50, new ItemStack(wandCore, 1, 0 + 1), 24, new HornStaffUpdate(), new ResourceLocation(MODID, "textures/models/wand_rod_horn.png"));
-		//WAND_CAP_PURE = new ElysiumWandCap("pure", 0F, new ItemStack(wandCap, 1, 0), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_pure.png"));
-		//WAND_CAP_CORRUPTED = new ElysiumWandCap("corrupted", 0F, new ItemStack(wandCap, 1, 1), 2, new ResourceLocation("elysium", "textures/models/wand_cap_crystal_corrupted.png"));
-		//WandCap WAND_CAP_IRON = new WandCap("iron", 1.1f, Arrays.asList(Aspect.ORDER),1, new ItemStack(ConfigItems.itemWandCap,1,0),1);
 
 		oreSulphure.setHarvestLevel("pickaxe", 0);
 		oreCobalt.setHarvestLevel("pickaxe", 1);
@@ -706,8 +652,6 @@ public class ConfigObjects extends CommonProxy {
 		biomeRiver = new ElysiumBiomeGenRiver(biomeIdRiver).setHeight(new Height(-0.5F, 0F)).setColor(0x73c6db).setBiomeName("Elysium River");
 		biomeDesert = new ElysiumBiomeGenDesert(biomeIdDesert).setHeight(new Height(0.3F, 0.1F)).setTemperatureRainfall(2F, 0.2F).setColor(0xc9c8ce).setBiomeName("Elysium Desert");
 		biomeBeach = new ElysiumBiomeGenBeach(biomeIdBeach).setHeight(new Height(0F, 0.025F)).setColor(16440917).setTemperatureRainfall(0.8F, 0.4F).setBiomeName("Elysium Beach");
-
-		ElysiumAspects.initAspects();
 
 		int caterPillarID = EntityRegistry.findGlobalUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityCaterPillar.class, "ElysiumCaterPillar", caterPillarID, 0x6e6e6e, 0xcccccc);
@@ -1086,13 +1030,6 @@ public class ConfigObjects extends CommonProxy {
 		GameRegistry.addRecipe(new ItemStack(itemArmorToothLeggings, 1, 0), new Object[] { "SSS", "S S", "S S", Character.valueOf('S'), itemToothIngot});
 		GameRegistry.addRecipe(new ItemStack(itemArmorToothBoots, 1, 0), new Object[] { "S S",  "S S", Character.valueOf('S'), itemToothIngot});
 
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {" EO"," O ", "O  ", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {"E O"," O ", "O  ", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {"  O","EO ", "O  ", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {"  O"," OE", "O  ", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {"  O"," O ", "OE ", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-		GameRegistry.addRecipe(new ItemStack(itemWhistle), new Object[] {"  O"," O ", "O E", Character.valueOf('O'), Blocks.obsidian, Character.valueOf('E'), Items.ender_eye});
-
 		GameRegistry.addRecipe(new ItemStack(blockSulphure), new Object[] {"XX", "XX", Character.valueOf('X'), itemSulphur});
 		GameRegistry.addShapelessRecipe(new ItemStack(itemSulphur, 4), new Object[] {blockSulphure});
 		GameRegistry.addRecipe(new ItemStack(blockBeryl), new Object[] {"XXX", "XXX", "XXX", Character.valueOf('X'), itemBeryl});
@@ -1255,8 +1192,6 @@ public class ConfigObjects extends CommonProxy {
 		ThaumcraftApi.addShapelessArcaneCraftingRecipe("", new ItemStack(itemToothIngot, 1, 0), new AspectList().add(Aspect.FIRE, 10), new Object[] {new ItemStack(itemHardPaw), ItemApi.getItem("itemResource", 2)});
 
 		ElysiumAspects.addAspects();
-		//ElysiumRecipes.addRecipes();
-		ElysiumResearch.addResearch();
 
 		if(Loader.isModLoaded("coloredlightscore"))
 		{
