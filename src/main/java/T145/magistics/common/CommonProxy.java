@@ -12,7 +12,10 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -26,17 +29,44 @@ import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.config.Log;
 import T145.magistics.common.lib.ResearchRecipe;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.server.FMLServerHandler;
 
 public class CommonProxy extends Log implements IGuiHandler {
 	public static Configuration config;
 	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
-	public static final String category[] = {
+	public static String category[] = {
 		"Graphics", "Blocks", "Items"
 	};
 
-	public static boolean winter;
+	public static int MAX_DRAGON_IN_END = 1;
+
+	public static int BIOME_PLAIN = 125;
+	public static int BIOME_FOREST = 126;
+	public static int BIOME_PLAIN_CORRUPT = 127;
+	public static int ELYSIUM_DEEP_OCEAN = 128;
+	public static int BIOME_OCEAN = 129;
+	public static int BIOME_RIVER = 130;
+	public static int BIOME_BEACH = 131;
+	public static int BIOME_DESERT = 132;
+
+	// Settings
+	public static int maxportaldistance = 64;
+	public static byte ticksbeforeportalcheck = 5;
+	public static byte ticksbeforeportalteleport = 20 * 5;
+
+	public static int labyrinthBottom = 5, labyrinthTop = labyrinthBottom + 4;
+
+	public static int mazeRoomRarity = 6;
+
+	public static boolean customGui = true, isMobCrystals = true, winter;
+
+	public static int dimensionID, maxDragon;
+
+	public static BiomeGenBase biomePlain, biomeForest, biomeCorruption, biomeForestCorrupt, biomeOcean, biomeRiver, biomeDesert, biomeBeach, biomeDeepOcean;
+
+	protected static int biomeIdPlains, biomeIdForest, biomeIdPlainsCorrupt, biomeIdForestCorrupt, biomeIdOcean, biomeIdDeepOcean, biomeIdRiver,  biomeIdDesert, biomeIdBeach;
 
 	public static boolean isWinterTime() {
 		Calendar c = Calendar.getInstance();
@@ -62,6 +92,38 @@ public class CommonProxy extends Log implements IGuiHandler {
 		colored_names = config.getBoolean(category[0], "Colored Names", false, "Toggles name coloring for some things.");
 		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
 		winter = (isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
+
+		/*Property ELYSIUM_PLAINS = config.get("biomeIds", "ELYSIUM_PLAINS", BIOME_PLAIN);
+		biomeIdPlains = ELYSIUM_PLAINS.getInt();
+
+		Property ELYSIUM_FOREST = config.get("biomeIds", "ELYSIUM_FOREST", BIOME_FOREST);
+		biomeIdForest = ELYSIUM_FOREST.getInt();
+
+		Property ELYSIUM_PLAINS_CORRUPT = config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", BIOME_PLAIN_CORRUPT);
+		biomeIdPlainsCorrupt = ELYSIUM_PLAINS_CORRUPT.getInt();
+
+		Property ELYSIUM_DEEP_OCEAN = config.get("biomeIds", "ELYSIUM_DEEP_OCEAN", ELYSIUM_DEEP_OCEAN);
+		biomeIdDeepOcean = ELYSIUM_DEEP_OCEAN.getInt();
+
+		Property ELYSIUM_OCEAN = config.get("biomeIds", "ELYSIUM_OCEAN", BIOME_OCEAN);
+		biomeIdOcean = ELYSIUM_OCEAN.getInt();
+
+		Property ELYSIUM_RIVER = config.get("biomeIds", "ELYSIUM_RIVER", BIOME_RIVER);
+		biomeIdRiver = ELYSIUM_RIVER.getInt();
+
+		Property ELYSIUM_DESERT = config.get("biomeIds", "ELYSIUM_DESERT", BIOME_DESERT);
+		biomeIdDesert = ELYSIUM_DESERT.getInt();
+
+		Property ELYSIUM_BEACH = config.get("biomeIds", "ELYSIUM_BEACH", BIOME_BEACH);
+		biomeIdBeach = ELYSIUM_BEACH.getInt();
+
+		Property ELYSIUM_ID = config.get("other", "ELYSIUM_ID", DimensionManager.getNextFreeDimId());
+		dimensionID = ELYSIUM_ID.getInt();
+
+		//Property MAX_DRAGON_IN_END = config.get("other", "MAX_DRAGON_IN_END", MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
+		Property MAX_END_DRAGON = config.getInt("MAX_DRAGON_IN_END", "other", MAX_DRAGON_IN_END, 1, 9, "How many dragons can be spawned to the End at the same time!");*/
+
+		Property MENU_ENABLED = config.get("other", "isMenuEnabled", customGui, "If you want to see the custom The Elysium menu instead of the regular Minecraft menu");
 	}
 
 	public void changeConfig(OnConfigChangedEvent e, String modid) {
@@ -96,6 +158,9 @@ public class CommonProxy extends Log implements IGuiHandler {
 
 		FreezerRecipes.addRecipe("water", new ItemStack(Blocks.ice));
 		FreezerRecipes.addRecipe("lava", new ItemStack(Blocks.obsidian));
+
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(ConfigObjects.blockRaspberryBush, 1, 1));
+		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(ConfigObjects.blockGrapesBush, 1, OreDictionary.WILDCARD_VALUE));
 
 		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
 

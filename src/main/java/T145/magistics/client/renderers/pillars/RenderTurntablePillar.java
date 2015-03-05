@@ -26,7 +26,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-import T145.magistics.api.CraftingPillarAPI;
+import T145.magistics.api.DiskRegistry;
 import T145.magistics.client.lib.pillars.ExternalRenderer;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.pillars.BlockPillarTurntable;
@@ -358,7 +358,7 @@ public class RenderTurntablePillar extends TileEntitySpecialRenderer implements 
 			glRotatef(workTile.rot, 0, 1, 0);
 			glScalef(0.025F, 0.025F, 0.025F);
 			glDisable(GL_LIGHTING);
-			FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(CraftingPillarAPI.getDiskTexture(workTile.getDisk().getItem())));
+			FMLClientHandler.instance().getClient().renderEngine.bindTexture(new ResourceLocation(DiskRegistry.getDiskTexture(workTile.getDisk().getItem())));
 			disk.renderAll();
 			glEnable(GL_LIGHTING);
 			glPopMatrix();

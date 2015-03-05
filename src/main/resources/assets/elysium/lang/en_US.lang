@@ -1,0 +1,148 @@
+itemGroup.elysium=The Elysium
+
+cave.elysium.name=Elysium Cave
+
+tile.palestone.name=Palestone
+tile.elysium_dirt.name=Elysium Dirt
+tile.elysium_grass.name=Elysium Grass
+tile.leucosand.name=Whitesand
+tile.rilt.name=Rilt
+
+tile.elysium_sapling.fostimber.name=Fostimber Sapling
+tile.elysium_sapling.silver.name=Gildensilv Sapling
+tile.elysium_log.fostimber.name=Fostimber Log
+tile.elysium_log.silver.name=Gildensilv Log
+tile.elysium_log.corrupt.name=Corrupted Log
+tile.elysium_leaves.fostimber.name=Fostimber Leaves
+tile.elysium_leaves.silver.name=Silver Leaves
+tile.elysium_planks.fostimber.name=Fostimber Planks
+tile.elysium_planks.silver.name=Gildensilv Planks
+tile.elysium_flower.asphodel.name=Asphodel Flower
+tile.elysium_flower.midas.name=Midas Flower
+tile.elysium_tallgrass.curlgrass.name=Curlgrass
+
+tile.oreSulphur.name=Sulphur Ore
+tile.oreBeryl.name=Beryl Ore
+tile.oreCobalt.name=Cobalt Ore
+tile.oreIridium.name=Iridium Ore
+tile.oreSilicon.name=Silicon Ore
+tile.oreJade.name=Jade Ore
+tile.oreTourmaline.name=Tourmaline Ore
+
+tile.elysium_water.name=Elysium Water
+tile.elysium_energy.name=Energy Liquid
+tile.energy_crystal.pure.name=Energy Crystal
+tile.energy_crystal.corrupted.name=Corrupted Energy Crystal
+tile.floating_block_conch.name=Floating Conch
+tile.floating_block_shell.name=Floating Shell
+
+tile.blockSulphur.name=Sulphur Block
+tile.blockBeryl.name=Beryl Block
+tile.blockCobalt.name=Cobalt Block
+tile.blockIridium.name=Iridium Block
+tile.blockSilicon.name=Silicon Block
+tile.blockJade.name=Jade Block
+tile.blockTourmaline.name=Tourmaline Block
+
+tile.blockCactus.name=Hallowed Cactus
+tile.blockRaspberryBush.name=Raspberry Bush
+tile.blockGrapes.name=Grapes Bush
+
+tile.quartzFence.clean.name=Quartz Fence
+tile.quartzFence.mossy.name=Mossy Quartz Fence
+tile.quartzWall.clean.name=Quartz Wall
+tile.quartzWall.mossy.name=Mossy Quartz Wall
+tile.quartz_mossy.default.name=Mossy Quartz Block
+tile.quartz_mossy.chiseled.name=Mossy Chiseled Quartz Block
+tile.quartz_mossy.lines.name=Mossy Pillar Quartz Block
+tile.quartzGate.name=Quartz Gate
+
+
+item.prism.name=Grace Prism
+item.seeds_pepper.name=Pepper Seed
+item.overkill.name=Overkill Weapon - NOT BALLANCED!
+item.asphodelpetal.name=Asphodel Petal
+item.debug.name=Teleporter (Shift + Right Click)
+item.beryl.name=Beryl
+item.ingotCobalt.name=Cobalt Ingot
+item.ingotIridium.name=Iridium Ingot
+item.jade.name=Jade
+item.siliconchunk.name=Silicon Chunk
+item.elysium_sulphur.name=Sulphur
+item.tourmaline.name=Tourmaline
+item.ingotTooth.name=Tooth Ingot
+item.sturdyHide.name=Sturdy Hide
+item.elysium_bucket_water.name=Holy Water Bucket
+item.elysium_bucket_energy.name=Energy Fluid Bucket
+
+fluid.elysium_energy=Energy Fluid
+fluid.elysium_water=Holy Water
+
+item.deer_pelt.name=Deer Pelt
+item.grapes.white.name=White Grapes
+item.grapes.blue.name=Blue Grapes
+item.raspberry.name=Raspberry
+
+item.staff.earth.name=Earth Staff
+item.staff.ice.name=Ice Staff
+item.staff.ender.name=Ender Staff
+item.staff.fire.name=Fire Staff
+
+item.horn.name=Horn
+item.antler.name=Antler
+item.hard_paw.name=Tooth
+item.knife.name=Knife
+
+item.swordFostimber.name=Fostimber Sword
+item.pickaxeFostimber.name=Fostimber Pickaxe
+item.axeFostimber.name=Fostimber Axe
+item.axeFostimber.name=Fostimber Axe
+item.shovelFostimber.name=Fostimber Shovel
+item.hoeFostimber.name=Fostimber Hoe
+
+item.swordPalestone.name=Palestone Sword
+item.pickaxePalestone.name=Palestone Pickaxe
+item.axePalestone.name=Palestone Axe
+item.axePalestone.name=Palestone Axe
+item.shovelPalestone.name=Palestone Shovel
+item.hoePalestone.name=Palestone Hoe
+
+item.enderflute.name=Ender Flute
+
+item.toothIngot.name=Tooth Ingot
+item.toothHelmet.name=Tooth Helmet
+item.toothChestplate.name=Tooth Chestplate
+item.toothLeggings.name=Tooth Leggings
+item.toothBoots.name=Tooth Boots
+
+item.Wand.pure.cap=Pure Energy Capped
+item.Wand.corrupted.cap=Corrupted Energy Capped
+
+item.Wand.horn.rod=Unicorn Horn
+
+item.WandCores.horn.name=Unicorn Horn Rod
+
+item.WandCaps.pure.name=Pure Energy Cap
+item.WandCaps.corrupted.name=Corrupted Energy Cap
+
+flute.tips.0=Hmm... looks like a musical instrument
+flute.tips.1=Its sound could be heard from a long distance...
+flute.tips.2=Sorry, I can't use it HERE!
+
+flute.dragonExist.0=Looks like there is a dragon here...
+flute.dragonExist.1=Oh! There is the Ender Dragon!
+flute.dragonExist.2=There can't be more dragons in this dimension...
+flute.dragonExist.3=There should be a dragon somewhere here...
+
+tc.aspect.sanctus=Sanctus
+tc.aspect.help.sanctus=Holiness
+
+
+entity.ElysiumCaterPillar.name=Cater Pillar
+entity.ElysiumSwan.name=Swan
+entity.ElysiumEvolvedOyster.name=Evolved Oyster
+entity.ElysiumDeer.name=Deer
+entity.ElysiumUnicorn.name=Pink Unicorn
+entity.ElysiumVoidSpecter.name=Void Specter
+entity.ElysiumEnderMage.name=Ender Mage
+entity.ElysiumHero.name=Hero
