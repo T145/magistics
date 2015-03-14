@@ -1,78 +1,114 @@
 package T145.magistics.common.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import T145.magistics.common.Magistics;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ConfigObjects {
-	public class BlockNode {
+	private class BlockNode {
 		private Block b;
-		private ItemBlock i;
+		private Class i;
 
 		public BlockNode(Block block) {
 			b = block;
 		}
 
-		public BlockNode(Block block, ItemBlock item) {
+		public BlockNode(Block block, Class item) {
 			b = block;
 			i = item;
 		}
 	}
 
-	/*private static Map<Object, List> objMatrix;
+	private static ConfigObjects instance = new ConfigObjects();
 
-	public ConfigObjects() {
-		List<BlockNode> blocks = new ArrayList<BlockNode>();
-		List<Item> items = new ArrayList<Item>();
-		List<Class> tiles = new ArrayList<Class>();
-		objMatrix = new HashMap<Object, List>();
-
-		objMatrix.put(Block.class, blocks);
-		objMatrix.put(Item.class, items);
-		objMatrix.put(Class.class, tiles);
+	public static ConfigObjects getInstance() {
+		return instance;
 	}
 
-	public static void add(Object input) {
-		for (Object key : objMatrix.keySet()) {
-			if (key.getClass().isAssignableFrom(input.getClass())) {
-				List dest = objMatrix.get(key);
-				dest.add(input);
-				objMatrix.put(key.getClass(), dest);
-			} else
-				Magistics.logger.info("Couldn't add in the object " + input + "!");
-		}
-	}*/
-
-	public static CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
+	private CreativeTabs tabMagistics = new CreativeTabs(Magistics.modid) {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.anvil);
+			return Item.getItemFromBlock(Magistics.proxy.blockChestHungryEnder);
 		}
-	};
 
-	/*public static void register() {
-		for (Object key : objMatrix.keySet()) {
-			if (key instanceof Block) {
-				List<BlockNode> values = objMatrix.get(key);
-				for (BlockNode block : values)
-					if (block.i == null)
-						GameRegistry.registerBlock(block.b.setCreativeTab(tabMagistics), block.b.getUnlocalizedName());
-					else
-						GameRegistry.registerBlock(block.b.setCreativeTab(tabMagistics), block.i.getClass(), block.b.getUnlocalizedName());
-			} else if (key instanceof Item) {
-				List<Item> values = objMatrix.get(key);
-				for (Item item : values)
-					GameRegistry.registerItem(item.setCreativeTab(tabMagistics), item.getUnlocalizedName());
-			} else {
-				List<Class> values = objMatrix.get(key);
-				for (Class tile : values)
-					GameRegistry.registerTileEntity(tile, tile.getSimpleName());
-			}
+		@Override
+		public boolean hasSearchBar() {
+			return true;
 		}
-	}*/
-	
-	
+	}.setBackgroundImageName("magistics.png").setNoTitle();
+
+	private LinkedList<Item> items = new LinkedList<Item>();
+	private LinkedList<Class> tiles = new LinkedList<Class>();
+	private LinkedList<BlockNode> blocks = new LinkedList<BlockNode>();
+
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public void addTile(Class tile) {
+		tiles.add(tile);
+	}
+
+	public void addBlock(Block block) {
+		blocks.add(new BlockNode(block));
+	}
+
+	public void addBlock(Block block, Class item) {
+		blocks.add(new BlockNode(block, item));
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public List<Class> getTiles() {
+		return tiles;
+	}
+
+	public List<Block> getBlocks() {
+		List<Block> dest = new ArrayList<Block>();
+		Iterator<BlockNode> iterator = blocks.iterator();
+
+		while (iterator.hasNext())
+			dest.add(iterator.next().b);
+
+		return dest;
+	}
+
+	public Map<Block, Class> getBlocksWithItems() {
+		Map<Block, Class> dest = new HashMap<Block, Class>();
+		Iterator<BlockNode> iterator = blocks.iterator();
+
+		while (iterator.hasNext()) {
+			BlockNode node = iterator.next();
+			dest.put(node.b, node.i);
+		}
+
+		return dest;
+	}
+
+	public void register() {
+		for (Item item : items)
+			GameRegistry.registerItem(item.setCreativeTab(tabMagistics), item.getUnlocalizedName());
+		for (Class tile : tiles)
+			GameRegistry.registerTileEntity(tile, "magistics:" + tile.getSimpleName());
+		for (BlockNode node : blocks) {
+			Block block = node.b;
+			Class item = node.i;
+
+			if (item == null)
+				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), block.getUnlocalizedName());
+			else
+				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), item, block.getUnlocalizedName());
+		}
+	}
 }

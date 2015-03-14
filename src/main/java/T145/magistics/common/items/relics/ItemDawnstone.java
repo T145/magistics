@@ -1,4 +1,4 @@
-package T145.magistics.common.items;
+package T145.magistics.common.items.relics;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

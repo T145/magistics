@@ -6,6 +6,7 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import T145.magistics.client.GuiHandler;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,11 +26,7 @@ public class Magistics {
 	public static final String modid = "Magistics", version = "8.0.0";
 
 	@Instance(modid)
-	private Magistics instance;
-
-	public Magistics getInstance() {
-		return instance;
-	}
+	public static Magistics instance;
 
 	@Metadata
 	public static ModMetadata meta;
@@ -85,7 +82,8 @@ public class Magistics {
 		meta.credits = "Azanor, for making Thaumcraft, and all of Magistics' contributors!";
 		meta.logoFile = "logo.png";
 
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		proxy.registerObjects();
 	}
 
 	@EventHandler // renderers, recipes, & TC stuff
