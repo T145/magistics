@@ -1,11 +1,11 @@
 package T145.magistics.client;
 
-import net.minecraft.network.Packet;
 import T145.magistics.common.CommonProxy;
-import cpw.mods.fml.client.FMLClientHandler;
+import T145.magistics.common.Magistics;
 
 public class ClientProxy extends CommonProxy {
-	public void sendToServer(Packet packet) {
-		FMLClientHandler.instance().getClient().getNetHandler().addToSendQueue(packet);
+	@Override
+	public void registerHandlers(Magistics instance) {
+		
 	}
 }

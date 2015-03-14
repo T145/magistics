@@ -8,17 +8,21 @@ import T145.magistics.client.gui.GuiSettings;
 import cpw.mods.fml.client.IModGuiFactory;
 
 public class GuiFactory implements IModGuiFactory {
-	public void initialize(final Minecraft minecraftInstance) {}
+	@Override
+	public void initialize(Minecraft mc) {}
 
+	@Override
 	public Class<? extends GuiScreen> mainConfigGuiClass() {
-		return (Class<? extends GuiScreen>) GuiSettings.class;
+		return GuiSettings.class;
 	}
 
-	public Set<IModGuiFactory.RuntimeOptionCategoryElement> runtimeGuiCategories() {
+	@Override
+	public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
 		return null;
 	}
 
-	public IModGuiFactory.RuntimeOptionGuiHandler getHandlerFor(final IModGuiFactory.RuntimeOptionCategoryElement element) {
+	@Override
+	public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
 		return null;
 	}
 }
