@@ -21,21 +21,20 @@ public class ItemMagisticsRecord extends ItemRecord {
 
 	public ItemMagisticsRecord(String name) {
 		super(name);
-
 		recordName = name;
-		maxStackSize = 1;
-
 		records.put(recordName, this);
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-		if (world.getBlock(x, y, z) == Blocks.jukebox && world.getBlockMetadata(x, y, z) == 0) {
+		if (world.getBlock(x, y, z) == Blocks.jukebox) {
+			BlockJukebox jukebox = (BlockJukebox) world.getBlock(x, y, z);
+
 			if (world.isRemote)
 				return true;
 			else {
-				((BlockJukebox) Blocks.jukebox).func_149926_b(world, x, y, z, itemStack);
-				world.playAuxSFXAtEntity((EntityPlayer) null, 1005, x, y, z, Item.getIdFromItem(this));
+				jukebox.func_149926_b(world, x, y, z, itemStack);
+				world.playAuxSFXAtEntity(null, 1005, x, y, z, Item.getIdFromItem(this));
 
 				--itemStack.stackSize;
 				return true;

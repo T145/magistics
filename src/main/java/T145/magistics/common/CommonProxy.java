@@ -12,6 +12,7 @@ import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.items.ItemMagisticsRecord;
 import T145.magistics.common.items.ItemResources;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
@@ -27,7 +28,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 
 public class CommonProxy {
-	public static Item itemResources;
+	public static Item itemResources, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
 	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
 
 	public void registerHandlers(Magistics instance) {
@@ -37,6 +38,17 @@ public class CommonProxy {
 	public void registerObjects() {
 		ConfigObjects config = ConfigObjects.getInstance();
 		config.addItem(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
+		config.addItem(record_chamber = new ItemMagisticsRecord("chamber").setUnlocalizedName("record_chamber").setTextureName("magistics:record_chamber"));
+		config.addItem(record_deception = new ItemMagisticsRecord("deception").setUnlocalizedName("record_deception").setTextureName("magistics:record_deception"));
+		config.addItem(record_ghost = new ItemMagisticsRecord("ghost").setUnlocalizedName("record_ghost").setTextureName("magistics:record_ghost"));
+		config.addItem(record_gloom = new ItemMagisticsRecord("gloom").setUnlocalizedName("record_gloom").setTextureName("magistics:record_gloom"));
+		config.addItem(record_halls = new ItemMagisticsRecord("halls").setUnlocalizedName("record_halls").setTextureName("magistics:record_halls"));
+		config.addItem(record_moonlight = new ItemMagisticsRecord("moonlight").setUnlocalizedName("record_moonlight").setTextureName("magistics:record_moonlight"));
+		config.addItem(record_plant = new ItemMagisticsRecord("plant").setUnlocalizedName("record_plant").setTextureName("magistics:record_plant"));
+		config.addItem(record_portal = new ItemMagisticsRecord("portal").setUnlocalizedName("record_portal").setTextureName("magistics:record_portal"));
+		config.addItem(record_queen = new ItemMagisticsRecord("queen").setUnlocalizedName("record_queen").setTextureName("magistics:record_queen"));
+		config.addItem(record_serpentine = new ItemMagisticsRecord("serpentine").setUnlocalizedName("record_serpentine").setTextureName("magistics:record_serpentine"));
+		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record_unlight"));
 
 		config.addTile(TileChestHungry.class);
 		config.addBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"));
