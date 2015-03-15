@@ -7,6 +7,7 @@ import T145.magistics.api.client.renderers.items.ItemChestRenderer;
 import T145.magistics.client.config.ConfigRenderers;
 import T145.magistics.client.lib.RenderHelper;
 import T145.magistics.client.renderers.blocks.BlockCrystalStorageRenderer;
+import T145.magistics.client.renderers.blocks.BlockCrystalStorageStructureRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryMetalRenderer;
@@ -19,6 +20,8 @@ import T145.magistics.common.blocks.BlockChestHungry;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockCrystalStorage;
+import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -37,7 +40,8 @@ public class ClientProxy extends CommonProxy {
 		super.registerObjects(); // make the server load first
 		ConfigRenderers config = ConfigRenderers.getInstance();
 
-		config.addBlockRenderer(new BlockCrystalStorageRenderer());
+		config.addBlockRenderer(new BlockCrystalStorageRenderer(BlockCrystalStorage.icon, BlockCrystalStorage.renderID));
+		config.addBlockRenderer(new BlockCrystalStorageStructureRenderer());
 
 		config.addTileRenderer(TileChestHungry.class, new TileChestHungryRenderer());
 		config.addBlockRenderer(new ChestRenderer(BlockChestHungry.renderID, new TileChestHungry()));

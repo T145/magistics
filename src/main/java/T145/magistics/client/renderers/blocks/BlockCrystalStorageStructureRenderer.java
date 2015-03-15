@@ -5,43 +5,27 @@ import java.awt.Color;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
+import net.minecraft.item.ItemDye;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.client.lib.RenderHelper;
 import T145.magistics.common.blocks.BlockCrystalStorage;
+import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
-	public IIcon textures[];
-	public int id;
-
-	public BlockCrystalStorageRenderer(IIcon[] resources, int renderID) {
-		textures = resources;
-		id = renderID;
-	}
-
+public class BlockCrystalStorageStructureRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
-
-		if (meta > 5)
-			BlockRenderer.drawFaces(renderer, block, textures[1], false);
-		else
-			BlockRenderer.drawFaces(renderer, block, textures[0], false);
-
-		Color c = RenderHelper.getColors().get(meta);
+		drawFaces(renderer, block, BlockCrystalStorageStructure.icon, false);
+		Color c = new Color(ItemDye.field_150922_c[meta]);
 		GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
 		block.setBlockBounds(0.005F, 0.005F, 0.005F, 0.995F, 0.995F, 0.995F);
 		renderer.setRenderBoundsFromBlock(block);
-		BlockRenderer.drawFaces(renderer, block, BlockCrystalStorage.iconGlow, false);
+		drawFaces(renderer, block, BlockCrystalStorage.iconGlow, false);
 		GL11.glColor3f(1F, 1F, 1F);
 	}
 
@@ -50,11 +34,9 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
 		renderer.renderStandardBlock(block, x, y, z);
-
 		Tessellator t = Tessellator.instance;
-		t.setColorOpaque_I(RenderHelper.getColorCodes().get(world.getBlockMetadata(x, y, z)));
+		t.setColorOpaque_I(ItemDye.field_150922_c[world.getBlockMetadata(x, y, z)]);
 		t.setBrightness(180);
-
 		renderAllSidesInverted(world, x, y, z, block, renderer, BlockCrystalStorage.iconGlow, false);
 		block.setBlockBounds(0.005F, 0.005F, 0.005F, 0.995F, 0.995F, 0.995F);
 		renderer.setRenderBoundsFromBlock(block);
@@ -73,6 +55,6 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 
 	@Override
 	public int getRenderId() {
-		return id;
+		return BlockCrystalStorageStructure.renderID;
 	}
 }

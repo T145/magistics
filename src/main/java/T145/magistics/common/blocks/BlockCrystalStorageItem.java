@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class BlockCrystalStorageItem extends ItemBlock {
 	private static String[] types = {
-		"aer", "fire", "water", "earth", "ordo", "entropy"
+		"air", "fire", "water", "earth", "ordo", "entropy"
 	};
 
 	public BlockCrystalStorageItem(Block block) {

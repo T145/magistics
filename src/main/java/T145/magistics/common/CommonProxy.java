@@ -9,6 +9,8 @@ import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.blocks.BlockCrystalStorage;
 import T145.magistics.common.blocks.BlockCrystalStorageItem;
+import T145.magistics.common.blocks.BlockCrystalStorageStructure;
+import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
@@ -53,6 +55,7 @@ public class CommonProxy {
 		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record_unlight"));
 
 		config.addBlock(new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
+		config.addBlock(new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
 
 		config.addTile(TileChestHungry.class);
 		config.addBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"));
