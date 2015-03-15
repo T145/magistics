@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import T145.magistics.client.lib.TextureHelper;
+import T145.magistics.client.lib.RenderHelper;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 
 import com.google.common.primitives.SignedBytes;
@@ -63,7 +63,7 @@ public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
 		if (tile != null && tile.hasWorldObj())
 			facing = tile.getFacing();
 
-		bindTexture(TextureHelper.ironChestTextures[type.ordinal()]);
+		bindTexture(RenderHelper.ironChestTextures[type.ordinal()]);
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);

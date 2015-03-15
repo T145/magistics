@@ -5,7 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import T145.magistics.api.client.renderers.blocks.ChestRenderer;
 import T145.magistics.api.client.renderers.items.ItemChestRenderer;
 import T145.magistics.client.config.ConfigRenderers;
-import T145.magistics.client.lib.TextureHelper;
+import T145.magistics.client.lib.RenderHelper;
+import T145.magistics.client.renderers.blocks.BlockCrystalStorageRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryMetalRenderer;
@@ -36,6 +37,8 @@ public class ClientProxy extends CommonProxy {
 		super.registerObjects(); // make the server load first
 		ConfigRenderers config = ConfigRenderers.getInstance();
 
+		config.addBlockRenderer(new BlockCrystalStorageRenderer());
+
 		config.addTileRenderer(TileChestHungry.class, new TileChestHungryRenderer());
 		config.addBlockRenderer(new ChestRenderer(BlockChestHungry.renderID, new TileChestHungry()));
 
@@ -53,7 +56,7 @@ public class ClientProxy extends CommonProxy {
 
 		if (Loader.isModLoaded("IronChest")) {
 			config.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
-			config.addBlockRenderer(new ChestRenderer(BlockChestHungryMetal.renderID, TextureHelper.ironChestTextures));
+			config.addBlockRenderer(new ChestRenderer(BlockChestHungryMetal.renderID, RenderHelper.ironChestTextures));
 		}
 
 		if (Loader.isModLoaded("RefinedRelocation")) {
@@ -72,7 +75,7 @@ public class ClientProxy extends CommonProxy {
 			}
 
 			if (Loader.isModLoaded("IronChest")) {
-				config.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungryMetal), new ItemChestRenderer(TextureHelper.ironChestTextures, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
+				config.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungryMetal), new ItemChestRenderer(RenderHelper.ironChestTextures, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
 				config.addTileRenderer(TileSortingChestHungryMetal.class, new TileSortingChestHungryMetalRenderer());
 			}
 		}

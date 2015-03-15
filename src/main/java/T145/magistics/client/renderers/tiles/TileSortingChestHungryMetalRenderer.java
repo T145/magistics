@@ -14,7 +14,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import T145.magistics.client.lib.TextureHelper;
+import T145.magistics.client.lib.RenderHelper;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
 
 import com.dynious.refinedrelocation.lib.Resources;
@@ -57,7 +57,7 @@ public class TileSortingChestHungryMetalRenderer extends TileEntitySpecialRender
 	}
 
 	private void setTextures(IronChestType type, boolean renderOverlay) {
-		bindTexture(TextureHelper.ironChestTextures[type.ordinal()]);
+		bindTexture(RenderHelper.ironChestTextures[type.ordinal()]);
 
 		if (renderOverlay)
 			bindTexture(Resources.MODEL_TEXTURE_OVERLAY_CHEST);

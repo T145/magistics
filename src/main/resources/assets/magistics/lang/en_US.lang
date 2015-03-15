@@ -98,6 +98,20 @@ item.mithril_flute.name=Mithril Flute
 # Blocks
 ###
 
+tile.crystal_storage.basic.air.name=Air Crystal Block
+tile.crystal_storage.basic.fire.name=Fire Crystal Block
+tile.crystal_storage.basic.water.name=Water Crystal Block
+tile.crystal_storage.basic.earth.name=Earth Crystal Block
+tile.crystal_storage.basic.ordo.name=Order Crystal Block
+tile.crystal_storage.basic.entropy.name=Entropy Crystal Block
+
+tile.crystal_storage.brick.air.name=Air Crystal Block
+tile.crystal_storage.brick.fire.name=Fire Crystal Block
+tile.crystal_storage.brick.water.name=Water Crystal Block
+tile.crystal_storage.brick.earth.name=Earth Crystal Block
+tile.crystal_storage.brick.ordo.name=Order Crystal Block
+tile.crystal_storage.brick.entropy.name=Entropy Crystal Block
+
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest
 tile.sorting_hungry_chest.name=Hungry Sorting Chest
@@ -115,6 +129,7 @@ tile.hungry_metal_chest.silver.name=Hungry Silver Chest
 tile.hungry_metal_chest.crystal.name=Hungry Crystal Chest
 tile.hungry_metal_chest.obsidian.name=Hungry Obsidian Chest
 tile.hungry_metal_chest.dirt.name=Hungry Dirt Chest
+
 tile.sorting_hungry_metal_chest.iron.name=Hungry Sorting Iron Chest
 tile.sorting_hungry_metal_chest.gold.name=Hungry Sorting Gold Chest
 tile.sorting_hungry_metal_chest.diamond.name=Hungry Sorting Diamond Chest
