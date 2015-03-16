@@ -11,6 +11,8 @@ import T145.magistics.common.blocks.BlockCrystalStorage;
 import T145.magistics.common.blocks.BlockCrystalStorageItem;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
+import T145.magistics.common.blocks.BlockDarknessDetector;
+import T145.magistics.common.blocks.BlockLightDetector;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
@@ -18,6 +20,7 @@ import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.items.ItemMagisticsRecord;
 import T145.magistics.common.items.ItemResources;
+import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -32,7 +35,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 
 public class CommonProxy {
-	public static Item itemResources, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
+	public static Item itemResources, itemDawnstone, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
 	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
 
 	public void registerHandlers(Magistics instance) {
@@ -42,6 +45,7 @@ public class CommonProxy {
 	public void registerObjects() {
 		ConfigObjects config = ConfigObjects.getInstance();
 		config.addItem(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
+		config.addItem(itemDawnstone = new ItemDawnstone().setTextureName("magistics:dawnstone").setUnlocalizedName("dawnstone"));
 		config.addItem(record_chamber = new ItemMagisticsRecord("chamber").setUnlocalizedName("record_chamber").setTextureName("magistics:record_chamber"));
 		config.addItem(record_deception = new ItemMagisticsRecord("deception").setUnlocalizedName("record_deception").setTextureName("magistics:record_deception"));
 		config.addItem(record_ghost = new ItemMagisticsRecord("ghost").setUnlocalizedName("record_ghost").setTextureName("magistics:record_ghost"));
@@ -56,6 +60,9 @@ public class CommonProxy {
 
 		config.addBlock(new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
 		config.addBlock(new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
+
+		config.addBlock(new BlockLightDetector().setBlockName("light_detector"));
+		config.addBlock(new BlockDarknessDetector().setBlockName("dark_detector"));
 
 		config.addTile(TileChestHungry.class);
 		config.addBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"));

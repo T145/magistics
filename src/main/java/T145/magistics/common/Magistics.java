@@ -37,10 +37,11 @@ public class Magistics {
 	public static Configuration config;
 	public static Logger logger = LogManager.getLogger(modid);
 
-	public static boolean debug;
+	public static boolean debug, colored_names;
 
 	public void syncConfiguration() {
 		debug = config.getBoolean("Debug", config.CATEGORY_GENERAL, true, "Toggles advanced log output.");
+		colored_names = config.getBoolean("Colored Names", config.CATEGORY_GENERAL, true, "Toggles certain colored names in the mod.");
 	}
 
 	@EventHandler
@@ -73,13 +74,18 @@ public class Magistics {
 	@EventHandler // registry registering & FMLInterComms
 	public void init(FMLInitializationEvent e) {
 		meta.modId = modid;
-		meta.name = EnumChatFormatting.AQUA + modid;
+
+		if (colored_names)
+			meta.name = String.format("%s%s" + modid, EnumChatFormatting.ITALIC, EnumChatFormatting.AQUA);
+		else
+			meta.name = EnumChatFormatting.ITALIC + modid;
+
 		meta.description = "Adding some logistics to Thaumcraft!";
 		meta.version = version;
 		meta.url = "https://github.com/T145/magistics";
 		meta.updateUrl = "https://github.com/T145/magistics/releases";
 		meta.authorList.add(EnumChatFormatting.GOLD + "T145");
-		meta.credits = "Azanor, for making Thaumcraft, and all of Magistics' contributors!";
+		meta.credits = "Special thanks to the texturing team!";
 		meta.logoFile = "logo.png";
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
