@@ -37,6 +37,7 @@ import cpw.mods.fml.common.Loader;
 public class CommonProxy {
 	public static Item itemResources, itemDawnstone, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
 	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
+	public static Block crystalStorage, crystalStructure, lightDetector, darknessDetector;
 
 	public void registerHandlers(Magistics instance) {
 		FMLCommonHandler.instance().bus().register(instance);
@@ -58,11 +59,11 @@ public class CommonProxy {
 		config.addItem(record_serpentine = new ItemMagisticsRecord("serpentine").setUnlocalizedName("record_serpentine").setTextureName("magistics:record_serpentine"));
 		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record_unlight"));
 
-		config.addBlock(new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
-		config.addBlock(new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
+		config.addBlock(crystalStorage = new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
+		config.addBlock(crystalStructure = new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
 
-		config.addBlock(new BlockLightDetector().setBlockName("light_detector"));
-		config.addBlock(new BlockDarknessDetector().setBlockName("dark_detector"));
+		config.addBlock(lightDetector = new BlockLightDetector().setBlockName("light_detector"));
+		config.addBlock(darknessDetector = new BlockDarknessDetector().setBlockName("darkness_detector"));
 
 		config.addTile(TileChestHungry.class);
 		config.addBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"));

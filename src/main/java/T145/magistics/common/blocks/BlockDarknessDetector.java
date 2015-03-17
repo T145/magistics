@@ -13,24 +13,28 @@ public class BlockDarknessDetector extends BlockDaylightDetector {
 	private IIcon icon[] = new IIcon[2];
 
 	@Override
-	public void func_149957_e(World world, int i, int j, int k) {
-		int darknessLevel = 15 - (world.getSavedLightValue(EnumSkyBlock.Sky, i, j, k) - world.skylightSubtracted);
-		float f = world.getCelestialAngleRadians(1F);
+	public void func_149957_e(World world, int x, int y, int z) {
+		if (!world.provider.hasNoSky) {
+			int light = world.getSavedLightValue(EnumSkyBlock.Sky, x, y, z) - world.skylightSubtracted;
+			float f = world.getCelestialAngleRadians(1F);
 
-		if (f < Math.PI)
-			f += (0.0F - f) * 0.2F;
-		else
-			f += ((Math.PI * 2F) - f) * 0.2F;
+			if (f < Math.PI)
+				f += (0.0F - f) * 0.2F;
+			else
+				f += ((Math.PI * 2F) - f) * 0.2F;
 
-		darknessLevel = Math.round(darknessLevel * MathHelper.cos(f));
+			light = Math.round(light * MathHelper.cos(f));
 
-		if (darknessLevel < 0)
-			darknessLevel = 0;
-		if (darknessLevel > 15)
-			darknessLevel = 15;
+			if (light < 0)
+				light = 0;
+			if (light > 15)
+				light = 15;
 
-		if (world.getBlockMetadata(i, j, k) != darknessLevel)
-			world.setBlockMetadataWithNotify(i, j, k, darknessLevel, 3);
+			int dark = 15 - light;
+
+			if (world.getBlockMetadata(x, y, z) != dark)
+				world.setBlockMetadataWithNotify(x, y, z, dark, 3);
+		}
 	}
 
 	@Override

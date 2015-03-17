@@ -156,6 +156,9 @@ tile.sorting_hungry_metal_chest.crystal.name=Hungry Sorting Crystal Chest
 tile.sorting_hungry_metal_chest.obsidian.name=Hungry Sorting Obsidian Chest
 tile.sorting_hungry_metal_chest.dirt.name=Hungry Sorting Dirt Chest
 
+tile.light_detector.name=Light Sensor
+tile.darkness_detector.name=Darkness Sensor
+
 tile.infusion_workbench.base.name=Reinforced Arcane Stone
 tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks
 
