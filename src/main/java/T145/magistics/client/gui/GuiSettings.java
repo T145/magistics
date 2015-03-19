@@ -5,20 +5,24 @@ import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.common.config.Configuration;
 import T145.magistics.common.Magistics;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
 
 public class GuiSettings extends GuiConfig {
+	private static Configuration config = Magistics.config;
+
 	public GuiSettings(GuiScreen parent) {
-		super(parent, (List) getConfigElements(), Magistics.modid, false, false, GuiConfig.getAbridgedConfigPath(Magistics.proxy.config.toString()));
+		super(parent, getConfigElements(), Magistics.modid, false, false, GuiConfig.getAbridgedConfigPath(config.toString()));
 	}
 
 	private static List<IConfigElement> getConfigElements() {
 		List<IConfigElement> list = new ArrayList<IConfigElement>();
-		list.addAll(new ConfigElement(Magistics.proxy.config.getCategory("general")).getChildElements());
-		for (String category : Magistics.proxy.category)
-			list.addAll(new ConfigElement(Magistics.proxy.config.getCategory(category)).getChildElements());
+
+		for (String category : config.getCategoryNames())
+			list.addAll(new ConfigElement(config.getCategory(category)).getChildElements());
+
 		return list;
 	}
 }

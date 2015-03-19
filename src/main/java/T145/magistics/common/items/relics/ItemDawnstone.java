@@ -6,15 +6,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import T145.magistics.common.Magistics;
 
 public class ItemDawnstone extends Item {
 	@Override
 	public EnumRarity getRarity(ItemStack is) {
-		if (Magistics.proxy.colored_names)
-			return EnumRarity.uncommon;
-		else
-			return EnumRarity.common;
+		return EnumRarity.uncommon;
 	}
 
 	@Override

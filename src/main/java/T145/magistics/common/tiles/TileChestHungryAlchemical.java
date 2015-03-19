@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import thaumcraft.api.wands.IWandable;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.Magistics;
 
 import com.pahimar.ee3.tileentity.TileEntityAlchemicalChest;
 
@@ -37,7 +37,7 @@ public class TileChestHungryAlchemical extends TileEntityAlchemicalChest impleme
 			if (numUsingPlayers > 0)
 				return false;
 
-			TileChestHungryAlchemical newChest = (TileChestHungryAlchemical) ConfigObjects.blockChestHungryAlchemical.createTileEntity(worldObj, upgradeMetadata);
+			TileChestHungryAlchemical newChest = (TileChestHungryAlchemical) Magistics.proxy.blockChestHungryAlchemical.createTileEntity(worldObj, upgradeMetadata);
 			newChest.setOrientation(getOrientation());
 
 			for (int slot = 0; slot < getSizeInventory(); slot++) {

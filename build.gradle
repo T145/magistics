@@ -74,6 +74,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradle_version
 }
 
+apply plugin: 'curseforge'
 apply plugin: 'forge'
 
 version = project_version
@@ -159,5 +160,18 @@ task apiZip(type: Zip) {
 }
 
 artifacts {
-    archives deobfJar, sourceJar, apiZip
+    archives deobfJar, sourceJar, javadocJar, apiZip
+}
+
+curse {
+    apiKey = curse_token
+    projectId = project_id
+    changelog = """
+    Multiline comment!
+    """
+    releaseType = 'beta'
+
+    // the default obfuscated jar is uploaded by default
+    //artifact = project.file('path/to/a.jar')
+    //additionalArtifact deobfJar
 }

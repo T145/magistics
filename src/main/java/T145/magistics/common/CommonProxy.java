@@ -1,200 +1,107 @@
 package T145.magistics.common;
 
-import java.io.File;
-import java.util.Calendar;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.oredict.OreDictionary;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchItem;
-import thaumcraft.api.research.ResearchPage;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.config.ConfigResearch;
-import T145.magistics.api.FreezerRecipes;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import T145.magistics.common.blocks.BlockChestHungry;
+import T145.magistics.common.blocks.BlockChestHungryAlchemical;
+import T145.magistics.common.blocks.BlockChestHungryEnder;
+import T145.magistics.common.blocks.BlockChestHungryMetal;
+import T145.magistics.common.blocks.BlockChestHungryMetalItem;
+import T145.magistics.common.blocks.BlockCrystalStorage;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineering;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineeringItem;
+import T145.magistics.common.blocks.BlockCrystalStorageItem;
+import T145.magistics.common.blocks.BlockCrystalStorageReinforced;
+import T145.magistics.common.blocks.BlockCrystalStorageReinforcedItem;
+import T145.magistics.common.blocks.BlockCrystalStorageStructure;
+import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
+import T145.magistics.common.blocks.BlockDarknessDetector;
+import T145.magistics.common.blocks.BlockLightDetector;
+import T145.magistics.common.blocks.BlockSortingChestHungry;
+import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
+import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
+import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.config.ConfigObjects;
-import T145.magistics.common.config.Log;
-import T145.magistics.common.lib.ResearchRecipe;
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.server.FMLServerHandler;
+import T145.magistics.common.items.ItemMagisticsRecord;
+import T145.magistics.common.items.ItemResources;
+import T145.magistics.common.items.relics.ItemDawnstone;
+import T145.magistics.common.tiles.TileChestHungry;
+import T145.magistics.common.tiles.TileChestHungryAlchemical;
+import T145.magistics.common.tiles.TileChestHungryEnder;
+import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileSortingChestHungry;
+import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
+import T145.magistics.common.tiles.TileSortingChestHungryMetal;
 
-public class CommonProxy extends Log implements IGuiHandler {
-	public static Configuration config;
-	public static boolean debug, colored_names, low_gfx, hungry_chest_override;
-	public static String category[] = {
-		"Graphics", "Blocks", "Items"
-	};
+import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
-	public static int MAX_DRAGON_IN_END = 1;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 
-	public static int BIOME_PLAIN = 125;
-	public static int BIOME_FOREST = 126;
-	public static int BIOME_PLAIN_CORRUPT = 127;
-	public static int ELYSIUM_DEEP_OCEAN = 128;
-	public static int BIOME_OCEAN = 129;
-	public static int BIOME_RIVER = 130;
-	public static int BIOME_BEACH = 131;
-	public static int BIOME_DESERT = 132;
+public class CommonProxy {
+	public static Item itemResources, itemDawnstone, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
+	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
+	public static Block crystalStorage, crystalStructure, crystalStorageReinforced, crystalStorageEngineering, lightDetector, darknessDetector;
 
-	// Settings
-	public static int maxportaldistance = 64;
-	public static byte ticksbeforeportalcheck = 5;
-	public static byte ticksbeforeportalteleport = 20 * 5;
-
-	public static int labyrinthBottom = 5, labyrinthTop = labyrinthBottom + 4;
-
-	public static int mazeRoomRarity = 6;
-
-	public static boolean customGui = true, isMobCrystals = true, winter;
-
-	public static int dimensionID, maxDragon;
-
-	public static BiomeGenBase biomePlain, biomeForest, biomeCorruption, biomeForestCorrupt, biomeOcean, biomeRiver, biomeDesert, biomeBeach, biomeDeepOcean;
-
-	protected static int biomeIdPlains, biomeIdForest, biomeIdPlainsCorrupt, biomeIdForestCorrupt, biomeIdOcean, biomeIdDeepOcean, biomeIdRiver,  biomeIdDesert, biomeIdBeach;
-
-	public static boolean isWinterTime() {
-		Calendar c = Calendar.getInstance();
-		Calendar b = Calendar.getInstance();
-		b.set(Calendar.MONTH, Calendar.DECEMBER);
-		b.set(Calendar.DAY_OF_MONTH, 1);
-		b.set(Calendar.HOUR_OF_DAY, 0);
-		b.set(Calendar.MINUTE, 0);
-		b.set(Calendar.MILLISECOND, 0);
-		Calendar e = Calendar.getInstance();
-		e.set(Calendar.YEAR, c.get(Calendar.YEAR) + 1);
-		e.set(Calendar.MONTH, Calendar.JANUARY);
-		e.set(Calendar.DAY_OF_MONTH, 15);
-		e.set(Calendar.HOUR_OF_DAY, 0);
-		e.set(Calendar.MINUTE, 0);
-		e.set(Calendar.MILLISECOND, 0);
-		return c.after(b) && c.before(e);
+	public void registerHandlers(Magistics instance) {
+		FMLCommonHandler.instance().bus().register(instance);
 	}
 
-	public void sync() {
-		debug = config.getBoolean(config.CATEGORY_GENERAL, "Debug", true, "Toggles advanced log output.");
-		hungry_chest_override = config.getBoolean(config.CATEGORY_GENERAL, "Hungry Chest Override", true, "Replaces Thaumcraft's Hungry Chest w/ a modified version.");
-		colored_names = config.getBoolean(category[0], "Colored Names", false, "Toggles name coloring for some things.");
-		low_gfx = config.getBoolean(category[0], "Low Graphics", false, "Determines some graphically intensive features are enabled.");
-		winter = (isWinterTime() && config.get("default", "enableWinter", true).getBoolean()) || config.get("default", "forceWinter", false).getBoolean();
+	public void registerObjects() {
+		ConfigObjects config = ConfigObjects.getInstance();
+		config.addItem(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
+		config.addItem(itemDawnstone = new ItemDawnstone().setTextureName("magistics:dawnstone").setUnlocalizedName("dawnstone"));
+		config.addItem(record_chamber = new ItemMagisticsRecord("chamber").setUnlocalizedName("record_chamber").setTextureName("magistics:record_chamber"));
+		config.addItem(record_deception = new ItemMagisticsRecord("deception").setUnlocalizedName("record_deception").setTextureName("magistics:record_deception"));
+		config.addItem(record_ghost = new ItemMagisticsRecord("ghost").setUnlocalizedName("record_ghost").setTextureName("magistics:record_ghost"));
+		config.addItem(record_gloom = new ItemMagisticsRecord("gloom").setUnlocalizedName("record_gloom").setTextureName("magistics:record_gloom"));
+		config.addItem(record_halls = new ItemMagisticsRecord("halls").setUnlocalizedName("record_halls").setTextureName("magistics:record_halls"));
+		config.addItem(record_moonlight = new ItemMagisticsRecord("moonlight").setUnlocalizedName("record_moonlight").setTextureName("magistics:record_moonlight"));
+		config.addItem(record_plant = new ItemMagisticsRecord("plant").setUnlocalizedName("record_plant").setTextureName("magistics:record_plant"));
+		config.addItem(record_portal = new ItemMagisticsRecord("portal").setUnlocalizedName("record_portal").setTextureName("magistics:record_portal"));
+		config.addItem(record_queen = new ItemMagisticsRecord("queen").setUnlocalizedName("record_queen").setTextureName("magistics:record_queen"));
+		config.addItem(record_serpentine = new ItemMagisticsRecord("serpentine").setUnlocalizedName("record_serpentine").setTextureName("magistics:record_serpentine"));
+		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record_unlight"));
 
-		/*Property ELYSIUM_PLAINS = config.get("biomeIds", "ELYSIUM_PLAINS", BIOME_PLAIN);
-		biomeIdPlains = ELYSIUM_PLAINS.getInt();
+		config.addBlock(crystalStorage = new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
+		config.addBlock(crystalStorageReinforced = new BlockCrystalStorageReinforced().setBlockName("crystal_storage_reinforced").setStepSound(Block.soundTypeGlass), BlockCrystalStorageReinforcedItem.class);
+		config.addBlock(crystalStorageEngineering = new BlockCrystalStorageEngineering().setBlockName("engineering_brick").setStepSound(Block.soundTypeMetal), BlockCrystalStorageEngineeringItem.class);
+		config.addBlock(crystalStructure = new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
 
-		Property ELYSIUM_FOREST = config.get("biomeIds", "ELYSIUM_FOREST", BIOME_FOREST);
-		biomeIdForest = ELYSIUM_FOREST.getInt();
+		config.addBlock(lightDetector = new BlockLightDetector().setBlockName("light_detector"));
+		config.addBlock(darknessDetector = new BlockDarknessDetector().setBlockName("darkness_detector"));
 
-		Property ELYSIUM_PLAINS_CORRUPT = config.get("biomeIds", "ELYSIUM_PLAINS_CORRUPT", BIOME_PLAIN_CORRUPT);
-		biomeIdPlainsCorrupt = ELYSIUM_PLAINS_CORRUPT.getInt();
+		config.addTile(TileChestHungry.class);
+		config.addBlock(blockChestHungry = new BlockChestHungry(0).setBlockName("hungry_chest"));
+		config.addBlock(blockChestHungryTrapped = new BlockChestHungry(1).setBlockName("trapped_hungry_chest"));
 
-		Property ELYSIUM_DEEP_OCEAN = config.get("biomeIds", "ELYSIUM_DEEP_OCEAN", ELYSIUM_DEEP_OCEAN);
-		biomeIdDeepOcean = ELYSIUM_DEEP_OCEAN.getInt();
-
-		Property ELYSIUM_OCEAN = config.get("biomeIds", "ELYSIUM_OCEAN", BIOME_OCEAN);
-		biomeIdOcean = ELYSIUM_OCEAN.getInt();
-
-		Property ELYSIUM_RIVER = config.get("biomeIds", "ELYSIUM_RIVER", BIOME_RIVER);
-		biomeIdRiver = ELYSIUM_RIVER.getInt();
-
-		Property ELYSIUM_DESERT = config.get("biomeIds", "ELYSIUM_DESERT", BIOME_DESERT);
-		biomeIdDesert = ELYSIUM_DESERT.getInt();
-
-		Property ELYSIUM_BEACH = config.get("biomeIds", "ELYSIUM_BEACH", BIOME_BEACH);
-		biomeIdBeach = ELYSIUM_BEACH.getInt();
-
-		Property ELYSIUM_ID = config.get("other", "ELYSIUM_ID", DimensionManager.getNextFreeDimId());
-		dimensionID = ELYSIUM_ID.getInt();
-
-		//Property MAX_DRAGON_IN_END = config.get("other", "MAX_DRAGON_IN_END", MAX_DRAGON_IN_END, "How many dragons can be spawned to the End at the same time!");
-		Property MAX_END_DRAGON = config.getInt("MAX_DRAGON_IN_END", "other", MAX_DRAGON_IN_END, 1, 9, "How many dragons can be spawned to the End at the same time!");*/
-
-		Property MENU_ENABLED = config.get("other", "isMenuEnabled", customGui, "If you want to see the custom The Elysium menu instead of the regular Minecraft menu");
-	}
-
-	public void changeConfig(OnConfigChangedEvent e, String modid) {
-		if (e.modID.equals(modid)) {
-			sync();
-			if (config != null && config.hasChanged())
-				config.save();
+		if (Loader.isModLoaded("EE3")) {
+			config.addTile(TileChestHungryAlchemical.class);
+			config.addBlock(blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_alchemical_chest"), ItemBlockAlchemicalChest.class);
 		}
-	}
 
-	public void preInit(File configFile) {
-		try {
-			config = new Configuration(configFile);
-			config.load();
-			sync();
-			config.save();
-		} catch (Exception err) {
-			error("An error has occurred while loading configuration properties!", err);
-		} finally {
-			if (config != null)
-				config.save();
+		config.addTile(TileChestHungryEnder.class);
+		config.addBlock(blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest").setHardness(22.5F).setResistance(1000F).setStepSound(Block.soundTypePiston).setLightLevel(0.5F));
+
+		if (Loader.isModLoaded("IronChest")) {
+			config.addTile(TileChestHungryMetal.class);
+			config.addBlock(blockChestHungryMetal = new BlockChestHungryMetal().setBlockName("hungry_metal_chest").setHardness(3F), BlockChestHungryMetalItem.class);
 		}
-	}
 
-	public void init() {
-		ConfigObjects.registerObjects();
-	}
+		if (Loader.isModLoaded("RefinedRelocation")) {
+			config.addTile(TileSortingChestHungry.class);
+			config.addBlock(blockSortingChestHungry = new BlockSortingChestHungry().setBlockName("sorting_hungry_chest"));
 
-	public void postInit() {
-		ConfigObjects.registerRenderers();
-		ConfigObjects.initAPI();
-
-		FreezerRecipes.addRecipe("water", new ItemStack(Blocks.ice));
-		FreezerRecipes.addRecipe("lava", new ItemStack(Blocks.obsidian));
-
-		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(ConfigObjects.blockRaspberryBush, 1, 1));
-		FMLInterModComms.sendMessage("Thaumcraft", "harvestClickableCrop", new ItemStack(ConfigObjects.blockGrapesBush, 1, OreDictionary.WILDCARD_VALUE));
-
-		ResearchCategories.registerCategory(Magistics.modid, new ResourceLocation("magistics", "textures/gui/tab.png"), new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png"));
-
-		ConfigResearch.recipes.put("HungryEnderChest", ThaumcraftApi.addArcaneCraftingRecipe("HUNGRYENDERCHEST", new ItemStack(ConfigObjects.blockChestHungryEnder), new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 3).add(Aspect.ENTROPY, 3), "ABA", "ACA", "AAA", 'A', Blocks.obsidian, 'B', new ItemStack(ConfigBlocks.blockMetalDevice, 1, 5), 'C', Items.ender_eye));
-		new ResearchItem("HUNGRYENDERCHEST", Magistics.modid, new AspectList().add(Aspect.HUNGER, 3).add(Aspect.VOID, 3), -1, 0, 1, new ItemStack(ConfigObjects.blockChestHungryEnder)).setPages(new ResearchPage("tc.research_page.HUNGRYENDERCHEST.1"), ResearchRecipe.arcane("HungryEnderChest")).setSecondary().setParents("HUNGRYCHEST").registerResearchItem();
-	}
-
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
-		return null;
-	}
-
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int i, int j, int k) {
-		return null;
-	}
-
-	public void sendToPlayer(EntityPlayerMP player, Packet packet) {
-		player.playerNetServerHandler.sendPacket(packet);
-	}
-
-	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance) {
-		if (world == null) {
-			WorldServer worlds[] = FMLServerHandler.instance().getServer().worldServers;
-			for (int i = 0; i < worlds.length; i++)
-				for (int j = 0; j < worlds[i].playerEntities.size(); j++)
-					sendToPlayer((EntityPlayerMP) worlds[i].playerEntities.get(j), packet);
-		} else
-			for (int i = 0; i < world.playerEntities.size(); i++) {
-				EntityPlayerMP player = (EntityPlayerMP) world.playerEntities.get(i);
-				if (((int) player.posX - x) * ((int) player.posX - x) + ((int) player.posY - y) * ((int) player.posY - y) + ((int) player.posY - y) * ((int) player.posY - y) <= maxDistance * maxDistance)
-					sendToPlayer(player, packet);
+			if (Loader.isModLoaded("EE3")) {
+				config.addTile(TileSortingChestHungryAlchemical.class);
+				config.addBlock(blockSortingChestHungryAlchemical = new BlockSortingChestHungryAlchemical().setBlockName("sorting_hungry_alchemical_chest"), BlockSortingChestHungryAlchemicalItem.class);
 			}
-	}
 
-	public void sendToServer(Packet packet) {}
+			if (Loader.isModLoaded("IronChest")) {
+				config.addTile(TileSortingChestHungryMetal.class);
+				config.addBlock(blockSortingChestHungryMetal = new BlockSortingChestHungryMetal().setBlockName("sorting_hungry_metal_chest"), BlockChestHungryMetalItem.class);
+			}
+		}
+		config.register();
+	}
 }

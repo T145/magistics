@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import vazkii.botania.api.wand.IWandable;
-import T145.magistics.client.lib.TextureHelper;
+import T145.magistics.client.lib.RenderHelper;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -26,7 +26,7 @@ public class BlockChestHungryMetal extends BlockIronChest implements IWandable {
 	public void registerBlockIcons(IIconRegister r) {
 		for (IronChestType type : IronChestType.values())
 			if (type != type.WOOD)
-				icon[type.ordinal()] = r.registerIcon("magistics:chest_hungry/" + TextureHelper.getSimpleIronChestName(type));
+				icon[type.ordinal()] = r.registerIcon("magistics:chest_hungry/" + RenderHelper.getSimpleIronChestName(type));
 	}
 
 	@Override

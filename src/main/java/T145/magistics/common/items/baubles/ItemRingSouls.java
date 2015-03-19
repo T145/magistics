@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import thaumcraft.common.Thaumcraft;
 import T145.magistics.api.items.baubles.ItemBauble;
-import T145.magistics.common.config.ConfigObjects;
+import T145.magistics.common.Magistics;
 import T145.magistics.common.items.ItemResources;
 import baubles.api.BaubleType;
 
@@ -33,7 +33,7 @@ public class ItemRingSouls extends ItemBauble {
 		if (xpOrb != null && !xpOrb.isDead) {
 			Thaumcraft.proxy.wispFXEG(xpOrb.worldObj, xpOrb.posX, xpOrb.posY, xpOrb.posZ, xpOrb);
 			if (user instanceof EntityPlayer)
-				((EntityPlayer) user).inventory.addItemStackToInventory(new ItemStack(ConfigObjects.itemResources, 1, ItemResources.Types.soul_fragment.ordinal()));
+				((EntityPlayer) user).inventory.addItemStackToInventory(new ItemStack(Magistics.proxy.itemResources, 1, ItemResources.Types.soul_fragment.ordinal()));
 			xpOrb.setDead();
 		}
 	}
