@@ -24,7 +24,7 @@ public class Research {
 		return instance;
 	}
 
-	private final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png");
+	private final ResourceLocation RESEARCH_BACKGROUND = new ResourceLocation("magistics", "textures/gui/gui_researchback.png");
 
 	public ResourceLocation getResearchBackground() {
 		return RESEARCH_BACKGROUND;
