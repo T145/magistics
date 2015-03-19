@@ -4,6 +4,6 @@
 
 # Resources
 - [ ] Furnace stuff
-- [ ] Darklight
-- [ ] Tinted Nitor
+- [x] Darklight
+- [x] Tinted Nitor
 - [ ] *Custom stuff*
