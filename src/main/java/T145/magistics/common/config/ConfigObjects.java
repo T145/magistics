@@ -110,5 +110,7 @@ public class ConfigObjects {
 			else
 				GameRegistry.registerBlock(block.setCreativeTab(tabMagistics), item, block.getUnlocalizedName());
 		}
+		Magistics.logger.info("Loaded " + items.size() + " items");
+		Magistics.logger.info("Loaded " + blocks.size() + " blocks");
 	}
 }

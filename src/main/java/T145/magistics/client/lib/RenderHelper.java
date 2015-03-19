@@ -30,9 +30,11 @@ public class RenderHelper {
 	}
 
 	public static List<Integer> getColorCodes() {
-		List<Integer> dest = new ArrayList<Integer>();
-		for (int i = 0; i <= 5; i++)
-			dest.add(getColorCode(i));
+		List<Integer> dest = new ArrayList<Integer>(), temp = new ArrayList<Integer>();
+		for (int i = 0; i < 6; i++)
+			temp.add(getColorCode(i));
+		dest.addAll(temp);
+		dest.addAll(temp);
 		return dest;
 	}
 

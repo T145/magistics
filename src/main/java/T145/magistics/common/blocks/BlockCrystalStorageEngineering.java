@@ -15,12 +15,16 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockCrystalStorage extends Block {
+public class BlockCrystalStorageEngineering extends Block {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon iconGlow, icon[] = new IIcon[2];
 
-	public BlockCrystalStorage() {
+	public BlockCrystalStorageEngineering() {
 		super(Material.glass);
+	}
+
+	public BlockCrystalStorageEngineering(Material material) {
+		super(material);
 	}
 
 	@Override
@@ -48,8 +52,8 @@ public class BlockCrystalStorage extends Block {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
 		iconGlow = r.registerIcon("thaumcraft:animatedglow");
-		icon[0] = r.registerIcon("magistics:decor/basic");
-		icon[1] = r.registerIcon("magistics:decor/brick");
+		icon[0] = r.registerIcon("magistics:decor/machines/brick_light");
+		icon[1] = r.registerIcon("magistics:decor/machines/brick_dark");
 	}
 
 	@Override

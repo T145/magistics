@@ -34,8 +34,12 @@ public class BlockCrystalStorageItem extends ItemBlock {
 		return meta > 5 ? second : first;
 	}
 
+	public String getName(String first, String second, int meta) {
+		return super.getUnlocalizedName() + "." + getType(first, second, meta) + "." + getAspect(meta);
+	}
+
 	@Override
 	public String getUnlocalizedName(ItemStack is) {
-		return super.getUnlocalizedName() + "." + getType("basic", "brick", is.getItemDamage()) + "." + getAspect(is.getItemDamage());
+		return getName("basic", "brick", is.getItemDamage());
 	}
 }

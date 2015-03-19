@@ -8,7 +8,11 @@ import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.blocks.BlockCrystalStorage;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineering;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineeringItem;
 import T145.magistics.common.blocks.BlockCrystalStorageItem;
+import T145.magistics.common.blocks.BlockCrystalStorageReinforced;
+import T145.magistics.common.blocks.BlockCrystalStorageReinforcedItem;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.blocks.BlockDarknessDetector;
@@ -37,7 +41,7 @@ import cpw.mods.fml.common.Loader;
 public class CommonProxy {
 	public static Item itemResources, itemDawnstone, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
 	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
-	public static Block crystalStorage, crystalStructure, lightDetector, darknessDetector;
+	public static Block crystalStorage, crystalStructure, crystalStorageReinforced, crystalStorageEngineering, lightDetector, darknessDetector;
 
 	public void registerHandlers(Magistics instance) {
 		FMLCommonHandler.instance().bus().register(instance);
@@ -60,6 +64,8 @@ public class CommonProxy {
 		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record_unlight"));
 
 		config.addBlock(crystalStorage = new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
+		config.addBlock(crystalStorageReinforced = new BlockCrystalStorageReinforced().setBlockName("crystal_storage_reinforced").setStepSound(Block.soundTypeGlass), BlockCrystalStorageReinforcedItem.class);
+		config.addBlock(crystalStorageEngineering = new BlockCrystalStorageEngineering().setBlockName("engineering_brick").setStepSound(Block.soundTypeMetal), BlockCrystalStorageEngineeringItem.class);
 		config.addBlock(crystalStructure = new BlockCrystalStorageStructure().setBlockName("crystal_structure").setStepSound(Block.soundTypeGlass), BlockCrystalStorageStructureItem.class);
 
 		config.addBlock(lightDetector = new BlockLightDetector().setBlockName("light_detector"));

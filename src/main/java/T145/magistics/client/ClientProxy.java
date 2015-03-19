@@ -21,7 +21,8 @@ import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockCrystalStorage;
-import T145.magistics.common.blocks.BlockCrystalStorageStructure;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineering;
+import T145.magistics.common.blocks.BlockCrystalStorageReinforced;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -42,6 +43,8 @@ public class ClientProxy extends CommonProxy {
 
 		config.addBlockRenderer(new BlockCrystalStorageRenderer(BlockCrystalStorage.icon, BlockCrystalStorage.renderID));
 		config.addBlockRenderer(new BlockCrystalStorageStructureRenderer());
+		config.addBlockRenderer(new BlockCrystalStorageRenderer(BlockCrystalStorageReinforced.icon, BlockCrystalStorageReinforced.renderID));
+		config.addBlockRenderer(new BlockCrystalStorageRenderer(BlockCrystalStorageEngineering.icon, BlockCrystalStorageEngineering.renderID));
 
 		config.addTileRenderer(TileChestHungry.class, new TileChestHungryRenderer());
 		config.addBlockRenderer(new ChestRenderer(BlockChestHungry.renderID, new TileChestHungry()));
