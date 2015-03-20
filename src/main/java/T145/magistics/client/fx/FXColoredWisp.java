@@ -1,17 +1,23 @@
 package T145.magistics.client.fx;
 
+import java.awt.Color;
+
 import net.minecraft.world.World;
 import thaumcraft.client.fx.particles.FXWisp;
 
 public class FXColoredWisp extends FXWisp {
-	public FXColoredWisp(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity, int colour) {
+	public FXColoredWisp(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity, Color color) {
 		super(world, x, y, z, x2, y2, z2, size, type);
-		switch (colour) {
+
+		particleRed = color.getRed();
+		particleBlue = color.getBlue();
+		particleGreen = color.getGreen();
+
+		/*switch (colour) {
 		case 0: {
 			particleRed = 0.0f;
 			particleBlue = 0.0f;
 			particleGreen = 0.0f;
-			// field_82339_as = 1.0f;
 			particleGravity = 1F;
 			break;
 		}
@@ -111,6 +117,6 @@ public class FXColoredWisp extends FXWisp {
 			particleBlue = world.rand.nextFloat();
 			break;
 		}
-		}
+		}*/
 	}
 }

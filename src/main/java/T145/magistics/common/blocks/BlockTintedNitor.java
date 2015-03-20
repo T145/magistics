@@ -29,7 +29,7 @@ public class BlockTintedNitor extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileTintedNitor(meta);
+		return new TileTintedNitor();
 	}
 
 	@Override
