@@ -21,9 +21,11 @@ import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
+import T145.magistics.common.blocks.BlockTintedNitor;
 import T145.magistics.common.config.ConfigObjects;
 import T145.magistics.common.items.ItemMagisticsRecord;
 import T145.magistics.common.items.ItemResources;
+import T145.magistics.common.items.ItemTintedNitor;
 import T145.magistics.common.items.relics.ItemDawnstone;
 import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
@@ -32,6 +34,7 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
+import T145.magistics.common.tiles.TileTintedNitor;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
@@ -39,9 +42,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 
 public class CommonProxy {
-	public static Item itemResources, itemDawnstone, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
+	public static Item itemResources, itemDawnstone, itemTintedNitor, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
 	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
-	public static Block crystalStorage, crystalStructure, crystalStorageReinforced, crystalStorageEngineering, lightDetector, darknessDetector;
+	public static Block crystalStorage, crystalStructure, crystalStorageReinforced, crystalStorageEngineering, lightDetector, darknessDetector, tintedNitor;
 
 	public void registerHandlers(Magistics instance) {
 		FMLCommonHandler.instance().bus().register(instance);
@@ -51,6 +54,8 @@ public class CommonProxy {
 		ConfigObjects config = ConfigObjects.getInstance();
 		config.addItem(itemResources = new ItemResources().setUnlocalizedName("mystic_resources"));
 		config.addItem(itemDawnstone = new ItemDawnstone().setTextureName("magistics:dawnstone").setUnlocalizedName("dawnstone"));
+		config.addItem(itemTintedNitor = new ItemTintedNitor().setTextureName("magistics:nitor_tinted").setUnlocalizedName("tinted_nitor"));
+
 		config.addItem(record_chamber = new ItemMagisticsRecord("chamber").setUnlocalizedName("record_chamber").setTextureName("magistics:record/chamber"));
 		config.addItem(record_deception = new ItemMagisticsRecord("deception").setUnlocalizedName("record_deception").setTextureName("magistics:record/deception"));
 		config.addItem(record_ghost = new ItemMagisticsRecord("ghost").setUnlocalizedName("record_ghost").setTextureName("magistics:record/ghost"));
@@ -62,6 +67,9 @@ public class CommonProxy {
 		config.addItem(record_queen = new ItemMagisticsRecord("queen").setUnlocalizedName("record_queen").setTextureName("magistics:record/queen"));
 		config.addItem(record_serpentine = new ItemMagisticsRecord("serpentine").setUnlocalizedName("record_serpentine").setTextureName("magistics:record/serpentine"));
 		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record/unlight"));
+
+		config.addTile(TileTintedNitor.class);
+		config.addBlock(tintedNitor = new BlockTintedNitor().setCreativeTab(null));
 
 		config.addBlock(crystalStorage = new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
 		config.addBlock(crystalStorageReinforced = new BlockCrystalStorageReinforced().setBlockName("crystal_storage_reinforced").setStepSound(Block.soundTypeGlass), BlockCrystalStorageReinforcedItem.class);

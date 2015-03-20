@@ -10,6 +10,6 @@ public class BlockCrystalStorageEngineeringItem extends BlockCrystalStorageItem 
 
 	@Override
 	public String getUnlocalizedName(ItemStack is) {
-		return getName("brick_light", "brick_dark", is.getItemDamage());
+		return getName("light", "dark", is.getItemDamage());
 	}
 }
