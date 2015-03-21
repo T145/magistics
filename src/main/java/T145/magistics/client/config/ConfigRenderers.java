@@ -41,7 +41,7 @@ public class ConfigRenderers {
 		for (Item item : itemRenderers.keySet())
 			MinecraftForgeClient.registerItemRenderer(item, itemRenderers.get(item));
 		for (Class tile : ConfigObjects.getInstance().getTiles())
-			if (tileRenderers.get(tile) != null)
+			if (tile != null && tileRenderers.get(tile) != null)
 				ClientRegistry.bindTileEntitySpecialRenderer(tile, tileRenderers.get(tile));
 		for (ISimpleBlockRenderingHandler blockRenderer : blockRenderers)
 			RenderingRegistry.registerBlockHandler(blockRenderer);

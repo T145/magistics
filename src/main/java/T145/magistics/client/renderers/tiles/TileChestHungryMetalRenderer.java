@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,11 +21,9 @@ import com.google.common.primitives.SignedBytes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.IronChestType;
-import cpw.mods.ironchest.TileEntityIronChest;
-import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
 
 @SideOnly(Side.CLIENT)
-public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
+public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 	public ModelChest model = new ModelChest();
 	public Random rand = new Random();
 	public RenderItem itemRenderer = new RenderItem() {
@@ -55,7 +54,7 @@ public class TileChestHungryMetalRenderer extends TileEntityIronChestRenderer {
 		itemRenderer.setRenderManager(RenderManager.instance);
 	}
 
-	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
+	public void render(TileChestHungryMetal tile, double x, double y, double z, float partialTick) {
 		if (tile == null)
 			return;
 		int facing = 3;

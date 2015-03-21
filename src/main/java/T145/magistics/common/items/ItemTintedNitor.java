@@ -32,34 +32,35 @@ public class ItemTintedNitor extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack is) {
-		return super.getUnlocalizedName() + "." + ItemDye.field_150922_c[is.getItemDamage()];
+		return super.getUnlocalizedName() + "." + ItemDye.field_150921_b[is.getItemDamage()];
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
 		Block var11 = world.getBlock(x, y, z);
-		if (var11 == Blocks.snow_layer && (world.getBlockMetadata(x, y, z) & 0x7) < 1) {
+		if (var11 == Blocks.snow_layer && (world.getBlockMetadata(x, y, z) & 0x7) < 1)
 			par7 = 1;
-		} else if (var11 != Blocks.vine && var11 != Blocks.tallgrass && var11 != Blocks.deadbush && !var11.isReplaceable((IBlockAccess) world, x, y, z)) {
-			if (par7 == 0) {
-				--y;
+		else if (var11 != Blocks.vine && var11 != Blocks.tallgrass && var11 != Blocks.deadbush && !var11.isReplaceable(world, x, y, z))
+			switch (par7) {
+			case 0:
+				y--;
+				break;
+			case 1:
+				y++;
+				break;
+			case 2:
+				z--;
+				break;
+			case 3:
+				z++;
+				break;
+			case 4:
+				x--;
+				break;
+			case 5:
+				x++;
+				break;
 			}
-			if (par7 == 1) {
-				++y;
-			}
-			if (par7 == 2) {
-				--z;
-			}
-			if (par7 == 3) {
-				++z;
-			}
-			if (par7 == 4) {
-				--x;
-			}
-			if (par7 == 5) {
-				++x;
-			}
-		}
 		if (itemstack.stackSize == 0 || !player.canPlayerEdit(x, y, z, par7, itemstack) || !world.canPlaceEntityOnSide(Magistics.proxy.tintedNitor, x, y, z, false, par7, player, itemstack))
 			return false;
 		if (placeBlockAt(itemstack, player, world, x, y, z, par7, par8, par9, par10, Magistics.proxy.tintedNitor, itemstack.getItemDamage())) {
