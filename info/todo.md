@@ -10,4 +10,4 @@
 - [x] Furnace stuff
 - [x] Darklight
 - [x] Tinted Nitor
-- [ ] New Dawn totems
+- [x] New Dawn totems

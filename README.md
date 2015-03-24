@@ -1,4 +1,4 @@
-![logo](http://i1064.photobucket.com/albums/u370/MegaT145/Magistics/magistics_banner.png)
+![logo](http://i1064.photobucket.com/albums/u370/MegaT145/Magistics/logo.png)
 ***
 
 **_Adding some logistics to Thaumcraft!_**
