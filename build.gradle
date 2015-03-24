@@ -41,12 +41,10 @@ repositories {
 // the setup command
 task setupWorkspace(type: Download) {
     def eclipseDir = new File('eclipse')
-    def refreshEclipseDir = eclipseDir.deleteDir()
-    assert refreshEclipseDir // be sure we'll have a clean directory so metadata confliction doesn't happen
 
-    // generate the eclipse directory
-    if (!eclipseDir.isDirectory()) {
-        eclipseDir.mkdirs()
+    // be sure the copy destination isn't occupied
+    if (eclipseDir.isDirectory()) {
+        eclipseDir.deleteDir()
     }
 
     def destination = new File(System.getProperty('user.dir'), 'forge.zip');
