@@ -6,6 +6,7 @@ import T145.magistics.api.client.renderers.blocks.ChestRenderer;
 import T145.magistics.api.client.renderers.items.ItemChestRenderer;
 import T145.magistics.client.config.ConfigRenderers;
 import T145.magistics.client.lib.RenderHelper;
+import T145.magistics.client.renderers.RenderHungryStrongbox;
 import T145.magistics.client.renderers.blocks.BlockCrystalStorageRenderer;
 import T145.magistics.client.renderers.blocks.BlockCrystalStorageStructureRenderer;
 import T145.magistics.client.renderers.tiles.TileChestHungryAlchemicalRenderer;
@@ -27,6 +28,8 @@ import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileHungryStrongbox;
+import T145.magistics.common.tiles.TileHungryStrongboxCreative;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
@@ -63,7 +66,7 @@ public class ClientProxy extends CommonProxy {
 
 		if (Loader.isModLoaded("IronChest")) {
 			config.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
-			config.addBlockRenderer(new ChestRenderer(BlockChestHungryMetal.renderID, RenderHelper.ironChestTextures));
+			config.addBlockRenderer(new ChestRenderer(BlockChestHungryMetal.renderID, RenderHelper.getMetalChestTextures()));
 		}
 
 		if (Loader.isModLoaded("RefinedRelocation")) {
@@ -82,9 +85,15 @@ public class ClientProxy extends CommonProxy {
 			}
 
 			if (Loader.isModLoaded("IronChest")) {
-				config.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungryMetal), new ItemChestRenderer(RenderHelper.ironChestTextures, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
+				config.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungryMetal), new ItemChestRenderer(RenderHelper.getMetalChestTextures(), Resources.MODEL_TEXTURE_OVERLAY_CHEST));
 				config.addTileRenderer(TileSortingChestHungryMetal.class, new TileSortingChestHungryMetalRenderer());
 			}
+		}
+
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			config.addTileRenderer(TileHungryStrongbox.class, new RenderHungryStrongbox());
+			config.addTileRenderer(TileHungryStrongboxCreative.class, new RenderHungryStrongbox());
+			config.addItemRenderer(Item.getItemFromBlock(blockHungryStrongbox), new RenderHungryStrongbox());
 		}
 
 		config.register();

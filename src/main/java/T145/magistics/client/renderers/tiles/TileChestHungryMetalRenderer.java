@@ -14,17 +14,17 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import T145.magistics.client.lib.RenderHelper;
-import T145.magistics.common.tiles.TileChestHungryMetal;
 
 import com.google.common.primitives.SignedBytes;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.TileEntityIronChest;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
-	public ModelChest model = new ModelChest();
+	public final ModelChest model = new ModelChest();
 	public Random rand = new Random();
 	public RenderItem itemRenderer = new RenderItem() {
 		@Override
@@ -54,7 +54,7 @@ public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 		itemRenderer.setRenderManager(RenderManager.instance);
 	}
 
-	public void render(TileChestHungryMetal tile, double x, double y, double z, float partialTick) {
+	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
 		if (tile == null)
 			return;
 		int facing = 3;
@@ -62,7 +62,7 @@ public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 		if (tile != null && tile.hasWorldObj())
 			facing = tile.getFacing();
 
-		bindTexture(RenderHelper.ironChestTextures[type.ordinal()]);
+		bindTexture(RenderHelper.getMetalChestTextures()[type.ordinal()]);
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -127,6 +127,7 @@ public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTick) {
-		render((TileChestHungryMetal) tile, x, y, z, partialTick);
+		if (tile instanceof TileEntityIronChest)
+			render((TileEntityIronChest) tile, x, y, z, partialTick);
 	}
 }

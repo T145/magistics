@@ -16,6 +16,7 @@ import T145.magistics.common.blocks.BlockCrystalStorageReinforcedItem;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.blocks.BlockDarknessDetector;
+import T145.magistics.common.blocks.BlockHungryStrongbox;
 import T145.magistics.common.blocks.BlockLightDetector;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
@@ -31,10 +32,13 @@ import T145.magistics.common.tiles.TileChestHungry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileHungryStrongbox;
+import T145.magistics.common.tiles.TileHungryStrongboxCreative;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileSortingChestHungryMetal;
 import T145.magistics.common.tiles.TileTintedNitor;
+import cofh.thermalexpansion.block.strongbox.ItemBlockStrongbox;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
@@ -43,7 +47,7 @@ import cpw.mods.fml.common.Loader;
 
 public class CommonProxy {
 	public static Item itemResources, itemDawnstone, itemTintedNitor, record_chamber, record_deception, record_ghost, record_gloom, record_halls, record_moonlight, record_plant, record_portal, record_queen, record_serpentine, record_unlight, record_auricom;
-	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal;
+	public static Block blockChestHungry, blockChestHungryTrapped, blockChestHungryEnder, blockChestHungryAlchemical, blockChestHungryMetal, blockChestHungryRailcraft, blockSortingChestHungry, blockSortingChestHungryAlchemical, blockSortingChestHungryMetal, blockHungryStrongbox;
 	public static Block crystalStorage, crystalStructure, crystalStorageReinforced, crystalStorageEngineering, lightDetector, darknessDetector, tintedNitor;
 
 	public void registerHandlers(Magistics instance) {
@@ -69,7 +73,7 @@ public class CommonProxy {
 		config.addItem(record_unlight = new ItemMagisticsRecord("unlight").setUnlocalizedName("record_unlight").setTextureName("magistics:record/unlight"));
 
 		config.addTile(TileTintedNitor.class);
-		config.addBlock(tintedNitor = new BlockTintedNitor().setCreativeTab(null));
+		config.addBlock(tintedNitor = new BlockTintedNitor().setBlockTextureName("thaumcraft:blank").setStepSound(Block.soundTypeCloth));
 
 		config.addBlock(crystalStorage = new BlockCrystalStorage().setBlockName("crystal_storage").setStepSound(Block.soundTypeGlass), BlockCrystalStorageItem.class);
 		config.addBlock(crystalStorageReinforced = new BlockCrystalStorageReinforced().setBlockName("crystal_storage_reinforced").setStepSound(Block.soundTypeGlass), BlockCrystalStorageReinforcedItem.class);
@@ -110,6 +114,13 @@ public class CommonProxy {
 				config.addBlock(blockSortingChestHungryMetal = new BlockSortingChestHungryMetal().setBlockName("sorting_hungry_metal_chest"), BlockChestHungryMetalItem.class);
 			}
 		}
+
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			config.addTile(TileHungryStrongbox.class);
+			config.addTile(TileHungryStrongboxCreative.class);
+			config.addBlock(blockHungryStrongbox = new BlockHungryStrongbox(), ItemBlockStrongbox.class);
+		}
+
 		config.register();
 	}
 }

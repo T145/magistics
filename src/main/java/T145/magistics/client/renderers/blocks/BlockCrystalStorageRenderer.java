@@ -33,15 +33,15 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 		renderer.setRenderBoundsFromBlock(block);
 
 		if (meta > 5)
-			BlockRenderer.drawFaces(renderer, block, textures[1], false);
+			drawFaces(renderer, block, textures[1], false);
 		else
-			BlockRenderer.drawFaces(renderer, block, textures[0], false);
+			drawFaces(renderer, block, textures[0], false);
 
-		Color c = RenderHelper.getColors().get(meta);
+		Color c = RenderHelper.getCrystalColors().get(meta);
 		GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
 		block.setBlockBounds(0.005F, 0.005F, 0.005F, 0.995F, 0.995F, 0.995F);
 		renderer.setRenderBoundsFromBlock(block);
-		BlockRenderer.drawFaces(renderer, block, BlockCrystalStorage.iconGlow, false);
+		drawFaces(renderer, block, BlockCrystalStorage.iconGlow, false);
 		GL11.glColor3f(1F, 1F, 1F);
 	}
 
@@ -52,7 +52,7 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 		renderer.renderStandardBlock(block, x, y, z);
 
 		Tessellator t = Tessellator.instance;
-		t.setColorOpaque_I(RenderHelper.getColorCodes().get(world.getBlockMetadata(x, y, z)));
+		t.setColorOpaque_I(RenderHelper.getCrystalColorCodes().get(world.getBlockMetadata(x, y, z)));
 		t.setBrightness(180);
 
 		renderAllSidesInverted(world, x, y, z, block, renderer, BlockCrystalStorage.iconGlow, false);

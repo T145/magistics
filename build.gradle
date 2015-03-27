@@ -1,180 +1,173 @@
 import de.undercouch.gradle.tasks.download.Download
 
 buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name 'forge'
-            url 'http://files.minecraftforge.net/maven'
-        }
-        maven {
-            name 'sonatype'
-            url 'https://oss.sonatype.org/content/repositories/snapshots/'
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+	repositories {
+		mavenCentral()
+		maven {
+			name 'forge'
+			url 'http://files.minecraftforge.net/maven'
+		}
+		maven {
+			name 'sonatype'
+			url 'https://oss.sonatype.org/content/repositories/snapshots/'
+		}
+		maven {
+			name 'ChickenBones'
+			url 'http://chickenbones.net/maven'
+		}
+		maven {
+			name 'IC2'
+			url 'http://maven.ic2.player.to/'
+		}
+		maven {
+			name 'Mobius'
+			url 'http://mobiusstrip.eu/maven'
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
 }
 
-// only buildscript blocks and other plugins blocks are allowed before plugins blocks
+// only buildscript and plugins blocks are allowed before plugins blocks
 plugins {
 	id 'de.undercouch.download' version '1.2'
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        name 'ChickenBones Repo'
-        url 'http://chickenbones.net/maven'
-    }
-    maven {
-        name 'IC2 Repo'
-        url 'http://maven.ic2.player.to/'
-    }
-    maven {
-        name 'Mobius Repo'
-        url 'http://mobiusstrip.eu/maven'
-    }
-}
-
 // the setup command
 task setupWorkspace(type: Download) {
-    def eclipseDir = new File('eclipse')
+	def eclipseDir = file('eclipse')
 
-    // be sure the copy destination isn't occupied
-    if (eclipseDir.isDirectory()) {
-        eclipseDir.deleteDir()
-    }
+	// be sure we have a clean destination to copy the eclipse metadata to
+	if (eclipseDir.isDirectory()) {
+		eclipseDir.deleteDir()
+	}
 
-    def destination = new File(System.getProperty('user.dir'), 'forge.zip');
+	def destination = file(System.getProperty('user.dir'), 'forge.zip')
 
-    src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
-    dest destination
+	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
+	dest destination
 
-    doLast {
-        project.copy {
-            from zipTree(destination)
-            into 'forge'
-        }
+	doLast {
+		project.copy {
+			from zipTree(destination)
+			into 'forge'
+		}
 
-        // move the eclipse metadata into our workspace
-        project.file('forge/eclipse').renameTo(project.file('eclipse'))
+		// move the eclipse metadata into our workspace
+		project.file('forge/eclipse').renameTo(project.file('eclipse'))
 
-        // delete all of the forge stuff
-        project.file('forge').deleteDir()
-        project.file('forge.zip').delete()
-    }
+		// clean out the remaining forge stuff
+		project.file('forge').deleteDir()
+		project.file('forge.zip').delete()
+	}
 }
 
+// updates the gradle wrapper
 task wrapper(type: Wrapper) {
-    gradleVersion = gradle_version
+	gradleVersion = gradle_version
 }
 
 apply plugin: 'curseforge'
 apply plugin: 'forge'
 
-def versions = file("info/changelog.md").text =~ /(## Version )(.*)/
-def latestVersion = versions[0][2]
+// get the project version from the changelog
+def versions = file('info/changelog.md').text =~ /(## Version )(.*)/
+version = versions[0][2]
 
-version = latestVersion
 group = 'T145.magistics'
 archivesBaseName = 'Magistics'
 
 minecraft {
-    version = forge_version
-    runDir = 'eclipse'
+	version = forge_version
+	runDir = 'eclipse'
 }
 
 dependencies {
-    compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
-    compile 'com.mod-buildcraft:buildcraft:6.4.3:dev'
-    compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.374:dev'
-    compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+	compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
+	compile 'com.mod-buildcraft:buildcraft:6.4.3:dev'
+	compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
+	compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev'
+	compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.374:dev'
+	compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
+	compile 'codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev'
+	compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+	compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
 
-    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev'
-    compile 'codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev'
-
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
-    compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
-
-    compile fileTree(dir: 'lib', include: '*.jar')
+	compile fileTree(dir: 'lib', include: '*.jar')
 }
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', project.minecraft.version
+	// this will ensure that this task is redone when the version changes
+	inputs.property 'version', project.version
+	inputs.property 'mcversion', project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+	// replace the version properties in the mcmod.info
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+
+		// replace version and mcversion with the updated properties
+		expand 'version':project.version, 'mcversion':project.minecraft.version
+	}
+
+	// now process everything else except the mcmod.info, since that's been dealt with
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
 }
 
-String title = project.minecraft.version + '-' + project.version
+def project_title = project.minecraft.version + '-' + project.version
 
-// modifies the actual release
+// modifies the regular release
 jar {
-	version = title
+	version = project_title
 }
 
 // add a developer release
 task deobfJar(type: Jar) {
-	from sourceSets.main.output
+	from(sourceSets.main.output)
 	classifier = 'dev'
-	version = title
+	version = project_title
 }
+
+// add an API release for developers
+task apiZip(type: Zip) {
+	from(sourceSets.main.java) {
+		include 'T145/magistics/api'
+	}
+	classifier = 'api'
+	version = project_title
+}
+
+apiZip.mustRunAfter(deobfJar)
 
 // add a javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	from 'build/docs/javadoc'
+	from('build/docs/javadoc')
 	classifier = 'javadoc'
-	version = title
+	version = project_title
 }
 
-// add a backup for all of the project source
+// add a backup for the project source code
 task sourceJar(type: Jar) {
-	from sourceSets.main.allJava
+	from(sourceSets.main.allJava)
 	classifier = 'src'
-	version = title
+	version = project_title
 }
-
-// add an archive for the mod's API
-task apiZip(type: Zip) {
-	from (sourceSets.main.java) {
-		include 'T145/magistics/api/**'
-	}
-	classifier = 'api'
-	version = title
-}
-
-apiZip.mustRunAfter(jar)
 
 artifacts {
-    archives deobfJar, sourceJar, javadocJar, apiZip
+	archives deobfJar, apiZip, sourceJar, javadocJar
 }
 
 curse {
-	// read the latest changelog content into the release description
-	def content = file('info/changelog.md').text =~ /(## Version)(.*)\n(.*)/
-	def latestChanglelog = content[0][3]
+	// get the latest changelog from the changlelog file
+	def content = file('info/changlelog.md').text =~ /(## Version)(.*)\n(.*)/
+	changelog = content[0][3]
 
-    apiKey = curse_token
-    projectId = project_id
-    changelog = latestChanglelog
-    releaseType = 'beta'
+	apiKey = curse_token
+	project = project_id
+	releaseType = 'beta'
 
-    // the default obfuscated jar is uploaded by default
-    //artifact = project.file('path/to/a.jar')
-    //additionalArtifact deobfJar
+	// the obfuscated jar is uploaded by default
+	//additionalArtifact project.file('build/libs/*deobf.jar')
 }

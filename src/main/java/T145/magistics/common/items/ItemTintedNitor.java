@@ -10,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import T145.magistics.common.Magistics;
 import cpw.mods.fml.relauncher.Side;

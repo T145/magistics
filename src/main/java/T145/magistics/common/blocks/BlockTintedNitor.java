@@ -3,26 +3,26 @@ package T145.magistics.common.blocks;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.client.fx.ParticleEngine;
-import thaumcraft.client.fx.particles.FXSparkle;
 import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.tiles.TileTintedNitor;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTintedNitor extends BlockContainer {
+	private Block nitor = Block.getBlockFromItem(new ItemStack(ConfigBlocks.blockAiry, 1, 1).getItem());
+
 	public BlockTintedNitor() {
 		super(Config.airyMaterial);
 	}
@@ -30,18 +30,6 @@ public class BlockTintedNitor extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileTintedNitor();
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister ir) {
-		blockIcon = ir.registerIcon("thaumcraft:blank");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta) {
-		return blockIcon;
 	}
 
 	@Override
@@ -98,10 +86,7 @@ public class BlockTintedNitor extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World w, int i, int j, int k, Random r) {
-		FXSparkle ef2 = new FXSparkle(w, i + 0.5f, j + 0.5f, k + 0.5f, i + 0.5f + (r.nextFloat() - r.nextFloat()) / 3.0f, j + 0.5f + (r.nextFloat() - r.nextFloat()) / 3.0f, k + 0.5f + (r.nextFloat() - r.nextFloat()) / 3.0f, 1.0f, 6, 3);
-		ef2.setGravity(0.05f);
-		ef2.noClip = true;
-		ParticleEngine.instance.addEffect(w, ef2);
+		nitor.randomDisplayTick(w, i, j, k, r);
 	}
 
 	@Override
