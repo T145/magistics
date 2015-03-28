@@ -95,6 +95,8 @@ dependencies {
     compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
     compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
 
+    compile 'mcp.mobius.waila:Waila:1.5.6a_1.7.10'
+
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 
