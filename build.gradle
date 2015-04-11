@@ -98,20 +98,6 @@ dependencies {
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 
-processResources {
-	inputs.property 'version', project.version
-	inputs.property 'mcversion', project.minecraft.version
-
-	from (sourceSets.main.resources.srcDirs) {
-		include 'mcmod.info'
-		expand 'version':project.version, 'mcversion':project.minecraft.version
-	}
-
-	from (sourceSets.main.resources.srcDirs) {
-		exclude 'mcmod.info'
-	}
-}
-
 def title = project.minecraft.version + '-' + project.version
 
 // rename the default obfuscated jar
