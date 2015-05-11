@@ -81,20 +81,34 @@ repositories {
 }
 
 dependencies {
-    compile 'appeng:appliedenergistics2:rv1-stable-1:dev'
-    compile 'com.mod-buildcraft:buildcraft:6.4.3:dev'
-    compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.374:dev'
-    compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
+	// Applied Energistics 2
+    compile 'appeng:appliedenergistics2:rv2-stable-1:dev'
 
-    compile 'codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev'
-    compile 'codechicken:ForgeMultipart:1.7.10-1.1.1.320:dev'
+    // Buildcraft
+    compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
 
-    compile 'codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev'
-    compile 'codechicken:EnderStorage:1.7.10-1.4.5.27:dev'
-    compile 'codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev'
+    // Equivalent Exchange 3
+    compile 'com.pahimar.ee3:EquivalentExchange3:' + project.minecraft.version + '-0.3.505:dev'
 
-    compile 'mcp.mobius.waila:Waila:1.5.6a_1.7.10'
+    // Iron Chests
+    compile 'cpw.mods:ironchest:' + project.minecraft.version + '-6.0.62.742:deobf'
 
+    // ChickenBones's things
+    def chickenmods = [
+    	[ "CodeChickenCore", "1.0.6.43" ],
+    	[ "EnderStorage", "1.4.7.36" ],
+    	[ "NotEnoughItems", "1.0.4.107" ],
+    	[ "ForgeMultipart", "1.2.0.344" ]
+    ]
+
+    chickenmods.each { key ->
+    	compile 'codechicken:' + key[0] + ':' + project.minecraft.version + '-' + key[1] + ':dev'
+    }
+
+    // Waila
+    compile 'mcp.mobius.waila:Waila:1.5.6a_' + project.minecraft.version
+
+    // for Thaumcraft and other mods to "manually" compile
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 
@@ -153,6 +167,6 @@ curse {
 	changelog = latestChangelog
 	releaseType = 'beta'
 
-	// append another jar to the obfuscated release
+	// add anohter jar to be published with the release
 	//additionalArtificat project.file('build/libs/*deobf.jar')
 }
