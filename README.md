@@ -19,7 +19,7 @@ If your using the Gradle wrapper, then just replace `gradle` with the wrapper ex
 ## License
 All of the wonderful license information is located in the project's license file. Please consult the license if you wish to use the source code and [myself](https://github.com/T145) for any of the assets.
 
-## Contributing
+## Contributing [![Stories in Ready](https://badge.waffle.io/t145/magistics.svg?label=ready&title=Ready)](http://waffle.io/t145/magistics) 
 1. Fork it
 2. Add or remove some stuff
 3. Commit your changes (`git commit -am "My awesome change!"`)
