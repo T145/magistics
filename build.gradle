@@ -82,7 +82,7 @@ repositories {
 
 dependencies {
 	// Applied Energistics 2
-    compile 'appeng:appliedenergistics2:rv2-stable-1:dev'
+    //compile 'appeng:appliedenergistics2:rv2-stable-1:dev'
 
     // Buildcraft
     compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
