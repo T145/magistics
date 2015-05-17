@@ -155,6 +155,7 @@ artifacts {
 	archives deobfJar, apiZip, sourceJar//, javadocJar
 }
 
+/*
 curse {
 	// get all of the text off of the changelog
 	def content = file('info/changelog.md').text =~ /(## Version )(.*)\n(.*)/
@@ -170,3 +171,4 @@ curse {
 	// add anohter jar to be published with the release
 	//additionalArtificat project.file('build/libs/*deobf.jar')
 }
+*/
