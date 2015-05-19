@@ -80,10 +80,19 @@ repositories {
 	}
 }
 
-dependencies {
-	// Applied Energistics 2
-    //compile 'appeng:appliedenergistics2:rv2-stable-1:dev'
+task getDependenciesManually(type: Download) {
+	src([ // download all of the dependencies that are not on maven
+	'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-1-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2234/199/CoFHCore-[1.7.10]3.0.2-262-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar'
+	])
+	dest 'lib'
+}
 
+dependencies {
+    getDependenciesManually.execute()
+	
     // Buildcraft
     compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
 

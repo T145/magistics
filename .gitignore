@@ -7,7 +7,7 @@
 # Ignore files that are not wanted in general
 .*
 _MACOSX
-Thumbs.db
+*.db
 
 # Ignore Gradle output
 bin/
@@ -23,4 +23,4 @@ forge-*.txt
 
 # Project-specific dependencies
 eclipse/*
-lib/Thaumcraft*.jar
+lib/*
