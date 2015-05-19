@@ -19,6 +19,8 @@ buildscript {
 	}
 }
 
+apply plugin: 'de.undercouch.download'
+
 task getDependenciesManually(type: Download) {
 	src([ // download all of the dependencies that are not on maven
 	'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-1-dev.jar',
@@ -100,21 +102,6 @@ dependencies {
     // Iron Chests
     compile 'cpw.mods:ironchest:' + project.minecraft.version + '-6.0.62.742:deobf'
 
-    // ChickenBones's things
-    def chickenmods = [
-    	[ "CodeChickenCore", "1.0.6.43" ],
-    	[ "EnderStorage", "1.4.7.36" ],
-    	[ "NotEnoughItems", "1.0.4.107" ],
-    	[ "ForgeMultipart", "1.2.0.344" ]
-    ]
-
-    chickenmods.each { key ->
-    	compile 'codechicken:' + key[0] + ':' + project.minecraft.version + '-' + key[1] + ':dev'
-    }
-
-    // Waila
-    compile 'mcp.mobius.waila:Waila:1.5.6a_' + project.minecraft.version
-
     // for Thaumcraft and other mods to "manually" compile
     compile fileTree(dir: 'lib', include: '*.jar')
 }
@@ -161,21 +148,3 @@ task sourceJar(type: Jar) {
 artifacts {
 	archives deobfJar, apiZip, sourceJar//, javadocJar
 }
-
-/*
-curse {
-	// get all of the text off of the changelog
-	def content = file('info/changelog.md').text =~ /(## Version )(.*)\n(.*)/
-
-	// get the latest changelog
-	def latestChangelog = content[0][3]
-
-	apiKey = curse_token
-	projectId = project_id
-	changelog = latestChangelog
-	releaseType = 'beta'
-
-	// add anohter jar to be published with the release
-	//additionalArtificat project.file('build/libs/*deobf.jar')
-}
-*/
