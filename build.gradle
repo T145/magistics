@@ -2,6 +2,7 @@ import de.undercouch.gradle.tasks.download.Download
 
 buildscript {
 	repositories {
+		jcenter()
 		mavenCentral()
 		maven {
 			name 'forge'
@@ -14,14 +15,23 @@ buildscript {
 	}
 	dependencies {
 		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'de.undercouch:gradle-download-task:1.2'
 	}
 }
 
-plugins {
-	id 'de.undercouch.download' version '1.2'
+task getDependenciesManually(type: Download) {
+	src([ // download all of the dependencies that are not on maven
+	'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-1-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2234/199/CoFHCore-[1.7.10]3.0.2-262-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
+	'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar'
+	])
+	dest 'lib'
 }
 
 task setupWorkspace(type: Download) {
+	getDependenciesManually.execute()
+
 	def destination = new File(System.getProperty('user.dir'), 'forge.zip')
 
 	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
@@ -80,19 +90,7 @@ repositories {
 	}
 }
 
-task getDependenciesManually(type: Download) {
-	src([ // download all of the dependencies that are not on maven
-	'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-1-dev.jar',
-	'http://addons-origin.cursecdn.com/files/2234/199/CoFHCore-[1.7.10]3.0.2-262-dev.jar',
-	'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
-	'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar'
-	])
-	dest 'lib'
-}
-
 dependencies {
-    getDependenciesManually.execute()
-	
     // Buildcraft
     compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
 
