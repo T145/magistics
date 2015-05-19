@@ -6,10 +6,7 @@
 <a href="https://codeship.com/projects/52617" target="_blank"><img src="https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master"/></a>
 
 ## Workspace Setup
-Simply follow these steps and you too can be working on Magistics like a boss!
-
-1. Plop your deobfuscated copy of Thaumcraft into the lib directory
-2. Run these commands:
+Simply run the following commands and you too can be working on Magistics like a boss!
 ``` bash
 gradle setupWorkspace
 gradle setupDecompWorkspace eclipse
