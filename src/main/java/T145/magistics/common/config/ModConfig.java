@@ -10,6 +10,8 @@ import thaumcraft.common.config.Config;
 import T145.magistics.client.renderers.block.BlockCrystalStorageRenderer;
 import T145.magistics.common.blocks.BlockCrystalStorageBasic;
 import T145.magistics.common.blocks.BlockCrystalStorageBrick;
+import T145.magistics.common.blocks.BlockCrystalStorageBrickEngineeringDark;
+import T145.magistics.common.blocks.BlockCrystalStorageBrickEngineeringLight;
 import T145.magistics.common.blocks.BlockCrystalStorageItem;
 import T145.magistics.common.blocks.BlockCrystalStoragePlate;
 import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
@@ -71,7 +73,9 @@ public class ModConfig {
 	blockCrystalStoragePlate = new BlockCrystalStoragePlate(),
 	blockCrystalStoragePlatform = new BlockCrystalStoragePlatform(),
 	blockCrystalStorageShield = new BlockCrystalStorageShield(),
-	blockCrystalStorageStructure = new BlockCrystalStorageStructure();
+	blockCrystalStorageStructure = new BlockCrystalStorageStructure(),
+	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageBrickEngineeringLight(),
+	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark();
 
 	public static void init() {
 		ModObjects reg = new ModObjects();
@@ -81,6 +85,8 @@ public class ModConfig {
 		reg.addBlock(blockCrystalStoragePlatform, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageShield, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageStructure, BlockCrystalStorageItem.class);
+		reg.addBlock(blockCrystalStorageBrickEngineeringLight, BlockCrystalStorageItem.class);
+		reg.addBlock(blockCrystalStorageBrickEngineeringDark, BlockCrystalStorageItem.class);
 		reg.registerObjects();
 
 		reg.addBlockRenderer(blockCrystalStorage, new BlockCrystalStorageRenderer(blockCrystalStorage.getRenderType()));
@@ -89,6 +95,8 @@ public class ModConfig {
 		reg.addBlockRenderer(blockCrystalStoragePlatform, new BlockCrystalStorageRenderer(blockCrystalStoragePlatform.getRenderType()));
 		reg.addBlockRenderer(blockCrystalStorageShield, new BlockCrystalStorageRenderer(blockCrystalStorageShield.getRenderType()));
 		reg.addBlockRenderer(blockCrystalStorageStructure, new BlockCrystalStorageRenderer(blockCrystalStorageStructure.getRenderType()));
+		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringLight, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
+		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringDark, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
 		reg.registerRenderers();
 	}
 
