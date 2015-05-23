@@ -1,8 +1,7 @@
 package T145.magistics.common.lib;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -48,7 +47,9 @@ public class ModObjects {
 		}
 	}.setBackgroundImageName("magistics.png").setNoTitle();
 
-	private static Dictionary modObjects = new Hashtable(), modRenderers = new Hashtable();
+	//private static Dictionary modObjects = new Hashtable(), modRenderers = new Hashtable();
+	private static LinkedHashMap<String, Object> modObjects = new LinkedHashMap<String, Object>();
+	private static LinkedHashMap<Object, Object> modRenderers = new LinkedHashMap<Object, Object>();
 
 	public static void addBlock(Block block) {
 		modObjects.put(block.getUnlocalizedName(), new BlockNode(block));
@@ -69,11 +70,11 @@ public class ModObjects {
 	public static void registerObjects() {
 		// be sure we have objects to register
 		if (!modObjects.isEmpty()) {
-			Enumeration keys = modObjects.keys();
+			Iterator keys = modObjects.keySet().iterator();
 
 			// go through each key
-			while (keys.hasMoreElements()) {
-				Object key = keys.nextElement();
+			while (keys.hasNext()) {
+				Object key = keys.next();
 				String name = (String) key;
 
 				// determine the key's value
@@ -121,12 +122,12 @@ public class ModObjects {
 
 	public static void registerRenderers() {
 		if (!modRenderers.isEmpty()) {
-			Enumeration keys = modRenderers.keys();
+			Iterator keys = modObjects.keySet().iterator();
 
 			// go through each key
-			while (keys.hasMoreElements()) {
+			while (keys.hasNext()) {
 				// determine the key's value
-				Object key = keys.nextElement(), value = modRenderers.get(key);
+				Object key = keys.next(), value = modRenderers.get(key);
 
 				// register said value
 				if (key instanceof Block) {
