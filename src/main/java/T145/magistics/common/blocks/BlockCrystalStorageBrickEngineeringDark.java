@@ -11,7 +11,7 @@ public class BlockCrystalStorageBrickEngineeringDark extends BlockCrystalStorage
 	public static IIcon icon;
 
 	public BlockCrystalStorageBrickEngineeringDark() {
-		setBlockName("crystal_storage:brick_engineering_dark");
+		setBlockName("crystal_storage.brick_engineering_dark");
 	}
 
 	@Override

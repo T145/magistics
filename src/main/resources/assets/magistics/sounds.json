@@ -1,8 +1,4 @@
 {
-	"UranusParadise": { "category": "master", "sounds": [{
-		"name": "UranusParadise",
-		"stream": true
-		}] },
 	"flute": { "category": "master", "sounds": [{
 		"name": "mithril_flute",
 		"stream": false

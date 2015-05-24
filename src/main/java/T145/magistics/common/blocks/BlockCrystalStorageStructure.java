@@ -17,7 +17,7 @@ public class BlockCrystalStorageStructure extends BlockCrystalStorage {
 	public static IIcon icon;
 
 	public BlockCrystalStorageStructure() {
-		setBlockName("crystal_storage:structure");
+		setBlockName("crystal_storage.structure");
 	}
 
 	@Override

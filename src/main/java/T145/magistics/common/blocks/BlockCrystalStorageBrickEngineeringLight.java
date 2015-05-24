@@ -11,7 +11,7 @@ public class BlockCrystalStorageBrickEngineeringLight extends BlockCrystalStorag
 	public static IIcon icon;
 
 	public BlockCrystalStorageBrickEngineeringLight() {
-		setBlockName("crystal_storage:brick_engineering_light");
+		setBlockName("crystal_storage.brick_engineering_light");
 	}
 
 	@Override

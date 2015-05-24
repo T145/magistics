@@ -11,7 +11,7 @@ public class BlockCrystalStorageShield extends BlockCrystalStorage {
 	public static IIcon icon;
 
 	public BlockCrystalStorageShield() {
-		setBlockName("crystal_storage:shield");
+		setBlockName("crystal_storage.shield");
 	}
 
 	@Override

@@ -10,9 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-
-import org.apache.logging.log4j.Level;
-
 import T145.magistics.common.Magistics;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -35,6 +32,16 @@ public class ModObjects {
 		}
 	}
 
+	private static class TileRenderer {
+		private Class tile;
+		private TileEntitySpecialRenderer renderer;
+
+		public TileRenderer(Class t, TileEntitySpecialRenderer r) {
+			tile = t;
+			renderer = r;
+		}
+	}
+
 	private static CreativeTabs tabMagistics = new CreativeTabs(Magistics.MODID) {
 		@Override
 		public Item getTabIconItem() {
@@ -47,7 +54,6 @@ public class ModObjects {
 		}
 	}.setBackgroundImageName("magistics.png").setNoTitle();
 
-	//private static Dictionary modObjects = new Hashtable(), modRenderers = new Hashtable();
 	private static LinkedHashMap<String, Object> modObjects = new LinkedHashMap<String, Object>();
 	private static LinkedHashMap<Object, Object> modRenderers = new LinkedHashMap<Object, Object>();
 
@@ -68,90 +74,74 @@ public class ModObjects {
 	}
 
 	public static void registerObjects() {
-		// be sure we have objects to register
 		if (!modObjects.isEmpty()) {
-			Iterator keys = modObjects.keySet().iterator();
+			Iterator keychain = modObjects.keySet().iterator();
 
-			// go through each key
-			while (keys.hasNext()) {
-				Object key = keys.next();
-				String name = (String) key;
+			while (keychain.hasNext()) {
+				String key = (String) keychain.next();
+				Object val = modObjects.get(key);
 
-				// determine the key's value
-				Object value = modObjects.get(name);
+				if (val instanceof BlockNode) {
+					BlockNode node = (BlockNode) val;
+					Block block = node.block.setCreativeTab(tabMagistics);
+					Class itemclass = node.item;
 
-				// register said value
-				if (value instanceof BlockNode) {
-					BlockNode node = (BlockNode) value;
+					if (itemclass == null)
+						GameRegistry.registerBlock(block, key);
+					else
+						GameRegistry.registerBlock(block, itemclass, key);
+				} else if (val instanceof Item) {
+					Item item = (Item) val;
 
-					if (node.item == null) {
-						GameRegistry.registerBlock(node.block.setCreativeTab(tabMagistics), name);
-					} else {
-						GameRegistry.registerBlock(node.block.setCreativeTab(tabMagistics), node.item, name);
-					}
-				} else if (value instanceof Item) {
-					Item item = (Item) value;
+					GameRegistry.registerItem(item.setCreativeTab(tabMagistics), key);
+				} else if (val instanceof Class) {
+					Class tile = (Class) val;
 
-					GameRegistry.registerItem(item.setCreativeTab(tabMagistics), name);
-				} else if (value instanceof Class) {
-					Class tile = (Class) value;
-
-					GameRegistry.registerTileEntity(tile, name);
+					GameRegistry.registerTileEntity(tile, key);
 				} else {
-					// unknown object
-					Magistics.logger.log(Level.WARN, "An unknown object attempted to register: " + key.toString() + " ... " + value.toString());
+					Magistics.logger.error("An unknown object attempted to register: " + key + ":" + val.toString());
 				}
 			}
-		} else {
-			// nothing to register
-			Magistics.logger.log(Level.INFO, "Object Registry: Nothing to register!");
 		}
 	}
 
-	public static void addBlockRenderer(Block block, ISimpleBlockRenderingHandler blockRenderer) {
-		modRenderers.put(block, blockRenderer);
+	public static void addBlockRenderer(Block block, ISimpleBlockRenderingHandler renderer) {
+		modRenderers.put(block, renderer);
 	}
 
-	public static void addItemRenderer(Item item, IItemRenderer itemRenderer) {
-		modRenderers.put(item, itemRenderer);
+	public static void addItemRenderer(Item item, IItemRenderer renderer) {
+		modRenderers.put(item, renderer);
 	}
 
-	public static void addTileRenderer(Class tile, TileEntitySpecialRenderer tileRenderer) {
-		modRenderers.put(tile, tileRenderer);
+	public static void addTileRenderer(Class tile, TileEntitySpecialRenderer renderer) {
+		modRenderers.put(tile, renderer);
 	}
 
 	public static void registerRenderers() {
 		if (!modRenderers.isEmpty()) {
-			Iterator keys = modObjects.keySet().iterator();
+			Iterator keychain = modRenderers.keySet().iterator();
 
-			// go through each key
-			while (keys.hasNext()) {
-				// determine the key's value
-				Object key = keys.next(), value = modRenderers.get(key);
+			while (keychain.hasNext()) {
+				Object key = keychain.next(), val = modRenderers.get(key);
 
-				// register said value
 				if (key instanceof Block) {
-					ISimpleBlockRenderingHandler renderer = (ISimpleBlockRenderingHandler) value;
+					ISimpleBlockRenderingHandler renderer = (ISimpleBlockRenderingHandler) val;
 
 					RenderingRegistry.registerBlockHandler(renderer);
 				} else if (key instanceof Item) {
 					Item item = (Item) key;
-					IItemRenderer renderer = (IItemRenderer) value;
+					IItemRenderer renderer = (IItemRenderer) val;
 
 					MinecraftForgeClient.registerItemRenderer(item, renderer);
 				} else if (key instanceof Class) {
 					Class tile = (Class) key;
-					TileEntitySpecialRenderer renderer = (TileEntitySpecialRenderer) value;
+					TileEntitySpecialRenderer renderer = (TileEntitySpecialRenderer) val;
 
 					ClientRegistry.bindTileEntitySpecialRenderer(tile, renderer);
 				} else {
-					// unknown renderer
-					Magistics.logger.log(Level.WARN, "An unknown renderer attempted to register: " + key.toString() + " ... " + value.toString());
+					Magistics.logger.error("An unknown renderer attempted to register: " + key.toString() + ":" + val.toString());
 				}
 			}
-		} else {
-			// nothing to register
-			Magistics.logger.log(Level.INFO, "Renderer Registry: Nothing to register!");
 		}
 	}
 }

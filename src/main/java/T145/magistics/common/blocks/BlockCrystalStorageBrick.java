@@ -11,7 +11,7 @@ public class BlockCrystalStorageBrick extends BlockCrystalStorage {
 	public static IIcon icon;
 
 	public BlockCrystalStorageBrick() {
-		setBlockName("crystal_storage:brick");
+		setBlockName("crystal_storage.brick");
 	}
 
 	@Override

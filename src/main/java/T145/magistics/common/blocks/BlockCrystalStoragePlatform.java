@@ -11,7 +11,7 @@ public class BlockCrystalStoragePlatform extends BlockCrystalStorage {
 	public static IIcon icon;
 
 	public BlockCrystalStoragePlatform() {
-		setBlockName("crystal_storage:platform");
+		setBlockName("crystal_storage.platform");
 	}
 
 	@Override
