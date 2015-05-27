@@ -25,6 +25,12 @@ buildscript {
 apply plugin: 'de.undercouch.download'
 
 task getDependencies(type: Download) {
+	def lib = new File(project.projectDir, 'lib')
+
+	if (!lib.exists()) {
+		lib.mkdirs()
+	}
+
 	src([
 		// Thaumcraft
 		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
@@ -43,11 +49,11 @@ task getDependencies(type: Download) {
 		'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
 		'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar'
 	])
-	dest 'lib'
+	dest lib
 }
 
 task setupWorkspace(type: Download, dependsOn: getDependencies) {
-	def destination = new File(System.getProperty('user.dir'), 'forge.zip')
+	def destination = new File(project.projectDir, 'forge.zip')
 	
 	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
 	dest destination

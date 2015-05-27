@@ -32,16 +32,6 @@ public class ModObjects {
 		}
 	}
 
-	private static class TileRenderer {
-		private Class tile;
-		private TileEntitySpecialRenderer renderer;
-
-		public TileRenderer(Class t, TileEntitySpecialRenderer r) {
-			tile = t;
-			renderer = r;
-		}
-	}
-
 	private static CreativeTabs tabMagistics = new CreativeTabs(Magistics.MODID) {
 		@Override
 		public Item getTabIconItem() {

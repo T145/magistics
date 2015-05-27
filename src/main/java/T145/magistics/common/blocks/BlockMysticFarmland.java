@@ -36,10 +36,11 @@ public class BlockMysticFarmland extends Block {
 	}
 
 	@Override
-	public int damageDropped(int metadata) {
-		return metadata;
+	public int damageDropped(int meta) {
+		return meta;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
 		super.registerBlockIcons(r);
@@ -51,6 +52,7 @@ public class BlockMysticFarmland extends Block {
 		iconGlow = r.registerIcon("thaumcraft:animatedglow");
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		if (meta > 1)
