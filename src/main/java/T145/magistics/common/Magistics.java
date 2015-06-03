@@ -19,7 +19,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft")
 public class Magistics {
-	public static final String MODID = "Magistics", VERSION = "3.0.2";
+	public static final String MODID = "Magistics", VERSION = "@VERSION@";
 
 	@Instance(MODID)
 	public static Magistics instance;

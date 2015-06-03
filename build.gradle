@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
 	repositories {
@@ -75,11 +76,21 @@ task wrap(type: Wrapper) {
 	gradleVersion = gradle_version
 }
 
+def getVersion = { ->
+	def stdout = new ByteArrayOutputStream()
+	exec {
+		commandLine 'git', 'describe', '--tags'
+		standardOutput = stdout
+	}
+	return stdout.toString().trim()
+}
+
 apply plugin: 'forge'
 
-def versions = file('info/changelog.md').text =~ /(## Version )(.*)/
-version = versions[0][2]
+//def versions = file('info/changelog.md').text =~ /(## Version )(.*)/
+//version = versions[0][2]
 
+version = getVersion()
 group = 'T145.magistics'
 archivesBaseName = 'Magistics'
 
@@ -90,4 +101,11 @@ minecraft {
 
 dependencies {
 	compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+processResources {
+	from (sourceSets.main.java) {
+		include 'T145/magistics/common/Magistics.java'
+		filter(ReplaceTokens, tokens: [version : project.version])
+	}
 }
