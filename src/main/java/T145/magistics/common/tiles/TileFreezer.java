@@ -2,20 +2,15 @@ package T145.magistics.common.tiles;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.Fluid;
-import cofh.lib.util.helpers.FluidHelper;
 
-public class TileFreezer extends TileEntity {
+public class TileFreezer extends TileCrystalMachine {
 	@Override
-	public boolean canUpdate() {
-		return true;
+	public boolean canRotate() {
+		return false;
 	}
 
 	@Override
-	public void updateEntity() {
-		super.updateEntity();
-
+	public void update() {
 		for (int i = xCoord - 1; i <= xCoord + 1; ++i)
 			for (int j = yCoord - 1; j <= yCoord + 1; ++j)
 				for (int k = zCoord - 1; k <= zCoord + 1; ++k) {
