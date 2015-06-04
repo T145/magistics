@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import thaumcraft.common.config.Config;
 import T145.magistics.client.renderers.block.BlockCrystalStorageRenderer;
-import T145.magistics.client.renderers.block.BlockMysticFarmlandRenderer;
 import T145.magistics.common.blocks.BlockCrystalStorageBasic;
 import T145.magistics.common.blocks.BlockCrystalStorageBrick;
 import T145.magistics.common.blocks.BlockCrystalStorageBrickEngineeringDark;
@@ -18,25 +17,24 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlate;
 import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
-import T145.magistics.common.blocks.BlockMysticFarmland;
 import T145.magistics.common.lib.ModObjects;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfig {
+	public static Configuration config;
 	public static final String CATEGORY_BLOCKS = "Blocks", CATEGORY_ITEMS = "Items";
 
-	public static int growthStackHeight, maxGrowthHeight;
+	public static boolean debug = false, blocks[], items[];
 
-	public static void sync(Configuration config) {
-		growthStackHeight = config.getInt("stackHeight", "Blocks", 16, 1, 255, "Set the stack size for the full growth buff.");
-		maxGrowthHeight = config.getInt("maxGrowthHeight", "Blocks", 4, 1, 32, "Set the max growth height of cacti/reeds.");
+	public static void sync() {
+		debug = config.getBoolean("Debug", config.CATEGORY_GENERAL, false, "Toggles advanced log output.");
 	}
 
-	public static void onConfigChanged(Configuration config, String modid, OnConfigChangedEvent e) {
+	public static void onConfigChanged(String modid, OnConfigChangedEvent e) {
 		if (e.modID.equals(modid)) {
-			sync(config);
+			sync();
 
 			if (config != null && config.hasChanged())
 				config.save();
@@ -55,14 +53,14 @@ public class ModConfig {
 		meta.logoFile = "logo.png";
 	}
 
-	public static void preInit(Configuration config, FMLPreInitializationEvent e, Logger logger) {
+	public static void preInit(FMLPreInitializationEvent e, Logger logger) {
 		try {
 			config = new Configuration(e.getSuggestedConfigurationFile());
 			config.copyCategoryProps(Config.config, new String[] { "enchantments", "monster_spawning", "world_generation", "world_regeneration" });
 			config.addCustomCategoryComment(CATEGORY_BLOCKS, "Blocks added by Magistics");
 			config.addCustomCategoryComment(CATEGORY_ITEMS, "Items added by Magistics");
 			config.load();
-			sync(config);
+			sync();
 			config.save();
 		} catch (Exception ex) {
 			logger.log(Level.ERROR, "A fatal error has occurred while reading configuration properties!");
@@ -70,6 +68,10 @@ public class ModConfig {
 			if (config != null)
 				config.save();
 		}
+	}
+
+	public static Configuration getConfig() {
+		return config;
 	}
 
 	public static Block
@@ -80,11 +82,10 @@ public class ModConfig {
 	blockCrystalStorageShield = new BlockCrystalStorageShield(),
 	blockCrystalStorageStructure = new BlockCrystalStorageStructure(),
 	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageBrickEngineeringLight(),
-	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark(),
-	blockMysticFarmland = new BlockMysticFarmland();
+	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark();
 
 	public static void init() {
-		ModObjects reg = new ModObjects();
+		ModObjects reg = ModObjects.getRegistry();
 		reg.addBlock(blockCrystalStorage, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageBrick, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStoragePlate, BlockCrystalStorageItem.class);
@@ -93,7 +94,6 @@ public class ModConfig {
 		reg.addBlock(blockCrystalStorageStructure, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageBrickEngineeringLight, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageBrickEngineeringDark, BlockCrystalStorageItem.class);
-		reg.addBlock(blockMysticFarmland);
 		reg.registerObjects();
 
 		reg.addBlockRenderer(blockCrystalStorage, new BlockCrystalStorageRenderer(blockCrystalStorage.getRenderType()));
@@ -104,7 +104,6 @@ public class ModConfig {
 		reg.addBlockRenderer(blockCrystalStorageStructure, new BlockCrystalStorageRenderer(blockCrystalStorageStructure.getRenderType()));
 		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringLight, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
 		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringDark, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
-		reg.addBlockRenderer(blockMysticFarmland, new BlockMysticFarmlandRenderer());
 		reg.registerRenderers();
 	}
 

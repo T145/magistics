@@ -8,15 +8,21 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.config.ModConfig;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModObjects {
+	public static ModObjects getRegistry() {
+		return new ModObjects();
+	}
+
 	private static class BlockNode {
 		private Block block;
 		private Class item;
@@ -55,12 +61,29 @@ public class ModObjects {
 		modObjects.put(block.getUnlocalizedName(), new BlockNode(block, item));
 	}
 
+	public static Block getBlock(String name) {
+		BlockNode node = (BlockNode) modObjects.get(name);
+		return node.block;
+	}
+
 	public static void addItem(Item item) {
 		modObjects.put(item.getUnlocalizedName(), item);
 	}
 
+	public static Item getItem(String name) {
+		return (Item) modObjects.get(name);
+	}
+
 	public static void addTile(Class tile) {
 		modObjects.put(tile.getSimpleName(), tile);
+	}
+
+	public static void addTile(TileEntity tile) {
+		modObjects.put(tile.getClass().getSimpleName(), tile.getClass());
+	}
+
+	public static Class getTile(String name) {
+		return (Class) modObjects.get(name);
 	}
 
 	public static void registerObjects() {
@@ -76,20 +99,33 @@ public class ModObjects {
 					Block block = node.block.setCreativeTab(tabMagistics);
 					Class itemclass = node.item;
 
-					if (itemclass == null)
+					if (itemclass == null) {
 						GameRegistry.registerBlock(block, key);
-					else
+
+						if (ModConfig.debug)
+							Magistics.logger.info("Registered Block: " + key);
+					} else {
 						GameRegistry.registerBlock(block, itemclass, key);
+
+						if (ModConfig.debug)
+							Magistics.logger.info("Registered ItemBlock: " + key);
+					}
 				} else if (val instanceof Item) {
 					Item item = (Item) val;
 
 					GameRegistry.registerItem(item.setCreativeTab(tabMagistics), key);
+
+					if (ModConfig.debug)
+						Magistics.logger.info("Registered Item: " + key);
 				} else if (val instanceof Class) {
 					Class tile = (Class) val;
 
 					GameRegistry.registerTileEntity(tile, key);
+
+					if (ModConfig.debug)
+						Magistics.logger.info("Registered Tile: " + key);
 				} else {
-					Magistics.logger.error("An unknown object attempted to register: " + key + ":" + val.toString());
+					Magistics.logger.fatal("An unknown object attempted to register: " + key + ":" + val.toString());
 				}
 			}
 		}
@@ -129,7 +165,7 @@ public class ModObjects {
 
 					ClientRegistry.bindTileEntitySpecialRenderer(tile, renderer);
 				} else {
-					Magistics.logger.error("An unknown renderer attempted to register: " + key.toString() + ":" + val.toString());
+					Magistics.logger.fatal("An unknown renderer attempted to register: " + key.toString() + ":" + val.toString());
 				}
 			}
 		}
