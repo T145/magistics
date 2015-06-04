@@ -33,10 +33,6 @@ task getDependencies(type: Download) {
 	}
 
 	src([
-		// Thaumcraft
-		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
-		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar',
-		
 		// Applied Energistics
 		'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-3-dev.jar',
 		
@@ -48,7 +44,14 @@ task getDependencies(type: Download) {
 		// Cofh
 		'http://addons-origin.cursecdn.com/files/2234/199/CoFHCore-[1.7.10]3.0.2-262-dev.jar',
 		'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
-		'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar'
+		'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar',
+		
+		// IronChest
+		'http://files.minecraftforge.net/maven/cpw/mods/ironchest/1.7.10-6.0.62.742/ironchest-1.7.10-6.0.62.742-deobf.jar',
+		
+		// Thaumcraft
+		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
+		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
 	])
 	dest lib
 }
@@ -104,6 +107,27 @@ processResources {
 	exclude '**/*.db'
 }
 
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	classifier = 'dev'
+}
+
+task apiArchive(type: Zip) {
+	from (sourceSets.main.java) {
+		include 'T145/magistics/api/**'
+	}
+	classifier = 'api'
+}
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allJava
+	classifier = 'src'
+}
+
+artifacts {
+	archives deobfJar, apiArchive, sourceJar
+}
+
 apply plugin: 'java'
 
 def filteredSourceDir = file("$buildDir/filtered")
@@ -125,3 +149,6 @@ task processVersion(type: Copy) {
 }
 
 compileJava.dependsOn processVersion
+
+// be sure the filtered source is removed to prevent its source from colliding w/ the main workspace
+deobfJar.dependsOn cleanProcessVersion
