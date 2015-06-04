@@ -19,7 +19,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft")
 public class Magistics {
-	public static final String MODID = "Magistics", VERSION = "@VERSION@";
+	public static final String MODID = "Magistics", VERSION = "$version";
 
 	@Instance(MODID)
 	public static Magistics instance;
@@ -31,19 +31,18 @@ public class Magistics {
 	public static CommonProxy proxy;
 
 	public static Logger logger;
-	public static Configuration config;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		logger = e.getModLog();
 
-		ModConfig.preInit(config, e, logger);
+		ModConfig.preInit(e, logger);
 		ModConfig.loadMetadata(metadata, MODID, VERSION);
 	}
 
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent e) {
-		ModConfig.onConfigChanged(config, MODID, e);
+		ModConfig.onConfigChanged(MODID, e);
 	}
 
 	@EventHandler

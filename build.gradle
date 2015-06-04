@@ -1,5 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
-import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.*
 
 buildscript {
 	repositories {
@@ -38,7 +38,7 @@ task getDependencies(type: Download) {
 		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar',
 		
 		// Applied Energistics
-		'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-1-dev.jar',
+		'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-3-dev.jar',
 		
 		// ChickenBones
 		'http://chickenbones.net/maven/codechicken/CodeChickenCore/1.7.10-1.0.6.44/CodeChickenCore-1.7.10-1.0.6.44-dev.jar',
@@ -87,9 +87,6 @@ def getVersion = { ->
 
 apply plugin: 'forge'
 
-//def versions = file('info/changelog.md').text =~ /(## Version )(.*)/
-//version = versions[0][2]
-
 version = getVersion()
 group = 'T145.magistics'
 archivesBaseName = 'Magistics'
@@ -104,8 +101,27 @@ dependencies {
 }
 
 processResources {
-	from (sourceSets.main.java) {
-		include 'T145/magistics/common/Magistics.java'
-		filter(ReplaceTokens, tokens: [version : project.version])
+	exclude '**/*.db'
+}
+
+apply plugin: 'java'
+
+def filteredSourceDir = file("$buildDir/filtered")
+
+sourceSets {
+	filtered {
+		java {
+			srcDirs = [filteredSourceDir]
+		}
 	}
 }
+
+compileJava.source = sourceSets.filtered.java
+
+task processVersion(type: Copy) {
+	from sourceSets.main.java
+	into filteredSourceDir
+	expand(version: project.version)
+}
+
+compileJava.dependsOn processVersion
