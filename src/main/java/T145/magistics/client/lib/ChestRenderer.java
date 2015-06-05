@@ -1,4 +1,4 @@
-package T145.magistics.api.client.renderers.blocks;
+package T145.magistics.client.lib;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.api.client.lib.ChestRenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,7 +29,11 @@ public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
 		if (chest == null) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
+			if (textures.length > 1)
+				Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
+			else
+				Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
+
 			ChestRenderHelper.renderChest();
 		} else
 			ChestRenderHelper.renderChest(chest);

@@ -45,7 +45,7 @@ public class BlockCrystalStorage extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		for (int i = 0; i < new BlockCustomOre().icon.length; i++) {
+		for (int i = 0; i <= new BlockCustomOre().icon.length; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

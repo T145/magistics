@@ -1,4 +1,4 @@
-package T145.magistics.api.client.lib;
+package T145.magistics.client.lib;
 
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;

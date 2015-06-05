@@ -8,16 +8,18 @@ import net.minecraft.world.World;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.common.lib.InventoryHelper;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
 
 public class BlockChestHungryMetal extends BlockIronChest {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon icon[] = new IIcon[IronChestType.values().length];
 
 	public BlockChestHungryMetal() {
-		setBlockName("hungry_chest_metal");
+		setBlockName("hungry_metal_chest");
 	}
 
 	@Override
@@ -32,6 +34,12 @@ public class BlockChestHungryMetal extends BlockIronChest {
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return icon[meta];
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderType() {
+		return renderID;
 	}
 
 	@Override

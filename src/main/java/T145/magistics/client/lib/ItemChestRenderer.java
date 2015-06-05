@@ -1,10 +1,9 @@
-package T145.magistics.api.client.renderers.items;
+package T145.magistics.client.lib;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import T145.magistics.api.client.lib.ChestRenderHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

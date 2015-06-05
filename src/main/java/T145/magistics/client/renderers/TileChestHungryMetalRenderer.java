@@ -18,8 +18,11 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 
 import com.google.common.primitives.SignedBytes;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.IronChestType;
 
+@SideOnly(Side.CLIENT)
 public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
 	private final ModelChest model = new ModelChest();
 	private Random rand = new Random();

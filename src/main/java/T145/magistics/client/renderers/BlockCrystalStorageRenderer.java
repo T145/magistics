@@ -34,7 +34,7 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 		if (block instanceof BlockCrystalStorageStructure) {
 			c = new Color(ItemDye.field_150922_c[meta]);
 		} else {
-			c = new Color(BlockCustomOreItem.colors[meta]);
+			c = new Color(BlockCustomOreItem.colors[meta + 1]);
 		}
 
 		GL11.glColor3f(c.getRed() / 255F, c.getGreen() / 255F, c.getBlue() / 255F);
@@ -56,7 +56,7 @@ public class BlockCrystalStorageRenderer extends BlockRenderer implements ISimpl
 		if (block instanceof BlockCrystalStorageStructure) {
 			t.setColorOpaque_I(ItemDye.field_150922_c[meta]);
 		} else {
-			t.setColorOpaque_I(BlockCustomOreItem.colors[meta]);
+			t.setColorOpaque_I(BlockCustomOreItem.colors[meta + 1]);
 		}
 
 		renderAllSidesInverted(world, x, y, z, block, renderer, ((BlockCrystalStorage) block).iconGlow, false);

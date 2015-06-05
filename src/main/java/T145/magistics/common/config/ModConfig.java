@@ -1,17 +1,18 @@
 package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import thaumcraft.common.config.Config;
-import T145.magistics.api.client.renderers.items.ItemChestRenderer;
+import T145.magistics.client.lib.ChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
+import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.blocks.BlockCrystalStorageBasic;
@@ -23,7 +24,9 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlate;
 import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
+import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.lib.ModObjects;
+import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Loader;
@@ -90,7 +93,9 @@ public class ModConfig {
 	blockCrystalStorageShield = new BlockCrystalStorageShield(),
 	blockCrystalStorageStructure = new BlockCrystalStorageStructure(),
 	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageBrickEngineeringLight(),
-	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark();
+	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark(),
+
+	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest");
 
 	public static BlockChestHungryMetal blockChestHungryMetal = new BlockChestHungryMetal();
 
@@ -101,18 +106,24 @@ public class ModConfig {
 		reg.addBlock(blockCrystalStoragePlate, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStoragePlatform, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageShield, BlockCrystalStorageItem.class);
-		reg.addBlock(blockCrystalStorageStructure, BlockCrystalStorageItem.class);
+		reg.addBlock(blockCrystalStorageStructure, BlockCrystalStorageStructureItem.class);
 		reg.addBlock(blockCrystalStorageBrickEngineeringLight, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageBrickEngineeringDark, BlockCrystalStorageItem.class);
 
-		reg.addBlockRenderer(blockCrystalStorage, new BlockCrystalStorageRenderer(blockCrystalStorage.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStorageBrick, new BlockCrystalStorageRenderer(blockCrystalStorageBrick.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStoragePlate, new BlockCrystalStorageRenderer(blockCrystalStoragePlate.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStoragePlatform, new BlockCrystalStorageRenderer(blockCrystalStoragePlatform.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStorageShield, new BlockCrystalStorageRenderer(blockCrystalStorageShield.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStorageStructure, new BlockCrystalStorageRenderer(blockCrystalStorageStructure.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringLight, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
-		reg.addBlockRenderer(blockCrystalStorageBrickEngineeringDark, new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorage.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrick.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStoragePlate.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStoragePlatform.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageShield.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageStructure.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
+		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
+
+		reg.addBlock(blockChestHungryEnder);
+		reg.addTile(TileChestHungryEnder.class);
+
+		reg.addBlockRenderer(new ChestRenderer(blockChestHungryEnder.getRenderType(), new TileChestHungryEnder()));
+		reg.addTileRenderer(TileChestHungryEnder.class, new TileChestHungryEnderRenderer());
 
 		if (Loader.isModLoaded("IronChest")) {
 			if (debug)
@@ -121,10 +132,8 @@ public class ModConfig {
 			reg.addBlock(blockChestHungryMetal, BlockChestHungryMetalItem.class);
 			reg.addTile(TileChestHungryMetal.class);
 
-			TileChestHungryMetalRenderer tileRendererChestHungryMetal = new TileChestHungryMetalRenderer();
-
-			reg.addItemRenderer(Item.getItemFromBlock(blockChestHungryMetal), new ItemChestRenderer(tileRendererChestHungryMetal.getChestTextures()));
-			reg.addTileRenderer(TileChestHungryMetal.class, tileRendererChestHungryMetal);
+			reg.addBlockRenderer(new ChestRenderer(blockChestHungryMetal.getRenderType(), TileChestHungryMetalRenderer.getChestTextures()));
+			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
 
 		reg.registerObjects();
