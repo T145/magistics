@@ -1,4 +1,4 @@
-package T145.magistics.client.renderers.block;
+package T145.magistics.client.renderers;
 
 import java.awt.Color;
 
