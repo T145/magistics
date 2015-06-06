@@ -20,11 +20,11 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ModObjects {
+public class ModRegistry {
 	private static boolean debug = ModConfig.debug;
 
-	public static ModObjects getRegistry() {
-		return new ModObjects();
+	public static ModRegistry getRegistry() {
+		return new ModRegistry();
 	}
 
 	private static class BlockNode {
@@ -59,21 +59,21 @@ public class ModObjects {
 	private static LinkedList<Class> tiles = new LinkedList<Class>();
 
 	public static void addBlock(Block block) {
-		blocks.add(new BlockNode(block));
+		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics)));
 
 		if (debug)
 			Magistics.logger.info("Added Block: " + block.getUnlocalizedName());
 	}
 
 	public static void addBlock(Block block, Class item) {
-		blocks.add(new BlockNode(block, item));
+		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics), item));
 
 		if (debug)
 			Magistics.logger.info("Added ItemBlock: " + block.getUnlocalizedName());
 	}
 
 	public static void addItem(Item item) {
-		items.add(item);
+		items.add(item.setCreativeTab(tabMagistics));
 
 		if (debug)
 			Magistics.logger.info("Added Item: " + item.getUnlocalizedName());
@@ -89,7 +89,7 @@ public class ModObjects {
 	public static void registerObjects() {
 		if (!blocks.isEmpty()) {
 			for (BlockNode node : blocks) {
-				Block block = node.block.setCreativeTab(tabMagistics);
+				Block block = node.block;
 				Class item = node.item;
 
 				if (item == null) {

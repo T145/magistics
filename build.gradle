@@ -46,9 +46,6 @@ task getDependencies(type: Download) {
 		'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
 		'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar',
 		
-		// IronChest
-		'http://files.minecraftforge.net/maven/cpw/mods/ironchest/1.7.10-6.0.62.742/ironchest-1.7.10-6.0.62.742-deobf.jar',
-		
 		// Thaumcraft
 		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
 		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
@@ -100,6 +97,15 @@ minecraft {
 }
 
 dependencies {
+	// Buildcraft
+	compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
+
+	// Equivalent Exchange 3
+	compile 'com.pahimar.ee3:EquivalentExchange3:' + project.minecraft.version + '-0.3.507:dev'
+
+	// IronChest
+	compile 'cpw.mods:ironchest:' + project.minecraft.version + '-6.0.62.742:deobf'
+
 	compile fileTree(dir: 'lib', include: '*.jar')
 }
 

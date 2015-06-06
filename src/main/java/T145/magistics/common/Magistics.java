@@ -1,10 +1,9 @@
 package T145.magistics.common;
 
-import net.minecraftforge.common.config.Configuration;
-
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.common.config.ModConfig;
+import T145.magistics.common.lib.ModRegistry;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -21,16 +20,25 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class Magistics {
 	public static final String MODID = "Magistics", VERSION = "$version";
 
+	public static String getVersion() {
+		return VERSION;
+	}
+
 	@Instance(MODID)
 	public static Magistics instance;
 
 	@Metadata
-	public static ModMetadata metadata;
+	private static ModMetadata metadata;
 
 	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
 	public static CommonProxy proxy;
 
+	private static ModRegistry registry = ModRegistry.getRegistry();
 	public static Logger logger;
+
+	public static ModRegistry getRegistry() {
+		return registry;
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -48,6 +56,8 @@ public class Magistics {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		ModConfig.init();
+		proxy.registerObjects();
+		proxy.registerRenderers();
 	}
 
 	@EventHandler

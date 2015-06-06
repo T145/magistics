@@ -25,7 +25,7 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
-import T145.magistics.common.lib.ModObjects;
+import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -100,7 +100,8 @@ public class ModConfig {
 	public static BlockChestHungryMetal blockChestHungryMetal = new BlockChestHungryMetal();
 
 	public static void init() {
-		ModObjects reg = ModObjects.getRegistry();
+		ModRegistry reg = Magistics.getRegistry();
+
 		reg.addBlock(blockCrystalStorage, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStorageBrick, BlockCrystalStorageItem.class);
 		reg.addBlock(blockCrystalStoragePlate, BlockCrystalStorageItem.class);
@@ -135,9 +136,6 @@ public class ModConfig {
 			reg.addBlockRenderer(new ChestRenderer(blockChestHungryMetal.getRenderType(), TileChestHungryMetalRenderer.getChestTextures()));
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
-
-		reg.registerObjects();
-		reg.registerRenderers();
 	}
 
 	public static void postInit() {
