@@ -17,8 +17,8 @@ import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
 import T145.magistics.common.blocks.BlockCrystalStorageBasic;
 import T145.magistics.common.blocks.BlockCrystalStorageBrick;
-import T145.magistics.common.blocks.BlockCrystalStorageBrickEngineeringDark;
-import T145.magistics.common.blocks.BlockCrystalStorageBrickEngineeringLight;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineeringDark;
+import T145.magistics.common.blocks.BlockCrystalStorageEngineeringLight;
 import T145.magistics.common.blocks.BlockCrystalStorageItem;
 import T145.magistics.common.blocks.BlockCrystalStoragePlate;
 import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
@@ -81,10 +81,6 @@ public class ModConfig {
 		}
 	}
 
-	public static Configuration getConfig() {
-		return config;
-	}
-
 	public static Block
 	blockCrystalStorage = new BlockCrystalStorageBasic(),
 	blockCrystalStorageBrick = new BlockCrystalStorageBrick(),
@@ -92,8 +88,8 @@ public class ModConfig {
 	blockCrystalStoragePlatform = new BlockCrystalStoragePlatform(),
 	blockCrystalStorageShield = new BlockCrystalStorageShield(),
 	blockCrystalStorageStructure = new BlockCrystalStorageStructure(),
-	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageBrickEngineeringLight(),
-	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageBrickEngineeringDark(),
+	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageEngineeringLight(),
+	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageEngineeringDark(),
 
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest");
 

@@ -9,7 +9,6 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -45,7 +44,7 @@ public class ModRegistry {
 	private static CreativeTabs tabMagistics = new CreativeTabs(Magistics.MODID) {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.anvil);
+			return Item.getItemFromBlock(ModConfig.blockChestHungryEnder);
 		}
 
 		@Override

@@ -6,12 +6,12 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockCrystalStorageBrickEngineeringDark extends BlockCrystalStorage {
+public class BlockCrystalStorageEngineeringDark extends BlockCrystalStorage {
 	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
 	public static IIcon icon;
 
-	public BlockCrystalStorageBrickEngineeringDark() {
-		setBlockName("crystal_storage.brick_engineering_dark");
+	public BlockCrystalStorageEngineeringDark() {
+		setBlockName("crystal_storage.engineering_dark");
 	}
 
 	@Override
