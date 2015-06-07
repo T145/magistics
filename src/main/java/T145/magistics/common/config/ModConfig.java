@@ -28,10 +28,12 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
+import T145.magistics.common.blocks.BlockThaumicEnchanter;
 import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileThaumicEnchanter;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
@@ -98,6 +100,8 @@ public class ModConfig {
 	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageEngineeringLight(),
 	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageEngineeringDark(),
 
+	blockThaumicEnchanter = new BlockThaumicEnchanter(),
+
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
 	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest");
 
@@ -155,6 +159,9 @@ public class ModConfig {
 			reg.addBlockRenderer(new ChestRenderer(blockChestHungryMetal.getRenderType(), TileChestHungryMetalRenderer.getChestTextures()));
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
+
+		reg.addBlock(blockThaumicEnchanter);
+		reg.addTile(TileThaumicEnchanter.class);
 	}
 
 	public static void postInit() {
