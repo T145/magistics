@@ -45,7 +45,10 @@ task getDependencies(type: Download) {
 		'http://addons-origin.cursecdn.com/files/2234/199/CoFHCore-[1.7.10]3.0.2-262-dev.jar',
 		'http://addons-origin.cursecdn.com/files/2233/781/ThermalFoundation-[1.7.10]1.0.0-81-dev.jar',
 		'http://addons-origin.cursecdn.com/files/2233/797/ThermalExpansion-[1.7.10]4.0.0-176-dev.jar',
-		
+
+		// Refined Relocation
+		'http://addons-origin.cursecdn.com/files/2241/578/RefinedRelocation-1.7.10-1.0.8b-deobf.jar',
+
 		// Thaumcraft
 		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
 		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'

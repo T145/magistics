@@ -1,6 +1,7 @@
 package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
@@ -9,9 +10,11 @@ import org.apache.logging.log4j.Logger;
 import thaumcraft.common.config.Config;
 import T145.magistics.client.lib.ChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
+import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.common.Magistics;
+import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
 import T145.magistics.common.blocks.BlockChestHungryMetal;
 import T145.magistics.common.blocks.BlockChestHungryMetalItem;
@@ -26,8 +29,12 @@ import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.lib.ModRegistry;
+import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+
+import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
+
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModMetadata;
@@ -91,7 +98,8 @@ public class ModConfig {
 	blockCrystalStorageBrickEngineeringLight = new BlockCrystalStorageEngineeringLight(),
 	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageEngineeringDark(),
 
-	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest");
+	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
+	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest");
 
 	public static BlockChestHungryMetal blockChestHungryMetal = new BlockChestHungryMetal();
 
@@ -121,6 +129,21 @@ public class ModConfig {
 
 		reg.addBlockRenderer(new ChestRenderer(blockChestHungryEnder.getRenderType(), new TileChestHungryEnder()));
 		reg.addTileRenderer(TileChestHungryEnder.class, new TileChestHungryEnderRenderer());
+
+		if (Loader.isModLoaded("EE3")) {
+			if (debug)
+				Magistics.logger.info("EE3 detected; compatibility loaded.");
+
+			reg.addBlock(blockChestHungryAlchemical, ItemBlockAlchemicalChest.class);
+			reg.addTile(TileChestHungryAlchemical.class);
+
+			reg.addBlockRenderer(new ChestRenderer(blockChestHungryAlchemical.getRenderType(), new ResourceLocation[] {
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"),
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"),
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png")
+			}));
+			reg.addTileRenderer(TileChestHungryAlchemical.class, new TileChestHungryAlchemicalRenderer());
+		}
 
 		if (Loader.isModLoaded("IronChest")) {
 			if (debug)

@@ -20,8 +20,6 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModRegistry {
-	private static boolean debug = ModConfig.debug;
-
 	public static ModRegistry getRegistry() {
 		return new ModRegistry();
 	}
@@ -60,28 +58,28 @@ public class ModRegistry {
 	public static void addBlock(Block block) {
 		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics)));
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Block: " + block.getUnlocalizedName());
 	}
 
 	public static void addBlock(Block block, Class item) {
 		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics), item));
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added ItemBlock: " + block.getUnlocalizedName());
 	}
 
 	public static void addItem(Item item) {
 		items.add(item.setCreativeTab(tabMagistics));
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Item: " + item.getUnlocalizedName());
 	}
 
 	public static void addTile(Class tile) {
 		tiles.add(tile);
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Tile: " + tile.getSimpleName());
 	}
 
@@ -94,17 +92,17 @@ public class ModRegistry {
 				if (item == null) {
 					GameRegistry.registerBlock(block, block.getUnlocalizedName());
 
-					if (debug)
+					if (ModConfig.debug)
 						Magistics.logger.info("Registered Block: " + block.getUnlocalizedName());
 				} else {
 					GameRegistry.registerBlock(block, item, block.getUnlocalizedName());
 
-					if (debug)
+					if (ModConfig.debug)
 						Magistics.logger.info("Registered ItemBlock: " + block.getUnlocalizedName());
 				}
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No blocks to register!");
 		}
 
@@ -112,11 +110,11 @@ public class ModRegistry {
 			for (Item item : items) {
 				GameRegistry.registerItem(item, item.getUnlocalizedName());
 
-				if (debug)
+				if (ModConfig.debug)
 					Magistics.logger.info("Registered Item: " + item.getUnlocalizedName());
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No items to register!");
 		}
 
@@ -124,11 +122,11 @@ public class ModRegistry {
 			for (Class tile : tiles) {
 				GameRegistry.registerTileEntity(tile, tile.getSimpleName());
 
-				if (debug)
+				if (ModConfig.debug)
 					Magistics.logger.info("Registered Tile: " + tile.getSimpleName());
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No tiles to register!");
 		}
 	}
@@ -140,21 +138,21 @@ public class ModRegistry {
 	public static void addBlockRenderer(ISimpleBlockRenderingHandler renderer) {
 		blockRenderers.add(renderer);
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Block Renderer: " + renderer.toString());
 	}
 
 	public static void addItemRenderer(Item item, IItemRenderer renderer) {
 		itemRenderers.put(item, renderer);
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Item Renderer: " + renderer.toString());
 	}
 
 	public static void addTileRenderer(Class tile, TileEntitySpecialRenderer renderer) {
 		tileRenderers.put(tile, renderer);
 
-		if (debug)
+		if (ModConfig.debug)
 			Magistics.logger.info("Added Tile Renderer: " + renderer.toString());
 	}
 
@@ -163,11 +161,11 @@ public class ModRegistry {
 			for (ISimpleBlockRenderingHandler renderer : blockRenderers) {
 				RenderingRegistry.registerBlockHandler(renderer);
 
-				if (debug)
+				if (ModConfig.debug)
 					Magistics.logger.info("Registered Block Renderer: " + renderer.toString());
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No block renderers to register!");
 		}
 
@@ -175,11 +173,11 @@ public class ModRegistry {
 			for (Item item : itemRenderers.keySet()) {
 				MinecraftForgeClient.registerItemRenderer(item, itemRenderers.get(item));
 
-				if (debug)
+				if (ModConfig.debug)
 					Magistics.logger.info("Registered Item Renderer: " + item.getUnlocalizedName() + " @ " + itemRenderers.get(item));
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No item renderers to register!");
 		}
 
@@ -187,11 +185,11 @@ public class ModRegistry {
 			for (Class tile : tileRenderers.keySet()) {
 				ClientRegistry.bindTileEntitySpecialRenderer(tile, tileRenderers.get(tile));
 
-				if (debug)
+				if (ModConfig.debug)
 					Magistics.logger.info("Registered Tile Renderer: " + tile.getSimpleName() + " @ " + tileRenderers.get(tile));
 			}
 		} else {
-			if (debug)
+			if (ModConfig.debug)
 				Magistics.logger.warn("No tile renderers to register!");
 		}
 	}
