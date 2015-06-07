@@ -20,15 +20,19 @@ public class ItemBauble extends Item implements IBauble {
 	public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player) {
 		if (!world.isRemote) {
 			InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
+
 			for (int i = 0; i < baubles.getSizeInventory(); i++)
 				if (baubles.getStackInSlot(i) == null && baubles.isItemValidForSlot(i, is)) {
 					baubles.setInventorySlotContents(i, is.copy());
+
 					if (!player.capabilities.isCreativeMode)
 						player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+
 					onEquipped(is, player);
 					break;
 				}
 		}
+
 		return is;
 	}
 

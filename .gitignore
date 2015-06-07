@@ -13,8 +13,10 @@ _MACOSX
 bin/
 build/
 
-# Ignore Forge changelogs
-forge-*.txt
+# Ignore Forge documents
+*fml.txt
+forge*.txt
+MinecraftForge*.txt
 
 # IDEA files
 *.iml

@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 public class BlockCrystalStorageStructureItem extends ItemBlock {
 	public BlockCrystalStorageStructureItem(Block block) {
 		super(block);
-		setHasSubtypes(true);
 	}
 
 	@Override
@@ -17,7 +16,7 @@ public class BlockCrystalStorageStructureItem extends ItemBlock {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack is) {
-		return super.getUnlocalizedName() + "." + ItemDye.field_150921_b[is.getItemDamage()];
+	public String getUnlocalizedName(ItemStack stack) {
+		return super.getUnlocalizedName() + "." + ItemDye.field_150921_b[stack.getItemDamage()];
 	}
 }

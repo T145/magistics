@@ -4,23 +4,50 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import thaumcraft.client.lib.UtilsFX;
+import thaumcraft.common.blocks.BlockCustomOre;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCrystalStorage extends Block {
-	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
-	public static IIcon iconGlow, icon[] = new IIcon[2];
+	public static IIcon iconGlow;
 
 	public BlockCrystalStorage() {
-		super(Material.glass);
+		super(Material.rock);
+		setStepSound(soundTypeStone);
+		setTickRandomly(true);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister r) {
+		iconGlow = r.registerIcon("thaumcraft:animatedglow");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta) {
+		return iconGlow;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+		for (int i = 0; i <= new BlockCustomOre().icon.length; i++) {
+			list.add(new ItemStack(item, 1, i));
+		}
 	}
 
 	@Override
@@ -29,44 +56,37 @@ public class BlockCrystalStorage extends Block {
 	}
 
 	@Override
-	public boolean isSideSolid(IBlockAccess world, int i, int j, int k, ForgeDirection side) {
-		return true;
+	@SideOnly(Side.CLIENT)
+	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+		UtilsFX.infusedStoneSparkle(world, target.blockX, target.blockY, target.blockZ, world.getBlockMetadata(target.blockX, target.blockY, target.blockZ));
+		return super.addHitEffects(world, target, effectRenderer);
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
+	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+		return super.addDestroyEffects(world, x, y, z, meta, effectRenderer);
+	}
+
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess world,  int x, int y, int z) {
+		setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
+		super.setBlockBoundsBasedOnState(world, x, y, z);
+	}
+
+	@Override
+	public void addCollisionBoxesToList(World world,  int x, int y, int z, AxisAlignedBB box, List list, Entity entity) {
+		setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
+		super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
+	}
+
+	@Override
+	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+		return true;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean renderAsNormalBlock() {
 		return false;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister r) {
-		iconGlow = r.registerIcon("thaumcraft:animatedglow");
-		icon[0] = r.registerIcon("magistics:decor/basic");
-		icon[1] = r.registerIcon("magistics:decor/brick");
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta) {
-		return meta > 5 ? icon[1] : icon[0];
-	}
-
-	@Override
-	public int getRenderType() {
-		return renderID;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item i, CreativeTabs t, List l) {
-		for (int j = 0; j < 12; j++)
-			l.add(new ItemStack(i, 1, j));
 	}
 }

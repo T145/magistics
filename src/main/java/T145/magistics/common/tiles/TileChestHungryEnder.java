@@ -4,11 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.tiles.TileOwned;
 
-public class TileChestHungryEnder extends TileOwned implements IInventory, IWandable {
+public class TileChestHungryEnder extends TileOwned implements IInventory {
 	public int numUsingPlayers;
 	public float prevLidAngle, lidAngle;
 
@@ -134,33 +132,4 @@ public class TileChestHungryEnder extends TileOwned implements IInventory, IWand
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
 		return getEnderInventory().isItemValidForSlot(slot, is);
 	}
-
-	public boolean onWanded(EntityPlayer player, int side) {
-		if (player.isSneaking() && isOwnedBy(player)) {
-			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, side, 2);
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			player.worldObj.playSound(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "thaumcraft:tool", 0.3F, 1.9F + player.worldObj.rand.nextFloat() * 0.2F, false);
-			player.swingItem();
-			markDirty();
-			return true;
-		} else
-			return false;
-	}
-
-	@Override
-	public int onWandRightClick(World world, ItemStack wand, EntityPlayer player, int i, int j, int k, int side, int meta) {
-		onWanded(player, side);
-		return 0;
-	}
-
-	@Override
-	public ItemStack onWandRightClick(World world, ItemStack wand, EntityPlayer player) {
-		return null;
-	}
-
-	@Override
-	public void onUsingWandTick(ItemStack wand, EntityPlayer player, int count) {}
-
-	@Override
-	public void onWandStoppedUsing(ItemStack wand, World world, EntityPlayer player, int count) {}
 }
