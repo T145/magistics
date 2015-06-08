@@ -7,13 +7,13 @@ buildscript {
 		mavenCentral()
 		
 		maven {
-			name = 'forge'
-			url = 'http://files.minecraftforge.net/maven'
+			name 'forge'
+			url 'http://files.minecraftforge.net/maven'
 		}
 		
 		maven {
-			name = 'sonatype'
-			url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+			name 'sonatype'
+			url 'https://oss.sonatype.org/content/repositories/snapshots/'
 		}
 	}
 	
@@ -99,15 +99,31 @@ minecraft {
 	runDir = 'eclipse'
 }
 
+repositories {
+	mavenCentral()
+	maven {
+		name 'ChickenBones'
+		url 'http://chickenbones.net/maven'
+	}
+	maven {
+		name 'IC2'
+		url 'http://maven.ic2.player.to/'
+	}
+	maven {
+		name 'ProfMobius'
+		url 'http://mobiusstrip.eu/maven'
+	}
+}
+
 dependencies {
 	// Buildcraft
 	compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
 
 	// Equivalent Exchange 3
-	compile 'com.pahimar.ee3:EquivalentExchange3:' + project.minecraft.version + '-0.3.507:dev'
+	compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.3.507:dev'
 
 	// IronChest
-	compile 'cpw.mods:ironchest:' + project.minecraft.version + '-6.0.62.742:deobf'
+	compile 'cpw.mods:ironchest:1.7.10-6.0.62.742:deobf'
 
 	compile fileTree(dir: 'lib', include: '*.jar')
 }
