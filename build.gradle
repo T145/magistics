@@ -35,6 +35,9 @@ task getDependencies(type: Download) {
 	src([
 		// Applied Energistics
 		'http://ae-mod.info/builds/appliedenergistics2-rv2-stable-3-dev.jar',
+
+		// Botania
+		'http://botaniamod.net/files/deobf/Botania%20r1.6-191-deobf.jar',
 		
 		// ChickenBones
 		'http://chickenbones.net/maven/codechicken/CodeChickenCore/1.7.10-1.0.6.44/CodeChickenCore-1.7.10-1.0.6.44-dev.jar',
@@ -54,17 +57,18 @@ task getDependencies(type: Download) {
 		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
 	])
 	dest lib
+	overwrite true
 }
 
 task setupWorkspace(type: Download, dependsOn: getDependencies) {
-	def destination = new File(project.projectDir, 'forge.zip')
+	def forgeArchive = new File(project.projectDir, 'forge.zip')
 	
 	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
-	dest destination
+	dest forgeArchive
 	
 	doLast {
 		project.copy {
-			from zipTree(destination)
+			from zipTree(forgeArchive)
 			into 'forge'
 		}
 		

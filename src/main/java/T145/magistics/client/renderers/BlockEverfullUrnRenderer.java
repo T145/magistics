@@ -11,7 +11,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 public class BlockEverfullUrnRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
 	public boolean renderEverfullUrn(RenderBlocks renderer, int x, int y, int z, Block block, boolean inv) {
 		if (block.getRenderBlockPass() == 0 || inv) {
-			block.setBlockBounds(W2, 0.0F, W2, 1.0F - W2, 0.5F + W1, 1.0F - W2);
+			block.setBlockBounds(W2, 0F, W2, 1F - W2, 0.5F + W1, 1F - W2);
 			renderer.setRenderBoundsFromBlock(block);
 
 			IIcon icon[] = ((BlockEverfullUrn) block).icon;
@@ -22,7 +22,7 @@ public class BlockEverfullUrnRenderer extends BlockRenderer implements ISimpleBl
 				renderer.renderStandardBlock(block, x, y, z);
 			}
 
-			block.setBlockBounds(W5, 0.5F + W1, W5, 1.0F - W5, 1.0F - W3, 1.0F - W5);
+			block.setBlockBounds(W5, 0.5F + W1, W5, 1F - W5, 1F - W3, 1F - W5);
 			renderer.setRenderBoundsFromBlock(block);
 
 			if (inv) {
@@ -31,7 +31,7 @@ public class BlockEverfullUrnRenderer extends BlockRenderer implements ISimpleBl
 				renderer.renderStandardBlock(block, x, y, z);
 			}
 
-			block.setBlockBounds(W4, 1.0F - W3, W4, 1.0F - W4, 1.0F, 1.0F - W4);
+			block.setBlockBounds(W4, 1F - W3, W4, 1F - W4, 1F, 1F - W4);
 			renderer.setRenderBoundsFromBlock(block);
 
 			if (inv) {
@@ -42,7 +42,7 @@ public class BlockEverfullUrnRenderer extends BlockRenderer implements ISimpleBl
 		}
 
 		renderer.clearOverrideBlockTexture();
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 
 		return true;
 	}
