@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import thaumcraft.common.config.Config;
 import T145.magistics.client.lib.ChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
+import T145.magistics.client.renderers.BlockEverfullUrnRenderer;
 import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
@@ -28,11 +29,13 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
+import T145.magistics.common.blocks.BlockEverfullUrn;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
 import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileEverfullUrn;
 import T145.magistics.common.tiles.TileThaumicEnchanter;
 
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
@@ -101,6 +104,7 @@ public class ModConfig {
 	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageEngineeringDark(),
 
 	blockThaumicEnchanter = new BlockThaumicEnchanter(),
+	blockEverfullUrn = new BlockEverfullUrn(),
 
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
 	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest");
@@ -162,6 +166,11 @@ public class ModConfig {
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);
+
+		reg.addBlock(blockEverfullUrn);
+		reg.addTile(TileEverfullUrn.class);
+
+		reg.addBlockRenderer(new BlockEverfullUrnRenderer());
 	}
 
 	public static void postInit() {
