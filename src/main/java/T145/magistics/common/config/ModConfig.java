@@ -17,6 +17,7 @@ import T145.magistics.client.renderers.BlockInfuserRenderer;
 import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
+import T145.magistics.client.renderers.TileInfuserRenderer;
 import T145.magistics.client.renderers.TileSortingChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileSortingChestHungryRenderer;
 import T145.magistics.common.Magistics;
@@ -220,6 +221,8 @@ public class ModConfig {
 		reg.addTile(TileInfuserDark.class);
 
 		reg.addBlockRenderer(new BlockInfuserRenderer());
+		reg.addTileRenderer(TileInfuser.class, new TileInfuserRenderer());
+		reg.addTileRenderer(TileInfuserDark.class, new TileInfuserRenderer());
 	}
 
 	public static void postInit() {
