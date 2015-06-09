@@ -5,6 +5,7 @@ itemGroup.Magistics=Magistics
 ###
 
 tc.research_category.Magistics=Magistics
+
 tc.research_name.HUNGRYENDERCHEST=Hungry Ender Chest
 tc.research_text.HUNGRYENDERCHEST=It's starving!
 tc.research_page.HUNGRYENDERCHEST.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
@@ -17,43 +18,6 @@ tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry 
 # Items
 ###
 
-item.eridium.ingot.name=Eridium Ingot
-item.eridium.nugget.name=Eridium Nugget
-
-item.mystic_resources.amber_drop.name=Amber Drop
-item.mystic_resources.animated_piston.name=Animated Piston
-item.mystic_resources.arcane_singularity.name=Arcane Singularity
-item.mystic_resources.dust_faint.name=Faint Dust
-item.mystic_resources.eldritch_mechanism.name=Eldritch Gear
-item.mystic_resources.eldritch_keystone_inert.name=Inert Eldritch Keystone
-item.mystic_resources.eldritch_keystone_tlhutlh.name=Eldritch Keystone
-item.mystic_resources.eldritch_gear.name=Voidmetal Gear
-item.mystic_resources.soul_fragment.name=Soul Fragment
-item.mystic_resources.void_ingot.name=Void Ingot
-
-item.record_chamber.name=Music Disc
-item.record_deception.name=Music Disc
-item.record_ghost.name=Music Disc
-item.record_gloom.name=Music Disc
-item.record_halls.name=Music Disc
-item.record_moonlight.name=Music Disc
-item.record_plant.name=Music Disc
-item.record_portal.name=Music Disc
-item.record_queen.name=Music Disc
-item.record_serpentine.name=Music Disc
-item.record_unlight.name=Music Disc
-item.record_chamber.desc=Chamber
-item.record_deception.desc=Deception
-item.record_ghost.desc=Ghost
-item.record_gloom.desc=Gloom
-item.record_halls.desc=Halls
-item.record_moonlight.desc=Moonlight
-item.record_plant.desc=Plant
-item.record_portal.desc=Portal
-item.record_queen.desc=Queen
-item.record_serpentine.desc=Serpentine
-item.record_unlight.desc=Unlight
-
 item.shard_fragment.aer.name=Aer Shard Fragment
 item.shard_fragment.aqua.name=Aqua Shard Fragment
 item.shard_fragment.ignis.name=Ignis Shard Fragment
@@ -62,37 +26,6 @@ item.shard_fragment.perdito.name=Perdito Shard Fragment
 item.shard_fragment.terra.name=Terra Shard Fragment
 
 item.dawnstone.name=Dawnstone
-
-item.eldritch_keystone.inert.name=Inert Eldritch Keystone
-item.eldritch_keystone.tlhutlh.name=Eldritch Keystone Tlhutlh
-
-item.cruel_mask.name=Mask Of Cruelty
-
-# More original names to come!
-item.bauble.amulet_dismay.name=Amulet of Dismay
-item.bauble.amulet_life.name=Amulet of Life
-item.bauble.belt_cleansing.name=Belt of Cleansing
-item.bauble.belt_vigor.name=Belt of Vigor
-item.bauble.ring_souls.name=Ring of Souls
-
-item.mithril_ingot.name=Mithril Ingot
-item.mithril_chunk.name=Mithril Chunk
-item.mithril_chunkcombined.name=Mithril Large Chunk
-item.mithril_sword.name=Mithril Sword
-item.mithril_axe.name=Mithril Axe
-item.mithril_pickaxe.name=Mithril Pickaxe
-item.mithril_spade.name=Mithril Shovel
-item.mithril_hoe.name=Mithril Hoe
-item.mithril_bow.name=Mithril Bow
-item.mithril_helmet.name=Mithril Goggles
-item.mithril_chestplate.name=Mithril Shoulder Armor
-item.mithril_leggings.name=Mithril Leggings
-item.mithril_boots.name=Mithril Boots
-item.ender_amulet.name=Dragon Amulet
-item.mithril_ring.name=Mithril Ring
-item.mithril_wither_ring.name=Wither Ring
-item.quartz_rod.name=Quartz Rod
-item.mithril_flute.name=Mithril Flute
 
 ####
 # Blocks
@@ -191,16 +124,7 @@ tile.sorting_hungry_metal_chest.crystal.name=Hungry Sorting Crystal Chest
 tile.sorting_hungry_metal_chest.obsidian.name=Hungry Sorting Obsidian Chest
 tile.sorting_hungry_metal_chest.dirt.name=Hungry Sorting Dirt Chest
 
-tile.light_detector.name=Light Sensor
-tile.darkness_detector.name=Darkness Sensor
-
-tile.infusion_workbench.base.name=Reinforced Arcane Stone
-tile.infusion_workbench.brick.name=Reinforced Arcane Stone Bricks
-
-tile.mithril_ore.name=Mithril Ore
-tile.mithril_chunk_block.name=Mithril Chunk
-tile.mithril_block.normal.name=Mithril Block
-tile.mithril_block.brick.name=Mithril Brick
-tile.mithril_block.carved.name=Chiseled Mithril Block
-tile.mithril_pillar.base.name=Mithril Pillar
-tile.mithril_pillar.quartz.name=Mithril Quartz Pillar
+tile.everfull_urn.name=Everfull Urn
+tile.thaumic_enchanter.name=Thaumic Enchanter
+tile.infuser.0.name=Infuser
+tile.infuser.1.name=Dark Infuser

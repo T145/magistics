@@ -13,6 +13,7 @@ import T145.magistics.client.lib.ChestRenderer;
 import T145.magistics.client.lib.ItemChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
 import T145.magistics.client.renderers.BlockEverfullUrnRenderer;
+import T145.magistics.client.renderers.BlockInfuserRenderer;
 import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
@@ -34,6 +35,8 @@ import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.blocks.BlockEverfullUrn;
+import T145.magistics.common.blocks.BlockInfuser;
+import T145.magistics.common.blocks.BlockInfuserItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
@@ -44,6 +47,8 @@ import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileEverfullUrn;
+import T145.magistics.common.tiles.TileInfuser;
+import T145.magistics.common.tiles.TileInfuserDark;
 import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileThaumicEnchanter;
@@ -116,6 +121,7 @@ public class ModConfig {
 
 	blockThaumicEnchanter = new BlockThaumicEnchanter(),
 	blockEverfullUrn = new BlockEverfullUrn(),
+	blockInfuser = new BlockInfuser(),
 
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
 	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest"),
@@ -208,6 +214,12 @@ public class ModConfig {
 		reg.addTile(TileEverfullUrn.class);
 
 		reg.addBlockRenderer(new BlockEverfullUrnRenderer());
+
+		reg.addBlock(blockInfuser, BlockInfuserItem.class);
+		reg.addTile(TileInfuser.class);
+		reg.addTile(TileInfuserDark.class);
+
+		reg.addBlockRenderer(new BlockInfuserRenderer());
 	}
 
 	public static void postInit() {
