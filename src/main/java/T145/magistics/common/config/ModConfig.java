@@ -1,7 +1,6 @@
 package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
@@ -11,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import thaumcraft.common.config.Config;
 import T145.magistics.client.lib.ChestRenderer;
-import T145.magistics.client.lib.ItemChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
 import T145.magistics.client.renderers.BlockEverfullUrnRenderer;
 import T145.magistics.client.renderers.BlockInfuserRenderer;
@@ -19,8 +17,6 @@ import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.TileInfuserRenderer;
-import T145.magistics.client.renderers.TileSortingChestHungryAlchemicalRenderer;
-import T145.magistics.client.renderers.TileSortingChestHungryRenderer;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
@@ -41,7 +37,6 @@ import T145.magistics.common.blocks.BlockInfuser;
 import T145.magistics.common.blocks.BlockInfuserItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
-import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
 import T145.magistics.common.lib.ModRegistry;
@@ -51,11 +46,8 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileEverfullUrn;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
-import T145.magistics.common.tiles.TileSortingChestHungry;
-import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileThaumicEnchanter;
 
-import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -155,20 +147,6 @@ public class ModConfig {
 		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
 		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
 
-		if (Loader.isModLoaded("BuildCraft|Core")) {
-			if (debug)
-				Magistics.logger.info("Buildcraft detected; compatibility enabled.");
-
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorage));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrick));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStoragePlate));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStoragePlatform));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageShield));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageStructure));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringLight));
-			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringDark));
-		}
-
 		reg.addBlock(blockChestHungryEnder);
 		reg.addTile(TileChestHungryEnder.class);
 
@@ -242,5 +220,18 @@ public class ModConfig {
 	}
 
 	public static void postInit() {
+		if (Loader.isModLoaded("BuildCraft|Transport")) {
+			if (debug)
+				Magistics.logger.info("BuildCraft|Transport detected; compatibility enabled.");
+
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorage));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrick));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStoragePlate));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStoragePlatform));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageShield));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageStructure));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringLight));
+			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringDark));
+		}
 	}
 }
