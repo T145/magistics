@@ -2,7 +2,6 @@ package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
@@ -41,6 +40,7 @@ import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
+import T145.magistics.common.lib.ModInterCommRegistry;
 import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
@@ -55,7 +55,6 @@ import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfig {
@@ -227,49 +226,53 @@ public class ModConfig {
 			if (debug)
 				Magistics.logger.info("BuildCraft|Transport detected; compatibility enabled.");
 
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorage));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrick));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStoragePlate));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStoragePlatform));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageShield));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageStructure));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringLight));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringDark));
+			ModInterCommRegistry reg = new ModInterCommRegistry();
 
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.glass));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.glass_pane));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.stained_glass));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.stained_glass_pane));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.iron_bars));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.trapdoor));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.acacia_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.birch_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.brick_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.dark_oak_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.jungle_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.nether_brick_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.oak_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.quartz_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.sandstone_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.spruce_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.stone_brick_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.stone_stairs));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.fence));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.fence_gate));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.nether_brick_fence));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.cobblestone_wall));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(Blocks.anvil));
+			reg.blacklistFacade(blockCrystalStorage);
+			reg.blacklistFacade(blockCrystalStorageBrick);
+			reg.blacklistFacade(blockCrystalStoragePlate);
+			reg.blacklistFacade(blockCrystalStoragePlatform);
+			reg.blacklistFacade(blockCrystalStorageShield);
+			reg.blacklistFacade(blockCrystalStorageStructure);
+			reg.blacklistFacade(blockCrystalStorageBrickEngineeringLight);
+			reg.blacklistFacade(blockCrystalStorageBrickEngineeringDark);
 
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockFluxGas));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockFluxGoo));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockLootCrate));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockLootUrn));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockStairsArcaneStone));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockStairsEldritch));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockStairsGreatwood));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockStairsSilverwood));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockEldritchPortal));
-			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(ConfigBlocks.blockMagicalLeaves));
+			reg.blacklistFacade(Blocks.glass);
+			reg.blacklistFacade(Blocks.glass_pane);
+			reg.blacklistFacade(Blocks.stained_glass);
+			reg.blacklistFacade(Blocks.stained_glass_pane);
+			reg.blacklistFacade(Blocks.iron_bars);
+			reg.blacklistFacade(Blocks.trapdoor);
+			reg.blacklistFacade(Blocks.acacia_stairs);
+			reg.blacklistFacade(Blocks.birch_stairs);
+			reg.blacklistFacade(Blocks.brick_stairs);
+			reg.blacklistFacade(Blocks.dark_oak_stairs);
+			reg.blacklistFacade(Blocks.jungle_stairs);
+			reg.blacklistFacade(Blocks.nether_brick_stairs);
+			reg.blacklistFacade(Blocks.oak_stairs);
+			reg.blacklistFacade(Blocks.quartz_stairs);
+			reg.blacklistFacade(Blocks.sandstone_stairs);
+			reg.blacklistFacade(Blocks.spruce_stairs);
+			reg.blacklistFacade(Blocks.stone_brick_stairs);
+			reg.blacklistFacade(Blocks.stone_stairs);
+			reg.blacklistFacade(Blocks.fence);
+			reg.blacklistFacade(Blocks.fence_gate);
+			reg.blacklistFacade(Blocks.nether_brick_fence);
+			reg.blacklistFacade(Blocks.cobblestone_wall);
+			reg.blacklistFacade(Blocks.anvil);
+
+			reg.blacklistFacade(ConfigBlocks.blockFluxGas);
+			reg.blacklistFacade(ConfigBlocks.blockFluxGoo);
+			reg.blacklistFacade(ConfigBlocks.blockLootCrate);
+			reg.blacklistFacade(ConfigBlocks.blockLootUrn);
+			reg.blacklistFacade(ConfigBlocks.blockStairsArcaneStone);
+			reg.blacklistFacade(ConfigBlocks.blockStairsEldritch);
+			reg.blacklistFacade(ConfigBlocks.blockStairsGreatwood);
+			reg.blacklistFacade(ConfigBlocks.blockStairsSilverwood);
+			reg.blacklistFacade(ConfigBlocks.blockEldritchPortal);
+			reg.blacklistFacade(ConfigBlocks.blockMagicalLeaves);
+
+			reg.blacklistFacades();
 		}
 	}
 
