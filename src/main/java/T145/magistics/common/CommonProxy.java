@@ -1,5 +1,6 @@
 package T145.magistics.common;
 
+import T145.magistics.common.config.ModConfig;
 import T145.magistics.common.lib.ModRegistry;
 
 public abstract class CommonProxy {
@@ -9,5 +10,6 @@ public abstract class CommonProxy {
 
 	public void registerObjects() {
 		reg.registerObjects();
+		ModConfig.sendInterModComms();
 	}
 }

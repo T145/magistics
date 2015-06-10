@@ -219,7 +219,8 @@ public class ModConfig {
 		reg.addTileRenderer(TileInfuserDark.class, new TileInfuserRenderer());
 	}
 
-	public static void postInit() {
+	// is between init() & postInit(), but proceeds after init()
+	public static void sendInterModComms() {
 		if (Loader.isModLoaded("BuildCraft|Transport")) {
 			if (debug)
 				Magistics.logger.info("BuildCraft|Transport detected; compatibility enabled.");
@@ -233,5 +234,8 @@ public class ModConfig {
 			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringLight));
 			FMLInterModComms.sendMessage("BuildCraft|Transport", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringDark));
 		}
+	}
+
+	public static void postInit() {
 	}
 }
