@@ -38,6 +38,9 @@ task getDependencies(type: Download) {
 
 		// Botania
 		'http://botaniamod.net/files/deobf/Botania%20r1.6-191-deobf.jar',
+
+		// BuildCraft
+		'http://www.mod-buildcraft.com/releases/BuildCraft/7.0.8/buildcraft-7.0.8-dev.jar',
 		
 		// ChickenBones
 		'http://chickenbones.net/maven/codechicken/CodeChickenCore/1.7.10-1.0.6.44/CodeChickenCore-1.7.10-1.0.6.44-dev.jar',
@@ -120,9 +123,6 @@ repositories {
 }
 
 dependencies {
-	// Buildcraft
-	compile 'com.mod-buildcraft:buildcraft:6.4.15:dev'
-
 	// Equivalent Exchange 3
 	compile 'com.pahimar.ee3:EquivalentExchange3:1.7.10-0.3.507:dev'
 

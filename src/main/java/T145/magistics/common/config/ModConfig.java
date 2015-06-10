@@ -2,6 +2,7 @@ package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
@@ -60,6 +61,7 @@ import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModMetadata;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfig {
@@ -153,6 +155,20 @@ public class ModConfig {
 		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringLight.getRenderType()));
 		reg.addBlockRenderer(new BlockCrystalStorageRenderer(blockCrystalStorageBrickEngineeringDark.getRenderType()));
 
+		if (Loader.isModLoaded("BuildCraft|Core")) {
+			if (debug)
+				Magistics.logger.info("Buildcraft detected; compatibility enabled.");
+
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorage));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrick));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStoragePlate));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStoragePlatform));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageShield));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageStructure));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringLight));
+			FMLInterModComms.sendRuntimeMessage(Magistics.MODID, "BuildCraft|Core", "blacklist-facade", new ItemStack(blockCrystalStorageBrickEngineeringDark));
+		}
+
 		reg.addBlock(blockChestHungryEnder);
 		reg.addTile(TileChestHungryEnder.class);
 
@@ -185,7 +201,7 @@ public class ModConfig {
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
 
-		if (Loader.isModLoaded("RefinedRelocation")) {
+		/*if (Loader.isModLoaded("RefinedRelocation")) {
 			if (debug)
 				Magistics.logger.info("Refined Relocation detected; compatibility loaded.");
 
@@ -206,7 +222,7 @@ public class ModConfig {
 					new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png")
 			}, Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST));
 			reg.addTileRenderer(TileSortingChestHungryAlchemical.class, new TileSortingChestHungryAlchemicalRenderer());
-		}
+		}*/
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);
