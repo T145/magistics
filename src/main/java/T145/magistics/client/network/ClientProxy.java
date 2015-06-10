@@ -1,6 +1,6 @@
-package T145.magistics.client;
+package T145.magistics.client.network;
 
-import T145.magistics.common.CommonProxy;
+import T145.magistics.common.network.CommonProxy;
 
 public class ClientProxy extends CommonProxy {
 	@Override

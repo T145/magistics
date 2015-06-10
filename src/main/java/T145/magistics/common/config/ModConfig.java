@@ -61,6 +61,10 @@ public class ModConfig {
 	private static Configuration config;
 	public static final String CATEGORY_BLOCKS = "Blocks", CATEGORY_ITEMS = "Items";
 
+	public static Configuration getConfig() {
+		return config;
+	}
+
 	public static boolean debug = false, blocks[], items[];
 
 	public static void sync() {

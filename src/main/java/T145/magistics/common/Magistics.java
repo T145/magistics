@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import T145.magistics.common.config.ModConfig;
 import T145.magistics.common.lib.ModRegistry;
+import T145.magistics.common.network.CommonProxy;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -16,7 +17,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft")
+@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft", guiFactory = "T145.magistics.client.MagisticsGuiFactory")
 public class Magistics {
 	public static final String MODID = "Magistics", VERSION = "$version";
 
