@@ -10,10 +10,19 @@ import T145.magistics.common.tiles.TileSortingChestHungry;
 
 import com.dynious.refinedrelocation.block.BlockSortingChest;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSortingChestHungry extends BlockSortingChest {
+	public static int renderID = RenderingRegistry.getNextAvailableRenderId();
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderType() {
+		return renderID;
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {

@@ -1,11 +1,11 @@
 package T145.magistics.client.lib;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	public int id = 0;
-	public ResourceLocation textures[];
+	public ResourceLocation textures[], overlay;
 	public TileEntity chest;
 
 	public ChestRenderer(int renderID, ResourceLocation[] resources) {
@@ -21,20 +21,31 @@ public class ChestRenderer implements ISimpleBlockRenderingHandler {
 		textures = resources;
 	}
 
+	public ChestRenderer(int renderID, ResourceLocation[] resources, ResourceLocation toplayer) {
+		id = renderID;
+		textures = resources;
+		overlay = toplayer;
+	}
+
 	public ChestRenderer(int renderID, TileEntity tile) {
 		id = renderID;
 		chest = tile;
 	}
 
+	public void bindTexture(ResourceLocation texture) {
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(texture);
+	}
+
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
 		if (chest == null) {
-			if (textures.length > 1)
-				Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
-			else
-				Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
+			bindTexture(textures[meta]);
+			ChestRenderHelper.renderChest(false);
 
-			ChestRenderHelper.renderChest();
+			if (overlay != null) {
+				bindTexture(overlay);
+				ChestRenderHelper.renderChest(true);
+			}
 		} else
 			ChestRenderHelper.renderChest(chest);
 	}

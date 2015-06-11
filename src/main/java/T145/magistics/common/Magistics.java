@@ -31,7 +31,7 @@ public class Magistics {
 	@Metadata
 	private static ModMetadata metadata;
 
-	@SidedProxy(clientSide = "T145.magistics.client.ClientProxy", serverSide = "T145.magistics.common.CommonProxy")
+	@SidedProxy(clientSide = "T145.magistics.client.network.ClientProxy", serverSide = "T145.magistics.common.network.CommonProxy")
 	public static CommonProxy proxy;
 
 	private static ModRegistry registry = ModRegistry.getRegistry();

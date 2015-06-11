@@ -18,6 +18,7 @@ import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.TileInfuserRenderer;
+import T145.magistics.client.renderers.TileSortingChestHungryRenderer;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
@@ -38,6 +39,7 @@ import T145.magistics.common.blocks.BlockInfuser;
 import T145.magistics.common.blocks.BlockInfuserItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockSortingChestHungryAlchemical;
+import T145.magistics.common.blocks.BlockSortingChestHungryAlchemicalItem;
 import T145.magistics.common.blocks.BlockSortingChestHungryMetal;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
 import T145.magistics.common.lib.ModInterCommRegistry;
@@ -48,8 +50,11 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileEverfullUrn;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
+import T145.magistics.common.tiles.TileSortingChestHungry;
+import T145.magistics.common.tiles.TileSortingChestHungryAlchemical;
 import T145.magistics.common.tiles.TileThaumicEnchanter;
 
+import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -184,28 +189,27 @@ public class ModConfig {
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
 
-		/*if (Loader.isModLoaded("RefinedRelocation")) {
+		if (Loader.isModLoaded("RefinedRelocation")) {
 			if (debug)
-				Magistics.logger.info("Refined Relocation detected; compatibility loaded.");
+				Magistics.logger.info("Refined Relocation detected; compatibility enabled.");
 
 			reg.addBlock(blockSortingChestHungry);
 			reg.addTile(TileSortingChestHungry.class);
 
-			reg.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungry), new ItemChestRenderer(new ResourceLocation[] {
-					new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
+			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungry.getRenderType(), new ResourceLocation[] {
+				new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
 			}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
 			reg.addTileRenderer(TileSortingChestHungry.class, new TileSortingChestHungryRenderer());
 
 			reg.addBlock(blockSortingChestHungryAlchemical, BlockSortingChestHungryAlchemicalItem.class);
 			reg.addTile(TileSortingChestHungryAlchemical.class);
 
-			reg.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungryAlchemical), new ItemChestRenderer(new ResourceLocation[] {
-					new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"),
-					new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"),
-					new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png")
+			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungryAlchemical.getRenderType(), new ResourceLocation[] {
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_small.png"),
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_medium.png"),
+				new ResourceLocation("magistics", "textures/models/chest_hungry/alchemical_large.png")
 			}, Resources.MODEL_TEXTURE_OVERLAY_ALCHEMICAL_CHEST));
-			reg.addTileRenderer(TileSortingChestHungryAlchemical.class, new TileSortingChestHungryAlchemicalRenderer());
-		}*/
+		}
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);
