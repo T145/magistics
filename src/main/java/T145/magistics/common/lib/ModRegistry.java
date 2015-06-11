@@ -24,7 +24,7 @@ public class ModRegistry {
 		return new ModRegistry();
 	}
 
-	private static class BlockNode {
+	private class BlockNode {
 		private Block block;
 		private Class item;
 
@@ -39,7 +39,7 @@ public class ModRegistry {
 		}
 	}
 
-	private static CreativeTabs tabMagistics = new CreativeTabs(Magistics.MODID) {
+	private CreativeTabs tabMagistics = new CreativeTabs(Magistics.MODID) {
 		@Override
 		public Item getTabIconItem() {
 			return Item.getItemFromBlock(ModConfig.blockChestHungryEnder);
@@ -51,39 +51,39 @@ public class ModRegistry {
 		}
 	}.setBackgroundImageName("magistics.png").setNoTitle();
 
-	private static LinkedList<Item> items = new LinkedList<Item>();
-	private static LinkedList<BlockNode> blocks = new LinkedList<BlockNode>();
-	private static LinkedList<Class> tiles = new LinkedList<Class>();
+	private LinkedList<Item> items = new LinkedList<Item>();
+	private LinkedList<Class> tiles = new LinkedList<Class>();
+	private LinkedList<BlockNode> blocks = new LinkedList<BlockNode>();
 
-	public static void addBlock(Block block) {
+	public void addBlock(Block block) {
 		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics)));
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Block: " + block.getUnlocalizedName());
 	}
 
-	public static void addBlock(Block block, Class item) {
+	public void addBlock(Block block, Class item) {
 		blocks.add(new BlockNode(block.setCreativeTab(tabMagistics), item));
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added ItemBlock: " + block.getUnlocalizedName());
 	}
 
-	public static void addItem(Item item) {
+	public void addItem(Item item) {
 		items.add(item.setCreativeTab(tabMagistics));
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Item: " + item.getUnlocalizedName());
 	}
 
-	public static void addTile(Class tile) {
+	public void addTile(Class tile) {
 		tiles.add(tile);
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Tile: " + tile.getSimpleName());
 	}
 
-	public static void registerObjects() {
+	public void registerObjects() {
 		if (!blocks.isEmpty()) {
 			for (BlockNode node : blocks) {
 				Block block = node.block;
@@ -131,32 +131,32 @@ public class ModRegistry {
 		}
 	}
 
-	private static Map<Item, IItemRenderer> itemRenderers = new HashMap<Item, IItemRenderer>();
-	private static List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
-	private static Map<Class, TileEntitySpecialRenderer> tileRenderers = new HashMap<Class, TileEntitySpecialRenderer>();
+	private Map<Item, IItemRenderer> itemRenderers = new HashMap<Item, IItemRenderer>();
+	private Map<Class, TileEntitySpecialRenderer> tileRenderers = new HashMap<Class, TileEntitySpecialRenderer>();
+	private List<ISimpleBlockRenderingHandler> blockRenderers = new ArrayList<ISimpleBlockRenderingHandler>();
 
-	public static void addBlockRenderer(ISimpleBlockRenderingHandler renderer) {
+	public void addBlockRenderer(ISimpleBlockRenderingHandler renderer) {
 		blockRenderers.add(renderer);
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Block Renderer: " + renderer.toString());
 	}
 
-	public static void addItemRenderer(Item item, IItemRenderer renderer) {
+	public void addItemRenderer(Item item, IItemRenderer renderer) {
 		itemRenderers.put(item, renderer);
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Item Renderer: " + renderer.toString());
 	}
 
-	public static void addTileRenderer(Class tile, TileEntitySpecialRenderer renderer) {
+	public void addTileRenderer(Class tile, TileEntitySpecialRenderer renderer) {
 		tileRenderers.put(tile, renderer);
 
 		if (ModConfig.debug)
 			Magistics.logger.info("Added Tile Renderer: " + renderer.toString());
 	}
 
-	public static void registerRenderers() {
+	public void registerRenderers() {
 		if (!blockRenderers.isEmpty()) {
 			for (ISimpleBlockRenderingHandler renderer : blockRenderers) {
 				RenderingRegistry.registerBlockHandler(renderer);
@@ -173,8 +173,8 @@ public class ModRegistry {
 			for (Item item : itemRenderers.keySet()) {
 				MinecraftForgeClient.registerItemRenderer(item, itemRenderers.get(item));
 
-				if (ModConfig.debug)
-					Magistics.logger.info("Registered Item Renderer: " + item.getUnlocalizedName() + " @ " + itemRenderers.get(item));
+				//if (ModConfig.debug)
+					//Magistics.logger.info("Registered Item Renderer: " + itemRenderers.get(item) + " @ " + item.getUnlocalizedName());
 			}
 		} else {
 			if (ModConfig.debug)

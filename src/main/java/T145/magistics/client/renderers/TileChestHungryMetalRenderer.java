@@ -24,7 +24,7 @@ import cpw.mods.ironchest.IronChestType;
 
 @SideOnly(Side.CLIENT)
 public class TileChestHungryMetalRenderer extends TileEntitySpecialRenderer {
-	private final ModelChest model = new ModelChest();
+	protected final ModelChest model = new ModelChest();
 	private Random rand = new Random();
 
 	private RenderItem itemRenderer;

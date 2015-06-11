@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL12;
 /**
  * @author T145
  * 
- *         A simple library designed to assist in normal chest rendering.
+ * A simple library designed to assist in normal chest rendering.
  */
 public class ChestRenderHelper {
 	/**
@@ -20,16 +20,19 @@ public class ChestRenderHelper {
 	 * @param type
 	 *            The ItemRenderType to use.
 	 */
-	public static void renderChest(ItemRenderType type, boolean alpha) {
+	public static void renderChest(ItemRenderType type) {
 		switch (type) {
 		case ENTITY:
-			renderChest(0.5F, 0.5F, 0.5F, alpha);
+			renderChest(0.5F, 0.5F, 0.5F);
 			break;
-		case EQUIPPED: case EQUIPPED_FIRST_PERSON:
-			renderChest(1F, 1F, 1F, alpha);
+		case EQUIPPED:
+			renderChest(1F, 1F, 1F);
+			break;
+		case EQUIPPED_FIRST_PERSON:
+			renderChest(1F, 1F, 1F);
 			break;
 		case INVENTORY:
-			renderChest(0F, 0.075F, 0F, alpha);
+			renderChest(0F, 0.075F, 0F);
 			break;
 		default:
 			break;
@@ -46,28 +49,20 @@ public class ChestRenderHelper {
 	 * @param z
 	 *            Z coordinate
 	 */
-	public static void renderChest(float x, float y, float z, boolean alpha) {
+	public static void renderChest(float x, float y, float z) {
 		GL11.glPushMatrix();
-
-		if (alpha)
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-
 		GL11.glTranslatef(x, y, z);
 		GL11.glRotatef(180, 1, 0, 0);
 		GL11.glRotatef(-90, 0, 1, 0);
 		new ModelChest().renderAll();
-
-		if (alpha)
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
-
 		GL11.glPopMatrix();
 	}
 
 	/**
 	 * Renders a chest normally in an inventory.
 	 */
-	public static void renderChest(boolean alpha) {
-		renderChest(0.5F, 0.5F, 0.5F, alpha);
+	public static void renderChest() {
+		renderChest(0.5F, 0.5F, 0.5F);
 	}
 
 	/**
