@@ -1,8 +1,8 @@
 package T145.magistics.common.config;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
@@ -12,15 +12,15 @@ import org.apache.logging.log4j.Logger;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.client.lib.ChestRenderer;
-import T145.magistics.client.lib.ItemChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
 import T145.magistics.client.renderers.BlockEverfullUrnRenderer;
 import T145.magistics.client.renderers.BlockInfuserRenderer;
+import T145.magistics.client.renderers.BlockThinkTankRenderer;
 import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
 import T145.magistics.client.renderers.TileInfuserRenderer;
-import T145.magistics.client.renderers.TileSortingChestHungryRenderer;
+import T145.magistics.client.renderers.TileThinkTankRender;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.blocks.BlockChestHungryAlchemical;
 import T145.magistics.common.blocks.BlockChestHungryEnder;
@@ -41,6 +41,7 @@ import T145.magistics.common.blocks.BlockInfuser;
 import T145.magistics.common.blocks.BlockInfuserItem;
 import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
+import T145.magistics.common.blocks.BlockThinkTank;
 import T145.magistics.common.lib.ModInterCommRegistry;
 import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
@@ -49,10 +50,9 @@ import T145.magistics.common.tiles.TileChestHungryMetal;
 import T145.magistics.common.tiles.TileEverfullUrn;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
-import T145.magistics.common.tiles.TileSortingChestHungry;
 import T145.magistics.common.tiles.TileThaumicEnchanter;
+import T145.magistics.common.tiles.TileThinkTank;
 
-import com.dynious.refinedrelocation.lib.Resources;
 import com.pahimar.ee3.item.ItemBlockAlchemicalChest;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -125,6 +125,7 @@ public class ModConfig {
 	blockThaumicEnchanter = new BlockThaumicEnchanter(),
 	blockEverfullUrn = new BlockEverfullUrn(),
 	blockInfuser = new BlockInfuser(),
+	blockThinkTank = new BlockThinkTank(false).setBlockName("think_tank"),
 
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
 	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest"),
@@ -185,18 +186,28 @@ public class ModConfig {
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
 
-		if (Loader.isModLoaded("RefinedRelocation")) {
+		/*if (Loader.isModLoaded("RefinedRelocation")) {
 			if (debug)
 				Magistics.logger.info("Refined Relocation detected; compatibility loaded.");
 
 			reg.addBlock(blockSortingChestHungry);
 			reg.addTile(TileSortingChestHungry.class);
 
+			// bad
 			reg.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungry), new ItemChestRenderer(new ResourceLocation[] {
 					new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
 			}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
+
+			// better
+			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungry.getRenderType(), new ResourceLocation[] {
+				new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
+			}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
+
+			// best?
+			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungry.getRenderType(), new TileSortingChestHungry()));
+
 			reg.addTileRenderer(TileSortingChestHungry.class, new TileSortingChestHungryRenderer());
-		}
+		}*/
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);
@@ -213,6 +224,13 @@ public class ModConfig {
 		reg.addBlockRenderer(new BlockInfuserRenderer());
 		reg.addTileRenderer(TileInfuser.class, new TileInfuserRenderer());
 		reg.addTileRenderer(TileInfuserDark.class, new TileInfuserRenderer());
+
+		reg.addBlock(blockThinkTank);
+		reg.addTile(TileThinkTank.class);
+
+		TileEntitySpecialRenderer renderThinkTank = new TileThinkTankRender();
+		reg.addBlockRenderer(new BlockThinkTankRenderer());
+		reg.addTileRenderer(TileThinkTank.class, renderThinkTank);
 	}
 
 	// is between init() & postInit(), but proceeds after init()

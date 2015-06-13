@@ -16,6 +16,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft", guiFactory = "T145.magistics.client.MagisticsGuiFactory")
 public class Magistics {
@@ -57,8 +58,11 @@ public class Magistics {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		ModConfig.init();
+
 		proxy.registerObjects();
 		proxy.registerRenderers();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 	}
 
 	@EventHandler

@@ -13,12 +13,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	public int id = 0;
-	public ResourceLocation textures[];
+	public ResourceLocation textures[], overlay;
 	public TileEntity chest;
 
 	public ChestRenderer(int renderID, ResourceLocation[] resources) {
 		id = renderID;
 		textures = resources;
+	}
+
+	public ChestRenderer(int renderID, ResourceLocation[] resources, ResourceLocation toplayer) {
+		id = renderID;
+		textures = resources;
+		overlay = toplayer;
 	}
 
 	public ChestRenderer(int renderID, TileEntity tile) {
@@ -30,9 +36,15 @@ public class ChestRenderer implements ISimpleBlockRenderingHandler {
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
 		if (chest == null) {
 			Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
-			ChestRenderHelper.renderChest();
-		} else
+			ChestRenderHelper.renderChest(false);
+
+			if (overlay != null) {
+				Minecraft.getMinecraft().getTextureManager().bindTexture(overlay);
+				ChestRenderHelper.renderChest(true);
+			}
+		} else {
 			ChestRenderHelper.renderChest(chest);
+		}
 	}
 
 	@Override
