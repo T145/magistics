@@ -3,9 +3,7 @@
 
 **_Adding some logistics to Thaumcraft!_**
 
-<a href="https://codeship.com/projects/52617" target="_blank"><img src="https://codeship.com/projects/49546e30-64a5-0132-1a9a-1a1c11ba4c94/status?branch=master"/></a>
-
-## Workspace Setup
+## Workspace Setup <a href="https://codeship.com/projects/52617" target="_blank"><img src="https://img.shields.io/codeship/d6c1ddd0-16a3-0132-5f85-2e35c05e22b1/master.svg"/></a>
 Simply run the following commands and you too can be working on Magistics like a boss!
 ``` bash
 gradle setupWorkspace
