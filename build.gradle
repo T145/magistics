@@ -82,7 +82,7 @@ task setupWorkspace(type: Download, dependsOn: getDependencies) {
 	}
 }
 
-task wrap(type: Wrapper) {
+task wrapper(type: Wrapper) {
 	gradleVersion = gradle_version
 }
 
@@ -154,7 +154,7 @@ task sourceJar(type: Jar) {
 }
 
 artifacts {
-	archives deobfJar, apiArchive, sourceJar
+	archives deobfJar, sourceJar, apiArchive
 }
 
 apply plugin: 'java'
@@ -180,4 +180,5 @@ task processVersion(type: Copy) {
 compileJava.dependsOn processVersion
 
 // be sure the filtered source is removed to prevent its source from colliding w/ the main workspace
-deobfJar.dependsOn cleanProcessVersion
+// execution by finalizedBy allows removal even if the build fails, preventing more crashes from the previously erroneous source
+compileJava.finalizedBy cleanProcessVersion
