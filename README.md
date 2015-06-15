@@ -11,8 +11,8 @@ gradle setupDecompWorkspace eclipse
 ```
 If your using the Gradle wrapper, then just replace `gradle` with the wrapper executable that's commpatible with your OS.
 
-## License
-All of the wonderful license information is located in the project's license file. Please consult the license if you wish to use the source code and contact [myself](https://github.com/T145) for permission to use any of the assets.
+## License [![Apache License](http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+Please consult the license at the provided link if you wish to use the source code. You may contact [myself](https://github.com/T145) for permission to use any of the assets.
 
 ## Contributing [![Stories in Ready](https://badge.waffle.io/t145/magistics.svg?label=ready&title=Ready)](http://waffle.io/t145/magistics) [![Stories in Progress](https://badge.waffle.io/t145/magistics.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/t145/magistics)
 1. Fork it
