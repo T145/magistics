@@ -16,7 +16,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import thaumcraft.common.blocks.BlockJar;
 import thaumcraft.common.blocks.CustomStepSound;
 import T145.magistics.common.Magistics;
 import T145.magistics.common.config.ModConfig;
@@ -38,7 +37,7 @@ public class BlockThinkTank extends BlockContainer {
 		setStepSound(new CustomStepSound("jar", 1F, 1F));
 		setHardness(0.3F);
 		setLightLevel(0.66F);
-		setBlockTextureName(new BlockJar().iconJarSide.getIconName());
+		setBlockTextureName("thaumcraft:jar_bottom");
 	}
 
 	@Override

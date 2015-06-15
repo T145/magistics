@@ -132,6 +132,8 @@ dependencies {
 	compile fileTree(dir: 'lib', include: '*.jar')
 }
 
+setupDecompWorkspace.dependsOn setupWorkspace
+
 processResources {
 	exclude '**/*.db'
 }
