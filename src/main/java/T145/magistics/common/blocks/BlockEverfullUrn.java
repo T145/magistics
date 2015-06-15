@@ -116,7 +116,7 @@ public class BlockEverfullUrn extends BlockContainer {
 					player.dropItem(FluidContainerRegistry.fillFluidContainer(new FluidStack(FluidRegistry.WATER, 1000), newStack).getItem(), 1);
 
 				world.playSoundAtEntity(player, "liquid.swim", 0.5F, 1.0F);
-			} else if (player.inventory.getCurrentItem().getItem() instanceof IFluidContainerItem) {
+			} else if (itemInHand instanceof IFluidContainerItem) {
 				ItemStack newStack = new ItemStack(itemInHand, 1);
 
 				player.inventory.decrStackSize(player.inventory.currentItem, 1);

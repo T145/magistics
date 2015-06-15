@@ -39,7 +39,6 @@ import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
 import T145.magistics.common.blocks.BlockEverfullUrn;
 import T145.magistics.common.blocks.BlockInfuser;
 import T145.magistics.common.blocks.BlockInfuserItem;
-import T145.magistics.common.blocks.BlockSortingChestHungry;
 import T145.magistics.common.blocks.BlockThaumicEnchanter;
 import T145.magistics.common.blocks.BlockThinkTank;
 import T145.magistics.common.lib.ModInterCommRegistry;
@@ -128,8 +127,7 @@ public class ModConfig {
 	blockThinkTank = new BlockThinkTank(false).setBlockName("think_tank"),
 
 	blockChestHungryEnder = new BlockChestHungryEnder().setBlockName("hungry_ender_chest"),
-	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest"),
-	blockSortingChestHungry = new BlockSortingChestHungry().setBlockName("sorting_hungry_chest");
+	blockChestHungryAlchemical = new BlockChestHungryAlchemical().setBlockName("hungry_achemical_chest");
 
 	public static BlockChestHungryMetal blockChestHungryMetal = new BlockChestHungryMetal();
 
@@ -185,29 +183,6 @@ public class ModConfig {
 			reg.addBlockRenderer(new ChestRenderer(blockChestHungryMetal.getRenderType(), TileChestHungryMetalRenderer.getChestTextures()));
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
-
-		/*if (Loader.isModLoaded("RefinedRelocation")) {
-			if (debug)
-				Magistics.logger.info("Refined Relocation detected; compatibility loaded.");
-
-			reg.addBlock(blockSortingChestHungry);
-			reg.addTile(TileSortingChestHungry.class);
-
-			// bad
-			reg.addItemRenderer(Item.getItemFromBlock(blockSortingChestHungry), new ItemChestRenderer(new ResourceLocation[] {
-					new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
-			}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
-
-			// better
-			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungry.getRenderType(), new ResourceLocation[] {
-				new ResourceLocation("thaumcraft", "textures/models/chesthungry.png")
-			}, Resources.MODEL_TEXTURE_OVERLAY_CHEST));
-
-			// best?
-			reg.addBlockRenderer(new ChestRenderer(blockSortingChestHungry.getRenderType(), new TileSortingChestHungry()));
-
-			reg.addTileRenderer(TileSortingChestHungry.class, new TileSortingChestHungryRenderer());
-		}*/
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);
