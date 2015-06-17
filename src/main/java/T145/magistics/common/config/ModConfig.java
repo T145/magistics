@@ -13,12 +13,14 @@ import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.client.lib.ChestRenderer;
 import T145.magistics.client.renderers.BlockCrystalStorageRenderer;
+import T145.magistics.client.renderers.BlockCrystalizerRenderer;
 import T145.magistics.client.renderers.BlockEverfullUrnRenderer;
 import T145.magistics.client.renderers.BlockInfuserRenderer;
 import T145.magistics.client.renderers.BlockThinkTankRenderer;
 import T145.magistics.client.renderers.TileChestHungryAlchemicalRenderer;
 import T145.magistics.client.renderers.TileChestHungryEnderRenderer;
 import T145.magistics.client.renderers.TileChestHungryMetalRenderer;
+import T145.magistics.client.renderers.TileCrystalizerRenderer;
 import T145.magistics.client.renderers.TileInfuserRenderer;
 import T145.magistics.client.renderers.TileThinkTankRender;
 import T145.magistics.common.Magistics;
@@ -36,6 +38,7 @@ import T145.magistics.common.blocks.BlockCrystalStoragePlatform;
 import T145.magistics.common.blocks.BlockCrystalStorageShield;
 import T145.magistics.common.blocks.BlockCrystalStorageStructure;
 import T145.magistics.common.blocks.BlockCrystalStorageStructureItem;
+import T145.magistics.common.blocks.BlockCrystalizer;
 import T145.magistics.common.blocks.BlockEverfullUrn;
 import T145.magistics.common.blocks.BlockInfuser;
 import T145.magistics.common.blocks.BlockInfuserItem;
@@ -46,6 +49,7 @@ import T145.magistics.common.lib.ModRegistry;
 import T145.magistics.common.tiles.TileChestHungryAlchemical;
 import T145.magistics.common.tiles.TileChestHungryEnder;
 import T145.magistics.common.tiles.TileChestHungryMetal;
+import T145.magistics.common.tiles.TileCrystalizer;
 import T145.magistics.common.tiles.TileEverfullUrn;
 import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileInfuserDark;
@@ -122,6 +126,7 @@ public class ModConfig {
 	blockCrystalStorageBrickEngineeringDark = new BlockCrystalStorageEngineeringDark(),
 
 	blockThaumicEnchanter = new BlockThaumicEnchanter(),
+	blockCrystalizer = new BlockCrystalizer(),
 	blockEverfullUrn = new BlockEverfullUrn(),
 	blockInfuser = new BlockInfuser(),
 	blockThinkTank = new BlockThinkTank(false).setBlockName("think_tank"),
@@ -183,6 +188,12 @@ public class ModConfig {
 			reg.addBlockRenderer(new ChestRenderer(blockChestHungryMetal.getRenderType(), TileChestHungryMetalRenderer.getChestTextures()));
 			reg.addTileRenderer(TileChestHungryMetal.class, new TileChestHungryMetalRenderer());
 		}
+
+		reg.addBlock(blockCrystalizer);
+		reg.addTile(TileCrystalizer.class);
+
+		reg.addBlockRenderer(new BlockCrystalizerRenderer());
+		reg.addTileRenderer(TileCrystalizer.class, new TileCrystalizerRenderer());
 
 		reg.addBlock(blockThaumicEnchanter);
 		reg.addTile(TileThaumicEnchanter.class);

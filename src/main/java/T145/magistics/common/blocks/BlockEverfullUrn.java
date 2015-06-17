@@ -41,11 +41,7 @@ public class BlockEverfullUrn extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		if (side > 1) {
-			return icon[2];
-		} else {
-			return icon[side];
-		}
+		return side > 1 ? icon[2] : icon[side];
 	}
 
 	@Override
