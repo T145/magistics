@@ -24,5 +24,8 @@ MinecraftForge*.txt
 *.iws
 
 # Project-specific dependencies
-eclipse/*
-lib/*
+eclipse/
+lib/
+
+## Be sure bizarrely modified assets aren't committed
+src/main/resources/
