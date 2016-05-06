@@ -1,0 +1,35 @@
+// put all custom methods for build manipulation and what not in here
+// you can simply run `gradle -b custom.gradle hello` to test if everything is working
+
+import de.undercouch.gradle.tasks.download.*
+import org.ajoberstar.grgit.*
+
+buildscript {
+	repositories {
+		mavenCentral()
+		
+		maven {
+			url 'https://plugins.gradle.org/m2/'
+		}
+	}
+	
+	dependencies {
+		classpath 'de.undercouch:gradle-download-task:3.0.0'
+		classpath 'org.ajoberstar:grgit:1.4.1'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'de.undercouch.download'
+
+task getDependencies(type: Download) {
+	def lib = new File(project.projectDir, 'lib')
+	
+	if (!lib.exists()) {
+		lib.mkdirs()
+	}
+	
+	src 'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar'
+	dest lib
+	overwrite true
+}
