@@ -29,7 +29,11 @@ task getDependencies(type: Download) {
 		lib.mkdirs()
 	}
 	
-	src 'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar'
+	src ([
+		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
+		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
+	])
+	
 	dest lib
 	overwrite true
 }
