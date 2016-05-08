@@ -1,8 +1,11 @@
 package T145.magistics;
 
+import net.minecraft.creativetab.CreativeTabs;
+
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.config.ConfigHandler;
+import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -14,6 +17,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, guiFactory = "T145.magistics.client.ModGuiFactory")
 public class Magistics {
@@ -28,6 +32,7 @@ public class Magistics {
 	@Metadata
 	private ModMetadata metadata;
 
+	public static CreativeTabs tabMagistics = new CreativeTabMagistics(MODID);
 	public static ConfigHandler configHandler;
 	public static Logger logger;
 
@@ -55,7 +60,11 @@ public class Magistics {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		proxy.registerObjectInformation();
+		proxy.registerRenderInformation();
+
 		FMLCommonHandler.instance().bus().register(configHandler);
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 	}
 
 	@EventHandler
