@@ -24,8 +24,8 @@ public class GuiModifiedFurnace extends GuiContainer {
 
 	@Override
 	public void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-		String s = tileFurnace.hasCustomInventoryName() ? tileFurnace.getInventoryName() : I18n.format(tileFurnace.getInventoryName(), new Object[0]);
-		fontRendererObj.drawString(s, xSize / 2 - fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+		String invName = tileFurnace.getBlockType().getLocalizedName();
+		fontRendererObj.drawString(invName, xSize / 2 - fontRendererObj.getStringWidth(invName) / 2, 6, 4210752);
 		fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, ySize - 96 + 2, 4210752);
 	}
 

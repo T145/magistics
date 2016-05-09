@@ -8,6 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 import T145.magistics.tiles.TileModifiedFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -110,7 +111,7 @@ public class ContainerModifiedFurnace extends Container {
 					if (!mergeItemStack(itemstack1, 0, 1, false)) {
 						return null;
 					}
-				} else if (TileModifiedFurnace.isItemFuel(itemstack1)) {
+				} else if (TileEntityFurnace.isItemFuel(itemstack1)) {
 					if (!mergeItemStack(itemstack1, 1, 2, false)) {
 						return null;
 					}

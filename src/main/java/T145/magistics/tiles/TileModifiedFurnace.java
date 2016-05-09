@@ -1,23 +1,16 @@
 package T145.magistics.tiles;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,8 +25,6 @@ ISidedInventory {
 	public int furnaceBurnTime;
 	public int currentItemBurnTime;
 	public int furnaceCookTime;
-
-	public String customName;
 
 	@Override
 	public int getSizeInventory() {
@@ -89,20 +80,6 @@ ISidedInventory {
 	}
 
 	@Override
-	public String getInventoryName() {
-		return hasCustomInventoryName() ? customName : "container.modified_furnace";
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return customName != null && customName.length() > 0;
-	}
-
-	public void setCustomName(String name) {
-		customName = name;
-	}
-
-	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		NBTTagList taglist = tag.getTagList("Items", 10);
@@ -120,10 +97,6 @@ ISidedInventory {
 		furnaceBurnTime = tag.getShort("BurnTime");
 		furnaceCookTime = tag.getShort("CookTime");
 		currentItemBurnTime = getItemBurnTime(furnaceItemStacks[1]);
-
-		if (tag.hasKey("CustomName", 8)) {
-			customName = tag.getString("CustomName");
-		}
 	}
 
 	@Override
@@ -144,10 +117,16 @@ ISidedInventory {
 		}
 
 		tag.setTag("Items", taglist);
+	}
 
-		if (hasCustomInventoryName()) {
-			tag.setString("CustomName", customName);
-		}
+	@Override
+	public String getInventoryName() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
 	}
 
 	@Override
@@ -260,49 +239,11 @@ ISidedInventory {
 		}
 	}
 
-	public static int getItemBurnTime(ItemStack stack) {
-		if (stack == null) {
-			return 0;
-		} else {
-			Item item = stack.getItem();
-
-			if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air) {
-				Block block = Block.getBlockFromItem(item);
-
-				if (block == Blocks.wooden_slab) {
-					return 150;
-				}
-
-				if (block.getMaterial() == Material.wood) {
-					return 300;
-				}
-
-				if (block == Blocks.coal_block) {
-					return 16000;
-				}
-			}
-
-			if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD"))
-				return 200;
-			if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD"))
-				return 200;
-			if (item instanceof ItemHoe && ((ItemHoe) item).getToolMaterialName().equals("WOOD"))
-				return 200;
-			if (item == Items.stick)
-				return 100;
-			if (item == Items.coal)
-				return 1600;
-			if (item == Items.lava_bucket)
-				return 20000;
-			if (item == Item.getItemFromBlock(Blocks.sapling))
-				return 100;
-			if (item == Items.blaze_rod)
-				return 2400;
-			return GameRegistry.getFuelValue(stack);
-		}
+	public int getItemBurnTime(ItemStack stack) {
+		return TileEntityFurnace.getItemBurnTime(stack);
 	}
 
-	public static boolean isItemFuel(ItemStack stack) {
+	public boolean isItemFuel(ItemStack stack) {
 		return getItemBurnTime(stack) > 0;
 	}
 

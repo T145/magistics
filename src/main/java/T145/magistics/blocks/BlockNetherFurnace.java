@@ -33,7 +33,9 @@ public class BlockNetherFurnace extends BlockContainer {
 	private final Random rand = new Random();
 
 	private final boolean active;
-	private static boolean update;
+	private static boolean keepInventory;
+
+	private int facing;
 
 	@SideOnly(Side.CLIENT)
 	private IIcon front;
@@ -89,8 +91,9 @@ public class BlockNetherFurnace extends BlockContainer {
 	}
 
 	public static void updateFurnaceBlockState(boolean isActive, World world, int x, int y, int z) {
+		int l = world.getBlockMetadata(x, y, z);
 		TileEntity tile = world.getTileEntity(x, y, z);
-		update = true;
+		keepInventory = true;
 
 		if (isActive) {
 			world.setBlock(x, y, z, instanceActive);
@@ -98,8 +101,8 @@ public class BlockNetherFurnace extends BlockContainer {
 			world.setBlock(x, y, z, instanceInactive);
 		}
 
-		update = false;
-		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z), 2);
+		keepInventory = false;
+		world.setBlockMetadataWithNotify(x, y, z, l, 2);
 
 		if (tile != null) {
 			tile.validate();
@@ -113,8 +116,8 @@ public class BlockNetherFurnace extends BlockContainer {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
-		int l = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
+		int l = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
 		if (l == 0) {
 			world.setBlockMetadataWithNotify(x, y, z, 2, 2);
@@ -131,13 +134,11 @@ public class BlockNetherFurnace extends BlockContainer {
 		if (l == 3) {
 			world.setBlockMetadataWithNotify(x, y, z, 4, 2);
 		}
-
-		((TileNetherFurnace) world.getTileEntity(x, y, z)).setCustomName(getLocalizedName());
 	}
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
-		if (!update) {
+		if (!keepInventory) {
 			TileNetherFurnace tilefurnace = (TileNetherFurnace) world .getTileEntity(x, y, z);
 
 			if (tilefurnace != null) {
