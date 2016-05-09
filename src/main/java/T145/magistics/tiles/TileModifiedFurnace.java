@@ -1,6 +1,5 @@
 package T145.magistics.tiles;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
@@ -154,8 +153,8 @@ ISidedInventory {
 
 	@Override
 	public void updateEntity() {
-		boolean isActive = furnaceBurnTime > 0;
-		boolean active = false;
+		boolean flag = furnaceBurnTime > 0;
+		boolean flag1 = false;
 
 		if (furnaceBurnTime > 0) {
 			--furnaceBurnTime;
@@ -167,7 +166,7 @@ ISidedInventory {
 					currentItemBurnTime = furnaceBurnTime = getItemBurnTime(furnaceItemStacks[1]);
 
 					if (furnaceBurnTime > 0) {
-						active = true;
+						flag1 = true;
 
 						if (furnaceItemStacks[1] != null) {
 							--furnaceItemStacks[1].stackSize;
@@ -185,20 +184,20 @@ ISidedInventory {
 					if (furnaceCookTime == 200) {
 						furnaceCookTime = 0;
 						smeltItem();
-						active = true;
+						flag1 = true;
 					}
 				} else {
 					furnaceCookTime = 0;
 				}
 			}
 
-			if (isActive != furnaceBurnTime > 0) {
-				active = true;
-				updateFurnaceBlockState(active, worldObj, xCoord, yCoord, zCoord);
+			if (flag != furnaceBurnTime > 0) {
+				flag1 = true;
+				updateFurnaceBlockState(furnaceBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
 			}
 		}
 
-		if (active) {
+		if (flag1) {
 			markDirty();
 		}
 	}
@@ -243,10 +242,6 @@ ISidedInventory {
 		return TileEntityFurnace.getItemBurnTime(stack);
 	}
 
-	public boolean isItemFuel(ItemStack stack) {
-		return getItemBurnTime(stack) > 0;
-	}
-
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
@@ -260,7 +255,7 @@ ISidedInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return slot == 2 ? false : (slot == 1 ? isItemFuel(stack) : true);
+		return slot == 2 ? false : (slot == 1 ? TileEntityFurnace.isItemFuel(stack) : true);
 	}
 
 	@Override

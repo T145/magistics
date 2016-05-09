@@ -96,13 +96,16 @@ public class BlockNetherFurnace extends BlockContainer {
 		keepInventory = true;
 
 		if (isActive) {
+			Magistics.logger.info("NFurn is active!");
 			world.setBlock(x, y, z, instanceActive);
 		} else {
+			Magistics.logger.info("NFurn is inactive!");
 			world.setBlock(x, y, z, instanceInactive);
 		}
 
 		keepInventory = false;
 		world.setBlockMetadataWithNotify(x, y, z, l, 2);
+		Magistics.logger.info("Updated NFurn Block!");
 
 		if (tile != null) {
 			tile.validate();
