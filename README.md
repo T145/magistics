@@ -40,6 +40,8 @@ It may take a while to complete, depending on your internet connection and the p
 
 To edit how this workspace functions for your own purposes, the only two files you need interact with are [custom.gradle](https://github.com/T145/ForgeWorkspace/blob/1.7.10/custom.gradle) and [gradle.properties](https://github.com/T145/ForgeWorkspace/blob/1.7.10/gradle.properties). The custom.gradle is where all of your normal build.gradle edits would go. In it is an example prompt that shows a message whenever the build command is issued (which is all the time), showing that any edits here will affect the build process properly. Keeping the build file and custom build setup separate allows for an extra degree of organization. The gradle.properties file is where all of the basic workspace information is set, such as the project name and which Forge version to use. Check here and edit it before building. Once both of those are in order you'll be all set to be begin programming!
 
+---
+
 ## License [![Apache License](http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Please consult the license at the provided link if you wish to use the source code. You may contact [myself](https://github.com/T145) for permission to use any of the assets.
