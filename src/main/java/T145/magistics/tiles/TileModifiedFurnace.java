@@ -1,29 +1,15 @@
 package T145.magistics.tiles;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class TileModifiedFurnace extends TileEntity implements
-ISidedInventory {
-	public static final int[] slotsTop = new int[] { 0 };
-	public static final int[] slotsBottom = new int[] { 2, 1 };
-	public static final int[] slotsSides = new int[] { 1 };
-
-	public ItemStack[] furnaceItemStacks = new ItemStack[3];
-
-	public int furnaceBurnTime;
-	public int currentItemBurnTime;
-	public int furnaceCookTime;
+public abstract class TileModifiedFurnace extends TileEntityFurnace {
+	private ItemStack[] furnaceItemStacks = new ItemStack[3];
+	private String displayName;
 
 	@Override
 	public int getSizeInventory() {
@@ -31,27 +17,27 @@ ISidedInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int p_70301_1_) {
-		return furnaceItemStacks[p_70301_1_];
+	public ItemStack getStackInSlot(int slot) {
+		return furnaceItemStacks[slot];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slotFrom, int slotTo) {
 		if (furnaceItemStacks[slotFrom] != null) {
-			ItemStack stack;
+			ItemStack itemstack;
 
 			if (furnaceItemStacks[slotFrom].stackSize <= slotTo) {
-				stack = furnaceItemStacks[slotFrom];
+				itemstack = furnaceItemStacks[slotFrom];
 				furnaceItemStacks[slotFrom] = null;
-				return stack;
+				return itemstack;
 			} else {
-				stack = furnaceItemStacks[slotFrom].splitStack(slotTo);
+				itemstack = furnaceItemStacks[slotFrom].splitStack(slotTo);
 
 				if (furnaceItemStacks[slotFrom].stackSize == 0) {
 					furnaceItemStacks[slotFrom] = null;
 				}
 
-				return stack;
+				return itemstack;
 			}
 		} else {
 			return null;
@@ -61,31 +47,44 @@ ISidedInventory {
 	@Override
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		if (furnaceItemStacks[slot] != null) {
-			ItemStack stack = furnaceItemStacks[slot];
+			ItemStack itemstack = furnaceItemStacks[slot];
 			furnaceItemStacks[slot] = null;
-			return stack;
+			return itemstack;
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
-		furnaceItemStacks[p_70299_1_] = p_70299_2_;
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+		furnaceItemStacks[slot] = stack;
 
-		if (p_70299_2_ != null && p_70299_2_.stackSize > getInventoryStackLimit()) {
-			p_70299_2_.stackSize = getInventoryStackLimit();
+		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
+			stack.stackSize = getInventoryStackLimit();
 		}
 	}
 
 	@Override
+	public String getInventoryName() {
+		return hasCustomInventoryName() ? displayName : "container.modified_furnace";
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return displayName != null && displayName.length() > 0;
+	}
+
+	public void setDisplayName(String name) {
+		displayName = name;
+	}
+
+	@Override
 	public void readFromNBT(NBTTagCompound tag) {
-		super.readFromNBT(tag);
-		NBTTagList taglist = tag.getTagList("Items", 10);
+		NBTTagList items = tag.getTagList("Items", 10);
 		furnaceItemStacks = new ItemStack[getSizeInventory()];
 
-		for (int i = 0; i < taglist.tagCount(); ++i) {
-			NBTTagCompound slot = taglist.getCompoundTagAt(i);
+		for (int i = 0; i < items.tagCount(); ++i) {
+			NBTTagCompound slot = items.getCompoundTagAt(i);
 			byte b0 = slot.getByte("Slot");
 
 			if (b0 >= 0 && b0 < furnaceItemStacks.length) {
@@ -96,67 +95,40 @@ ISidedInventory {
 		furnaceBurnTime = tag.getShort("BurnTime");
 		furnaceCookTime = tag.getShort("CookTime");
 		currentItemBurnTime = getItemBurnTime(furnaceItemStacks[1]);
+
+		if (tag.hasKey("CustomName", 8)) {
+			displayName = tag.getString("CustomName");
+		}
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound tag) {
-		super.writeToNBT(tag);
 		tag.setShort("BurnTime", (short) furnaceBurnTime);
 		tag.setShort("CookTime", (short) furnaceCookTime);
-
-		NBTTagList taglist = new NBTTagList();
+		NBTTagList items = new NBTTagList();
 
 		for (int i = 0; i < furnaceItemStacks.length; ++i) {
 			if (furnaceItemStacks[i] != null) {
 				NBTTagCompound slot = new NBTTagCompound();
 				slot.setByte("Slot", (byte) i);
 				furnaceItemStacks[i].writeToNBT(slot);
-				taglist.appendTag(slot);
+				items.appendTag(slot);
 			}
 		}
 
-		tag.setTag("Items", taglist);
-	}
+		tag.setTag("Items", items);
 
-	@Override
-	public String getInventoryName() {
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public int getCookProgressScaled(int time) {
-		return furnaceCookTime * time / 200;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public int getBurnTimeRemainingScaled(int time) {
-		if (currentItemBurnTime == 0) {
-			currentItemBurnTime = 200;
+		if (hasCustomInventoryName()) {
+			tag.setString("CustomName", displayName);
 		}
-
-		return furnaceBurnTime * time / currentItemBurnTime;
-	}
-
-	public boolean isBurning() {
-		return furnaceBurnTime > 0;
 	}
 
 	@Override
 	public void updateEntity() {
-		boolean flag = furnaceBurnTime > 0;
-		boolean flag1 = false;
+		boolean isActive = isBurning();
+		boolean active = false;
 
-		if (furnaceBurnTime > 0) {
+		if (isBurning()) {
 			--furnaceBurnTime;
 		}
 
@@ -165,8 +137,8 @@ ISidedInventory {
 				if (furnaceBurnTime == 0 && canSmelt()) {
 					currentItemBurnTime = furnaceBurnTime = getItemBurnTime(furnaceItemStacks[1]);
 
-					if (furnaceBurnTime > 0) {
-						flag1 = true;
+					if (isBurning()) {
+						active = true;
 
 						if (furnaceItemStacks[1] != null) {
 							--furnaceItemStacks[1].stackSize;
@@ -184,50 +156,51 @@ ISidedInventory {
 					if (furnaceCookTime == 200) {
 						furnaceCookTime = 0;
 						smeltItem();
-						flag1 = true;
+						active = true;
 					}
 				} else {
 					furnaceCookTime = 0;
 				}
 			}
 
-			if (flag != furnaceBurnTime > 0) {
-				flag1 = true;
-				updateFurnaceBlockState(furnaceBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
+			if (isActive != isBurning()) {
+				active = true;
+				updateFurnaceBlockState(isBurning(), worldObj, xCoord, yCoord, zCoord);
 			}
 		}
 
-		if (flag1) {
+		if (active) {
 			markDirty();
 		}
 	}
 
-	public abstract void updateFurnaceBlockState(boolean isActive, World worldObj, int xCoord, int yCoord, int zCoord);
+	public abstract void updateFurnaceBlockState(boolean b, World worldObj, int xCoord, int yCoord, int zCoord);
 
-	public boolean canSmelt() {
+	private boolean canSmelt() {
 		if (furnaceItemStacks[0] == null) {
 			return false;
 		} else {
-			ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(furnaceItemStacks[0]);
-			if (stack == null)
+			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(furnaceItemStacks[0]);
+			if (itemstack == null)
 				return false;
 			if (furnaceItemStacks[2] == null)
 				return true;
-			if (!furnaceItemStacks[2].isItemEqual(stack))
+			if (!furnaceItemStacks[2].isItemEqual(itemstack))
 				return false;
-			int result = furnaceItemStacks[2].stackSize + stack.stackSize;
+			int result = furnaceItemStacks[2].stackSize + itemstack.stackSize;
 			return result <= getInventoryStackLimit() && result <= furnaceItemStacks[2].getMaxStackSize();
 		}
 	}
 
+	@Override
 	public void smeltItem() {
 		if (canSmelt()) {
-			ItemStack stack = FurnaceRecipes.smelting().getSmeltingResult(furnaceItemStacks[0]);
+			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(furnaceItemStacks[0]);
 
 			if (furnaceItemStacks[2] == null) {
-				furnaceItemStacks[2] = stack.copy();
-			} else if (furnaceItemStacks[2].getItem() == stack.getItem()) {
-				furnaceItemStacks[2].stackSize += stack.stackSize;
+				furnaceItemStacks[2] = itemstack.copy();
+			} else if (furnaceItemStacks[2].getItem() == itemstack.getItem()) {
+				furnaceItemStacks[2].stackSize += itemstack.stackSize;
 			}
 
 			--furnaceItemStacks[0].stackSize;
@@ -236,40 +209,5 @@ ISidedInventory {
 				furnaceItemStacks[0] = null;
 			}
 		}
-	}
-
-	public int getItemBurnTime(ItemStack stack) {
-		return TileEntityFurnace.getItemBurnTime(stack);
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64.0D;
-	}
-
-	@Override
-	public void openInventory() {}
-
-	@Override
-	public void closeInventory() {}
-
-	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return slot == 2 ? false : (slot == 1 ? TileEntityFurnace.isItemFuel(stack) : true);
-	}
-
-	@Override
-	public int[] getAccessibleSlotsFromSide(int side) {
-		return side == 0 ? slotsBottom : (side == 1 ? slotsTop : slotsSides);
-	}
-
-	@Override
-	public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) {
-		return isItemValidForSlot(p_102007_1_, p_102007_2_);
-	}
-
-	@Override
-	public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) {
-		return p_102008_3_ != 0 || p_102008_1_ != 1 || p_102008_2_.getItem() == Items.bucket;
 	}
 }

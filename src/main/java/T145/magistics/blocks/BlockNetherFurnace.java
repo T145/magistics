@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileNetherFurnace;
@@ -80,14 +79,7 @@ public class BlockNetherFurnace extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			TileNetherFurnace tile = (TileNetherFurnace) world.getTileEntity(x, y, z);
-
-			if (tile != null) {
-				player.openGui(Magistics.instance, 0, world, x, y, z);
-			}
-		}
-		return true;
+		return Blocks.furnace.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
 	}
 
 	public static void updateFurnaceBlockState(boolean isActive, World world, int x, int y, int z) {
@@ -96,16 +88,13 @@ public class BlockNetherFurnace extends BlockContainer {
 		keepInventory = true;
 
 		if (isActive) {
-			Magistics.logger.info("NFurn is active!");
 			world.setBlock(x, y, z, instanceActive);
 		} else {
-			Magistics.logger.info("NFurn is inactive!");
 			world.setBlock(x, y, z, instanceInactive);
 		}
 
 		keepInventory = false;
 		world.setBlockMetadataWithNotify(x, y, z, l, 2);
-		Magistics.logger.info("Updated NFurn Block!");
 
 		if (tile != null) {
 			tile.validate();
@@ -120,23 +109,7 @@ public class BlockNetherFurnace extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-		int l = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-		if (l == 0) {
-			world.setBlockMetadataWithNotify(x, y, z, 2, 2);
-		}
-
-		if (l == 1) {
-			world.setBlockMetadataWithNotify(x, y, z, 5, 2);
-		}
-
-		if (l == 2) {
-			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
-		}
-
-		if (l == 3) {
-			world.setBlockMetadataWithNotify(x, y, z, 4, 2);
-		}
+		Blocks.furnace.onBlockPlacedBy(world, x, y, z, player, stack);
 	}
 
 	@Override
