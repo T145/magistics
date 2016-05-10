@@ -21,9 +21,9 @@ public class PluginHandler {
 			return mod;
 		}
 
-		public abstract boolean preInit();
-		public abstract boolean init();
-		public abstract boolean postInit();
+		public abstract void preInit();
+		public abstract void init();
+		public abstract void postInit();
 	}
 
 	private static ArrayList<Plugin> plugins = new ArrayList();
@@ -48,24 +48,24 @@ public class PluginHandler {
 	}
 
 	public static void load(FMLStateEvent event) {
-		Magistics.logger.info("Loading plugins...");
-
 		if (plugins.isEmpty()) {
 			Magistics.logger.info("Woops... looks like you need to install Thaumcraft!");
 		} else {
 			for (Plugin plugin : plugins) {
 				if (event instanceof FMLPreInitializationEvent) {
+					Magistics.logger.info("PreInitializing plugins...");
 					plugin.preInit();
 					Magistics.logger.info("PreInitialized plugin: " + plugin.getModId());
 				} else if (event instanceof FMLInitializationEvent) {
+					Magistics.logger.info("Initializing plugins...");
 					plugin.init();
 					Magistics.logger.info("Initialized plugin: " + plugin.getModId());
 				} else if (event instanceof FMLPostInitializationEvent) {
+					Magistics.logger.info("PostInitializing plugins...");
 					plugin.postInit();
 					Magistics.logger.info("PostInitialized plugin: " + plugin.getModId());
 				}
 			}
-			Magistics.logger.info("Plugin load complete!");
 		}
 	}
 }

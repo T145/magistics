@@ -5,25 +5,14 @@ import T145.magistics.plugins.PluginHandler.Plugin;
 public class PluginEnderStorage extends Plugin {
 	public PluginEnderStorage() {
 		super("EnderStorage");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean preInit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public void preInit() {}
 
 	@Override
-	public boolean init() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public void init() {}
 
 	@Override
-	public boolean postInit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	public void postInit() {}
 }

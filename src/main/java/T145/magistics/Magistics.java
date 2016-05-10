@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
+import T145.magistics.plugins.PluginHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -56,19 +57,19 @@ public class Magistics {
 		configHandler = new ConfigHandler(event);
 		logger = event.getModLog();
 		loadMetadata();
+		PluginHandler.load(event);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.registerObjectInformation();
-		proxy.registerRenderInformation();
-
 		FMLCommonHandler.instance().bus().register(configHandler);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+		PluginHandler.load(event);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		PluginHandler.load(event);
 		logger.info("Hello World!");
 	}
 }

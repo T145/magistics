@@ -1,30 +1,20 @@
 package T145.magistics.plugins;
 
+import T145.magistics.Magistics;
 import T145.magistics.plugins.PluginHandler.Plugin;
 
 public class PluginThermalExpansion extends Plugin {
 
 	public PluginThermalExpansion() {
 		super("ThermalExpansion");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean preInit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public void preInit() {}
 
 	@Override
-	public boolean init() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public void init() {}
 
 	@Override
-	public boolean postInit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	public void postInit() {}
 }

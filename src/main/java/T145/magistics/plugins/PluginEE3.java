@@ -8,17 +8,11 @@ public class PluginEE3 extends Plugin {
 	}
 
 	@Override
-	public boolean preInit() {
-		return true;
-	}
+	public void preInit() {}
 
 	@Override
-	public boolean init() {
-		return true;
-	}
+	public void init() {}
 
 	@Override
-	public boolean postInit() {
-		return true;
-	}
+	public void postInit() {}
 }

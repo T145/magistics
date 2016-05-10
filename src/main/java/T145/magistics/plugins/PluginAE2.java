@@ -8,17 +8,11 @@ public class PluginAE2 extends Plugin {
 	}
 
 	@Override
-	public boolean preInit() {
-		return false;
-	}
+	public void preInit() {}
 
 	@Override
-	public boolean init() {
-		return false;
-	}
+	public void init() {}
 
 	@Override
-	public boolean postInit() {
-		return false;
-	}
+	public void postInit() {}
 }
