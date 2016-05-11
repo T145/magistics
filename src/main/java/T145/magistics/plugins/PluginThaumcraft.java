@@ -3,11 +3,14 @@ package T145.magistics.plugins;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.research.ResearchCategories;
 import T145.magistics.Magistics;
+import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.client.lib.BlockChestRender;
+import T145.magistics.client.render.RenderChestHungryEnder;
 import T145.magistics.client.render.RenderChestHungryTrapped;
 import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileNetherFurnace;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -29,12 +32,16 @@ public class PluginThaumcraft extends Plugin {
 		GameRegistry.registerBlock(BlockNetherFurnace.INACTIVE, BlockNetherFurnace.INACTIVE.getUnlocalizedName() + "_off");
 		GameRegistry.registerTileEntity(TileChestHungryTrapped.class, TileChestHungryTrapped.class.getSimpleName());
 		GameRegistry.registerBlock(BlockChestHungryTrapped.INSTANCE, BlockChestHungryTrapped.INSTANCE.getUnlocalizedName());
+		GameRegistry.registerTileEntity(TileChestHungryEnder.class, TileChestHungryEnder.class.getSimpleName());
+		GameRegistry.registerBlock(BlockChestHungryEnder.INSTANCE, BlockChestHungryEnder.INSTANCE.getUnlocalizedName());
 	}
 
 	@Override
 	public void postInit() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryTrapped.class, RenderChestHungryTrapped.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new BlockChestRender(BlockChestHungryTrapped.INSTANCE.getRenderType(), new TileChestHungryTrapped()));
+		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryEnder.class, RenderChestHungryEnder.INSTANCE);
+		RenderingRegistry.registerBlockHandler(new BlockChestRender(BlockChestHungryEnder.INSTANCE.getRenderType(), new TileChestHungryEnder()));
 
 		ResearchCategories.registerCategory(Magistics.MODID, new ResourceLocation("magistics", "textures/gui/thaumonomicon/tab.png"), new ResourceLocation("magistics", "textures/gui/thaumonomicon/bg.png"));
 	}

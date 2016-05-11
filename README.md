@@ -30,7 +30,7 @@ Each of the listed requirements contains a hyperlink that should take you direct
 
 To begin coding, start by executing the following command:
 ```
-gradle setupWorkspace eclipse
+gradle getDependencies setupWorkspace eclipse
 ```
 It may take a while to complete, depending on your internet connection and the processing power of your machine. On average it takes about 10 minutes for most people. Again, if you don't have Gradle installed, then just replace the `gradle` in that command with `gradlew`. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
 
@@ -38,7 +38,7 @@ It may take a while to complete, depending on your internet connection and the p
 
 ## Development
 
-To edit how this workspace functions for your own purposes, the only two files you need interact with are [custom.gradle](https://github.com/T145/ForgeWorkspace/blob/1.7.10/custom.gradle) and [gradle.properties](https://github.com/T145/ForgeWorkspace/blob/1.7.10/gradle.properties). The custom.gradle is where all of your normal build.gradle edits would go. In it is an example prompt that shows a message whenever the build command is issued (which is all the time), showing that any edits here will affect the build process properly. Keeping the build file and custom build setup separate allows for an extra degree of organization. The gradle.properties file is where all of the basic workspace information is set, such as the project name and which Forge version to use. Check here and edit it before building. Once both of those are in order you'll be all set to be begin programming!
+To edit how this workspace functions for your own purposes, the only file you need interact with is [gradle.properties](https://github.com/T145/ForgeWorkspace/blob/1.7.10/gradle.properties). This file is where all of the basic workspace information is set, such as the project name and which Forge version to use. Check here and edit it before building. Once it's set and the project has been built you'll be all set to be begin programming!
 
 ---
 
