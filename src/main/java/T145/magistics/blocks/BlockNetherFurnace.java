@@ -26,8 +26,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockNetherFurnace extends BlockContainer {
-	public static Block instanceActive = new BlockNetherFurnace(true).setLightLevel(0.875F);
-	public static Block instanceInactive = new BlockNetherFurnace(false).setCreativeTab(Magistics.tabMagistics);
+	public static final Block ACTIVE = new BlockNetherFurnace(true).setLightLevel(0.875F);
+	public static final Block INACTIVE = new BlockNetherFurnace(false).setCreativeTab(Magistics.tabMagistics);
 
 	private final Random rand = new Random();
 
@@ -50,7 +50,7 @@ public class BlockNetherFurnace extends BlockContainer {
 
 	@Override
 	public Item getItemDropped(int fortune, Random random, int amount) {
-		return Item.getItemFromBlock(instanceInactive);
+		return Item.getItemFromBlock(INACTIVE);
 	}
 
 	@Override
@@ -88,9 +88,9 @@ public class BlockNetherFurnace extends BlockContainer {
 		keepInventory = true;
 
 		if (isActive) {
-			world.setBlock(x, y, z, instanceActive);
+			world.setBlock(x, y, z, ACTIVE);
 		} else {
-			world.setBlock(x, y, z, instanceInactive);
+			world.setBlock(x, y, z, INACTIVE);
 		}
 
 		keepInventory = false;
@@ -196,6 +196,6 @@ public class BlockNetherFurnace extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int x, int y, int z) {
-		return Item.getItemFromBlock(instanceInactive);
+		return Item.getItemFromBlock(INACTIVE);
 	}
 }

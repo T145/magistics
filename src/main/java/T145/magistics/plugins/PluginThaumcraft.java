@@ -1,8 +1,17 @@
 package T145.magistics.plugins;
 
+import net.minecraft.util.ResourceLocation;
+import thaumcraft.api.research.ResearchCategories;
+import T145.magistics.Magistics;
+import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockNetherFurnace;
+import T145.magistics.client.lib.BlockChestRender;
+import T145.magistics.client.render.RenderChestHungryTrapped;
 import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileNetherFurnace;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PluginThaumcraft extends Plugin {
@@ -16,10 +25,17 @@ public class PluginThaumcraft extends Plugin {
 	@Override
 	public void init() {
 		GameRegistry.registerTileEntity(TileNetherFurnace.class, TileNetherFurnace.class.getSimpleName());
-		GameRegistry.registerBlock(BlockNetherFurnace.instanceActive, BlockNetherFurnace.instanceActive.getUnlocalizedName() + "_on");
-		GameRegistry.registerBlock(BlockNetherFurnace.instanceInactive, BlockNetherFurnace.instanceInactive.getUnlocalizedName() + "_off");
+		GameRegistry.registerBlock(BlockNetherFurnace.ACTIVE, BlockNetherFurnace.ACTIVE.getUnlocalizedName() + "_on");
+		GameRegistry.registerBlock(BlockNetherFurnace.INACTIVE, BlockNetherFurnace.INACTIVE.getUnlocalizedName() + "_off");
+		GameRegistry.registerTileEntity(TileChestHungryTrapped.class, TileChestHungryTrapped.class.getSimpleName());
+		GameRegistry.registerBlock(BlockChestHungryTrapped.INSTANCE, BlockChestHungryTrapped.INSTANCE.getUnlocalizedName());
 	}
 
 	@Override
-	public void postInit() {}
+	public void postInit() {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryTrapped.class, RenderChestHungryTrapped.INSTANCE);
+		RenderingRegistry.registerBlockHandler(new BlockChestRender(BlockChestHungryTrapped.INSTANCE.getRenderType(), new TileChestHungryTrapped()));
+
+		ResearchCategories.registerCategory(Magistics.MODID, new ResourceLocation("magistics", "textures/gui/thaumonomicon/tab.png"), new ResourceLocation("magistics", "textures/gui/thaumonomicon/bg.png"));
+	}
 }
