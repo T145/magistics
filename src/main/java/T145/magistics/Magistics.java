@@ -57,19 +57,19 @@ public class Magistics {
 		configHandler = new ConfigHandler(event);
 		logger = event.getModLog();
 		loadMetadata();
-		PluginHandler.load(event);
+		PluginHandler.preInit(event);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(configHandler);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-		PluginHandler.load(event);
+		PluginHandler.init(event);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		PluginHandler.load(event);
+		PluginHandler.postInit(event);
 		logger.info("Hello World!");
 	}
 }

@@ -7,18 +7,17 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLStateEvent;
 
 public class PluginHandler {
 	static abstract class Plugin {
-		private final String mod;
+		private final String name;
 
 		public Plugin(String modid) {
-			mod = modid;
+			name = modid;
 		}
 
 		public String getModId() {
-			return mod;
+			return name;
 		}
 
 		public abstract void preInit();
@@ -47,25 +46,34 @@ public class PluginHandler {
 		}
 	}
 
-	public static void load(FMLStateEvent event) {
+	public static void preInit(FMLPreInitializationEvent event) {
+		Magistics.logger.info("PreInitializing plugins...");
+
 		if (plugins.isEmpty()) {
 			Magistics.logger.info("Woops... looks like you need to install Thaumcraft!");
 		} else {
 			for (Plugin plugin : plugins) {
-				if (event instanceof FMLPreInitializationEvent) {
-					Magistics.logger.info("PreInitializing plugins...");
-					plugin.preInit();
-					Magistics.logger.info("PreInitialized plugin: " + plugin.getModId());
-				} else if (event instanceof FMLInitializationEvent) {
-					Magistics.logger.info("Initializing plugins...");
-					plugin.init();
-					Magistics.logger.info("Initialized plugin: " + plugin.getModId());
-				} else if (event instanceof FMLPostInitializationEvent) {
-					Magistics.logger.info("PostInitializing plugins...");
-					plugin.postInit();
-					Magistics.logger.info("PostInitialized plugin: " + plugin.getModId());
-				}
+				plugin.preInit();
+				Magistics.logger.info("PreInitialized plugin: " + plugin.getModId());
 			}
+		}
+	}
+
+	public static void init(FMLInitializationEvent event) {
+		Magistics.logger.info("Initializing plugins...");
+
+		for (Plugin plugin : plugins) {
+			plugin.init();
+			Magistics.logger.info("Initialized plugin: " + plugin.getModId());
+		}
+	}
+
+	public static void postInit(FMLPostInitializationEvent event) {
+		Magistics.logger.info("PostInitializing plugins...");
+
+		for (Plugin plugin : plugins) {
+			plugin.postInit();
+			Magistics.logger.info("PostInitialized plugin: " + plugin.getModId());
 		}
 	}
 }
