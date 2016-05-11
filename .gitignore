@@ -10,10 +10,10 @@ _MACOSX
 *.db
 
 # Ignore Gradle output
-bin/
-build/
-minecraftSrc/
-release/
+/bin/
+/build/
+/minecraftSrc/
+/release/
 
 # Ignore Forge documents
 *fml.txt
@@ -29,5 +29,5 @@ hs_err_pid*
 *.iws
 
 # Project-specific dependencies
-eclipse/
-lib/
+/eclipse/
+/lib/
