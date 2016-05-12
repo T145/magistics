@@ -32,4 +32,15 @@ public class BlockChthonianFurnace extends BlockContainer {
 	public int getRenderType() {
 		return renderID;
 	}
+
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
 }

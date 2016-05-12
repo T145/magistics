@@ -21,7 +21,7 @@ public class RenderBlockChthonianFurnace extends BlockRenderer implements ISimpl
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
 		GL11.glRotatef(90F, 0F, 1F, 0F);
-		GL11.glTranslatef(-0.5F, 0F, -0.5F);
+		GL11.glTranslatef(-0.5F, -.5F, -0.5F);
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileChthonianFurnace(), 0, 0, 0, 0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}

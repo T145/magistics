@@ -19,7 +19,7 @@ public class RenderChthonianFurnace extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileChthonianFurnace table, double par2, double par4, double par6, float par8) {
 		GL11.glPushMatrix();
 		UtilsFX.bindTexture("magistics", "textures/models/chthonian_furnace.png");
-		GL11.glTranslatef((float) par2 + 0.5F, (float) par4 + 1F, (float) par6 + 0.5F);
+		GL11.glTranslatef((float) par2 + 0.5F, (float) par4 + 1.5F, (float) par6 + 0.5F);
 		GL11.glRotatef(180F, 1F, 0F, 0F);
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		model.renderAll();
