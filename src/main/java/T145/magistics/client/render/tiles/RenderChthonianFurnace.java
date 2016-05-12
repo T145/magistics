@@ -2,10 +2,11 @@ package T145.magistics.client.render.tiles;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
-import thaumcraft.client.lib.UtilsFX;
 import T145.magistics.client.render.models.ModelChthonianFurnace;
 import T145.magistics.tiles.TileChthonianFurnace;
 import cpw.mods.fml.relauncher.Side;
@@ -14,19 +15,38 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderChthonianFurnace extends TileEntitySpecialRenderer {
 	public static final TileEntitySpecialRenderer INSTANCE = new RenderChthonianFurnace();
-	private ModelChthonianFurnace model = new ModelChthonianFurnace();
+	private final ModelChthonianFurnace model = new ModelChthonianFurnace();
 
-	public void renderTileEntityAt(TileChthonianFurnace table, double par2, double par4, double par6, float par8) {
+	public void renderTileEntityAt(TileChthonianFurnace furnace, float x, float y, float z) {
 		GL11.glPushMatrix();
-		UtilsFX.bindTexture("magistics", "textures/models/chthonian_furnace.png");
-		GL11.glTranslatef((float) par2 + 0.5F, (float) par4 + 1.5F, (float) par6 + 0.5F);
-		GL11.glRotatef(180F, 1F, 0F, 0F);
+		bindTexture(new ResourceLocation("magistics", "textures/models/chthonian_furnace.png"));
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glColor4f(1F, 1F, 1F, 1F);
+		GL11.glTranslatef(x, y + 1F, z + 1F);
+		GL11.glScalef(1F, -1F, -1F);
+		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
+		switch (furnace.getFacing()) {
+		case 2:
+			GL11.glRotatef(180, 0F, 1F, 0F);
+			break;
+		case 4:
+			GL11.glRotatef(90, 0F, 1F, 0F);
+			break;
+		case 5:
+			GL11.glRotatef(-90, 0F, 1F, 0F);
+			break;
+		}
+
+		GL11.glTranslatef(0F, -1F, 0F);
 		model.renderAll();
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 	}
 
-	public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
-		renderTileEntityAt((TileChthonianFurnace) par1TileEntity, par2, par4, par6, par8);
+	@Override
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTick) {
+		renderTileEntityAt((TileChthonianFurnace) tile, (float) x, (float) y, (float) z);
 	}
 }

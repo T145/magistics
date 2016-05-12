@@ -48,9 +48,9 @@ public class PluginThaumcraft extends Plugin {
 		RenderingRegistry.registerBlockHandler(new RenderBlockChest(BlockChestHungryTrapped.INSTANCE.getRenderType(), new TileChestHungryTrapped()));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryEnder.class, RenderChestHungryEnder.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new RenderBlockChest(BlockChestHungryEnder.INSTANCE.getRenderType(), new TileChestHungryEnder()));
-		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChthonianFurnace.class, RenderChthonianFurnace.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new RenderBlockChthonianFurnace());
+
 		ResearchCategories.registerCategory(Magistics.MODID, new ResourceLocation("magistics", "textures/gui/thaumonomicon/tab.png"), new ResourceLocation("magistics", "textures/gui/thaumonomicon/bg.png"));
 	}
 }
