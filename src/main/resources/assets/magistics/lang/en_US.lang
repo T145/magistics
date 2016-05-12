@@ -32,6 +32,7 @@ item.dawnstone.name=Dawnstone
 ###
 
 tile.netherrack_furnace.name=Netherrack Furnace
+tile.chthonian_furnace.name=Chthonian Furnace
 
 tile.hungry_chest.name=Hungry Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest

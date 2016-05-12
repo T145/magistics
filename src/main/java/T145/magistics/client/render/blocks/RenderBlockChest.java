@@ -1,4 +1,4 @@
-package T145.magistics.client.lib;
+package T145.magistics.client.render.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -6,28 +6,29 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import T145.magistics.client.lib.InventoryChestRenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class BlockChestRender implements ISimpleBlockRenderingHandler {
+public class RenderBlockChest implements ISimpleBlockRenderingHandler {
 	private int id = 0;
 	private ResourceLocation[] textures;
 	private ResourceLocation overlay;
 	private TileEntity chest;
 
-	public BlockChestRender(int renderID, ResourceLocation[] resources) {
+	public RenderBlockChest(int renderID, ResourceLocation[] resources) {
 		id = renderID;
 		textures = resources;
 	}
 
-	public BlockChestRender(int renderID, ResourceLocation[] resources, ResourceLocation overlay) {
+	public RenderBlockChest(int renderID, ResourceLocation[] resources, ResourceLocation overlay) {
 		this(renderID, resources);
 		this.overlay = overlay;
 	}
 
-	public BlockChestRender(int renderID, TileEntity tile) {
+	public RenderBlockChest(int renderID, TileEntity tile) {
 		id = renderID;
 		chest = tile;
 	}

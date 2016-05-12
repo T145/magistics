@@ -1,6 +1,5 @@
 package T145.magistics.plugins;
 
-import T145.magistics.Magistics;
 import T145.magistics.plugins.PluginHandler.Plugin;
 
 public class PluginThermalExpansion extends Plugin {

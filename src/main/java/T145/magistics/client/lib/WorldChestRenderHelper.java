@@ -1,12 +1,9 @@
 package T145.magistics.client.lib;
 
 import net.minecraft.client.model.ModelChest;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import thaumcraft.client.lib.UtilsFX;
 
 /**
  * @author T145

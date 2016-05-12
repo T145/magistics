@@ -77,11 +77,11 @@ public class TileChestHungryEnder extends TileOwned implements IInventory {
 	public void updateEntity() {
 		prevLidAngle = lidAngle;
 
-		if (numUsingPlayers > 0 && lidAngle == 0.0F) {
+		if (numUsingPlayers > 0 && lidAngle == 0F) {
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		}
 
-		if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F) {
+		if (numUsingPlayers == 0 && lidAngle > 0F || numUsingPlayers > 0 && lidAngle < 1F) {
 			float oldAngle = lidAngle;
 
 			if (numUsingPlayers > 0) {
@@ -90,16 +90,16 @@ public class TileChestHungryEnder extends TileOwned implements IInventory {
 				lidAngle -= 0.1F;
 			}
 
-			if (lidAngle > 1.0F) {
-				lidAngle = 1.0F;
+			if (lidAngle > 1F) {
+				lidAngle = 1F;
 			}
 
 			if (lidAngle < 0.5F && oldAngle >= 0.5F) {
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
-			if (lidAngle < 0.0F) {
-				lidAngle = 0.0F;
+			if (lidAngle < 0F) {
+				lidAngle = 0F;
 			}
 		}
 	}

@@ -20,7 +20,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, guiFactory = "T145.magistics.client.ModGuiFactory")
+@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft", guiFactory = "T145.magistics.client.ModGuiFactory")
 public class Magistics {
 	public static final String MODID = "Magistics", VERSION = "$version";
 
