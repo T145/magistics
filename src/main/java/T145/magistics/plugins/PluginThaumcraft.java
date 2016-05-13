@@ -43,6 +43,14 @@ public class PluginThaumcraft extends Plugin {
 		GameRegistry.registerBlock(BlockChestHungryEnder.INSTANCE, BlockChestHungryEnder.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerTileEntity(TileChthonianFurnace.class, TileChthonianFurnace.class.getSimpleName());
 		GameRegistry.registerBlock(BlockChthonianFurnace.INSTANCE, BlockChthonianFurnace.INSTANCE.getUnlocalizedName());
+
+		ConfigBlocks.blockFluidDeath.setCreativeTab(null);
+		ConfigBlocks.blockFluidPure.setCreativeTab(null);
+		ConfigBlocks.blockFluxGas.setCreativeTab(null);
+		ConfigBlocks.blockFluxGoo.setCreativeTab(null);
+
+		ConfigBlocks.blockTaint.setCreativeTab(null);
+		ConfigBlocks.blockTaintFibres.setCreativeTab(null);
 	}
 
 	@Override
