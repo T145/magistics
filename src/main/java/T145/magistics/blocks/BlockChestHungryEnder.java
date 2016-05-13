@@ -39,7 +39,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
+	public TileEntity createNewTileEntity(World world, int metadata) {
 		return new TileChestHungryEnder();
 	}
 
@@ -61,8 +61,8 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public Item getItemDropped(int meta, Random rand, int fortune) {
-		return Blocks.ender_chest.getItemDropped(meta, rand, fortune);
+	public Item getItemDropped(int metadata, Random rand, int fortune) {
+		return Blocks.ender_chest.getItemDropped(metadata, rand, fortune);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase user, ItemStack is) {
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase user, ItemStack stack) {
 		if (user != null && user instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) user;
 			TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
@@ -93,7 +93,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 			chest.setOwner(player.getCommandSenderName());
 		}
 
-		Blocks.ender_chest.onBlockPlacedBy(world, x, y, z, user, is);
+		Blocks.ender_chest.onBlockPlacedBy(world, x, y, z, user, stack);
 	}
 
 	@Override
@@ -103,10 +103,11 @@ public class BlockChestHungryEnder extends BlockContainer {
 
 			if (chest != null && chest.isOwnedBy(player)) {
 				player.displayGUIChest(chest);
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -133,7 +134,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public int getComparatorInputOverride(World world, int x, int y, int z, int rs) {
+	public int getComparatorInputOverride(World world, int x, int y, int z, int power) {
 		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
 		return (chest != null && chest.getEnderInventory() != null) ? Container.calcRedstoneFromInventory(chest.getEnderInventory()) : 0;
 	}

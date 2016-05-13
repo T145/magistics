@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import thaumcraft.common.blocks.BlockArcaneFurnace;
+import thaumcraft.common.tiles.TileArcaneFurnace;
 import T145.magistics.plugins.PluginHandler.Plugin;
 import T145.magistics.tiles.TileChestHungryEnder;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -31,14 +33,19 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		FMLInterModComms.sendMessage("Waila", "register", getClass().getCanonicalName() + ".callRegistrar");
 	}
 
+	public static void callRegistrar(IWailaRegistrar registrar) {
+		registrar.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
+		registrar.registerBodyProvider(INSTANCE, TileArcaneFurnace.class);
+	}
+
 	@Override
 	public void postInit() {}
 
-	public static boolean compareByClass (Class class1, Class class2) {
+	public static boolean compareByClass(Class class1, Class class2) {
 		return (class1 != null && class2 != null) ? class1.getName().equalsIgnoreCase(class2.getName()) : false;
 	}
 
-	public static boolean compareTileEntityByClass (TileEntity tile, Class tileClass) {
+	public static boolean compareTileEntityByClass(TileEntity tile, Class tileClass) {
 		return compareByClass(tile.getClass(), tileClass);
 	}
 
@@ -57,6 +64,9 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		TileEntity tile = accessor.getTileEntity();
 		Block block = accessor.getBlock();
 		int metadata = accessor.getMetadata();
+
+		if (block instanceof BlockArcaneFurnace) {
+		}
 
 		if (block.hasTileEntity(metadata) && tile.hasWorldObj()) {
 			if (compareTileEntityByClass(tile, TileChestHungryEnder.class)) {
@@ -80,9 +90,5 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		}
 
 		return tag;
-	}
-
-	public static void callRegistrar(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
 	}
 }

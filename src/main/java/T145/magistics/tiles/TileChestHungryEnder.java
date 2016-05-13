@@ -44,8 +44,8 @@ public class TileChestHungryEnder extends TileOwned implements IInventory {
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack is) {
-		getEnderInventory().setInventorySlotContents(slot, is);
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+		getEnderInventory().setInventorySlotContents(slot, stack);
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class TileChestHungryEnder extends TileOwned implements IInventory {
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		return getEnderInventory().isItemValidForSlot(slot, is);
+	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		return getEnderInventory().isItemValidForSlot(slot, stack);
 	}
 }

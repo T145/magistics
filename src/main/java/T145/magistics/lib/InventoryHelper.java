@@ -1,17 +1,63 @@
 package T145.magistics.lib;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class InventoryHelper {
+	private static final Random RAND = new Random();
+
+	public static void emptyInventory(World world, int x, int y, int z) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+
+		if (tile != null && tile instanceof IInventory) {
+			IInventory inv = (IInventory) tile;
+
+			for (int slot = 0; slot < inv.getSizeInventory(); ++slot) {
+				ItemStack stack = inv.getStackInSlot(slot);
+
+				if (stack != null) {
+					float f = RAND.nextFloat() * 0.8F + 0.1F;
+					float f1 = RAND.nextFloat() * 0.8F + 0.1F;
+					float f2 = RAND.nextFloat() * 0.8F + 0.1F;
+
+					while (stack.stackSize > 0) {
+						int j1 = RAND.nextInt(21) + 10;
+
+						if (j1 > stack.stackSize) {
+							j1 = stack.stackSize;
+						}
+
+						stack.stackSize -= j1;
+						EntityItem item = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), new ItemStack(stack.getItem(), j1, stack.getItemDamage()));
+
+						if (stack.hasTagCompound()) {
+							item.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
+						}
+
+						float f3 = 0.05F;
+						item.motionX = (double) ((float) RAND.nextGaussian() * f3);
+						item.motionY = (double) ((float) RAND.nextGaussian() * f3 + 0.2F);
+						item.motionZ = (double) ((float) RAND.nextGaussian() * f3);
+						world.spawnEntityInWorld(item);
+					}
+				}
+			}
+
+			world.func_147453_f(x, y, z, tile.getBlockType());
+		}
+	}
+
 	public static void absorbCollidingItemStackIntoInventory(Entity collidingEntity, IInventory inv, Block addEventTo, int eventID, int eventParameter, World world, int x, int y, int z, boolean playSoundEffect) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 
@@ -21,7 +67,7 @@ public class InventoryHelper {
 
 			if (leftovers == null || leftovers.stackSize != item.getEntityItem().stackSize) {
 				if (playSoundEffect) {
-					world.playSoundAtEntity(collidingEntity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+					world.playSoundAtEntity(collidingEntity, "random.eat", 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1F);
 				}
 
 				world.addBlockEvent(x, y, z, addEventTo, eventID, eventParameter);
