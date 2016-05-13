@@ -2,6 +2,7 @@ package T145.magistics.plugins;
 
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
@@ -9,6 +10,8 @@ import T145.magistics.blocks.BlockChthonianFurnace;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.client.render.blocks.RenderBlockChest;
 import T145.magistics.client.render.blocks.RenderBlockChthonianFurnace;
+import T145.magistics.client.render.blocks.RenderBlockLootCrate;
+import T145.magistics.client.render.blocks.RenderBlockLootUrn;
 import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
@@ -50,6 +53,14 @@ public class PluginThaumcraft extends Plugin {
 		RenderingRegistry.registerBlockHandler(new RenderBlockChest(BlockChestHungryEnder.INSTANCE.getRenderType(), new TileChestHungryEnder()));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChthonianFurnace.class, RenderChthonianFurnace.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new RenderBlockChthonianFurnace());
+
+		int newBlockLootCrateRI = RenderingRegistry.getNextAvailableRenderId();
+		ConfigBlocks.blockLootCrateRI = newBlockLootCrateRI;
+		RenderingRegistry.registerBlockHandler(new RenderBlockLootCrate(newBlockLootCrateRI));
+
+		int newBlockLootUrnRI = RenderingRegistry.getNextAvailableRenderId();
+		ConfigBlocks.blockLootUrnRI = newBlockLootUrnRI;
+		RenderingRegistry.registerBlockHandler(new RenderBlockLootUrn(newBlockLootUrnRI));
 
 		ResearchCategories.registerCategory(Magistics.MODID, new ResourceLocation("magistics", "textures/gui/thaumonomicon/tab.png"), new ResourceLocation("magistics", "textures/gui/thaumonomicon/bg.png"));
 	}

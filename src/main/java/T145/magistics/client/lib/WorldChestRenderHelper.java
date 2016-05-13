@@ -47,15 +47,4 @@ public class WorldChestRenderHelper {
 		GL11.glPopMatrix();
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 	}
-
-	/*private static void renderChest(int facing, float x, float y, float z, float prevLidAngle, float lidAngle, float partialTick) {
-		preRenderChest(x, y, z);
-		rotateChest(facing);
-		postRenderChest(prevLidAngle, lidAngle, partialTick);
-	}
-
-	public static void renderChest(ResourceLocation texture, int facing, float x, float y, float z, float prevLidAngle, float lidAngle, float partialTick) {
-		UtilsFX.bindTexture(texture);
-		renderChest(facing, x, y, z, prevLidAngle, lidAngle, partialTick);
-	}*/
 }
