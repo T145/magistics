@@ -1,16 +1,13 @@
 package T145.magistics.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockEnderChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -22,20 +19,14 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockChestHungryEnder extends BlockContainer {
+public class BlockChestHungryEnder extends BlockEnderChest {
 	public static final Block INSTANCE = new BlockChestHungryEnder();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
 	public BlockChestHungryEnder() {
-		super(Material.rock);
 		setBlockName("hungry_ender_chest");
-		setBlockBounds((float) Blocks.ender_chest.getBlockBoundsMinX(), (float) Blocks.ender_chest.getBlockBoundsMinY(), (float) Blocks.ender_chest.getBlockBoundsMinZ(), (float) Blocks.ender_chest.getBlockBoundsMaxX(), (float) Blocks.ender_chest.getBlockBoundsMaxY(), (float) Blocks.ender_chest.getBlockBoundsMaxZ());
 		setBlockTextureName("magistics:chest_hungry/ender");
 		setCreativeTab(Magistics.tabMagistics);
-		setHardness(22.5F);
-		setLightLevel(0.5F);
-		setResistance(1000F);
-		setStepSound(soundTypePiston);
 	}
 
 	@Override
@@ -44,30 +35,9 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
-		return Blocks.ender_chest.isOpaqueCube();
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean renderAsNormalBlock() {
-		return Blocks.ender_chest.renderAsNormalBlock();
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
 		return renderID;
-	}
-
-	@Override
-	public Item getItemDropped(int metadata, Random rand, int fortune) {
-		return Blocks.ender_chest.getItemDropped(metadata, rand, fortune);
-	}
-
-	@Override
-	public int quantityDropped(Random rand) {
-		return Blocks.ender_chest.quantityDropped(rand);
 	}
 
 	@Override
@@ -93,7 +63,7 @@ public class BlockChestHungryEnder extends BlockContainer {
 			chest.setOwner(player.getCommandSenderName());
 		}
 
-		Blocks.ender_chest.onBlockPlacedBy(world, x, y, z, user, stack);
+		super.onBlockPlacedBy(world, x, y, z, user, stack);
 	}
 
 	@Override
@@ -123,12 +93,6 @@ public class BlockChestHungryEnder extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-		Blocks.ender_chest.randomDisplayTick(world, x, y, z, rand);
-	}
-
-	@Override
 	public boolean hasComparatorInputOverride() {
 		return true;
 	}
@@ -136,6 +100,12 @@ public class BlockChestHungryEnder extends BlockContainer {
 	@Override
 	public int getComparatorInputOverride(World world, int x, int y, int z, int power) {
 		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
-		return (chest != null && chest.getEnderInventory() != null) ? Container.calcRedstoneFromInventory(chest.getEnderInventory()) : 0;
+		IInventory inventory = chest.getEnderInventory();
+
+		if (inventory != null) {
+			return Container.calcRedstoneFromInventory(inventory);
+		} else {
+			return 0;
+		}
 	}
 }
