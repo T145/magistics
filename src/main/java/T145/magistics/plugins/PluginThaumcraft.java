@@ -12,7 +12,7 @@ import T145.magistics.client.render.blocks.RenderBlockLootUrn;
 import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
 import T145.magistics.research.ResearchHandler;
 import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
@@ -24,7 +24,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PluginThaumcraft extends Plugin {
 	public PluginThaumcraft() {
-		super("Thaumcraft");
+		super("Thaumcraft", true);
 	}
 
 	@Override

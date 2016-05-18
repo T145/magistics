@@ -1,11 +1,11 @@
 package T145.magistics.plugins;
 
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
+
 
 public class PluginProjectE extends Plugin {
-
-	public PluginProjectE() {
-		super("ProjectE");
+	public PluginProjectE(boolean enable) {
+		super("ProjectE", enable);
 	}
 
 	@Override

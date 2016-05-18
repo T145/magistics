@@ -1,11 +1,11 @@
 package T145.magistics.plugins;
 
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
+
 
 public class PluginRailcraft extends Plugin {
-
-	public PluginRailcraft() {
-		super("Railcraft");
+	public PluginRailcraft(boolean enable) {
+		super("Railcraft", enable);
 	}
 
 	@Override

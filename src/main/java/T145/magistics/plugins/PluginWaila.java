@@ -14,15 +14,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockArcaneFurnace;
 import thaumcraft.common.tiles.TileArcaneFurnace;
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
 import T145.magistics.tiles.TileChestHungryEnder;
 import cpw.mods.fml.common.event.FMLInterModComms;
 
 public class PluginWaila extends Plugin implements IWailaDataProvider {
-	private static final PluginWaila INSTANCE = new PluginWaila();
+	private static final PluginWaila INSTANCE = new PluginWaila(active);
 
-	public PluginWaila() {
-		super("Waila");
+	public PluginWaila(boolean enable) {
+		super("Waila", enable);
 	}
 
 	@Override

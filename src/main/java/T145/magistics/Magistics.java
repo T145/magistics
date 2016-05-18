@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
-import T145.magistics.plugins.PluginHandler;
+import T145.magistics.plugins.core.PluginHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;

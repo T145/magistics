@@ -1,10 +1,11 @@
 package T145.magistics.plugins;
 
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
+
 
 public class PluginEnderStorage extends Plugin {
-	public PluginEnderStorage() {
-		super("EnderStorage");
+	public PluginEnderStorage(boolean enable) {
+		super("EnderStorage", enable);
 	}
 
 	@Override

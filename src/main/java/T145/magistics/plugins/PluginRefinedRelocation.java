@@ -1,11 +1,11 @@
 package T145.magistics.plugins;
 
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
+
 
 public class PluginRefinedRelocation extends Plugin {
-
-	public PluginRefinedRelocation() {
-		super("RefinedRelocation");
+	public PluginRefinedRelocation(boolean enable) {
+		super("RefinedRelocation", enable);
 	}
 
 	@Override

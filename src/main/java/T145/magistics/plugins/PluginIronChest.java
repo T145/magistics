@@ -1,11 +1,11 @@
 package T145.magistics.plugins;
 
-import T145.magistics.plugins.PluginHandler.Plugin;
+import T145.magistics.plugins.core.Plugin;
+
 
 public class PluginIronChest extends Plugin {
-
-	public PluginIronChest() {
-		super("IronChest");
+	public PluginIronChest(boolean enable) {
+		super("IronChest", enable);
 	}
 
 	@Override
