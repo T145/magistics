@@ -51,6 +51,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -73,11 +74,10 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 
 			if (chest != null && chest.isOwnedBy(player)) {
 				player.displayGUIChest(chest);
-				return true;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
