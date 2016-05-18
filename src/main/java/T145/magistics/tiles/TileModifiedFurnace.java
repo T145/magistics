@@ -174,7 +174,7 @@ public abstract class TileModifiedFurnace extends TileEntityFurnace {
 		}
 	}
 
-	public abstract void updateFurnaceBlockState(boolean b, World worldObj, int xCoord, int yCoord, int zCoord);
+	public abstract void updateFurnaceBlockState(boolean active, World world, int x, int y, int z);
 
 	private boolean canSmelt() {
 		if (furnaceItemStacks[0] == null) {

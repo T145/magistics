@@ -13,10 +13,6 @@ import T145.magistics.Magistics;
 
 public class ResearchHandler {
 	public static void registerResearch() {
-		registerResearchPages();
-	}
-
-	private static void registerResearchPages() {
 		ResourceLocation tab = new ResourceLocation("magistics", "textures/gui/thaumonomicon/tab.png");
 		ResourceLocation background = new ResourceLocation("magistics", "textures/gui/thaumonomicon/bg.png");
 		ResearchCategories.registerCategory(Magistics.MODID, tab, background);
