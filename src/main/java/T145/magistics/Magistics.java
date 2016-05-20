@@ -47,9 +47,8 @@ public class Magistics {
 		metadata.url = "https://github.com/T145/magistics";
 		metadata.updateUrl = "https://github.com/T145/magistics/releases";
 		metadata.authorList.add("T145");
-		metadata.credits = "Special thanks to the fans who kept believing!";
+		metadata.credits = "Special thanks to everyone who kept believing!";
 		metadata.logoFile = "logo.png";
-		logger.info("Loaded metadata!");
 	}
 
 	@EventHandler

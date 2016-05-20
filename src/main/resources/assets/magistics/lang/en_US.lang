@@ -33,36 +33,11 @@ item.dawnstone.name=Dawnstone
 
 tile.netherrack_furnace.name=Netherrack Furnace
 tile.chthonian_furnace.name=Chthonian Furnace
-
-tile.hungry_chest.name=Hungry Chest
-tile.trapped_hungry_chest.name=Trapped Hungry Chest
-tile.sorting_hungry_chest.name=Hungry Sorting Chest
-
-tile.hungry_ender_chest.name=Hungry Ender Chest
-
-tile.ee3:hungry_alchemical_chest.name=Hungry Alchemical Chest
-tile.sortingAlchemicalChest.hungry.name=Hungry Sorting Alchemical Chest
-
-tile.hungry_metal_chest.iron.name=Hungry Iron Chest
-tile.hungry_metal_chest.gold.name=Hungry Gold Chest
-tile.hungry_metal_chest.diamond.name=Hungry Diamond Chest
-tile.hungry_metal_chest.copper.name=Hungry Copper Chest
-tile.hungry_metal_chest.silver.name=Hungry Silver Chest
-tile.hungry_metal_chest.crystal.name=Hungry Crystal Chest
-tile.hungry_metal_chest.obsidian.name=Hungry Obsidian Chest
-tile.hungry_metal_chest.dirt.name=Hungry Dirt Chest
-
-tile.sorting_hungry_metal_chest.iron.name=Hungry Sorting Iron Chest
-tile.sorting_hungry_metal_chest.gold.name=Hungry Sorting Gold Chest
-tile.sorting_hungry_metal_chest.diamond.name=Hungry Sorting Diamond Chest
-tile.sorting_hungry_metal_chest.copper.name=Hungry Sorting Copper Chest
-tile.sorting_hungry_metal_chest.silver.name=Hungry Sorting Silver Chest
-tile.sorting_hungry_metal_chest.crystal.name=Hungry Sorting Crystal Chest
-tile.sorting_hungry_metal_chest.obsidian.name=Hungry Sorting Obsidian Chest
-tile.sorting_hungry_metal_chest.dirt.name=Hungry Sorting Dirt Chest
-
+tile.arcane_redstone_lamp.name=Arcane Redstone Lamp
 tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
-tile.infuser.0.name=Infuser
-tile.infuser.1.name=Dark Infuser
-tile.think_tank.name=Think Tank
+
+tile.hungry_chest.name=Hungry Chest
+tile.sorting_hungry_chest.name=Hungry Sorting Chest
+tile.trapped_hungry_chest.name=Trapped Hungry Chest
+tile.hungry_ender_chest.name=Hungry Ender Chest

@@ -1,6 +1,7 @@
 package T145.magistics.plugins;
 
 import thaumcraft.common.config.ConfigBlocks;
+import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockChthonianFurnace;
@@ -14,6 +15,7 @@ import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
 import T145.magistics.plugins.core.Plugin;
 import T145.magistics.research.ResearchHandler;
+import T145.magistics.tiles.TileArcaneLampRedstone;
 import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileChthonianFurnace;
@@ -48,6 +50,10 @@ public class PluginThaumcraft extends Plugin {
 		GameRegistry.registerBlock(BlockChestHungryTrapped.INSTANCE, BlockChestHungryTrapped.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerTileEntity(TileChestHungryEnder.class, TileChestHungryEnder.class.getSimpleName());
 		GameRegistry.registerBlock(BlockChestHungryEnder.INSTANCE, BlockChestHungryEnder.INSTANCE.getUnlocalizedName());
+
+		GameRegistry.registerTileEntity(TileArcaneLampRedstone.class, TileArcaneLampRedstone.class.getSimpleName());
+		GameRegistry.registerBlock(BlockArcaneLampRedstone.ACTIVE, BlockArcaneLampRedstone.ACTIVE.getUnlocalizedName() + "_on");
+		GameRegistry.registerBlock(BlockArcaneLampRedstone.INACTIVE, BlockArcaneLampRedstone.INACTIVE.getUnlocalizedName() + "_off");
 	}
 
 	@Override
