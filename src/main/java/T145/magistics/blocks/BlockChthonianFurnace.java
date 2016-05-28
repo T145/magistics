@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileChthonianFurnace;
+import T145.magistics.tiles.TileRotatable;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -52,9 +53,9 @@ public class BlockChthonianFurnace extends BlockContainer {
 		int facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if (tile != null && tile instanceof TileChthonianFurnace) {
-			TileChthonianFurnace furnace = (TileChthonianFurnace) tile;
-			furnace.setFacing(facing);
+		if (tile != null && tile instanceof TileRotatable) {
+			TileRotatable rotatable = (TileRotatable) tile;
+			rotatable.setFacing(facing);
 		}
 	}
 }

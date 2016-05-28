@@ -14,6 +14,8 @@ import thaumcraft.common.lib.utils.EntityUtils;
 import T145.magistics.Magistics;
 
 public class ItemCruelMask extends ItemArmor {
+	//public static final ItemArmor INSTANCE = new ItemCruelMask();
+
 	public ItemCruelMask(ArmorMaterial material, int renderIndex, int armorType) {
 		super(material, renderIndex, armorType);
 		setCreativeTab(Magistics.tabMagistics);

@@ -17,16 +17,18 @@ public class RenderBlockLootCrate extends BlockRenderer implements ISimpleBlockR
 		id = renderID;
 	}
 
-	private boolean renderBlock(Block block, int x, int y, int z, RenderBlocks renderer, boolean inWorld) {
-		block.setBlockBounds(W1, 0F, W1, W15, W14, W15);
-		renderer.setRenderBoundsFromBlock(block);
-
+	private void drawFaces(Block block, int metadata, int x, int y, int z, RenderBlocks renderer, boolean inWorld) {
 		if (inWorld) {
 			renderer.renderStandardBlock(block, x, y, z);
 		} else {
-			drawFaces(renderer, block, ConfigBlocks.blockLootCrate.getIcon(0, 0), false);
+			drawFaces(renderer, block, block.getIcon(2, metadata), block.getIcon(0, metadata), block.getIcon(2, metadata), block.getIcon(2, metadata), block.getIcon(2, metadata), block.getIcon(2, metadata), false);
 		}
+	}
 
+	private boolean renderBlock(Block block, int metadata, int x, int y, int z, RenderBlocks renderer, boolean inWorld) {
+		block.setBlockBounds(W1, 0F, W1, W15, W14, W15);
+		renderer.setRenderBoundsFromBlock(block);
+		drawFaces(ConfigBlocks.blockLootCrate, metadata, x, y, z, renderer, inWorld);
 		renderer.clearOverrideBlockTexture();
 		block.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
 		renderer.setRenderBoundsFromBlock(block);
@@ -35,12 +37,12 @@ public class RenderBlockLootCrate extends BlockRenderer implements ISimpleBlockR
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		renderBlock(block, 0, 0, 0, renderer, false);
+		renderBlock(block, metadata, 0, 0, 0, renderer, false);
 	}
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-		return renderBlock(block, x, y, z, renderer, true);
+		return renderBlock(block, world.getBlockMetadata(x, y, z), x, y, z, renderer, true);
 	}
 
 	@Override
