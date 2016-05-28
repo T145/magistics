@@ -31,6 +31,9 @@ item.dawnstone.name=Dawnstone
 # Blocks
 ###
 
+tile.infuser.name=Infuser
+tile.infuser.dark.name=Dark Infuser
+
 tile.netherrack_furnace.name=Netherrack Furnace
 tile.chthonian_furnace.name=Chthonian Furnace
 tile.arcane_redstone_lamp.name=Arcane Redstone Lamp
