@@ -13,7 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockArcaneFurnace;
-import thaumcraft.common.tiles.TileArcaneFurnace;
+import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.items.ItemDummy;
 import T145.magistics.plugins.core.Plugin;
 import T145.magistics.tiles.TileChestHungryEnder;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -35,7 +36,10 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 
 	public static void callRegistrar(IWailaRegistrar registrar) {
 		registrar.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
-		registrar.registerBodyProvider(INSTANCE, TileArcaneFurnace.class);
+		registrar.registerTailProvider(INSTANCE, BlockArcaneFurnace.class);
+
+		registrar.registerStackProvider(INSTANCE, BlockArcaneFurnace.class);
+		registrar.registerStackProvider(INSTANCE, BlockInfuser.class);
 	}
 
 	@Override
@@ -51,6 +55,18 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		TileEntity tile = accessor.getTileEntity();
+		Block block = accessor.getBlock();
+		int metadata = accessor.getMetadata();
+
+		if (block instanceof BlockArcaneFurnace) {
+			return new ItemStack(ItemDummy.INFERNAL_FURNACE, 1);
+		}
+
+		if (block instanceof BlockInfuser) {
+			return new ItemStack(BlockInfuser.INSTANCE, 1, metadata);
+		}
+
 		return accessor.getStack();
 	}
 
@@ -64,9 +80,6 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		TileEntity tile = accessor.getTileEntity();
 		Block block = accessor.getBlock();
 		int metadata = accessor.getMetadata();
-
-		if (block instanceof BlockArcaneFurnace) {
-		}
 
 		if (block.hasTileEntity(metadata) && tile.hasWorldObj()) {
 			if (compareTileEntityByClass(tile, TileChestHungryEnder.class)) {

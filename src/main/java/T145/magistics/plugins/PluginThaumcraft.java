@@ -1,5 +1,6 @@
 package T145.magistics.plugins;
 
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigBlocks;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockChestHungryEnder;
@@ -20,6 +21,7 @@ import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
 import T145.magistics.client.render.tiles.RenderInfuser;
+import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.plugins.core.Plugin;
 import T145.magistics.research.ResearchHandler;
@@ -31,6 +33,7 @@ import T145.magistics.tiles.TileEverfullUrn;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import T145.magistics.tiles.TileNetherFurnace;
+import T145.magistics.util.ItemRegisterUtil;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -74,6 +77,7 @@ public class PluginThaumcraft extends Plugin {
 		GameRegistry.registerBlock(BlockInfuser.INSTANCE, BlockInfuserItem.class, BlockInfuser.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
+		ItemRegisterUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 
 	@Override
