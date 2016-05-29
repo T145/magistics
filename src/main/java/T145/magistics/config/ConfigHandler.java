@@ -30,6 +30,7 @@ public class ConfigHandler {
 	public static boolean noFluidsInTCTabs;
 	public static boolean noTaintInTCTabs;
 	public static boolean sortTCTabsContent;
+	public static boolean fixTCBlockNames;
 
 	public Configuration getConfig() {
 		return config;
@@ -56,6 +57,7 @@ public class ConfigHandler {
 		noFluidsInTCTabs = addProperty(CATEGORY_OVERRIDES, "noFluidsInTCTabs", true, "Disables fluid blocks in the TC tab (or tabs if tab content sorting is enabled).");
 		noTaintInTCTabs = addProperty(CATEGORY_OVERRIDES, "noTaintInTCTabs", true, "Disables taint in the TC tab (or tabs if tab content sorting is enabled.");
 		sortTCTabsContent = addProperty(CATEGORY_OVERRIDES, "sortTCTabsContent", true, "Sorts the TC tab into separate tabs that correspond to the Thaumonomicon categories.");
+		fixTCBlockNames = addProperty(CATEGORY_OVERRIDES, "fixTCBlockNames", true, "Makes some TC block names like vanilla ones; e.g. Thaumium Block becomes Block of Thaumium");
 	}
 
 	private void saveConfig() {

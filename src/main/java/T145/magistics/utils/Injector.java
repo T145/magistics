@@ -1,4 +1,4 @@
-package T145.magistics.util;
+package T145.magistics.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

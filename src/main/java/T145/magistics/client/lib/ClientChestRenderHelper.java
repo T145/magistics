@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL12;
  * 
  * A simple library designed to assist in normal chest rendering in an inventory.
  */
-public class InventoryChestRenderHelper {
+public class ClientChestRenderHelper {
 	/**
 	 * Renders a chest using a given item renderer for inventory rendering
 	 * 

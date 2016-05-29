@@ -41,6 +41,8 @@ tile.chthonian_furnace.name=Chthonian Furnace
 tile.arcane_redstone_lamp.name=Arcane Redstone Lamp
 tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
+tile.entropic_dispenser.name=Entropic Dispenser
+tile.voidstone.name=Voidstone
 
 tile.hungry_chest.name=Hungry Chest
 tile.sorting_hungry_chest.name=Hungry Sorting Chest

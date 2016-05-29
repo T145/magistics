@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
-import T145.magistics.client.lib.InventoryChestRenderHelper;
+import T145.magistics.client.lib.ClientChestRenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -44,14 +44,14 @@ public class RenderBlockChest implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
 		if (hasTileEntity()) {
-			InventoryChestRenderHelper.renderChest(chest);
+			ClientChestRenderHelper.renderChest(chest);
 		} else {
 			Minecraft.getMinecraft().getTextureManager().bindTexture(textures[meta]);
-			InventoryChestRenderHelper.renderChest(false);
+			ClientChestRenderHelper.renderChest(false);
 
 			if (hasOverlay()) {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(overlay);
-				InventoryChestRenderHelper.renderChest(true);
+				ClientChestRenderHelper.renderChest(true);
 			}
 		}
 	}
