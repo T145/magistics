@@ -18,12 +18,13 @@ tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry 
 # Items
 ###
 
-item.shard_fragment.aer.name=Aer Shard Fragment
-item.shard_fragment.aqua.name=Aqua Shard Fragment
-item.shard_fragment.ignis.name=Ignis Shard Fragment
-item.shard_fragment.ordo.name=Ordo Shard Fragment
-item.shard_fragment.perdito.name=Perdito Shard Fragment
-item.shard_fragment.terra.name=Terra Shard Fragment
+item.shard_fragment.0.name=Aer Shard Fragment
+item.shard_fragment.1.name=Ignis Shard Fragment
+item.shard_fragment.2.name=Aqua Shard Fragment
+item.shard_fragment.3.name=Terra Shard Fragment
+item.shard_fragment.4.name=Ordo Shard Fragment
+item.shard_fragment.5.name=Perdito Shard Fragment
+item.shard_fragment.6.name=Balanced Shard Fragment
 
 item.dawnstone.name=Dawnstone
 

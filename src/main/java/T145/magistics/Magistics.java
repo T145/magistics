@@ -1,11 +1,13 @@
 package T145.magistics;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
+import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.network.CommonProxy;
 import T145.magistics.plugins.core.PluginHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -62,6 +64,7 @@ public class Magistics {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(configHandler);
+		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		PluginHandler.init(event);
 	}
