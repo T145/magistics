@@ -12,7 +12,7 @@ tc.research_page.HUNGRYENDERCHEST.1=After discovering the intricacies of the hun
 
 tc.research_name.SHARDFRAGMENTS=Notes on Infused Ore
 tc.research_text.SHARDFRAGMENTS =Fragile crystals
-tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more fragile that you originally thought. After trying to mine Infused ore to acquire them, you found that the crystals in the ore could not withstand the force of being struck with a regular pickaxe, and they shattered into much smaller fragments instead. These fragments are not potent enough to use in place of full crystal shards,  but they do seem to have many uses nontheless.<BR>Shard fragments can be assembled into complete shards with an infuser.It may also be possible to aquire complete shards with a better pickaxe.<BR>§4The arcane workbench recipe is temporary and will be replaced with an infuser recipe in the second release.§r
+tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more fragile that you originally thought. After trying to mine Infused ore to acquire them, you found that the crystals in the ore could not withstand the force of being struck with a regular pickaxe, and they shattered into much smaller fragments instead. These fragments are not potent enough to use in place of full crystal shards,  but they do seem to have many uses nontheless.<BR>Shard fragments can be assembled into complete shards with an infuser.It may also be possible to aquire complete shards with a better pickaxe.<BR>§4This recipe is temporary and will be replaced with an infuser recipe in the second full release.§r
 
 tc.research_name.NETHERRACKFURNACE=Netherack Furnace
 tc.research_text.NETHERRACKFURNACE=Hotter Topic
