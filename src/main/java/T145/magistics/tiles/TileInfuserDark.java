@@ -6,4 +6,9 @@ public class TileInfuserDark extends TileInfuser {
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getDarkCookProgressScaled(int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

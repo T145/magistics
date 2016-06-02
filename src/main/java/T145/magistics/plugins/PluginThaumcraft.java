@@ -24,6 +24,7 @@ import T145.magistics.client.render.tiles.RenderChthonianFurnace;
 import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardFragment;
+import T145.magistics.items.relics.ItemDawnstone;
 import T145.magistics.plugins.core.Plugin;
 import T145.magistics.research.ResearchHandler;
 import T145.magistics.tiles.TileArcaneLampRedstone;
@@ -80,6 +81,7 @@ public class PluginThaumcraft extends Plugin {
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
+		GameRegistry.registerItem(ItemDawnstone.INSTANCE, ItemDawnstone.INSTANCE.getUnlocalizedName());
 		RegistrationUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 

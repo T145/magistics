@@ -82,9 +82,9 @@ public class RenderInfuser extends TileEntitySpecialRenderer {
 		float offset = 0.5F - (rand.nextFloat() - rand.nextFloat()) * 0.35F;
 		float mod = 0.9475F;
 
-		drawDisk(x, y + mod, z, infuser.getFacing(), infuser.burnTime > 0, infuser.getBlockMetadata() > 0);
+		drawDisk(x, y + mod, z, infuser.getFacing(), infuser.infuserBurnTime > 0, infuser.getBlockMetadata() > 0);
 
-		if (infuser.burnTime > 0F && rand.nextFloat() < infuser.burnTime) {
+		if (infuser.infuserBurnTime > 0F && rand.nextFloat() < infuser.infuserBurnTime) {
 			float xx = infuser.xCoord + offset;
 			float yy = infuser.yCoord + mod;
 			float zz = infuser.zCoord + offset;

@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -191,5 +192,14 @@ public class BlockInfuser extends BlockContainer {
 			TileRotatable rotatable = (TileRotatable) tile;
 			rotatable.setFacing(facing);
 		}
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote && !player.isSneaking()) {
+			player.openGui(Magistics.instance, world.getBlockMetadata(x, y, z), world, x, y, z);
+		}
+
+		return true;
 	}
 }
