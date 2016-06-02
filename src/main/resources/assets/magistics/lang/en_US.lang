@@ -10,6 +10,18 @@ tc.research_name.HUNGRYENDERCHEST=Hungry Ender Chest
 tc.research_text.HUNGRYENDERCHEST=It's starving!
 tc.research_page.HUNGRYENDERCHEST.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
 
+tc.research_name.SHARDFRAGMENTS=Notes on Infused Ore
+tc.research_text.SHARDFRAGMENTS =Fragile crystals
+tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more fragile that you originally thought. After trying to mine Infused ore to acquire them, you found that the crystals in the ore could not withstand the force of being struck with a regular pickaxe, and they shattered into much smaller fragments instead. These fragments are not potent enough to use in place of full crystal shards,  but they do seem to have many uses nontheless.<BR>Shard fragments can be assembled into complete shards with an infuser.It may also be possible to aquire complete shards with a better pickaxe.<BR>§4The arcane workbench recipe is temporary and will be replaced with an infuser recipe in the second release.§r
+
+tc.research_name.NETHERRACKFURNACE=Netherack Furnace
+tc.research_text.NETHERRACKFURNACE=Hotter Topic
+tc.research_page.NETHERRACKFURNACE.1=Coating a furnace with netherrack plates allows it to retain heat better, letting it double its fuel efficiency.
+
+tc.research_name.TRAPPEDHUNGRYCHEST=Trapped Hungry Chest
+tc.research_text.TRAPPEDHUNGRYCHEST =Knowing when it eats
+tc.research_page.TRAPPEDHUNGRYCHEST.1=Adding a mechanism to the hungry chest to make it output a redstone signal when it opens is relatively simple, but due to the chests animated nature, some reinforcement is needed to keep the mechanism in place.
+
 tc.research_name.HUNGRYIRONCHEST=Hungry Iron Chests
 tc.research_text.HUNGRYIRONCHEST=Who needs lunchboxes?
 tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry Chest, you have successfully devised a way to integrate its mystical properties into other similar chest types!
