@@ -9,6 +9,8 @@ import net.minecraft.world.World;
 import T145.magistics.Magistics;
 
 public class ItemDawnstone extends Item {
+	public static final Item INSTANCE = new ItemDawnstone();
+
 	private static final long globalTime = 24000L;
 
 	public ItemDawnstone() {
@@ -25,6 +27,10 @@ public class ItemDawnstone extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!player.capabilities.isCreativeMode) {
+			--stack.stackSize;
+		}
+
 		if (world.getWorldTime() % globalTime >= 6000L) {
 			long time = world.getWorldTime() + globalTime;
 			long timeDawn = time - (time % globalTime);
@@ -33,10 +39,9 @@ public class ItemDawnstone extends Item {
 				MinecraftServer.getServer().worldServers[j].setWorldTime(timeDawn);
 			}
 
-			--stack.stackSize;
 			world.playSoundAtEntity(player, "thaumcraft.recover", 1F, 1F);
 		}
 
-		return super.onItemRightClick(stack, world, player);
+		return stack;
 	}
 }

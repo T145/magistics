@@ -25,8 +25,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockNetherFurnace extends BlockContainer {
-	public static final Block ACTIVE = new BlockNetherFurnace(true).setLightLevel(0.875F);
-	public static final Block INACTIVE = new BlockNetherFurnace(false).setCreativeTab(Magistics.tabMagistics);
+	public static final Block ACTIVE = new BlockNetherFurnace(true);
+	public static final Block INACTIVE = new BlockNetherFurnace(false);
 
 	private final boolean active;
 	private static boolean keepInventory;
@@ -41,6 +41,12 @@ public class BlockNetherFurnace extends BlockContainer {
 		setBlockName("netherrack_furnace");
 		setHardness(3.5F);
 		setStepSound(soundTypePiston);
+
+		if (active) {
+			setLightLevel(0.875F);
+		} else {
+			setCreativeTab(Magistics.tabMagistics);
+		}
 	}
 
 	@Override

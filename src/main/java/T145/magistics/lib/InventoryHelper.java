@@ -17,6 +17,18 @@ import thaumcraft.common.lib.utils.InventoryUtils;
 public class InventoryHelper {
 	private static final Random RAND = new Random();
 
+	public static void removeItem(IInventory inv, ItemStack target) {
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			if (inv.getStackInSlot(i) != null) {
+				ItemStack j = inv.getStackInSlot(i);
+
+				if (j.getItem() != null && j.getItem() == target.getItem()) {
+					inv.setInventorySlotContents(i, null);
+				}
+			}
+		}
+	}
+
 	public static void emptyInventory(World world, int x, int y, int z) {
 		TileEntity tile = world.getTileEntity(x, y, z);
 
