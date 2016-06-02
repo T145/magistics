@@ -8,7 +8,7 @@ tc.research_category.Magistics=Magistics
 
 tc.research_name.HUNGRYENDERCHEST=Hungry Ender Chest
 tc.research_text.HUNGRYENDERCHEST=It's starving!
-tc.research_page.HUNGRYENDERCHEST.1=After discovering the intricacies of the hungry chest, you've applied your craft to a more complex chest, the ender chest!
+tc.research_page.HUNGRYENDERCHEST.1=Applying the concept of the Hungry Chest to the construction of an Ender Chest has yielded some interesting results. The Hungry Ender Chest will consume items that touch it, much the same as any hungry chest, however it will only insert them into the ender chest space of the player that placed the chest. Even if the Hungry Ender Chest is accessed by another player, it will only place items dropped on it into its owners ender chest.<BR>The Hungry Ender Chest also seems to react to the presence of item transfer devices like golems and pipes unlike its non-hungry counterpart. It seems to behave the same way with devices as it does with dropped items, in that such methods will only interact with the owners ender chest.
 
 tc.research_name.SHARDFRAGMENTS=Notes on Infused Ore
 tc.research_text.SHARDFRAGMENTS =Fragile crystals
@@ -16,7 +16,7 @@ tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more frag
 
 tc.research_name.NETHERRACKFURNACE=Netherack Furnace
 tc.research_text.NETHERRACKFURNACE=Hotter Topic
-tc.research_page.NETHERRACKFURNACE.1=Coating a furnace with netherrack plates allows it to retain heat better, letting it double its fuel efficiency.
+tc.research_page.NETHERRACKFURNACE.1=Reinforcing a furnace with netherrack plates allows it to retain heat better, allowing it to run with double th fuel efficiency of a normal furnace.
 
 tc.research_name.TRAPPEDHUNGRYCHEST=Trapped Hungry Chest
 tc.research_text.TRAPPEDHUNGRYCHEST =Knowing when it eats
