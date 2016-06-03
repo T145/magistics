@@ -23,8 +23,12 @@ tc.research_text.TRAPPEDHUNGRYCHEST=Knowing when it eats
 tc.research_page.TRAPPEDHUNGRYCHEST.1=Adding a mechanism to the hungry chest to make it output a redstone signal when it opens is relatively simple, but due to the chests animated nature, some reinforcement is needed to keep the mechanism in place.
 
 tc.research_name.HUNGRYIRONCHEST=Hungry Iron Chests
-tc.research_text.HUNGRYIRONCHEST=Who needs lunchboxes?
-tc.research_page.HUNGRYIRONCHEST.1=After learning the intricacies of the Hungry Chest, you have successfully devised a way to integrate its mystical properties into other similar chest types!
+tc.research_text.HUNGRYIRONCHEST=They're all hungry...
+tc.research_page.HUNGRYIRONCHEST.1=After going through the process of building the Trapped Hungry Chest and the Hungry Ender Chest and §5closely studying both§r, you believe you have discovered the secret of how hungry chests are animated into the semi-sentient item eating devices that they are. With careful engineering and a few modifications for structural purposes, you have found a way to reconstruct almost any chest into a hungry variant.
+
+tc.research_name.NETHERFORGE=Nether Forge
+tc.research_text.NETHERFORGE=Bigger Better Faster Hotter
+tc.research_page.NETHERFORGE.1=Further investigation into the properties of the Netherrack furnace reveal that it can be further modified. By enlarging its smelting chamber, installing internal tubing and valves for essentia, and reinforcing the whole construct with thaumium, the Netherrack Furnace can be made to accept and output four stacks of items at once instead of one.<BR>The Nether Forge also has some essentia based efficiency boosting capabilities. If any essentia jars containing potentia are nearby, the Nether Forge will siphon small quantities in order to purify and energize its internal flame. This enhanced flame gives it a chance to double metallic ore outputs. It also allows the forge to more thoroughly and evenly roast various meats and fish, occasionally resulting in delectable extra nuggets of goodness.
 
 ####
 # Items
