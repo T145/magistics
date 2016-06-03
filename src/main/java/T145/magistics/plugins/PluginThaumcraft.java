@@ -1,7 +1,12 @@
 package T145.magistics.plugins;
 
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import thaumcraft.common.Thaumcraft;
+import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.entities.monster.EntityPech;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
@@ -47,12 +52,7 @@ public class PluginThaumcraft extends Plugin {
 
 	@Override
 	public void preInit() {
-		/*ConfigBlocks.blockFluidDeath.setCreativeTab(null);
-		ConfigBlocks.blockFluidPure.setCreativeTab(null);
-		ConfigBlocks.blockFluxGas.setCreativeTab(null);
-		ConfigBlocks.blockFluxGoo.setCreativeTab(null);
-		ConfigBlocks.blockTaint.setCreativeTab(null);
-		ConfigBlocks.blockTaintFibres.setCreativeTab(null);*/
+		BiomeGenBase.getBiome(Config.biomeEerieID).getSpawnableList(EnumCreatureType.monster).add(new SpawnListEntry(EntityPech.class, 3, 1, 1));
 	}
 
 	@Override

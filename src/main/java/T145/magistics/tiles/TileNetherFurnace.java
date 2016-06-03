@@ -14,7 +14,7 @@ public class TileNetherFurnace extends TileModifiedFurnace {
 	}
 
 	private void speedUpSmelting() {
-		if ((furnaceCookTime > 0) && (furnaceCookTime < 199)) {
+		if (furnaceCookTime > 0 && furnaceCookTime < 199) {
 			furnaceCookTime += 1;
 		}
 	}

@@ -17,6 +17,7 @@ import thaumcraft.common.blocks.BlockArcaneFurnace;
 import thaumcraft.common.config.ConfigItems;
 import T145.magistics.blocks.BlockEntropicDispenser;
 import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.plugins.core.Plugin;
 import T145.magistics.tiles.TileChestHungryEnder;
@@ -43,6 +44,7 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		registrar.registerStackProvider(INSTANCE, BlockArcaneFurnace.class);
 		registrar.registerStackProvider(INSTANCE, BlockArcaneDoor.class);
 
+		registrar.registerStackProvider(INSTANCE, BlockNetherFurnace.class);
 		registrar.registerStackProvider(INSTANCE, BlockInfuser.class);
 		registrar.registerStackProvider(INSTANCE, BlockEntropicDispenser.class);
 	}
@@ -70,6 +72,14 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 
 		if (block instanceof BlockArcaneFurnace) {
 			return new ItemStack(ItemDummy.INFERNAL_FURNACE);
+		}
+
+		if (block == BlockNetherFurnace.INACTIVE) {
+			return new ItemStack(BlockNetherFurnace.INACTIVE, 1, 3);
+		}
+
+		if (block == BlockNetherFurnace.ACTIVE) {
+			return new ItemStack(BlockNetherFurnace.ACTIVE, 1, 3);
 		}
 
 		if (block instanceof BlockInfuser) {

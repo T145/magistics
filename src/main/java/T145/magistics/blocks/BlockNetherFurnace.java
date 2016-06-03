@@ -28,11 +28,11 @@ public class BlockNetherFurnace extends BlockContainer {
 	public static final Block ACTIVE = new BlockNetherFurnace(true);
 	public static final Block INACTIVE = new BlockNetherFurnace(false);
 
-	private final boolean active;
+	protected final boolean active;
 	private static boolean keepInventory;
 
 	@SideOnly(Side.CLIENT)
-	private IIcon front;
+	protected IIcon front;
 
 	public BlockNetherFurnace(boolean isActive) {
 		super(Material.rock);
@@ -130,17 +130,17 @@ public class BlockNetherFurnace extends BlockContainer {
 		float f4 = rand.nextFloat() * 0.6F - 0.3F;
 
 		if (facing == 4) {
-			world.spawnParticle("smoke", (double) (f - f3), (double) f1, (double) (f2 + f4), 0, 0, 0);
-			world.spawnParticle("flame", (double) (f - f3), (double) f1, (double) (f2 + f4), 0, 0, 0);
+			world.spawnParticle("smoke", f - f3,  f1, f2 + f4, 0, 0, 0);
+			world.spawnParticle("flame", f - f3,  f1, f2 + f4, 0, 0, 0);
 		} else if (facing == 5) {
-			world.spawnParticle("smoke", (double) (f + f3), (double) f1, (double) (f2 + f4), 0, 0, 0);
-			world.spawnParticle("flame", (double) (f + f3), (double) f1, (double) (f2 + f4), 0, 0, 0);
+			world.spawnParticle("smoke", f + f3,  f1, f2 + f, 0, 0, 0);
+			world.spawnParticle("flame", f + f3,  f1, f2 + f, 0, 0, 0);
 		} else if (facing == 2) {
-			world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 - f3), 0, 0, 0);
-			world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 - f3), 0, 0, 0);
+			world.spawnParticle("smoke", f + f4,  f1, f2 - f3, 0, 0, 0);
+			world.spawnParticle("flame", f + f4,  f1, f2 - f3, 0, 0, 0);
 		} else if (facing == 3) {
-			world.spawnParticle("smoke", (double) (f + f4), (double) f1, (double) (f2 + f3), 0, 0, 0);
-			world.spawnParticle("flame", (double) (f + f4), (double) f1, (double) (f2 + f3), 0, 0, 0);
+			world.spawnParticle("smoke", f + f4,  f1, f2 + f3, 0, 0, 0);
+			world.spawnParticle("flame", f + f4,  f1, f2 + f3, 0, 0, 0);
 		}
 	}
 

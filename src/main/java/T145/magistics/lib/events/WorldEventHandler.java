@@ -9,7 +9,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class WorldEventHandler {
 	@SubscribeEvent
 	public void onBlockHarvest(HarvestDropsEvent event) {
-		if (event.harvester != null) {
+		if (event.harvester != null && !event.harvester.worldObj.isRemote && !event.isCanceled() && !event.isSilkTouching) {
 			if (event.block == ConfigBlocks.blockCustomOre && event.blockMetadata != 0 && event.blockMetadata < 6) {
 				event.drops.clear();
 

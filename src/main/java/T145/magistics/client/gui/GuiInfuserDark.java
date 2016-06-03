@@ -37,7 +37,6 @@ public class GuiInfuserDark extends GuiContainer {
 			drawTexturedModalRect(var5 + 164, var6 + 151 - var8, 182, 46 - var8, 6, var8);
 		}
 
-		var7 = mc.theWorld.getMoonPhase();
-		drawTexturedModalRect(var5 + 160, var6 + 8, 192, var7 * 8, 8, 8);
+		drawTexturedModalRect(var5 + 160, var6 + 8, 192, mc.theWorld.getMoonPhase() * 8, 8, 8);
 	}
 }
