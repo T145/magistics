@@ -20,7 +20,6 @@ public class BlockEverfullUrn extends BlockContainer {
 	public static final Block INSTANCE = new BlockEverfullUrn();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	@SideOnly(Side.CLIENT)
 	public IIcon[] icon = new IIcon[3];
 
 	public BlockEverfullUrn() {

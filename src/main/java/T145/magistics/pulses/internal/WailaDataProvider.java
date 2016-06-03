@@ -1,4 +1,4 @@
-package T145.magistics.plugins;
+package T145.magistics.pulses.internal;
 
 import java.util.List;
 
@@ -19,44 +19,31 @@ import T145.magistics.blocks.BlockEntropicDispenser;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemDummy;
-import T145.magistics.plugins.core.Plugin;
 import T145.magistics.tiles.TileChestHungryEnder;
-import cpw.mods.fml.common.event.FMLInterModComms;
 
-public class PluginWaila extends Plugin implements IWailaDataProvider {
-	private static final PluginWaila INSTANCE = new PluginWaila(active);
+public class WailaDataProvider implements IWailaDataProvider {
+	private static final WailaDataProvider INSTANCE = new WailaDataProvider();
 
-	public PluginWaila(boolean enable) {
-		super("Waila", enable);
+	public static void registerProvider(IWailaRegistrar provider) {
+		provider.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
+
+		provider.registerStackProvider(INSTANCE, BlockArcaneFurnace.class);
+		provider.registerStackProvider(INSTANCE, BlockArcaneDoor.class);
+
+		provider.registerStackProvider(INSTANCE, BlockNetherFurnace.class);
+		provider.registerStackProvider(INSTANCE, BlockInfuser.class);
+		provider.registerStackProvider(INSTANCE, BlockEntropicDispenser.class);
 	}
 
-	@Override
-	public void preInit() {}
-
-	@Override
-	public void init() {
-		FMLInterModComms.sendMessage("Waila", "register", getClass().getCanonicalName() + ".callRegistrar");
+	private boolean compareByClass(Class first, Class second) {
+		if (first == null || second == null) {
+			return false;
+		} else {
+			return first.getName().equalsIgnoreCase(second.getName());
+		}
 	}
 
-	public static void callRegistrar(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
-
-		registrar.registerStackProvider(INSTANCE, BlockArcaneFurnace.class);
-		registrar.registerStackProvider(INSTANCE, BlockArcaneDoor.class);
-
-		registrar.registerStackProvider(INSTANCE, BlockNetherFurnace.class);
-		registrar.registerStackProvider(INSTANCE, BlockInfuser.class);
-		registrar.registerStackProvider(INSTANCE, BlockEntropicDispenser.class);
-	}
-
-	@Override
-	public void postInit() {}
-
-	public static boolean compareByClass(Class class1, Class class2) {
-		return (class1 != null && class2 != null) ? class1.getName().equalsIgnoreCase(class2.getName()) : false;
-	}
-
-	public static boolean compareTileEntityByClass(TileEntity tile, Class tileClass) {
+	private boolean compareTileEntityByClass(TileEntity tile, Class tileClass) {
 		return compareByClass(tile.getClass(), tileClass);
 	}
 
@@ -94,12 +81,12 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 	}
 
 	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> toolTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return toolTip;
+	public List<String> getWailaHead(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return tooltip;
 	}
 
 	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> toolTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		TileEntity tile = accessor.getTileEntity();
 		Block block = accessor.getBlock();
 		int metadata = accessor.getMetadata();
@@ -107,16 +94,16 @@ public class PluginWaila extends Plugin implements IWailaDataProvider {
 		if (block.hasTileEntity(metadata) && tile.hasWorldObj()) {
 			if (compareTileEntityByClass(tile, TileChestHungryEnder.class)) {
 				TileChestHungryEnder chest = (TileChestHungryEnder) tile;
-				toolTip.add("Owner: " + chest.owner);
+				tooltip.add("Owner: " + chest.owner);
 			}
 		}
 
-		return toolTip;
+		return tooltip;
 	}
 
 	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> toolTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return toolTip;
+	public List<String> getWailaTail(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return tooltip;
 	}
 
 	@Override

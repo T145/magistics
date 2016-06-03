@@ -31,7 +31,6 @@ public class BlockNetherFurnace extends BlockContainer {
 	protected final boolean active;
 	private static boolean keepInventory;
 
-	@SideOnly(Side.CLIENT)
 	protected IIcon front;
 
 	public BlockNetherFurnace(boolean isActive) {

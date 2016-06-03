@@ -22,7 +22,6 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 
 	private boolean active;
 
-	@SideOnly(Side.CLIENT)
 	public IIcon[] icon = new IIcon[4];
 
 	public BlockArcaneLampRedstone(boolean isActive) {

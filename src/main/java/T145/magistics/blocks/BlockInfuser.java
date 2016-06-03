@@ -32,10 +32,7 @@ public class BlockInfuser extends BlockContainer {
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 	private float maxRenderY = 1F - BlockRenderer.W1;
 
-	@SideOnly(Side.CLIENT)
 	public IIcon[] light_icon = new IIcon[5];
-
-	@SideOnly(Side.CLIENT)
 	public IIcon[] dark_icon = new IIcon[5];
 
 	public BlockInfuser() {

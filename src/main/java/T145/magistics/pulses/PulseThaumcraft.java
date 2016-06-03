@@ -1,5 +1,7 @@
-package T145.magistics.plugins;
+package T145.magistics.pulses;
 
+import mantle.pulsar.pulse.Handler;
+import mantle.pulsar.pulse.Pulse;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
@@ -30,7 +32,7 @@ import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
-import T145.magistics.plugins.core.Plugin;
+import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.research.ResearchHandler;
 import T145.magistics.tiles.TileArcaneLampRedstone;
 import T145.magistics.tiles.TileChestHungryEnder;
@@ -43,20 +45,22 @@ import T145.magistics.tiles.TileNetherFurnace;
 import T145.magistics.utils.RegistrationUtil;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class PluginThaumcraft extends Plugin {
-	public PluginThaumcraft() {
-		super("Thaumcraft", true);
-	}
-
-	@Override
-	public void preInit() {
+@Pulse(id = Thaumcraft.MODID, description = "Thaumcraft compatibility in Magistics.", modsRequired = Thaumcraft.MODID)
+public class PulseThaumcraft extends CorePulse {
+	@Handler
+	public void preInit(FMLPreInitializationEvent event) {
 		BiomeGenBase.getBiome(Config.biomeEerieID).getSpawnableList(EnumCreatureType.monster).add(new SpawnListEntry(EntityPech.class, 3, 1, 1));
 	}
 
-	@Override
-	public void init() {
+	@Handler
+	public void init(FMLInitializationEvent event) {
 		GameRegistry.registerTileEntity(TileNetherFurnace.class, TileNetherFurnace.class.getSimpleName());
 		GameRegistry.registerBlock(BlockNetherFurnace.ACTIVE, BlockNetherFurnace.ACTIVE.getUnlocalizedName() + "_on");
 		GameRegistry.registerBlock(BlockNetherFurnace.INACTIVE, BlockNetherFurnace.INACTIVE.getUnlocalizedName() + "_off");
@@ -85,8 +89,14 @@ public class PluginThaumcraft extends Plugin {
 		RegistrationUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 
+	@Handler
+	public void postInit(FMLPostInitializationEvent event) {
+		ResearchHandler.registerResearch();
+	}
+
 	@Override
-	public void postInit() {
+	@SideOnly(Side.CLIENT)
+	public void registerRenderInformation() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryTrapped.class, RenderChestHungryTrapped.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new RenderBlockChest(BlockChestHungryTrapped.INSTANCE.getRenderType(), new TileChestHungryTrapped()));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryEnder.class, RenderChestHungryEnder.INSTANCE);
@@ -105,7 +115,5 @@ public class PluginThaumcraft extends Plugin {
 		int newBlockLootUrnRI = RenderingRegistry.getNextAvailableRenderId();
 		ConfigBlocks.blockLootUrnRI = newBlockLootUrnRI;
 		RenderingRegistry.registerBlockHandler(new RenderBlockLootUrn(newBlockLootUrnRI));
-
-		ResearchHandler.registerResearch();
 	}
 }

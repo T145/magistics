@@ -5,11 +5,13 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Logger;
 
+import thaumcraft.common.Thaumcraft;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.network.CommonProxy;
-import T145.magistics.plugins.core.PluginHandler;
+import T145.magistics.pulses.PulseThaumcraft;
+import T145.magistics.pulses.PulseWaila;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -22,14 +24,14 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "after:Thaumcraft", guiFactory = "T145.magistics.client.ModGuiFactory")
+@Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "required-after:Thaumcraft", guiFactory = "T145.magistics.client.ModGuiFactory")
 public class Magistics {
 	public static final String MODID = "Magistics", VERSION = "$version";
 
 	@Instance(MODID)
 	public static Magistics instance;
 
-	@SidedProxy(serverSide = "T145.magistics.network.CommonProxy", clientSide = "T145.magistics.network.ClientProxy")
+	@SidedProxy(clientSide = "T145.magistics.network.ClientProxy", serverSide = "T145.magistics.network.CommonProxy")
 	public static CommonProxy proxy;
 
 	@Metadata
@@ -58,20 +60,23 @@ public class Magistics {
 		configHandler = new ConfigHandler(event);
 		logger = event.getModLog();
 		loadMetadata();
-		PluginHandler.preInit(event);
+
+		proxy.addPulse(Thaumcraft.MODID, new PulseThaumcraft());
+		proxy.addPulse("Waila", new PulseWaila());
+		proxy.preInit(event);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(configHandler);
-		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-		PluginHandler.init(event);
+		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
+		proxy.init(event);
+		proxy.registerRenderInformation();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		PluginHandler.postInit(event);
-		logger.info("Hello World!");
+		proxy.postInit(event);
 	}
 }
