@@ -21,29 +21,29 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
-	protected static PulseManager pulser = new PulseManager(Magistics.MODID + "Modules", new ForgeCFG(Magistics.MODID, "Modules: Disabling these will disable a chunk of the mod"));
+	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "plugins"));
 	protected static Map<String, CorePulse> pulses = new HashMap<String, CorePulse>();
 
 	public void addPulse(String modid, CorePulse pulse) {
 		if (Loader.isModLoaded(modid)) {
-			pulser.registerPulse(pulse);
+			pulsar.registerPulse(pulse);
 		}
 
-		if (pulser.isPulseLoaded(modid)) {
+		if (pulsar.isPulseLoaded(modid)) {
 			pulses.put(modid, pulse);
 		}
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		pulser.preInit(event);
+		pulsar.preInit(event);
 	}
 
 	public void init(FMLInitializationEvent event) {
-		pulser.init(event);
+		pulsar.init(event);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		pulser.postInit(event);
+		pulsar.postInit(event);
 	}
 
 	public void registerRenderInformation() {}

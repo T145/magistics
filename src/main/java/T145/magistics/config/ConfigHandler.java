@@ -8,24 +8,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
-	public static final String CATEGORY_PlUGINS = "plugins";
 	public static final String CATEGORY_OVERRIDES = "thaumcraft_overrides";
-
-	public static final String CATEGORY_BLOCKS = "Blocks";
-	public static final String CATEGORY_ITEMS = "Items";
+	public static final String CATEGORY_BLOCKS = "blocks";
+	public static final String CATEGORY_ITEMS = "items";
 
 	private Configuration config;
-
-	public static boolean enableAE2;
-	public static boolean enableEE3;
-	public static boolean enableEnderStorage;
-	public static boolean enableIronChest;
-	public static boolean enableProjectE;
-	public static boolean enableRailcraft;
-	public static boolean enableRefinedRelocation;
-	public static boolean enableThaumicTinkerer;
-	public static boolean enableThermalExpansion;
-	public static boolean enableWaila;
 
 	public static boolean noFluidsInTCTabs;
 	public static boolean noTaintInTCTabs;
@@ -43,17 +30,6 @@ public class ConfigHandler {
 	}
 
 	private void syncConfig() {
-		enableAE2 = addProperty(CATEGORY_PlUGINS, "enable_ae2", true, "Toggle the Applied Energistics 2 plugin");
-		enableEE3 = addProperty(CATEGORY_PlUGINS, "enable_ee3", true, "Toggle the Equivalent Exchange 3 plugin");
-		enableEnderStorage = addProperty(CATEGORY_PlUGINS, "enable_ender_storage", true, "Toggle the EnderStorage plugin");
-		enableIronChest = addProperty(CATEGORY_PlUGINS, "enable_iron_chests", true, "Toggle the Iron Chest plugin");
-		enableProjectE = addProperty(CATEGORY_PlUGINS, "enable_projecte", true, "Toggle the Project E plugin");
-		enableRailcraft = addProperty(CATEGORY_PlUGINS, "enable_railcraft", true, "Toggle the Railcraft plugin");
-		enableRefinedRelocation = addProperty(CATEGORY_PlUGINS, "enable_refined_relocation", true, "Toggle the Refined Relocation plugin");
-		enableThaumicTinkerer = addProperty(CATEGORY_PlUGINS, "enable_thaumic_tinkerer", true, "Toggle the Thaumic Tinkerer plugin");
-		enableThermalExpansion = addProperty(CATEGORY_PlUGINS, "enable_thermal_expansion", true, "Toggle the Thermal Expansion plugin");
-		enableWaila = addProperty(CATEGORY_PlUGINS, "enable_waila", true, "Toggle the Waila plugin");
-
 		noFluidsInTCTabs = addProperty(CATEGORY_OVERRIDES, "noFluidsInTCTabs", true, "Disables fluid blocks in the TC tab (or tabs if tab content sorting is enabled).");
 		noTaintInTCTabs = addProperty(CATEGORY_OVERRIDES, "noTaintInTCTabs", true, "Disables taint in the TC tab (or tabs if tab content sorting is enabled.");
 		sortTCTabsContent = addProperty(CATEGORY_OVERRIDES, "sortTCTabsContent", true, "Sorts the TC tab into separate tabs that correspond to the Thaumonomicon categories.");
@@ -77,7 +53,6 @@ public class ConfigHandler {
 	public ConfigHandler(FMLPreInitializationEvent event) {
 		try {
 			config = new Configuration(event.getSuggestedConfigurationFile());
-			config.addCustomCategoryComment(CATEGORY_PlUGINS, "NOTE: Requires full game restart to take effect!!!");
 			config.addCustomCategoryComment(CATEGORY_OVERRIDES, "Things that Magistics changes in regular Thaumcraft");
 			config.load();
 			syncConfig();
