@@ -21,7 +21,6 @@ public class BlockChestHungryTrapped extends BlockChestHungry {
 	public BlockChestHungryTrapped() {
 		super();
 		setBlockName("trapped_hungry_chest");
-		setBlockTextureName("thaumcraft:woodplain");
 		setCreativeTab(Magistics.tabMagistics);
 	}
 

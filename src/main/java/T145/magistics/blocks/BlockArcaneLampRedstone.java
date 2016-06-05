@@ -1,7 +1,5 @@
 package T145.magistics.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -11,6 +9,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.client.renderers.block.BlockRenderer;
+import thaumcraft.common.tiles.TileArcaneLamp;
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileArcaneLampRedstone;
 import cpw.mods.fml.relauncher.Side;
@@ -83,6 +82,7 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int side) {
 		removeLights(world.getTileEntity(x, y, z));
+		super.breakBlock(world, x, y, z, block, side);
 	}
 
 	@Override
@@ -90,34 +90,36 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 		return active ? 15 : 0;
 	}
 
-	@Override
-	public void onBlockAdded(World world, int x, int y, int z) {
+	private void updateBlockState(World world, int x, int y, int z) {
 		if (!world.isRemote) {
 			if (active && !world.isBlockIndirectlyGettingPowered(x, y, z)) {
-				world.scheduleBlockUpdate(x, y, z, this, 4);
+				world.setBlock(x, y, z, INACTIVE, 0, 2);
+				removeLights(world.getTileEntity(x, y, z));
 			} else if (!active && world.isBlockIndirectlyGettingPowered(x, y, z)) {
 				world.setBlock(x, y, z, ACTIVE, 0, 2);
 			}
 		}
+	}
+
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		updateBlockState(world, x, y, z);
 	}
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-		if (!world.isRemote) {
-			if (active && !world.isBlockIndirectlyGettingPowered(x, y, z)) {
-				world.scheduleBlockUpdate(x, y, z, this, 4);
-			} else if (!active && world.isBlockIndirectlyGettingPowered(x, y, z)) {
-				world.setBlock(x, y, z, ACTIVE, 0, 2);
+		TileEntity te = world.getTileEntity(x, y, z);
+
+		if (te != null && te instanceof TileArcaneLamp) {
+			TileArcaneLamp telb = (TileArcaneLamp) te;
+
+			if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
+				dropBlockAsItem(world, x, y, z, 7, 0);
+				world.setBlockToAir(x, y, z);
 			}
 		}
-	}
 
-	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
-		if (!world.isRemote && active && !world.isBlockIndirectlyGettingPowered(x, y, z)) {
-			world.setBlock(x, y, z, INACTIVE, 0, 2);
-			removeLights(world.getTileEntity(x, y, z));
-		}
+		updateBlockState(world, x, y, z);
 	}
 
 	@Override

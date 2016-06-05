@@ -30,12 +30,14 @@ public class TileArcaneLampRedstone extends TileArcaneLamp {
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
-		conflictingLamp = tag.getBoolean("neighboringLamp");
+		super.readCustomNBT(tag);
+		conflictingLamp = tag.getBoolean("conflictingLamp");
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
-		tag.setBoolean("neighborLamp", conflictingLamp);
+		super.writeCustomNBT(tag);
+		tag.setBoolean("conflictingLamp", conflictingLamp);
 	}
 
 	@Override
@@ -52,10 +54,7 @@ public class TileArcaneLampRedstone extends TileArcaneLamp {
 					if (tile != null && tile instanceof TileArcaneLamp) {
 						if (tile instanceof TileArcaneLampRedstone) {
 							TileArcaneLampRedstone lamp = (TileArcaneLampRedstone) tile;
-
-							if (lamp.isActive()) {
-								conflictingLamp = true;
-							}
+							conflictingLamp = lamp.isActive();
 						} else {
 							conflictingLamp = true;
 						}

@@ -20,7 +20,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
-public class CommonProxy implements IGuiHandler {
+public abstract class CommonProxy implements IGuiHandler {
 	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "plugins"));
 	protected static Map<String, CorePulse> pulses = new HashMap<String, CorePulse>();
 
@@ -46,7 +46,7 @@ public class CommonProxy implements IGuiHandler {
 		pulsar.postInit(event);
 	}
 
-	public void registerRenderInformation() {}
+	public abstract void registerRenderInformation();
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -63,7 +63,5 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
-	}
+	public abstract Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
 }

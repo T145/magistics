@@ -2,6 +2,7 @@ package T145.magistics.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEnderChest;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,14 +25,20 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
 	public BlockChestHungryEnder() {
+		super();
 		setBlockName("hungry_ender_chest");
-		setBlockTextureName("magistics:chest_hungry/ender");
 		setCreativeTab(Magistics.tabMagistics);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
 		return new TileChestHungryEnder();
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister reg) {
+		blockIcon = reg.registerIcon("magistics:chest_hungry/ender");
 	}
 
 	@Override
