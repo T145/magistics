@@ -12,6 +12,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlockEverfullUrn extends BlockRenderer implements ISimpleBlockRenderingHandler {
+	public static final ISimpleBlockRenderingHandler INSTANCE = new RenderBlockEverfullUrn();
+
 	private void drawFaces(RenderBlocks renderer, int x, int y, int z, BlockEverfullUrn urn, boolean inWorld) {
 		IIcon bottom = urn.getIcon(0, 0);
 		IIcon top = urn.getIcon(1, 0);

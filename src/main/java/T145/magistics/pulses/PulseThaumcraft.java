@@ -5,13 +5,17 @@ import mantle.pulsar.pulse.Pulse;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+import net.minecraftforge.oredict.OreDictionary;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.client.renderers.tile.TileArcaneLampRenderer;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.entities.monster.EntityPech;
+import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockArcaneLampRedstoneItem;
+import T145.magistics.blocks.BlockArcaneWood;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockChthonianFurnace;
@@ -57,6 +61,22 @@ public class PulseThaumcraft extends CorePulse {
 	@Handler
 	public void preInit(FMLPreInitializationEvent event) {
 		BiomeGenBase.getBiome(Config.biomeEerieID).getSpawnableList(EnumCreatureType.monster).add(new SpawnListEntry(EntityPech.class, 3, 1, 1));
+
+		if (Magistics.configHandler.noFluidsInTCTabs) {
+		}
+
+		if (Magistics.configHandler.noTaintInTCTabs) {
+		}
+
+		if (Magistics.configHandler.sortTCTabsContent) {
+			String[] tabNames = new String[] {
+					"Basic Materials",
+					"Thaumaturgy",
+					"Alchemy",
+					"Golemancy",
+					"Eldritch"
+			};
+		}
 	}
 
 	@Handler
@@ -88,6 +108,10 @@ public class PulseThaumcraft extends CorePulse {
 
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
 
+		GameRegistry.registerBlock(BlockArcaneWood.INSTANCE, BlockArcaneWood.INSTANCE.getUnlocalizedName());
+		OreDictionary.registerOre("blockWood", BlockArcaneWood.INSTANCE);
+		ThaumcraftApi.portableHoleBlackList.add(BlockArcaneWood.INSTANCE);
+
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemDawnstone.INSTANCE, ItemDawnstone.INSTANCE.getUnlocalizedName());
 		RegistrationUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
@@ -108,8 +132,8 @@ public class PulseThaumcraft extends CorePulse {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArcaneLampRedstone.class, new TileArcaneLampRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChthonianFurnace.class, RenderChthonianFurnace.INSTANCE);
-		RenderingRegistry.registerBlockHandler(new RenderBlockChthonianFurnace());
-		RenderingRegistry.registerBlockHandler(new RenderBlockEverfullUrn());
+		RenderingRegistry.registerBlockHandler(RenderBlockChthonianFurnace.INSTANCE);
+		RenderingRegistry.registerBlockHandler(RenderBlockEverfullUrn.INSTANCE);
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, RenderInfuser.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockInfuser.INSTANCE);

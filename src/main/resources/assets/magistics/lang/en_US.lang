@@ -64,6 +64,7 @@ tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
 tile.entropic_dispenser.name=Entropic Dispenser
 tile.voidstone.name=Voidstone
+tile.arcane_wood.name=Arcane Wood
 
 tile.hungry_chest.name=Hungry Chest
 tile.sorting_hungry_chest.name=Hungry Sorting Chest

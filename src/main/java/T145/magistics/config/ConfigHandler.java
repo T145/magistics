@@ -8,16 +8,14 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
-	public static final String CATEGORY_OVERRIDES = "thaumcraft_overrides";
-	public static final String CATEGORY_BLOCKS = "blocks";
-	public static final String CATEGORY_ITEMS = "items";
+	public static final String CATEGORY_THAUMCRAFT_OVERRIDES = "thaumcraft_overrides";
+	public static final String CATEGORY_VANILLA_OVERRIDES = "vanilla_overrides";
 
 	private Configuration config;
 
 	public static boolean noFluidsInTCTabs;
 	public static boolean noTaintInTCTabs;
 	public static boolean sortTCTabsContent;
-	public static boolean fixTCBlockNames;
 
 	public Configuration getConfig() {
 		return config;
@@ -30,10 +28,9 @@ public class ConfigHandler {
 	}
 
 	private void syncConfig() {
-		noFluidsInTCTabs = addProperty(CATEGORY_OVERRIDES, "noFluidsInTCTabs", true, "Disables fluid blocks (not buckets) in the TC creative tab (or tabs if tab content sorting is enabled).");
-		noTaintInTCTabs = addProperty(CATEGORY_OVERRIDES, "noTaintInTCTabs", true, "Disables taint in the TC creative tab (or tabs if tab content sorting is enabled.");
-		sortTCTabsContent = addProperty(CATEGORY_OVERRIDES, "sortTCTabsContent", true, "Sorts the TC creative tab into separate tabs that correspond to the Thaumonomicon categories.");
-		fixTCBlockNames = addProperty(CATEGORY_OVERRIDES, "fixTCBlockNames", true, "Makes some TC block names like vanilla ones; e.g. Thaumium Block becomes Block of Thaumium");
+		noFluidsInTCTabs = addProperty(CATEGORY_THAUMCRAFT_OVERRIDES, "noFluidsInTCTabs", true, "Disables fluid blocks (not buckets) in the TC creative tab (or tabs if tab content sorting is enabled).");
+		noTaintInTCTabs = addProperty(CATEGORY_THAUMCRAFT_OVERRIDES, "noTaintInTCTabs", true, "Disables taint in the TC creative tab (or tabs if tab content sorting is enabled.");
+		sortTCTabsContent = addProperty(CATEGORY_THAUMCRAFT_OVERRIDES, "sortTCTabsContent", true, "Sorts the TC creative tab into separate tabs that correspond to the Thaumonomicon categories.");
 	}
 
 	private void saveConfig() {
@@ -53,7 +50,8 @@ public class ConfigHandler {
 	public ConfigHandler(FMLPreInitializationEvent event) {
 		try {
 			config = new Configuration(event.getSuggestedConfigurationFile());
-			config.addCustomCategoryComment(CATEGORY_OVERRIDES, "Things that Magistics changes in regular Thaumcraft");
+			config.addCustomCategoryComment(CATEGORY_THAUMCRAFT_OVERRIDES, "Things that Magistics changes in Thaumcraft");
+			config.addCustomCategoryComment(CATEGORY_VANILLA_OVERRIDES, "Things that Magistics changes in Minecraft");
 			config.load();
 			syncConfig();
 			saveConfig();

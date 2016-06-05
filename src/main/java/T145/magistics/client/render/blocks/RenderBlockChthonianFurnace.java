@@ -17,6 +17,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlockChthonianFurnace extends BlockRenderer implements ISimpleBlockRenderingHandler {
+	public static final ISimpleBlockRenderingHandler INSTANCE = new RenderBlockChthonianFurnace();
+
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
 		GL11.glRotatef(90F, 0F, 1F, 0F);

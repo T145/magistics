@@ -56,13 +56,14 @@ public class Magistics {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		configHandler = new ConfigHandler(event);
 		logger = event.getModLog();
 		loadMetadata();
 
 		proxy.addPulse(Thaumcraft.MODID, new PulseThaumcraft());
 		proxy.addPulse("Waila", new PulseWaila());
 		proxy.preInit(event);
+
+		configHandler = new ConfigHandler(event);
 	}
 
 	@EventHandler
