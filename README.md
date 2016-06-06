@@ -38,7 +38,11 @@ It may take a while to complete, depending on your internet connection and the p
 
 ## Development
 
-To edit how this workspace functions for your own purposes, the only file you need interact with is [gradle.properties](https://github.com/T145/ForgeWorkspace/blob/1.7.10/gradle.properties). This file is where all of the basic workspace information is set, such as the project name and which Forge version to use. Check here and edit it before building. Once it's set and the project has been built you'll be all set to be begin programming!
+When run in the workspace for the first time, CodeChickenCore will prompt you for access to the MCP source mappings. These can be found at:
+```
+(user)\.gradle\caches\minecraft\net\minecraftforge\forge\(forge version)\unpacked\conf
+```
+It will remember this path for consecutive executions, so you're all set for here on out.
 
 ---
 
@@ -50,11 +54,6 @@ Please consult the license at the provided link if you wish to use the source co
 
 ## Contributing
 
-This project is made specifically for the community and mainstream use! If you see something wrong with it or want to add a new feature then please fork it and make a contribution. If this actually helps you out, then tell your friends! For those of you that prefer lists and the standard `CONTRIBUTING.md` format, then glance below:
-
-1. Fork it
-2. Make changes
-3. Commit changes
-4. Make a pull request
+This project is made specifically for the community and mainstream use! If you see something wrong with it or want to add a new feature, then please fork it and make a contribution.
 
 Enjoy!

@@ -81,6 +81,10 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 
 repositories {
     mavenCentral()
+	maven {
+        name = 'ChickenBones'
+        url = 'http://chickenbones.net/maven'
+    }
     maven {
         name 'ProfMobius'
         url 'http://mobiusstrip.eu/maven'
