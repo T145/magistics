@@ -43,9 +43,7 @@ public class ContainerInfuser extends Container {
 	@Override
 	public void addCraftingToCrafters(ICrafting p_75132_1_) {
 		super.addCraftingToCrafters(p_75132_1_);
-		p_75132_1_.sendProgressBarUpdate(this, 0, infuser.infuserCookTime);
-		p_75132_1_.sendProgressBarUpdate(this, 1, infuser.infuserBurnTime);
-		p_75132_1_.sendProgressBarUpdate(this, 2, infuser.currentItemBurnTime);
+		p_75132_1_.sendProgressBarUpdate(this, 0, (int) infuser.infuserCookTime);
 	}
 
 	@Override
@@ -56,21 +54,11 @@ public class ContainerInfuser extends Container {
 			ICrafting icrafting = (ICrafting) crafters.get(i);
 
 			if (lastCookTime != infuser.infuserCookTime) {
-				icrafting.sendProgressBarUpdate(this, 0, infuser.infuserCookTime);
-			}
-
-			if (lastBurnTime != infuser.infuserBurnTime) {
-				icrafting.sendProgressBarUpdate(this, 1, infuser.infuserBurnTime);
-			}
-
-			if (lastItemBurnTime != infuser.currentItemBurnTime) {
-				icrafting.sendProgressBarUpdate(this, 2, infuser.currentItemBurnTime);
+				icrafting.sendProgressBarUpdate(this, 0, (int) infuser.infuserCookTime);
 			}
 		}
 
-		lastCookTime = infuser.infuserCookTime;
-		lastBurnTime = infuser.infuserBurnTime;
-		lastItemBurnTime = infuser.currentItemBurnTime;
+		lastCookTime = (int) infuser.infuserCookTime;
 	}
 
 	@Override
@@ -78,14 +66,6 @@ public class ContainerInfuser extends Container {
 	public void updateProgressBar(int p_75137_1_, int p_75137_2_) {
 		if (p_75137_1_ == 0) {
 			infuser.infuserCookTime = p_75137_2_;
-		}
-
-		if (p_75137_1_ == 1) {
-			infuser.infuserBurnTime = p_75137_2_;
-		}
-
-		if (p_75137_1_ == 2) {
-			infuser.currentItemBurnTime = p_75137_2_;
 		}
 	}
 
