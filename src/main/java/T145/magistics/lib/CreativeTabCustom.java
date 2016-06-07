@@ -6,22 +6,22 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class CreativeTabBasic extends CreativeTabs {
-	private ItemStack icon;
+public class CreativeTabCustom extends CreativeTabs {
+	private ItemStack stack;
 
-	public CreativeTabBasic(String lable, ItemStack iconStack) {
+	public CreativeTabCustom(String lable, ItemStack iconStack) {
 		super(lable);
-		icon = iconStack;
+		stack = iconStack;
 	}
 
-	public CreativeTabBasic(String lable, Item iconStack) {
+	public CreativeTabCustom(String lable, Item iconStack) {
 		this(lable, new ItemStack(iconStack));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
-		return icon;
+		return stack;
 	}
 
 	@Override

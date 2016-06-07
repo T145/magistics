@@ -1,20 +1,28 @@
-itemGroup.Magistics=Magistics
+itemGroup.magistics=Magistics
+
+itemGroup.magistics.basics=Thaumcraft - Basic Materials
+itemGroup.magistics.thaumaturgy=Thaumcraft - Thaumaturgy
+itemGroup.magistics.alchemy=Thaumcraft - Alchemy
+itemGroup.magistics.artifice=Thaumcraft - Artifice
+itemGroup.magistics.golemancy=Thaumcraft - Golemancy
+itemGroup.magistics.eldritch=Thaumcraft - Eldritch
 
 ####
 # Research
 ###
 
-tc.research_category.Magistics=Magistics
+tc.research_category.magistics=Magistics
 
 tc.research_name.HUNGRYENDERCHEST=Hungry Ender Chest
 tc.research_text.HUNGRYENDERCHEST=It's starving!
-tc.research_page.HUNGRYENDERCHEST.1=Applying the concept of the Hungry Chest to the construction of an Ender Chest has yielded some interesting results. The Hungry Ender Chest will consume items that touch it, much the same as any hungry chest, however it will only insert them into the ender chest space of the player that placed the chest. The Hungry Ender Chest can only be accessed by its owner, any other players will simply be unable to open it.<BR>The Hungry Ender Chest also seems to react to the presence of item transfer devices like golems and pipes unlike its non-hungry counterpart. It seems to behave the same way with devices as it does with dropped items, in that it will only insert or extract from the owners ender chest.
+tc.research_page.HUNGRYENDERCHEST.1=Applying the concept of the Hungry Chest to the construction of an Ender Chest has yielded some interesting results. The Hungry Ender Chest will consume items that touch it, much the same as any hungry chest, however it will only insert them into the ender chest space of the player that placed the chest. The Hungry Ender Chest can only be accessed by its owner, any other players will simply be unable to open it.
+tc.research_page.HUNGRYENDERCHEST.2=The Hungry Ender Chest also seems to react to the presence of item transfer devices like golems and pipes unlike its non-hungry counterpart. It seems to behave the same way with devices as it does with dropped items, in that it will only insert or extract from the owners ender chest.
 
 tc.research_name.SHARDFRAGMENTS=Notes on Infused Ore
 tc.research_text.SHARDFRAGMENTS=Fragile crystals
-tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more fragile that you originally thought. After trying to mine Infused ore to acquire them, you found that the crystals in the ore could not withstand the force of being struck with a regular pickaxe, and they shattered into much smaller fragments instead. These fragments are not potent enough to use in place of full crystal shards,  but they do seem to have many uses nontheless.<BR>Shard fragments can be assembled into complete shards with an infuser.It may also be possible to aquire complete shards with a better pickaxe.<BR>§4This recipe is temporary and will be replaced with an infuser recipe in the second full release.§r
+tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more fragile that you originally thought. After trying to mine Infused ore to acquire them, you found that the crystals in the ore could not withstand the force of being struck with a regular pickaxe, and they shattered into much smaller fragments instead. These fragments are not potent enough to use in place of full crystal shards,  but they do seem to have many uses nontheless.<BR>Shard fragments can be assembled into complete shards with an infuser. It may also be possible to aquire complete shards with a better pickaxe.<BR>§4This recipe is temporary and will be replaced with an infuser recipe in the second full release.§r
 
-tc.research_name.NETHERRACKFURNACE=Netherack Furnace
+tc.research_name.NETHERRACKFURNACE=Netherrack Furnace
 tc.research_text.NETHERRACKFURNACE=Hotter Topic
 tc.research_page.NETHERRACKFURNACE.1=Reinforcing a furnace with netherrack plates allows it to retain heat better, allowing it to run with double th fuel efficiency of a normal furnace.
 

@@ -11,9 +11,13 @@ public class BlockArcaneWood extends Block {
 
 	public BlockArcaneWood() {
 		super(Material.wood);
+
 		setBlockName("arcane_wood");
 		setBlockTextureName("magistics:arcane_wood");
 		setCreativeTab(Magistics.tabMagistics);
+
+		setHardness(2F);
+		setStepSound(soundTypeWood);
 	}
 
 	@Override

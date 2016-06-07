@@ -2,7 +2,9 @@ package T145.magistics.pulses;
 
 import mantle.pulsar.pulse.Handler;
 import mantle.pulsar.pulse.Pulse;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -11,7 +13,9 @@ import thaumcraft.client.renderers.tile.TileArcaneLampRenderer;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.monster.EntityPech;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockArcaneLampRedstoneItem;
@@ -38,7 +42,9 @@ import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
+import T145.magistics.lib.CreativeTabCustom;
 import T145.magistics.pulses.core.CorePulse;
+import T145.magistics.research.RecipeHandler;
 import T145.magistics.research.ResearchHandler;
 import T145.magistics.tiles.TileArcaneLampRedstone;
 import T145.magistics.tiles.TileChestHungryEnder;
@@ -62,20 +68,12 @@ public class PulseThaumcraft extends CorePulse {
 	public void preInit(FMLPreInitializationEvent event) {
 		BiomeGenBase.getBiome(Config.biomeEerieID).getSpawnableList(EnumCreatureType.monster).add(new SpawnListEntry(EntityPech.class, 3, 1, 1));
 
+		Config.allowCheatSheet = true;
+
 		if (Magistics.configHandler.noFluidsInTCTabs) {
 		}
 
 		if (Magistics.configHandler.noTaintInTCTabs) {
-		}
-
-		if (Magistics.configHandler.sortTCTabsContent) {
-			String[] tabNames = new String[] {
-					"Basic Materials",
-					"Thaumaturgy",
-					"Alchemy",
-					"Golemancy",
-					"Eldritch"
-			};
 		}
 	}
 
@@ -109,7 +107,8 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockArcaneWood.INSTANCE, BlockArcaneWood.INSTANCE.getUnlocalizedName());
-		OreDictionary.registerOre("blockWood", BlockArcaneWood.INSTANCE);
+
+		OreDictionary.registerOre("logWood", BlockArcaneWood.INSTANCE);
 		ThaumcraftApi.portableHoleBlackList.add(BlockArcaneWood.INSTANCE);
 
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
@@ -119,6 +118,26 @@ public class PulseThaumcraft extends CorePulse {
 
 	@Handler
 	public void postInit(FMLPostInitializationEvent event) {
+		if (Magistics.configHandler.sortTCTabsContent) {
+			CreativeTabs tabTCBasics = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".basics", ConfigItems.itemThaumonomicon);
+			ConfigItems.itemThaumonomicon.setCreativeTab(tabTCBasics);
+
+			ItemStack sceptre = new ItemStack(ConfigItems.itemWandCasting, 1, (int) (ConfigItems.WAND_CAP_THAUMIUM.getCraftCost() * ConfigItems.WAND_ROD_SILVERWOOD.getCraftCost() * 1.5F));
+			((ItemWandCasting) sceptre.getItem()).setCap(sceptre, ConfigItems.WAND_CAP_THAUMIUM);
+			((ItemWandCasting) sceptre.getItem()).setRod(sceptre, ConfigItems.WAND_ROD_SILVERWOOD);
+
+			CreativeTabs tabTCThaumaturgy = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".thaumaturgy", sceptre);
+
+			CreativeTabs tabTCAlchemy = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".alchemy", new ItemStack(ConfigBlocks.blockMetalDevice, 1, 0));
+
+			CreativeTabs tabTCArtifice = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".artifice", new ItemStack(ConfigBlocks.blockTable, 1, 15));
+
+			CreativeTabs tabTCGolemancy = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".golemancy", ConfigItems.itemGolemPlacer);
+
+			CreativeTabs tabTCEldritch = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".eldritch", new ItemStack(ConfigItems.itemEldritchObject, 1, 1));
+		}
+
+		RecipeHandler.registerRecipes();
 		ResearchHandler.registerResearch();
 	}
 

@@ -37,7 +37,7 @@ public class Magistics {
 	@Metadata
 	private ModMetadata metadata;
 
-	public static CreativeTabs tabMagistics = new CreativeTabMagistics(MODID);
+	public static CreativeTabs tabMagistics = new CreativeTabMagistics();
 	public static ConfigHandler configHandler;
 	public static Logger logger;
 
