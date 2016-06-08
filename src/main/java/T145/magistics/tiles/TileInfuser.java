@@ -1,6 +1,7 @@
 package T145.magistics.tiles;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -8,14 +9,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import thaumcraft.common.config.ConfigItems;
+import T145.magistics.lib.InventoryHelper;
 import T145.magistics.lib.crafting.InfuserRecipes;
 
 public class TileInfuser extends TileRotatable implements ISidedInventory {
 	protected ItemStack[] infuserItemStacks = new ItemStack[8];
 
-	public float infuserCookTime = 0.0F;
+	public float infuserCookTime = 0F;
 	public float currentItemCookCost;
-	public float sucked = 0.0F;
+	public float sucked = 0F;
 
 	public int angle = -1;
 	public int boost = 0;
@@ -27,10 +29,12 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 		return infuserItemStacks.length;
 	}
 
+	@Override
 	public ItemStack getStackInSlot(int slot) {
 		return infuserItemStacks[slot];
 	}
 
+	@Override
 	public ItemStack decrStackSize(int slotFrom, int slotTo) {
 		if (infuserItemStacks[slotFrom] != null) {
 			ItemStack stack;
@@ -56,9 +60,9 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 	@Override
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		if (infuserItemStacks[slot] != null) {
-			ItemStack var2 = infuserItemStacks[slot];
+			ItemStack stack = infuserItemStacks[slot];
 			infuserItemStacks[slot] = null;
-			return var2;
+			return stack;
 		} else {
 			return null;
 		}
@@ -80,11 +84,11 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 		infuserItemStacks = new ItemStack[getSizeInventory()];
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte b0 = nbttagcompound1.getByte("Slot");
+			NBTTagCompound tagslot = nbttaglist.getCompoundTagAt(i);
+			byte slot = tagslot.getByte("Slot");
 
-			if (b0 >= 0 && b0 < infuserItemStacks.length) {
-				infuserItemStacks[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			if (slot >= 0 && slot < infuserItemStacks.length) {
+				infuserItemStacks[slot] = ItemStack.loadItemStackFromNBT(tagslot);
 			}
 		}
 
@@ -97,18 +101,18 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 		super.writeToNBT(tag);
 		tag.setFloat("CookTime", infuserCookTime);
 		tag.setFloat("CookCost", currentItemCookCost);
-		NBTTagList nbttaglist = new NBTTagList();
+		NBTTagList items = new NBTTagList();
 
-		for (int i = 0; i < infuserItemStacks.length; ++i) {
-			if (infuserItemStacks[i] != null) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				infuserItemStacks[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
+		for (int slot = 0; slot < infuserItemStacks.length; ++slot) {
+			if (infuserItemStacks[slot] != null) {
+				NBTTagCompound item = new NBTTagCompound();
+				item.setByte("Slot", (byte) slot);
+				infuserItemStacks[slot].writeToNBT(item);
+				items.appendTag(item);
 			}
 		}
 
-		tag.setTag("Items", nbttaglist);
+		tag.setTag("Items", items);
 	}
 
 	public int getCookProgressScaled(int var1) {
@@ -116,11 +120,11 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 	}
 
 	public int getBoostScaled() {
-		return Math.round(0.1F + (float) boost / 2.0F) * 6;
+		return Math.round(0.1F + (float) boost / 2F) * 6;
 	}
 
 	public boolean isCooking() {
-		return infuserCookTime > 0.0F;
+		return infuserCookTime > 0F;
 	}
 
 	@Override
@@ -131,20 +135,20 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 			--soundDelay;
 		}
 
-		angle = (int) (infuserCookTime / currentItemCookCost * 360.0F);
+		angle = (int) (infuserCookTime / currentItemCookCost * 360F);
 
 		if (!worldObj.isRemote) {
-			boolean var1 = false;
-			boolean var2 = infuserCookTime > 0.0F;
+			boolean done = false;
+			boolean cooked = isCooking();
 			int var4;
 
-			if (canProcess() && currentItemCookCost > 0.0F && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+			if (canProcess() && currentItemCookCost > 0F && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 				float var3 = Math.min(0.5F + 0.05F * (float) boost, currentItemCookCost - infuserCookTime + 0.01F);
 				// sucked = getAvailablePureVis(var3);
 				infuserCookTime += sucked;
 
 				if (soundDelay == 0 && sucked >= 0.025F) {
-					worldObj.playSoundEffect(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "thaumcraft.infuser", 0.2F, 1.0F);
+					worldObj.playSoundEffect(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, "magistics.infuser", 0.2F, 1F);
 					soundDelay = 62;
 					var4 = xCoord >> 4;
 					int var5 = zCoord >> 4;
@@ -152,29 +156,29 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 					// spread an eerie biome at the expense of performance
 				}
 			} else {
-				sucked = 0.0F;
+				sucked = 0F;
 			}
 
-			if (infuserCookTime >= currentItemCookCost && var2) {
+			if (infuserCookTime >= currentItemCookCost && cooked) {
 				addProcessedItem();
-				infuserCookTime = 0.0F;
-				currentItemCookCost = 0.0F;
+				infuserCookTime = 0F;
+				currentItemCookCost = 0F;
 				markDirty();
 			}
 
-			if (currentItemCookCost != 0.0F && currentItemCookCost != getCookCost()) {
-				infuserCookTime = 0.0F;
-				currentItemCookCost = 0.0F;
-				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.fizz", 1.0F, 1.6F);
+			if (currentItemCookCost != 0F && currentItemCookCost != getCookCost()) {
+				infuserCookTime = 0F;
+				currentItemCookCost = 0F;
+				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "random.fizz", 1F, 1.6F);
 			}
 
-			if (infuserCookTime == 0.0F && canProcess()) {
+			if (infuserCookTime == 0F && canProcess()) {
 				currentItemCookCost = getCookCost();
 				markDirty();
 			}
 
-			if (var2 != infuserCookTime > 0.0F) {
-				var1 = true;
+			if (cooked != isCooking()) {
+				done = true;
 			}
 
 			if (boostDelay <= 0 || boostDelay == 10) {
@@ -193,82 +197,82 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 		}
 	}
 
-	protected float getCookCost() {
-		ArrayList var1 = new ArrayList();
+	protected List<ItemStack> getInventoryContents() {
+		List<ItemStack> contents = new ArrayList<ItemStack>();
 
-		for (int var2 = 2; var2 <= 7; ++var2) {
-			if (infuserItemStacks[var2] != null) {
-				ItemStack var3 = new ItemStack(infuserItemStacks[var2].getItem(), 1, infuserItemStacks[var2].getItemDamage());
-				var1.add(var3);
+		for (int slot = 2; slot < infuserItemStacks.length; ++slot) {
+			ItemStack stackInSlot = infuserItemStacks[slot];
+
+			if (stackInSlot != null) {
+				ItemStack ingredient = new ItemStack(stackInSlot.getItem(), 1, stackInSlot.getItemDamage());
+				contents.add(ingredient);
 			}
 		}
 
-		if (var1.size() > 0) {
-			float var4 = (float) InfuserRecipes.infusing().getInfusingCost(var1.toArray());
-			return var4;
+		return contents;
+	}
+
+	protected float getCookCost() {
+		List<ItemStack> contents = getInventoryContents();
+
+		if (contents.isEmpty()) {
+			return 0F;
 		} else {
-			return 0.0F;
+			return InfuserRecipes.infusing().getInfusingCost(contents.toArray());
 		}
 	}
 
 	protected ItemStack getResultStack() {
-		ArrayList var1 = new ArrayList();
+		List<ItemStack> contents = getInventoryContents();
 
-		for (int var2 = 2; var2 <= 7; ++var2) {
-			if (infuserItemStacks[var2] != null) {
-				ItemStack var3 = new ItemStack(infuserItemStacks[var2].getItem(), 1, infuserItemStacks[var2].getItemDamage());
-				var1.add(var3);
-			}
-		}
-
-		if (var1.size() > 0) {
-			return InfuserRecipes.infusing().getInfusingResult(var1.toArray());
-		} else {
+		if (contents.isEmpty()) {
 			return null;
+		} else {
+			return InfuserRecipes.infusing().getInfusingResult(contents.toArray());
 		}
 	}
 
 	protected boolean canProcess() {
-		ItemStack var1 = getResultStack();
+		ItemStack stack = getResultStack();
 
-		if (var1 == null) {
+		if (stack == null) {
 			return false;
 		} else if (infuserItemStacks[0] == null) {
 			return true;
-		} else if (!infuserItemStacks[0].isItemEqual(var1)) {
+		} else if (!infuserItemStacks[0].isItemEqual(stack)) {
 			return false;
 		} else {
-			int var2 = infuserItemStacks[0].stackSize + var1.stackSize;
-			return var2 <= getInventoryStackLimit() && var2 <= var1.getMaxStackSize();
+			int stackSize = infuserItemStacks[0].stackSize + stack.stackSize;
+			return stackSize <= getInventoryStackLimit() && stackSize <= stack.getMaxStackSize();
 		}
 	}
 
 	protected void addProcessedItem() {
 		if (canProcess()) {
-			ItemStack var1 = getResultStack();
+			ItemStack result = getResultStack();
 
 			if (infuserItemStacks[0] == null) {
-				infuserItemStacks[0] = var1.copy();
-			} else if (infuserItemStacks[0].isItemEqual(var1) && infuserItemStacks[0].stackSize < var1.getMaxStackSize()) {
-				infuserItemStacks[0].stackSize += var1.stackSize;
+				infuserItemStacks[0] = result.copy();
+			} else if (infuserItemStacks[0].isItemEqual(result) && infuserItemStacks[0].stackSize < result.getMaxStackSize()) {
+				infuserItemStacks[0].stackSize += result.stackSize;
 			}
 
-			for (int var2 = 2; var2 <= 7; ++var2) {
-				if (infuserItemStacks[var2] != null) {
-					if (infuserItemStacks[var2].getItem() == ConfigItems.itemShard && infuserItemStacks[var2].getItemDamage() < 5 && worldObj.rand.nextBoolean()) {
+			for (int slot = 2; slot < infuserItemStacks.length; ++slot) {
+				if (infuserItemStacks[slot] != null) {
+					if (infuserItemStacks[slot].getItem() == ConfigItems.itemShard && infuserItemStacks[slot].getItemDamage() < 5 && worldObj.rand.nextBoolean()) {
 						if (infuserItemStacks[1] == null) {
 							infuserItemStacks[1] = new ItemStack(ConfigItems.itemShard, 1, 6);
 						} else if (infuserItemStacks[1].isItemEqual(new ItemStack(ConfigItems.itemShard, 1, 6)) && infuserItemStacks[1].stackSize < 64) {
 							++infuserItemStacks[1].stackSize;
 						} else {
-							// throw items into the world
+							InventoryHelper.emptyInventory(worldObj, xCoord, yCoord, zCoord);
 						}
 					}
 
-					--infuserItemStacks[var2].stackSize;
+					--infuserItemStacks[slot].stackSize;
 
-					if (infuserItemStacks[var2].stackSize <= 0) {
-						infuserItemStacks[var2] = null;
+					if (infuserItemStacks[slot].stackSize <= 0) {
+						infuserItemStacks[slot] = null;
 					}
 				}
 			}
@@ -296,12 +300,10 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 	}
 
 	@Override
-	public void openInventory() {
-	}
+	public void openInventory() {}
 
 	@Override
-	public void closeInventory() {
-	}
+	public void closeInventory() {}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
@@ -328,5 +330,9 @@ public class TileInfuser extends TileRotatable implements ISidedInventory {
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
 		return canInsertItem(slot, stack, side);
+	}
+
+	public boolean hasConnectedSide(int side) {
+		return false;
 	}
 }

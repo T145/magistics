@@ -125,8 +125,8 @@ dependencies {
 		compile fileTree(dir: 'lib', include: '*.jar')
 	}
 	
-	compile 'mcp.mobius.waila:Waila:1.5.10_1.7.10:dev'
-	compile "mantle:Mantle:1.7.10-0.3.2.jenkins187:deobf"
+	//compile 'mcp.mobius.waila:Waila:1.5.10_1.7.10:dev'
+	//compile 'mantle:Mantle:1.7.10-0.3.2.jenkins187:deobf'
 }
 
 build {

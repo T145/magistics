@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.containers.ContainerInfuserDark;
-import T145.magistics.pulses.core.CorePulse;
+import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import cpw.mods.fml.common.Loader;
@@ -22,9 +22,9 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 public abstract class CommonProxy implements IGuiHandler {
 	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "plugins"));
-	protected static Map<String, CorePulse> pulses = new HashMap<String, CorePulse>();
+	protected static Map<String, ServerPulse> pulses = new HashMap<String, ServerPulse>();
 
-	public void addPulse(String modid, CorePulse pulse) {
+	public void addPulse(String modid, ServerPulse pulse) {
 		if (Loader.isModLoaded(modid)) {
 			pulsar.registerPulse(pulse);
 		}

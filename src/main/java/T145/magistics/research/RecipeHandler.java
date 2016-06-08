@@ -10,10 +10,12 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemShardFragment;
+import T145.magistics.lib.crafting.InfuserRecipes;
 
 public class RecipeHandler {
 	public static Map<String, Object> recipes = new HashMap<String, Object>();
@@ -42,5 +44,10 @@ public class RecipeHandler {
 		}));
 
 		ConfigResearch.recipes.putAll(recipes);
+
+		InfuserRecipes.infusing().addInfusing(new ItemStack(ConfigItems.itemResource, 1, 1), 6, new ItemStack[] {
+			new ItemStack(Items.glowstone_dust),
+			new ItemStack(Items.redstone)
+		});
 	}
 }

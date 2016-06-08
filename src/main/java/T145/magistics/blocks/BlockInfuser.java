@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -19,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.Magistics;
+import T145.magistics.lib.InventoryHelper;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import T145.magistics.tiles.TileRotatable;
@@ -198,5 +200,14 @@ public class BlockInfuser extends BlockContainer {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int side) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+
+		if (tile != null && tile instanceof IInventory) {
+			InventoryHelper.emptyInventory(world, x, y, z);
+		}
 	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.pulses.core.CorePulse;
+import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import cpw.mods.fml.relauncher.Side;
@@ -16,8 +17,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerRenderInformation() {
-		for (CorePulse pulse : pulses.values()) {
-			pulse.registerRenderInformation();
+		for (ServerPulse pulse : pulses.values()) {
+			if (pulse instanceof CorePulse) {
+				CorePulse core = (CorePulse) pulse;
+				core.registerRenderInformation();
+			}
 		}
 	}
 
