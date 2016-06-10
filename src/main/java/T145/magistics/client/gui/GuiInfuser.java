@@ -30,23 +30,14 @@ public class GuiInfuser extends GuiContainer {
 		drawTexturedModalRect(var5, var6, 0, 0, xSize, ySize);
 		int var7;
 
-		if (infuserInventory.isCooking()) {
+		if (infuserInventory.isCrafting()) {
 			var7 = infuserInventory.getCookProgressScaled(46);
 			drawTexturedModalRect(var5 + 160, var6 + 151 - var7, 176, 46 - var7, 9, var7);
 		}
 
-		if (infuserInventory.boost > 0) {
+		if (infuserInventory.getBoost() > 0) {
 			var7 = infuserInventory.getBoostScaled();
 			drawTexturedModalRect(var5 + 161, var6 + 38 - var7, 192, 30 - var7, 7, var7);
 		}
-
-		/*
-		 * mc.getTextureManager().bindTexture(new ResourceLocation("magistics",
-		 * ""));
-		 * 
-		 * if (infuserInventory.getUpgrades()[0] >= 0) {
-		 * drawTexturedModalRect(var5 + 8, var6 + 128, 16 *
-		 * infuserInventory.getUpgrades()[0], 32, 16, 16); }
-		 */
 	}
 }

@@ -1,4 +1,4 @@
 package T145.magistics.tiles;
 
-public class TileChthonianFurnace extends TileRotatable {
+public class TileChthonianFurnace extends TileMagistics {
 }

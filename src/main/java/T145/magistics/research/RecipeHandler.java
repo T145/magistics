@@ -45,9 +45,9 @@ public class RecipeHandler {
 
 		ConfigResearch.recipes.putAll(recipes);
 
-		InfuserRecipes.infusing().addInfusing(new ItemStack(ConfigItems.itemResource, 1, 1), 6, new ItemStack[] {
+		InfuserRecipes.infusing().addInfusingRecipe(new ItemStack(ConfigItems.itemResource, 1, 1), new AspectList().add(Aspect.FIRE, 6).add(Aspect.LIGHT, 6), new ItemStack[] {
 			new ItemStack(Items.glowstone_dust),
 			new ItemStack(Items.redstone)
-		});
+		}, 60);
 	}
 }

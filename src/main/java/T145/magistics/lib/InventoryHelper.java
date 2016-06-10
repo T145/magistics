@@ -17,6 +17,45 @@ import thaumcraft.common.lib.utils.InventoryUtils;
 public class InventoryHelper {
 	private static final Random RAND = new Random();
 
+	public static ItemStack decrStackSize(IInventory inv, int slot, int size) {
+		ItemStack item = inv.getStackInSlot(slot);
+
+		if (item != null) {
+			if (item.stackSize <= size) {
+				inv.setInventorySlotContents(slot, null);
+				inv.markDirty();
+				return item;
+			}
+
+			ItemStack newStack = item.splitStack(size);
+
+			if (item.stackSize == 0) {
+				inv.setInventorySlotContents(slot, null);
+			} else {
+				inv.setInventorySlotContents(slot, item);
+			}
+
+			inv.markDirty();
+			return newStack;
+		}
+
+		return null;
+	}
+
+	public static ItemStack getStackInSlotOnClosing(IInventory inv, int slot) {
+		ItemStack stack = inv.getStackInSlot(slot);
+		inv.setInventorySlotContents(slot, null);
+		return stack;
+	}
+
+	public static void setInventorySlotContents(IInventory inv, ItemStack[] contents, int slot, ItemStack stack) {
+		contents[slot] = stack;
+
+		if (stack != null && stack.stackSize > inv.getInventoryStackLimit()) {
+			stack.stackSize = inv.getInventoryStackLimit();
+		}
+	}
+
 	public static void removeItem(IInventory inv, ItemStack target) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			if (inv.getStackInSlot(i) != null) {

@@ -1,8 +1,5 @@
 package T145.magistics.client.render.tiles;
 
-import java.util.Random;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,8 +7,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import thaumcraft.client.fx.particles.FXWisp;
 import thaumcraft.client.lib.UtilsFX;
+import thaumcraft.common.Thaumcraft;
 import T145.magistics.tiles.TileInfuser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,14 +17,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderInfuser extends TileEntitySpecialRenderer {
 	public static final TileEntitySpecialRenderer INSTANCE = new RenderInfuser();
 
-	private void drawDisk(double x, double y, double z, int facing, boolean active, boolean isDark) {
+	private void drawDisk(TileInfuser infuser, double x, double y, double z, boolean isDark) {
 		Tessellator t = Tessellator.instance;
 
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y, (float) z + 0.5F);
 		GL11.glPushMatrix();
 
-		switch (facing) {
+		switch (infuser.getFacing()) {
 		case 2:
 			GL11.glRotatef(180, 0F, 1F, 0F);
 			break;
@@ -43,7 +40,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer {
 		GL11.glDepthMask(false);
 		GL11.glEnable(GL11.GL_BLEND);
 
-		if (active) {
+		if (infuser.isCrafting()) {
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		} else {
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -59,7 +56,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer {
 		t.startDrawingQuads();
 		t.setBrightness(220);
 
-		if (active) {
+		if (infuser.isCrafting()) {
 			t.setColorRGBA_F(1F, 0.5F, 1F, 1F);
 		} else {
 			t.setColorRGBA_F(0F, 0F, 0F, 1F);
@@ -78,18 +75,14 @@ public class RenderInfuser extends TileEntitySpecialRenderer {
 	}
 
 	public void renderInfuserAt(TileInfuser infuser, double x, double y, double z) {
-		Random rand = infuser.getWorldObj().rand;
-		float offset = 0.5F - (rand.nextFloat() - rand.nextFloat()) * 0.35F;
-		float mod = 0.9475F;
+		float offsetY = 0.9475F;
+		drawDisk(infuser, x, y + offsetY, z, infuser.getBlockMetadata() == 1);
 
-		drawDisk(x, y + mod, z, infuser.getFacing(), infuser.isCooking(), infuser.getBlockMetadata() > 0);
-
-		if (infuser.isCooking() && rand.nextFloat() < infuser.infuserCookTime) {
-			float xx = infuser.xCoord + offset;
-			float yy = infuser.yCoord + mod;
-			float zz = infuser.zCoord + offset;
-			FXWisp fx = new FXWisp(infuser.getWorldObj(), xx, yy, zz, xx, yy + rand.nextFloat(), zz, 0.1F, infuser.getBlockMetadata() > 0 ? 5 : rand.nextInt(5));
-			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+		if (infuser.isCrafting() && infuser.getWorldObj().rand.nextFloat() < infuser.infuserCookTime) {
+			float xx = infuser.xCoord + 0.5F - (infuser.getWorldObj().rand.nextFloat() - infuser.getWorldObj().rand.nextFloat()) * 0.35F;
+			float yy = infuser.yCoord + offsetY;
+			float zz = infuser.zCoord + 0.5F - (infuser.getWorldObj().rand.nextFloat() - infuser.getWorldObj().rand.nextFloat()) * 0.35F;
+			Thaumcraft.proxy.wispFX3(infuser.getWorldObj(), xx, yy, zz, xx, yy + infuser.getWorldObj().rand.nextFloat(), zz, 0.1F, infuser.getBlockMetadata() == 2 ? 5 : infuser.getWorldObj().rand.nextInt(5), false, 0);
 		}
 	}
 

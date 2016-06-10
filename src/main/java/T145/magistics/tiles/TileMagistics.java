@@ -1,12 +1,9 @@
 package T145.magistics.tiles;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import thaumcraft.api.TileThaumcraft;
 
-public class TileRotatable extends TileEntity {
-	public TileRotatable() {
-	}
-
+public class TileMagistics extends TileThaumcraft {
 	private int facing = 0;
 
 	public int getFacing() {

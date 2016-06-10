@@ -30,7 +30,7 @@ public class GuiInfuserDark extends GuiContainer {
 		drawTexturedModalRect(var5, var6, 0, 0, xSize, ySize);
 		int var7;
 
-		if (infuserInventory.isCooking()) {
+		if (infuserInventory.isCrafting()) {
 			var7 = infuserInventory.getCookProgressScaled(46);
 			int var8 = infuserInventory.getDarkCookProgressScaled(46);
 			drawTexturedModalRect(var5 + 158, var6 + 151 - var7, 176, 46 - var7, 6, var7);
