@@ -1,7 +1,5 @@
 package T145.magistics.lib;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -15,8 +13,6 @@ import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class InventoryHelper {
-	private static final Random RAND = new Random();
-
 	public static ItemStack decrStackSize(IInventory inv, int slot, int size) {
 		ItemStack item = inv.getStackInSlot(slot);
 
@@ -78,12 +74,12 @@ public class InventoryHelper {
 				ItemStack stack = inv.getStackInSlot(slot);
 
 				if (stack != null) {
-					float f = RAND.nextFloat() * 0.8F + 0.1F;
-					float f1 = RAND.nextFloat() * 0.8F + 0.1F;
-					float f2 = RAND.nextFloat() * 0.8F + 0.1F;
+					float f = world.rand.nextFloat() * 0.8F + 0.1F;
+					float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+					float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
 
 					while (stack.stackSize > 0) {
-						int j1 = RAND.nextInt(21) + 10;
+						int j1 = world.rand.nextInt(21) + 10;
 
 						if (j1 > stack.stackSize) {
 							j1 = stack.stackSize;
@@ -97,9 +93,9 @@ public class InventoryHelper {
 						}
 
 						float f3 = 0.05F;
-						item.motionX = (double) ((float) RAND.nextGaussian() * f3);
-						item.motionY = (double) ((float) RAND.nextGaussian() * f3 + 0.2F);
-						item.motionZ = (double) ((float) RAND.nextGaussian() * f3);
+						item.motionX = (double) ((float) world.rand.nextGaussian() * f3);
+						item.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
+						item.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
 						world.spawnEntityInWorld(item);
 					}
 				}

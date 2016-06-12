@@ -53,9 +53,9 @@ item.shard_fragment.3.name=Terra Shard Fragment
 item.shard_fragment.4.name=Ordo Shard Fragment
 item.shard_fragment.5.name=Perdito Shard Fragment
 item.shard_fragment.6.name=Balanced Shard Fragment
+item.shard_dull.name=Dull Shard
 
 item.dawnstone.name=Dawnstone
-
 item.arcane_furnace.name=Infernal Furnace
 
 ####

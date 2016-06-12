@@ -40,6 +40,7 @@ import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
 import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
+import T145.magistics.items.ItemShardDull;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
 import T145.magistics.lib.CreativeTabCustom;
@@ -112,6 +113,7 @@ public class PulseThaumcraft extends CorePulse {
 		ThaumcraftApi.portableHoleBlackList.add(BlockArcaneWood.INSTANCE);
 
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
+		GameRegistry.registerItem(ItemShardDull.INSTANCE, ItemShardDull.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemDawnstone.INSTANCE, ItemDawnstone.INSTANCE.getUnlocalizedName());
 		RegistrationUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}

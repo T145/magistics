@@ -13,8 +13,10 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
+import T145.magistics.items.ItemShardDull;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.lib.crafting.InfuserRecipes;
+import T145.magistics.lib.crafting.MagisticsRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -60,17 +62,17 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
+		facing = tag.getByte("facing");
 		active = tag.getBoolean("active");
 		crafting = tag.getBoolean("crafting");
-		facing = tag.getByte("facing");
 		recipeEssentia.readFromNBT(tag);
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
+		tag.setByte("facing", (byte) facing);
 		tag.setBoolean("active", active);
 		tag.setBoolean("crafting", crafting);
-		tag.setByte("facing", (byte) facing);
 		recipeEssentia.writeToNBT(tag);
 	}
 
@@ -166,32 +168,32 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		angle = infuserBurnTime > 0 ? (infuserCookTime * 360) / infuserBurnTime : facing;
 
 		if (hasWorldObj()) {
-			ItemStack result = getResultStack();
+			MagisticsRecipe recipe = InfuserRecipes.infusing().getMatchingRecipe(inventoryStacks, isDark());
 			boolean cooked = false;
 			boolean isCooking = infuserCookTime > 0;
 
-			if (canProcess(result) && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+			if (canProcess(recipe) && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 				if (!active && !crafting) {
-					setAspects(getRecipeEssentia().copy());
+					setAspects(recipe.getAspects().copy());
 				}
 
 				active = true;
 
 				if (crafting) {
 					if (infuserCookTime == 0) {
-						infuserBurnTime = getRecipeBurnTime();
+						infuserBurnTime = recipe.getBurnTime();
 						markDirty();
 					}
 
 					if (soundDelay == 0) {
-						worldObj.playSoundEffect(xCoord + 0.5F, yCoord + 0.5, zCoord + 0.5F, isDark() ? "magistics:infuserdark" : "magistics:infuser", 0.2F, 1.0F);
+						worldObj.playSoundEffect(xCoord + 0.5F, yCoord + 0.5, zCoord + 0.5F, isDark() ? "magistics:infuserdark" : "magistics:infuser", 0.2F, 1F);
 						soundDelay = 62;
 					}
 
 					++infuserCookTime;
 
 					if (infuserCookTime >= infuserBurnTime && infuserCookTime > 0) {
-						addProcessedItem(result);
+						addProcessedItem(recipe.getResult(), recipe.getRecipe());
 						resetInfuser();
 					}
 				} else {
@@ -247,7 +249,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		active = false;
 	}
 
-	protected void addProcessedItem(ItemStack result) {
+	protected void addProcessedItem(ItemStack result, ItemStack[] recipe) {
 		if (inventoryStacks[0] == null) {
 			inventoryStacks[0] = result.copy();
 		} else if (inventoryStacks[0].isItemEqual(result) && inventoryStacks[0].stackSize < result.getMaxStackSize()) {
@@ -256,48 +258,48 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 		for (int slot = 2; slot < inventoryStacks.length; ++slot) {
 			if (inventoryStacks[slot] != null) {
-				if (inventoryStacks[slot].getItem() == ConfigItems.itemShard && inventoryStacks[slot].getItemDamage() < 5 && worldObj.rand.nextBoolean()) {
-					if (inventoryStacks[1] == null) {
-						inventoryStacks[1] = new ItemStack(ConfigItems.itemShard, 1, 6);
-					} else if (inventoryStacks[1].isItemEqual(new ItemStack(ConfigItems.itemShard, 1, 6)) && inventoryStacks[1].stackSize < 64) {
-						++inventoryStacks[1].stackSize;
-					} else {
-						InventoryUtils.dropItems(worldObj, xCoord, yCoord, zCoord);
+				for (ItemStack ingredient : recipe) {
+					if (InventoryUtils.areItemStacksEqualStrict(ingredient, inventoryStacks[slot])) {
+						if (inventoryStacks[slot].getItem() == ConfigItems.itemShard && worldObj.rand.nextBoolean()) {
+							ItemStack dullShard = new ItemStack(ItemShardDull.INSTANCE);
+
+							if (inventoryStacks[1] == null) {
+								inventoryStacks[1] = dullShard;
+							} else if (inventoryStacks[1].isItemEqual(dullShard) && inventoryStacks[1].stackSize < 64) {
+								++inventoryStacks[1].stackSize;
+							} else {
+								// drop the shard
+							}
+						}
+
+						--inventoryStacks[slot].stackSize;
+
+						if (inventoryStacks[slot].stackSize == 0) {
+							inventoryStacks[slot] = null;
+						}
 					}
-				}
-
-				--inventoryStacks[slot].stackSize;
-
-				if (inventoryStacks[slot].stackSize == 0) {
-					inventoryStacks[slot] = null;
 				}
 			}
 		}
 	}
 
-	protected boolean canProcess(ItemStack result) {
-		if (result == null) {
-			return false;
-		} else if (inventoryStacks[0] == null) {
-			return true;
-		} else if (!inventoryStacks[0].isItemEqual(result)) {
+	protected boolean canProcess(MagisticsRecipe recipe) {
+		if (recipe == null) {
 			return false;
 		} else {
-			int stackSize = inventoryStacks[0].stackSize + result.stackSize;
-			return stackSize <= getInventoryStackLimit() && stackSize <= result.getMaxStackSize();
+			ItemStack result = recipe.getResult();
+
+			if (result == null) {
+				return false;
+			} else if (inventoryStacks[0] == null) {
+				return true;
+			} else if (!inventoryStacks[0].isItemEqual(result)) {
+				return false;
+			} else {
+				int stackSize = inventoryStacks[0].stackSize + result.stackSize;
+				return stackSize <= getInventoryStackLimit() && stackSize <= result.getMaxStackSize();
+			}
 		}
-	}
-
-	protected ItemStack getResultStack() {
-		return InfuserRecipes.infusing().getInfusingResult(inventoryStacks, isDark());
-	}
-
-	protected AspectList getRecipeEssentia() {
-		return InfuserRecipes.infusing().getInfusingCost(inventoryStacks, isDark());
-	}
-
-	protected int getRecipeBurnTime() {
-		return InfuserRecipes.infusing().getInfusingTime(inventoryStacks, isDark());
 	}
 
 	@Override
