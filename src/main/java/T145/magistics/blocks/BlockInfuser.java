@@ -23,7 +23,6 @@ import T145.magistics.Magistics;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
-import T145.magistics.tiles.TileMagistics;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -96,7 +95,7 @@ public class BlockInfuser extends BlockContainer {
 		int metadata = world.getBlockMetadata(x, y, z);
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if (tile instanceof TileMagistics) {
+		if (tile instanceof TileInfuser) {
 			TileInfuser infuser = (TileInfuser) tile;
 
 			if (isDark(metadata)) {
@@ -184,18 +183,16 @@ public class BlockInfuser extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-		int facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if (tile != null && tile instanceof TileMagistics) {
-			TileMagistics rotatable = (TileMagistics) tile;
-			rotatable.setFacing(facing);
+		if (tile != null && tile instanceof TileInfuser) {
+			((TileInfuser) tile).facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		}
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && !player.isSneaking()) {
+		if (!world.isRemote) {
 			player.openGui(Magistics.instance, world.getBlockMetadata(x, y, z), world, x, y, z);
 		}
 

@@ -34,10 +34,6 @@ public class InfuserRecipes {
 		return result;
 	}
 
-	public ItemStack getInfusingResult(ItemStack[] recipe) {
-		return getInfusingResult(recipe, false);
-	}
-
 	public AspectList getInfusingCost(ItemStack[] recipe, boolean isDark) {
 		MagisticsRecipe match = getMatchingRecipe(recipe);
 		AspectList result = null;
@@ -49,10 +45,6 @@ public class InfuserRecipes {
 		return result;
 	}
 
-	public AspectList getInfusingCost(ItemStack[] recipe) {
-		return getInfusingCost(recipe, false);
-	}
-
 	public int getInfusingTime(ItemStack[] recipe, boolean isDark) {
 		MagisticsRecipe match = getMatchingRecipe(recipe);
 		int result = 0;
@@ -62,10 +54,6 @@ public class InfuserRecipes {
 		}
 
 		return result;
-	}
-
-	public int getInfusingTime(ItemStack[] recipe) {
-		return getInfusingTime(recipe, false);
 	}
 
 	private MagisticsRecipe getMatchingRecipe(ItemStack[] recipe) {

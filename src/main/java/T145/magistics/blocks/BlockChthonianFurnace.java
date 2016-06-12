@@ -10,7 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileChthonianFurnace;
-import T145.magistics.tiles.TileMagistics;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,12 +49,10 @@ public class BlockChthonianFurnace extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-		int facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		TileEntity tile = world.getTileEntity(x, y, z);
 
-		if (tile != null && tile instanceof TileMagistics) {
-			TileMagistics rotatable = (TileMagistics) tile;
-			rotatable.setFacing(facing);
+		if (tile != null && tile instanceof TileChthonianFurnace) {
+			((TileChthonianFurnace) tile).facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		}
 	}
 }

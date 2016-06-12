@@ -6,19 +6,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import T145.magistics.Magistics;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.lib.crafting.InfuserRecipes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileMagistics implements ISidedInventory, IAspectContainer {
+public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAspectContainer {
 	protected ItemStack[] inventoryStacks = new ItemStack[8];
 	protected AspectList recipeEssentia = new AspectList();
 
@@ -27,10 +27,11 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 
 	public int infuserCookTime;
 	public int infuserBurnTime;
+	public int facing = 0;
 
 	private int boostDelay = 20;
 	protected int boost = 0;
-	protected int angle = getFacing();
+	protected int angle = 0;
 	protected int soundDelay = 0;
 
 	public boolean isActive() {
@@ -53,10 +54,15 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 		return angle;
 	}
 
+	public boolean isDark() {
+		return false;
+	}
+
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
 		active = tag.getBoolean("active");
 		crafting = tag.getBoolean("crafting");
+		facing = tag.getByte("facing");
 		recipeEssentia.readFromNBT(tag);
 	}
 
@@ -64,6 +70,7 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 	public void writeCustomNBT(NBTTagCompound tag) {
 		tag.setBoolean("active", active);
 		tag.setBoolean("crafting", crafting);
+		tag.setByte("facing", (byte) facing);
 		recipeEssentia.writeToNBT(tag);
 	}
 
@@ -138,22 +145,14 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 		return true;
 	}
 
-	private int cookTimeRatio(int multiplier) {
-		if (infuserBurnTime == 0) {
-			return 0;
-		} else {
-			return infuserCookTime / (infuserBurnTime * multiplier);
-		}
-	}
-
 	@SideOnly(Side.CLIENT)
 	public int getCookProgressScaled(int time) {
-		return Math.round(cookTimeRatio(time));
+		return infuserBurnTime > 0 ? (infuserCookTime * time) / infuserBurnTime : 0;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getBoostScaled() {
-		return Math.round(0.1F + (boost / 2)) * 6;
+		return Math.round(0.1F + (float) boost / 2F) * 6;
 	}
 
 	@Override
@@ -164,24 +163,16 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 			--soundDelay;
 		}
 
-		if (active) {
-			angle = cookTimeRatio(360);
-
-			if (angle == 0) {
-				angle = getFacing();
-			}
-			
-			Magistics.logger.info("Angle: " + angle);
-		}
+		angle = infuserBurnTime > 0 ? (infuserCookTime * 360) / infuserBurnTime : facing;
 
 		if (hasWorldObj()) {
-			boolean dirty = false;
+			ItemStack result = getResultStack();
 			boolean cooked = false;
 			boolean isCooking = infuserCookTime > 0;
 
-			if (canProcess() && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
+			if (canProcess(result) && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 				if (!active && !crafting) {
-					setAspects(getRecipeEssentia());
+					setAspects(getRecipeEssentia().copy());
 				}
 
 				active = true;
@@ -189,48 +180,41 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 				if (crafting) {
 					if (infuserCookTime == 0) {
 						infuserBurnTime = getRecipeBurnTime();
-						dirty = true;
+						markDirty();
+					}
+
+					if (soundDelay == 0) {
+						worldObj.playSoundEffect(xCoord + 0.5F, yCoord + 0.5, zCoord + 0.5F, isDark() ? "magistics:infuserdark" : "magistics:infuser", 0.2F, 1.0F);
+						soundDelay = 62;
 					}
 
 					++infuserCookTime;
 
 					if (infuserCookTime >= infuserBurnTime && infuserCookTime > 0) {
-						addProcessedItem();
-						infuserBurnTime = 0;
-						infuserCookTime = 0;
-						crafting = false;
-						active = false;
+						addProcessedItem(result);
+						resetInfuser();
 					}
 				} else {
-					// drain essentia
-					for (Aspect aspect : recipeEssentia.getAspects()) {
-						if (recipeEssentia.getAmount(aspect) != 0) {
-							if (EssentiaHandler.drainEssentia(this, aspect, ForgeDirection.UP, 6)) {
-								recipeEssentia.reduce(aspect, 1);
-								worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-								markDirty();
-								return;
+					if (recipeEssentia.visSize() > 0) {
+						for (Aspect aspect : recipeEssentia.getAspects()) {
+							if (recipeEssentia.getAmount(aspect) > 0) {
+								if (EssentiaHandler.drainEssentia(this, aspect, ForgeDirection.UP, 6)) {
+									recipeEssentia.reduce(aspect, 1);
+									worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+									markDirty();
+									return;
+								}
 							}
 						}
-					}
-
-					// begin crafting
-					if (recipeEssentia.visSize() == 0) {
+						return;
+					} else {
 						recipeEssentia = new AspectList();
 						crafting = true;
 					}
 				}
 
-				// check for cancel all activity
-				if (recipeEssentia.visSize() != 0 && recipeEssentia != getRecipeEssentia()) {
-					infuserBurnTime = 0;
-					infuserCookTime = 0;
-					recipeEssentia.aspects.clear();
-					worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.fizz", 1F, 1.6F);
-				}
-
 				if (infuserCookTime > 0 != isCooking) {
-					dirty = true;
+					markDirty();
 				}
 
 				if (boostDelay <= 0 || boostDelay == 10) {
@@ -245,29 +229,25 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 				} else {
 					--boostDelay;
 				}
-			}
-
-			if (dirty) {
-				markDirty();
-			}
-		}
-	}
-
-	protected void consumeIngredients() {
-		for (int slot = 2; slot < getSizeInventory(); ++slot) {
-			if (inventoryStacks[slot] != null) {
-				--inventoryStacks[slot].stackSize;
-
-				if (inventoryStacks[slot].stackSize == 0) {
-					inventoryStacks[slot] = inventoryStacks[slot].getItem().getContainerItem(inventoryStacks[slot]);
+			} else {
+				if (crafting) {
+					worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, "random.fizz", 1F, 1.6F);
 				}
+
+				resetInfuser();
 			}
 		}
 	}
 
-	protected void addProcessedItem() {
-		ItemStack result = getResultStack();
+	private void resetInfuser() {
+		infuserBurnTime = 0;
+		infuserCookTime = 0;
+		recipeEssentia = new AspectList();
+		crafting = false;
+		active = false;
+	}
 
+	protected void addProcessedItem(ItemStack result) {
 		if (inventoryStacks[0] == null) {
 			inventoryStacks[0] = result.copy();
 		} else if (inventoryStacks[0].isItemEqual(result) && inventoryStacks[0].stackSize < result.getMaxStackSize()) {
@@ -288,38 +268,36 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 
 				--inventoryStacks[slot].stackSize;
 
-				if (inventoryStacks[slot].stackSize <= 0) {
+				if (inventoryStacks[slot].stackSize == 0) {
 					inventoryStacks[slot] = null;
 				}
 			}
 		}
 	}
 
-	protected boolean canProcess() {
-		ItemStack stack = getResultStack();
-
-		if (stack == null) {
+	protected boolean canProcess(ItemStack result) {
+		if (result == null) {
 			return false;
 		} else if (inventoryStacks[0] == null) {
 			return true;
-		} else if (!inventoryStacks[0].isItemEqual(stack)) {
+		} else if (!inventoryStacks[0].isItemEqual(result)) {
 			return false;
 		} else {
-			int stackSize = inventoryStacks[0].stackSize + stack.stackSize;
-			return stackSize <= getInventoryStackLimit() && stackSize <= stack.getMaxStackSize();
+			int stackSize = inventoryStacks[0].stackSize + result.stackSize;
+			return stackSize <= getInventoryStackLimit() && stackSize <= result.getMaxStackSize();
 		}
 	}
 
 	protected ItemStack getResultStack() {
-		return InfuserRecipes.infusing().getInfusingResult(inventoryStacks);
+		return InfuserRecipes.infusing().getInfusingResult(inventoryStacks, isDark());
 	}
 
 	protected AspectList getRecipeEssentia() {
-		return InfuserRecipes.infusing().getInfusingCost(inventoryStacks);
+		return InfuserRecipes.infusing().getInfusingCost(inventoryStacks, isDark());
 	}
 
 	protected int getRecipeBurnTime() {
-		return InfuserRecipes.infusing().getInfusingTime(inventoryStacks);
+		return InfuserRecipes.infusing().getInfusingTime(inventoryStacks, isDark());
 	}
 
 	@Override
@@ -350,7 +328,7 @@ public class TileInfuser extends TileMagistics implements ISidedInventory, IAspe
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return slot > 1 && !active;
+		return slot > 1;
 	}
 
 	@Override

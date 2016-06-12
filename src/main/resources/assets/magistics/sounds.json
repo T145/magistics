@@ -1,0 +1,4 @@
+{
+  "infuser": {"category": "master","sounds": [{"name": "infuser","stream": false}]},
+  "infuserdark": {"category": "master","sounds": [{"name": "infuserdark","stream": false}]}
+}

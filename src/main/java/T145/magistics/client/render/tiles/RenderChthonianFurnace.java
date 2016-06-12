@@ -26,7 +26,7 @@ public class RenderChthonianFurnace extends TileEntitySpecialRenderer {
 		GL11.glScalef(1F, -1F, -1F);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 
-		switch (furnace.getFacing()) {
+		switch (furnace.facing) {
 		case 2:
 			GL11.glRotatef(180, 0F, 1F, 0F);
 			break;

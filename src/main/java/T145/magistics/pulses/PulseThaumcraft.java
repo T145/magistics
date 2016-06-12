@@ -155,6 +155,7 @@ public class PulseThaumcraft extends CorePulse {
 		RenderingRegistry.registerBlockHandler(RenderBlockEverfullUrn.INSTANCE);
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, RenderInfuser.INSTANCE);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, RenderInfuser.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockInfuser.INSTANCE);
 
 		int newBlockLootCrateRI = RenderingRegistry.getNextAvailableRenderId();
