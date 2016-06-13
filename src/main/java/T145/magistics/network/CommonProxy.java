@@ -3,8 +3,6 @@ package T145.magistics.network;
 import java.util.HashMap;
 import java.util.Map;
 
-import mantle.pulsar.config.ForgeCFG;
-import mantle.pulsar.control.PulseManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -21,29 +19,28 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
-	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "Modules: Disabling these will disable a chunk of the mod"));
 	protected static Map<String, ServerPulse> pulses = new HashMap<String, ServerPulse>();
 
 	public void addPulse(String modid, ServerPulse pulse) {
 		if (Loader.isModLoaded(modid)) {
-			pulsar.registerPulse(pulse);
+			Magistics.pulsar.registerPulse(pulse);
 		}
 
-		if (pulsar.isPulseLoaded(modid)) {
+		if (Magistics.pulsar.isPulseLoaded(modid)) {
 			pulses.put(modid, pulse);
 		}
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		pulsar.preInit(event);
+		Magistics.pulsar.preInit(event);
 	}
 
 	public void init(FMLInitializationEvent event) {
-		pulsar.init(event);
+		Magistics.pulsar.init(event);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		pulsar.postInit(event);
+		Magistics.pulsar.postInit(event);
 	}
 
 	public void registerRenderInformation() {}

@@ -1,5 +1,7 @@
 package T145.magistics;
 
+import mantle.pulsar.config.ForgeCFG;
+import mantle.pulsar.control.PulseManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -40,6 +42,8 @@ public class Magistics {
 	public static CreativeTabs tabMagistics = new CreativeTabMagistics();
 	public static ConfigHandler configHandler;
 	public static Logger logger;
+
+	public static PulseManager pulsar = new PulseManager(MODID, new ForgeCFG("MagisticsModules", "Modules: Disabling these will disable a chunk of the mod"));
 
 	public boolean isDeobfuscated() {
 		return VERSION == "$version";
