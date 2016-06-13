@@ -42,6 +42,10 @@ tc.research_name.ARCANEREDSTONELAMP=Arcane Redstone Lamp
 tc.research_text.ARCANEREDSRONELAMP=A switch for the large source of light
 tc.research_page.ARCANEREDSTONELAMP.1=Adding a few simple mechanisms to an Arcane Lamp block its light and allow it to be activated with a redstone signal.
 
+tc.research_name.DAWNSTONE=Dawnstone
+tc.research_text.DAWNSTONE=LET THERE BE SUNLIGHT!!!
+tc.research_page.DAWNSTONE.1=The Dawnstone is a very strange artifact. If the stone is broken with a right click after the sun has passed noon, then time itself will accelerate until the sun is once again just starting to rise above the horizon. How it accomplishes this is a mystery, as the stone itself contains very little power, but the uses of this device are more than obvious to those who fear the night and the denizens that lurk deep within its shadows.
+
 ####
 # Items
 ###
