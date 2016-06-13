@@ -1,12 +1,11 @@
 package T145.magistics.network;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.containers.ContainerInfuserDark;
 import T145.magistics.pulses.core.ServerPulse;
@@ -19,28 +18,30 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
-	protected static Map<String, ServerPulse> pulses = new HashMap<String, ServerPulse>();
+	protected List<ServerPulse> pulses = new ArrayList<ServerPulse>();
 
-	public void addPulse(String modid, ServerPulse pulse) {
-		if (Loader.isModLoaded(modid)) {
-			Magistics.pulsar.registerPulse(pulse);
-		}
-
-		if (Magistics.pulsar.isPulseLoaded(modid)) {
-			pulses.put(modid, pulse);
+	public void addPulse(ServerPulse pulse) {
+		if (Loader.isModLoaded(pulse.getModId())) {
+			pulses.add(pulse);
 		}
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		Magistics.pulsar.preInit(event);
+		for (ServerPulse pulse : pulses) {
+			pulse.preInit(event);
+		}
 	}
 
 	public void init(FMLInitializationEvent event) {
-		Magistics.pulsar.init(event);
+		for (ServerPulse pulse : pulses) {
+			pulse.init(event);
+		}
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		Magistics.pulsar.postInit(event);
+		for (ServerPulse pulse : pulses) {
+			pulse.postInit(event);
+		}
 	}
 
 	public void registerRenderInformation() {}

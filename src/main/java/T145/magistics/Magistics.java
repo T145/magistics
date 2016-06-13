@@ -1,13 +1,10 @@
 package T145.magistics;
 
-import mantle.pulsar.config.ForgeCFG;
-import mantle.pulsar.control.PulseManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Logger;
 
-import thaumcraft.common.Thaumcraft;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.lib.events.WorldEventHandler;
@@ -43,8 +40,6 @@ public class Magistics {
 	public static ConfigHandler configHandler;
 	public static Logger logger;
 
-	public static PulseManager pulsar = new PulseManager(MODID, new ForgeCFG("MagisticsModules", "Modules: Disabling these will disable a chunk of the mod"));
-
 	public boolean isDeobfuscated() {
 		return VERSION == "$version";
 	}
@@ -65,13 +60,12 @@ public class Magistics {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
+		configHandler = new ConfigHandler(event);
 		loadMetadata();
 
-		proxy.addPulse(Thaumcraft.MODID, new PulseThaumcraft());
-		proxy.addPulse("Waila", new PulseWaila());
+		proxy.addPulse(new PulseThaumcraft());
+		proxy.addPulse(new PulseWaila());
 		proxy.preInit(event);
-
-		configHandler = new ConfigHandler(event);
 	}
 
 	@EventHandler

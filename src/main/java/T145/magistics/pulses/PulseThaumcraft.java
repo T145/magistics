@@ -1,7 +1,5 @@
 package T145.magistics.pulses;
 
-import mantle.pulsar.pulse.Handler;
-import mantle.pulsar.pulse.Pulse;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.ItemStack;
@@ -65,9 +63,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Pulse(id = Thaumcraft.MODID, forced = true, modsRequired = Thaumcraft.MODID)
 public class PulseThaumcraft extends CorePulse {
-	@Handler
+	@Override
+	public String getModId() {
+		return "Thaumcraft";
+	}
+
+	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		BiomeGenBase.getBiome(Config.biomeEerieID).getSpawnableList(EnumCreatureType.monster).add(new SpawnListEntry(EntityPech.class, 3, 1, 1));
 
@@ -80,7 +82,7 @@ public class PulseThaumcraft extends CorePulse {
 		}
 	}
 
-	@Handler
+	@Override
 	public void init(FMLInitializationEvent event) {
 		GameRegistry.registerTileEntity(TileNetherFurnace.class, TileNetherFurnace.class.getSimpleName());
 		GameRegistry.registerBlock(BlockNetherFurnace.ACTIVE, BlockNetherFurnace.ACTIVE.getUnlocalizedName() + "_on");
@@ -120,7 +122,7 @@ public class PulseThaumcraft extends CorePulse {
 		RegistrationUtil.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 
-	@Handler
+	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		if (Magistics.configHandler.sortTCTabsContent) {
 			CreativeTabs tabTCBasics = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".basics", ConfigItems.itemThaumonomicon);

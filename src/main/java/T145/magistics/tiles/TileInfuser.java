@@ -17,6 +17,7 @@ import T145.magistics.items.ItemShardDull;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.lib.crafting.InfuserRecipes;
 import T145.magistics.lib.crafting.MagisticsRecipe;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -348,6 +349,11 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 	}
 
 	public boolean hasConnectedSide(int side) {
+		if (Loader.isModLoaded("BuildCraft|Transport")) {
+		}
+
+		if (Loader.isModLoaded("ThermalDynamics")) {
+		}
 		return false;
 	}
 

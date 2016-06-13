@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerRenderInformation() {
-		for (ServerPulse pulse : pulses.values()) {
+		for (ServerPulse pulse : pulses) {
 			if (pulse instanceof CorePulse) {
 				CorePulse core = (CorePulse) pulse;
 				core.registerRenderInformation();
