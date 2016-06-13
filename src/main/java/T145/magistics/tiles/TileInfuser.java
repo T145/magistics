@@ -30,11 +30,11 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 	public int infuserCookTime;
 	public int infuserBurnTime;
 	public int facing = 0;
+	public int boost = 0;
 
-	private int boostDelay = 20;
-	protected int boost = 0;
 	protected int angle = 0;
 	protected int soundDelay = 0;
+	private int boostDelay = 20;
 
 	public boolean isActive() {
 		return active;
@@ -42,14 +42,6 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 	public boolean isCrafting() {
 		return crafting;
-	}
-
-	public int getBoost() {
-		return boost;
-	}
-
-	public void setBoost(int amount) {
-		boost = amount;
 	}
 
 	public int getDiskAngle() {
