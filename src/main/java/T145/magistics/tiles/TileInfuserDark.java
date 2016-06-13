@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileInfuserDark extends TileInfuser {
-	private TileEldritchObelisk obelisk = null;
+	protected int[] obeliskQuards = new int[3];
 	private boolean nearObelisk = false;
 	private int sparkDelay = 40;
 
@@ -21,11 +21,15 @@ public class TileInfuserDark extends TileInfuser {
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
+		super.readCustomNBT(tag);
+		obeliskQuards = tag.getIntArray("obeliskQuards");
 		nearObelisk = tag.getBoolean("nearObelisk");
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
+		super.writeCustomNBT(tag);
+		tag.setIntArray("obeliskQuards", obeliskQuards);
 		tag.setBoolean("nearObelisk", nearObelisk);
 	}
 
@@ -40,7 +44,7 @@ public class TileInfuserDark extends TileInfuser {
 			super.updateEntity();
 
 			if (sparkDelay <= 0) {
-				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap(obelisk.xCoord + 0.5F, obelisk.yCoord + 0.5F, obelisk.zCoord + 0.5F, xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32.0D));
+				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap(obeliskQuards[0] + 0.5F, obeliskQuards[1] + 0.5F, obeliskQuards[2] + 0.5F, xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32.0D));
 				sparkDelay = 80;
 			} else {
 				--sparkDelay;
@@ -51,10 +55,15 @@ public class TileInfuserDark extends TileInfuser {
 			for (int x = -range; x <= range; ++x) {
 				for (int y = -range; y <= range; ++y) {
 					for (int z = -range; z <= range; ++z) {
-						TileEntity tile = worldObj.getTileEntity(xCoord + x, yCoord + y, zCoord + z);
+						int xx = xCoord + x;
+						int yy = yCoord + y;
+						int zz = zCoord + z;
+						TileEntity tile = worldObj.getTileEntity(xx, yy, zz);
 
 						if (tile != null && tile instanceof TileEldritchObelisk) {
-							obelisk = (TileEldritchObelisk) tile;
+							obeliskQuards[0] = xx;
+							obeliskQuards[1] = yy;
+							obeliskQuards[2] = zz;
 							nearObelisk = true;
 							return;
 						}
@@ -62,7 +71,6 @@ public class TileInfuserDark extends TileInfuser {
 				}
 			}
 
-			obelisk = null;
 			nearObelisk = false;
 		}
 	}
