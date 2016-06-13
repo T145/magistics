@@ -20,8 +20,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
-public abstract class CommonProxy implements IGuiHandler {
-	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "plugins"));
+public class CommonProxy implements IGuiHandler {
+	protected static PulseManager pulsar = new PulseManager(Magistics.MODID, new ForgeCFG(Magistics.MODID, "Modules: Disabling these will disable a chunk of the mod"));
 	protected static Map<String, ServerPulse> pulses = new HashMap<String, ServerPulse>();
 
 	public void addPulse(String modid, ServerPulse pulse) {
@@ -46,7 +46,7 @@ public abstract class CommonProxy implements IGuiHandler {
 		pulsar.postInit(event);
 	}
 
-	public abstract void registerRenderInformation();
+	public void registerRenderInformation() {}
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -63,5 +63,7 @@ public abstract class CommonProxy implements IGuiHandler {
 	}
 
 	@Override
-	public abstract Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		return null;
+	}
 }

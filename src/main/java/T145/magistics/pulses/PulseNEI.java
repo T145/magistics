@@ -12,7 +12,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Pulse(id = "NotEnoughItems", modsRequired = "NotEnoughItems")
-public class PulseNotEnoughItems extends ServerPulse {
+public class PulseNEI extends ServerPulse {
 	private Injector nei = new Injector("codechicken.nei.api.API");
 
 	private void hideItem(ItemStack item) {

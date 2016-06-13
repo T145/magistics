@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class TileInfuserDark extends TileInfuser {
 	protected int[] obeliskQuards = new int[3];
 	private boolean nearObelisk = false;
-	private int sparkDelay = 40;
+	private int sparkDelay = 60;
 
 	@Override
 	public boolean isDark() {
@@ -45,7 +45,7 @@ public class TileInfuserDark extends TileInfuser {
 
 			if (sparkDelay <= 0) {
 				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap(obeliskQuards[0] + 0.5F, obeliskQuards[1] + 0.5F, obeliskQuards[2] + 0.5F, xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32.0D));
-				sparkDelay = 80;
+				sparkDelay = 100;
 			} else {
 				--sparkDelay;
 			}

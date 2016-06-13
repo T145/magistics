@@ -62,6 +62,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Pulse(id = Thaumcraft.MODID, forced = true, modsRequired = Thaumcraft.MODID)
 public class PulseThaumcraft extends CorePulse {
@@ -144,6 +146,7 @@ public class PulseThaumcraft extends CorePulse {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerRenderInformation() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryTrapped.class, RenderChestHungryTrapped.INSTANCE);
 		RenderingRegistry.registerBlockHandler(new RenderBlockChest(BlockChestHungryTrapped.INSTANCE.getRenderType(), new TileChestHungryTrapped()));
