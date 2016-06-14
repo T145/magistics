@@ -80,7 +80,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 			NBTTagCompound slot = items.getCompoundTagAt(i);
 			byte pos = slot.getByte("Slot");
 
-			if (pos >= 0 && pos < inventoryStacks.length) {
+			if (pos >= 0 && pos < getSizeInventory()) {
 				inventoryStacks[pos] = ItemStack.loadItemStackFromNBT(slot);
 			}
 		}
@@ -98,7 +98,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 		NBTTagList items = new NBTTagList();
 
-		for (int i = 0; i < inventoryStacks.length; ++i) {
+		for (int i = 0; i < getSizeInventory(); ++i) {
 			if (inventoryStacks[i] != null) {
 				NBTTagCompound slot = new NBTTagCompound();
 				slot.setByte("Slot", (byte) i);
@@ -249,11 +249,11 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 			inventoryStacks[0].stackSize += result.stackSize;
 		}
 
-		for (int slot = 2; slot < inventoryStacks.length; ++slot) {
+		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (inventoryStacks[slot] != null) {
 				for (ItemStack ingredient : recipe) {
 					if (InventoryUtils.areItemStacksEqualStrict(ingredient, inventoryStacks[slot])) {
-						if (inventoryStacks[slot].getItem() == ConfigItems.itemShard && worldObj.rand.nextBoolean()) {
+						if (!isDark() && inventoryStacks[slot].getItem() == ConfigItems.itemShard && worldObj.rand.nextBoolean()) {
 							ItemStack dullShard = new ItemStack(ItemShardDull.INSTANCE);
 
 							if (inventoryStacks[1] == null) {
@@ -349,11 +349,6 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 	}
 
 	public boolean hasConnectedSide(int side) {
-		if (Loader.isModLoaded("BuildCraft|Transport")) {
-		}
-
-		if (Loader.isModLoaded("ThermalDynamics")) {
-		}
 		return false;
 	}
 

@@ -52,5 +52,8 @@ public class RecipeHandler {
 		InfuserRecipes.infusing().addInfusingRecipe(new ItemStack(ConfigItems.itemResource, 1, 17), new AspectList().add(Aspect.DARKNESS, 8).add(Aspect.VOID, 8).add(Aspect.ELDRITCH, 2), new ItemStack[] {
 			new ItemStack(Items.wheat_seeds)
 		}, 100, true);
+		InfuserRecipes.infusing().addInfusingRecipe(new ItemStack(ConfigItems.itemResource, 1, 16), new AspectList().add(Aspect.METAL, 8), new ItemStack[] {
+			new ItemStack(Items.iron_ingot)
+		}, 100, true);
 	}
 }

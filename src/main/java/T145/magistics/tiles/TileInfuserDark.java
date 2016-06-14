@@ -1,5 +1,6 @@
 package T145.magistics.tiles;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import thaumcraft.common.lib.network.PacketHandler;
@@ -13,6 +14,10 @@ public class TileInfuserDark extends TileInfuser {
 	protected int[] obeliskQuards = new int[3];
 	private boolean nearObelisk = false;
 	private int sparkDelay = 60;
+
+	public TileInfuserDark() {
+		inventoryStacks = new ItemStack[6];
+	}
 
 	@Override
 	public boolean isDark() {

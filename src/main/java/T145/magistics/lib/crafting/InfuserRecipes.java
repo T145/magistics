@@ -27,7 +27,7 @@ public class InfuserRecipes {
 		MagisticsRecipe match = null;
 
 		for (MagisticsRecipe entry : recipes) {
-			if (areRecipesEqual(recipe, entry.getRecipe()) && isDark == entry.isDark()) {
+			if (entryHasRecipe(entry, recipe, isDark)) {
 				match = entry;
 			}
 		}
@@ -35,15 +35,18 @@ public class InfuserRecipes {
 		return match;
 	}
 
-	private boolean areRecipesEqual(ItemStack[] input, ItemStack[] entries) {
+	private boolean entryHasRecipe(MagisticsRecipe entry, ItemStack[] recipe, boolean isDark) {
+		ItemStack[] entries = entry.getRecipe();
 		int matches = 0;
 
-		for (int i = 2; i < input.length; ++i) {
-			ItemStack match = input[i];
+		if (isDark == entry.isDark()) {
+			for (int index = isDark ? 1 : 2; index < recipe.length; ++index) {
+				ItemStack match = recipe[index];
 
-			for (ItemStack entry : entries) {
-				if (InventoryUtils.areItemStacksEqualStrict(match, entry)) {
-					++matches;
+				for (ItemStack ingredient : entries) {
+					if (InventoryUtils.areItemStacksEqualStrict(match, ingredient)) {
+						++matches;
+					}
 				}
 			}
 		}
