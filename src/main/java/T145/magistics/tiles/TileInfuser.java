@@ -17,7 +17,6 @@ import T145.magistics.items.ItemShardDull;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.lib.crafting.InfuserRecipes;
 import T145.magistics.lib.crafting.MagisticsRecipe;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -323,18 +322,16 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return slot > 1;
+		return isDark() ? slot > 0 : slot > 1;
 	}
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
 		switch (side) {
-		case 0:
-			return new int[] { 0, 1 };
-		case 1:
-			return null;
+		case 0: case 1:
+			return new int[] {};
 		default:
-			return new int[] { 2, 3, 4, 5, 6, 7 };
+			return isDark() ? new int[] { 0, 1, 2, 3, 4, 5 } : new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
 		}
 	}
 
@@ -345,7 +342,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return slot < 2;
+		return !isItemValidForSlot(slot, stack);
 	}
 
 	public boolean hasConnectedSide(int side) {
