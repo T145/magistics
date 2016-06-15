@@ -19,19 +19,21 @@ import thaumcraft.common.config.Config;
 
 public class TileEverfullUrn extends TileThaumcraft {
 	private List<BlockCoord> blacklist = new ArrayList<BlockCoord>();
+	private int[] targetQuards = new int[3];
 	private boolean filling = false;
 	private int soundDelay = 33;
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
 		blacklist = getBlackListNBT(tag.getIntArray("blacklist"));
+		targetQuards = tag.getIntArray("targetQuards");
 		filling = tag.getBoolean("filling");
 	}
 
 	private List<BlockCoord> getBlackListNBT(int[] coords) {
 		List<BlockCoord> filled = new ArrayList<BlockCoord>();
 
-		for (int i = coords.length; i > 0 && i % 3 == 0; i -= 3) {
+		for (int i = coords.length; i > 0; i -= 3) {
 			int xcount = i - 2;
 			int ycount = i - 1;
 			int zcount = i;
@@ -45,6 +47,7 @@ public class TileEverfullUrn extends TileThaumcraft {
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
 		tag.setIntArray("blacklist", setBlackListNBT());
+		tag.setIntArray("targetQuards", targetQuards);
 		tag.setBoolean("filling", filling);
 	}
 
@@ -77,8 +80,22 @@ public class TileEverfullUrn extends TileThaumcraft {
 		return filling;
 	}
 
-	public BlockCoord getTarget() {
-		return blacklist.isEmpty() ? null : blacklist.get(blacklist.size() - 1);
+	public int getTargetX() {
+		return targetQuards[0];
+	}
+
+	public int getTargetY() {
+		return targetQuards[1];
+	}
+
+	public int getTargetZ() {
+		return targetQuards[2];
+	}
+
+	private void setTarget(int x, int y, int z) {
+		targetQuards[0] = x;
+		targetQuards[1] = y;
+		targetQuards[2] = z;
 	}
 
 	@Override
@@ -96,11 +113,8 @@ public class TileEverfullUrn extends TileThaumcraft {
 			for (int x = -range; x <= range; ++x) {
 				for (int y = -range; y <= range; ++y) {
 					for (int z = -range; z <= range; ++z) {
-						int xx = xCoord + x;
-						int yy = yCoord + y;
-						int zz = zCoord + z;
-						BlockCoord coord = new BlockCoord(xx, yy, zz);
-						TileEntity tile = worldObj.getTileEntity(xx, yy, zz);
+						BlockCoord coord = new BlockCoord(xCoord + x, yCoord + y, zCoord + z);
+						TileEntity tile = worldObj.getTileEntity(coord.x, coord.y, coord.z);
 
 						if (isWhiteListed(coord) && tile != null) {
 							if (tile instanceof IFluidHandler) {
@@ -109,9 +123,9 @@ public class TileEverfullUrn extends TileThaumcraft {
 
 								if (tank.fill(ForgeDirection.UNKNOWN, water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
 									filling = true;
-
-									while (tank.fill(ForgeDirection.UNKNOWN, water, true) == FluidContainerRegistry.BUCKET_VOLUME);
-
+									tank.fill(ForgeDirection.UNKNOWN, water, true);
+									setTarget(coord.x, coord.y, coord.z);
+								} else {
 									blacklist.add(coord);
 								}
 								return;
@@ -121,9 +135,9 @@ public class TileEverfullUrn extends TileThaumcraft {
 
 								if (tank.fill(water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
 									filling = true;
-
-									while (tank.fill(water, true) == FluidContainerRegistry.BUCKET_VOLUME);
-
+									tank.fill(water, true);
+									setTarget(coord.x, coord.y, coord.z);
+								} else {
 									blacklist.add(coord);
 								}
 								return;
@@ -138,13 +152,9 @@ public class TileEverfullUrn extends TileThaumcraft {
 	}
 
 	private boolean isWhiteListed(BlockCoord coord) {
-		if (!blacklist.isEmpty()) {
-			for (BlockCoord match : blacklist) {
-				if (coord.equals(match)) {
-					filling = false;
-					return false;
-				}
-			}
+		if (!blacklist.isEmpty() && blacklist.contains(coord)) {
+			filling = false;
+			return false;
 		}
 		return true;
 	}
