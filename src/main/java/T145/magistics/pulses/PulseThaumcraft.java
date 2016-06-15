@@ -36,6 +36,7 @@ import T145.magistics.client.render.blocks.RenderBlockLootUrn;
 import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
+import T145.magistics.client.render.tiles.RenderEverfullUrn;
 import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardDull;
@@ -159,6 +160,8 @@ public class PulseThaumcraft extends CorePulse {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArcaneLampRedstone.class, new TileArcaneLampRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChthonianFurnace.class, RenderChthonianFurnace.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockChthonianFurnace.INSTANCE);
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEverfullUrn.class, RenderEverfullUrn.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockEverfullUrn.INSTANCE);
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, RenderInfuser.INSTANCE);
