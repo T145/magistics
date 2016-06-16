@@ -72,6 +72,7 @@ item.arcane_furnace.name=Infernal Furnace
 
 tile.infuser.name=Infuser
 tile.infuser.dark.name=Dark Infuser
+tile.crystalizer.name=Crystalizer
 
 tile.netherrack_furnace.name=Netherrack Furnace
 tile.chthonian_furnace.name=Chthonian Furnace
@@ -79,6 +80,7 @@ tile.arcane_redstone_lamp.name=Arcane Redstone Lamp
 tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
 tile.entropic_dispenser.name=Entropic Dispenser
+
 tile.voidstone.name=Voidstone
 tile.arcane_wood.name=Arcane Wood
 

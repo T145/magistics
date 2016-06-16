@@ -38,9 +38,12 @@ public class BlockInfuser extends BlockContainer {
 
 	public BlockInfuser() {
 		super(Material.rock);
-
 		setBlockName("infuser");
 		setCreativeTab(Magistics.tabMagistics);
+
+		setHardness(2F);
+		setResistance(15F);
+		setStepSound(soundTypeStone);
 	}
 
 	public boolean isDark(int metadata) {

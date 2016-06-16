@@ -21,14 +21,15 @@ import T145.magistics.blocks.BlockArcaneWood;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockChthonianFurnace;
+import T145.magistics.blocks.BlockCrystalizer;
 import T145.magistics.blocks.BlockEntropicDispenser;
 import T145.magistics.blocks.BlockEverfullUrn;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockInfuserItem;
 import T145.magistics.blocks.BlockNetherFurnace;
-import T145.magistics.blocks.BlockVoidstone;
 import T145.magistics.client.render.blocks.RenderBlockChest;
 import T145.magistics.client.render.blocks.RenderBlockChthonianFurnace;
+import T145.magistics.client.render.blocks.RenderBlockCrystalizer;
 import T145.magistics.client.render.blocks.RenderBlockEverfullUrn;
 import T145.magistics.client.render.blocks.RenderBlockInfuser;
 import T145.magistics.client.render.blocks.RenderBlockLootCrate;
@@ -36,6 +37,7 @@ import T145.magistics.client.render.blocks.RenderBlockLootUrn;
 import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
+import T145.magistics.client.render.tiles.RenderCrystalizer;
 import T145.magistics.client.render.tiles.RenderEverfullUrn;
 import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
@@ -50,6 +52,7 @@ import T145.magistics.tiles.TileArcaneLampRedstone;
 import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileChthonianFurnace;
+import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileEverfullUrn;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
@@ -104,11 +107,13 @@ public class PulseThaumcraft extends CorePulse {
 
 		GameRegistry.registerTileEntity(TileEverfullUrn.class, TileEverfullUrn.class.getSimpleName());
 		GameRegistry.registerBlock(BlockEverfullUrn.INSTANCE, BlockEverfullUrn.INSTANCE.getUnlocalizedName());
-		GameRegistry.registerBlock(BlockVoidstone.INSTANCE, BlockVoidstone.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 		GameRegistry.registerTileEntity(TileInfuserDark.class, TileInfuserDark.class.getSimpleName());
 		GameRegistry.registerBlock(BlockInfuser.INSTANCE, BlockInfuserItem.class, BlockInfuser.INSTANCE.getUnlocalizedName());
+
+		GameRegistry.registerTileEntity(TileCrystalizer.class, TileCrystalizer.class.getSimpleName());
+		GameRegistry.registerBlock(BlockCrystalizer.INSTANCE, BlockCrystalizer.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
 
@@ -167,6 +172,9 @@ public class PulseThaumcraft extends CorePulse {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, RenderInfuser.INSTANCE);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, RenderInfuser.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockInfuser.INSTANCE);
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystalizer.class, RenderCrystalizer.INSTANCE);
+		RenderingRegistry.registerBlockHandler(RenderBlockCrystalizer.INSTANCE);
 
 		int newBlockLootCrateRI = RenderingRegistry.getNextAvailableRenderId();
 		ConfigBlocks.blockLootCrateRI = newBlockLootCrateRI;

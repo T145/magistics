@@ -26,6 +26,10 @@ public class BlockEverfullUrn extends BlockContainer {
 		super(Material.rock);
 		setCreativeTab(Magistics.tabMagistics);
 		setBlockName("everfull_urn");
+
+		setHardness(2F);
+		setResistance(15F);
+		setStepSound(soundTypeStone);
 	}
 
 	@Override
