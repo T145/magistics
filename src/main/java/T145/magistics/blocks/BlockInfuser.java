@@ -47,11 +47,7 @@ public class BlockInfuser extends BlockContainer {
 	}
 
 	public boolean isDark(int metadata) {
-		if (metadata == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return metadata == 1;
 	}
 
 	@Override

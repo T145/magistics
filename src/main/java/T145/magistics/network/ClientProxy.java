@@ -4,10 +4,12 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import T145.magistics.client.gui.GuiCrystalizer;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.pulses.core.ServerPulse;
+import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import cpw.mods.fml.relauncher.Side;
@@ -35,6 +37,8 @@ public class ClientProxy extends CommonProxy {
 				return new GuiInfuser(player.inventory, (TileInfuser) tile);
 			case 1:
 				return new GuiInfuserDark(player.inventory, (TileInfuserDark) tile);
+			case 2:
+				return new GuiCrystalizer(player.inventory, (TileCrystalizer) tile);
 			}
 		}
 

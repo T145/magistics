@@ -6,9 +6,11 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import T145.magistics.containers.ContainerCrystalizer;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.containers.ContainerInfuserDark;
 import T145.magistics.pulses.core.ServerPulse;
+import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import cpw.mods.fml.common.Loader;
@@ -55,6 +57,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerInfuser(player.inventory, (TileInfuser) tile);
 		case 1:
 			return new ContainerInfuserDark(player.inventory, (TileInfuserDark) tile);
+		case 2:
+			return new ContainerCrystalizer(player.inventory, (TileCrystalizer) tile);
 		default:
 			return null;
 		}

@@ -22,6 +22,7 @@ import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockChthonianFurnace;
 import T145.magistics.blocks.BlockCrystalizer;
+import T145.magistics.blocks.BlockElevator;
 import T145.magistics.blocks.BlockEntropicDispenser;
 import T145.magistics.blocks.BlockEverfullUrn;
 import T145.magistics.blocks.BlockInfuser;
@@ -53,6 +54,7 @@ import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileChthonianFurnace;
 import T145.magistics.tiles.TileCrystalizer;
+import T145.magistics.tiles.TileElevator;
 import T145.magistics.tiles.TileEverfullUrn;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
@@ -116,6 +118,9 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerBlock(BlockCrystalizer.INSTANCE, BlockCrystalizer.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
+
+		GameRegistry.registerTileEntity(TileElevator.class, TileElevator.class.getSimpleName());
+		GameRegistry.registerBlock(BlockElevator.INSTANCE, BlockElevator.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockArcaneWood.INSTANCE, BlockArcaneWood.INSTANCE.getUnlocalizedName());
 

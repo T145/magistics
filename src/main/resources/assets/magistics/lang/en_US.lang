@@ -80,6 +80,7 @@ tile.arcane_redstone_lamp.name=Arcane Redstone Lamp
 tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
 tile.entropic_dispenser.name=Entropic Dispenser
+tile.elevator.name=Elevator
 
 tile.voidstone.name=Voidstone
 tile.arcane_wood.name=Arcane Wood
