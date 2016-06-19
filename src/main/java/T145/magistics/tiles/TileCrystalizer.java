@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import thaumcraft.api.TileThaumcraft;
 import thaumcraft.common.config.ConfigItems;
+import T145.magistics.items.ItemShardDull;
 import T145.magistics.lib.InventoryHelper;
 
 public class TileCrystalizer extends TileThaumcraft implements ISidedInventory {
@@ -114,7 +115,7 @@ public class TileCrystalizer extends TileThaumcraft implements ISidedInventory {
 			}
 
 			if (crystalTime == 0F && inventoryStacks[6] != null && inventoryStacks[6].getItem() == ConfigItems.itemShard) {
-				if (inventoryStacks[6].isItemEqual(new ItemStack(ConfigItems.itemShard, 1, 6))) {
+				if (inventoryStacks[6].isItemEqual(new ItemStack(ItemShardDull.INSTANCE))) {
 					crystalTime = maxTime;
 				} else {
 					crystalTime = maxTime * 2F / 3F;
@@ -190,9 +191,9 @@ public class TileCrystalizer extends TileThaumcraft implements ISidedInventory {
 		case 1:
 			return new int[] {};
 		case 0:
-			return new int[] { 0 };
+			return new int[] { 0, 1, 2, 3, 4, 5, 7, 8, 9 };
 		default:
-			return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			return new int[] { 6 };
 		}
 	}
 
