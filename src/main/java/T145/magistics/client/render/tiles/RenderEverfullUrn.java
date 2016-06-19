@@ -21,7 +21,7 @@ public class RenderEverfullUrn extends TileEntitySpecialRenderer {
 	}
 
 	public void spawnRandomWaterFountain(World worldObj, int xCoord, int yCoord, int zCoord) {
-		spawnWaterAtLocation(worldObj, xCoord, yCoord, zCoord, xCoord + 0.5F + ((Math.random()) - 0.5), yCoord + 2.1F, zCoord + 0.5F + ((Math.random()) - 0.5));
+		spawnWaterAtLocation(worldObj, xCoord, yCoord, zCoord, xCoord + ((Math.random()) - 0.5), yCoord + 1F, zCoord + ((Math.random()) - 0.5));
 	}
 
 	public void spawnWaterOnPlayer(World worldObj, int xCoord, int yCoord, int zCoord, EntityPlayer player) {
