@@ -3,6 +3,7 @@ package T145.magistics.tiles;
 import java.awt.Color;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
@@ -14,9 +15,15 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXBlockBubble;
+import thaumcraft.common.tiles.TileAlembic;
+import thaumcraft.common.tiles.TileJarFillable;
+import vazkii.botania.common.block.mana.BlockAlchemyCatalyst;
+import vazkii.botania.common.block.tile.TileAltar;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class TileEverfullUrn extends TileEntity {
@@ -25,6 +32,14 @@ public class TileEverfullUrn extends TileEntity {
 	@Override
 	public boolean canUpdate() {
 		return true;
+	}
+
+	public boolean canFillApothecary() {
+		return Loader.isModLoaded("Botania");
+	}
+
+	public boolean hasAlchemyCatalyst() {
+		return canFillApothecary() && worldObj.getBlock(xCoord, yCoord - 1, zCoord) instanceof BlockAlchemyCatalyst;
 	}
 
 	public boolean isActive() {
@@ -65,16 +80,23 @@ public class TileEverfullUrn extends TileEntity {
 									bubbleAt(xx, yy, zz);
 									worldObj.setBlockMetadataWithNotify(xx, yy, zz, 7, 2);
 								}
+							} else if (block instanceof BlockCauldron) {
+								if (worldObj.getBlockMetadata(xx, yy, zz) < 3) {
+									bubbleAt(xx, yy, zz);
+									worldObj.setBlockMetadataWithNotify(xx, yy, zz, 3, 2);
+								}
 							}
 						} else {
 							if (tile instanceof IFluidHandler) {
 								IFluidHandler tank = (IFluidHandler) tile;
 								FluidStack water = new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME);
 
-								if (tank.fill(ForgeDirection.UNKNOWN, water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
-									bubbleAt(xx, yy, zz);
-									tank.fill(ForgeDirection.UNKNOWN, water, true);
-									return;
+								for (ForgeDirection dir : ForgeDirection.values()) {
+									if (tank.fill(dir, water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
+										bubbleAt(xx, yy, zz);
+										tank.fill(dir, water, true);
+										return;
+									}
 								}
 							} else if (tile instanceof IFluidTank) {
 								IFluidTank tank = (IFluidTank) tile;
@@ -84,6 +106,32 @@ public class TileEverfullUrn extends TileEntity {
 									bubbleAt(xx, yy, zz);
 									tank.fill(water, true);
 									return;
+								}
+							} else if (canFillApothecary() && tile instanceof TileAltar) {
+								TileAltar apothecary = (TileAltar) tile;
+
+								if (!apothecary.hasWater()) {
+									bubbleAt(xx, yy, zz);
+									apothecary.setWater(true);
+									worldObj.func_147453_f(xx, yy, zz, worldObj.getBlock(xx, yy, zz));
+								}
+							} else if (hasAlchemyCatalyst()) {
+								if (tile instanceof TileJarFillable) {
+									TileJarFillable container = (TileJarFillable) tile;
+
+									if (container.doesContainerAccept(Aspect.WATER) && container.amount < container.maxAmount) {
+										bubbleAt(xx, yy, zz);
+										container.addToContainer(Aspect.WATER, 1);
+										return;
+									}
+								} else if (tile instanceof TileAlembic) {
+									TileAlembic alembic = (TileAlembic) tile;
+
+									if (alembic.aspectFilter == Aspect.WATER && alembic.amount < alembic.maxAmount) {
+										bubbleAt(xx, yy, zz);
+										alembic.addToContainer(Aspect.WATER, 1);
+										return;
+									}
 								}
 							}
 						}
