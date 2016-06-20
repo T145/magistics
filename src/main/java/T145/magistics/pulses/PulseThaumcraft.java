@@ -27,7 +27,7 @@ import T145.magistics.blocks.BlockEverfullUrn;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockInfuserItem;
 import T145.magistics.blocks.BlockNetherFurnace;
-import T145.magistics.blocks.BlockWarpSentinel;
+import T145.magistics.blocks.BlockElevator;
 import T145.magistics.client.render.blocks.RenderBlockChest;
 import T145.magistics.client.render.blocks.RenderBlockChthonianFurnace;
 import T145.magistics.client.render.blocks.RenderBlockCrystalizer;
@@ -58,7 +58,7 @@ import T145.magistics.tiles.TileEverfullUrn;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import T145.magistics.tiles.TileNetherFurnace;
-import T145.magistics.tiles.TileWarpSentinel;
+import T145.magistics.tiles.TileElevator;
 import T145.magistics.utils.RegistrationUtil;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -119,8 +119,8 @@ public class PulseThaumcraft extends CorePulse {
 
 		GameRegistry.registerBlock(BlockEntropicDispenser.INSTANCE, BlockEntropicDispenser.INSTANCE.getUnlocalizedName());
 
-		GameRegistry.registerTileEntity(TileWarpSentinel.class, TileWarpSentinel.class.getSimpleName());
-		GameRegistry.registerBlock(BlockWarpSentinel.INSTANCE, BlockWarpSentinel.INSTANCE.getUnlocalizedName());
+		GameRegistry.registerTileEntity(TileElevator.class, TileElevator.class.getSimpleName());
+		GameRegistry.registerBlock(BlockElevator.INSTANCE, BlockElevator.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockArcaneWood.INSTANCE, BlockArcaneWood.INSTANCE.getUnlocalizedName());
 

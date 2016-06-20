@@ -9,16 +9,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import T145.magistics.Magistics;
-import T145.magistics.tiles.TileWarpSentinel;
+import T145.magistics.tiles.TileElevator;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockWarpSentinel extends BlockContainer {
-	public static final Block INSTANCE = new BlockWarpSentinel();
+public class BlockElevator extends BlockContainer {
+	public static final Block INSTANCE = new BlockElevator();
 
 	public IIcon bottom;
 
-	public BlockWarpSentinel() {
+	public BlockElevator() {
 		super(Material.rock);
 		setBlockName("elevator");
 		setCreativeTab(Magistics.tabMagistics);
@@ -46,6 +46,6 @@ public class BlockWarpSentinel extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
-		return new TileWarpSentinel();
+		return new TileElevator();
 	}
 }
