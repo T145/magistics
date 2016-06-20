@@ -43,14 +43,14 @@ public class TileElevator extends TileThaumcraft {
 
 		++count;
 
-		if (hasWorldObj() && count % 40 == 0) {
+		if (hasWorldObj() && count == 40) {
 			count = 0;
 
 			double xx = xCoord + 0.5;
 			double yy = yCoord + 1;
 			double zz = zCoord + 0.5;
 
-			List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + RANGE, zz));
+			List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + 1, zz));
 
 			if (targets.size() == 1) {
 				EntityPlayer player = targets.get(0);
@@ -71,7 +71,7 @@ public class TileElevator extends TileThaumcraft {
 						}
 					}
 				} else {
-					for (int destY = RANGE; destY > 0; --destY) {
+					for (int destY = RANGE; destY > 1; --destY) {
 						TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + destY, zCoord);
 
 						if (tile instanceof TileElevator) {
