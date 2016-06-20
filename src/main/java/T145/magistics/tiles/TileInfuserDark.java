@@ -3,17 +3,13 @@ package T145.magistics.tiles;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.fx.PacketFXBlockZap;
 import thaumcraft.common.tiles.TileEldritchObelisk;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileInfuserDark extends TileInfuser {
 	protected int[] obeliskQuards = new int[3];
 	private boolean nearObelisk = false;
-	private int sparkDelay = 60;
 
 	public TileInfuserDark() {
 		inventoryStacks = new ItemStack[6];
@@ -47,13 +43,6 @@ public class TileInfuserDark extends TileInfuser {
 	public void updateEntity() {
 		if (nearObelisk) {
 			super.updateEntity();
-
-			if (sparkDelay <= 0) {
-				PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockZap(obeliskQuards[0] + 0.5F, obeliskQuards[1] + 0.5F, obeliskQuards[2] + 0.5F, xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32.0D));
-				sparkDelay = 100;
-			} else {
-				--sparkDelay;
-			}
 		} else {
 			int range = 6;
 

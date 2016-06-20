@@ -1,11 +1,12 @@
 package T145.magistics.tiles;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockFire;
 import net.minecraft.block.material.Material;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -13,58 +14,13 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
-import thaumcraft.api.TileThaumcraft;
-import thaumcraft.codechicken.lib.vec.BlockCoord;
 import thaumcraft.common.config.Config;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXBlockBubble;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
-public class TileEverfullUrn extends TileThaumcraft {
-	private List<BlockCoord> blacklist = new ArrayList<BlockCoord>();
-	private int[] targetQuards = new int[3];
-	private boolean filling = false;
+public class TileEverfullUrn extends TileEntity {
 	private int soundDelay = 33;
-
-	@Override
-	public void readCustomNBT(NBTTagCompound tag) {
-		blacklist = getBlackListNBT(tag.getIntArray("blacklist"));
-		targetQuards = tag.getIntArray("targetQuards");
-		filling = tag.getBoolean("filling");
-	}
-
-	private List<BlockCoord> getBlackListNBT(int[] coords) {
-		List<BlockCoord> filled = new ArrayList<BlockCoord>();
-
-		for (int i = coords.length; i > 0; i -= 3) {
-			int xcount = i - 2;
-			int ycount = i - 1;
-			int zcount = i;
-
-			filled.add(new BlockCoord(xcount, ycount, zcount));
-		}
-
-		return filled;
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound tag) {
-		tag.setIntArray("blacklist", setBlackListNBT());
-		tag.setIntArray("targetQuards", targetQuards);
-		tag.setBoolean("filling", filling);
-	}
-
-	private int[] setBlackListNBT() {
-		int[] coords = new int[blacklist.size() * 3];
-		int xcount = -1;
-		int ycount = 0;
-		int zcount = 1;
-
-		for (BlockCoord coord : blacklist) {
-			coords[++xcount] = coord.x;
-			coords[++ycount] = coord.y;
-			coords[++zcount] = coord.z;
-		}
-
-		return coords;
-	}
 
 	@Override
 	public boolean canUpdate() {
@@ -76,30 +32,10 @@ public class TileEverfullUrn extends TileThaumcraft {
 		return block.getMaterial() == Material.air || block.getMaterial() == Config.airyMaterial;
 	}
 
-	public boolean isFilling() {
-		return filling;
-	}
-
-	public int getTargetX() {
-		return targetQuards[0];
-	}
-
-	public int getTargetY() {
-		return targetQuards[1];
-	}
-
-	public int getTargetZ() {
-		return targetQuards[2];
-	}
-
-	private void setTarget(int x, int y, int z) {
-		targetQuards[0] = x;
-		targetQuards[1] = y;
-		targetQuards[2] = z;
-	}
-
 	@Override
 	public void updateEntity() {
+		super.updateEntity();
+
 		if (hasWorldObj() && isActive()) {
 			--soundDelay;
 
@@ -113,49 +49,59 @@ public class TileEverfullUrn extends TileThaumcraft {
 			for (int x = -range; x <= range; ++x) {
 				for (int y = -range; y <= range; ++y) {
 					for (int z = -range; z <= range; ++z) {
-						BlockCoord coord = new BlockCoord(xCoord + x, yCoord + y, zCoord + z);
-						TileEntity tile = worldObj.getTileEntity(coord.x, coord.y, coord.z);
+						int xx = xCoord + x;
+						int yy = yCoord + y;
+						int zz = zCoord + z;
+						TileEntity tile = worldObj.getTileEntity(xx, yy, zz);
 
-						if (isWhiteListed(coord) && tile != null) {
+						if (tile == null) {
+							Block block = worldObj.getBlock(xx, yy, zz);
+
+							if (block instanceof BlockFire) {
+								bubbleAt(xx, yy, zz);
+								worldObj.setBlockToAir(xx, yy, zz);
+							} else if (block instanceof BlockFarmland) {
+								if (worldObj.getBlockMetadata(xx, yy, zz) < 4) {
+									bubbleAt(xx, yy, zz);
+									worldObj.setBlockMetadataWithNotify(xx, yy, zz, 7, 2);
+								}
+							}
+						} else {
 							if (tile instanceof IFluidHandler) {
 								IFluidHandler tank = (IFluidHandler) tile;
 								FluidStack water = new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME);
 
 								if (tank.fill(ForgeDirection.UNKNOWN, water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
-									filling = true;
+									bubbleAt(xx, yy, zz);
 									tank.fill(ForgeDirection.UNKNOWN, water, true);
-									setTarget(coord.x, coord.y, coord.z);
-								} else {
-									blacklist.add(coord);
+									return;
 								}
-								return;
 							} else if (tile instanceof IFluidTank) {
 								IFluidTank tank = (IFluidTank) tile;
 								FluidStack water = new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME);
 
 								if (tank.fill(water, false) == FluidContainerRegistry.BUCKET_VOLUME) {
-									filling = true;
+									bubbleAt(xx, yy, zz);
 									tank.fill(water, true);
-									setTarget(coord.x, coord.y, coord.z);
-								} else {
-									blacklist.add(coord);
+									return;
 								}
-								return;
 							}
-						} else {
-							blacklist.remove(coord);
 						}
 					}
 				}
 			}
+
+			EntityPlayer player = worldObj.getClosestPlayer(xCoord, yCoord, zCoord, range);
+
+			if (player != null && player.isBurning()) {
+				bubbleAt(player.serverPosX, player.serverPosY, player.serverPosZ);
+				player.extinguish();
+			}
 		}
 	}
 
-	private boolean isWhiteListed(BlockCoord coord) {
-		if (!blacklist.isEmpty() && blacklist.contains(coord)) {
-			filling = false;
-			return false;
-		}
-		return true;
+	public void bubbleAt(int x, int y, int z) {
+		PacketHandler.INSTANCE.sendToAllAround(new PacketFXBlockBubble(x, y, z, new Color(0.33F, 0.33F, 1F).getRGB()), new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 32D));
+		worldObj.playSoundEffect(x, y, z, "thaumcraft:bubble", 0.15F, 1F);
 	}
 }

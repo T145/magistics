@@ -10,8 +10,8 @@ import net.minecraft.util.AxisAlignedBB;
 import thaumcraft.api.TileThaumcraft;
 
 public class TileElevator extends TileThaumcraft {
-	public static final int RANGE = 10;
 	private boolean blocked = false;
+	private int range = 0;
 	private int count = 0;
 
 	public boolean isBlocked() {
@@ -41,52 +41,58 @@ public class TileElevator extends TileThaumcraft {
 	public void updateEntity() {
 		super.updateEntity();
 
-		++count;
+		if (hasWorldObj()) {
+			++count;
 
-		if (hasWorldObj() && count == 40) {
-			count = 0;
+			range = worldObj.getActualHeight() / 4;
 
-			double xx = xCoord + 0.5;
-			double yy = yCoord + 1;
-			double zz = zCoord + 0.5;
+			if (count % 45 == 0) {
+				count = 0;
 
-			List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + 1, zz));
+				double xx = xCoord + 0.5;
+				double yy = yCoord + 1;
+				double zz = zCoord + 0.5;
 
-			if (targets.size() == 1) {
-				EntityPlayer player = targets.get(0);
+				List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + 1, zz));
 
-				blocked = true;
+				if (targets.size() == 1) {
+					EntityPlayer player = targets.get(0);
 
-				if (isPowered()) {
-					for (int destY = yCoord - 1; destY > yCoord - 1 - RANGE; --destY) {
-						TileEntity tile = worldObj.getTileEntity(xCoord, destY, zCoord);
+					blocked = true;
 
-						if (tile instanceof TileElevator) {
-							TileElevator elevator = (TileElevator) tile;
+					if (isPowered()) {
+						for (int destY = yCoord - 1; destY > yCoord - 1 - range; --destY) {
+							TileEntity tile = worldObj.getTileEntity(xCoord, destY, zCoord);
 
-							if (!elevator.isBlocked() && canTeleportTo(xCoord, destY, zCoord)) {
-								player.setPositionAndUpdate(xx, destY + 1, zz);
-								return;
+							if (tile instanceof TileElevator) {
+								TileElevator elevator = (TileElevator) tile;
+
+								if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, destY, zCoord)) {
+									player.setPositionAndUpdate(xx, destY + 1, zz);
+									worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
+									return;
+								}
+							}
+						}
+					} else {
+						for (int destY = range; destY > 1; --destY) {
+							TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + destY, zCoord);
+
+							if (tile instanceof TileElevator) {
+								TileElevator elevator = (TileElevator) tile;
+
+								if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, yCoord + destY, zCoord)) {
+									player.setPositionAndUpdate(xx, yy + destY, zz);
+									worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
+									return;
+								}
 							}
 						}
 					}
 				} else {
-					for (int destY = RANGE; destY > 1; --destY) {
-						TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + destY, zCoord);
-
-						if (tile instanceof TileElevator) {
-							TileElevator elevator = (TileElevator) tile;
-
-							if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, yCoord + destY, zCoord)) {
-								player.setPositionAndUpdate(xx, yy + destY, zz);
-								return;
-							}
-						}
-					}
+					blocked = false;
+					return;
 				}
-			} else {
-				blocked = false;
-				return;
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package T145.magistics.blocks;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -9,6 +11,9 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.client.fx.ParticleEngine;
+import thaumcraft.client.fx.particles.FXEssentiaTrail;
 import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileEverfullUrn;
@@ -85,6 +90,23 @@ public class BlockEverfullUrn extends BlockContainer {
 		AxisAlignedBB.getBoundingBox(BlockRenderer.W5, BlockRenderer.W9, BlockRenderer.W5, BlockRenderer.W11, 1, BlockRenderer.W11);
 		AxisAlignedBB.getBoundingBox(BlockRenderer.W2, 0, BlockRenderer.W2, BlockRenderer.W14, BlockRenderer.W9, BlockRenderer.W14);
 		return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void spawnWaterAtLocation(World world, double x, double y, double z, double dX, double dY, double dZ) {
+		FXEssentiaTrail fx = new FXEssentiaTrail(world, x + 0.5F, y + 1.1F, z + 0.5F, dX + 0.5F, dY + 1.1F, dZ + 0.5F, 5, Aspect.TOOL.getColor(), 1.0F);
+		ParticleEngine.instance.addEffect(world, fx);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void spawnRandomWaterFountain(World world, Random rand, int x, int y, int z) {
+		spawnWaterAtLocation(world, x, y, z, x + (Math.random() - 0.5), y + 1F, z + (Math.random() - 0.5));
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+		spawnRandomWaterFountain(world, rand, x, y, z);
 	}
 
 	@Override
