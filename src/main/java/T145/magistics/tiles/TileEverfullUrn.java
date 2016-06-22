@@ -19,7 +19,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.lib.network.PacketHandler;
 import thaumcraft.common.lib.network.fx.PacketFXBlockBubble;
-import thaumcraft.common.tiles.TileAlembic;
 import thaumcraft.common.tiles.TileJarFillable;
 import vazkii.botania.common.block.mana.BlockAlchemyCatalyst;
 import vazkii.botania.common.block.tile.TileAltar;
@@ -39,7 +38,7 @@ public class TileEverfullUrn extends TileEntity {
 	}
 
 	public boolean hasAlchemyCatalyst() {
-		return canFillApothecary() && worldObj.getBlock(xCoord, yCoord - 1, zCoord) instanceof BlockAlchemyCatalyst;
+		return worldObj.getBlock(xCoord, yCoord - 1, zCoord) instanceof BlockAlchemyCatalyst;
 	}
 
 	public boolean isActive() {
@@ -107,30 +106,26 @@ public class TileEverfullUrn extends TileEntity {
 									tank.fill(water, true);
 									return;
 								}
-							} else if (canFillApothecary() && tile instanceof TileAltar) {
-								TileAltar apothecary = (TileAltar) tile;
+							} else if (canFillApothecary()) {
+								if (tile instanceof TileAltar) {
+									TileAltar apothecary = (TileAltar) tile;
 
-								if (!apothecary.hasWater()) {
-									bubbleAt(xx, yy, zz);
-									apothecary.setWater(true);
-									worldObj.func_147453_f(xx, yy, zz, worldObj.getBlock(xx, yy, zz));
-								}
-							} else if (hasAlchemyCatalyst()) {
-								if (tile instanceof TileJarFillable) {
-									TileJarFillable container = (TileJarFillable) tile;
-
-									if (container.doesContainerAccept(Aspect.WATER) && container.amount < container.maxAmount) {
+									if (!apothecary.hasWater()) {
 										bubbleAt(xx, yy, zz);
-										container.addToContainer(Aspect.WATER, 1);
-										return;
+										apothecary.setWater(true);
+										worldObj.func_147453_f(xx, yy, zz, worldObj.getBlock(xx, yy, zz));
 									}
-								} else if (tile instanceof TileAlembic) {
-									TileAlembic alembic = (TileAlembic) tile;
+								}
 
-									if (alembic.aspectFilter == Aspect.WATER && alembic.amount < alembic.maxAmount) {
-										bubbleAt(xx, yy, zz);
-										alembic.addToContainer(Aspect.WATER, 1);
-										return;
+								if (hasAlchemyCatalyst()) {
+									if (tile instanceof TileJarFillable) {
+										TileJarFillable container = (TileJarFillable) tile;
+
+										if (container.amount == 0 || container.doesContainerContainAmount(Aspect.WATER, 1) && container.amount < container.maxAmount) {
+											bubbleAt(xx, yy, zz);
+											container.addToContainer(Aspect.WATER, 1);
+											return;
+										}
 									}
 								}
 							}

@@ -36,7 +36,7 @@ public class TileInfuserDark extends TileInfuser {
 
 	@SideOnly(Side.CLIENT)
 	public int getDarkCookProgressScaled(int time) {
-		return 0;
+		return getCookProgressScaled(time);
 	}
 
 	@Override

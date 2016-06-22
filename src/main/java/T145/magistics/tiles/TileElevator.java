@@ -4,12 +4,10 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import thaumcraft.api.TileThaumcraft;
 
-public class TileElevator extends TileThaumcraft {
+public class TileElevator extends TileEntity {
 	private boolean blocked = false;
 	private int range = 0;
 	private int count = 0;
@@ -23,16 +21,6 @@ public class TileElevator extends TileThaumcraft {
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound tag) {
-		blocked = tag.getBoolean("blocked");
-	}
-
-	@Override
-	public void writeCustomNBT(NBTTagCompound tag) {
-		tag.setBoolean("blocked", blocked);
-	}
-
-	@Override
 	public boolean canUpdate() {
 		return true;
 	}
@@ -42,57 +30,56 @@ public class TileElevator extends TileThaumcraft {
 		super.updateEntity();
 
 		if (hasWorldObj()) {
-			++count;
-
 			range = worldObj.getActualHeight() / 4;
 
-			if (count % 45 == 0) {
-				count = 0;
+			double xx = xCoord + 0.5;
+			double yy = yCoord + 1;
+			double zz = zCoord + 0.5;
 
-				double xx = xCoord + 0.5;
-				double yy = yCoord + 1;
-				double zz = zCoord + 0.5;
+			List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + 1, zz));
 
-				List<EntityPlayer> targets = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xx, yy, zz, xx, yy + 1, zz));
+			if (targets.size() == 1) {
+				EntityPlayer player = targets.get(0);
+				double destY = 0;
+				double endY = 0;
 
-				if (targets.size() == 1) {
-					EntityPlayer player = targets.get(0);
+				++count;
+				blocked = true;
 
-					blocked = true;
+				if (isPowered()) {
+					endY = yy - 1;
+					destY = endY - range;
+				} else {
+					endY = yy + 1;
+					destY = range + endY;
+				}
 
-					if (isPowered()) {
-						for (int destY = yCoord - 1; destY > yCoord - 1 - range; --destY) {
-							TileEntity tile = worldObj.getTileEntity(xCoord, destY, zCoord);
+				if (count % 45 == 0) {
+					count = 0;
 
-							if (tile instanceof TileElevator) {
-								TileElevator elevator = (TileElevator) tile;
-
-								if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, destY, zCoord)) {
-									player.setPositionAndUpdate(xx, destY + 1, zz);
-									worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
-									return;
-								}
-							}
+					while (destY != endY) {
+						if (isPowered()) {
+							++destY;
+						} else {
+							--destY;
 						}
-					} else {
-						for (int destY = range; destY > 1; --destY) {
-							TileEntity tile = worldObj.getTileEntity(xCoord, yCoord + destY, zCoord);
 
-							if (tile instanceof TileElevator) {
-								TileElevator elevator = (TileElevator) tile;
+						TileEntity tile = worldObj.getTileEntity(xCoord, (int) destY, zCoord);
 
-								if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, yCoord + destY, zCoord)) {
-									player.setPositionAndUpdate(xx, yy + destY, zz);
-									worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
-									return;
-								}
+						if (tile != null && tile instanceof TileElevator) {
+							TileElevator elevator = (TileElevator) tile;
+
+							if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, (int) destY, zCoord)) {
+								player.setPositionAndUpdate(player.posX, destY + 1, player.posZ);
+								worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
+								return;
 							}
 						}
 					}
-				} else {
-					blocked = false;
-					return;
 				}
+			} else {
+				blocked = false;
+				return;
 			}
 		}
 	}

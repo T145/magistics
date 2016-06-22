@@ -260,7 +260,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 							} else if (inventoryStacks[1].isItemEqual(dullShard) && inventoryStacks[1].stackSize < 64) {
 								++inventoryStacks[1].stackSize;
 							} else {
-								// drop the shard
+								InventoryHelper.dropStack(inventoryStacks[1], worldObj, xCoord, yCoord, zCoord);
 							}
 						}
 
@@ -353,7 +353,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 	public int addToContainer(Aspect aspect, int amount) {
 		if (doesContainerAccept(aspect)) {
 			recipeEssentia.add(aspect, amount);
-			return 1;
+			return amount;
 		} else {
 			return 0;
 		}

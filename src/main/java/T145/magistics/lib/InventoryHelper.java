@@ -72,36 +72,39 @@ public class InventoryHelper {
 
 			for (int slot = 0; slot < inv.getSizeInventory(); ++slot) {
 				ItemStack stack = inv.getStackInSlot(slot);
-
-				if (stack != null) {
-					float f = world.rand.nextFloat() * 0.8F + 0.1F;
-					float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-					float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-
-					while (stack.stackSize > 0) {
-						int j1 = world.rand.nextInt(21) + 10;
-
-						if (j1 > stack.stackSize) {
-							j1 = stack.stackSize;
-						}
-
-						stack.stackSize -= j1;
-						EntityItem item = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), new ItemStack(stack.getItem(), j1, stack.getItemDamage()));
-
-						if (stack.hasTagCompound()) {
-							item.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
-						}
-
-						float f3 = 0.05F;
-						item.motionX = (double) ((float) world.rand.nextGaussian() * f3);
-						item.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
-						item.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
-						world.spawnEntityInWorld(item);
-					}
-				}
+				dropStack(stack, world, x, y, z);
 			}
 
 			world.func_147453_f(x, y, z, tile.getBlockType());
+		}
+	}
+
+	public static void dropStack(ItemStack stack, World world, int x, int y, int z) {
+		if (stack != null) {
+			float f = world.rand.nextFloat() * 0.8F + 0.1F;
+			float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+			float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
+
+			while (stack.stackSize > 0) {
+				int j1 = world.rand.nextInt(21) + 10;
+
+				if (j1 > stack.stackSize) {
+					j1 = stack.stackSize;
+				}
+
+				stack.stackSize -= j1;
+				EntityItem item = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), new ItemStack(stack.getItem(), j1, stack.getItemDamage()));
+
+				if (stack.hasTagCompound()) {
+					item.getEntityItem().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
+				}
+
+				float f3 = 0.05F;
+				item.motionX = (double) ((float) world.rand.nextGaussian() * f3);
+				item.motionY = (double) ((float) world.rand.nextGaussian() * f3 + 0.2F);
+				item.motionZ = (double) ((float) world.rand.nextGaussian() * f3);
+				world.spawnEntityInWorld(item);
+			}
 		}
 	}
 

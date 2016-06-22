@@ -2,11 +2,14 @@ package T145.magistics.client.render.models;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * chthonian furnace - wiiv
  * Created using Tabula 4.1.1
  */
+@SideOnly(Side.CLIENT)
 public class ModelChthonianFurnace extends ModelBase {
 	public ModelRenderer base, side1, top, side2, back, bar1, bar2, bar3;
 
