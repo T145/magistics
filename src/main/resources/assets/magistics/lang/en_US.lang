@@ -81,6 +81,8 @@ tile.everfull_urn.name=Everfull Urn
 tile.thaumic_enchanter.name=Thaumic Enchanter
 tile.entropic_dispenser.name=Entropic Dispenser
 tile.elevator.name=Elevator
+tile.crystal_core.name=Crystal Core
+tile.crystal_capacitor.name=Crystal Capacitor
 
 tile.voidstone.name=Voidstone
 tile.arcane_wood.name=Arcane Wood

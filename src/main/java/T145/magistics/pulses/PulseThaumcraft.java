@@ -1,19 +1,16 @@
 package T145.magistics.pulses;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.client.renderers.tile.TileArcaneLampRenderer;
 import thaumcraft.common.Thaumcraft;
+import thaumcraft.common.blocks.BlockCosmeticSolidItem;
 import thaumcraft.common.config.Config;
 import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.entities.monster.EntityPech;
-import thaumcraft.common.items.wands.ItemWandCasting;
 import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockArcaneLampRedstoneItem;
@@ -21,6 +18,7 @@ import T145.magistics.blocks.BlockArcaneWood;
 import T145.magistics.blocks.BlockChestHungryEnder;
 import T145.magistics.blocks.BlockChestHungryTrapped;
 import T145.magistics.blocks.BlockChthonianFurnace;
+import T145.magistics.blocks.BlockCrystalCore;
 import T145.magistics.blocks.BlockCrystalizer;
 import T145.magistics.blocks.BlockElevator;
 import T145.magistics.blocks.BlockEntropicDispenser;
@@ -28,8 +26,10 @@ import T145.magistics.blocks.BlockEverfullUrn;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockInfuserItem;
 import T145.magistics.blocks.BlockNetherFurnace;
+import T145.magistics.blocks.BlockTotem;
 import T145.magistics.client.render.blocks.RenderBlockChest;
 import T145.magistics.client.render.blocks.RenderBlockChthonianFurnace;
+import T145.magistics.client.render.blocks.RenderBlockCrystalCore;
 import T145.magistics.client.render.blocks.RenderBlockCrystalizer;
 import T145.magistics.client.render.blocks.RenderBlockEverfullUrn;
 import T145.magistics.client.render.blocks.RenderBlockInfuser;
@@ -38,13 +38,13 @@ import T145.magistics.client.render.blocks.RenderBlockLootUrn;
 import T145.magistics.client.render.tiles.RenderChestHungryEnder;
 import T145.magistics.client.render.tiles.RenderChestHungryTrapped;
 import T145.magistics.client.render.tiles.RenderChthonianFurnace;
+import T145.magistics.client.render.tiles.RenderCrystalCore;
 import T145.magistics.client.render.tiles.RenderCrystalizer;
 import T145.magistics.client.render.tiles.RenderInfuser;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardDull;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
-import T145.magistics.lib.CreativeTabCustom;
 import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.research.RecipeHandler;
 import T145.magistics.research.ResearchHandler;
@@ -52,12 +52,14 @@ import T145.magistics.tiles.TileArcaneLampRedstone;
 import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import T145.magistics.tiles.TileChthonianFurnace;
+import T145.magistics.tiles.TileCrystalCore;
 import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileElevator;
 import T145.magistics.tiles.TileEverfullUrn;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import T145.magistics.tiles.TileNetherFurnace;
+import T145.magistics.tiles.TileTotemRune;
 import T145.magistics.utils.RegistrationUtil;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -122,9 +124,16 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerBlock(BlockElevator.INSTANCE, BlockElevator.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerBlock(BlockArcaneWood.INSTANCE, BlockArcaneWood.INSTANCE.getUnlocalizedName());
-
 		OreDictionary.registerOre("logWood", BlockArcaneWood.INSTANCE);
 		ThaumcraftApi.portableHoleBlackList.add(BlockArcaneWood.INSTANCE);
+
+		GameRegistry.registerTileEntity(TileTotemRune.class, TileTotemRune.class.getSimpleName());
+		GameRegistry.registerBlock(BlockTotem.INSTANCE, BlockCosmeticSolidItem.class, BlockTotem.INSTANCE.getUnlocalizedName());
+
+		// register stone things
+
+		GameRegistry.registerTileEntity(TileCrystalCore.class, TileCrystalCore.class.getSimpleName());
+		GameRegistry.registerBlock(BlockCrystalCore.INSTANCE, BlockCrystalCore.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemShardDull.INSTANCE, ItemShardDull.INSTANCE.getUnlocalizedName());
@@ -134,7 +143,7 @@ public class PulseThaumcraft extends CorePulse {
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		if (Magistics.configHandler.sortTCTabsContent) {
+		/*if (Magistics.configHandler.sortTCTabsContent) {
 			CreativeTabs tabTCBasics = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".basics", ConfigItems.itemThaumonomicon);
 			ConfigItems.itemThaumonomicon.setCreativeTab(tabTCBasics);
 
@@ -151,7 +160,7 @@ public class PulseThaumcraft extends CorePulse {
 			CreativeTabs tabTCGolemancy = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".golemancy", ConfigItems.itemGolemPlacer);
 
 			CreativeTabs tabTCEldritch = new CreativeTabCustom(Magistics.MODID.toLowerCase() + ".eldritch", new ItemStack(ConfigItems.itemEldritchObject, 1, 1));
-		}
+		}*/
 
 		RecipeHandler.registerRecipes();
 		ResearchHandler.registerResearch();
@@ -178,6 +187,9 @@ public class PulseThaumcraft extends CorePulse {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystalizer.class, RenderCrystalizer.INSTANCE);
 		RenderingRegistry.registerBlockHandler(RenderBlockCrystalizer.INSTANCE);
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystalCore.class, RenderCrystalCore.INSTANCE);
+		RenderingRegistry.registerBlockHandler(RenderBlockCrystalCore.INSTANCE);
 
 		int newBlockLootCrateRI = RenderingRegistry.getNextAvailableRenderId();
 		ConfigBlocks.blockLootCrateRI = newBlockLootCrateRI;
