@@ -36,7 +36,7 @@ tc.research_page.HUNGRYIRONCHEST.1=After going through the process of building t
 
 tc.research_name.NETHERFORGE=Nether Forge
 tc.research_text.NETHERFORGE=Bigger Better Faster Hotter
-tc.research_page.NETHERFORGE.1=Further investigation into the properties of the Netherrack furnace reveal that it can be further modified. By enlarging its smelting chamber and reinforcing the whole construct with thaumium, the Netherrack Furnace can be made to accept and output four stacks of items at once instead of one.<BR>The Nether Forge also has some essentia based efficiency boosting capabilities. If any essentia jars containing potentia are nearby, the Nether Forge will siphon small quantities in order to purify and energize its internal flame. This enhanced flame gives it a chance to double metallic ore outputs. It also allows the forge to more thoroughly and evenly roast various meats and fish, occasionally resulting in delectable extra nuggets of goodness.
+tc.research_page.NETHERFORGE.1=Further investigation into the properties of the Netherrack furnace reveal that it can be further modified. By enlarging its smelting chamber and reinforcing the whole construct with thaumium, the Netherrack Furnace can be made to accept and output four stacks of items at once instead of one.<BR>The Nether Forge also has some essentia based efficiency boosting capabilities. If any essentia jars containing potentia are nearby, the Nether Forge will siphon small quantities in order to purify and energize its internal flame. This enhanced flame gives it a chance to double metallic ore outputs. It also allows the forge to more thoroughly and evenly roast various meats and fish, occasionally resulting in delectable extra nuggets of crispy savory goodness.
 
 tc.research_name.ARCANEREDSTONELAMP=Arcane Redstone Lamp
 tc.research_text.ARCANEREDSRONELAMP=A switch for the large source of light
@@ -44,7 +44,7 @@ tc.research_page.ARCANEREDSTONELAMP.1=Adding a few simple mechanisms to an Arcan
 
 tc.research_name.DAWNSTONE=Dawnstone
 tc.research_text.DAWNSTONE=LET THERE BE SUNLIGHT!!!
-tc.research_page.DAWNSTONE.1=The Dawnstone is a very strange artifact. If the stone is broken with a right click after the sun has passed noon, then time itself will accelerate until the sun is once again just starting to rise above the horizon. How it accomplishes this is a mystery, as the stone itself contains very little power, but the uses of this device are more than obvious to those who fear the night and the denizens that lurk within its shadows.
+tc.research_page.DAWNSTONE.1=The Dawnstone is a very strange artifact. If the stone is broken with a right click after the sun has passed noon, then time itself will accelerate until the sun is once again just starting to rise above the horizon. How it accomplishes this is a mystery, as the stone itself contains very little power, but its uses are more than obvious to those who fear the night and the denizens that lurk within its shadows.
 
 tc.research_name.EVERFULLURN=Everfull Urn
 tc.research_text.EVERFULLURN =Always cold and refreshing.
