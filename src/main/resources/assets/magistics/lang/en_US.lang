@@ -44,11 +44,11 @@ tc.research_page.ARCANEREDSTONELAMP.1=Adding a few simple mechanisms to an Arcan
 
 tc.research_name.DAWNSTONE=Dawnstone
 tc.research_text.DAWNSTONE=LET THERE BE SUNLIGHT!!!
-tc.research_page.DAWNSTONE.1=The Dawnstone is a very strange artifact. If the stone is broken with a right click after the sun has passed noon, then time itself will accelerate until the sun is once again just starting to rise above the horizon. How it accomplishes this is a mystery, as the stone itself contains very little power, but the uses of this device are more than obvious to those who fear the night and the denizens that lurk deep within its shadows.
+tc.research_page.DAWNSTONE.1=The Dawnstone is a very strange artifact. If the stone is broken with a right click after the sun has passed noon, then time itself will accelerate until the sun is once again just starting to rise above the horizon. How it accomplishes this is a mystery, as the stone itself contains very little power, but the uses of this device are more than obvious to those who fear the night and the denizens that lurk within its shadows.
 
 tc.research_name.EVERFULLURN=Everfull Urn
 tc.research_text.EVERFULLURN =Always cold and refreshing.
-tc.research_page.EVERFULLURN.1=This clay urn has been carefully infused with water crystals, allowing it to sustain its own infinite water source. The Everfull Urn actually sustains this water source so well that it spouts a small stream of water from its top. This water stream will constantly seek out nearby crucibles and other devices like the arcane spa to fill, as well as splashing any players who are on fire within 6 blocks.<BR>You wonder what would happen if you filled this urn with something that has a little more kick than water...
+tc.research_page.EVERFULLURN.1=This clay urn has been carefully infused with an inner coating of water crystal, allowing it to sustain its own infinite water source. The Everfull Urn actually sustains this water source so well that it constantly splashes water from its top. The urn will constantly seek out nearby crucibles, tanks, and other devices like the arcane spa and even machines to fill, as well as splashing any players who are on fire within 6 blocks.<BR>You wonder what would happen if you filled this urn with something that has a little more kick than water...
 
 ####
 # Items
