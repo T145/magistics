@@ -9,6 +9,7 @@ import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.network.CommonProxy;
+import T145.magistics.pulses.PulseIronChest;
 import T145.magistics.pulses.PulseThaumcraft;
 import T145.magistics.pulses.PulseWaila;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -65,6 +66,7 @@ public class Magistics {
 
 		proxy.addPulse(new PulseThaumcraft());
 		proxy.addPulse(new PulseWaila());
+		proxy.addPulse(new PulseIronChest());
 		proxy.preInit(event);
 	}
 
