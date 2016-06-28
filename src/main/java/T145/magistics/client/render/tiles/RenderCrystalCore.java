@@ -61,11 +61,11 @@ public class RenderCrystalCore extends TileEntitySpecialRenderer {
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
+	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
 		TileCrystalCore tco = (TileCrystalCore) te;
 
 		GL11.glPushMatrix();
-		bindTexture(new ResourceLocation("magistics", "textures/models/crystal.png"));
+		bindTexture(new ResourceLocation("magistics", "textures/models/crystals/base.png"));
 
 		Random rand = new Random(tco.xCoord + tco.yCoord * tco.zCoord);
 		int col = 0;
@@ -84,10 +84,10 @@ public class RenderCrystalCore extends TileEntitySpecialRenderer {
 			}
 
 			int color = BlockCustomOreItem.colors[col];
-			float angle1 = (tco.isActive() ? (f * tco.speed) : 0F) + tco.rotation + 18 * a;
+			float angle1 = (tco.isActive() ? (partialTick * tco.speed) : 0F) + tco.rotation + 18 * a;
 			float angle2 = 30 * (1 + a % 5);
 
-			drawCrystal((float) x, (float) y + tco.speed, (float) z, angle1, angle2, ((tco.isActive() ? (f * tco.speed) : 0F) + tco.rotation) * 2F, rand, color, 0.7f, tco.speed);
+			drawCrystal((float) x, (float) y + tco.speed, (float) z, angle1, angle2, ((tco.isActive() ? (partialTick * tco.speed) : 0F) + tco.rotation) * 2F, rand, color, 0.7f, tco.speed);
 		}
 
 		GL11.glPopMatrix();
