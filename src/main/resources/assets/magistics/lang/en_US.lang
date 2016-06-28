@@ -91,3 +91,15 @@ tile.hungry_chest.name=Hungry Chest
 tile.sorting_hungry_chest.name=Hungry Sorting Chest
 tile.trapped_hungry_chest.name=Trapped Hungry Chest
 tile.hungry_ender_chest.name=Hungry Ender Chest
+
+tile.ee3:hungry_alchemical_chest.name=Hungry Alchemical Chest
+tile.sortingAlchemicalChest.hungry.name=Hungry Sorting Alchemical Chest
+
+tile.hungry_metal_chest.iron.name=Hungry Iron Chest
+tile.hungry_metal_chest.gold.name=Hungry Gold Chest
+tile.hungry_metal_chest.diamond.name=Hungry Diamond Chest
+tile.hungry_metal_chest.copper.name=Hungry Copper Chest
+tile.hungry_metal_chest.silver.name=Hungry Silver Chest
+tile.hungry_metal_chest.crystal.name=Hungry Crystal Chest
+tile.hungry_metal_chest.obsidian.name=Hungry Obsidian Chest
+tile.hungry_metal_chest.dirt.name=Hungry Dirt Chest
