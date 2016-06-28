@@ -13,7 +13,6 @@ import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -23,7 +22,7 @@ public class CommonProxy implements IGuiHandler {
 	protected List<ServerPulse> pulses = new ArrayList<ServerPulse>();
 
 	public void addPulse(ServerPulse pulse) {
-		if (Loader.isModLoaded(pulse.getModId())) {
+		if (pulse.isLoaded()) {
 			pulses.add(pulse);
 		}
 	}
