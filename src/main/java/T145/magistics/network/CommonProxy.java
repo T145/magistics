@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import T145.magistics.containers.ContainerCrystalizer;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.containers.ContainerInfuserDark;
+import T145.magistics.items.wands.WandManager;
 import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
@@ -19,6 +20,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
+	public WandManager wandManager = new WandManager();
+
 	protected List<ServerPulse> pulses = new ArrayList<ServerPulse>();
 
 	public void addPulse(ServerPulse pulse) {

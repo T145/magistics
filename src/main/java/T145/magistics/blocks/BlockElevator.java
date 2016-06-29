@@ -27,7 +27,7 @@ public class BlockElevator extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		bottom = r.registerIcon("magistics:infusion_workbench/base/0");
+		bottom = r.registerIcon("magistics:infusion_workbench/base/1");
 		blockIcon = r.registerIcon("magistics:elevator");
 	}
 

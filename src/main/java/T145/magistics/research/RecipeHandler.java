@@ -9,10 +9,13 @@ import net.minecraft.item.ItemStack;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.wands.WandTriggerRegistry;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigResearch;
+import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockChestHungryEnder;
+import T145.magistics.blocks.BlockInfusionWorkbench;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.lib.crafting.InfuserRecipes;
@@ -55,5 +58,7 @@ public class RecipeHandler {
 		InfuserRecipes.infusing().addInfusingRecipe(new ItemStack(ConfigItems.itemResource, 1, 16), new AspectList().add(Aspect.METAL, 8), new ItemStack[] {
 			new ItemStack(Items.iron_ingot)
 		}, 100, true);
+
+		WandTriggerRegistry.registerWandBlockTrigger(Magistics.proxy.wandManager, 1, BlockInfusionWorkbench.INSTANCE, 0, Magistics.MODID);
 	}
 }
