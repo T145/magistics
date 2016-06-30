@@ -16,8 +16,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockElevator extends BlockContainer {
 	public static final Block INSTANCE = new BlockElevator();
 
-	public IIcon bottom;
-
 	public BlockElevator() {
 		super(Material.rock);
 		setBlockName("elevator");
@@ -27,7 +25,6 @@ public class BlockElevator extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		bottom = r.registerIcon("magistics:infusion_workbench/base/1");
 		blockIcon = r.registerIcon("magistics:elevator");
 	}
 
@@ -36,7 +33,7 @@ public class BlockElevator extends BlockContainer {
 	public IIcon getIcon(int side, int metadata) {
 		switch (side) {
 		case 0:
-			return bottom;
+			return BlockInfusionWorkbench.base[0];
 		case 1:
 			return Blocks.quartz_block.getIcon(side, 1);
 		default:

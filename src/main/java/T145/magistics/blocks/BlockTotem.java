@@ -23,8 +23,8 @@ public class BlockTotem extends BlockContainer {
 	public static final Block INSTANCE = new BlockTotem();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public IIcon[] dawn = new IIcon[7];
-	public IIcon[] dusk = new IIcon[7];
+	public static IIcon[] dawn = new IIcon[7];
+	public static IIcon[] dusk = new IIcon[7];
 
 	public BlockTotem() {
 		super(Material.rock);

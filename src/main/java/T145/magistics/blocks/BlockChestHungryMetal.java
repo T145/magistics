@@ -19,7 +19,7 @@ public class BlockChestHungryMetal extends BlockIronChest {
 	public static final Block INSTANCE = new BlockChestHungryMetal();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public IIcon[] icon = new IIcon[IronChestType.values().length];
+	public static IIcon[] icon = new IIcon[IronChestType.values().length];
 
 	public BlockChestHungryMetal() {
 		super();

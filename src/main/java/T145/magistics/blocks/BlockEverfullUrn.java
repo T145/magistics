@@ -25,7 +25,7 @@ public class BlockEverfullUrn extends BlockContainer {
 	public static final Block INSTANCE = new BlockEverfullUrn();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public IIcon[] icon = new IIcon[3];
+	public static IIcon[] icon = new IIcon[3];
 
 	public BlockEverfullUrn() {
 		super(Material.rock);

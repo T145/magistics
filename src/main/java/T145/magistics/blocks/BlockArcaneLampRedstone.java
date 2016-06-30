@@ -21,7 +21,7 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 
 	private boolean active;
 
-	public IIcon[] icon = new IIcon[4];
+	public static IIcon[] icon = new IIcon[4];
 
 	public BlockArcaneLampRedstone(boolean isActive) {
 		super(Material.iron);

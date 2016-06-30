@@ -16,8 +16,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import T145.magistics.Magistics;
+import T145.magistics.client.lib.ConnectedTextureHelper;
 import T145.magistics.lib.InventoryHelper;
 import T145.magistics.tiles.TileInfusionWorkbench;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -28,8 +30,9 @@ public class BlockInfusionWorkbench extends BlockContainer {
 	public static final Block INSTANCE = new BlockInfusionWorkbench();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public IIcon[] icon = new IIcon[7];
-	public IIcon iconGlow;
+	public static IIcon[] icon = new IIcon[6];
+	public static IIcon[] base = new IIcon[16];
+	public static IIcon iconGlow;
 
 	public BlockInfusionWorkbench() {
 		super(Material.rock);
@@ -44,9 +47,11 @@ public class BlockInfusionWorkbench extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister r) {
-		icon[0] = r.registerIcon("magistics:infusion_workbench/base/1");
+		for (int i = 0; i < base.length; ++i) {
+			base[i] = r.registerIcon("magistics:infusion_workbench/base/" + ConnectedTextureHelper.connected_suffix[i]);
+		}
 
-		for (int i = 1; i < 7; ++i) {
+		for (int i = 0; i < icon.length; ++i) {
 			icon[i] = r.registerIcon("magistics:infusion_workbench/side" + i);
 		}
 
@@ -62,61 +67,59 @@ public class BlockInfusionWorkbench extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int metadata) {
+		return base[0];
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+		int metadata = world.getBlockMetadata(x, y, z);
+
 		switch (metadata) {
 		case 1:
 			switch (side) {
-			case 0: case 1:
-				return icon[1];
-			case 2: case 5:
-				return icon[6];
-			case 3: case 4:
-				return icon[5];
-			default:
+			case 1:
 				return icon[0];
+			case 2: case 5:
+				return icon[5];
+			case 3: case 4:
+				return icon[4];
 			}
 		case 2:
 			switch (side) {
-			case 0: case 1:
-				return icon[2];
+			case 1:
+				return icon[1];
 			case 2: case 3:
-				return icon[5];
+				return icon[4];
 			case 4: case 5:
-				return icon[6];
-			default:
-				return icon[0];
+				return icon[5];
 			}
 		case 3:
 			switch (side) {
-			case 0: case 1:
-				return icon[3];
+			case 1:
+				return icon[2];
 			case 2: case 3:
-				return icon[5];
+				return icon[4];
 			case 4: case 5:
-				return icon[6];
-			default:
-				return icon[0];
+				return icon[5];
 			}
 		case 4:
 			switch (side) {
-			case 0: case 1:
-				return icon[4];
+			case 1:
+				return icon[3];
 			case 2: case 5:
-				return icon[5];
+				return icon[4];
 			case 3: case 4:
-				return icon[6];
-			default:
-				return icon[0];
+				return icon[5];
 			}
+		default:
+			return ConnectedTextureHelper.getConnectedTexture(world, x, y, z, side, base, this, metadata > 0);
 		}
-		return icon[0];
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
-		if (metadata == 1) {
-			return new TileInfusionWorkbench();
-		}
-		return null;
+		return metadata == 1 ? new TileInfusionWorkbench() : null;
 	}
 
 	@Override
@@ -223,12 +226,8 @@ public class BlockInfusionWorkbench extends BlockContainer {
 			return false;
 		}
 
-		if (world.isRemote) {
-			return true;
-		}
-
 		if (tile != null && tile instanceof TileInfusionWorkbench) {
-			player.openGui(Magistics.instance, 14, world, x, y, z);
+			//player.openGui(Magistics.instance, 14, world, x, y, z);
 			return true;
 		}
 
@@ -237,7 +236,7 @@ public class BlockInfusionWorkbench extends BlockContainer {
 			tile = world.getTileEntity(x - 1, y, z);
 
 			if (tile != null && tile instanceof TileInfusionWorkbench) {
-				player.openGui(Magistics.instance, 14, world, x - 1, y, z);
+				//player.openGui(Magistics.instance, 14, world, x - 1, y, z);
 				return true;
 			}
 
@@ -246,7 +245,7 @@ public class BlockInfusionWorkbench extends BlockContainer {
 			tile = world.getTileEntity(x, y, z - 1);
 
 			if (tile != null && tile instanceof TileInfusionWorkbench) {
-				player.openGui(Magistics.instance, 14, world, x, y, z - 1);
+				//player.openGui(Magistics.instance, 14, world, x, y, z - 1);
 				return true;
 			}
 
@@ -255,7 +254,7 @@ public class BlockInfusionWorkbench extends BlockContainer {
 			tile = world.getTileEntity(x - 1, y, z - 1);
 
 			if (tile != null && tile instanceof TileInfusionWorkbench) {
-				player.openGui(Magistics.instance, 14, world, x - 1, y, z - 1);
+				//player.openGui(Magistics.instance, 14, world, x - 1, y, z - 1);
 				return true;
 			}
 
@@ -272,23 +271,23 @@ public class BlockInfusionWorkbench extends BlockContainer {
 
 	@Override
 	public boolean onBlockEventReceived(World world, int x, int y, int z, int event, int data) {
-		if (event == 1) {
+		switch (event) {
+		case 1:
 			if (world.isRemote) {
-				Thaumcraft.proxy.blockSparkle(world, x, y, z, data, 5);
+				Thaumcraft.proxy.blockSparkle(world, x, y, z, Aspect.MAGIC.getColor(), 5);
 			}
 
+			world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "thaumcraft:wand", 1.0F, 1.0F);
 			return true;
-		}
-
-		if (event == 2) {
+		case 2:
 			for (int i = 0; i < 8; ++i) {
 				world.spawnParticle("largesmoke", x + Math.random(), y + Math.random(), z + Math.random(), 0, 0, 0);
 			}
 
 			world.playSoundEffect(x, y, z, "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 			return true;
+		default:
+			return super.onBlockEventReceived(world, x, y, z, event, data);
 		}
-
-		return super.onBlockEventReceived(world, x, y, z, event, data);
 	}
 }

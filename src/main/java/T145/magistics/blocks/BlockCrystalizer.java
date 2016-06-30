@@ -23,8 +23,8 @@ public class BlockCrystalizer extends BlockContainer {
 	public static final Block INSTANCE = new BlockCrystalizer();
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 
-	public IIcon[] icon = new IIcon[3];
-	public IIcon inside, top_opaque;
+	public static IIcon[] icon = new IIcon[3];
+	public static IIcon inside, top_opaque;
 
 	public BlockCrystalizer() {
 		super(Material.iron);

@@ -26,6 +26,7 @@ import T145.magistics.blocks.BlockEverfullUrn;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockInfuserItem;
 import T145.magistics.blocks.BlockInfusionWorkbench;
+import T145.magistics.blocks.BlockInfusionWorkbenchItem;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.blocks.BlockTotem;
 import T145.magistics.client.render.blocks.RenderBlockChest;
@@ -47,6 +48,7 @@ import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardDull;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
+import T145.magistics.lib.RegistrationHelper;
 import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.research.RecipeHandler;
 import T145.magistics.research.ResearchHandler;
@@ -63,7 +65,6 @@ import T145.magistics.tiles.TileInfuserDark;
 import T145.magistics.tiles.TileInfusionWorkbench;
 import T145.magistics.tiles.TileNetherFurnace;
 import T145.magistics.tiles.TileTotemRune;
-import T145.magistics.utils.RegistrationUtils;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -134,7 +135,7 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerBlock(BlockTotem.INSTANCE, BlockCosmeticSolidItem.class, BlockTotem.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerTileEntity(TileInfusionWorkbench.class, TileInfusionWorkbench.class.getSimpleName());
-		GameRegistry.registerBlock(BlockInfusionWorkbench.INSTANCE, BlockCosmeticSolidItem.class, BlockInfusionWorkbench.INSTANCE.getUnlocalizedName());
+		GameRegistry.registerBlock(BlockInfusionWorkbench.INSTANCE, BlockInfusionWorkbenchItem.class, BlockInfusionWorkbench.INSTANCE.getUnlocalizedName());
 
 		GameRegistry.registerTileEntity(TileCrystalCore.class, TileCrystalCore.class.getSimpleName());
 		GameRegistry.registerBlock(BlockCrystalCore.INSTANCE, BlockCrystalCore.INSTANCE.getUnlocalizedName());
@@ -142,7 +143,7 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemShardDull.INSTANCE, ItemShardDull.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemDawnstone.INSTANCE, ItemDawnstone.INSTANCE.getUnlocalizedName());
-		RegistrationUtils.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
+		RegistrationHelper.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 
 	@Override

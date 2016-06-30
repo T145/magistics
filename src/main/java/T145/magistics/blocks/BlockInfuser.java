@@ -33,8 +33,8 @@ public class BlockInfuser extends BlockContainer {
 	private int renderID = RenderingRegistry.getNextAvailableRenderId();
 	private float maxRenderY = 1F - BlockRenderer.W1;
 
-	public IIcon[] light_icon = new IIcon[5];
-	public IIcon[] dark_icon = new IIcon[5];
+	public static IIcon[] light_icon = new IIcon[5];
+	public static IIcon[] dark_icon = new IIcon[5];
 
 	public BlockInfuser() {
 		super(Material.rock);

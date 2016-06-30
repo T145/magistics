@@ -84,6 +84,9 @@ tile.elevator.name=Elevator
 tile.crystal_core.name=Crystal Core
 tile.crystal_capacitor.name=Crystal Capacitor
 
+tile.infusion_workbench.name=Infusion Workbench
+tile.infusion_workbench.base.name=Enchanted Stone
+
 tile.voidstone.name=Voidstone
 tile.arcane_wood.name=Arcane Wood
 

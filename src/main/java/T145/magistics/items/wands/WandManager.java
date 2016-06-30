@@ -11,7 +11,7 @@ import T145.magistics.blocks.BlockInfusionWorkbench;
 
 public class WandManager implements IWandTriggerManager {
 	public static boolean createInfusionWorkbench(ItemStack wandstack, EntityPlayer player, World world, int x, int y, int z) {
-		ItemWandCasting wand = (ItemWandCasting)wandstack.getItem();
+		ItemWandCasting wand = (ItemWandCasting) wandstack.getItem();
 
 		for (int xx = x - 1; xx <= x; ++xx) {
 			int zz = z - 1;
