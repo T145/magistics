@@ -94,7 +94,7 @@ public class TileCrystalCore extends TileThaumcraft implements IWandable {
 		super.updateEntity();
 
 		if (hasWorldObj()) {
-			if (nodes == null) {
+			if (nodes == null || nodes.isEmpty()) {
 				findNodes();
 			}
 

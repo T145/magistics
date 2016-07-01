@@ -277,7 +277,7 @@ public class BlockInfusionWorkbench extends BlockContainer {
 				Thaumcraft.proxy.blockSparkle(world, x, y, z, Aspect.MAGIC.getColor(), 5);
 			}
 
-			world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "thaumcraft:wand", 1.0F, 1.0F);
+			world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "thaumcraft:wand", 1F, 1F);
 			return true;
 		case 2:
 			for (int i = 0; i < 8; ++i) {
