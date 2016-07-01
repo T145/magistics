@@ -185,13 +185,15 @@ public class BlockInfuser extends BlockContainer {
 		TileEntity tile = world.getTileEntity(x, y, z);
 
 		if (tile != null && tile instanceof TileInfuser) {
-			((TileInfuser) tile).facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
+			TileInfuser infuser = (TileInfuser) tile;
+			//infuser.setOwner(player.getCommandSenderName());
+			infuser.facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		}
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
+		if (!world.isRemote && !player.isSneaking()) {
 			player.openGui(Magistics.instance, world.getBlockMetadata(x, y, z), world, x, y, z);
 		}
 

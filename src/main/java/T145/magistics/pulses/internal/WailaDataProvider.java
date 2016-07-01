@@ -6,6 +6,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import mcp.mobius.waila.api.SpecialChars;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -20,12 +21,15 @@ import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.tiles.TileChestHungryEnder;
+import T145.magistics.tiles.TileInfuser;
+import T145.magistics.tiles.TileInfuserDark;
 
 public class WailaDataProvider implements IWailaDataProvider {
 	private static final WailaDataProvider INSTANCE = new WailaDataProvider();
 
 	public static void registerProvider(IWailaRegistrar provider) {
 		provider.registerBodyProvider(INSTANCE, TileChestHungryEnder.class);
+		provider.registerBodyProvider(INSTANCE, TileInfuser.class);
 
 		provider.registerStackProvider(INSTANCE, BlockArcaneFurnace.class);
 		provider.registerStackProvider(INSTANCE, BlockArcaneDoor.class);
@@ -95,6 +99,16 @@ public class WailaDataProvider implements IWailaDataProvider {
 			if (compareTileEntityByClass(tile, TileChestHungryEnder.class)) {
 				TileChestHungryEnder chest = (TileChestHungryEnder) tile;
 				tooltip.add("Owner: " + chest.owner);
+			}
+
+			if (tile instanceof TileInfuser) {
+				TileInfuser infuser = (TileInfuser) tile;
+
+				if (infuser.isOwned()) {
+					tooltip.add((infuser.isDark() ? SpecialChars.LPURPLE : SpecialChars.AQUA) + "Owner: " + infuser.owner);
+				} else {
+					tooltip.add((infuser.isDark() ? SpecialChars.LPURPLE : SpecialChars.AQUA) + SpecialChars.ITALIC + "- Unowned -");
+				}
 			}
 		}
 

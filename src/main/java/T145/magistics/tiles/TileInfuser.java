@@ -5,22 +5,24 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.TileThaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
+import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
+import thaumcraft.common.tiles.TileOwned;
+import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.items.ItemShardDull;
 import T145.magistics.lib.InventoryHelper;
-import T145.magistics.lib.crafting.InfuserRecipes;
-import T145.magistics.lib.crafting.MagisticsRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAspectContainer {
+public class TileInfuser extends TileOwned implements ISidedInventory, IAspectContainer, IWandable {
 	protected ItemStack[] inventoryStacks = new ItemStack[8];
 	protected AspectList recipeEssentia = new AspectList();
 
@@ -44,6 +46,10 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		return crafting;
 	}
 
+	public boolean isDormant() {
+		return !active && !crafting;
+	}
+
 	public int getDiskAngle() {
 		return angle;
 	}
@@ -52,8 +58,21 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		return false;
 	}
 
+	public void setOwner(String name) {
+		owner = name;
+	}
+
+	public boolean isOwned() {
+		return owner.length() > 0;
+	}
+
+	public boolean isOwnedBy(EntityPlayer player) {
+		return player.getCommandSenderName().equals(owner);
+	}
+
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
+		super.readCustomNBT(tag);
 		facing = tag.getByte("facing");
 		active = tag.getBoolean("active");
 		crafting = tag.getBoolean("crafting");
@@ -62,6 +81,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
+		super.writeCustomNBT(tag);
 		tag.setByte("facing", (byte) facing);
 		tag.setBoolean("active", active);
 		tag.setBoolean("crafting", crafting);
@@ -160,12 +180,12 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		angle = infuserBurnTime > 0 ? (infuserCookTime * 360) / infuserBurnTime : facing;
 
 		if (hasWorldObj()) {
-			MagisticsRecipe recipe = InfuserRecipes.infusing().getMatchingRecipe(inventoryStacks, isDark());
+			InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(worldObj.getPlayerEntityByName(owner), inventoryStacks, isDark());
 			boolean cooked = false;
 			boolean isCooking = infuserCookTime > 0;
 
 			if (canProcess(recipe) && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-				if (!active && !crafting) {
+				if (isDormant()) {
 					setAspects(recipe.getAspects().copy());
 				}
 
@@ -185,7 +205,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 					++infuserCookTime;
 
 					if (infuserCookTime >= infuserBurnTime && infuserCookTime > 0) {
-						addProcessedItem(recipe.getResult(), recipe.getRecipe());
+						addProcessedItem(recipe.getResult(), recipe.getIngredients());
 						resetInfuser();
 					}
 				} else {
@@ -275,7 +295,7 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 		}
 	}
 
-	protected boolean canProcess(MagisticsRecipe recipe) {
+	protected boolean canProcess(InfuserRecipe recipe) {
 		if (recipe == null) {
 			return false;
 		} else {
@@ -404,4 +424,28 @@ public class TileInfuser extends TileThaumcraft implements ISidedInventory, IAsp
 	public boolean takeFromContainer(Aspect aspect, int amount) {
 		return recipeEssentia.reduce(aspect, amount);
 	}
+
+	@Override
+	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
+		if (!isOwnedBy(player) && isDormant() && player.isSneaking()) {
+			setOwner(player.getCommandSenderName());
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			markDirty();
+			player.swingItem();
+			return 0;
+		}
+
+		return -1;
+	}
+
+	@Override
+	public ItemStack onWandRightClick(World world, ItemStack wandstack, EntityPlayer player) {
+		return wandstack;
+	}
+
+	@Override
+	public void onUsingWandTick(ItemStack wandstack, EntityPlayer player, int count) {}
+
+	@Override
+	public void onWandStoppedUsing(ItemStack wandstack, World world, EntityPlayer player, int count) {}
 }
