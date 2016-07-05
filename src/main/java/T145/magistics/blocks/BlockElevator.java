@@ -3,7 +3,6 @@ package T145.magistics.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -19,13 +18,8 @@ public class BlockElevator extends BlockContainer {
 	public BlockElevator() {
 		super(Material.rock);
 		setBlockName("elevator");
+		setBlockTextureName("magistics:elevator");
 		setCreativeTab(Magistics.tabMagistics);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister r) {
-		blockIcon = r.registerIcon("magistics:elevator");
 	}
 
 	@Override

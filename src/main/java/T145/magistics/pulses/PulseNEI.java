@@ -12,10 +12,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class PulseNEI extends ServerPulse {
-	private Injector nei = new Injector("codechicken.nei.api.API");;
+	private Injector neiInjector;
 
 	private void hideItem(ItemStack item) {
-		nei.invokeMethod("hideItem", ItemStack.class, item);
+		neiInjector.invokeMethod("hideItem", ItemStack.class, item);
 	}
 
 	public void setItemListEntries(Block block, Iterable<ItemStack> items) {
@@ -23,7 +23,7 @@ public class PulseNEI extends ServerPulse {
 	}
 
 	public void setItemListEntries(Item item, Iterable<ItemStack> items) {
-		nei.invokeMethod("setItemListEntries", new Class[] { Item.class, Iterable.class }, item, items);
+		neiInjector.invokeMethod("setItemListEntries", new Class[] { Item.class, Iterable.class }, item, items);
 	}
 
 	@Override
@@ -36,6 +36,8 @@ public class PulseNEI extends ServerPulse {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
+		neiInjector = new Injector("codechicken.nei.api.API");
+
 		hideItem(new ItemStack(ItemDummy.INFERNAL_FURNACE));
 		hideItem(new ItemStack(BlockNetherFurnace.ACTIVE, 1, Short.MAX_VALUE));
 	}

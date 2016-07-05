@@ -11,6 +11,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.wands.IWandable;
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
@@ -427,8 +428,24 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		if (!isOwnedBy(player) && isDormant() && player.isSneaking()) {
-			setOwner(player.getCommandSenderName());
+		if (isDormant() && player.isSneaking()) {
+			if (isOwned()) {
+				if (side > 1) {
+					if (facing == side) {
+						facing = ForgeDirection.getOrientation(side).getOpposite().ordinal();
+					} else {
+						facing = side;
+					}
+				}
+			} else {
+				if (world.isRemote) {
+					Thaumcraft.proxy.blockSparkle(world, x, y, z, this.isDark() ? Aspect.MAGIC.getColor() : Aspect.SENSES.getColor(), 5);
+				}
+
+				world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "thaumcraft:wand", 1F, 1F);
+				setOwner(player.getCommandSenderName());
+			}
+
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			markDirty();
 			player.swingItem();

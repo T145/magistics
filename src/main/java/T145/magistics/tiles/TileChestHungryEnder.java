@@ -14,12 +14,20 @@ public class TileChestHungryEnder extends TileOwned implements IInventory {
 		owner = name;
 	}
 
+	public boolean isOwned() {
+		return owner.length() > 0;
+	}
+
 	public boolean isOwnedBy(EntityPlayer player) {
 		return player.getCommandSenderName().equals(owner);
 	}
 
+	public EntityPlayer getOwner() {
+		return worldObj.getPlayerEntityByName(owner);
+	}
+
 	public InventoryEnderChest getEnderInventory() {
-		EntityPlayer player = worldObj.getPlayerEntityByName(owner);
+		EntityPlayer player = getOwner();
 		return player == null ? null : player.getInventoryEnderChest();
 	}
 

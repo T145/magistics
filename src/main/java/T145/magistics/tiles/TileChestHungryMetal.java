@@ -12,7 +12,9 @@ import cpw.mods.ironchest.TileEntityIronChest;
 public class TileChestHungryMetal extends TileEntityIronChest {
 	int numUsingPlayers = (Integer) ReflectionHelper.getPrivateValue(TileEntityIronChest.class, this, "numUsingPlayers");
 
-	public TileChestHungryMetal() {}
+	public TileChestHungryMetal() {
+		super();
+	}
 
 	public TileChestHungryMetal(IronChestType type) {
 		super(type);
@@ -20,25 +22,40 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 
 	@Override
 	public boolean receiveClientEvent(int id, int data) {
-		if (id == 1) {
-			numUsingPlayers = data;
-			return true;
-		}
-
-		if (id == 2) {
+		if (id == 4) {
 			if (lidAngle < data / 10F) {
 				lidAngle = data / 10F;
 			}
 			return true;
 		}
+		return super.receiveClientEvent(id, data);
+	}
 
-		return tileEntityInvalid;
+	@Override
+	public void openInventory() {
+		if (worldObj == null) {
+			return;
+		}
+
+		numUsingPlayers++;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 1, numUsingPlayers);
+	}
+
+	@Override
+	public void closeInventory() {
+		if (worldObj == null) {
+			return;
+		}
+
+		numUsingPlayers--;
+		worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 1, numUsingPlayers);
 	}
 
 	@Override
 	public TileEntityIronChest applyUpgradeItem(ItemChestChanger itemChestChanger) {
-		if (numUsingPlayers > 0 || !itemChestChanger.getType().canUpgrade(getType()))
+		if (numUsingPlayers > 0 || !itemChestChanger.getType().canUpgrade(getType())) {
 			return null;
+		}
 
 		TileChestHungryMetal chest = new TileChestHungryMetal(IronChestType.values()[itemChestChanger.getTargetChestOrdinal(getType().ordinal())]);
 
