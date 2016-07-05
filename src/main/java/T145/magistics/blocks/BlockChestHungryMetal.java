@@ -60,6 +60,6 @@ public class BlockChestHungryMetal extends BlockIronChest {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryMetal) world.getTileEntity(x, y, z), this, 2, 2, world, x, y, z, true);
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, (TileChestHungryMetal) world.getTileEntity(x, y, z), this, 4, 2, world, x, y, z, true);
 	}
 }

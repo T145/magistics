@@ -16,13 +16,11 @@ import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockArcaneDoor;
 import thaumcraft.common.blocks.BlockArcaneFurnace;
 import thaumcraft.common.config.ConfigItems;
-import T145.magistics.blocks.BlockEntropicDispenser;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.tiles.TileChestHungryEnder;
 import T145.magistics.tiles.TileInfuser;
-import T145.magistics.tiles.TileInfuserDark;
 
 public class WailaDataProvider implements IWailaDataProvider {
 	private static final WailaDataProvider INSTANCE = new WailaDataProvider();
@@ -36,7 +34,6 @@ public class WailaDataProvider implements IWailaDataProvider {
 
 		provider.registerStackProvider(INSTANCE, BlockNetherFurnace.class);
 		provider.registerStackProvider(INSTANCE, BlockInfuser.class);
-		provider.registerStackProvider(INSTANCE, BlockEntropicDispenser.class);
 	}
 
 	private boolean compareByClass(Class first, Class second) {
@@ -77,9 +74,6 @@ public class WailaDataProvider implements IWailaDataProvider {
 			return new ItemStack(BlockInfuser.INSTANCE, 1, metadata);
 		}
 
-		if (block instanceof BlockEntropicDispenser) {
-			return new ItemStack(BlockEntropicDispenser.INSTANCE, 1, 3);
-		}
 
 		return accessor.getStack();
 	}
