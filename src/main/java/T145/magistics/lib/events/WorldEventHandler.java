@@ -1,10 +1,10 @@
 package T145.magistics.lib.events;
 
+import T145.magistics.items.ItemShardFragment;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import thaumcraft.common.config.ConfigBlocks;
-import T145.magistics.items.ItemShardFragment;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldEventHandler {
 	@SubscribeEvent

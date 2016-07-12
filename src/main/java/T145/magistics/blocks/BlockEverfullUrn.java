@@ -2,6 +2,11 @@ package T145.magistics.blocks;
 
 import java.util.Random;
 
+import T145.magistics.Magistics;
+import T145.magistics.tiles.TileEverfullUrn;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,11 +20,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.particles.FXEssentiaTrail;
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.Magistics;
-import T145.magistics.tiles.TileEverfullUrn;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEverfullUrn extends BlockContainer {
 	public static final Block INSTANCE = new BlockEverfullUrn();

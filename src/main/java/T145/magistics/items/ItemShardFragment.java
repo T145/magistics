@@ -1,11 +1,11 @@
 package T145.magistics.items;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
-import thaumcraft.common.items.ItemShard;
 import T145.magistics.Magistics;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import thaumcraft.common.items.ItemShard;
 
 public class ItemShardFragment extends ItemShard {
 	public static final Item INSTANCE = new ItemShardFragment();

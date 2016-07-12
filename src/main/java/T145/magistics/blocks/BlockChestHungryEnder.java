@@ -1,5 +1,11 @@
 package T145.magistics.blocks;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.tiles.TileChestHungryEnder;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEnderChest;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -8,17 +14,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileChestHungryEnder;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChestHungryEnder extends BlockEnderChest {
 	public static final Block INSTANCE = new BlockChestHungryEnder();
@@ -68,7 +67,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 			EntityPlayer player = (EntityPlayer) user;
 			TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
 
-			chest.setOwner(player.getCommandSenderName());
+			chest.setOwner(player);
 		}
 
 		super.onBlockPlacedBy(world, x, y, z, user, stack);
@@ -96,7 +95,7 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
-		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, chest.getEnderInventory(), this, 1, 2, world, x, y, z, true);
+		InventoryHelper.absorbCollidingItemStackIntoInventory(entity, chest, this, 1, 2, world, x, y, z, true);
 	}
 
 	@Override
@@ -107,12 +106,6 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 	@Override
 	public int getComparatorInputOverride(World world, int x, int y, int z, int power) {
 		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
-		IInventory inventory = chest.getEnderInventory();
-
-		if (inventory != null) {
-			return Container.calcRedstoneFromInventory(inventory);
-		} else {
-			return 0;
-		}
+		return chest == null ? 0 : Container.calcRedstoneFromInventory(chest);
 	}
 }

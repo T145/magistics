@@ -1,5 +1,6 @@
 package T145.magistics.tiles;
 
+import T145.magistics.blocks.BlockEntropicDispenser;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
@@ -10,7 +11,6 @@ import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import T145.magistics.blocks.BlockEntropicDispenser;
 
 public class TileEntropicDispenser extends TileEntityDispenser {
 	private int ticksExpired = 0;

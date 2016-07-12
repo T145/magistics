@@ -2,6 +2,11 @@ package T145.magistics.pulses.internal;
 
 import java.util.List;
 
+import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.blocks.BlockNetherFurnace;
+import T145.magistics.items.ItemDummy;
+import T145.magistics.tiles.TileChestHungryEnder;
+import T145.magistics.tiles.TileInfuser;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -16,11 +21,6 @@ import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockArcaneDoor;
 import thaumcraft.common.blocks.BlockArcaneFurnace;
 import thaumcraft.common.config.ConfigItems;
-import T145.magistics.blocks.BlockInfuser;
-import T145.magistics.blocks.BlockNetherFurnace;
-import T145.magistics.items.ItemDummy;
-import T145.magistics.tiles.TileChestHungryEnder;
-import T145.magistics.tiles.TileInfuser;
 
 public class WailaDataProvider implements IWailaDataProvider {
 	private static final WailaDataProvider INSTANCE = new WailaDataProvider();
@@ -34,18 +34,6 @@ public class WailaDataProvider implements IWailaDataProvider {
 
 		provider.registerStackProvider(INSTANCE, BlockNetherFurnace.class);
 		provider.registerStackProvider(INSTANCE, BlockInfuser.class);
-	}
-
-	private boolean compareByClass(Class first, Class second) {
-		if (first == null || second == null) {
-			return false;
-		} else {
-			return first.getName().equalsIgnoreCase(second.getName());
-		}
-	}
-
-	private boolean compareTileEntityByClass(TileEntity tile, Class tileClass) {
-		return compareByClass(tile.getClass(), tileClass);
 	}
 
 	@Override
@@ -90,16 +78,16 @@ public class WailaDataProvider implements IWailaDataProvider {
 		int metadata = accessor.getMetadata();
 
 		if (block.hasTileEntity(metadata) && tile.hasWorldObj()) {
-			if (compareTileEntityByClass(tile, TileChestHungryEnder.class)) {
+			if (tile instanceof TileChestHungryEnder) {
 				TileChestHungryEnder chest = (TileChestHungryEnder) tile;
-				tooltip.add("Owner: " + chest.owner);
+				tooltip.add("Owner: " + chest.ownerName);
 			}
 
 			if (tile instanceof TileInfuser) {
 				TileInfuser infuser = (TileInfuser) tile;
 
 				if (infuser.isOwned()) {
-					tooltip.add((infuser.isDark() ? SpecialChars.LPURPLE : SpecialChars.AQUA) + "Owner: " + infuser.owner);
+					tooltip.add((infuser.isDark() ? SpecialChars.LPURPLE : SpecialChars.AQUA) + "Owner: " + infuser.ownerName);
 				} else {
 					tooltip.add((infuser.isDark() ? SpecialChars.LPURPLE : SpecialChars.AQUA) + SpecialChars.ITALIC + "- Unowned -");
 				}

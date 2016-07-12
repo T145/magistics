@@ -1,12 +1,12 @@
 package T145.magistics.client.render.tiles;
 
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import T145.magistics.client.lib.WorldChestRenderHelper;
 import T145.magistics.tiles.TileChestHungryEnder;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
 public class RenderChestHungryEnder extends TileEntitySpecialRenderer {

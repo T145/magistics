@@ -3,6 +3,11 @@ package T145.magistics.blocks;
 import java.util.List;
 import java.util.Random;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.tiles.TileNetherFurnace;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -18,11 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileNetherFurnace;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockNetherFurnace extends BlockContainer {
 	public static final Block ACTIVE = new BlockNetherFurnace(true);
@@ -79,7 +79,12 @@ public class BlockNetherFurnace extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		return Blocks.furnace.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+		if (world.isRemote) {
+			return true;
+		} else {
+			player.openGui(Magistics.MODID, 3, world, x, y, z);
+			return true;
+		}
 	}
 
 	public static void updateFurnaceBlockState(boolean isActive, World world, int x, int y, int z) {

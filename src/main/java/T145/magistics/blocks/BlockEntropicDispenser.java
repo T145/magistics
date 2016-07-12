@@ -2,6 +2,11 @@ package T145.magistics.blocks;
 
 import java.util.Random;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.tiles.TileEntropicDispenser;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
@@ -19,11 +24,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileEntropicDispenser;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEntropicDispenser extends BlockContainer {
 	public static final Block INSTANCE = new BlockEntropicDispenser();

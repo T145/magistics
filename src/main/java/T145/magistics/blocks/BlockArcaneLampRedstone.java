@@ -1,5 +1,9 @@
 package T145.magistics.blocks;
 
+import T145.magistics.Magistics;
+import T145.magistics.tiles.TileArcaneLampRedstone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -10,10 +14,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.client.renderers.block.BlockRenderer;
 import thaumcraft.common.tiles.TileArcaneLamp;
-import T145.magistics.Magistics;
-import T145.magistics.tiles.TileArcaneLampRedstone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockArcaneLampRedstone extends BlockContainer {
 	public static final Block ACTIVE = new BlockArcaneLampRedstone(true);

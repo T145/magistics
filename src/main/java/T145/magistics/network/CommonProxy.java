@@ -3,10 +3,9 @@ package T145.magistics.network;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.containers.ContainerCrystalizer;
+import T145.magistics.containers.ContainerFurnace;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.containers.ContainerInfuserDark;
 import T145.magistics.items.wands.WandManager;
@@ -18,6 +17,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class CommonProxy implements IGuiHandler {
 	public WandManager wandManager = new WandManager();
@@ -61,6 +63,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerInfuserDark(player.inventory, (TileInfuserDark) tile);
 		case 2:
 			return new ContainerCrystalizer(player.inventory, (TileCrystalizer) tile);
+		case 3:
+			return new ContainerFurnace(player.inventory, (TileFurnace) tile);
 		default:
 			return null;
 		}

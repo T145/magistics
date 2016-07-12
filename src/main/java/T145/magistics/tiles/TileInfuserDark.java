@@ -1,11 +1,11 @@
 package T145.magistics.tiles;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import thaumcraft.common.tiles.TileEldritchObelisk;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileInfuserDark extends TileInfuser {
 	protected int[] obeliskQuards = new int[3];

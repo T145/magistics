@@ -1,9 +1,9 @@
 package T145.magistics.client.lib;
 
-import net.minecraft.client.model.ModelChest;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import net.minecraft.client.model.ModelChest;
 
 /**
  * @author T145

@@ -1,11 +1,11 @@
 package T145.magistics.config;
 
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import T145.magistics.Magistics;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class ConfigHandler {
 	public static final String CATEGORY_THAUMCRAFT_OVERRIDES = "thaumcraft_overrides";

@@ -1,12 +1,12 @@
 package T145.magistics.items.relics;
 
+import T145.magistics.Magistics;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import T145.magistics.Magistics;
 
 public class ItemDawnstone extends Item {
 	public static final Item INSTANCE = new ItemDawnstone();

@@ -1,5 +1,11 @@
 package T145.magistics.blocks;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.tiles.TileChestHungryTrapped;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -7,12 +13,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import thaumcraft.common.blocks.BlockChestHungry;
-import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileChestHungryTrapped;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChestHungryTrapped extends BlockChestHungry {
 	public static final Block INSTANCE = new BlockChestHungryTrapped();

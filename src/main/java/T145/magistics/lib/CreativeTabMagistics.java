@@ -1,8 +1,8 @@
 package T145.magistics.lib;
 
+import T145.magistics.Magistics;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import T145.magistics.Magistics;
 
 public class CreativeTabMagistics extends CreativeTabCustom {
 	public CreativeTabMagistics() {

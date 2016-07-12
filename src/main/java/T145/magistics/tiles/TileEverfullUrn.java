@@ -2,6 +2,8 @@ package T145.magistics.tiles;
 
 import java.awt.Color;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.BlockFarmland;
@@ -22,8 +24,6 @@ import thaumcraft.common.lib.network.fx.PacketFXBlockBubble;
 import thaumcraft.common.tiles.TileJarFillable;
 import vazkii.botania.common.block.mana.BlockAlchemyCatalyst;
 import vazkii.botania.common.block.tile.TileAltar;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class TileEverfullUrn extends TileEntity {
 	private int soundDelay = 33;

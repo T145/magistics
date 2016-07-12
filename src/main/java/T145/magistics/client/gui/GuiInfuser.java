@@ -1,13 +1,12 @@
 package T145.magistics.client.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.tiles.TileInfuser;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiInfuser extends GuiContainer {
 	private TileInfuser infuser;

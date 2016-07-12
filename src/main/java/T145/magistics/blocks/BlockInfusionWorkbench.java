@@ -2,6 +2,13 @@ package T145.magistics.blocks;
 
 import java.util.List;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.client.lib.ConnectedTextureHelper;
+import T145.magistics.tiles.TileInfusionWorkbench;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -18,13 +25,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
-import T145.magistics.Magistics;
-import T145.magistics.client.lib.ConnectedTextureHelper;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileInfusionWorkbench;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockInfusionWorkbench extends BlockContainer {
 	public static final Block INSTANCE = new BlockInfusionWorkbench();

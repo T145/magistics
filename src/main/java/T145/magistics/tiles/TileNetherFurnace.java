@@ -1,16 +1,33 @@
 package T145.magistics.tiles;
 
-import net.minecraft.world.World;
+import T145.magistics.api.tiles.IFacing;
+import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.blocks.BlockNetherFurnace;
+import net.minecraft.world.World;
 
-public class TileNetherFurnace extends TileModifiedFurnace {
+public class TileNetherFurnace extends TileFurnace implements IFacing {
 	public TileNetherFurnace() {
-		setDisplayName("Netherrack Furnace");
+		super(true, false);
 	}
 
 	@Override
-	public void updateFurnaceBlockState(boolean active, World worldObj, int xCoord, int yCoord, int zCoord) {
-		BlockNetherFurnace.updateFurnaceBlockState(active, worldObj, xCoord, yCoord, zCoord);
+	public int getFacing() {
+		return getBlockMetadata();
+	}
+
+	@Override
+	public void setFacing(int dir) {
+		blockMetadata = dir;
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "Netherrack Furnace";
+	}
+
+	@Override
+	public void updateFurnaceBlockState(boolean isActive, World world, int x, int y, int z) {
+		BlockNetherFurnace.updateFurnaceBlockState(isActive, worldObj, xCoord, yCoord, zCoord);
 	}
 
 	private void speedUpSmelting() {
@@ -21,7 +38,7 @@ public class TileNetherFurnace extends TileModifiedFurnace {
 
 	@Override
 	public void updateEntity() {
-		super.updateEntity();
 		speedUpSmelting();
+		super.updateEntity();
 	}
 }

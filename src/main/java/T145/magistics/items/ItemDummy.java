@@ -1,10 +1,10 @@
 package T145.magistics.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDummy extends Item {
 	public static final Item INFERNAL_FURNACE = new ItemDummy("magistics:waila/infernal_furnace", "arcane_furnace");

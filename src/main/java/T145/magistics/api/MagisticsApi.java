@@ -3,10 +3,10 @@ package T145.magistics.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import T145.magistics.api.crafting.InfuserRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.AspectList;
-import T145.magistics.api.crafting.InfuserRecipe;
 
 public class MagisticsApi {
 	private static List<InfuserRecipe> infuserRecipes = new ArrayList<InfuserRecipe>();

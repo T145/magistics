@@ -1,14 +1,14 @@
 package T145.magistics.client.render.blocks;
 
+import T145.magistics.blocks.BlockEverfullUrn;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.blocks.BlockEverfullUrn;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlockEverfullUrn extends BlockRenderer implements ISimpleBlockRenderingHandler {

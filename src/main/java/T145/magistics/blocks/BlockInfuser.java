@@ -1,7 +1,15 @@
 package T145.magistics.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import T145.magistics.Magistics;
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.tiles.TileInfuser;
+import T145.magistics.tiles.TileInfuserDark;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
@@ -10,22 +18,18 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
-import T145.magistics.tiles.TileInfuser;
-import T145.magistics.tiles.TileInfuserDark;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockInfuser extends BlockContainer {
 	public static final Block INSTANCE = new BlockInfuser();
@@ -46,7 +50,7 @@ public class BlockInfuser extends BlockContainer {
 		setStepSound(soundTypeStone);
 	}
 
-	public boolean isDark(int metadata) {
+	public static boolean isDark(int metadata) {
 		return metadata == 1;
 	}
 
@@ -173,20 +177,15 @@ public class BlockInfuser extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
-		if (isDark(metadata)) {
-			return new TileInfuserDark();
-		} else {
-			return new TileInfuser();
-		}
+		return isDark(metadata) ? new TileInfuserDark() : new TileInfuser();
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
 		TileEntity tile = world.getTileEntity(x, y, z);
+		TileInfuser infuser = (TileInfuser) tile;
 
-		if (tile != null && tile instanceof TileInfuser) {
-			TileInfuser infuser = (TileInfuser) tile;
-			//infuser.setOwner(player.getCommandSenderName());
+		if (infuser != null) {
 			infuser.facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
 		}
 	}
@@ -194,18 +193,49 @@ public class BlockInfuser extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && !player.isSneaking()) {
-			player.openGui(Magistics.instance, world.getBlockMetadata(x, y, z), world, x, y, z);
+			TileEntity tile = world.getTileEntity(x, y, z);
+			TileInfuser infuser = (TileInfuser) tile;
+
+			if (ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "INFUSER")) {
+				if (infuser.isOwnedBy(player)) {
+					player.openGui(Magistics.instance, world.getBlockMetadata(x, y, z), world, x, y, z);
+				} else if (infuser.isOwned()) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + StatCollector.translateToLocal("mg.infuser.unowned") + infuser.ownerName));
+				} else {
+					// set owner
+				}
+			} else {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + StatCollector.translateToLocal("tc.researchmissing")));
+			}
 		}
 
 		return true;
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int side) {
-		TileEntity tile = world.getTileEntity(x, y, z);
+	public void onBlockHarvested(World world, int x, int y, int z, int fortune, EntityPlayer player) {
+		dropBlockAsItem(world, x, y, z, fortune, 0);
+		super.onBlockHarvested(world, x, y, z, fortune, player);
+	}
 
-		if (tile != null && tile instanceof IInventory) {
-			InventoryHelper.emptyInventory(world, x, y, z);
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		TileEntity tile = world.getTileEntity(x, y, z);
+		TileInfuser infuser = (TileInfuser) tile;
+
+		if (infuser != null) {
+			ItemStack drop = new ItemStack(INSTANCE);
+			((BlockInfuserItem) drop.getItem()).setOwner(drop, infuser.ownerName);
+			drops.add(drop);
 		}
+
+		return drops;
+	}
+
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int side) {
+		InventoryHelper.emptyInventory(world, x, y, z);
+		super.breakBlock(world, x, y, z, block, side);
 	}
 }

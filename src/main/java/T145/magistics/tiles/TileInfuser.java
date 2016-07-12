@@ -1,30 +1,34 @@
 package T145.magistics.tiles;
 
+import T145.magistics.api.InventoryHelper;
+import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.crafting.InfuserRecipe;
+import T145.magistics.api.tiles.IFacing;
+import T145.magistics.api.tiles.IOwned;
+import T145.magistics.api.tiles.TileMagisticsInventory;
+import T145.magistics.items.ItemShardDull;
+import T145.magistics.lib.ModHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.wands.IWandable;
-import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.lib.events.EssentiaHandler;
 import thaumcraft.common.lib.utils.InventoryUtils;
-import thaumcraft.common.tiles.TileOwned;
-import T145.magistics.api.MagisticsApi;
-import T145.magistics.api.crafting.InfuserRecipe;
-import T145.magistics.items.ItemShardDull;
-import T145.magistics.lib.InventoryHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileOwned implements ISidedInventory, IAspectContainer, IWandable {
-	protected ItemStack[] inventoryStacks = new ItemStack[8];
+public class TileInfuser extends TileMagisticsInventory implements IFacing, IOwned, ISidedInventory, IAspectContainer, IWandable {
+	public TileInfuser() {
+		super(8, true, true);
+	}
+
 	protected AspectList recipeEssentia = new AspectList();
 
 	private boolean active = false;
@@ -32,7 +36,6 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 
 	public int infuserCookTime;
 	public int infuserBurnTime;
-	public int facing = 0;
 	public int boost = 0;
 
 	protected int angle = 0;
@@ -59,22 +62,44 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 		return false;
 	}
 
-	public void setOwner(String name) {
-		owner = name;
+	public boolean hasConnectedSide(int side) {
+		return false;
 	}
 
+	@Override
+	public EntityPlayer getOwner() {
+		return ModHelper.findPlayerByUUID(ownerUUID);
+	}
+
+	@Override
+	public void setOwner(EntityPlayer player) {
+		ownerName = player.getCommandSenderName();
+		ownerUUID = player.getUniqueID();
+	}
+
+	@Override
 	public boolean isOwned() {
-		return owner.length() > 0;
+		return ownerName.length() > 0;
 	}
 
+	@Override
 	public boolean isOwnedBy(EntityPlayer player) {
-		return player.getCommandSenderName().equals(owner);
+		return player.getUniqueID().equals(ownerUUID);
+	}
+
+	@Override
+	public int getFacing() {
+		return facing;
+	}
+
+	@Override
+	public void setFacing(int dir) {
+		facing = dir;
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
 		super.readCustomNBT(tag);
-		facing = tag.getByte("facing");
 		active = tag.getBoolean("active");
 		crafting = tag.getBoolean("crafting");
 		recipeEssentia.readFromNBT(tag);
@@ -83,7 +108,6 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
 		super.writeCustomNBT(tag);
-		tag.setByte("facing", (byte) facing);
 		tag.setBoolean("active", active);
 		tag.setBoolean("crafting", crafting);
 		recipeEssentia.writeToNBT(tag);
@@ -92,19 +116,6 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-
-		NBTTagList items = tag.getTagList("Items", 10);
-		inventoryStacks = new ItemStack[getSizeInventory()];
-
-		for (int i = 0; i < items.tagCount(); ++i) {
-			NBTTagCompound slot = items.getCompoundTagAt(i);
-			byte pos = slot.getByte("Slot");
-
-			if (pos >= 0 && pos < getSizeInventory()) {
-				inventoryStacks[pos] = ItemStack.loadItemStackFromNBT(slot);
-			}
-		}
-
 		infuserBurnTime = tag.getShort("BurnTime");
 		infuserCookTime = tag.getShort("CookTime");
 	}
@@ -112,52 +123,8 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 	@Override
 	public void writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-
 		tag.setShort("BurnTime", (short) infuserBurnTime);
 		tag.setShort("CookTime", (short) infuserCookTime);
-
-		NBTTagList items = new NBTTagList();
-
-		for (int i = 0; i < getSizeInventory(); ++i) {
-			if (inventoryStacks[i] != null) {
-				NBTTagCompound slot = new NBTTagCompound();
-				slot.setByte("Slot", (byte) i);
-				inventoryStacks[i].writeToNBT(slot);
-				items.appendTag(slot);
-			}
-		}
-
-		tag.setTag("Items", items);
-	}
-
-	@Override
-	public int getSizeInventory() {
-		return inventoryStacks.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		return inventoryStacks[slot];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int slot, int size) {
-		return InventoryHelper.decrStackSize(this, slot, size);
-	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		return InventoryHelper.getStackInSlotOnClosing(this, slot);
-	}
-
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		InventoryHelper.setInventorySlotContents(this, inventoryStacks, slot, stack);
-	}
-
-	@Override
-	public boolean canUpdate() {
-		return true;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -181,7 +148,7 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 		angle = infuserBurnTime > 0 ? (infuserCookTime * 360) / infuserBurnTime : facing;
 
 		if (hasWorldObj()) {
-			InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(worldObj.getPlayerEntityByName(owner), inventoryStacks, isDark());
+			InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(getOwner(), inventoryStacks, isDark());
 			boolean cooked = false;
 			boolean isCooking = infuserCookTime > 0;
 
@@ -321,27 +288,6 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
-		return true;
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
-	}
-
-	@Override
-	public void openInventory() {}
-
-	@Override
-	public void closeInventory() {}
-
-	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 		return isDark() ? slot > 0 : slot > 1;
 	}
@@ -364,10 +310,6 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
 		return !isItemValidForSlot(slot, stack);
-	}
-
-	public boolean hasConnectedSide(int side) {
-		return false;
 	}
 
 	@Override
@@ -428,24 +370,7 @@ public class TileInfuser extends TileOwned implements ISidedInventory, IAspectCo
 
 	@Override
 	public int onWandRightClick(World world, ItemStack wandstack, EntityPlayer player, int x, int y, int z, int side, int md) {
-		if (isDormant() && player.isSneaking()) {
-			if (isOwned()) {
-				if (side > 1) {
-					if (facing == side) {
-						facing = ForgeDirection.getOrientation(side).getOpposite().ordinal();
-					} else {
-						facing = side;
-					}
-				}
-			} else {
-				if (world.isRemote) {
-					Thaumcraft.proxy.blockSparkle(world, x, y, z, this.isDark() ? Aspect.MAGIC.getColor() : Aspect.SENSES.getColor(), 5);
-				}
-
-				world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "thaumcraft:wand", 1F, 1F);
-				setOwner(player.getCommandSenderName());
-			}
-
+		if (isDormant() && player.isSneaking() && isOwnedBy(player)) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			markDirty();
 			player.swingItem();

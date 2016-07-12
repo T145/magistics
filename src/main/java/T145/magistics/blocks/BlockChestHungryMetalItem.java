@@ -1,9 +1,9 @@
 package T145.magistics.blocks;
 
+import cpw.mods.ironchest.IronChestType;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import cpw.mods.ironchest.IronChestType;
 
 public class BlockChestHungryMetalItem extends ItemBlock {
 	public BlockChestHungryMetalItem(Block block) {

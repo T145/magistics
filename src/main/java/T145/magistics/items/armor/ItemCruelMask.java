@@ -1,5 +1,6 @@
 package T145.magistics.items.armor;
 
+import T145.magistics.Magistics;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import thaumcraft.common.lib.utils.EntityUtils;
-import T145.magistics.Magistics;
 
 public class ItemCruelMask extends ItemArmor {
 	//public static final ItemArmor INSTANCE = new ItemCruelMask();

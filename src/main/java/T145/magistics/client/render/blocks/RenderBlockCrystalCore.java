@@ -1,19 +1,18 @@
 package T145.magistics.client.render.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.world.IBlockAccess;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import thaumcraft.client.renderers.block.BlockRenderer;
 import T145.magistics.blocks.BlockCrystalCore;
 import T145.magistics.tiles.TileCrystalCore;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlockCrystalCore extends BlockRenderer implements ISimpleBlockRenderingHandler {

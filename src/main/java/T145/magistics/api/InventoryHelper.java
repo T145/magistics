@@ -1,4 +1,4 @@
-package T145.magistics.lib;
+package T145.magistics.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;

@@ -1,7 +1,7 @@
 package T145.magistics.items;
 
-import net.minecraft.item.Item;
 import T145.magistics.Magistics;
+import net.minecraft.item.Item;
 
 public class ItemTintedNitor extends Item {
 	public static final Item INSTANCE = new ItemTintedNitor();

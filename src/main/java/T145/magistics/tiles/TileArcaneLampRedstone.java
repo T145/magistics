@@ -1,11 +1,11 @@
 package T145.magistics.tiles;
 
+import T145.magistics.blocks.BlockArcaneLampRedstone;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.tiles.TileArcaneLamp;
-import T145.magistics.blocks.BlockArcaneLampRedstone;
 
 public class TileArcaneLampRedstone extends TileArcaneLamp {
 	private boolean conflictingLamp = false;

@@ -1,5 +1,10 @@
 package T145.magistics.blocks;
 
+import T145.magistics.Magistics;
+import T145.magistics.tiles.TileChthonianFurnace;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
@@ -8,11 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import T145.magistics.Magistics;
-import T145.magistics.tiles.TileChthonianFurnace;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChthonianFurnace extends BlockContainer {
 	public static final Block INSTANCE = new BlockChthonianFurnace();

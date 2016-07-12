@@ -1,19 +1,19 @@
 package T145.magistics.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 import T145.magistics.Magistics;
-import T145.magistics.lib.InventoryHelper;
+import T145.magistics.api.InventoryHelper;
 import T145.magistics.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
 public class BlockChestHungryMetal extends BlockIronChest {
 	public static final Block INSTANCE = new BlockChestHungryMetal();

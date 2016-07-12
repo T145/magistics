@@ -1,8 +1,5 @@
 package T145.magistics;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.MinecraftForge;
-
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.config.ConfigHandler;
@@ -24,6 +21,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = Magistics.MODID, name = Magistics.MODID, version = Magistics.VERSION, dependencies = "required-after:Thaumcraft", guiFactory = "T145.magistics.client.ModGuiFactory")
 public class Magistics {

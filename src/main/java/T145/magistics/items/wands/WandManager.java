@@ -1,5 +1,6 @@
 package T145.magistics.items.wands;
 
+import T145.magistics.blocks.BlockInfusionWorkbench;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -7,7 +8,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandTriggerManager;
 import thaumcraft.common.items.wands.ItemWandCasting;
-import T145.magistics.blocks.BlockInfusionWorkbench;
 
 public class WandManager implements IWandTriggerManager {
 	public static boolean createInfusionWorkbench(ItemStack wandstack, EntityPlayer player, World world, int x, int y, int z) {

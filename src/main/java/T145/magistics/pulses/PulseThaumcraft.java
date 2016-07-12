@@ -1,16 +1,5 @@
 package T145.magistics.pulses;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
-import net.minecraftforge.oredict.OreDictionary;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.client.renderers.tile.TileArcaneLampRenderer;
-import thaumcraft.common.Thaumcraft;
-import thaumcraft.common.blocks.BlockCosmeticSolidItem;
-import thaumcraft.common.config.Config;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.entities.monster.EntityPech;
 import T145.magistics.Magistics;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockArcaneLampRedstoneItem;
@@ -73,6 +62,17 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+import net.minecraftforge.oredict.OreDictionary;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.client.renderers.tile.TileArcaneLampRenderer;
+import thaumcraft.common.Thaumcraft;
+import thaumcraft.common.blocks.BlockCosmeticSolidItem;
+import thaumcraft.common.config.Config;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.entities.monster.EntityPech;
 
 public class PulseThaumcraft extends CorePulse {
 	@Override

@@ -2,6 +2,11 @@ package T145.magistics.blocks;
 
 import java.util.Random;
 
+import T145.magistics.Magistics;
+import T145.magistics.tiles.TileCrystalizer;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,11 +18,6 @@ import net.minecraft.world.World;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.particles.FXSparkle;
 import thaumcraft.client.renderers.block.BlockRenderer;
-import T145.magistics.Magistics;
-import T145.magistics.tiles.TileCrystalizer;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCrystalizer extends BlockContainer {
 	public static final Block INSTANCE = new BlockCrystalizer();

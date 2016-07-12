@@ -8,6 +8,12 @@ itemGroup.magistics.golemancy=Thaumcraft - Golemancy
 itemGroup.magistics.eldritch=Thaumcraft - Eldritch
 
 ####
+# Messages
+###
+
+mg.infuser.unowned=You're unable to understand the runic symbol enscribed by 
+
+####
 # Research
 ###
 

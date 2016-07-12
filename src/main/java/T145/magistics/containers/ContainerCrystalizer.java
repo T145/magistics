@@ -1,5 +1,6 @@
 package T145.magistics.containers;
 
+import T145.magistics.tiles.TileCrystalizer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -7,7 +8,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import thaumcraft.common.container.SlotOutput;
-import T145.magistics.tiles.TileCrystalizer;
 
 public class ContainerCrystalizer extends Container {
 	private TileCrystalizer crystalizer;
