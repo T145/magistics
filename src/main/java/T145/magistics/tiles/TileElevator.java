@@ -47,11 +47,11 @@ public class TileElevator extends TileEntity {
 				blocked = true;
 
 				if (isPowered()) {
-					endY = yy - 1;
-					destY = endY - range;
+					destY = yy - 1;
+					endY = range - destY;
 				} else {
-					endY = yy + 1;
-					destY = range + endY;
+					destY = yy + 1;
+					endY = range + destY;
 				}
 
 				if (count % 45 == 0) {
@@ -59,21 +59,18 @@ public class TileElevator extends TileEntity {
 
 					while (destY != endY) {
 						if (isPowered()) {
-							++destY;
-						} else {
 							--destY;
+						} else {
+							++destY;
 						}
 
 						TileEntity tile = worldObj.getTileEntity(xCoord, (int) destY, zCoord);
+						TileElevator elevator = (TileElevator) tile;
 
-						if (tile != null && tile instanceof TileElevator) {
-							TileElevator elevator = (TileElevator) tile;
-
-							if (!elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, (int) destY, zCoord)) {
-								player.setPositionAndUpdate(player.posX, destY + 1, player.posZ);
-								worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
-								return;
-							}
+						if (elevator != null && !elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(xCoord, (int) destY, zCoord)) {
+							player.setPositionAndUpdate(player.posX, destY + 1, player.posZ);
+							worldObj.playSoundAtEntity(player, "mob.endermen.portal", 1F, 1F);
+							return;
 						}
 					}
 				}
