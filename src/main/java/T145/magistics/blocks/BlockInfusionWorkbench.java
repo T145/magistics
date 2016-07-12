@@ -3,8 +3,8 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.InventoryHelper;
 import T145.magistics.client.lib.ConnectedTextureHelper;
+import T145.magistics.lib.utils.InventoryHelper;
 import T145.magistics.tiles.TileInfusionWorkbench;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;

@@ -3,7 +3,6 @@ package T145.magistics.network;
 import java.util.ArrayList;
 import java.util.List;
 
-import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.containers.ContainerCrystalizer;
 import T145.magistics.containers.ContainerFurnace;
 import T145.magistics.containers.ContainerInfuser;
@@ -13,6 +12,7 @@ import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
+import T145.magistics.tiles.core.TileFurnace;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

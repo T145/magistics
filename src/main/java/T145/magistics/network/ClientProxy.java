@@ -1,6 +1,5 @@
 package T145.magistics.network;
 
-import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.client.gui.GuiCrystalizer;
 import T145.magistics.client.gui.GuiFurnace;
 import T145.magistics.client.gui.GuiInfuser;
@@ -10,6 +9,7 @@ import T145.magistics.pulses.core.ServerPulse;
 import T145.magistics.tiles.TileCrystalizer;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
+import T145.magistics.tiles.core.TileFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.multiplayer.WorldClient;

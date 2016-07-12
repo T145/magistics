@@ -3,7 +3,7 @@ package T145.magistics.blocks;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.InventoryHelper;
+import T145.magistics.lib.utils.InventoryHelper;
 import T145.magistics.tiles.TileEntropicDispenser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

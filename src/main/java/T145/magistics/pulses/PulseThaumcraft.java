@@ -37,7 +37,7 @@ import T145.magistics.items.ItemDummy;
 import T145.magistics.items.ItemShardDull;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
-import T145.magistics.lib.RegistrationHelper;
+import T145.magistics.lib.utils.RegistrationUtils;
 import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.research.RecipeHandler;
 import T145.magistics.research.ResearchHandler;
@@ -143,7 +143,7 @@ public class PulseThaumcraft extends CorePulse {
 		GameRegistry.registerItem(ItemShardFragment.INSTANCE, ItemShardFragment.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemShardDull.INSTANCE, ItemShardDull.INSTANCE.getUnlocalizedName());
 		GameRegistry.registerItem(ItemDawnstone.INSTANCE, ItemDawnstone.INSTANCE.getUnlocalizedName());
-		RegistrationHelper.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
+		RegistrationUtils.registerItem(Thaumcraft.MODID, ItemDummy.INFERNAL_FURNACE);
 	}
 
 	@Override

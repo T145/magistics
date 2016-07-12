@@ -1,6 +1,6 @@
 package T145.magistics.containers;
 
-import T145.magistics.api.tiles.TileFurnace;
+import T145.magistics.tiles.core.TileFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;

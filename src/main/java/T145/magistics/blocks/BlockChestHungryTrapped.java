@@ -1,7 +1,7 @@
 package T145.magistics.blocks;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.InventoryHelper;
+import T145.magistics.lib.utils.InventoryHelper;
 import T145.magistics.tiles.TileChestHungryTrapped;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;

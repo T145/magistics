@@ -2,8 +2,8 @@ package T145.magistics.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.containers.ContainerFurnace;
+import T145.magistics.tiles.core.TileFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.inventory.GuiContainer;

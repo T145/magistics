@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.InventoryHelper;
+import T145.magistics.lib.utils.InventoryHelper;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import cpw.mods.fml.client.registry.RenderingRegistry;

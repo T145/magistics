@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.InventoryHelper;
+import T145.magistics.lib.utils.InventoryHelper;
 import T145.magistics.tiles.TileNetherFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

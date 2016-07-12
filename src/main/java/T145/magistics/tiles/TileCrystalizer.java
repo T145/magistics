@@ -1,7 +1,7 @@
 package T145.magistics.tiles;
 
-import T145.magistics.api.InventoryHelper;
 import T145.magistics.items.ItemShardDull;
+import T145.magistics.lib.utils.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;

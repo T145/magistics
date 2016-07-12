@@ -1,4 +1,4 @@
-package T145.magistics.api.tiles;
+package T145.magistics.tiles.core;
 
 public abstract class TileChest extends TileMagisticsInventory {
 	public int numUsingPlayers;

@@ -1,4 +1,4 @@
-package T145.magistics.lib;
+package T145.magistics.lib.utils;
 
 import java.util.List;
 import java.util.UUID;
@@ -7,14 +7,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
-public class ModHelper {
+public class PlayerUtils {
 	public static EntityPlayer findPlayerByUUID(UUID uuid) {
 		if (uuid == null) {
 			return null;
 		}
 
 		MinecraftServer server = MinecraftServer.getServer();
-		
+
 		if (server == null) {
 			return null;
 		}
@@ -22,7 +22,7 @@ public class ModHelper {
 		List<EntityPlayer> playerList = server.getConfigurationManager().playerEntityList;
 
 		for (EntityPlayer player : playerList) {
-			if (player.getUniqueID().equals(uuid) == true) {
+			if (player.getUniqueID().equals(uuid)) {
 				return player;
 			}
 		}

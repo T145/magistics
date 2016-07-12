@@ -1,6 +1,7 @@
-package T145.magistics.api.tiles;
+package T145.magistics.tiles.core;
 
-import T145.magistics.api.InventoryHelper;
+import T145.magistics.api.tiles.TileMagistics;
+import T145.magistics.lib.utils.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

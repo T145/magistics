@@ -1,4 +1,4 @@
-package T145.magistics.lib;
+package T145.magistics.lib.utils;
 
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.Loader;
@@ -6,7 +6,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
-public class RegistrationHelper {
+public class RegistrationUtils {
 	public static <T extends Item> T registerItem(T item, String name) {
 		GameRegistry.registerItem(item, name);
 		return item;

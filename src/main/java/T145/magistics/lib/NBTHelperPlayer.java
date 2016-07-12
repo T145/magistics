@@ -27,9 +27,8 @@ public class NBTHelperPlayer {
 		}
 
 		NBTTagCompound tag = nbt.getCompoundTag("Player");
-		if (tag != null && tag.hasKey("UUIDM", Constants.NBT.TAG_LONG) == true
-				&& tag.hasKey("UUIDL", Constants.NBT.TAG_LONG) == true
-				&& tag.hasKey("Name", Constants.NBT.TAG_STRING) == true) {
+
+		if (tag != null && tag.hasKey("UUIDM", Constants.NBT.TAG_LONG) && tag.hasKey("UUIDL", Constants.NBT.TAG_LONG) && tag.hasKey("Name", Constants.NBT.TAG_STRING)) {
 			return true;
 		}
 
@@ -138,8 +137,7 @@ public class NBTHelperPlayer {
 			return false;
 		}
 
-		// FIXME verify that this would work: if (this.playerUUID != null &&
-		// this.playerUUID.equals(player.getUniqueID()) == true)
+		// FIXME verify that this would work: if (this.playerUUID != null &&  this.playerUUID.equals(player.getUniqueID()))
 		if (this.playerUUIDMost == player.getUniqueID().getMostSignificantBits() && this.playerUUIDLeast == player.getUniqueID().getLeastSignificantBits()) {
 			return true;
 		}
@@ -177,6 +175,6 @@ public class NBTHelperPlayer {
 		}
 
 		NBTHelperPlayer playerData = getPlayerDataFromItem(stack);
-		return (playerData == null || playerData.isPublic == true || playerData.isOwner(player) == true);
+		return (playerData == null || playerData.isPublic  || playerData.isOwner(player));
 	}
 }
