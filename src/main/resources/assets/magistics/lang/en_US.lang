@@ -11,7 +11,7 @@ itemGroup.magistics.eldritch=Thaumcraft - Eldritch
 # Messages
 ###
 
-mg.infuser.unowned=You're unable to understand the runic symbol enscribed by 
+mg.infuser.unowned=You're unable to understand the strange symbols enscribed by 
 
 ####
 # Research
@@ -30,7 +30,7 @@ tc.research_page.SHARDFRAGMENTS.1=Crystal shards turned out to be much more frag
 
 tc.research_name.NETHERRACKFURNACE=Netherrack Furnace
 tc.research_text.NETHERRACKFURNACE=Hotter Topic
-tc.research_page.NETHERRACKFURNACE.1=Reinforcing a furnace with netherrack plates allows it to retain heat better, allowing it to run with double th fuel efficiency of a normal furnace.
+tc.research_page.NETHERRACKFURNACE.1=Reinforcing a furnace with netherrack plates allows it to retain heat better, allowing it to run with double the fuel efficiency of a normal furnace.
 
 tc.research_name.TRAPPEDHUNGRYCHEST=Trapped Hungry Chest
 tc.research_text.TRAPPEDHUNGRYCHEST=Knowing when it eats
@@ -67,6 +67,10 @@ tc.research_page.WARPELEVATOR.1=Running up and down flights of stairs is downrig
 tc.research_name.CRYSTALIZER=Crystalizer
 tc.research_text.CRYSTALIZER=Advanced Shard Manipulation
 tc.research_page.CRYSTALIZER.1=The Infuser does a halfway decent job at manipulating elemental shards, but its functions are slow and require multiple fragments to generate a single full shard. Rather than fusing multiple fragments together, the Crystalizer can force a single shard fragment to grow into a complete shard. Not only that, but it does so with minimal amounts of primal essentia that match the aspect of the shard fragment.<BR>The Crystalizer has some rather strange properties. It seems to be able to react with the local aura, enabling it to gather small amounts of ambient vis from the air itself. While this ability is not potent enough to influence elemental shards, it can react with dull shards whose primary aspect has been removed with an Infuser, allowing it to recharge those shards. The process of recharging dull shards requires a small amount each primal aspect of essentia. The type of primal shard that will appear is mostly random, however the biome in which the Crystalizer is placed has some influence on what types of primal shard are most common.
+
+tc.research_name.ENTROPICDISPENSER=Entropic Dispenser
+tc.research_text.ENTROPICDISPENSER=Smarter Item Tossing
+tc.research_page.ENTROPICDISPENSER.1=Normal droppers and dispensers are quite clumsy and clunky contraptions, enough so that even an old box with the bottom punched out can be better at dropping things than them. Like most other devices though, the problems that droppers and dispensers cause can be fixed with a little thaumaturgical tinkering.<BR>The entropic dispenser’s primary function revolves around the orientation of its internal mechanism. If the entropic dispenser is facing horizontally in any direction, it will hurl items, fire arrows, and throw potions with the same force as a normal dispenser. If it faces straight up or down however, part of the internal launcher disengages, allowing it to toss or drop items with no extra propulsion as well as insert items into inventories either directly above or below the device.<BR>The entropic dispenser is far more...lively... than some other devices. Not only will it actively attempt to push any items in its internal buffer out, it will actively seek to pull from and empty nearby inventories as well. Unlike its mundane counterparts, It needs a redstone signal to suppress its functions.
 
 ####
 # Items
