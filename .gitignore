@@ -10,13 +10,18 @@ _MACOSX
 *.db
 
 # Ignore Gradle output
-bin/
-build/
+/bin/
+/build/
+/minecraftSrc/
+/release/
 
 # Ignore Forge documents
 *fml.txt
 forge*.txt
 MinecraftForge*.txt
+
+# Ignore JVM crash logs
+hs_err_pid*
 
 # IDEA files
 *.iml
@@ -24,8 +29,5 @@ MinecraftForge*.txt
 *.iws
 
 # Project-specific dependencies
-eclipse/
-lib/
-
-## Be sure bizarrely modified assets aren't committed
-src/main/resources/
+/eclipse/
+/lib/
