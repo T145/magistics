@@ -1,0 +1,6 @@
+# Server
+source: docs
+destination: _gh_pages
+baseurl: ""
+encoding: UTF-8
+exclude: [assets/scss/]
