@@ -1,7 +1,7 @@
 <p align="center"><img src="http://i1064.photobucket.com/albums/u370/MegaT145/Magistics/logo.png"/></p>
 ***
 
-Adding some logistics to Thaumcraft!
+Logistical magic!
 
 ---
 **_Table of Contents_**
@@ -40,7 +40,7 @@ It may take a while to complete, depending on your internet connection and the p
 
 When run in the workspace for the first time, CodeChickenCore will prompt you for access to the MCP source mappings. These can be found at:
 ```
-(user)\.gradle\caches\minecraft\net\minecraftforge\forge\(forge version)\unpacked\conf
+(User)\.gradle\caches\minecraft\net\minecraftforge\forge\(MinecraftForge Version)\unpacked\conf
 ```
 It will remember this path for consecutive executions, so you're all set for here on out.
 
@@ -56,4 +56,4 @@ Please consult the license at the provided link if you wish to use the source co
 
 This project is made specifically for the community and mainstream use! If you see something wrong with it or want to add a new feature, then please fork it and make a contribution.
 
-Enjoy!
+*Enjoy!*
