@@ -30,7 +30,7 @@ Each of the listed requirements contains a hyperlink that should take you direct
 
 To begin coding, start by executing the following command:
 ```
-gradle getDependencies setupWorkspace eclipse
+gradle setupWorkspace eclipse
 ```
 It may take a while to complete, depending on your internet connection and the processing power of your machine. On average it takes about 10 minutes for most people. Again, if you don't have Gradle installed, then just replace the `gradle` in that command with `gradlew`. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
 

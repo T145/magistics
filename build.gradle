@@ -42,39 +42,36 @@ ext {
 	try {
 		revision = git.describe().toString().trim()
 	} catch (Throwable err) {
-		println 'Unable to describe anything; creating a default release...'
-		
-		// be sure there is a HEAD to tag
-		git.add(patterns: ['.'], update: true)
-		git.commit(message: 'Initial commit')
-		
-		// create something that can be described
-		git.tag.add {
-			name = 'v0.1'
-			message = 'Hello World!'
-			annotate = true
-		}
-		
-		// be sure the version is set afterwards
-		revision = git.describe().toString().trim()
+		println 'Unable to describe anything!'
 	}
 }
 
 task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
-	def forgeArchive = project.file('forge.zip')
+	def forgeArchive = 'forge-' + forge_version + '-src.zip'
+	def lib = new File(project.projectDir, 'lib')
 	
-	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-src.zip'
-	dest forgeArchive
+	if (!lib.exists()) {
+		lib.mkdirs()
+	}
+	
+	src ([
+		'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/' + forgeArchive,
+		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
+		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
+	])
+	
+	dest lib
+	overwrite true
 	
 	doLast {
 		project.copy {
-			from zipTree(forgeArchive)
+			from zipTree('lib/' + forgeArchive)
 			into 'forge'
 		}
 		
 		project.file('forge/eclipse').renameTo(project.file('eclipse'))
 		
-		project.file('forge.zip').delete()
+		project.file('lib/' + forgeArchive).delete()
 		project.file('forge').deleteDir()
 	}
 }
@@ -82,8 +79,8 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 repositories {
     mavenCentral()
 	maven {
-        name = 'ChickenBones'
-        url = 'http://chickenbones.net/maven'
+        name 'ChickenBones'
+        url 'http://chickenbones.net/maven'
     }
     maven {
         name 'ProfMobius'
@@ -93,22 +90,6 @@ repositories {
 		name 'DVS1 Maven FS'
 		url 'http://dvs1.progwml6.com/files/maven'
 	}
-}
-
-task getDependencies(type: Download) {
-	def lib = new File(project.projectDir, 'lib')
-	
-	if (!lib.exists()) {
-		lib.mkdirs()
-	}
-	
-	src ([
-		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
-		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
-	])
-	
-	dest lib
-	overwrite true
 }
 
 minecraft {
@@ -124,9 +105,6 @@ dependencies {
 	if (project.file('lib').exists()) {
 		compile fileTree(dir: 'lib', include: '*.jar')
 	}
-	
-	//compile 'mcp.mobius.waila:Waila:1.5.10_1.7.10:dev'
-	//compile 'mantle:Mantle:1.7.10-0.3.2.jenkins187:deobf'
 }
 
 build {
