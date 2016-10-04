@@ -1,4 +1,4 @@
-package T145.magistics.tiles.core;
+package T145.magistics.api.tiles;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

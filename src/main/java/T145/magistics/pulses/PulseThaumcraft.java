@@ -1,6 +1,7 @@
 package T145.magistics.pulses;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.pulses.CorePulse;
 import T145.magistics.blocks.BlockArcaneLampRedstone;
 import T145.magistics.blocks.BlockArcaneLampRedstoneItem;
 import T145.magistics.blocks.BlockArcaneWood;
@@ -38,7 +39,6 @@ import T145.magistics.items.ItemShardDull;
 import T145.magistics.items.ItemShardFragment;
 import T145.magistics.items.relics.ItemDawnstone;
 import T145.magistics.lib.utils.RegistrationUtils;
-import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.research.RecipeHandler;
 import T145.magistics.research.ResearchHandler;
 import T145.magistics.tiles.TileArcaneLampRedstone;

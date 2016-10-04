@@ -1,9 +1,9 @@
 package T145.magistics.pulses;
 
+import T145.magistics.api.pulses.ServerPulse;
 import T145.magistics.blocks.BlockNetherFurnace;
 import T145.magistics.items.ItemDummy;
 import T145.magistics.lib.utils.Injector;
-import T145.magistics.pulses.core.ServerPulse;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

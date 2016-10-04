@@ -1,10 +1,10 @@
 package T145.magistics.pulses;
 
+import T145.magistics.api.pulses.CorePulse;
 import T145.magistics.blocks.BlockChestHungryMetal;
 import T145.magistics.blocks.BlockChestHungryMetalItem;
 import T145.magistics.client.render.blocks.RenderBlockChest;
 import T145.magistics.client.render.tiles.RenderChestHungryMetal;
-import T145.magistics.pulses.core.CorePulse;
 import T145.magistics.tiles.TileChestHungryMetal;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;

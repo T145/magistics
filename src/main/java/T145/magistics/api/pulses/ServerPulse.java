@@ -1,4 +1,4 @@
-package T145.magistics.pulses.core;
+package T145.magistics.api.pulses;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;

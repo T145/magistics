@@ -1,8 +1,8 @@
 package T145.magistics.tiles;
 
 import T145.magistics.api.tiles.IFacing;
+import T145.magistics.api.tiles.TileFurnace;
 import T145.magistics.blocks.BlockNetherFurnace;
-import T145.magistics.tiles.core.TileFurnace;
 import net.minecraft.world.World;
 
 public class TileNetherFurnace extends TileFurnace implements IFacing {

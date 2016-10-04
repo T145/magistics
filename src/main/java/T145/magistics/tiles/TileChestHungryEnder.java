@@ -2,8 +2,8 @@ package T145.magistics.tiles;
 
 import T145.magistics.api.tiles.IFacing;
 import T145.magistics.api.tiles.IOwned;
+import T145.magistics.api.tiles.TileChest;
 import T145.magistics.lib.utils.PlayerUtils;
-import T145.magistics.tiles.core.TileChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
