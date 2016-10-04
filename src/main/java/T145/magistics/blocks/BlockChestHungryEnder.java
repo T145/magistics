@@ -48,25 +48,16 @@ public class BlockChestHungryEnder extends BlockEnderChest {
 
 	@Override
 	public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-
-		if (tile != null && tile instanceof TileChestHungryEnder) {
-			TileChestHungryEnder chest = (TileChestHungryEnder) tile;
-
-			if (chest.isOwnedBy(player)) {
-				return true;
-			}
-		}
-
-		return false;
+		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
+		return chest != null && chest.isOwnedBy(player);
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase user, ItemStack stack) {
-		if (user != null && user instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) user;
-			TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
+		TileChestHungryEnder chest = (TileChestHungryEnder) world.getTileEntity(x, y, z);
+		EntityPlayer player = (EntityPlayer) user;
 
+		if (player != null) {
 			chest.setOwner(player);
 		}
 

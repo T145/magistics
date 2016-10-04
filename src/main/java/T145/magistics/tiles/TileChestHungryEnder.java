@@ -113,7 +113,7 @@ public class TileChestHungryEnder extends TileChest implements IFacing, IOwned {
 					continue;
 				}
 
-				if (InventoryUtils.areItemStacksEqualStrict(inventoryStacks[slot], enderChestStack) == true) {
+				if (InventoryUtils.areItemStacksEqualStrict(inventoryStacks[slot], enderChestStack)) {
 					amount = Math.min(inventoryStacks[slot].stackSize, invEnderChest.getInventoryStackLimit() - enderChestStack.stackSize);
 					amount = Math.min(amount, inventoryStacks[slot].getMaxStackSize());
 

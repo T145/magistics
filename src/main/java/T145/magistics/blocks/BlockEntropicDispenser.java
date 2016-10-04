@@ -35,10 +35,12 @@ public class BlockEntropicDispenser extends BlockContainer {
 
 	public BlockEntropicDispenser() {
 		super(Material.rock);
+
+		setBlockName("entropic_dispenser");
 		setCreativeTab(Magistics.tabMagistics);
+
 		setHardness(3.5F);
 		setStepSound(Block.soundTypePiston);
-		setBlockName("entropic_dispenser");
 	}
 
 	@Override
@@ -46,10 +48,10 @@ public class BlockEntropicDispenser extends BlockContainer {
 		super.onBlockAdded(world, x, y, z);
 		setMeta(world, x, y, z);
 
-		TileEntropicDispenser tile = (TileEntropicDispenser) world.getTileEntity(x, y, z);
+		TileEntropicDispenser dispenser = (TileEntropicDispenser) world.getTileEntity(x, y, z);
 
-		if (tile != null) {
-			tile.func_146018_a(tile.getInventoryName());
+		if (dispenser != null) {
+			dispenser.func_146018_a(dispenser.getInventoryName());
 		}
 	}
 
@@ -61,19 +63,19 @@ public class BlockEntropicDispenser extends BlockContainer {
 			Block block3 = world.getBlock(x + 1, y, z);
 			byte meta = 3;
 
-			if ((block.func_149730_j()) && (!block1.func_149730_j())) {
+			if (block.func_149730_j() && !block1.func_149730_j()) {
 				meta = 4;
 			}
 
-			if ((block1.func_149730_j()) && (!block.func_149730_j())) {
+			if (block1.func_149730_j() && !block.func_149730_j()) {
 				meta = 3;
 			}
 
-			if ((block2.func_149730_j()) && (!block3.func_149730_j())) {
+			if (block2.func_149730_j() && !block3.func_149730_j()) {
 				meta = 6;
 			}
 
-			if ((block3.func_149730_j()) && (!block2.func_149730_j())) {
+			if (block3.func_149730_j() && !block2.func_149730_j()) {
 				meta = 5;
 			}
 
@@ -133,10 +135,10 @@ public class BlockEntropicDispenser extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			TileEntropicDispenser tile = (TileEntropicDispenser) world.getTileEntity(x, y, z);
+			TileEntropicDispenser dispenser = (TileEntropicDispenser) world.getTileEntity(x, y, z);
 
-			if (tile != null) {
-				player.func_146102_a(tile);
+			if (dispenser != null) {
+				player.func_146102_a(dispenser);
 			}
 		}
 

@@ -29,8 +29,9 @@ public class BlockEverfullUrn extends BlockContainer {
 
 	public BlockEverfullUrn() {
 		super(Material.rock);
-		setCreativeTab(Magistics.tabMagistics);
+
 		setBlockName("everfull_urn");
+		setCreativeTab(Magistics.tabMagistics);
 
 		setHardness(2F);
 		setResistance(15F);

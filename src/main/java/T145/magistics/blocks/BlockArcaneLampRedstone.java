@@ -25,13 +25,15 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 
 	public BlockArcaneLampRedstone(boolean isActive) {
 		super(Material.iron);
+
 		active = isActive;
+
+		setBlockName("arcane_redstone_lamp");
+		setBlockBounds(BlockRenderer.W4, BlockRenderer.W2, BlockRenderer.W4, BlockRenderer.W12, BlockRenderer.W14, BlockRenderer.W12);
 
 		setHardness(3F);
 		setResistance(17F);
 		setStepSound(soundTypeMetal);
-		setBlockName("arcane_redstone_lamp");
-		setBlockBounds(BlockRenderer.W4, BlockRenderer.W2, BlockRenderer.W4, BlockRenderer.W12, BlockRenderer.W14, BlockRenderer.W12);
 	}
 
 	@Override
@@ -58,23 +60,16 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int metadata) {
 		if (active) {
-			if (side <= 1) {
-				return icon[1];
-			} else {
-				return icon[0];
-			}
+			return side <= 1 ? icon[1] : icon[0];
 		} else {
-			if (side <= 1) {
-				return icon[3];
-			} else {
-				return icon[2];
-			}
+			return side <= 1 ? icon[3] : icon[2];
 		}
 	}
 
 	public void removeLights(TileEntity tile) {
-		if (tile != null && tile instanceof TileArcaneLampRedstone) {
-			TileArcaneLampRedstone lamp = (TileArcaneLampRedstone) tile;
+		TileArcaneLampRedstone lamp = (TileArcaneLampRedstone) tile;
+
+		if (lamp != null) {
 			lamp.removeLights();
 		}
 	}
@@ -108,15 +103,12 @@ public class BlockArcaneLampRedstone extends BlockContainer {
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-		TileEntity te = world.getTileEntity(x, y, z);
+		TileEntity tile = world.getTileEntity(x, y, z);
+		TileArcaneLamp lamp = (TileArcaneLamp) tile;
 
-		if (te != null && te instanceof TileArcaneLamp) {
-			TileArcaneLamp telb = (TileArcaneLamp) te;
-
-			if (world.isAirBlock(x + telb.facing.offsetX, y + telb.facing.offsetY, z + telb.facing.offsetZ)) {
-				dropBlockAsItem(world, x, y, z, 7, 0);
-				world.setBlockToAir(x, y, z);
-			}
+		if (lamp != null && world.isAirBlock(x + lamp.facing.offsetX, y + lamp.facing.offsetY, z + lamp.facing.offsetZ)) {
+			dropBlockAsItem(world, x, y, z, 7, 0);
+			world.setBlockToAir(x, y, z);
 		}
 
 		updateBlockState(world, x, y, z);

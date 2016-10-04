@@ -88,7 +88,7 @@ public class BlockNetherFurnace extends BlockContainer {
 	}
 
 	public static void updateFurnaceBlockState(boolean isActive, World world, int x, int y, int z) {
-		int l = world.getBlockMetadata(x, y, z);
+		int meta = world.getBlockMetadata(x, y, z);
 		TileEntity tile = world.getTileEntity(x, y, z);
 		keepInventory = true;
 
@@ -99,7 +99,7 @@ public class BlockNetherFurnace extends BlockContainer {
 		}
 
 		keepInventory = false;
-		world.setBlockMetadataWithNotify(x, y, z, l, 2);
+		world.setBlockMetadataWithNotify(x, y, z, meta, 2);
 
 		if (tile != null) {
 			tile.validate();

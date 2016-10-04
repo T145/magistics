@@ -84,11 +84,11 @@ public class TileEntropicDispenser extends TileEntityDispenser {
 	}
 
 	protected ItemStack dispenseStack(IBlockSource block, ItemStack target) {
-		doDispense(block.getWorld(), target.splitStack(1), BlockEntropicDispenser.getFrontSide(Math.max(block.getBlockMetadata() - 1, 0)), BlockEntropicDispenser.getPosition(block));
+		dispense(block.getWorld(), target.splitStack(1), BlockEntropicDispenser.getFrontSide(Math.max(block.getBlockMetadata() - 1, 0)), BlockEntropicDispenser.getPosition(block));
 		return target;
 	}
 
-	public static void doDispense(World world, ItemStack target, EnumFacing facing, IPosition position) {
+	public static void dispense(World world, ItemStack target, EnumFacing facing, IPosition position) {
 		double xx = position.getX();
 		double yy = position.getY();
 		double zz = position.getZ();

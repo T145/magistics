@@ -23,8 +23,8 @@ public class BlockChestHungryMetal extends BlockIronChest {
 
 	public BlockChestHungryMetal() {
 		super();
-		setCreativeTab(Magistics.tabMagistics);
 		setBlockName("hungry_metal_chest");
+		setCreativeTab(Magistics.tabMagistics);
 	}
 
 	public static String getSimpleChestName(IronChestType type) {

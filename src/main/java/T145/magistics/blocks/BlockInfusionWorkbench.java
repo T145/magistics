@@ -15,7 +15,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -146,11 +145,7 @@ public class BlockInfusionWorkbench extends BlockContainer {
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int side) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-
-		if (tile != null && tile instanceof IInventory) {
-			InventoryHelper.emptyInventory(world, x, y, z);
-		}
+		InventoryHelper.emptyInventory(world, x, y, z);
 	}
 
 	@Override
@@ -160,8 +155,6 @@ public class BlockInfusionWorkbench extends BlockContainer {
 
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-
 		switch (world.getBlockMetadata(x, y, z)) {
 		case 1:
 			if (world.getBlock(x + 1, y, z) != this

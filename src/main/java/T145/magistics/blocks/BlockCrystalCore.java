@@ -23,8 +23,9 @@ public class BlockCrystalCore extends BlockContainer {
 
 	public BlockCrystalCore() {
 		super(Material.glass);
-		setCreativeTab(Magistics.tabMagistics);
+
 		setBlockName("crystal_core");
+		setCreativeTab(Magistics.tabMagistics);
 
 		setHardness(0.7F);
 		setResistance(1F);
@@ -59,10 +60,10 @@ public class BlockCrystalCore extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
 		float mod = 0.2F;
-		TileEntity tile = world.getTileEntity(x, y, z);
+		TileCrystalCore core = (TileCrystalCore) world.getTileEntity(x, y, z);
 
-		if (tile != null && tile instanceof TileCrystalCore) {
-			mod += ((TileCrystalCore) tile).speed;
+		if (core != null) {
+			mod += core.speed;
 		}
 
 		FXSparkle fx = new FXSparkle(world, x + 0.2F + world.rand.nextFloat() * 0.6F, y + mod + world.rand.nextFloat() * 0.6F, z + 0.2F + world.rand.nextFloat() * 0.6F, 1F, rand.nextInt(5), 3);

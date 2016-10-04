@@ -42,6 +42,7 @@ public class BlockInfuser extends BlockContainer {
 
 	public BlockInfuser() {
 		super(Material.rock);
+
 		setBlockName("infuser");
 		setCreativeTab(Magistics.tabMagistics);
 
@@ -182,8 +183,7 @@ public class BlockInfuser extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		TileInfuser infuser = (TileInfuser) tile;
+		TileInfuser infuser = (TileInfuser) world.getTileEntity(x, y, z);;
 
 		if (infuser != null) {
 			infuser.facing = BlockPistonBase.determineOrientation(world, x, y, z, player);
@@ -193,8 +193,7 @@ public class BlockInfuser extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && !player.isSneaking()) {
-			TileEntity tile = world.getTileEntity(x, y, z);
-			TileInfuser infuser = (TileInfuser) tile;
+			TileInfuser infuser = (TileInfuser) world.getTileEntity(x, y, z);;
 
 			if (ThaumcraftApiHelper.isResearchComplete(player.getCommandSenderName(), "INFUSER")) {
 				if (infuser.isOwnedBy(player)) {
@@ -221,8 +220,7 @@ public class BlockInfuser extends BlockContainer {
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		TileEntity tile = world.getTileEntity(x, y, z);
-		TileInfuser infuser = (TileInfuser) tile;
+		TileInfuser infuser = (TileInfuser) world.getTileEntity(x, y, z);;
 
 		if (infuser != null) {
 			ItemStack drop = new ItemStack(INSTANCE);
