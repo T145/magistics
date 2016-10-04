@@ -46,9 +46,9 @@ It will remember this path for consecutive executions, so you're all set for her
 
 ---
 
-## License [![Apache License](http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+## License
 
-Please consult the license at the provided link if you wish to use the source code. You may contact [myself](https://github.com/T145) for permission to use any of the assets.
+Please consult the license if you wish to use the source code. You may contact [myself](https://github.com/T145) for permission to use any of the assets.
 
 ---
 
