@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 public class TileChestHungryEnder extends TileChest implements IFacing, IOwned {
+	private int syncDelay = 33;
+
 	public TileChestHungryEnder() {
 		super(true, true);
 	}
@@ -52,11 +54,16 @@ public class TileChestHungryEnder extends TileChest implements IFacing, IOwned {
 
 	@Override
 	public void updateEntity() {
-		if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-			syncWithEnderChest();
-		}
-
 		super.updateEntity();
+
+		if (hasWorldObj()) {
+			--syncDelay;
+
+			if (syncDelay == 0) {
+				syncWithEnderChest();
+				syncDelay = 33;
+			}
+		}
 	}
 
 	@Override
