@@ -22,7 +22,7 @@ buildscript {
 	
 	dependencies {
 		classpath 'de.undercouch:gradle-download-task:3.0.0'
-		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
 		classpath 'org.ajoberstar:grgit:1.4.1'
 	}
 }
@@ -30,7 +30,7 @@ buildscript {
 apply plugin: 'java'
 
 apply plugin: 'de.undercouch.download'
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 task wrapper(type: Wrapper) {
 	gradleVersion = gradle_version
@@ -47,54 +47,29 @@ ext {
 }
 
 task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
-	def forgeArchive = 'forge-' + forge_version + '-src.zip'
-	def lib = new File(project.projectDir, 'lib')
+	def forgeArchive = project.file('forge.zip')
 	
-	if (!lib.exists()) {
-		lib.mkdirs()
-	}
-	
-	src ([
-		'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/' + forgeArchive,
-		'https://dl.dropboxusercontent.com/u/47135879/Thaumcraft-deobf-1.7.10-4.2.3.5.jar',
-		'https://dl.dropboxusercontent.com/u/47135879/Baubles-deobf-1.7.10-1.0.1.10.jar'
-	])
-	
-	dest lib
-	overwrite true
+	src 'http://files.minecraftforge.net/maven/net/minecraftforge/forge/' + forge_version + '/forge-' + forge_version + '-mdk.zip'
+	dest forgeArchive
 	
 	doLast {
 		project.copy {
-			from zipTree('lib/' + forgeArchive)
+			from zipTree(forgeArchive)
 			into 'forge'
 		}
 		
 		project.file('forge/eclipse').renameTo(project.file('eclipse'))
 		
-		project.file('lib/' + forgeArchive).delete()
+		project.file('forge.zip').delete()
 		project.file('forge').deleteDir()
 	}
 }
 
-repositories {
-    mavenCentral()
-	maven {
-        name 'ChickenBones'
-        url 'http://chickenbones.net/maven'
-    }
-    maven {
-        name 'ProfMobius'
-        url 'http://mobiusstrip.eu/maven'
-    }
-	maven {
-		name 'DVS1 Maven FS'
-		url 'http://dvs1.progwml6.com/files/maven'
-	}
-}
 
 minecraft {
-	version = forge_version
-	runDir = 'eclipse'
+    version = forge_version
+    mappings = "snapshot_20160715"
+    runDir = "run"
 }
 
 version = revision

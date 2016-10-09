@@ -1,12 +1,13 @@
 package T145.magistics.lib;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CreativeTabCustom extends CreativeTabs {
+
 	private ItemStack stack;
 
 	public CreativeTabCustom(String lable, ItemStack iconStack) {

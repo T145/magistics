@@ -3,8 +3,7 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.tiles.TileInfuser;
-import T145.magistics.tiles.TileInfuserDark;
+import T145.magistics.tiles.TileCrucible;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -15,14 +14,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfuser extends BlockMagistics implements ITileEntityProvider {
+public class BlockCrucible extends BlockMagistics implements ITileEntityProvider {
 
-	public BlockInfuser() {
-		super(Material.ROCK, "infuser");
-	}
-
-	public boolean isDark(int meta) {
-		return meta == 1;
+	public BlockCrucible() {
+		super(Material.ROCK, "crucible");
 	}
 
 	@Override
@@ -30,6 +25,8 @@ public class BlockInfuser extends BlockMagistics implements ITileEntityProvider 
 	public void registerModel() {
 		Magistics.proxy.registerBlockRenderer(this, 0, getName());
 		Magistics.proxy.registerBlockRenderer(this, 1, getName());
+		Magistics.proxy.registerBlockRenderer(this, 2, getName());
+		Magistics.proxy.registerBlockRenderer(this, 3, getName());
 	}
 
 	@Override
@@ -37,10 +34,12 @@ public class BlockInfuser extends BlockMagistics implements ITileEntityProvider 
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
 		list.add(new ItemStack(this, 1, 0));
 		list.add(new ItemStack(this, 1, 1));
+		list.add(new ItemStack(this, 1, 2));
+		list.add(new ItemStack(this, 1, 3));
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return isDark(meta) ? new TileInfuserDark() : new TileInfuser();
+		return new TileCrucible();
 	}
 }
