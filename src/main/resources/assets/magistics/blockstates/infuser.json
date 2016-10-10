@@ -1,16 +1,27 @@
 {
     "forge_marker": 1,
-    "defaults": {
+    "defaults":
+    {
+        "transform": "forge:default-block",
+        "model": "cube_all",
         "textures": {
-            "all": "magistics:blocks/infuser_side"
+            "all": "magistics:blocks/clear_texture",
+            "bottom": "#all",
+            "top": "#all",
+            "side": "#all",
+            "particle": "#all"
         }
     },
     "variants": {
-        "normal": {
-            "model": "cube_all"
-        },
-        "inventory": {
-            "model": "cube_all"
-        }
+        "type=light": [
+            {
+                "model": "magistics:infuser"
+            }
+        ],
+        "type=dark": [
+            {
+                "model": "magistics:infuser_dark"
+            }
+        ]
     }
 }
