@@ -99,13 +99,8 @@ task devJar(type: Jar) {
 	classifier = 'dev'
 }
 
-task srcJar(type: Jar) {
-	from sourceSets.main.allJava
-	classifier = 'src'
-}
-
 artifacts {
-	archives devJar, srcJar
+	archives devJar
 }
 
 def filteredSrc = project.file("$buildDir/filtered")

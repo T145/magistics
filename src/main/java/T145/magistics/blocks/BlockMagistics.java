@@ -3,7 +3,7 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockMagisticsEnum;
+import T145.magistics.api.blocks.IBlockMagistics;
 import T145.magistics.api.blocks.IBlockTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMagistics<E extends IBlockMagisticsEnum> extends Block implements IBlockTypes {
+public class BlockMagistics<E extends IBlockMagistics> extends Block implements IBlockTypes {
 
 	protected static IProperty[] tempVariants;
 	public final PropertyEnum TYPE;
@@ -36,7 +36,6 @@ public class BlockMagistics<E extends IBlockMagisticsEnum> extends Block impleme
 		}
 
 		setCreativeTab(Magistics.tab);
-
 		setInitDefaultState();
 	}
 
@@ -146,7 +145,7 @@ public class BlockMagistics<E extends IBlockMagisticsEnum> extends Block impleme
 			return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
 		}
 
-		IBlockMagisticsEnum type = (IBlockMagisticsEnum) state.getValue(TYPE);
+		IBlockMagistics type = (IBlockMagistics) state.getValue(TYPE);
 
 		return type.getName();
 	}

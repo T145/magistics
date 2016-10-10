@@ -1,27 +1,32 @@
 {
     "forge_marker": 1,
-    "defaults":
-    {
-        "transform": "forge:default-block",
-        "model": "cube_all",
-        "textures": {
-            "all": "magistics:blocks/clear_texture",
-            "bottom": "#all",
-            "top": "#all",
-            "side": "#all",
-            "particle": "#all"
-        }
+    "defaults": {
+        "transform": "forge:default-block"
     },
     "variants": {
-        "type=light": [
-            {
-                "model": "magistics:infuser"
-            }
-        ],
-        "type=dark": [
-            {
-                "model": "magistics:infuser_dark"
-            }
-        ]
+        "type=light": {
+             "model": "cube_all",
+             "textures": {
+                "particle": "magistics:blocks/infuser_bottom",
+                "up": "magistics:blocks/infuser_top_clear",
+                "down": "magistics:blocks/infuser_bottom",
+                "east": "magistics:blocks/infuser_side",
+                "west": "magistics:blocks/infuser_side",
+                "north": "magistics:blocks/infuser_side",
+                "south": "magistics:blocks/infuser_side"
+             }
+         },
+        "type=dark": {
+            "model": "cube_all",
+            "textures": {
+                "particle": "magistics:blocks/dark_infuser_bottom",
+                "up": "magistics:blocks/dark_infuser_top_clear",
+                "down": "magistics:blocks/dark_infuser_bottom",
+                "east": "magistics:blocks/dark_infuser_side",
+                "west": "magistics:blocks/dark_infuser_side",
+                "north": "magistics:blocks/dark_infuser_side",
+                "south": "magistics:blocks/dark_infuser_side"
+             }
+         }
     }
 }

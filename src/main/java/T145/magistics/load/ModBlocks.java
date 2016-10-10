@@ -11,14 +11,12 @@ import T145.magistics.blocks.BlockMagistics;
 import T145.magistics.blocks.BlockMagisticsItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
@@ -41,17 +39,17 @@ public class ModBlocks {
 	public static void initModelsAndVariants() {
 		for (Block block : blocks) {
 			Item blockItem = Item.getItemFromBlock(block);
-			ResourceLocation loc = GameData.getBlockRegistry().getNameForObject(block);
+			ResourceLocation loc = block.getRegistryName();
 			String location = loc.toString();
 
 			if (block instanceof IBlockTypes && ((IBlockTypes) block).hasTypes()) {
-				BlockStateContainer bsc = block.getBlockState();
-				IBlockState state = bsc.getBaseState();
+				IBlockTypes blockWithTypes = (IBlockTypes) block;
+				IBlockState state = block.getBlockState().getBaseState();
 
-				for (IProperty prop : ((IBlockTypes) block).getTypes()) {
+				for (IProperty prop : blockWithTypes.getTypes()) {
 					for (Object value : prop.getAllowedValues()) {
 						int meta = block.damageDropped(state);
-						String stateName = ((IBlockTypes) block).getTypeName(state);
+						String stateName = blockWithTypes.getTypeName(state);
 						String type = "type=" + stateName.toLowerCase(Locale.US);
 
 						ModelLoader.setCustomModelResourceLocation(blockItem, meta, new ModelResourceLocation(location, type));
@@ -85,14 +83,14 @@ public class ModBlocks {
 	}
 
 	public static Block registerBlock(Block block, ItemBlock itemBlock, String name) {
-		block = (Block) register(block, name);
+		block = register(block, name);
 		register(itemBlock, name);
 		return block;
 	}
 
 	public static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
 		try {
-			return registerBlock(block, (ItemBlock) itemBlock.getConstructor(new Class[] { Block.class }).newInstance(new Object[] { block }), name);
+			return registerBlock(block, itemBlock.getConstructor(new Class[] { Block.class }).newInstance(new Object[] { block }), name);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
