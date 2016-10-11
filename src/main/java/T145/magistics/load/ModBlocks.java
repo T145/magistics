@@ -9,6 +9,7 @@ import T145.magistics.api.blocks.IBlockTypes;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockMagistics;
 import T145.magistics.blocks.BlockMagisticsItem;
+import T145.magistics.tiles.TileInfuser;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -27,6 +28,7 @@ public class ModBlocks {
 	private static List<Block> blocks = new ArrayList<Block>();
 
 	public static void preInit() {
+		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 		blockInfuser = initBlock(new BlockInfuser(), "infuser");
 	}
 
@@ -34,6 +36,7 @@ public class ModBlocks {
 	}
 
 	public static void postInit() {
+		// load recipes and what not
 	}
 
 	public static void initModelsAndVariants() {

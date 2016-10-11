@@ -68,7 +68,7 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 
 minecraft {
     version = forge_version
-    mappings = "snapshot_20160715"
+    mappings = "snapshot_20161011"
     runDir = "run"
 }
 

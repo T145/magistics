@@ -1,5 +1,8 @@
 {
 "__comment": "Designed by T145",
+"textures": {
+    "particle": "#side"
+},
 "elements": [ 
 {
     "__comment": "MainCube",
