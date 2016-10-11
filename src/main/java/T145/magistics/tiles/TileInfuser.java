@@ -28,6 +28,26 @@ public class TileInfuser extends TileMagistics implements IFacing, ITickable, IS
 	private int facing = 0;
 	private int boostDelay = 20;
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public boolean isCrafting() {
+		return crafting;
+	}
+
+	public boolean isDormant() {
+		return !active && !crafting;
+	}
+
+	public int getDiskAngle() {
+		return angle;
+	}
+
+	public boolean isDark() {
+		return false;
+	}
+
 	@Override
 	public int getFacing() {
 		return facing;
@@ -51,10 +71,12 @@ public class TileInfuser extends TileMagistics implements IFacing, ITickable, IS
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
+		facing = tag.getByte("facing");
 	}
 
 	@Override
 	public NBTTagCompound writeCustomNBT(NBTTagCompound tag) {
+		tag.setByte("facing", (byte) facing);
 		return tag;
 	}
 

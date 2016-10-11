@@ -1,8 +1,11 @@
 package T145.magistics.network;
 
+import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.load.ModBlocks;
+import T145.magistics.tiles.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -19,6 +22,11 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 
 		ModBlocks.initModelsAndVariants();
+		initRenderers();
+	}
+
+	private void initRenderers() {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 	}
 
 	@Override

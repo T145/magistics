@@ -16,4 +16,5 @@ public class BlockRenderer {
 	public static double W13 = 0.8125D;
 	public static double W14 = 0.875D;
 	public static double W15 = 0.9375D;
+	public static double W16 = 0.9475D;
 }
