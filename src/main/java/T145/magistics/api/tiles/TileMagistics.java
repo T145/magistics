@@ -46,13 +46,13 @@ public class TileMagistics extends TileEntity {
 		return oldState.getBlock() != newState.getBlock();
 	}
 
-	public EnumFacing getFacing() {
+	/*public EnumFacing getFacing() {
 		try {
 			return EnumFacing.getFront(getBlockMetadata() & 7);
 		} catch (Exception err) {}
 
 		return EnumFacing.UP;
-	}
+	}*/
 
 	public boolean isPowered() {
 		return worldObj.isBlockPowered(getPos());

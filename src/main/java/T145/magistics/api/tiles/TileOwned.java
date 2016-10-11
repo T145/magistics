@@ -1,32 +1,28 @@
 package T145.magistics.api.tiles;
 
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
-import T145.magistics.lib.NBTHelperPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.StringUtils;
 
 public class TileOwned extends TileMagistics {
 
-	public String ownerName = "";
-	public UUID ownerUUID = null;
-
-	public ArrayList<String> accessList = new ArrayList();
-	public boolean isPublic = false;
+	public String owner = "";
+	public List<String> accessList = new ArrayList<String>();
+	public boolean safeToRemove = false;
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
+		owner = tag.getString("owner");
 
-		ownerName = tag.getString("owner");
-		NBTTagList owners = tag.getTagList("access", 10);
-		accessList = new ArrayList();
+		NBTTagList accessTags = tag.getTagList("access", 10);
+		accessList = new ArrayList<String>();
 
-		for (int i = 0; i < owners.tagCount(); ++i) {
-			NBTTagCompound ownerNBT = owners.getCompoundTagAt(i);
-			accessList.add(ownerNBT.getString("name"));
+		for (int i = 0; i < accessTags.tagCount(); ++i) {
+			NBTTagCompound accessTag = accessTags.getCompoundTagAt(i);
+			accessList.add(accessTag.getString("name"));
 		}
 	}
 
@@ -34,36 +30,27 @@ public class TileOwned extends TileMagistics {
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
 
-		NBTTagList owners = new NBTTagList();
+		NBTTagList accessTags = new NBTTagList();
 
 		for (int i = 0; i < accessList.size(); ++i) {
-			NBTTagCompound ownerNBT = new NBTTagCompound();
-			ownerNBT.setString("name", accessList.get(i));
-			owners.appendTag(ownerNBT);
+			NBTTagCompound accessTag = new NBTTagCompound();
+			accessTag.setString("name", accessList.get(i));
+			accessTags.appendTag(accessTag);
 		}
 
-		tag.setTag("access", owners);
+		tag.setTag("access", accessTags);
 
 		return tag;
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
-		NBTHelperPlayer playerData = NBTHelperPlayer.getPlayerDataFromNBT(tag);
-
-		if (playerData != null) {
-			ownerUUID = new UUID(playerData.playerUUIDMost, playerData.playerUUIDLeast);
-			ownerName = playerData.playerName;
-			isPublic = playerData.isPublic;
-		}
+		owner = tag.getString("owner");
 	}
 
 	@Override
 	public NBTTagCompound writeCustomNBT(NBTTagCompound tag) {
-		if (!StringUtils.isNullOrEmpty(ownerName) && ownerUUID != null) {
-			NBTHelperPlayer.writePlayerTagToNBT(tag, ownerUUID.getMostSignificantBits(), ownerUUID.getLeastSignificantBits(), ownerName, isPublic);
-		}
-
+		tag.setString("owner", owner);
 		return tag;
 	}
 }

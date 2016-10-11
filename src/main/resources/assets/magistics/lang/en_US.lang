@@ -1,2 +1,4 @@
 itemGroup.magistics=Magistics
 
+tile.infuser.light.name=Infuser
+tile.infuser.dark.name=Dark Infuser

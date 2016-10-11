@@ -5,27 +5,21 @@
     },
     "variants": {
         "type=light": {
-             "model": "cube_all",
+             "model": "magistics:infuser",
              "textures": {
                 "particle": "magistics:blocks/infuser_bottom",
-                "up": "magistics:blocks/infuser_top_clear",
-                "down": "magistics:blocks/infuser_bottom",
-                "east": "magistics:blocks/infuser_side",
-                "west": "magistics:blocks/infuser_side",
-                "north": "magistics:blocks/infuser_side",
-                "south": "magistics:blocks/infuser_side"
+                "top": "magistics:blocks/infuser_top_clear",
+                "bottom": "magistics:blocks/infuser_bottom",
+                "side": "magistics:blocks/infuser_side"
              }
          },
         "type=dark": {
-            "model": "cube_all",
+            "model": "magistics:infuser",
             "textures": {
                 "particle": "magistics:blocks/dark_infuser_bottom",
-                "up": "magistics:blocks/dark_infuser_top_clear",
-                "down": "magistics:blocks/dark_infuser_bottom",
-                "east": "magistics:blocks/dark_infuser_side",
-                "west": "magistics:blocks/dark_infuser_side",
-                "north": "magistics:blocks/dark_infuser_side",
-                "south": "magistics:blocks/dark_infuser_side"
+                "top": "magistics:blocks/dark_infuser_top_clear",
+                "bottom": "magistics:blocks/dark_infuser_bottom",
+                "side": "magistics:blocks/dark_infuser_side"
              }
          }
     }
