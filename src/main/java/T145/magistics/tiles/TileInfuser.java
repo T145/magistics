@@ -26,12 +26,12 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	public int itemBurnTime;
 	public int cookTime;
 	public int totalCookTime;
-	public int boost = 0;
 
-	protected int angle = 0;
-	protected int soundDelay = 0;
+	protected int angle;
+	protected int soundDelay;
 
 	private int facing;
+	private int boost;
 	private int boostDelay = 20;
 
 	public boolean isDark() {
@@ -52,6 +52,10 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 	public int getDiskAngle() {
 		return angle;
+	}
+
+	public int getBoost() {
+		return boost;
 	}
 
 	@Override
@@ -260,6 +264,8 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 	@Override
 	public void update() {
+		super.update();
+
 		// TODO Implement
 		if (hasWorldObj()) {
 			if (soundDelay > 0) {

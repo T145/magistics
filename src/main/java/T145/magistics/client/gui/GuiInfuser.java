@@ -55,7 +55,7 @@ public class GuiInfuser extends GuiContainer {
 				drawTexturedModalRect(minX + 160, minY + 151 - scaling, 176, 46 - scaling, 9, scaling);
 			}
 
-			if (infuser.boost > 0) {
+			if (infuser.getBoost() > 0) {
 				scaling = infuser.getBoostScaled();
 				drawTexturedModalRect(minX + 161, minY + 38 - scaling, 192, 30 - scaling, 7, scaling);
 			}

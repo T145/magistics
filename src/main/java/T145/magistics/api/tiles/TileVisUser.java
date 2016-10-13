@@ -116,8 +116,7 @@ public class TileVisUser extends TileMagistics implements ITickable, IConnection
 	}
 
 	@Override
-	public void setPureVis(float amount) {
-	}
+	public void setPureVis(float amount) {}
 
 	@Override
 	public float getTaintedVis() {
