@@ -31,7 +31,7 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	protected int angle = 0;
 	protected int soundDelay = 0;
 
-	private int facing = 0;
+	private int facing;
 	private int boostDelay = 20;
 
 	public boolean isDark() {
@@ -55,9 +55,9 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		NBTTagList nbttaglist = tag.getTagList("Items", 10);
 		inventoryStacks = new ItemStack[getSizeInventory()];
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -69,24 +69,26 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 			}
 		}
 
-		burnTime = nbt.getInteger("BurnTime");
-		cookTime = nbt.getInteger("CookTime");
-		totalCookTime = nbt.getInteger("CookTimeTotal");
+		facing = tag.getInteger("facing");
+		burnTime = tag.getInteger("BurnTime");
+		cookTime = tag.getInteger("CookTime");
+		totalCookTime = tag.getInteger("CookTimeTotal");
 		itemBurnTime = getItemBurnTime(inventoryStacks[1]);
 	}
 
 	@Override
-	public void readCustomNBT(NBTTagCompound nbt) {
-		facing = nbt.getInteger("facing");
-		active = nbt.getBoolean("active");
-		crafting = nbt.getBoolean("crafting");
+	public void readClientDataFromNBT(NBTTagCompound tag) {
+		facing = tag.getInteger("facing");
+		active = tag.getBoolean("active");
+		crafting = tag.getBoolean("crafting");
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("BurnTime", burnTime);
-		nbt.setInteger("CookTime", cookTime);
-		nbt.setInteger("CookTimeTotal", totalCookTime);
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		tag.setInteger("facing", facing);
+		tag.setInteger("BurnTime", burnTime);
+		tag.setInteger("CookTime", cookTime);
+		tag.setInteger("CookTimeTotal", totalCookTime);
 		NBTTagList nbttaglist = new NBTTagList();
 
 		for (int i = 0; i < getSizeInventory(); ++i) {
@@ -98,16 +100,15 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 			}
 		}
 
-		nbt.setTag("Items", nbttaglist);
-		return super.writeToNBT(nbt);
+		tag.setTag("Items", nbttaglist);
+		return super.writeToNBT(tag);
 	}
 
 	@Override
-	public NBTTagCompound writeCustomNBT(NBTTagCompound nbt) {
-		nbt.setInteger("facing", facing);
-		nbt.setBoolean("active", active);
-		nbt.setBoolean("crafting", crafting);
-		return nbt;
+	public void writeClientDataToNBT(NBTTagCompound tag) {
+		tag.setInteger("facing", facing);
+		tag.setBoolean("active", active);
+		tag.setBoolean("crafting", crafting);
 	}
 
 	@Override
@@ -259,8 +260,6 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 	@Override
 	public void update() {
-		super.update();
-
 		// TODO Implement
 		if (hasWorldObj()) {
 			if (soundDelay > 0) {
