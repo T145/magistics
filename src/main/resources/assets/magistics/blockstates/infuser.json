@@ -7,31 +7,31 @@
     "variants": {
         "inventory,type=light": [{
             "textures": {
-                "top": "magistics:blocks/infuser_top",
-                "bottom": "magistics:blocks/infuser_bottom",
-                "side": "magistics:blocks/infuser_side"
+                "top": "magistics:blocks/infuser/top",
+                "bottom": "magistics:blocks/infuser/bottom",
+                "side": "magistics:blocks/infuser/side"
             }
         }],
         "inventory,type=dark": [{
             "textures": {
-                "top": "magistics:blocks/dark_infuser_top",
-                "bottom": "magistics:blocks/dark_infuser_bottom",
-                "side": "magistics:blocks/dark_infuser_side"
+                "top": "magistics:blocks/infuser/dark_top",
+                "bottom": "magistics:blocks/infuser/dark_bottom",
+                "side": "magistics:blocks/infuser/dark_side"
             }
         }],
         "type": {
             "light": {
                 "textures": {
-                    "top": "magistics:blocks/infuser_top_clear",
-                    "bottom": "magistics:blocks/infuser_bottom",
-                    "side": "magistics:blocks/infuser_side"
+                    "top": "magistics:blocks/infuser/top_clear",
+                    "bottom": "magistics:blocks/infuser/bottom",
+                    "side": "magistics:blocks/infuser/side"
                 }
             },
             "dark": {
                 "textures": {
-                    "top": "magistics:blocks/dark_infuser_top_clear",
-                    "bottom": "magistics:blocks/dark_infuser_bottom",
-                    "side": "magistics:blocks/dark_infuser_side"
+                    "top": "magistics:blocks/infuser/dark_top_clear",
+                    "bottom": "magistics:blocks/infuser/dark_bottom",
+                    "side": "magistics:blocks/infuser/dark_side"
                 }
             }
         }

@@ -1,9 +1,12 @@
 package T145.magistics.network;
 
 import T145.magistics.api.IFMLEventHandler;
+import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.load.ModItems;
+import T145.magistics.tiles.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -14,7 +17,14 @@ public class CommonProxy implements IFMLEventHandler, IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
+		BlockPos pos = new BlockPos(x, y, z);
+
+		switch (ID) {
+		case 0:
+			return new ContainerInfuser(player.inventory, (TileInfuser) world.getTileEntity(pos));
+		default:
+			return null;
+		}
 	}
 
 	@Override

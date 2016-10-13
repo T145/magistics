@@ -44,9 +44,9 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		}
 
 		if (infuser.isDark()) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/dark_infuser_symbol.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser/dark_symbol.png"));
 		} else {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser_symbol.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser/symbol.png"));
 		}
 
 		GlStateManager.color(1F, 1F, 1F, 1F);

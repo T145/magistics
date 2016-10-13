@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION)
 public class Magistics implements IFMLEventHandler {
@@ -58,6 +59,8 @@ public class Magistics implements IFMLEventHandler {
 	@Override
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
 		proxy.init(event);
 	}
 

@@ -1,9 +1,11 @@
 package T145.magistics.network;
 
+import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -14,7 +16,14 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
+		BlockPos pos = new BlockPos(x, y, z);
+
+		switch (ID) {
+		case 0:
+			return new GuiInfuser(player.inventory, (TileInfuser) world.getTileEntity(pos));
+		default:
+			return null;
+		}
 	}
 
 	@Override
