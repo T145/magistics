@@ -65,9 +65,6 @@ public class BlockInfuser extends BlockMagistics implements ITileEntityProvider 
 	public static enum InfuserType implements IBlockMagistics {
 		LIGHT, DARK;
 
-		private InfuserType() {
-		}
-
 		@Override
 		public String getName() {
 			return name().toLowerCase();

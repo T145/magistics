@@ -106,11 +106,11 @@ public class BlockMagistics<E extends IBlockMagistics> extends Block implements 
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (TYPE == null) {
+		/*if (TYPE == null) {
 			return super.getStateFromMeta(meta);
-		}
+		}*/
 
-		if (meta < variantValues.length) {
+		if (TYPE != null && meta < variantValues.length) {
 			return getDefaultState().withProperty(TYPE, variantValues[meta]);
 		}
 
@@ -124,7 +124,6 @@ public class BlockMagistics<E extends IBlockMagistics> extends Block implements 
 		}
 
 		int meta = ((Enum) state.getValue(TYPE)).ordinal();
-
 		return meta;
 	}
 
@@ -146,7 +145,6 @@ public class BlockMagistics<E extends IBlockMagistics> extends Block implements 
 		}
 
 		IBlockMagistics type = (IBlockMagistics) state.getValue(TYPE);
-
 		return type.getName();
 	}
 }

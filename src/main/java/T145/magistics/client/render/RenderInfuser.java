@@ -40,31 +40,23 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		} else {
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		}
 
 		if (infuser.isDark()) {
-			//bindTexture(new ResourceLocation("magistics", "textures/blocks/dark_infuser_symbol.png"));
 			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/dark_infuser_symbol.png"));
 		} else {
-			//bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser_symbol.png"));
 			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser_symbol.png"));
 		}
 
 		GlStateManager.color(1F, 1F, 1F, 1F);
 
 		Tessellator tessellator = Tessellator.getInstance();
-
 		tessellator.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		//tessellator.getBuffer().putBrightness4(220, 220, 220, 220);
 
 		if (infuser.isCrafting()) {
-			//tessellator.getBuffer().putColorRGB_F(1F, 0.5F, 1F, 1);
-			//tessellator.getBuffer().putColorRGB_F4(1F, 0.5F, 1F);
 			GlStateManager.color(1F, 0.5F, 1F, 1F);
 		} else {
-			//tessellator.getBuffer().putColorRGB_F(0F, 0F, 0F, 1);
-			//tessellator.getBuffer().putColorRGB_F4(0F, 0F, 0F);
 			GlStateManager.color(0F, 0F, 0F, 1F);
 		}
 
