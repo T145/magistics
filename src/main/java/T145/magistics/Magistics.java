@@ -4,9 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.api.IFMLEventHandler;
+import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -18,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION)
+@Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
 public class Magistics implements IFMLEventHandler {
 
 	public static final String MODID = "magistics";
@@ -35,7 +37,12 @@ public class Magistics implements IFMLEventHandler {
 	private static ModMetadata meta;
 
 	public static Logger logger = LogManager.getLogger(NAME);
+	public static ConfigHandler config = new ConfigHandler();
 	public static final CreativeTabs tab = new CreativeTabMagistics();
+
+	public boolean isDeobfuscated() {
+		return VERSION.equals("$version");
+	}
 
 	@Override
 	@EventHandler
@@ -53,20 +60,24 @@ public class Magistics implements IFMLEventHandler {
 		meta.useDependencyInformation = false;
 		meta.version = VERSION;
 
+		config.preInit(event);
 		proxy.preInit(event);
 	}
 
 	@Override
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(config);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
+		config.init(event);
 		proxy.init(event);
 	}
 
 	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		config.postInit(event);
 		proxy.postInit(event);
 	}
 }
