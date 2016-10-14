@@ -1,5 +1,7 @@
 package T145.magistics.containers;
 
+import javax.annotation.Nullable;
+
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -109,43 +111,44 @@ public class ContainerInfuser extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-		ItemStack var2 = null;
-		Slot var3 = (Slot) inventorySlots.get(slot);
+	@Nullable
+	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+		ItemStack copyStack = null;
+		Slot slot = inventorySlots.get(index);
 
-		if (var3 != null && var3.getHasStack()) {
-			ItemStack var4 = var3.getStack();
-			var2 = var4.copy();
+		if (slot != null && slot.getHasStack()) {
+			ItemStack slotStack = slot.getStack();
+			copyStack = slotStack.copy();
 
-			if (slot < 8) {
-				if (!mergeItemStack(var4, 8, 35, true)) {
+			if (index < 8) {
+				if (!mergeItemStack(slotStack, 8, 35, true)) {
 					return null;
 				}
-			} else if (slot >= 8 && slot <= 35) {
-				if (!mergeItemStack(var4, 0, 6, false)) {
+			} else if (index >= 8 && index <= 35) {
+				if (!mergeItemStack(slotStack, 0, 6, false)) {
 					return null;
 				}
-			} else if (slot > 35 && slot <= 44) {
-				if (!mergeItemStack(var4, 8, 35, false)) {
+			} else if (index > 35 && index <= 44) {
+				if (!mergeItemStack(slotStack, 8, 35, false)) {
 					return null;
 				}
-			} else if (!mergeItemStack(var4, 8, 44, false)) {
+			} else if (!mergeItemStack(slotStack, 8, 44, false)) {
 				return null;
 			}
 
-			if (var4.stackSize == 0) {
-				var3.putStack((ItemStack) null);
+			if (slotStack.stackSize == 0) {
+				slot.putStack(null);
 			} else {
-				var3.onSlotChanged();
+				slot.onSlotChanged();
 			}
 
-			if (var4.stackSize == var2.stackSize) {
+			if (slotStack.stackSize == copyStack.stackSize) {
 				return null;
 			}
 
-			var3.onPickupFromSlot(player, var4);
+			slot.onPickupFromSlot(player, slotStack);
 		}
 
-		return var2;
+		return copyStack;
 	}
 }

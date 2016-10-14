@@ -11,11 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory, ITickable {
+public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory {
 
 	private ItemStack[] inventoryStacks = new ItemStack[8];
 
