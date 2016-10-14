@@ -6,9 +6,11 @@ import java.util.Locale;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockTypes;
+import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockMagistics;
 import T145.magistics.blocks.BlockMagisticsItem;
+import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -24,12 +26,16 @@ import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 public class ModBlocks {
 
 	public static Block blockInfuser;
+	public static Block blockCrucible;
 
 	private static List<Block> blocks = new ArrayList<Block>();
 
 	public static void preInit() {
 		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
+		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
+
 		blockInfuser = initBlock(new BlockInfuser(), "infuser");
+		blockCrucible = initBlock(new BlockCrucible(), "crucible");
 	}
 
 	public static void init() {

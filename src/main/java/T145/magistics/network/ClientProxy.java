@@ -1,9 +1,12 @@
 package T145.magistics.network;
 
+import T145.magistics.client.fx.particles.ParticleGreenFlame;
+import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.tiles.TileInfuser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -46,5 +49,17 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
+	}
+
+	@Override
+	public void createGreenFlameFX(World world, float x, float y, float z) {
+		ParticleGreenFlame flame = new ParticleGreenFlame(world, x, y, z, 0F, 0F, 0F);
+		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
+	}
+
+	@Override
+	public void createSmallGreenFlameFX(World world, float x, float y, float z) {
+		ParticleGreenFlame flame = new ParticleSmallGreenFlame(world, x, y, z, 0F, 0F, 0F);
+		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
 	}
 }

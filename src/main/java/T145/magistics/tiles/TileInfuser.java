@@ -72,7 +72,7 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 			}
 		}
 
-		facing = tag.getInteger("facing");
+		facing = tag.getInteger("Facing");
 		burnTime = tag.getInteger("BurnTime");
 		cookTime = tag.getInteger("CookTime");
 		totalCookTime = tag.getInteger("CookTimeTotal");
@@ -80,15 +80,8 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	}
 
 	@Override
-	public void readClientDataFromNBT(NBTTagCompound tag) {
-		facing = tag.getInteger("facing");
-		active = tag.getBoolean("active");
-		crafting = tag.getBoolean("crafting");
-	}
-
-	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		tag.setInteger("facing", facing);
+		tag.setInteger("Facing", facing);
 		tag.setInteger("BurnTime", burnTime);
 		tag.setInteger("CookTime", cookTime);
 		tag.setInteger("CookTimeTotal", totalCookTime);
@@ -105,13 +98,6 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 		tag.setTag("Items", nbttaglist);
 		return super.writeToNBT(tag);
-	}
-
-	@Override
-	public void writeClientDataToNBT(NBTTagCompound tag) {
-		tag.setInteger("facing", facing);
-		tag.setBoolean("active", active);
-		tag.setBoolean("crafting", crafting);
 	}
 
 	@Override

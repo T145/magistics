@@ -49,4 +49,8 @@ public class CommonProxy implements IFMLEventHandler, IGuiHandler {
 		ModBlocks.postInit();
 		ModItems.postInit();
 	}
+
+	public void createGreenFlameFX(World world, float x, float y, float z) {}
+
+	public void createSmallGreenFlameFX(World world, float x, float y, float z) {}
 }
