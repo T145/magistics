@@ -8,10 +8,10 @@
         "type": {
             "basic": {
                 "textures": {
-                    "particle": "magistics:blocks/crucible/eyes_side_in",
+                    "particle": "magistics:blocks/crucible/eyes_top_in",
                     "top": "magistics:blocks/crucible/eyes_top_out",
-                    "bottom": "magistics:blocks/crucible/eyes_bottom_in",
-                    "side": "magistics:blocks/crucible/eyes_side_out_off",
+                    "bottom": "magistics:blocks/crucible/eyes_bottom_out",
+                    "side": "magistics:blocks/crucible/eyes_side_in",
                     "inside": "magistics:blocks/crucible/eyes_bottom_in"
                 }
             }
