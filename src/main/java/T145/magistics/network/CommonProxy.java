@@ -3,6 +3,7 @@ package T145.magistics.network;
 import T145.magistics.Magistics;
 import T145.magistics.api.IFMLEventHandler;
 import T145.magistics.containers.ContainerInfuser;
+import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
@@ -39,6 +40,7 @@ public class CommonProxy implements IFMLEventHandler, IGuiHandler {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(Magistics.config);
+		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 		NetworkRegistry.INSTANCE.registerGuiHandler(Magistics.instance, Magistics.proxy);
 
 		ModBlocks.preInit();
