@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.Magistics;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,6 +21,13 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 	@Override
 	public void renderTileEntityAt(@Nonnull TileInfuser infuser, double x, double y, double z, float partialTicks, int destroyStage) {
 		drawDisk(infuser, x, y + BlockRenderer.W16, z);
+
+		if (infuser.isCrafting() && infuser.getWorld().rand.nextFloat() < infuser.cookTime) {
+			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
+			double yy = infuser.getPos().getY() + BlockRenderer.W16;
+			double zz = infuser.getPos().getZ() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
+			Magistics.proxy.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
+		}
 	}
 
 	private void drawDisk(TileInfuser infuser, double x, double y, double z) {
@@ -44,9 +52,9 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		}
 
 		if (infuser.isDark()) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser/dark_symbol.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/dark_symbol.png"));
 		} else {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("magistics", "textures/blocks/infuser/symbol.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/symbol.png"));
 		}
 
 		GlStateManager.color(1F, 1F, 1F, 1F);
