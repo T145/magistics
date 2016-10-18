@@ -31,11 +31,11 @@ public class ModBlocks {
 	private static List<Block> blocks = new ArrayList<Block>();
 
 	public static void preInit() {
-		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
+		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 
-		blockInfuser = initBlock(new BlockInfuser(), "infuser");
 		blockCrucible = initBlock(new BlockCrucible(), "crucible");
+		blockInfuser = initBlock(new BlockInfuser(), "infuser");
 	}
 
 	public static void init() {

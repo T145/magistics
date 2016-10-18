@@ -5,8 +5,11 @@ import T145.magistics.client.fx.particles.ParticleGreenFlame;
 import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
 import T145.magistics.client.fx.particles.ParticleWisp;
 import T145.magistics.client.gui.GuiInfuser;
+import T145.magistics.client.lib.events.IconAtlas;
+import T145.magistics.client.render.RenderCrucible;
 import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.load.ModBlocks;
+import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -37,11 +40,13 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 
+		MinecraftForge.EVENT_BUS.register(ParticleEngine.INSTANCE);
+		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
+
 		ModBlocks.initModelsAndVariants();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
-
-		MinecraftForge.EVENT_BUS.register(ParticleEngine.INSTANCE);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 	}
 
 	@Override

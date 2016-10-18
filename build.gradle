@@ -27,6 +27,13 @@ buildscript {
 	}
 }
 
+repositories {
+	maven {
+		name 'ChickenBones'
+		url 'http://chickenbones.net/maven'
+	}
+}
+
 apply plugin: 'java'
 
 apply plugin: 'de.undercouch.download'
@@ -77,9 +84,7 @@ group = mod_group
 archivesBaseName = mod_id
 
 dependencies {
-	if (project.file('lib').exists()) {
-		compile fileTree(dir: 'lib', include: '*.jar')
-	}
+	compile "codechicken:CodeChickenCore:1.10.2-2.3.4.89:deobf"
 }
 
 build {

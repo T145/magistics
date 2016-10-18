@@ -13,7 +13,14 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -22,6 +29,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrucible extends BlockMagistics implements ITileEntityProvider {
+
+	private int delay = 0;
 
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 0.3125D, 1.0D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 1.0D, 0.125D);
@@ -57,14 +66,50 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 		return false;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-		Magistics.proxy.createGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
+
+		if (crucible.hasWorldObj() && crucible.getBlockMetadata() < 3) {
+			Magistics.proxy.createGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+		}
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
+
+		if (crucible != null) {
+			crucible.setTier();
+		}
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+		if (entity instanceof EntityItem && entity.posY <= pos.getY() + 0.7D) {
+			EntityItem item = (EntityItem) entity;
 
+			item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+			item.motionY += world.rand.nextFloat() * 0.1F;
+			item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+
+			item.setPickupDelay(10);
+			item.lifespan = 0;
+		}
+
+		delay += 1;
+
+		if (delay < 5) {
+			return;
+		}
+
+		delay = 0;
+
+		if (entity instanceof EntityLiving) {
+			entity.attackEntityFrom(DamageSource.magic, 1);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
+		}
 	}
 
 	@Override
@@ -77,9 +122,10 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 		return true;
 	}
 
-	/*public int getComparatorputOverride(IBlockState blockState, World world, BlockPos pos) {
-		return visLevels;
-	}*/
+	/*
+	 * public int getComparatorputOverride(IBlockState blockState, World world,
+	 * BlockPos pos) { return visLevels; }
+	 */
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {

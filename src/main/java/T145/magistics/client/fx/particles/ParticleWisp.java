@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ParticleWisp extends Particle {
+
 	public ParticleWisp(World world, double d, double d1, double d2, float f, float f1, float f2) {
 		this(world, d, d1, d2, 1.0F, f, f1, f2);
 	}
