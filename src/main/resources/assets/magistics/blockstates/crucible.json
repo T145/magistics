@@ -1,18 +1,51 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "transform": "forge:default-block",
-        "model": "minecraft:cauldron_empty"
+        "transform": "forge:default-block"
     },
     "variants": {
         "type": {
             "basic": {
+                "model": "minecraft:cauldron_empty",
                 "textures": {
                     "particle": "magistics:blocks/crucible/eyes_top_in",
                     "top": "magistics:blocks/crucible/eyes_top_out",
                     "bottom": "magistics:blocks/crucible/eyes_bottom_out",
                     "side": "magistics:blocks/crucible/eyes_side_in",
                     "inside": "magistics:blocks/crucible/eyes_bottom_in"
+                }
+            },
+            "eyes": {
+                "model": "magistics:crucible",
+                "textures": {
+                    "particle": "magistics:blocks/crucible/eyes_top_in",
+                    "bottom_in": "magistics:blocks/crucible/eyes_bottom_in",
+                    "bottom_out": "magistics:blocks/crucible/eyes_bottom_out",
+                    "side_in": "magistics:blocks/crucible/eyes_side_in",
+                    "side_out": "magistics:blocks/crucible/eyes_side_out_off",
+                    "top_in": "magistics:blocks/crucible/eyes_top_in",
+                    "top_out": "magistics:blocks/crucible/eyes_top_out"
+                }
+            },
+            "thaumium": {
+                "model": "magistics:crucible",
+                "textures": {
+                    "particle": "magistics:blocks/crucible/thaumium_top_in",
+                    "bottom_in": "magistics:blocks/crucible/thaumium_bottom_in",
+                    "bottom_out": "magistics:blocks/crucible/thaumium_bottom_out",
+                    "side_in": "magistics:blocks/crucible/thaumium_side_in",
+                    "side_out": "magistics:blocks/crucible/thaumium_side_out_off",
+                    "top_in": "magistics:blocks/crucible/thaumium_top_in",
+                    "top_out": "magistics:blocks/crucible/thaumium_top_out"
+                }
+            },
+            "souls": {
+                "model": "minecraft:cube_bottom_top",
+                "textures": {
+                    "particle": "magistics:blocks/crucible/souls_inside",
+                    "bottom": "magistics:blocks/crucible/souls_bottom",
+                    "top": "magistics:blocks/crucible/souls_top",
+                    "side": "magistics:blocks/crucible/souls_side_off"
                 }
             }
         }

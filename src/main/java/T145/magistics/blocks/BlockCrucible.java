@@ -14,10 +14,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -77,15 +75,6 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
-
-		if (crucible != null) {
-			crucible.setTier();
-		}
-	}
-
-	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityItem && entity.posY <= pos.getY() + 0.7D) {
 			EntityItem item = (EntityItem) entity;
@@ -114,7 +103,13 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 
 	@Override
 	public boolean isPassable(IBlockAccess world, BlockPos pos) {
-		return true;
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
+
+		if (crucible.hasWorldObj() && crucible.getBlockMetadata() < 3) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -129,11 +124,11 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible();
+		return new TileCrucible(CrucibleType.values()[meta]);
 	}
 
 	public static enum CrucibleType implements IBlockMagistics {
-		BASIC;
+		BASIC, EYES, THAUMIUM, SOULS;
 
 		@Override
 		public String getName() {

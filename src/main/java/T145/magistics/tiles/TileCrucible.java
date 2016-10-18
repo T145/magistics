@@ -4,6 +4,7 @@ import java.util.List;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.tiles.TileVisUser;
+import T145.magistics.blocks.BlockCrucible.CrucibleType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -26,10 +27,39 @@ public class TileCrucible extends TileVisUser {
 	private float speed;
 	private float wait;
 	private boolean updateNextPeriod;
-	public boolean isPowering = false;
+	private boolean powering = false;
 
 	public int smeltDelay;
 	private int soundDelay = 25;
+
+	public boolean isPowering() {
+		return powering;
+	}
+
+	public TileCrucible(CrucibleType type) {
+		switch (type) {
+		case SOULS:
+			maxVis = 750F;
+			conversion = 0.4F;
+			speed = 0.75F;
+			break;
+		case THAUMIUM:
+			maxVis = 750F;
+			conversion = 0.7F;
+			speed = 0.75F;
+			break;
+		case EYES:
+			maxVis = 600F;
+			conversion = 0.6F;
+			speed = 0.5F;
+			break;
+		default:
+			maxVis = 500F;
+			conversion = 0.5F;
+			speed = 0.25F;
+			break;
+		}
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
@@ -55,31 +85,6 @@ public class TileCrucible extends TileVisUser {
 	public void writeClientDataToNBT(NBTTagCompound tag) {
 		tag.setFloat("pureVis", pureVis);
 		tag.setFloat("taintedVis", taintedVis);
-	}
-
-	public void setTier() {
-		switch (getBlockMetadata()) {
-		case 0: // basic
-			maxVis = 500F;
-			conversion = 0.5F;
-			speed = 0.25F;
-			break;
-		case 1: // eyes
-			maxVis = 600F;
-			conversion = 0.6F;
-			speed = 0.5F;
-			break;
-		case 2: // thaumium
-			maxVis = 750F;
-			conversion = 0.7F;
-			speed = 0.75F;
-			break;
-		case 3: // souls
-			maxVis = 750F;
-			conversion = 0.4F;
-			speed = 0.75F;
-			break;
-		}
 	}
 
 	@Override
@@ -125,15 +130,15 @@ public class TileCrucible extends TileVisUser {
 			}
 
 			if (getBlockMetadata() == 1 || getBlockMetadata() == 2) {
-				boolean oldPower = isPowering;
+				boolean oldPower = powering;
 
 				if (totalVis >= maxVis * 0.9D) {
-					isPowering = true;
+					powering = true;
 				} else {
-					isPowering = false;
+					powering = false;
 				}
 
-				if (oldPower != isPowering) {
+				if (oldPower != powering) {
 					for (int a = -1; a < 2; a++) {
 						for (int b = -1; b < 2; b++) {
 							for (int c = -1; c < 2; c++) {
