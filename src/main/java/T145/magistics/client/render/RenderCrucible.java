@@ -5,12 +5,14 @@ import javax.annotation.Nonnull;
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.tiles.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,7 +25,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		GlStateManager.translate(x, y, z);
 
 		float totalVis = crucible.pureVis + crucible.taintedVis;
-		if (totalVis > 0.1F) {
+		if (totalVis > 0F) {
 			renderVis(crucible, totalVis);
 		}
 
@@ -36,22 +38,22 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		VertexBuffer buffer = tessellator.getBuffer();
-
-		float size = 0.8F;
 		TextureAtlasSprite icon = IconAtlas.INSTANCE.spriteVis;
 
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.color(1F, 1F, 1F, 1F);
 
-		double uMin = (double) icon.getMinU();
-		double uMax = (double) icon.getMaxU();
-		double vMin = (double) icon.getMinV();
-		double vMax = (double) icon.getMaxV();
+		double uMin = icon.getMinU();
+		double uMax = icon.getMaxU();
+		double vMin = icon.getMinV();
+		double vMax = icon.getMaxV();
 
+		float size = 0.8F;
 		float tint = Math.min(1F, crucible.pureVis / totalVis);
-		int brightness = 20 + (int) (tint * 210F);
+		float brightness = 20F + (tint * 210F);
 
 		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		setBrightness(crucible.getWorld().getSkylightSubtracted(), brightness);
 		buffer.pos(size / 2F, 0, size / 2F).tex(uMax, vMax).endVertex();
 		buffer.pos(size / 2F, 0, -size / 2F).tex(uMax, vMin).endVertex();
 		buffer.pos(-size / 2F, 0, -size / 2F).tex(uMin, vMin).endVertex();
@@ -59,6 +61,10 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		tessellator.draw();
 
 		GlStateManager.popMatrix();
+	}
+
+	private void setBrightness(float skyLight, float blockLight) {
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, MathHelper.clamp_float(skyLight, 0, 15) * 16, MathHelper.clamp_float(blockLight, 0, 15) * 16);
 	}
 
 	private double getLevel(TileCrucible crucible, float totalVis) {

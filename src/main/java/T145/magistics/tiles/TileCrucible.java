@@ -4,7 +4,7 @@ import java.util.List;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.tiles.TileVisUser;
-import T145.magistics.blocks.BlockCrucible.CrucibleType;
+import T145.magistics.lib.sounds.SoundHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -34,31 +34,6 @@ public class TileCrucible extends TileVisUser {
 
 	public boolean isPowering() {
 		return powering;
-	}
-
-	public TileCrucible(CrucibleType type) {
-		switch (type) {
-		case SOULS:
-			maxVis = 750F;
-			conversion = 0.4F;
-			speed = 0.75F;
-			break;
-		case THAUMIUM:
-			maxVis = 750F;
-			conversion = 0.7F;
-			speed = 0.75F;
-			break;
-		case EYES:
-			maxVis = 600F;
-			conversion = 0.6F;
-			speed = 0.5F;
-			break;
-		default:
-			maxVis = 500F;
-			conversion = 0.5F;
-			speed = 0.25F;
-			break;
-		}
 	}
 
 	@Override
@@ -92,6 +67,31 @@ public class TileCrucible extends TileVisUser {
 		super.update();
 
 		if (hasWorldObj()) {
+			if (maxVis == 0) {
+				switch (getBlockMetadata()) {
+				case 3:
+					maxVis = 750F;
+					conversion = 0.4F;
+					speed = 0.75F;
+					break;
+				case 2:
+					maxVis = 750F;
+					conversion = 0.7F;
+					speed = 0.75F;
+					break;
+				case 1:
+					maxVis = 600F;
+					conversion = 0.6F;
+					speed = 0.5F;
+					break;
+				default:
+					maxVis = 500F;
+					conversion = 0.5F;
+					speed = 0.25F;
+					break;
+				}
+			}
+
 			float totalVis = pureVis + taintedVis;
 
 			--smeltDelay;
@@ -184,7 +184,7 @@ public class TileCrucible extends TileVisUser {
 
 							worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
 							worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, entity.posX, entity.posY, entity.posZ, 0.0D, 0.0D, 0.0D);
-							// play bubble sound effect
+							worldObj.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + worldObj.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						entity.motionX = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F;
@@ -192,7 +192,7 @@ public class TileCrucible extends TileVisUser {
 						entity.motionZ = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F;
 						worldObj.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + worldObj.rand.nextFloat() * 0.45F);
 						entity.setPickupDelay(10);
-						entity.lifespan = 0;
+						//entity.lifespan = 0;
 					}
 				}
 			}

@@ -1,0 +1,18 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "textures": {
+            "texture": "magistics:blocks/vis_conduit",
+            "particle": "#texture"
+        }
+    },
+    "variants": {
+        "inventory": [{
+            "model": "magistics:conduit_top-bottom"
+        }],
+        "normal": [{
+            "model": "magistics:conduit_base"
+        }]
+    }
+}

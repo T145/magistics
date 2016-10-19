@@ -8,6 +8,7 @@ import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.client.render.RenderCrucible;
 import T145.magistics.client.render.RenderInfuser;
+import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
@@ -38,6 +39,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
+		SoundHandler.registerSounds();
+
 		super.preInit(event);
 
 		MinecraftForge.EVENT_BUS.register(ParticleEngine.INSTANCE);
@@ -60,13 +63,13 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void createGreenFlameFX(World world, float x, float y, float z) {
+	public void greenFlameFX(World world, float x, float y, float z) {
 		ParticleGreenFlame flame = new ParticleGreenFlame(world, x, y, z, 0F, 0F, 0F);
 		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
 	}
 
 	@Override
-	public void createSmallGreenFlameFX(World world, float x, float y, float z) {
+	public void smallGreenFlameFX(World world, float x, float y, float z) {
 		ParticleGreenFlame flame = new ParticleSmallGreenFlame(world, x, y, z, 0F, 0F, 0F);
 		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
 	}

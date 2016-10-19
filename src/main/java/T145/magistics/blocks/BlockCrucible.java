@@ -28,8 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrucible extends BlockMagistics implements ITileEntityProvider {
 
-	private int delay = 0;
-
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 0.3125D, 1.0D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 1.0D, 0.125D);
 	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, 0.875D, 1.0D, 1.0D, 1.0D);
@@ -70,46 +68,33 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
 		if (crucible.hasWorldObj() && crucible.getBlockMetadata() < 3) {
-			Magistics.proxy.createGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+			Magistics.proxy.greenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
 		}
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityItem && entity.posY <= pos.getY() + 0.7D) {
-			EntityItem item = (EntityItem) entity;
+		if (entity.posY <= pos.getY() + 0.7D) {
+			if (entity instanceof EntityItem) {
+				EntityItem item = (EntityItem) entity;
 
-			item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
-			item.motionY += world.rand.nextFloat() * 0.1F;
-			item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+				item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+				item.motionY += world.rand.nextFloat() * 0.1F;
+				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
 
-			item.setPickupDelay(10);
-			item.lifespan = 0;
-		}
-
-		delay += 1;
-
-		if (delay < 5) {
-			return;
-		}
-
-		delay = 0;
-
-		if (entity instanceof EntityLiving) {
-			entity.attackEntityFrom(DamageSource.magic, 1);
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
+				item.setPickupDelay(10);
+				//item.lifespan = 0;
+			} else if (entity instanceof EntityLiving) {
+				entity.attackEntityFrom(DamageSource.magic, 1);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
+			}
 		}
 	}
 
 	@Override
 	public boolean isPassable(IBlockAccess world, BlockPos pos) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
-
-		if (crucible.hasWorldObj() && crucible.getBlockMetadata() < 3) {
-			return true;
-		}
-
-		return false;
+		return crucible.hasWorldObj() && crucible.getBlockMetadata() < 3;
 	}
 
 	@Override
@@ -118,13 +103,12 @@ public class BlockCrucible extends BlockMagistics implements ITileEntityProvider
 	}
 
 	/*
-	 * public int getComparatorputOverride(IBlockState blockState, World world,
-	 * BlockPos pos) { return visLevels; }
+	 * public int getComparatorputOverride(IBlockState blockState, World world, BlockPos pos) { return visLevels; }
 	 */
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible(CrucibleType.values()[meta]);
+		return new TileCrucible();
 	}
 
 	public static enum CrucibleType implements IBlockMagistics {

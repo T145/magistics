@@ -1,0 +1,5 @@
+{
+   "bubbling": {"category": "master","sounds": [{"name": "magistics:bubbling","stream": false}]},
+   "infuser": {"category": "master","sounds": [{"name": "magistics:infuser","stream": false}]},
+   "infuserdark": {"category": "master","sounds": [{"name": "magistics:infuserdark","stream": false}]}
+}

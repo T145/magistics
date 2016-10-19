@@ -6,10 +6,15 @@ import java.util.Locale;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockTypes;
+import T145.magistics.blocks.BlockConduit;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockMagistics;
 import T145.magistics.blocks.BlockMagisticsItem;
+import T145.magistics.client.render.RenderConduit;
+import T145.magistics.client.render.RenderCrucible;
+import T145.magistics.client.render.RenderInfuser;
+import T145.magistics.tiles.TileConduit;
 import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.block.Block;
@@ -20,21 +25,27 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
 	public static Block blockInfuser;
 	public static Block blockCrucible;
+	public static Block blockConduit;
 
 	private static List<Block> blocks = new ArrayList<Block>();
 
 	public static void preInit() {
 		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
+		GameRegistry.registerTileEntity(TileConduit.class, TileConduit.class.getSimpleName());
 		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 
 		blockCrucible = initBlock(new BlockCrucible(), "crucible");
+		blockConduit = initBlock(new BlockConduit(), "conduit");
 		blockInfuser = initBlock(new BlockInfuser(), "infuser");
 	}
 
@@ -45,6 +56,14 @@ public class ModBlocks {
 		// load recipes and what not
 	}
 
+	@SideOnly(Side.CLIENT)
+	public static void initTileRenderers() {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
+	}
+
+	@SideOnly(Side.CLIENT)
 	public static void initModelsAndVariants() {
 		for (Block block : blocks) {
 			Item blockItem = Item.getItemFromBlock(block);
@@ -72,17 +91,18 @@ public class ModBlocks {
 		}
 	}
 
-	private static Block initBlock(BlockMagistics block, String name) {
+	private static Block initBlock(Block block, String name) {
 		return initBlock(block, name, null);
 	}
 
 	private static Block initBlock(Block block, String name, Class ib) {
 		blocks.add(block);
 		block.setUnlocalizedName(name);
+		block.setCreativeTab(Magistics.tab);
 
 		if (ib != null) {
 			registerBlock(block, ib, name);
-		} else if (block instanceof BlockMagistics && ((BlockMagistics) block).hasTypes()) {
+		} else if (block instanceof BlockMagistics) {
 			registerBlock(block, BlockMagisticsItem.class, name);
 		} else {
 			registerBlock(block, ItemBlock.class, name);

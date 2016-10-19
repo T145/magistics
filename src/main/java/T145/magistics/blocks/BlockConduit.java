@@ -2,8 +2,7 @@ package T145.magistics.blocks;
 
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.TileConduit;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -13,12 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockConduit extends BlockMagistics implements ITileEntityProvider {
+public class BlockConduit extends BlockContainer {
 
 	protected static final AxisAlignedBB CONDUIT_AABB = new AxisAlignedBB(BlockRenderer.W4, BlockRenderer.W4, BlockRenderer.W4, 1F - BlockRenderer.W4, 1F - BlockRenderer.W4, 1F - BlockRenderer.W4);
 
-	public BlockConduit(Class types) {
-		super(Material.CIRCUITS, types, SoundType.WOOD);
+	public BlockConduit() {
+		super(Material.CIRCUITS);
 	}
 
 	@Override
