@@ -83,9 +83,7 @@ version = revision
 group = mod_group
 archivesBaseName = mod_id
 
-dependencies {
-	compile "codechicken:CodeChickenCore:1.10.2-2.3.4.89:deobf"
-}
+dependencies {}
 
 build {
 	doLast {
