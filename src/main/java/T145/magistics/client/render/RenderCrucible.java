@@ -2,17 +2,17 @@ package T145.magistics.client.render;
 
 import javax.annotation.Nonnull;
 
+import org.lwjgl.opengl.GL11;
+
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.tiles.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,40 +34,46 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 	private void renderVis(TileCrucible crucible, float totalVis) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.5, getLevel(crucible, totalVis), 0.5);
+		GlStateManager.translate(0.5, getVisLevel(crucible, totalVis), 0.5);
+
+		TextureAtlasSprite sprite = IconAtlas.INSTANCE.spriteVis;
+		double imageSize = 0.4D;
+		double uMin = sprite.getMinU();
+		double uMax = sprite.getMaxU();
+		double vMin = sprite.getMinV();
+		double vMax = sprite.getMaxV();
+
+		float tint = Math.min(1F, crucible.pureVis / totalVis);
+		int lightValue = 20 + (int) (tint * 210F);
+		int brightness = getWorld().getCombinedLight(crucible.getPos(), lightValue);
+		int lightx = brightness >> 0x10 & 0xFFFF;
+		int lighty = brightness & 0xFFFF;
+
+		GlStateManager.disableCull();
+		GlStateManager.disableLighting();
+		GlStateManager.enableBlend();
+		GlStateManager.enableAlpha();
+
+		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
 		Tessellator tessellator = Tessellator.getInstance();
 		VertexBuffer buffer = tessellator.getBuffer();
-		TextureAtlasSprite icon = IconAtlas.INSTANCE.spriteVis;
-
-		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		GlStateManager.color(1F, 1F, 1F, 1F);
-
-		double uMin = icon.getMinU();
-		double uMax = icon.getMaxU();
-		double vMin = icon.getMinV();
-		double vMax = icon.getMaxV();
-
-		float size = 0.8F;
-		float tint = Math.min(1F, crucible.pureVis / totalVis);
-		float brightness = 20F + (tint * 210F);
-
-		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		setBrightness(crucible.getWorld().getSkylightSubtracted(), brightness);
-		buffer.pos(size / 2F, 0, size / 2F).tex(uMax, vMax).endVertex();
-		buffer.pos(size / 2F, 0, -size / 2F).tex(uMax, vMin).endVertex();
-		buffer.pos(-size / 2F, 0, -size / 2F).tex(uMin, vMin).endVertex();
-		buffer.pos(-size / 2F, 0, size / 2F).tex(uMin, vMax).endVertex();
+		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		buffer.pos(imageSize, 0D, imageSize).tex(uMax, vMax).endVertex();
+		buffer.pos(imageSize, 0D, -imageSize).tex(uMax, vMin).endVertex();
+		buffer.pos(-imageSize, 0D, -imageSize).tex(uMin, vMin).endVertex();
+		buffer.pos(-imageSize, 0D, imageSize).tex(uMin, vMax).endVertex();
 		tessellator.draw();
+
+		GlStateManager.disableAlpha();
+		GlStateManager.disableBlend();
+		GlStateManager.enableLighting();
+		GlStateManager.enableCull();
 
 		GlStateManager.popMatrix();
 	}
 
-	private void setBrightness(float skyLight, float blockLight) {
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, MathHelper.clamp_float(skyLight, 0, 15) * 16, MathHelper.clamp_float(blockLight, 0, 15) * 16);
-	}
-
-	private double getLevel(TileCrucible crucible, float totalVis) {
+	private double getVisLevel(TileCrucible crucible, float totalVis) {
 		float height = Math.min(totalVis, crucible.getMaxVis());
 		float level = 0.75F * (height / crucible.getMaxVis());
 

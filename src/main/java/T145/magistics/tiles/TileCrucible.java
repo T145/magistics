@@ -184,7 +184,7 @@ public class TileCrucible extends TileVisUser {
 
 							worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
 							worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, entity.posX, entity.posY, entity.posZ, 0.0D, 0.0D, 0.0D);
-							worldObj.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + worldObj.rand.nextFloat() * 0.2F);
+							worldObj.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + worldObj.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						entity.motionX = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F;
