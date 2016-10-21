@@ -5,21 +5,25 @@
         "model": "magistics:infuser"
     },
     "variants": {
-        "inventory,type=light": [{
-            "textures": {
-                "top": "magistics:blocks/infuser/top",
-                "bottom": "magistics:blocks/infuser/bottom",
-                "side": "magistics:blocks/infuser/side"
+        "inventory,variant=light": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/top",
+                    "bottom": "magistics:blocks/infuser/bottom",
+                    "side": "magistics:blocks/infuser/side"
+                }
             }
-        }],
-        "inventory,type=dark": [{
-            "textures": {
-                "top": "magistics:blocks/infuser/dark_top",
-                "bottom": "magistics:blocks/infuser/dark_bottom",
-                "side": "magistics:blocks/infuser/dark_side"
+        ],
+        "inventory,variant=dark": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/dark_top",
+                    "bottom": "magistics:blocks/infuser/dark_bottom",
+                    "side": "magistics:blocks/infuser/dark_side"
+                }
             }
-        }],
-        "type": {
+        ],
+        "variant": {
             "light": {
                 "textures": {
                     "top": "magistics:blocks/infuser/top_clear",

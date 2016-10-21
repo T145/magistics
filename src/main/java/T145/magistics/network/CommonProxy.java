@@ -1,7 +1,6 @@
 package T145.magistics.network;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.IFMLEventHandler;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.load.ModBlocks;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-public class CommonProxy implements IFMLEventHandler, IGuiHandler {
+public class CommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -37,26 +36,23 @@ public class CommonProxy implements IFMLEventHandler, IGuiHandler {
 		return null;
 	}
 
-	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(Magistics.config);
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 		NetworkRegistry.INSTANCE.registerGuiHandler(Magistics.instance, Magistics.proxy);
 
-		ModBlocks.preInit();
-		ModItems.preInit();
+		ModBlocks.preInit(event);
+		ModItems.preInit(event);
 	}
 
-	@Override
 	public void init(FMLInitializationEvent event) {
-		ModBlocks.init();
-		ModItems.init();
+		ModBlocks.init(event);
+		ModItems.init(event);
 	}
 
-	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		ModBlocks.postInit();
-		ModItems.postInit();
+		ModBlocks.postInit(event);
+		ModItems.postInit(event);
 	}
 
 	public void greenFlameFX(World world, float x, float y, float z) {}

@@ -1,8 +1,5 @@
 package T145.magistics.tiles;
 
-import javax.annotation.Nullable;
-
-import T145.magistics.api.tiles.IFacing;
 import T145.magistics.api.tiles.TileVisUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -11,20 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.ITickable;
 
-public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory {
+public class TileInfuser extends TileVisUser implements ITickable, ISidedInventory {
 
-	private ItemStack[] inventoryStacks = new ItemStack[8];
+	protected ItemStack[] inventoryStacks = new ItemStack[8];
 
 	private boolean active = false;
 	private boolean crafting = false;
 
-	public int burnTime;
-	public int itemBurnTime;
 	public int cookTime;
-	public int totalCookTime;
+	public int burnTime;
 
 	protected int angle;
 	protected int soundDelay;
@@ -34,7 +28,7 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	private int boostDelay = 20;
 
 	public boolean isDark() {
-		return getBlockMetadata() == 1;
+		return false;
 	}
 
 	public boolean isActive() {
@@ -57,6 +51,14 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 		return boost;
 	}
 
+	public void setFacing(int dir) {
+		facing = dir;
+	}
+
+	public int getFacing() {
+		return facing;
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -75,8 +77,6 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 		facing = tag.getInteger("Facing");
 		burnTime = tag.getInteger("BurnTime");
 		cookTime = tag.getInteger("CookTime");
-		totalCookTime = tag.getInteger("CookTimeTotal");
-		itemBurnTime = getItemBurnTime(inventoryStacks[1]);
 	}
 
 	@Override
@@ -84,7 +84,6 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 		tag.setInteger("Facing", facing);
 		tag.setInteger("BurnTime", burnTime);
 		tag.setInteger("CookTime", cookTime);
-		tag.setInteger("CookTimeTotal", totalCookTime);
 		NBTTagList nbttaglist = new NBTTagList();
 
 		for (int i = 0; i < getSizeInventory(); ++i) {
@@ -98,16 +97,6 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 		tag.setTag("Items", nbttaglist);
 		return super.writeToNBT(tag);
-	}
-
-	@Override
-	public int getFacing() {
-		return facing;
-	}
-
-	@Override
-	public void setFacing(int dir) {
-		facing = dir;
 	}
 
 	@Override
@@ -131,23 +120,12 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-		boolean flag = stack != null && stack.isItemEqual(inventoryStacks[index]) && ItemStack.areItemStackTagsEqual(stack, inventoryStacks[index]);
+	public void setInventorySlotContents(int index, ItemStack stack) {
 		inventoryStacks[index] = stack;
 
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
 			stack.stackSize = getInventoryStackLimit();
 		}
-
-		if (index == 0 && !flag) {
-			totalCookTime = getCookTime(stack);
-			cookTime = 0;
-			markDirty();
-		}
-	}
-
-	public int getCookTime(@Nullable ItemStack stack) {
-		return 200;
 	}
 
 	@Override
@@ -173,41 +151,20 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 	@Override
 	public int getField(int id) {
-		switch (id) {
-		case 0:
-			return burnTime;
-		case 1:
-			return itemBurnTime;
-		case 2:
-			return cookTime;
-		case 3:
-			return totalCookTime;
-		default:
-			return 0;
-		}
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		switch (id) {
-		case 0:
-			burnTime = value;
-			break;
-		case 1:
-			itemBurnTime = value;
-			break;
-		case 2:
-			cookTime = value;
-			break;
-		case 3:
-			totalCookTime = value;
-			break;
-		}
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 4;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -249,32 +206,21 @@ public class TileInfuser extends TileVisUser implements IFacing, ISidedInventory
 
 	@Override
 	public void update() {
-		super.update();
+		// TODO Auto-generated method stub
 
-		// TODO Implement
-		if (hasWorldObj()) {
-			if (soundDelay > 0) {
-				--soundDelay;
-			}
-		}
 	}
 
-	private int getItemBurnTime(ItemStack stack) {
+	public int getCookProgressScaled(int i) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public int getCookProgressScaled(int time) {
-		return burnTime > 0 ? (cookTime * time) / burnTime : 0;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public int getBoostScaled() {
-		return Math.round(0.1F + (float) boost / 2F) * 6;
-	}
-
 	public int getDarkCookProgressScaled(int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getBoostScaled() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

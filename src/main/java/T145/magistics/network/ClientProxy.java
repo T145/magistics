@@ -6,11 +6,8 @@ import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
 import T145.magistics.client.fx.particles.ParticleWisp;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.events.IconAtlas;
-import T145.magistics.client.render.RenderCrucible;
-import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.load.ModBlocks;
-import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -18,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -46,10 +42,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(ParticleEngine.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
 
-		ModBlocks.initModelsAndVariants();
-
-		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
+		ModBlocks.initClient();
 	}
 
 	@Override

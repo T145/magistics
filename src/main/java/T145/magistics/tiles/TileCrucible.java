@@ -2,7 +2,6 @@ package T145.magistics.tiles;
 
 import java.util.List;
 
-import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.tiles.TileVisUser;
 import T145.magistics.lib.sounds.SoundHandler;
 import net.minecraft.entity.item.EntityItem;
@@ -36,6 +35,31 @@ public class TileCrucible extends TileVisUser {
 		return powering;
 	}
 
+	public void setTier(int meta) {
+		switch (meta) {
+		case 3:
+			maxVis = 750F;
+			conversion = 0.4F;
+			speed = 0.75F;
+			break;
+		case 2:
+			maxVis = 750F;
+			conversion = 0.7F;
+			speed = 0.75F;
+			break;
+		case 1:
+			maxVis = 600F;
+			conversion = 0.6F;
+			speed = 0.5F;
+			break;
+		default:
+			maxVis = 500F;
+			conversion = 0.5F;
+			speed = 0.25F;
+			break;
+		}
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -66,32 +90,7 @@ public class TileCrucible extends TileVisUser {
 	public void update() {
 		super.update();
 
-		if (hasWorldObj()) {
-			if (maxVis == 0) {
-				switch (getBlockMetadata()) {
-				case 3:
-					maxVis = 750F;
-					conversion = 0.4F;
-					speed = 0.75F;
-					break;
-				case 2:
-					maxVis = 750F;
-					conversion = 0.7F;
-					speed = 0.75F;
-					break;
-				case 1:
-					maxVis = 600F;
-					conversion = 0.6F;
-					speed = 0.5F;
-					break;
-				default:
-					maxVis = 500F;
-					conversion = 0.5F;
-					speed = 0.25F;
-					break;
-				}
-			}
-
+		/*if (hasWorldObj()) {
 			float totalVis = pureVis + taintedVis;
 
 			--smeltDelay;
@@ -169,7 +168,7 @@ public class TileCrucible extends TileVisUser {
 						float pureCook = cookVal * conversion;
 						float taintCook = cookVal - pureCook;
 
-						if (/*getBlockMetadata() != 2 || */totalVis + cookVal <= maxVis) {
+						if (getBlockMetadata() != 2 || totalVis + cookVal <= maxVis) {
 							pureVis += pureCook;
 							taintedVis += taintCook;
 							smeltDelay = (10 + Math.round(cookVal / 5F / speed));
@@ -196,16 +195,16 @@ public class TileCrucible extends TileVisUser {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	private List getContents() {
 		return worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() + 1.0D, getPos().getY() + 1.0D, getPos().getZ() + 1.0D));
 	}
 
-	private boolean canProcess(ItemStack stack) {
+	/*private boolean canProcess(ItemStack stack) {
 		return stack != null && MagisticsApi.getMatchingCrucibleRecipe(stack).getResult() > 0F;
-	}
+	}*/
 
 	@Override
 	public boolean getConnectable(EnumFacing face) {

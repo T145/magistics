@@ -3,7 +3,6 @@ package T145.magistics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.magistics.api.IFMLEventHandler;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
@@ -19,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
-public class Magistics implements IFMLEventHandler {
+public class Magistics {
 
 	public static final String MODID = "magistics";
 	public static final String NAME = "Magistics";
@@ -42,7 +41,6 @@ public class Magistics implements IFMLEventHandler {
 		return VERSION.equals("$version");
 	}
 
-	@Override
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger.info("Hello World!");
@@ -62,17 +60,13 @@ public class Magistics implements IFMLEventHandler {
 		proxy.preInit(event);
 	}
 
-	@Override
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		config.init(event);
 		proxy.init(event);
 	}
 
-	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		config.postInit(event);
 		proxy.postInit(event);
 	}
 }
