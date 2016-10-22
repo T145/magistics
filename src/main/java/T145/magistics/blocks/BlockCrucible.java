@@ -3,6 +3,8 @@ package T145.magistics.blocks;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModel;
 import T145.magistics.api.blocks.IBlockTileRendered;
@@ -54,6 +56,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 			this.name = name;
 		}
 
+		@Override
 		public String getName() {
 			return name;
 		}
@@ -116,6 +119,15 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 	}
 
 	@Override
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+	}
+
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return FULL_BLOCK_AABB;
 	}
@@ -169,7 +181,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity.posY <= pos.getY() + 0.7D) {
+		if (!world.isRemote && entity.getEntityBoundingBox().minY <= pos.getY() + 0.7D) {
 			if (entity instanceof EntityItem) {
 				EntityItem item = (EntityItem) entity;
 
@@ -178,7 +190,6 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
 
 				item.setPickupDelay(10);
-				item.lifespan = 0;
 			} else if (entity instanceof EntityLiving) {
 				entity.attackEntityFrom(DamageSource.magic, 1);
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);

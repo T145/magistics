@@ -1,5 +1,6 @@
 package T145.magistics.load;
 
+import T145.magistics.api.crafting.CrucibleRecipes;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfuser;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,5 +30,7 @@ public class ModBlocks {
 
 	public static void init(FMLInitializationEvent event) {}
 
-	public static void postInit(FMLPostInitializationEvent event) {}
+	public static void postInit(FMLPostInitializationEvent event) {
+		CrucibleRecipes.register();
+	}
 }

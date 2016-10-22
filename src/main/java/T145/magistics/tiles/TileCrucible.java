@@ -2,6 +2,7 @@ package T145.magistics.tiles;
 
 import java.util.List;
 
+import T145.magistics.api.crafting.CrucibleRecipes;
 import T145.magistics.api.tiles.TileVisUser;
 import T145.magistics.lib.sounds.SoundHandler;
 import net.minecraft.entity.item.EntityItem;
@@ -68,29 +69,18 @@ public class TileCrucible extends TileVisUser {
 	}
 
 	@Override
-	public void readClientDataFromNBT(NBTTagCompound tag) {
-		pureVis = tag.getFloat("pureVis");
-		taintedVis = tag.getFloat("taintedVis");
-	}
-
-	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
 		tag.setFloat("pureVis", pureVis);
 		tag.setFloat("taintedVis", taintedVis);
-		return super.writeToNBT(tag);
-	}
-
-	@Override
-	public void writeClientDataToNBT(NBTTagCompound tag) {
-		tag.setFloat("pureVis", pureVis);
-		tag.setFloat("taintedVis", taintedVis);
+		return tag;
 	}
 
 	@Override
 	public void update() {
 		super.update();
 
-		/*if (hasWorldObj()) {
+		if (hasWorldObj()) {
 			float totalVis = pureVis + taintedVis;
 
 			--smeltDelay;
@@ -157,18 +147,17 @@ public class TileCrucible extends TileVisUser {
 				if (list.size() > 0) {
 					EntityItem entity = (EntityItem) list.get(worldObj.rand.nextInt(list.size()));
 					ItemStack stack = entity.getEntityItem();
+					float cookVal = CrucibleRecipes.getResult(stack);
 
-					if (canProcess(stack)) {
+					if (cookVal > 0F) {
 						// check for arcane furnace below
-
-						float cookVal = MagisticsApi.getMatchingCrucibleRecipe(stack).getResult();
 
 						// boost conversion rate if above arcane furnace
 
 						float pureCook = cookVal * conversion;
 						float taintCook = cookVal - pureCook;
 
-						if (getBlockMetadata() != 2 || totalVis + cookVal <= maxVis) {
+						if (totalVis + cookVal <= maxVis) {
 							pureVis += pureCook;
 							taintedVis += taintCook;
 							smeltDelay = (10 + Math.round(cookVal / 5F / speed));
@@ -191,20 +180,15 @@ public class TileCrucible extends TileVisUser {
 						entity.motionZ = (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F;
 						worldObj.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + worldObj.rand.nextFloat() * 0.45F);
 						entity.setPickupDelay(10);
-						//entity.lifespan = 0;
 					}
 				}
 			}
-		}*/
+		}
 	}
 
 	private List getContents() {
 		return worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() + 1.0D, getPos().getY() + 1.0D, getPos().getZ() + 1.0D));
 	}
-
-	/*private boolean canProcess(ItemStack stack) {
-		return stack != null && MagisticsApi.getMatchingCrucibleRecipe(stack).getResult() > 0F;
-	}*/
 
 	@Override
 	public boolean getConnectable(EnumFacing face) {

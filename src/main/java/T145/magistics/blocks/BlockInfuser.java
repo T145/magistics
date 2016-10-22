@@ -59,6 +59,7 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 			this.name = name;
 		}
 
+		@Override
 		public String getName() {
 			return name;
 		}
