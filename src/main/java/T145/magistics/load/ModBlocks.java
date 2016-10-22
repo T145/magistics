@@ -15,8 +15,8 @@ public class ModBlocks {
 	public static BlockInfuser blockInfuser;
 
 	public static void preInit(FMLPreInitializationEvent event) {
-		blockCrucible = new BlockCrucible();
-		blockInfuser = new BlockInfuser();
+		blockCrucible = new BlockCrucible("crucible");
+		blockInfuser = new BlockInfuser("infuser");
 	}
 
 	@SideOnly(Side.CLIENT)

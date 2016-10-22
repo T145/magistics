@@ -10,7 +10,6 @@ import T145.magistics.api.blocks.IBlockTileRendered;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
-import T145.magistics.tiles.TileInfuserDark;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
@@ -30,7 +29,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -100,24 +98,21 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	protected static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
 
-	public BlockInfuser() {
+	public BlockInfuser(String name) {
 		super(Material.ROCK);
 
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.INFUSER));
-		setRegistryName(new ResourceLocation(Magistics.MODID, "infuser"));
+		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);
-		setUnlocalizedName("infuser");
+		setUnlocalizedName(name);
 		setSoundType(SoundType.STONE);
 		setHardness(2F);
 		setResistance(15F);
 
 		GameRegistry.register(this);
 		GameRegistry.register(new BlockInfuserItem(this), getRegistryName());
-
-		for (EnumType type : EnumType.values()) {
-			GameRegistry.registerTileEntity(getTile(type.ordinal()).getClass(), getTile(type.ordinal()).getClass().getSimpleName());
-		}
+		GameRegistry.registerTileEntity(getTileClass(), getTileClass().getSimpleName());
 	}
 
 	@Override
@@ -133,11 +128,6 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
-	}
-
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
 	}
 
 	@Override
@@ -214,7 +204,9 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 
 	@Override
 	public TileEntity getTile(int meta) {
-		return isDark(meta) ? new TileInfuserDark() : new TileInfuser();
+		TileInfuser infuser = new TileInfuser();
+		infuser.setTier(meta);
+		return infuser;
 	}
 
 	@Override

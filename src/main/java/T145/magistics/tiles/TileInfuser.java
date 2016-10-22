@@ -12,7 +12,7 @@ import net.minecraft.util.ITickable;
 
 public class TileInfuser extends TileVisUser implements ITickable, ISidedInventory {
 
-	protected ItemStack[] inventoryStacks = new ItemStack[8];
+	protected ItemStack[] inventoryStacks;
 
 	private boolean active = false;
 	private boolean crafting = false;
@@ -28,7 +28,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	private int boostDelay = 20;
 
 	public boolean isDark() {
-		return false;
+		return getBlockMetadata() == 1;
 	}
 
 	public boolean isActive() {
@@ -59,6 +59,17 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 		return facing;
 	}
 
+	public void setTier(int meta) {
+		switch (meta) {
+		case 1:
+			inventoryStacks = new ItemStack[6];
+			break;
+		default:
+			inventoryStacks = new ItemStack[8];
+			break;
+		}
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
@@ -81,6 +92,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
 		tag.setInteger("Facing", facing);
 		tag.setInteger("BurnTime", burnTime);
 		tag.setInteger("CookTime", cookTime);
@@ -96,7 +108,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 		}
 
 		tag.setTag("Items", nbttaglist);
-		return super.writeToNBT(tag);
+		return tag;
 	}
 
 	@Override

@@ -147,20 +147,20 @@ public class TileCrucible extends TileVisUser {
 				if (list.size() > 0) {
 					EntityItem entity = (EntityItem) list.get(worldObj.rand.nextInt(list.size()));
 					ItemStack stack = entity.getEntityItem();
-					float cookVal = CrucibleRecipes.getResult(stack);
+					float visOutput = CrucibleRecipes.getResult(stack);
 
-					if (cookVal > 0F) {
+					if (visOutput > 0F) {
 						// check for arcane furnace below
 
 						// boost conversion rate if above arcane furnace
 
-						float pureCook = cookVal * conversion;
-						float taintCook = cookVal - pureCook;
+						float pureCook = visOutput * conversion;
+						float taintCook = visOutput - pureCook;
 
-						if (totalVis + cookVal <= maxVis) {
+						if (getBlockMetadata() != 2 || totalVis + visOutput <= maxVis) {
 							pureVis += pureCook;
 							taintedVis += taintCook;
-							smeltDelay = (10 + Math.round(cookVal / 5F / speed));
+							smeltDelay = (10 + Math.round(visOutput / 5F / speed));
 
 							// decrease delay if above arcane furnace
 

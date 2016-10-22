@@ -28,7 +28,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -95,20 +94,20 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 	}
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
-	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 0.3125D, 1.0D);
-	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1.0D, 1.0D, 0.125D);
-	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, 0.875D, 1.0D, 1.0D, 1.0D);
-	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0D, 0D, 1.0D, 1.0D, 1.0D);
-	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, 0.125D, 1.0D, 1.0D);
+	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, 0.3125D, 1D);
+	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, 0.125D);
+	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, 0.875D, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0D, 0D, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, 0.125D, 1D, 1D);
 
-	public BlockCrucible() {
+	public BlockCrucible(String name) {
 		super(Material.IRON);
 
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.BASIC));
-		setRegistryName(new ResourceLocation(Magistics.MODID, "crucible"));
+		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);
-		setUnlocalizedName("crucible");
+		setUnlocalizedName(name);
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
 		setResistance(17F);
@@ -140,11 +139,6 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
-	}
-
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
 	}
 
 	@Override
@@ -192,7 +186,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 				item.setPickupDelay(10);
 			} else if (entity instanceof EntityLiving) {
 				entity.attackEntityFrom(DamageSource.magic, 1);
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2.0F + world.rand.nextFloat() * 0.4F);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
 			}
 		}
 	}
