@@ -5,9 +5,11 @@ import T145.magistics.client.fx.particles.ParticleGreenFlame;
 import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
 import T145.magistics.client.fx.particles.ParticleWisp;
 import T145.magistics.client.gui.GuiInfuser;
+import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.load.ModBlocks;
+import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -43,11 +45,14 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
 
 		ModBlocks.initClient();
+		ModItems.initClient();
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+
+		ColorHandler.registerColorHandlers();
 	}
 
 	@Override

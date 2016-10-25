@@ -9,3 +9,17 @@ tile.crucible.thaumium.name=Thaumium Crucible
 tile.crucible.souls.name=Crucible of Souls
 
 tile.conduit.name=Vis Conduit
+
+item.shard.air.name=Air Crystal
+item.shard.fire.name=Fire Crystal
+item.shard.water.name=Water Crystal
+item.shard.earth.name=Earth Crystal
+item.shard.light.name=Vis Crystal
+item.shard.dark.name=Taint Crystal
+
+item.fragment.air.name=Air Crystal Fragment
+item.fragment.fire.name=Fire Crystal Fragment
+item.fragment.water.name=Water Crystal Fragment
+item.fragment.earth.name=Earth Crystal Fragment
+item.fragment.light.name=Vis Crystal Fragment
+item.fragment.dark.name=Taint Crystal Fragment

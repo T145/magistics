@@ -2,12 +2,14 @@ package T145.magistics.config;
 
 import T145.magistics.Magistics;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
+
+	public static boolean lowGfx = false;
+	public static short auraMax = 15000;
 
 	private Configuration config;
 
@@ -15,13 +17,10 @@ public class ConfigHandler {
 		return config;
 	}
 
-	private boolean addProperty(String category, String key, boolean value, String comment) {
-		Property property = config.get(category, key, value);
-		property.setComment(comment);
-		return property.getBoolean();
+	private void sync() {
+		lowGfx = config.getBoolean("Low Graphics", Configuration.CATEGORY_CLIENT, lowGfx, "Toggles graphics");
+		auraMax = (short) config.get(Configuration.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
 	}
-
-	private void sync() {}
 
 	private void save() {
 		if (config.getConfigFile().isFile() && config.hasChanged()) {

@@ -6,8 +6,9 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockModel;
+import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
+import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.RenderCrucible;
 import T145.magistics.tiles.TileCrucible;
 import net.minecraft.block.Block;
@@ -42,16 +43,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends Block implements IBlockModel, IBlockTileRendered {
+public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRendered {
 
-	public static enum EnumType implements IStringSerializable {
+	public static enum BlockType implements IStringSerializable {
 
 		BASIC("basic"), EYES("eyes"), THAUMIUM("thaumium"), SOULS("souls");
 
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
+		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
 		private final String name;
 
-		private EnumType(String name) {
+		private BlockType(String name) {
 			this.name = name;
 		}
 
@@ -64,12 +65,12 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 			return "variant=" + name;
 		}
 
-		public static EnumType byMetadata(int meta) {
+		public static BlockType byMetadata(int meta) {
 			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
 		}
 
 		static {
-			for (EnumType type : values()) {
+			for (BlockType type : values()) {
 				META_LOOKUP[type.ordinal()] = type;
 			}
 		}
@@ -89,21 +90,21 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 
 		@Override
 		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + EnumType.byMetadata(stack.getMetadata()).getName();
+			return super.getUnlocalizedName() + "." + BlockType.byMetadata(stack.getMetadata()).getName();
 		}
 	}
 
-	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
-	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, 0.3125D, 1D);
-	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, 0.125D);
-	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, 0.875D, 1D, 1D, 1D);
-	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0D, 0D, 1D, 1D, 1D);
-	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, 0.125D, 1D, 1D);
+	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
+	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
+	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
+	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, BlockRenderer.W14, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(BlockRenderer.W14, 0D, 0D, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, BlockRenderer.W2, 1D, 1D);
 
 	public BlockCrucible(String name) {
 		super(Material.IRON);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.BASIC));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.BASIC));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);
@@ -154,7 +155,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (EnumType type : EnumType.values()) {
+		for (BlockType type : BlockType.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -168,7 +169,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (EnumType type : EnumType.values()) {
+		for (BlockType type : BlockType.values()) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
@@ -221,7 +222,7 @@ public class BlockCrucible extends Block implements IBlockModel, IBlockTileRende
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+		return getDefaultState().withProperty(VARIANT, BlockType.byMetadata(meta));
 	}
 
 	@Override

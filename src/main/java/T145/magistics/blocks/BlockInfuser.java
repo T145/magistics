@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockModel;
+import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.RenderInfuser;
@@ -44,16 +44,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfuser extends Block implements IBlockModel, IBlockTileRendered {
+public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRendered {
 
-	public static enum EnumType implements IStringSerializable {
+	public static enum BlockType implements IStringSerializable {
 
 		INFUSER("light"), DARK_INFUSER("dark");
 
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
+		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
 		private final String name;
 
-		private EnumType(String name) {
+		private BlockType(String name) {
 			this.name = name;
 		}
 
@@ -66,12 +66,12 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 			return "variant=" + name;
 		}
 
-		public static EnumType byMetadata(int meta) {
+		public static BlockType byMetadata(int meta) {
 			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
 		}
 
 		static {
-			for (EnumType type : values()) {
+			for (BlockType type : values()) {
 				META_LOOKUP[type.ordinal()] = type;
 			}
 		}
@@ -91,17 +91,17 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 
 		@Override
 		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + EnumType.byMetadata(stack.getMetadata()).getName();
+			return super.getUnlocalizedName() + "." + BlockType.byMetadata(stack.getMetadata()).getName();
 		}
 	}
 
-	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
+	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 	protected static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
 
 	public BlockInfuser(String name) {
 		super(Material.ROCK);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumType.INFUSER));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.INFUSER));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);
@@ -133,7 +133,7 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (EnumType type : EnumType.values()) {
+		for (BlockType type : BlockType.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -147,7 +147,7 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (EnumType type : EnumType.values()) {
+		for (BlockType type : BlockType.values()) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), "inventory," + type.getClientName()));
 		}
@@ -198,10 +198,6 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 		return TileInfuser.class;
 	}
 
-	public boolean isDark(int meta) {
-		return meta == 1;
-	}
-
 	@Override
 	public TileEntity getTile(int meta) {
 		TileInfuser infuser = new TileInfuser();
@@ -221,7 +217,7 @@ public class BlockInfuser extends Block implements IBlockModel, IBlockTileRender
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+		return getDefaultState().withProperty(VARIANT, BlockType.byMetadata(meta));
 	}
 
 	@Override
