@@ -39,6 +39,10 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 			return name;
 		}
 
+		public String getClientName() {
+			return "variant=" + name;
+		}
+
 		public static ItemType byMetadata(int meta) {
 			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
 		}

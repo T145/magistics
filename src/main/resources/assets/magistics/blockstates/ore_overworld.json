@@ -9,6 +9,13 @@
         }
     },
     "variants": {
-        "normal": [{}]
+        "variant": {
+            "air": {},
+            "fire": {},
+            "water": {},
+            "earth": {},
+            "light": {},
+            "dark": {}
+        }
     }
 }

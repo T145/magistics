@@ -1,6 +1,8 @@
 package T145.magistics.client.lib;
 
+import T145.magistics.load.ModBlocks;
 import T145.magistics.load.ModItems;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -18,10 +20,18 @@ public class ColorHandler {
 		registerItemColorHandlers(blockColors, itemColors);
 	}
 
-	private static void registerBlockColorHandlers(BlockColors blockColors) {}
+	private static void registerBlockColorHandlers(BlockColors blockColors) {
+		blockColors.registerBlockColorHandler(ModBlocks.blockOre, new Block[] {
+				ModBlocks.blockOre, ModBlocks.blockNetherOre, ModBlocks.blockEndOre
+		});
+	}
 
 	private static void registerItemColorHandlers(BlockColors blockColors, ItemColors itemColors) {
 		itemColors.registerItemColorHandler(ModItems.itemShard, new Item[] { ModItems.itemShard });
 		itemColors.registerItemColorHandler(ModItems.itemShardFragment, new Item[] { ModItems.itemShardFragment });
+
+		itemColors.registerItemColorHandler(ModItems.itemShardFragment, new Block[] {
+				ModBlocks.blockOre, ModBlocks.blockNetherOre, ModBlocks.blockEndOre
+		});
 	}
 }

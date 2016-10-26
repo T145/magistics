@@ -10,6 +10,7 @@ public class ConfigHandler {
 
 	public static boolean lowGfx = false;
 	public static short auraMax = 15000;
+	public static int[] dimensionSupport;
 
 	private Configuration config;
 
@@ -20,6 +21,7 @@ public class ConfigHandler {
 	private void sync() {
 		lowGfx = config.getBoolean("Low Graphics", Configuration.CATEGORY_CLIENT, lowGfx, "Toggles graphics");
 		auraMax = (short) config.get(Configuration.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
+		dimensionSupport = config.get(config.CATEGORY_GENERAL, "Dimension Ids", new int[] { -1, 0, 1 }, "Supported Dimension Ids").getIntList();
 	}
 
 	private void save() {
