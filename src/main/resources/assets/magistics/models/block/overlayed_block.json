@@ -1,0 +1,36 @@
+{
+"__comment": "Designed by T145",
+"textures": {
+    "particle": "#inner"
+},
+"elements": [
+{
+    "__comment": "MainCube",
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 16, 16 ],
+    "shade": true,
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#inner", "cullface": "down" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#inner", "cullface": "up" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#inner", "cullface": "north" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#inner", "cullface": "south" },
+        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#inner", "cullface": "west" },
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#inner", "cullface": "east" }
+    }
+},
+{
+    "__comment": "Overlay",
+    "from": [ 0, 0, 0 ],
+    "to": [ 16, 16, 16 ],
+    "shade": false,
+    "faces": {
+        "down":  { "uv": [ 16, 16, 0, 0 ], "texture": "#outer", "cullface": "down" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#outer", "cullface": "up" },
+        "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#outer", "cullface": "north" },
+        "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#outer", "cullface": "south" },
+        "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#outer", "cullface": "west" },
+        "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#outer", "cullface": "east" }
+    }
+}
+]
+}

@@ -24,6 +24,7 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 	private final boolean hasEffect;
 
 	public static enum ItemType implements IStringSerializable {
+
 		AIR("air"), FIRE("fire"), WATER("water"), EARTH("earth"), LIGHT("light"), DARK("dark");
 
 		private static final ItemType[] META_LOOKUP = new ItemType[values().length];
@@ -91,7 +92,7 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-		return COLORS[(stack.getItemDamage())];
+		return COLORS[stack.getItemDamage()];
 	}
 
 	@Override

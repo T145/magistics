@@ -10,6 +10,27 @@ tile.crucible.souls.name=Crucible of Souls
 
 tile.conduit.name=Vis Conduit
 
+tile.ore_overworld.air.name=Air Infused Stone
+tile.ore_overworld.fire.name=Fire Infused Stone
+tile.ore_overworld.water.name=Water Infused Stone
+tile.ore_overworld.earth.name=Earth Infused Stone
+tile.ore_overworld.light.name=Vis Infused Stone
+tile.ore_overworld.dark.name=Taint Infused Stone
+
+tile.ore_nether.air.name=Air Infused Netherrack
+tile.ore_nether.fire.name=Fire Infused Netherrack
+tile.ore_nether.water.name=Water Infused Netherrack
+tile.ore_nether.earth.name=Earth Infused Netherrack
+tile.ore_nether.light.name=Vis Infused Netherrack
+tile.ore_nether.dark.name=Taint Infused Netherrack
+
+tile.ore_end.air.name=Air Infused Endstone
+tile.ore_end.fire.name=Fire Infused Endstone
+tile.ore_end.water.name=Water Infused Endstone
+tile.ore_end.earth.name=Earth Infused Endstone
+tile.ore_end.light.name=Vis Infused Endstone
+tile.ore_end.dark.name=Taint Infused Endstone
+
 item.shard.air.name=Air Crystal
 item.shard.fire.name=Fire Crystal
 item.shard.water.name=Water Crystal
