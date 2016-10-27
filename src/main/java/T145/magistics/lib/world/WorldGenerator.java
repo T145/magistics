@@ -4,11 +4,15 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.load.ModBlocks;
+import net.minecraft.block.state.pattern.BlockMatcher;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderEnd;
+import net.minecraft.world.gen.ChunkProviderHell;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -21,30 +25,30 @@ public class WorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		generateWorld(random, chunkX, chunkZ, world, true);
+		generateWorld(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, true);
 	}
 
-	private void generateWorld(Random random, int chunkX, int chunkZ, World world, boolean newGen) {
+	private void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider, boolean newGen) {
 		switch (world.provider.getDimension()) {
 		case -1:
-			generateNether(world, random, chunkX, chunkZ, newGen);
+			generateNether(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
 			break;
 		case 1:
-			generateEnd(world, random, chunkX, chunkZ, newGen);
+			generateEnd(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
 			break;
 		default:
-			generateSurface(world, random, chunkX, chunkZ, newGen);
+			generateSurface(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
 			break;
 		}
 	}
 
-	private void generateSurface(World world, Random random, int chunkX, int chunkZ, boolean newGen) {
+	private void generateSurface(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider, boolean newGen) {
 		if (newGen) {
-			for (int i = 0; i < 8; i++) {
-				int randPosX = chunkX * 16 + random.nextInt(16);
-				int randPosZ = chunkZ * 16 + random.nextInt(16);
-				int randPosY = random.nextInt(Math.max(5, world.getHeightmapHeight(randPosX, randPosZ) - 5));
-				BlockPos pos = new BlockPos(randPosX, randPosY, randPosZ);
+			Magistics.logger.info("Beginning Overworld generation...");
+
+			BlockPos pos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+
+			for (int rarity = 0; rarity < 8; ++rarity) {
 				int meta = random.nextInt(6);
 
 				if (random.nextInt(3) == 0) {
@@ -69,7 +73,7 @@ public class WorldGenerator implements IWorldGenerator {
 				}
 
 				try {
-					new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6).generate(world, random, pos);
+					new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
 					Magistics.logger.info("Generating InfusedOre:Meta{" + meta + "} at: " + pos);
 				} catch (Exception err) {
 					Magistics.logger.catching(err);
@@ -78,9 +82,41 @@ public class WorldGenerator implements IWorldGenerator {
 		}
 	}
 
-	private void generateNether(World world, Random random, int chunkX, int chunkZ, boolean newGen) {
+	private void generateNether(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider, boolean newGen) {
+		if (newGen && chunkGenerator instanceof ChunkProviderHell) {
+			Magistics.logger.info("Beginning Nether generation...");
+
+			BlockPos pos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+
+			for (int rarity = 0; rarity < 4; ++rarity) {
+				int meta = random.nextInt(6);
+
+				try {
+					new WorldGenMinable(ModBlocks.blockNetherOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
+					Magistics.logger.info("Generating NetherInfusedOre:Meta{" + meta + "} at: " + pos);
+				} catch (Exception err) {
+					Magistics.logger.catching(err);
+				}
+			}
+		}
 	}
 
-	private void generateEnd(World world, Random random, int chunkX, int chunkZ, boolean newGen) {
+	private void generateEnd(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider, boolean newGen) {
+		if (newGen && chunkGenerator instanceof ChunkProviderEnd) {
+			Magistics.logger.info("Beginning End generation...");
+
+			BlockPos pos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+
+			for (int rarity = 0; rarity < 4; ++rarity) {
+				int meta = random.nextInt(6);
+
+				try {
+					new WorldGenMinable(ModBlocks.blockEndOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.END_STONE)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
+					Magistics.logger.info("Generating EndInfusedOre:Meta{" + meta + "} at: " + pos);
+				} catch (Exception err) {
+					Magistics.logger.catching(err);
+				}
+			}
+		}
 	}
 }

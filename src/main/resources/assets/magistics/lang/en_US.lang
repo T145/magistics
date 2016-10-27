@@ -24,12 +24,12 @@ tile.ore_nether.earth.name=Earth Infused Netherrack
 tile.ore_nether.light.name=Vis Infused Netherrack
 tile.ore_nether.dark.name=Taint Infused Netherrack
 
-tile.ore_end.air.name=Air Infused Endstone
-tile.ore_end.fire.name=Fire Infused Endstone
-tile.ore_end.water.name=Water Infused Endstone
-tile.ore_end.earth.name=Earth Infused Endstone
-tile.ore_end.light.name=Vis Infused Endstone
-tile.ore_end.dark.name=Taint Infused Endstone
+tile.ore_end.air.name=Air Infused End Stone
+tile.ore_end.fire.name=Fire Infused End Stone
+tile.ore_end.water.name=Water Infused End Stone
+tile.ore_end.earth.name=Earth Infused End Stone
+tile.ore_end.light.name=Vis Infused End Stone
+tile.ore_end.dark.name=Taint Infused End Stone
 
 item.shard.air.name=Air Crystal
 item.shard.fire.name=Fire Crystal
