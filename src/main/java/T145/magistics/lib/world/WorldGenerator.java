@@ -3,6 +3,7 @@ package T145.magistics.lib.world;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.config.ConfigHandler;
 import T145.magistics.load.ModBlocks;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -29,16 +30,20 @@ public class WorldGenerator implements IWorldGenerator {
 	}
 
 	private void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider, boolean newGen) {
-		switch (world.provider.getDimension()) {
-		case -1:
-			generateNether(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
-			break;
-		case 1:
-			generateEnd(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
-			break;
-		default:
-			generateSurface(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
-			break;
+		int dimension = world.provider.getDimension();
+
+		if (!ConfigHandler.isDimensionBlacklisted(dimension)) {
+			switch (dimension) {
+			case -1:
+				generateNether(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
+				break;
+			case 1:
+				generateEnd(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
+				break;
+			default:
+				generateSurface(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider, newGen);
+				break;
+			}
 		}
 	}
 

@@ -8,9 +8,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
 
+	public static final String CATEGORY_WORLDGEN = "worldgen";
+
 	public static boolean lowGfx = false;
-	public static short auraMax = 15000;
-	public static int[] dimensionSupport;
+	public static int auraMax = 15000;
+	public static int[] dimensionBlacklist;
 
 	private Configuration config;
 
@@ -19,9 +21,21 @@ public class ConfigHandler {
 	}
 
 	private void sync() {
-		lowGfx = config.getBoolean("Low Graphics", Configuration.CATEGORY_CLIENT, lowGfx, "Toggles graphics");
-		auraMax = (short) config.get(Configuration.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
-		dimensionSupport = config.get(config.CATEGORY_GENERAL, "Dimension Ids", new int[] { -1, 0, 1 }, "Supported Dimension Ids").getIntList();
+		lowGfx = config.getBoolean("Low Graphics", config.CATEGORY_CLIENT, lowGfx, "Enables low graphics (better for older computers)");
+		auraMax = config.get(config.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
+		dimensionBlacklist = config.get(CATEGORY_WORLDGEN, "Dimension Blacklist", new int[] {}, "Add dimension ids that you don't want Magistics worldgen applied to").getIntList();
+	}
+
+	public static boolean isDimensionBlacklisted(int id) {
+		int matches = 0;
+
+		for (int dimension : dimensionBlacklist) {
+			if (id == dimension) {
+				++matches;
+			}
+		}
+
+		return matches == 0;
 	}
 
 	private void save() {
@@ -45,6 +59,9 @@ public class ConfigHandler {
 	public void preInit(FMLPreInitializationEvent event) {
 		try {
 			config = new Configuration(event.getSuggestedConfigurationFile());
+			config.addCustomCategoryComment(config.CATEGORY_CLIENT, "Settings that improve client performance");
+			config.addCustomCategoryComment(config.CATEGORY_GENERAL, "The basic mod settings");
+			config.addCustomCategoryComment(CATEGORY_WORLDGEN, "Configure world generation");
 			config.load();
 			update();
 		} catch (Throwable err) {
