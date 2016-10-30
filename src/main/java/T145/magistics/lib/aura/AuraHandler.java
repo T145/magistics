@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import T145.magistics.Magistics;
 import T145.magistics.config.ConfigHandler;
-import T145.magistics.lib.world.BiomeHandler;
+import T145.magistics.lib.world.biomes.BiomeHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.biome.Biome;
@@ -14,7 +14,7 @@ import net.minecraft.world.chunk.Chunk;
 
 public class AuraHandler {
 
-	private static ConcurrentHashMap<Integer, AuraWorld> auras = new ConcurrentHashMap();
+	private static ConcurrentHashMap<Integer, AuraWorld> auras = new ConcurrentHashMap<Integer, AuraWorld>();
 
 	public static void generateAura(Chunk chunk, Random random) {
 		Biome dest = chunk.getWorld().getBiomeForCoordsBody(new BlockPos(chunk.xPosition * 16 + 8, 50, chunk.zPosition * 16 + 8));

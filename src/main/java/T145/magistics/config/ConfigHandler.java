@@ -27,16 +27,16 @@ public class ConfigHandler {
 		dimensionBlacklist = config.get(CATEGORY_WORLDGEN, "Dimension Blacklist", new int[] {}, "Add dimension ids that you don't want Magistics worldgen applied to").getIntList();
 	}
 
-	public static boolean isDimensionBlacklisted(int id) {
-		int matches = 0;
-
-		for (int dimension : dimensionBlacklist) {
-			if (id == dimension) {
-				++matches;
+	public static boolean isDimensionWhitelisted(int id) {
+		if (dimensionBlacklist.length > 0) {
+			for (int i = 0; i < dimensionBlacklist.length; ++i) {
+				if (dimensionBlacklist[i] == id) {
+					return false;
+				}
 			}
 		}
 
-		return matches == 0;
+		return true;
 	}
 
 	private void save() {

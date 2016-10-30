@@ -11,6 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldEventHandler {
 
+	public static final String KEY_VIS = "Vis";
+	public static final String KEY_MIASMA = "Miasma";
+
 	@SubscribeEvent
 	public void worldLoad(WorldEvent.Load event) {
 		if (!event.getWorld().isRemote) {
@@ -35,8 +38,8 @@ public class WorldEventHandler {
 		event.getData().setTag(Magistics.NAME, tag);
 
 		if (chunk != null) {
-			tag.setFloat("Vis", chunk.getVis());
-			tag.setFloat("Miasma", chunk.getMiasma());
+			tag.setFloat(KEY_VIS, chunk.getVis());
+			tag.setFloat(KEY_MIASMA, chunk.getMiasma());
 
 			if (event.getChunk().unloaded) {
 				AuraHandler.removeAuraChunk(pos, dimension);
@@ -50,8 +53,8 @@ public class WorldEventHandler {
 		ChunkPos pos = event.getChunk().getChunkCoordIntPair();
 		NBTTagCompound tag = event.getData().getCompoundTag(Magistics.NAME);
 
-		if (tag.hasKey("Vis") && tag.hasKey("Miasma")) {
-			AuraHandler.addAuraChunk(event.getChunk(), tag.getFloat("Vis"), tag.getFloat("Miasma"));
+		if (tag.hasKey(KEY_VIS) && tag.hasKey(KEY_MIASMA)) {
+			AuraHandler.addAuraChunk(event.getChunk(), tag.getFloat(KEY_VIS), tag.getFloat(KEY_MIASMA));
 		} else {
 			AuraHandler.generateAura(event.getChunk(), event.getWorld().rand);
 		}

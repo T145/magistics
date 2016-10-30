@@ -1,4 +1,4 @@
-package T145.magistics.lib.world;
+package T145.magistics.lib.world.biomes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ public class BiomeHandler {
 	public static List<Biome> biomeMagic = new ArrayList<Biome>();
 	public static List<Biome> biomeTaint = new ArrayList<Biome>();
 
-	// just in case I want specific biome generation catering
 	public static List<Biome> biomeLowAura = new ArrayList<Biome>();
 	public static List<Biome> biomeHighAura = new ArrayList<Biome>();
 	public static List<Biome> biomeGoodAura = new ArrayList<Biome>();

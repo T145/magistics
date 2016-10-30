@@ -90,7 +90,7 @@ public class BlockInfusedOre extends Block implements IBlockModeled, IBlockColor
 	@Override
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
+		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
@@ -127,6 +127,11 @@ public class BlockInfusedOre extends Block implements IBlockModeled, IBlockColor
 		}
 
 		return drops;
+	}
+
+	@Override
+	public boolean canSilkHarvest() {
+		return true;
 	}
 
 	@Override

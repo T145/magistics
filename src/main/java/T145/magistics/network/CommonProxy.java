@@ -3,7 +3,7 @@ package T145.magistics.network;
 import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.WorldEventHandler;
-import T145.magistics.lib.world.BiomeHandler;
+import T145.magistics.lib.world.biomes.BiomeHandler;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
