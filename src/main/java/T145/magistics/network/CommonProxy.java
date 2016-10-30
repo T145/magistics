@@ -3,6 +3,7 @@ package T145.magistics.network;
 import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.WorldEventHandler;
+import T145.magistics.lib.world.BiomeHandler;
 import T145.magistics.load.ModBlocks;
 import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
@@ -40,6 +41,7 @@ public class CommonProxy implements IGuiHandler {
 		MinecraftForge.EVENT_BUS.register(Magistics.config);
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 		NetworkRegistry.INSTANCE.registerGuiHandler(Magistics.instance, Magistics.proxy);
+		BiomeHandler.loadBiomeData();
 
 		ModBlocks.preInit(event);
 		ModItems.preInit(event);

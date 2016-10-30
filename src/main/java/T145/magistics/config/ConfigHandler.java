@@ -12,6 +12,7 @@ public class ConfigHandler {
 
 	public static boolean lowGfx = false;
 	public static int auraMax = 15000;
+	public static int taintRarity = 1;
 	public static int[] dimensionBlacklist;
 
 	private Configuration config;

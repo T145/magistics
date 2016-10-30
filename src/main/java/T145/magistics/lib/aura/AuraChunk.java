@@ -27,7 +27,7 @@ public class AuraChunk {
 	}
 
 	public float getVis() {
-		return 0F;
+		return vis;
 	}
 
 	public void setVis(float vis) {
@@ -35,7 +35,7 @@ public class AuraChunk {
 	}
 
 	public float getMiasma() {
-		return 0F;
+		return miasma;
 	}
 
 	public void setMiasma(float miasma) {

@@ -5,6 +5,8 @@ import java.util.Random;
 import T145.magistics.Magistics;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.load.ModBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -77,12 +79,7 @@ public class WorldGenerator implements IWorldGenerator {
 					}
 				}
 
-				try {
-					new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
-					Magistics.logger.info("Generating InfusedOre:Meta{" + meta + "} at: " + pos);
-				} catch (Exception err) {
-					Magistics.logger.catching(err);
-				}
+				generateOre(random, world, pos, ModBlocks.blockOre.getStateFromMeta(meta), Blocks.STONE);
 			}
 		}
 	}
@@ -95,13 +92,7 @@ public class WorldGenerator implements IWorldGenerator {
 
 			for (int rarity = 0; rarity < 4; ++rarity) {
 				int meta = random.nextInt(6);
-
-				try {
-					new WorldGenMinable(ModBlocks.blockNetherOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
-					Magistics.logger.info("Generating NetherInfusedOre:Meta{" + meta + "} at: " + pos);
-				} catch (Exception err) {
-					Magistics.logger.catching(err);
-				}
+				generateOre(random, world, pos, ModBlocks.blockNetherOre.getStateFromMeta(meta), Blocks.NETHERRACK);
 			}
 		}
 	}
@@ -114,14 +105,17 @@ public class WorldGenerator implements IWorldGenerator {
 
 			for (int rarity = 0; rarity < 4; ++rarity) {
 				int meta = random.nextInt(6);
-
-				try {
-					new WorldGenMinable(ModBlocks.blockEndOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.END_STONE)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
-					Magistics.logger.info("Generating EndInfusedOre:Meta{" + meta + "} at: " + pos);
-				} catch (Exception err) {
-					Magistics.logger.catching(err);
-				}
+				generateOre(random, world, pos, ModBlocks.blockEndOre.getStateFromMeta(meta), Blocks.END_STONE);
 			}
+		}
+	}
+
+	private void generateOre(Random random, World world, BlockPos pos, IBlockState oreState, Block surroundingBlock) {
+		try {
+			new WorldGenMinable(oreState, 6, BlockMatcher.forBlock(surroundingBlock)).generate(world, random, pos.add(random.nextInt(16), random.nextInt(108) + 10, random.nextInt(16)));
+			Magistics.logger.info("Generating InfusedOre at: " + pos);
+		} catch (Exception err) {
+			Magistics.logger.catching(err);
 		}
 	}
 }
