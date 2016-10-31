@@ -4,6 +4,9 @@ import java.util.List;
 
 import T145.magistics.api.crafting.CrucibleRecipes;
 import T145.magistics.api.tiles.TileVisUser;
+import T145.magistics.lib.aura.AuraChunk;
+import T145.magistics.lib.aura.AuraHandler;
+import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.sounds.SoundHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
@@ -14,11 +17,12 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.chunk.Chunk;
 
 public class TileCrucible extends TileVisUser {
 
-	public float pureVis = 0F;
-	public float taintedVis = 0F;
+	public float vis = 0F;
+	public float miasma = 0F;
 	private float pureBuffer;
 	private float taintedBuffer;
 
@@ -64,15 +68,15 @@ public class TileCrucible extends TileVisUser {
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-		pureVis = tag.getFloat("pureVis");
-		taintedVis = tag.getFloat("taintedVis");
+		vis = tag.getFloat(WorldEventHandler.KEY_VIS);
+		miasma = tag.getFloat(WorldEventHandler.KEY_MIASMA);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setFloat("pureVis", pureVis);
-		tag.setFloat("taintedVis", taintedVis);
+		tag.setFloat(WorldEventHandler.KEY_VIS, vis);
+		tag.setFloat(WorldEventHandler.KEY_MIASMA, miasma);
 		return tag;
 	}
 
@@ -81,14 +85,14 @@ public class TileCrucible extends TileVisUser {
 		super.update();
 
 		if (hasWorldObj()) {
-			float totalVis = pureVis + taintedVis;
+			float totalVis = vis + miasma;
 
 			--smeltDelay;
 			--wait;
 
-			if (pureBuffer != pureVis || taintedBuffer != taintedVis) {
-				taintedBuffer = taintedVis;
-				pureBuffer = pureVis;
+			if (pureBuffer != vis || taintedBuffer != miasma) {
+				taintedBuffer = miasma;
+				pureBuffer = vis;
 				updateNextPeriod = true;
 			}
 
@@ -105,14 +109,22 @@ public class TileCrucible extends TileVisUser {
 			}
 
 			if (totalVis > maxVis) {
-				float overflowSplit = Math.min((pureVis + taintedVis - maxVis) / 2F, 1F);
+				float overflowSplit = Math.min((vis + miasma - maxVis) / 2F, 1F);
 
-				if (pureVis >= overflowSplit) {
-					pureVis -= overflowSplit;
+				if (vis >= overflowSplit) {
+					vis -= overflowSplit;
 				}
 
 				if (overflowSplit >= 1F) {
-					// corrupt the aura
+					Chunk chunk = worldObj.getChunkFromBlockCoords(getPos());
+					AuraChunk aura = AuraHandler.getAuraChunk(chunk);
+
+					if (aura != null && miasma >= 0.1F) {
+						miasma -= 1F;
+						float auraMiasma = aura.getMiasma();
+						aura.setMiasma(++auraMiasma);
+						// wispy fx
+					}
 				}
 
 				worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
@@ -128,11 +140,11 @@ public class TileCrucible extends TileVisUser {
 				}
 
 				if (oldPower != powering) {
-					for (int a = -1; a < 2; a++) {
-						for (int b = -1; b < 2; b++) {
-							for (int c = -1; c < 2; c++) {
-								worldObj.scheduleUpdate(new BlockPos(getPos().getX() + a, getPos().getY() + b, getPos().getZ() + c), getBlockType(), 0);
-								worldObj.notifyNeighborsOfStateChange(new BlockPos(getPos().getX() + a, getPos().getY() + b, getPos().getZ() + c), getBlockType());
+					for (int i = -1; i < 2; i++) {
+						for (int j = -1; j < 2; j++) {
+							for (int k = -1; k < 2; k++) {
+								worldObj.scheduleUpdate(new BlockPos(getPos().getX() + i, getPos().getY() + j, getPos().getZ() + k), getBlockType(), 0);
+								worldObj.notifyNeighborsOfStateChange(new BlockPos(getPos().getX() + i, getPos().getY() + j, getPos().getZ() + k), getBlockType());
 							}
 						}
 					}
@@ -158,8 +170,8 @@ public class TileCrucible extends TileVisUser {
 						float taintCook = visOutput - pureCook;
 
 						if (getBlockMetadata() != 2 || totalVis + visOutput <= maxVis) {
-							pureVis += pureCook;
-							taintedVis += taintCook;
+							vis += pureCook;
+							miasma += taintCook;
 							smeltDelay = (10 + Math.round(visOutput / 5F / speed));
 
 							// decrease delay if above arcane furnace
@@ -212,22 +224,22 @@ public class TileCrucible extends TileVisUser {
 
 	@Override
 	public float getPureVis() {
-		return pureVis;
+		return vis;
 	}
 
 	@Override
 	public void setPureVis(float amount) {
-		pureVis = amount;
+		vis = amount;
 	}
 
 	@Override
 	public float getTaintedVis() {
-		return taintedVis;
+		return miasma;
 	}
 
 	@Override
 	public void setTaintedVis(float amount) {
-		taintedVis = amount;
+		miasma = amount;
 	}
 
 	@Override
@@ -245,22 +257,22 @@ public class TileCrucible extends TileVisUser {
 			return result;
 		}
 
-		if (pureVis < pureAmount) {
-			pureAmount = pureVis;
+		if (vis < pureAmount) {
+			pureAmount = vis;
 		}
 
-		if (taintedVis < taintAmount) {
-			taintAmount = taintedVis;
+		if (miasma < taintAmount) {
+			taintAmount = miasma;
 		}
 
 		if (pureAmount < amount / 2F && taintAmount == amount / 2F) {
-			taintAmount = Math.min(amount - pureAmount, taintedVis);
+			taintAmount = Math.min(amount - pureAmount, miasma);
 		} else if (taintAmount < amount / 2F && pureAmount == amount / 2F) {
-			pureAmount = Math.min(amount - taintAmount, pureVis);
+			pureAmount = Math.min(amount - taintAmount, vis);
 		}
 
-		pureVis -= pureAmount;
-		taintedVis -= taintAmount;
+		vis -= pureAmount;
+		miasma -= taintAmount;
 
 		result[0] = pureAmount;
 		result[1] = taintAmount;

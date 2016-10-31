@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL11;
 
 import T145.magistics.Magistics;
 import T145.magistics.tiles.TileInfuser;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -45,17 +44,9 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		GlStateManager.depthMask(false);
 		GlStateManager.enableBlend();
 
-		if (infuser.isCrafting()) {
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		} else {
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		}
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, infuser.isCrafting() ? GL11.GL_ONE : GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		if (infuser.isDark()) {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/dark_symbol.png"));
-		} else {
-			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/symbol.png"));
-		}
+		bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/" + (infuser.isDark() ? "dark_symbol" : "symbol") + ".png"));
 
 		GlStateManager.color(1F, 1F, 1F, 1F);
 

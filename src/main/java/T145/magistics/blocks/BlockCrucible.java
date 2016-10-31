@@ -120,11 +120,13 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity) {
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+		if (getMetaFromState(state) < 3) {
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+		}
 	}
 
 	@Override

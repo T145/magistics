@@ -4,7 +4,6 @@ import T145.magistics.Magistics;
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,9 +29,7 @@ public class WorldEventHandler {
 
 	@SubscribeEvent
 	public void chunkSave(ChunkDataEvent.Save event) {
-		int dimension = event.getWorld().provider.getDimension();
-		ChunkPos pos = event.getChunk().getChunkCoordIntPair();
-		AuraChunk chunk = AuraHandler.getAuraChunk(pos, dimension);
+		AuraChunk chunk = AuraHandler.getAuraChunk(event.getChunk());
 		NBTTagCompound tag = new NBTTagCompound();
 
 		event.getData().setTag(Magistics.NAME, tag);
@@ -42,15 +39,13 @@ public class WorldEventHandler {
 			tag.setFloat(KEY_MIASMA, chunk.getMiasma());
 
 			if (event.getChunk().unloaded) {
-				AuraHandler.removeAuraChunk(pos, dimension);
+				AuraHandler.removeAuraChunk(event.getChunk());
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public void chunkLoad(ChunkDataEvent.Load event) {
-		int dimension = event.getWorld().provider.getDimension();
-		ChunkPos pos = event.getChunk().getChunkCoordIntPair();
 		NBTTagCompound tag = event.getData().getCompoundTag(Magistics.NAME);
 
 		if (tag.hasKey(KEY_VIS) && tag.hasKey(KEY_MIASMA)) {

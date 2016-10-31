@@ -1,11 +1,10 @@
 package T145.magistics.api.crafting;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -16,7 +15,7 @@ import net.minecraft.item.ItemStack;
 public class CrucibleRecipes {
 
 	public static final CrucibleRecipes INSTANCE = new CrucibleRecipes();
-	private static Map<ItemStack, Float> recipes = Maps.<ItemStack, Float>newHashMap();
+	public static Map<ItemStack, Float> recipes = new HashMap<ItemStack, Float>();
 
 	public static void register() {
 		addRecipe(Items.STICK, 0.25F);
@@ -25,10 +24,10 @@ public class CrucibleRecipes {
 		addRecipe(Items.FLINT, 1F);
 		addRecipe(Items.COAL, 2F);
 		addRecipe(Items.SNOWBALL, 0.25F);
-		/*addRecipe(Items.DYE, 0, 4F);
-		addRecipe(Items.DYE, 2, 4F);
-		addRecipe(Items.DYE, 3, 25F);
-		addRecipe(Items.DYE, 4, 9F);*/
+		addRecipe(new ItemStack(Items.DYE, 1, 0), 4F);
+		addRecipe(new ItemStack(Items.DYE, 1, 2), 4F);
+		addRecipe(new ItemStack(Items.DYE, 1, 3), 25F);
+		addRecipe(new ItemStack(Items.DYE, 1, 4), 9F);
 		addRecipe(Items.IRON_INGOT, 5F);
 		addRecipe(Items.BEETROOT_SEEDS, 4F);
 		addRecipe(Items.MELON_SEEDS, 4F);

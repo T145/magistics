@@ -58,7 +58,9 @@ public class AuraHandler {
 		addAuraChunk(chunk, auraVis, auraMiasma);
 	}
 
-	private static void generateTaintedArea(Chunk chunk, Random random, float auraTaint) {}
+	private static void generateTaintedArea(Chunk chunk, Random random, float auraTaint) {
+		Magistics.logger.info("WARNING: Taint area generating!");
+	}
 
 	public static void addAuraChunk(Chunk chunk, float auraVis, float auraMiasma) {
 		int dimension = chunk.getWorld().provider.getDimension();
@@ -73,17 +75,19 @@ public class AuraHandler {
 		auras.put(dimension, world);
 	}
 
-	public static void removeAuraChunk(ChunkPos pos, int dimension) {
-		AuraWorld world = auras.get(dimension);
+	public static void removeAuraChunk(Chunk chunk) {
+		AuraWorld world = auras.get(chunk.getWorld().provider.getDimension());
 
 		if (world != null) {
-			world.getAuraChunks().remove(pos);
+			world.getAuraChunks().remove(chunk.getChunkCoordIntPair());
 		}
 	}
 
-	public static AuraChunk getAuraChunk(ChunkPos pos, int dimension) {
+	public static AuraChunk getAuraChunk(Chunk chunk) {
+		int dimension = chunk.getWorld().provider.getDimension();
+
 		if (auras.containsKey(dimension)) {
-			return auras.get(dimension).getAuraChunkAt(pos);
+			return auras.get(dimension).getAuraChunkAt(chunk.getChunkCoordIntPair());
 		}
 
 		return null;
