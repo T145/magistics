@@ -16,7 +16,6 @@ public class ModBlocks {
 	public static BlockCrucible blockCrucible;
 	public static BlockInfuser blockInfuser;
 
-	private static WorldGenerator worldGenerator;
 	public static BlockInfusedOre blockOre;
 	public static BlockInfusedOre blockNetherOre;
 	public static BlockInfusedOre blockEndOre;
@@ -28,8 +27,6 @@ public class ModBlocks {
 		blockOre = new BlockInfusedOre("ore_overworld");
 		blockNetherOre = new BlockInfusedOre("ore_nether");
 		blockEndOre = new BlockInfusedOre("ore_end");
-
-		worldGenerator = new WorldGenerator();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -46,7 +43,7 @@ public class ModBlocks {
 	}
 
 	public static void init(FMLInitializationEvent event) {
-		worldGenerator.load();
+		WorldGenerator.init();
 	}
 
 	public static void postInit(FMLPostInitializationEvent event) {

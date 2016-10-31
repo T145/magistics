@@ -1,6 +1,5 @@
 package T145.magistics.network;
 
-import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.world.biomes.BiomeHandler;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -38,9 +36,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(Magistics.config);
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
-		NetworkRegistry.INSTANCE.registerGuiHandler(Magistics.instance, Magistics.proxy);
 		BiomeHandler.loadBiomeData();
 
 		ModBlocks.preInit(event);

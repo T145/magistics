@@ -65,7 +65,7 @@ public class AuraHandler {
 		AuraWorld world = auras.get(dimension);
 
 		if (world == null) {
-			addAuraWorld(dimension);
+			world = new AuraWorld(dimension);
 		}
 
 		ChunkPos pos = chunk.getChunkCoordIntPair();
