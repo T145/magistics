@@ -58,7 +58,7 @@ public class WorldGenerator implements IWorldGenerator {
 			int meta = random.nextInt(6);
 
 			if (random.nextInt(3) == 0) {
-				Biome dest = world.getBiomeForCoordsBody(pos);
+				Biome biome = world.getBiomeForCoordsBody(pos);
 
 				// decorate biome
 			}

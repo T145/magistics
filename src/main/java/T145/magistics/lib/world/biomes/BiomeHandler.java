@@ -3,24 +3,44 @@ package T145.magistics.lib.world.biomes;
 import java.util.ArrayList;
 import java.util.List;
 
+import T145.magistics.Magistics;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BiomeHandler {
 
-	public static List<Biome> biomeAir = new ArrayList<Biome>();
-	public static List<Biome> biomeFire = new ArrayList<Biome>();
-	public static List<Biome> biomeWater = new ArrayList<Biome>();
-	public static List<Biome> biomeEarth = new ArrayList<Biome>();
-	public static List<Biome> biomeMagic = new ArrayList<Biome>();
-	public static List<Biome> biomeTaint = new ArrayList<Biome>();
+	/*public static enum AuraType {
+		HIGH, LOW, GOOD, BAD;
 
-	public static List<Biome> biomeLowAura = new ArrayList<Biome>();
-	public static List<Biome> biomeHighAura = new ArrayList<Biome>();
-	public static List<Biome> biomeGoodAura = new ArrayList<Biome>();
-	public static List<Biome> biomeBadAura = new ArrayList<Biome>();
+		public static Map<Biome, AuraType> biomeMap = new HashMap<Biome, AuraType>();
 
-	public static void loadBiomeData() {
+		// one value per biome
+		public static void registerBiomes() {
+			biomeMap.put(Biomes.SWAMPLAND, BAD);
+			biomeMap.put(Biomes.JUNGLE, GOOD);
+			biomeMap.put(Biomes.JUNGLE_HILLS, GOOD);
+			biomeMap.put(Biomes.MUSHROOM_ISLAND, GOOD);
+			biomeMap.put(Biomes.MUSHROOM_ISLAND_SHORE, GOOD);
+			biomeMap.put(Biomes.DESERT, LOW);
+			biomeMap.put(Biomes.DESERT_HILLS, LOW);
+			biomeMap.put(Biomes.HELL, LOW);
+			biomeMap.put(Biomes.FOREST, HIGH);
+			biomeMap.put(Biomes.FOREST_HILLS, HIGH);
+			biomeMap.put(Biomes.BIRCH_FOREST, HIGH);
+			biomeMap.put(Biomes.BIRCH_FOREST_HILLS, HIGH);
+		}
+	}
+
+	public static enum OreType {
+		AIR, FIRE, WATER, EARTH, MAGIC, TAINT;
+
+		public static Map<Biome, OreType[]> biomeMap = new HashMap<Biome, OreType[]>();
+
+		public static void init() {
 		biomeAir.add(Biomes.DESERT);
 		biomeAir.add(Biomes.EXTREME_HILLS);
 		biomeAir.add(Biomes.ICE_MOUNTAINS);
@@ -54,6 +74,37 @@ public class BiomeHandler {
 		biomeTaint.add(Biomes.MUSHROOM_ISLAND);
 		biomeTaint.add(Biomes.MUSHROOM_ISLAND_SHORE);
 		biomeTaint.add(Biomes.SWAMPLAND);
+	}
+
+		// multiple values per biome
+		public static void registerBiomes() {
+			biomeMap.put(Biomes.DESERT, new OreType[] { AIR, FIRE });
+			biomeMap.put(Biomes.EXTREME_HILLS, new OreType[] { AIR, FIRE, EARTH });
+		}
+
+		public static boolean hasType(Biome biome, OreType type) {
+			for (OreType ore : biomeMap.get(biome)) {
+				if (ore == type) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+	}*/
+
+	public static List<Biome> biomeLowAura = new ArrayList<Biome>();
+	public static List<Biome> biomeHighAura = new ArrayList<Biome>();
+	public static List<Biome> biomeGoodAura = new ArrayList<Biome>();
+	public static List<Biome> biomeBadAura = new ArrayList<Biome>();
+
+	public static Biome biomeTaint;
+
+	public static void registerBiomes() {
+		biomeTaint = registerBiome(new BiomeTaint());
+		registerBiomeToDictionary(biomeTaint, Type.MAGICAL, Type.WASTELAND);
+		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeTaint, 10));
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeTaint, 10));
 
 		biomeLowAura.add(Biomes.DESERT);
 		biomeLowAura.add(Biomes.DESERT_HILLS);
@@ -70,5 +121,41 @@ public class BiomeHandler {
 		biomeGoodAura.add(Biomes.JUNGLE_HILLS);
 
 		biomeBadAura.add(Biomes.SWAMPLAND);
+	}
+
+	public static int getNextFreeBiomeId() {
+		int nextBiomeId = 40;
+
+		for (int id = nextBiomeId; id < 256; ++id) {
+			if (Biome.getBiome(id) != null) {
+				if (id == 255) {
+					Magistics.logger.throwing(new IllegalArgumentException("No biome ID is avaliable!"));
+				}
+				continue;
+			} else {
+				nextBiomeId = id + 1;
+				return id;
+			}
+		}
+
+		return -1;
+	}
+
+	private static Biome registerBiome(Biome biome) {
+		int id = getNextFreeBiomeId();
+
+		if (id > 0) {
+			Biome.registerBiome(id, biome.getBiomeName(), biome);
+			GameRegistry.register(biome);
+			return biome;
+		}
+
+		return null;
+	}
+
+	private static void registerBiomeToDictionary(Biome biome, BiomeDictionary.Type... types) {
+		if (biome != null) {
+			BiomeDictionary.registerBiomeType(biome, types);
+		}
 	}
 }

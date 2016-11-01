@@ -36,8 +36,8 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
+		BiomeHandler.registerBiomes();
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
-		BiomeHandler.loadBiomeData();
 
 		ModBlocks.preInit(event);
 		ModItems.preInit(event);
@@ -51,6 +51,10 @@ public class CommonProxy implements IGuiHandler {
 	public void postInit(FMLPostInitializationEvent event) {
 		ModBlocks.postInit(event);
 		ModItems.postInit(event);
+	}
+
+	public World getClientWorld() {
+		return null;
 	}
 
 	public void greenFlameFX(World world, float x, float y, float z) {}

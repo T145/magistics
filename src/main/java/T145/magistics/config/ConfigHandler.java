@@ -24,6 +24,7 @@ public class ConfigHandler {
 	private void sync() {
 		lowGfx = config.getBoolean("Low Graphics", config.CATEGORY_CLIENT, lowGfx, "Enables low graphics (better for older computers)");
 		auraMax = config.get(config.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
+		taintRarity = config.getInt("Taint Rarity", config.CATEGORY_GENERAL, 1, 0, 2, "How often taint appears (0 for rare - 2 for a lot");
 		dimensionBlacklist = config.get(CATEGORY_WORLDGEN, "Dimension Blacklist", new int[] {}, "Add dimension ids that you don't want Magistics worldgen applied to").getIntList();
 	}
 
