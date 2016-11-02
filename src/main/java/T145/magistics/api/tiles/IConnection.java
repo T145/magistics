@@ -4,7 +4,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public interface IConnection {
-	boolean getConnectable(EnumFacing facing);
+
+	public boolean getConnectable(EnumFacing facing);
 
 	boolean isVisSource();
 	boolean isVisConduit();

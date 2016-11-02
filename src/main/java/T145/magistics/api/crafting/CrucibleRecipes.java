@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
+import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -136,15 +137,11 @@ public class CrucibleRecipes {
 	@Nullable
 	public static float getResult(ItemStack stack) {
 		for (Entry<ItemStack, Float> entry : recipes.entrySet()) {
-			if (compareItemStacks(stack, entry.getKey())) {
+			if (InventoryUtils.areStacksEqual(stack, entry.getKey())) {
 				return entry.getValue();
 			}
 		}
 
 		return 0F;
-	}
-
-	private static boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
-		return stack2.getItem() == stack1.getItem() && (stack2.getMetadata() == 32767 || stack2.getMetadata() == stack1.getMetadata());
 	}
 }

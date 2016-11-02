@@ -1,6 +1,7 @@
 package T145.magistics.load;
 
 import T145.magistics.api.crafting.CrucibleRecipes;
+import T145.magistics.api.crafting.InfuserRecipes;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfusedOre;
 import T145.magistics.blocks.BlockInfuser;
@@ -48,5 +49,6 @@ public class ModBlocks {
 
 	public static void postInit(FMLPostInitializationEvent event) {
 		CrucibleRecipes.register();
+		InfuserRecipes.register();
 	}
 }

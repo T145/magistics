@@ -1,6 +1,9 @@
 package T145.magistics.tiles;
 
+import T145.magistics.api.crafting.InfuserRecipe;
+import T145.magistics.api.crafting.InfuserRecipes;
 import T145.magistics.api.tiles.TileVisUser;
+import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -9,6 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuser extends TileVisUser implements ITickable, ISidedInventory {
 
@@ -17,10 +22,10 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	private boolean active = false;
 	private boolean crafting = false;
 
-	public int cookTime;
-	public int burnTime;
+	public float cookCost;
+	public float cookTime;
 
-	protected int angle;
+	protected float angle;
 	protected int soundDelay;
 
 	private int facing;
@@ -43,7 +48,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 		return !active && !crafting;
 	}
 
-	public int getDiskAngle() {
+	public float getDiskAngle() {
 		return angle;
 	}
 
@@ -86,16 +91,22 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 		}
 
 		facing = tag.getInteger("Facing");
-		burnTime = tag.getInteger("BurnTime");
-		cookTime = tag.getInteger("CookTime");
+		cookCost = tag.getFloat("CookCost");
+		cookTime = tag.getFloat("CookTime");
+		active = tag.getBoolean("Active");
+		crafting = tag.getBoolean("Crafting");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
+
 		tag.setInteger("Facing", facing);
-		tag.setInteger("BurnTime", burnTime);
-		tag.setInteger("CookTime", cookTime);
+		tag.setFloat("CookCost", cookCost);
+		tag.setFloat("CookTime", cookTime);
+		tag.setBoolean("Active", active);
+		tag.setBoolean("Crafting", crafting);
+
 		NBTTagList nbttaglist = new NBTTagList();
 
 		for (int i = 0; i < getSizeInventory(); ++i) {
@@ -217,23 +228,119 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
+	public boolean getConnectable(EnumFacing face) {
+		switch (face) {
+		case NORTH: case SOUTH: case EAST: case WEST:
+			return true;
+		default:
+			return false;
+		}
 	}
 
-	public int getCookProgressScaled(int i) {
-		// TODO Auto-generated method stub
+	@SideOnly(Side.CLIENT)
+	public int getCookProgressScaled(int time) {
+		return Math.round(cookTime / cookCost * time);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getDarkCookProgressScaled(int time) {
+		// TODO Implement
 		return 0;
 	}
 
-	public int getDarkCookProgressScaled(int i) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	@SideOnly(Side.CLIENT)
 	public int getBoostScaled() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Math.round(0.1F + boost / 2F) * 6;
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (soundDelay > 0) {
+			--soundDelay;
+		}
+
+		angle = crafting ? cookTime * 360F / cookCost : facing;
+
+		InfuserRecipe recipe = InfuserRecipes.getMatchingInfuserRecipe(inventoryStacks, isDark());
+
+		if (this.isDormant()) {
+			// preparation time?
+		}
+
+		if (active = hasWorldObj() && recipe != null && !isPowered()) {
+			cookCost = recipe.getCost();
+
+			if (crafting = getAvailablePureVis(cookCost) > 0F) {
+				this.cookTime += this.getAvailablePureVis(Math.min(0.5F + 0.05F * this.boost, this.cookCost - this.cookTime + 0.01F));
+
+				if (this.soundDelay == 0) {
+					// play infusing sound
+					soundDelay = 62;
+				}
+
+				if (this.cookTime >= this.cookCost) {
+					this.addProcessedItem(recipe.getResult(), recipe.getComponents());
+					this.reset();
+					this.markDirtyClient();
+				}
+			} else {
+				// pause infusing
+			}
+		} else {
+			// stop infusing
+		}
+	}
+
+	private void reset() {
+		cookCost = 0F;
+		cookTime = 0F;
+		crafting = false;
+		active = false;
+	}
+
+	protected boolean canProcess(InfuserRecipe recipe) {
+		if (recipe == null) {
+			return false;
+		} else {
+			ItemStack result = recipe.getResult();
+
+			if (result == null) {
+				return false;
+			} else if (inventoryStacks[0] == null) {
+				return true;
+			} else if (!inventoryStacks[0].isItemEqual(result)) {
+				return false;
+			} else {
+				int stackSize = inventoryStacks[0].stackSize + result.stackSize;
+				return stackSize <= getInventoryStackLimit() && stackSize <= result.getMaxStackSize();
+			}
+		}
+	}
+
+	private void addProcessedItem(ItemStack result, ItemStack[] components) {
+		if (inventoryStacks[0] == null) {
+			inventoryStacks[0] = result.copy();
+		} else if (inventoryStacks[0].isItemEqual(result) && inventoryStacks[0].stackSize < result.getMaxStackSize()) {
+			inventoryStacks[0].stackSize += result.stackSize;
+		}
+
+		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
+			if (inventoryStacks[slot] != null) {
+				for (ItemStack component : components) {
+					if (InventoryUtils.areStacksEqual(component, inventoryStacks[slot])) {
+
+						// add dull shard if light infuser
+
+						--inventoryStacks[slot].stackSize;
+
+						if (inventoryStacks[slot].stackSize == 0) {
+							inventoryStacks[slot] = null;
+						}
+					}
+				}
+			}
+		}
 	}
 }

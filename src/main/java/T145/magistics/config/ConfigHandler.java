@@ -9,11 +9,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ConfigHandler {
 
 	public static final String CATEGORY_WORLDGEN = "worldgen";
+	public static final String CATEGORY_BIOMES = "biomes";
 
 	public static boolean lowGfx = false;
 	public static int auraMax = 15000;
-	public static int taintRarity = 1;
 	public static int[] dimensionBlacklist;
+
+	public static int taintSeverity = 1;
+	public static int taintWeight = 4;
 
 	private Configuration config;
 
@@ -24,8 +27,10 @@ public class ConfigHandler {
 	private void sync() {
 		lowGfx = config.getBoolean("Low Graphics", config.CATEGORY_CLIENT, lowGfx, "Enables low graphics (better for older computers)");
 		auraMax = config.get(config.CATEGORY_GENERAL, "Max Aura", auraMax).getInt();
-		taintRarity = config.getInt("Taint Rarity", config.CATEGORY_GENERAL, 1, 0, 2, "How often taint appears (0 for rare - 2 for a lot");
 		dimensionBlacklist = config.get(CATEGORY_WORLDGEN, "Dimension Blacklist", new int[] {}, "Add dimension ids that you don't want Magistics worldgen applied to").getIntList();
+
+		taintSeverity = config.getInt("Taint Severity", CATEGORY_BIOMES, 1, 0, 2, "How harsh the taint biomes are (0 for ok, 1 for normal, 2 for world eating)");
+		taintWeight = config.getInt("Taint Weight", CATEGORY_BIOMES, 4, 1, 10, "How often taint biomes are generated");
 	}
 
 	public static boolean isDimensionWhitelisted(int id) {
@@ -64,6 +69,7 @@ public class ConfigHandler {
 			config.addCustomCategoryComment(config.CATEGORY_CLIENT, "Settings that improve client performance");
 			config.addCustomCategoryComment(config.CATEGORY_GENERAL, "The basic mod settings");
 			config.addCustomCategoryComment(CATEGORY_WORLDGEN, "Configure world generation");
+			config.addCustomCategoryComment(CATEGORY_BIOMES, "Biome gen configurations");
 			config.load();
 			update();
 		} catch (Throwable err) {

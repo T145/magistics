@@ -47,19 +47,9 @@ public class AuraHandler {
 		float auraVis = floor + random.nextInt((int) (ceiling - floor));
 		float auraMiasma = auraVis / 3;
 
-		// do this for the tainted biome (generateTaintedArea should be handled by taint biome's decorator)
-
-		/*int taintChance = ConfigHandler.taintRarity == 2 ? 300 : 2200;
-
-		if (ConfigHandler.taintRarity > 0 && random.nextInt(taintChance) == 0) {
-			auraVis = auraFloor + random.nextInt((int) (auraCeiling - auraFloor)) / 2;
-			auraMiasma = ConfigHandler.auraMax * (ConfigHandler.taintRarity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (ConfigHandler.auraMax * 0.2F));
-			generateTaintedArea(chunk, random, auraMiasma);
-		}*/
-
 		if (infected) {
 			auraVis = floor + random.nextInt((int) (ceiling - floor)) / 2;
-			auraMiasma = ConfigHandler.auraMax * (ConfigHandler.taintRarity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (ConfigHandler.auraMax * 0.2F));
+			auraMiasma = ConfigHandler.auraMax * (ConfigHandler.taintSeverity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (ConfigHandler.auraMax * 0.2F));
 		}
 
 		if (discharge) {
