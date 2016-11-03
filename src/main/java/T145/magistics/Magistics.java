@@ -3,7 +3,7 @@ package T145.magistics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.magistics.commands.CommandAura;
+import T145.magistics.commands.CommandMagistics;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
@@ -79,6 +79,6 @@ public class Magistics {
 
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandAura());
+		event.registerServerCommand(new CommandMagistics());
 	}
 }
