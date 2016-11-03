@@ -1,55 +1,48 @@
 package T145.magistics.api.tiles;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileVisUser extends TileMagistics implements ITickable, IConnection {
+public class TileVisManager extends TileMagistics implements ITickable, IVisManager {
 
 	private int visSuction = 0;
 	private int taintSuction = 0;
 
-	public IConnection getConnectableTile(EnumFacing facing) {
+	public IVisManager getConnectableTile(EnumFacing facing) {
 		BlockPos pos = new BlockPos(getPos().getX() + facing.getFrontOffsetX(), getPos().getY() + facing.getFrontOffsetY(), getPos().getZ() + facing.getFrontOffsetZ());
-		IConnection connection = (IConnection) worldObj.getTileEntity(pos);
-		return connection;
-	}
+		TileEntity tile = worldObj.getTileEntity(pos);
+		IVisManager visManager = null;
 
-	public boolean getExactPureVis(float amount) {
-		setVisSuction(50);
-
-		for (EnumFacing facing : EnumFacing.VALUES) {
-			if (getConnectable(facing)) {
-				IConnection connection = getConnectableTile(facing);
-
-				if (connection != null && (connection.isVisConduit() || connection.isVisSource())) {
-					connection.setPureVis(connection.getPureVis() - amount);
-					return true;
-				}
-			}
+		if (tile instanceof IVisManager) {
+			visManager = (IVisManager) tile;
 		}
 
-		return false;
+		return visManager;
 	}
 
-	public float getAvailablePureVis(float amount) {
+	public float drainAvailablePureVis(float amount, boolean drain) {
 		setVisSuction(50);
 
 		float mod = 0F;
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (getConnectable(facing)) {
-				IConnection connection = getConnectableTile(facing);
+				IVisManager visManager = getConnectableTile(facing);
 
-				if (connection != null && (connection.isVisConduit() || connection.isVisSource())) {
-					float vis = Math.min(amount - mod, connection.getPureVis());
+				if (visManager != null && (visManager.isVisConduit() || visManager.isVisSource())) {
+					float vis = Math.min(amount - mod, visManager.getPureVis());
 
 					if (vis < 0.001F) {
 						vis = 0F;
 					}
 
 					mod += vis;
-					connection.setPureVis(connection.getPureVis() - vis);
+
+					if (drain) {
+						visManager.setPureVis(visManager.getPureVis() - vis);
+					}
 				}
 
 				if (mod >= amount) {
@@ -61,24 +54,27 @@ public class TileVisUser extends TileMagistics implements ITickable, IConnection
 		return Math.min(amount, mod);
 	}
 
-	public float getAvailableTaintedVis(float amount) {
+	public float drainAvailableTaintedVis(float amount, boolean drain) {
 		setTaintSuction(50);
 
 		float mod = 0F;
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (getConnectable(facing)) {
-				IConnection connection = getConnectableTile(facing);
+				IVisManager visManager = getConnectableTile(facing);
 
-				if (connection != null && (connection.isVisConduit() || connection.isVisSource())) {
-					float vis = Math.min(amount - mod, connection.getTaintedVis());
+				if (visManager != null && (visManager.isVisConduit() || visManager.isVisSource())) {
+					float vis = Math.min(amount - mod, visManager.getTaintedVis());
 
 					if (vis < 0.001F) {
 						vis = 0F;
 					}
 
 					mod += vis;
-					connection.setTaintedVis(connection.getTaintedVis() - vis);
+
+					if (drain) {
+						visManager.setTaintedVis(visManager.getTaintedVis() - vis);
+					}
 				}
 
 				if (mod >= amount) {

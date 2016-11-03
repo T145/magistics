@@ -2,22 +2,33 @@ package T145.magistics.tiles;
 
 import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.crafting.InfuserRecipes;
-import T145.magistics.api.tiles.TileVisUser;
+import T145.magistics.api.tiles.TileVisManager;
+import T145.magistics.containers.ContainerInfuser;
+import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IInteractionObject;
+import net.minecraft.world.ILockableContainer;
+import net.minecraft.world.LockCode;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileVisUser implements ITickable, ISidedInventory {
+public class TileInfuser extends TileVisManager implements IInteractionObject, ISidedInventory, ILockableContainer {
 
-	protected ItemStack[] inventoryStacks;
+	protected ItemStack[] inventoryStacks = new ItemStack[8];
+	private LockCode code = LockCode.EMPTY_CODE;
 
 	private boolean active = false;
 	private boolean crafting = false;
@@ -33,7 +44,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	private int boostDelay = 20;
 
 	public boolean isDark() {
-		return getBlockMetadata() == 1;
+		return false;
 	}
 
 	public boolean isActive() {
@@ -64,62 +75,19 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 		return facing;
 	}
 
-	public void setTier(int meta) {
-		switch (meta) {
-		case 1:
-			inventoryStacks = new ItemStack[6];
-			break;
-		default:
-			inventoryStacks = new ItemStack[8];
-			break;
-		}
+	@Override
+	public String getName() {
+		return isDark() ? "tile.infuser.dark.name" : "tile.infuser.light.name";
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		super.readFromNBT(tag);
-		NBTTagList nbttaglist = tag.getTagList("Items", 10);
-		inventoryStacks = new ItemStack[getSizeInventory()];
-
-		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			NBTTagCompound nbttagnbt = nbttaglist.getCompoundTagAt(i);
-			int j = nbttagnbt.getByte("Slot");
-
-			if (j >= 0 && j < getSizeInventory()) {
-				inventoryStacks[j] = ItemStack.loadItemStackFromNBT(nbttagnbt);
-			}
-		}
-
-		facing = tag.getInteger("Facing");
-		cookCost = tag.getFloat("CookCost");
-		cookTime = tag.getFloat("CookTime");
-		active = tag.getBoolean("Active");
-		crafting = tag.getBoolean("Crafting");
+	public boolean hasCustomName() {
+		return true;
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		super.writeToNBT(tag);
-
-		tag.setInteger("Facing", facing);
-		tag.setFloat("CookCost", cookCost);
-		tag.setFloat("CookTime", cookTime);
-		tag.setBoolean("Active", active);
-		tag.setBoolean("Crafting", crafting);
-
-		NBTTagList nbttaglist = new NBTTagList();
-
-		for (int i = 0; i < getSizeInventory(); ++i) {
-			if (inventoryStacks[i] != null) {
-				NBTTagCompound nbttagnbt = new NBTTagCompound();
-				nbttagnbt.setByte("Slot", (byte) i);
-				inventoryStacks[i].writeToNBT(nbttagnbt);
-				nbttaglist.appendTag(nbttagnbt);
-			}
-		}
-
-		tag.setTag("Items", nbttaglist);
-		return tag;
+	public ITextComponent getDisplayName() {
+		return new TextComponentTranslation(getName(), new Object[0]);
 	}
 
 	@Override
@@ -144,11 +112,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		inventoryStacks[index] = stack;
-
-		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-			stack.stackSize = getInventoryStackLimit();
-		}
+		InventoryUtils.setInventorySlotContents(inventoryStacks, stack, getInventoryStackLimit(), index);
 	}
 
 	@Override
@@ -158,7 +122,7 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
 	}
 
 	@Override
@@ -174,20 +138,33 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		switch (id) {
+		case 0:
+			return (int) cookCost;
+		case 1:
+			return (int) cookTime;
+		default:
+			return 0;
+		}
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-
+		switch (id) {
+		case 0:
+			cookCost = value;
+			break;
+		case 1:
+			cookTime = value;
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
@@ -198,13 +175,18 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	}
 
 	@Override
-	public String getName() {
-		return isDark() ? "Dark Infuser" : "Infuser";
+	public boolean isLocked() {
+		return code != null && !code.isEmpty();
 	}
 
 	@Override
-	public boolean hasCustomName() {
-		return true;
+	public LockCode getLockCode() {
+		return code;
+	}
+
+	@Override
+	public void setLockCode(LockCode code) {
+		this.code = code;
 	}
 
 	@Override
@@ -228,29 +210,84 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 	}
 
 	@Override
-	public boolean getConnectable(EnumFacing face) {
-		switch (face) {
-		case NORTH: case SOUTH: case EAST: case WEST:
-			return true;
-		default:
-			return false;
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
+		return new ContainerInfuser(playerInventory, this);
+	}
+
+	@Override
+	public String getGuiID() {
+		return "magistics:infuser";
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		code = LockCode.fromNBT(tag);
+
+		NBTTagList nbttaglist = tag.getTagList("Items", 10);
+		inventoryStacks = new ItemStack[getSizeInventory()];
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+			int j = nbttagcompound.getByte("Slot");
+
+			if (j >= 0 && j < getSizeInventory()) {
+				inventoryStacks[j] = ItemStack.loadItemStackFromNBT(nbttagcompound);
+			}
 		}
+
+		facing = tag.getInteger("Facing");
+		cookCost = tag.getFloat("CookCost");
+		cookTime = tag.getFloat("CookTime");
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+
+		if (code != null) {
+			code.toNBT(tag);
+		}
+
+		tag.setInteger("Facing", facing);
+		tag.setFloat("CookCost", cookCost);
+		tag.setFloat("cookTime", cookTime);
+
+		NBTTagList nbttaglist = new NBTTagList();
+
+		for (int i = 0; i < getSizeInventory(); ++i) {
+			if (inventoryStacks[i] != null) {
+				NBTTagCompound nbttagcompound = new NBTTagCompound();
+				nbttagcompound.setByte("Slot", (byte) i);
+				inventoryStacks[i].writeToNBT(nbttagcompound);
+				nbttaglist.appendTag(nbttagcompound);
+			}
+		}
+
+		tag.setTag("Items", nbttaglist);
+
+		return tag;
+	}
+
+	@Override
+	public boolean getConnectable(EnumFacing face) {
+		return face != EnumFacing.UP;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getCookProgressScaled(int time) {
-		return Math.round(cookTime / cookCost * time);
+		return Math.round(crafting ? (cookTime * time) / cookCost : 0);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getDarkCookProgressScaled(int time) {
-		// TODO Implement
+	public int getDarkCookProgressScaled(int i) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getBoostScaled() {
-		return Math.round(0.1F + boost / 2F) * 6;
+		return Math.round(0.1F + (float) boost / 2F) * 6;
 	}
 
 	@Override
@@ -261,29 +298,29 @@ public class TileInfuser extends TileVisUser implements ITickable, ISidedInvento
 			--soundDelay;
 		}
 
-		angle = crafting ? cookTime * 360F / cookCost : facing;
-
 		InfuserRecipe recipe = InfuserRecipes.getMatchingInfuserRecipe(inventoryStacks, isDark());
 
-		if (this.isDormant()) {
-			// preparation time?
+		if (isDormant()) {
+			angle = facing;
+		} else if (crafting) {
+			angle = (cookTime * 360) / cookCost;
 		}
 
 		if (active = hasWorldObj() && recipe != null && !isPowered()) {
 			cookCost = recipe.getCost();
 
-			if (crafting = getAvailablePureVis(cookCost) > 0F) {
-				this.cookTime += this.getAvailablePureVis(Math.min(0.5F + 0.05F * this.boost, this.cookCost - this.cookTime + 0.01F));
+			if (crafting = drainAvailablePureVis(cookCost, false) > 0F) {
+				cookTime += drainAvailablePureVis(Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F), true);
 
-				if (this.soundDelay == 0) {
-					// play infusing sound
+				if (soundDelay == 0) {
+					worldObj.playSound(null, new BlockPos(getPos().getX() + 0.5F, getPos().getY() + 0.5F, getPos().getZ() + 0.5F), SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
-				if (this.cookTime >= this.cookCost) {
-					this.addProcessedItem(recipe.getResult(), recipe.getComponents());
-					this.reset();
-					this.markDirtyClient();
+				if (cookTime >= cookCost) {
+					addProcessedItem(recipe.getResult(), recipe.getComponents());
+					reset();
+					markDirty();
 				}
 			} else {
 				// pause infusing

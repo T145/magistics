@@ -14,10 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerInfuser extends Container {
 	private TileInfuser infuser;
-	private int burnTime;
-	private int itemBurnTime;
+	private int cookCost;
 	private int cookTime;
-	private int totalCookTime;
 
 	public ContainerInfuser(InventoryPlayer inv, TileInfuser tile) {
 		infuser = tile;
@@ -76,27 +74,17 @@ public class ContainerInfuser extends Container {
 		for (int i = 0; i < listeners.size(); ++i) {
 			IContainerListener icontainerlistener = (IContainerListener) listeners.get(i);
 
-			if (cookTime != infuser.getField(2)) {
-				icontainerlistener.sendProgressBarUpdate(this, 2, infuser.getField(2));
-			}
-
-			if (burnTime != infuser.getField(0)) {
+			if (cookCost != infuser.getField(0)) {
 				icontainerlistener.sendProgressBarUpdate(this, 0, infuser.getField(0));
 			}
 
-			if (itemBurnTime != infuser.getField(1)) {
+			if (cookTime != infuser.getField(1)) {
 				icontainerlistener.sendProgressBarUpdate(this, 1, infuser.getField(1));
-			}
-
-			if (totalCookTime != infuser.getField(3)) {
-				icontainerlistener.sendProgressBarUpdate(this, 3, infuser.getField(3));
 			}
 		}
 
-		cookTime = infuser.getField(2);
-		burnTime = infuser.getField(0);
-		itemBurnTime = infuser.getField(1);
-		totalCookTime = infuser.getField(3);
+		cookCost = infuser.getField(0);
+		cookTime = infuser.getField(1);
 	}
 
 	@Override

@@ -5,8 +5,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IBlockTileRendered extends IBlockTiled {
 
-	public Class getTileClass();
-
 	@SideOnly(Side.CLIENT)
 	public void registerRenderer();
 }

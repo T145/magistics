@@ -10,6 +10,7 @@ import T145.magistics.api.blocks.IBlockTileRendered;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
+import T145.magistics.tiles.TileInfuserDark;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
@@ -112,7 +113,8 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 
 		GameRegistry.register(this);
 		GameRegistry.register(new BlockInfuserItem(this), getRegistryName());
-		GameRegistry.registerTileEntity(getTileClass(), getTileClass().getSimpleName());
+		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
+		GameRegistry.registerTileEntity(TileInfuserDark.class, TileInfuserDark.class.getSimpleName());
 	}
 
 	@Override
@@ -141,7 +143,8 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerRenderer() {
-		ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new RenderInfuser());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
 	}
 
 	@Override
@@ -194,15 +197,8 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 	}
 
 	@Override
-	public Class getTileClass() {
-		return TileInfuser.class;
-	}
-
-	@Override
 	public TileEntity getTile(int meta) {
-		TileInfuser infuser = new TileInfuser();
-		infuser.setTier(meta);
-		return infuser;
+		return meta == 1 ? new TileInfuserDark() : new TileInfuser();
 	}
 
 	@Override

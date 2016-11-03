@@ -25,7 +25,6 @@ public class AuraHandler {
 		float ceiling = ConfigHandler.auraMax / 3;
 		float floor = ConfigHandler.auraMax / 5;
 		boolean discharge = false;
-		boolean infected = false;
 
 		if (BiomeHandler.biomeLowAura.contains(biome)) {
 			ceiling = ConfigHandler.auraMax / 8;
@@ -41,13 +40,12 @@ public class AuraHandler {
 			ceiling = ConfigHandler.auraMax * 0.5F;
 			floor = ConfigHandler.auraMax / 3;
 			discharge = true;
-			infected = biome instanceof BiomeTaint;
 		}
 
 		float auraVis = floor + random.nextInt((int) (ceiling - floor));
 		float auraMiasma = auraVis / 3;
 
-		if (infected) {
+		if (biome instanceof BiomeTaint) {
 			auraVis = floor + random.nextInt((int) (ceiling - floor)) / 2;
 			auraMiasma = ConfigHandler.auraMax * (ConfigHandler.taintSeverity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (ConfigHandler.auraMax * 0.2F));
 		}

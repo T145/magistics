@@ -3,7 +3,7 @@ package T145.magistics.api.tiles;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
-public interface IConnection {
+public interface IVisManager {
 
 	public boolean getConnectable(EnumFacing facing);
 

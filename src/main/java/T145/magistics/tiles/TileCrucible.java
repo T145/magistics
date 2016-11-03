@@ -3,7 +3,7 @@ package T145.magistics.tiles;
 import java.util.List;
 
 import T145.magistics.api.crafting.CrucibleRecipes;
-import T145.magistics.api.tiles.TileVisUser;
+import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;
 import T145.magistics.lib.events.WorldEventHandler;
@@ -19,7 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 
-public class TileCrucible extends TileVisUser {
+public class TileCrucible extends TileVisManager {
 
 	public float vis = 0F;
 	public float miasma = 0F;

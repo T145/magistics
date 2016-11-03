@@ -19,11 +19,7 @@ public class GuiInfuser extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		if (infuser.isDark()) {
-			fontRendererObj.drawString(infuser.getName(), 8, 5, 6307936);
-		} else {
-			fontRendererObj.drawString(infuser.getName(), 8, 5, 4210752);
-		}
+		fontRendererObj.drawString(infuser.getDisplayName().getFormattedText(), 8, 5, infuser.isDark() ? 6307936 : 4210752);
 	}
 
 	@Override

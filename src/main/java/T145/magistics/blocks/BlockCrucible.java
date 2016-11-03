@@ -115,7 +115,7 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 
 		GameRegistry.register(this);
 		GameRegistry.register(new BlockCrucibleItem(this), getRegistryName());
-		GameRegistry.registerTileEntity(getTileClass(), getTileClass().getSimpleName());
+		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerRenderer() {
-		ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new RenderCrucible());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 	}
 
 	@Override
@@ -198,11 +198,6 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 	public boolean isPassable(IBlockAccess world, BlockPos pos) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 		return crucible.hasWorldObj() && crucible.getBlockMetadata() < 3;
-	}
-
-	@Override
-	public Class getTileClass() {
-		return TileCrucible.class;
 	}
 
 	@Override

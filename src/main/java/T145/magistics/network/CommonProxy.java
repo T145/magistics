@@ -1,6 +1,5 @@
 package T145.magistics.network;
 
-import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.world.biomes.BiomeHandler;
 import T145.magistics.load.ModBlocks;
@@ -24,7 +23,8 @@ public class CommonProxy implements IGuiHandler {
 
 		switch (ID) {
 		case 0:
-			return new ContainerInfuser(player.inventory, (TileInfuser) world.getTileEntity(pos));
+			TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
+			return infuser.createContainer(player.inventory, player);
 		default:
 			return null;
 		}
