@@ -1,13 +1,14 @@
 package T145.magistics.tiles;
 
-import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.crafting.InfuserRecipes;
+import T145.magistics.api.crafting.recipes.InfuserRecipe;
 import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -36,7 +37,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	public float cookCost;
 	public float cookTime;
 
-	protected float angle;
+	protected int angle;
 	protected int soundDelay;
 
 	private int facing;
@@ -276,11 +277,11 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 
 	@SideOnly(Side.CLIENT)
 	public int getCookProgressScaled(int time) {
-		return Math.round(crafting ? (cookTime * time) / cookCost : 0);
+		return Math.round(cookTime / cookCost * time);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getDarkCookProgressScaled(int i) {
+	public int getDarkCookProgressScaled(int time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -303,7 +304,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		if (isDormant()) {
 			angle = facing;
 		} else if (crafting) {
-			angle = (cookTime * 360) / cookCost;
+			angle = getCookProgressScaled(360);
 		}
 
 		if (active = hasWorldObj() && recipe != null && !isPowered()) {
@@ -326,7 +327,11 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 				// pause infusing
 			}
 		} else {
-			// stop infusing
+			if (crafting) {
+				worldObj.playSound(null, new BlockPos(getPos().getX() + 0.5F, getPos().getY() + 0.5F, getPos().getZ() + 0.5F), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+			}
+
+			reset();
 		}
 	}
 

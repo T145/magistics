@@ -33,13 +33,28 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5D, y, z + 0.5D);
 		GlStateManager.pushMatrix();
-		GlStateManager.rotate(getDiskAngle(infuser), 0F, 1F, 0F);
+
+		if (infuser.isCrafting()) {
+			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
+		} else {
+			GlStateManager.rotate(getDefaultAngle(infuser.getFacing()), 0F, 1F, 0F);
+		}
+
 		GlStateManager.translate(-0.45D, 0D, -0.45D);
 		GlStateManager.depthMask(false);
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, infuser.isCrafting() ? GL11.GL_ONE : GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/" + (infuser.isDark() ? "dark_symbol.png" : "symbol.png")));
+		if (infuser.isCrafting()) {
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+		} else {
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		}
+
+		if (infuser.isDark()) {
+			bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/dark_symbol.png"));
+		} else {
+			bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/symbol.png"));
+		}
 
 		GlStateManager.color(1F, 1F, 1F, 1F);
 
@@ -64,20 +79,16 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		GlStateManager.popMatrix();
 	}
 
-	private float getDiskAngle(TileInfuser infuser) {
-		if (!infuser.isCrafting()) {
-			switch (infuser.getFacing()) {
-			case 2:
-				return 180F;
-			case 4:
-				return -90F;
-			case 5:
-				return 90F;
-			default:
-				return 0F;
-			}
+	private float getDefaultAngle(int facing) {
+		switch (facing) {
+		case 2:
+			return 180F;
+		case 4:
+			return -90F;
+		case 5:
+			return 90F;
+		default:
+			return 0F;
 		}
-
-		return infuser.getDiskAngle();
 	}
 }
