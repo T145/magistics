@@ -1,4 +1,4 @@
-package T145.magistics.client.render;
+package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 

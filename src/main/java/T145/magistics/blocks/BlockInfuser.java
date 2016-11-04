@@ -8,7 +8,7 @@ import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.client.render.RenderInfuser;
+import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import net.minecraft.block.Block;

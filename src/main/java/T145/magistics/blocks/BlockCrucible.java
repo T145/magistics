@@ -9,7 +9,7 @@ import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.client.render.RenderCrucible;
+import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.tiles.TileCrucible;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

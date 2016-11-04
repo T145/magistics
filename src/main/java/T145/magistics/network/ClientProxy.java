@@ -9,6 +9,7 @@ import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.load.ModBlocks;
+import T145.magistics.load.ModEntities;
 import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
@@ -47,6 +48,7 @@ public class ClientProxy extends CommonProxy {
 
 		ModBlocks.initClient();
 		ModItems.initClient();
+		ModEntities.initClient();
 	}
 
 	@Override

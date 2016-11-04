@@ -1,10 +1,11 @@
-package T145.magistics.client.render;
+package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.Magistics;
+import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
