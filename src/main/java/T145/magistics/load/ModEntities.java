@@ -17,7 +17,7 @@ public class ModEntities {
 	private static int id;
 
 	public static void preInit(FMLPreInitializationEvent event) {
-		EntityRegistry.registerModEntity(EntityVisSlime.class, "slime.vis", id++, Magistics.instance, 64, 5, true, ItemShard.COLORS[4], 11126094);
+		EntityRegistry.registerModEntity(EntityVisSlime.class, "slime.vis", id++, Magistics.instance, 55, 1, true, ItemShard.COLORS[4], 11126094);
 	}
 
 	@SideOnly(Side.CLIENT)
