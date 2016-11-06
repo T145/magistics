@@ -1,7 +1,7 @@
 package T145.magistics.load;
 
 import T145.magistics.Magistics;
-import T145.magistics.client.render.entities.RenderVisSlime;
+import T145.magistics.client.render.entities.RenderColoredSlime.RenderColoredSlimeFactory;
 import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.items.ItemShard;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -22,7 +22,7 @@ public class ModEntities {
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityVisSlime.class, RenderVisSlime.RENDER_FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(EntityVisSlime.class, new RenderColoredSlimeFactory(0xFFFF00FF));
 	}
 
 	public static void init(FMLInitializationEvent event) {}
