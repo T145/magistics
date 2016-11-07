@@ -43,12 +43,6 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		double vMin = sprite.getMinV();
 		double vMax = sprite.getMaxV();
 
-		float tint = Math.min(1F, crucible.vis / totalVis);
-		int lightValue = 20 + (int) (tint * 210F);
-		int brightness = getWorld().getCombinedLight(crucible.getPos(), lightValue);
-		int lightx = brightness >> 0x10 & 0xFFFF;
-		int lighty = brightness & 0xFFFF;
-
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();

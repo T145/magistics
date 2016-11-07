@@ -25,22 +25,17 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 
 	public static enum ItemType implements IStringSerializable {
 
-		AIR("air"), FIRE("fire"), WATER("water"), EARTH("earth"), LIGHT("light"), DARK("dark");
+		AIR(), FIRE(), WATER(), EARTH(), LIGHT(), DARK();
 
 		private static final ItemType[] META_LOOKUP = new ItemType[values().length];
-		private final String name;
-
-		private ItemType(String name) {
-			this.name = name;
-		}
 
 		@Override
 		public String getName() {
-			return name;
+			return name().toLowerCase();
 		}
 
 		public String getClientName() {
-			return "variant=" + name;
+			return "variant=" + getName();
 		}
 
 		public static ItemType byMetadata(int meta) {

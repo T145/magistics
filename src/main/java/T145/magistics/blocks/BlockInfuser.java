@@ -49,22 +49,17 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 
 	public static enum BlockType implements IStringSerializable {
 
-		INFUSER("light"), DARK_INFUSER("dark");
+		LIGHT(), DARK();
 
 		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
-		private final String name;
-
-		private BlockType(String name) {
-			this.name = name;
-		}
 
 		@Override
 		public String getName() {
-			return name;
+			return name().toLowerCase();
 		}
 
 		public String getClientName() {
-			return "variant=" + name;
+			return "variant=" + getName();
 		}
 
 		public static BlockType byMetadata(int meta) {
@@ -102,7 +97,7 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 	public BlockInfuser(String name) {
 		super(Material.ROCK);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.INFUSER));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.LIGHT));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);

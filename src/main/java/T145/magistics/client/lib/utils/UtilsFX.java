@@ -1,7 +1,6 @@
 package T145.magistics.client.lib.utils;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.VertexBuffer;
 
 public class UtilsFX {
 
@@ -16,10 +15,6 @@ public class UtilsFX {
 		float b = blue(color) / 255F;
 
 		GlStateManager.color(r, g, b, a);
-	}
-
-	public static void setBrightness(VertexBuffer renderer, int brightness) {
-		renderer.putBrightness4(brightness, brightness, brightness, brightness);
 	}
 
 	public static int compose(int r, int g, int b, int a) {

@@ -1,0 +1,67 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "axis=x,variant=greatwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/greatwood/top",
+                "side": "magistics:blocks/greatwood/side"
+            },
+            "x": 90,
+            "y": 90
+        },
+        "axis=y,variant=greatwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/greatwood/top",
+                "side": "magistics:blocks/greatwood/side"
+            }
+        },
+        "axis=z,variant=greatwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/greatwood/top",
+                "side": "magistics:blocks/greatwood/side"
+            },
+            "x": 90
+        },
+        "axis=none,variant=greatwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/greatwood/top",
+                "side": "magistics:blocks/greatwood/side"
+            }
+        },
+        "axis=x,variant=silverwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/silverwood/top",
+                "side": "magistics:blocks/silverwood/side"
+            },
+            "x": 90,
+            "y": 90
+        },
+        "axis=y,variant=silverwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/silverwood/top",
+                "side": "magistics:blocks/silverwood/side"
+            }
+        },
+        "axis=z,variant=silverwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/silverwood/top",
+                "side": "magistics:blocks/silverwood/side"
+            },
+            "x": 90
+        },
+        "axis=none,variant=silverwood": {
+            "model": "cube_column",
+            "textures": {
+                "end": "magistics:blocks/silverwood/top",
+                "side": "magistics:blocks/silverwood/side"
+            }
+        }
+    }
+}

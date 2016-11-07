@@ -5,6 +5,7 @@ import T145.magistics.api.crafting.InfuserRecipes;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfusedOre;
 import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.blocks.BlockLogs;
 import T145.magistics.lib.world.WorldGenerator;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -21,6 +22,8 @@ public class ModBlocks {
 	public static BlockInfusedOre blockNetherOre;
 	public static BlockInfusedOre blockEndOre;
 
+	public static BlockLogs blockLogs;
+
 	public static void preInit(FMLPreInitializationEvent event) {
 		blockCrucible = new BlockCrucible("crucible");
 		blockInfuser = new BlockInfuser("infuser");
@@ -28,6 +31,8 @@ public class ModBlocks {
 		blockOre = new BlockInfusedOre("ore_overworld");
 		blockNetherOre = new BlockInfusedOre("ore_nether");
 		blockEndOre = new BlockInfusedOre("ore_end");
+
+		blockLogs = new BlockLogs("log");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -41,6 +46,8 @@ public class ModBlocks {
 		blockOre.registerModel();
 		blockNetherOre.registerModel();
 		blockEndOre.registerModel();
+
+		blockLogs.registerModel();
 	}
 
 	public static void init(FMLInitializationEvent event) {

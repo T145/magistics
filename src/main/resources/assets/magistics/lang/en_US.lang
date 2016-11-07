@@ -34,6 +34,9 @@ tile.ore_end.earth.name=Earth Infused End Stone
 tile.ore_end.light.name=Vis Infused End Stone
 tile.ore_end.dark.name=Taint Infused End Stone
 
+tile.log.greatwood.name=Greatwood Log
+tile.log.silverwood.name=Silverwood Log
+
 item.shard.air.name=Air Crystal
 item.shard.fire.name=Fire Crystal
 item.shard.water.name=Water Crystal

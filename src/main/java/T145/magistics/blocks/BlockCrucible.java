@@ -47,22 +47,17 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 
 	public static enum BlockType implements IStringSerializable {
 
-		BASIC("basic"), EYES("eyes"), THAUMIUM("thaumium"), SOULS("souls");
+		BASIC(), EYES(), THAUMIUM(), SOULS();
 
 		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
-		private final String name;
-
-		private BlockType(String name) {
-			this.name = name;
-		}
 
 		@Override
 		public String getName() {
-			return name;
+			return name().toLowerCase();
 		}
 
 		public String getClientName() {
-			return "variant=" + name;
+			return "variant=" + getName();
 		}
 
 		public static BlockType byMetadata(int meta) {

@@ -28,10 +28,15 @@ public class BiomeHandler {
 		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeTaint, ConfigHandler.taintWeight));
 		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeTaint, ConfigHandler.taintWeight));
 
-		loadAuraMap();
+		biomeEnchantedForest = registerBiome(new BiomeEnchantedForest());
+		registerBiomeToDictionary(biomeEnchantedForest, Type.MAGICAL, Type.FOREST);
+		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, 10));
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, 10));
+
+		loadAuraMapping();
 	}
 
-	private static void loadAuraMap() {
+	private static void loadAuraMapping() {
 		biomeLowAura.add(Biomes.DESERT);
 		biomeLowAura.add(Biomes.DESERT_HILLS);
 		biomeLowAura.add(Biomes.HELL);
