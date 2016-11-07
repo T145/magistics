@@ -4,9 +4,10 @@ import java.util.List;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModeled;
-import T145.magistics.api.blocks.IBlockType;
-import net.minecraft.block.BlockLog;
+import T145.magistics.blocks.BlockLogs.BlockType;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,41 +17,19 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLogs extends BlockLog implements IBlockModeled {
-
-	public static enum BlockType implements IBlockType {
-
-		GREATWOOD, SILVERWOOD;
-
-		@Override
-		public String getName() {
-			return name().toLowerCase();
-		}
-
-		@Override
-		public String getClientName() {
-			return "variant=" + getName();
-		}
-
-		public static BlockType byMetadata(int meta) {
-			return values()[MathHelper.clamp_int(meta, 0, meta)];
-		}
-	}
+public class BlockPlanks extends Block implements IBlockModeled {
 
 	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 
-	public BlockLogs(String name) {
-		super();
+	public BlockPlanks(String name) {
+		super(Material.WOOD);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.tab);
@@ -76,39 +55,27 @@ public class BlockLogs extends BlockLog implements IBlockModeled {
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
 		for (BlockType type : BlockType.values()) {
-			for (BlockLog.EnumAxis axis : BlockLog.EnumAxis.values()) {
-				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), "axis=" + axis.getName() + "," + type.getClientName()));
-			}
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
 
 	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return damageDropped(state) == 1 ? 6 : super.getLightValue(state, world, pos);
-	}
-
-	@Override
-	protected ItemStack createStackedBlock(IBlockState state) {
-		return new ItemStack(Item.getItemFromBlock(this), 1, damageDropped(state));
-	}
-
-	@Override
 	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+		return getMetaFromState(state);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.values()[meta >> 2]).withProperty(VARIANT, BlockType.byMetadata(meta & 3));
+		return getDefaultState().withProperty(VARIANT, BlockType.byMetadata(meta));
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return ((BlockLog.EnumAxis) state.getValue(LOG_AXIS)).ordinal() * 4 + state.getValue(VARIANT).ordinal();
+		return state.getValue(VARIANT).ordinal();
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { LOG_AXIS, VARIANT });
+		return new BlockStateContainer(this, new IProperty[] { VARIANT });
 	}
 }

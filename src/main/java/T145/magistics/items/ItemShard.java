@@ -25,9 +25,7 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 
 	public static enum ItemType implements IStringSerializable {
 
-		AIR(), FIRE(), WATER(), EARTH(), LIGHT(), DARK();
-
-		private static final ItemType[] META_LOOKUP = new ItemType[values().length];
+		AIR, FIRE, WATER, EARTH, LIGHT, DARK;
 
 		@Override
 		public String getName() {
@@ -39,13 +37,7 @@ public class ItemShard extends Item implements IItemModeled, IItemColor {
 		}
 
 		public static ItemType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
-		}
-
-		static {
-			for (ItemType type : values()) {
-				META_LOOKUP[type.ordinal()] = type;
-			}
+			return values()[MathHelper.clamp_int(meta, 0, meta)];
 		}
 	}
 

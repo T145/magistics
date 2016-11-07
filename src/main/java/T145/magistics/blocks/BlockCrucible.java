@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
+import T145.magistics.api.blocks.IBlockType;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.tiles.TileCrucible;
@@ -25,11 +26,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -45,47 +44,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRendered {
 
-	public static enum BlockType implements IStringSerializable {
+	public static enum BlockType implements IBlockType {
 
-		BASIC(), EYES(), THAUMIUM(), SOULS();
-
-		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
+		BASIC, EYES, THAUMIUM, SOULS;
 
 		@Override
 		public String getName() {
 			return name().toLowerCase();
 		}
 
+		@Override
 		public String getClientName() {
 			return "variant=" + getName();
 		}
 
 		public static BlockType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
-		}
-
-		static {
-			for (BlockType type : values()) {
-				META_LOOKUP[type.ordinal()] = type;
-			}
-		}
-	}
-
-	public static class BlockCrucibleItem extends ItemBlock {
-
-		public BlockCrucibleItem(Block block) {
-			super(block);
-			setHasSubtypes(true);
-		}
-
-		@Override
-		public int getMetadata(int meta) {
-			return meta;
-		}
-
-		@Override
-		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + BlockType.byMetadata(stack.getMetadata()).getName();
+			return values()[MathHelper.clamp_int(meta, 0, meta)];
 		}
 	}
 
@@ -109,7 +83,7 @@ public class BlockCrucible extends Block implements IBlockModeled, IBlockTileRen
 		setResistance(17F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockCrucibleItem(this), getRegistryName());
+		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
 	}
 

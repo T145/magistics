@@ -1,0 +1,31 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "minecraft:cube_all"
+    },
+    "variants": {
+        "variant": {
+            "greatwood": {
+                "textures": {
+                    "all": "magistics:blocks/greatwood/planks"
+                }
+            },
+            "greatwood_orn": {
+                "textures": {
+                    "all": "magistics:blocks/greatwood/planks_orn"
+                }
+            },
+            "silverwood": {
+                "textures": {
+                    "all": "magistics:blocks/silverwood/planks"
+                }
+            },
+            "silverwood_orn": {
+                "textures": {
+                    "all": "magistics:blocks/silverwood/planks_orn"
+                }
+            }
+        }
+    }
+}

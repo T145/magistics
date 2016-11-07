@@ -6,6 +6,7 @@ import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfusedOre;
 import T145.magistics.blocks.BlockInfuser;
 import T145.magistics.blocks.BlockLogs;
+import T145.magistics.blocks.BlockPlanks;
 import T145.magistics.lib.world.WorldGenerator;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -23,6 +24,7 @@ public class ModBlocks {
 	public static BlockInfusedOre blockEndOre;
 
 	public static BlockLogs blockLogs;
+	public static BlockPlanks blockPlanks;
 
 	public static void preInit(FMLPreInitializationEvent event) {
 		blockCrucible = new BlockCrucible("crucible");
@@ -33,6 +35,7 @@ public class ModBlocks {
 		blockEndOre = new BlockInfusedOre("ore_end");
 
 		blockLogs = new BlockLogs("log");
+		blockPlanks = new BlockPlanks("planks");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -48,6 +51,7 @@ public class ModBlocks {
 		blockEndOre.registerModel();
 
 		blockLogs.registerModel();
+		blockPlanks.registerModel();
 	}
 
 	public static void init(FMLInitializationEvent event) {

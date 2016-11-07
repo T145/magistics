@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import T145.magistics.Magistics;
 import T145.magistics.api.blocks.IBlockModeled;
 import T145.magistics.api.blocks.IBlockTileRendered;
+import T145.magistics.api.blocks.IBlockType;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
@@ -27,12 +28,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -47,47 +46,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRendered {
 
-	public static enum BlockType implements IStringSerializable {
+	public static enum BlockType implements IBlockType {
 
-		LIGHT(), DARK();
-
-		private static final BlockType[] META_LOOKUP = new BlockType[values().length];
+		LIGHT, DARK;
 
 		@Override
 		public String getName() {
 			return name().toLowerCase();
 		}
 
+		@Override
 		public String getClientName() {
 			return "variant=" + getName();
 		}
 
 		public static BlockType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp_int(meta, 0, META_LOOKUP.length)];
-		}
-
-		static {
-			for (BlockType type : values()) {
-				META_LOOKUP[type.ordinal()] = type;
-			}
-		}
-	}
-
-	public static class BlockInfuserItem extends ItemBlock {
-
-		public BlockInfuserItem(Block block) {
-			super(block);
-			setHasSubtypes(true);
-		}
-
-		@Override
-		public int getMetadata(int meta) {
-			return meta;
-		}
-
-		@Override
-		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + BlockType.byMetadata(stack.getMetadata()).getName();
+			return values()[MathHelper.clamp_int(meta, 0, meta)];
 		}
 	}
 
@@ -107,7 +81,7 @@ public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRend
 		setResistance(15F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockInfuserItem(this), getRegistryName());
+		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 		GameRegistry.registerTileEntity(TileInfuserDark.class, TileInfuserDark.class.getSimpleName());
 	}

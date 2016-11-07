@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -33,24 +32,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockInfusedOre extends Block implements IBlockModeled, IBlockColor {
-
-	public static class BlockOreItem extends ItemBlock {
-
-		public BlockOreItem(Block block) {
-			super(block);
-			setHasSubtypes(true);
-		}
-
-		@Override
-		public int getMetadata(int meta) {
-			return meta;
-		}
-
-		@Override
-		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + ItemShard.ItemType.byMetadata(stack.getMetadata()).getName();
-		}
-	}
 
 	public static final PropertyEnum<ItemShard.ItemType> VARIANT = PropertyEnum.<ItemShard.ItemType>create("variant", ItemShard.ItemType.class);
 	private Random rand = new Random();
@@ -69,7 +50,7 @@ public class BlockInfusedOre extends Block implements IBlockModeled, IBlockColor
 		setTickRandomly(true);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockOreItem(this), getRegistryName());
+		GameRegistry.register(new BlockMagisticsItem(this, ItemShard.ItemType.class), getRegistryName());
 	}
 
 	@Override
