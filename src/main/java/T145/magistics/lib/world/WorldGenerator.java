@@ -65,7 +65,7 @@ public class WorldGenerator implements IWorldGenerator {
 
 			try {
 				new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
-				Magistics.logger.info("Generating InfusedOre:Meta{" + meta + "} at " + pos);
+				//Magistics.logger.info("Generating InfusedOre:Meta{" + meta + "} at " + pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}

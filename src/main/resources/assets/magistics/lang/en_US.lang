@@ -38,6 +38,10 @@ tile.log.greatwood.name=Greatwood Log
 tile.log.silverwood.name=Silverwood Log
 tile.planks.greatwood.name=Greatwood Planks
 tile.planks.silverwood.name=Silverwood Planks
+tile.leaves.greatwood.name=Greatwood Leaves
+tile.leaves.silverwood.name=Silverwood Leaves
+tile.saplings.greatwood.name=Greatwood Sapling
+tile.saplings.silverwood.name=Silverwood Sapling
 
 item.shard.air.name=Air Crystal
 item.shard.fire.name=Fire Crystal

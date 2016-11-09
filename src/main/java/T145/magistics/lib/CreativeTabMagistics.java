@@ -1,9 +1,10 @@
 package T145.magistics.lib;
 
 import T145.magistics.Magistics;
+import T145.magistics.load.ModBlocks;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,7 +23,13 @@ public class CreativeTabMagistics extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
+	public ItemStack getIconItemStack() {
+		return new ItemStack(ModBlocks.blockInfuser, 1, 0);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		return Item.getItemFromBlock(Blocks.BOOKSHELF);
+		return getIconItemStack().getItem();
 	}
 }

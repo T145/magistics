@@ -1,0 +1,39 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "cross"
+    },
+    "variants": {
+        "variant": {
+            "greatwood": {
+                "textures": {
+                    "cross": "magistics:blocks/greatwood/sapling"
+                }
+            },
+            "silverwood": {
+                "textures": {
+                    "cross": "magistics:blocks/silverwood/sapling"
+                }
+            }
+        },
+        "stage": {
+            "0": {},
+            "1": {}
+        },
+        "variant=greatwood": {
+            "model": "forge:item-layer",
+            "transform": "forge:default-item",
+            "textures": {
+                "layer0": "magistics:blocks/greatwood/sapling"
+            }
+        },
+        "variant=silverwood": {
+            "model": "forge:item-layer",
+            "transform": "forge:default-item",
+            "textures": {
+                "layer0": "magistics:blocks/silverwood/sapling"
+            }
+        }
+    }
+}

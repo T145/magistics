@@ -5,8 +5,10 @@ import T145.magistics.api.crafting.InfuserRecipes;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfusedOre;
 import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.blocks.BlockLeaves;
 import T145.magistics.blocks.BlockLogs;
 import T145.magistics.blocks.BlockPlanks;
+import T145.magistics.blocks.BlockSaplings;
 import T145.magistics.lib.world.WorldGenerator;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -25,6 +27,8 @@ public class ModBlocks {
 
 	public static BlockLogs blockLogs;
 	public static BlockPlanks blockPlanks;
+	public static BlockLeaves blockLeaves;
+	public static BlockSaplings blockSaplings;
 
 	public static void preInit(FMLPreInitializationEvent event) {
 		blockCrucible = new BlockCrucible("crucible");
@@ -36,6 +40,8 @@ public class ModBlocks {
 
 		blockLogs = new BlockLogs("log");
 		blockPlanks = new BlockPlanks("planks");
+		blockLeaves = new BlockLeaves("leaves");
+		blockSaplings = new BlockSaplings("saplings");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -52,6 +58,8 @@ public class ModBlocks {
 
 		blockLogs.registerModel();
 		blockPlanks.registerModel();
+		blockLeaves.registerModel();
+		blockSaplings.registerModel();
 	}
 
 	public static void init(FMLInitializationEvent event) {

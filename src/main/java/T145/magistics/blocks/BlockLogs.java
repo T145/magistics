@@ -84,7 +84,12 @@ public class BlockLogs extends BlockLog implements IBlockModeled {
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return damageDropped(state) == 1 ? 6 : super.getLightValue(state, world, pos);
+		switch (getMetaFromState(state)) {
+		case 1: case 5: case 9:
+			return 6;
+		default:
+			return 0;
+		}
 	}
 
 	@Override
