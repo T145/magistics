@@ -2,6 +2,9 @@ package T145.magistics.lib.world.biomes;
 
 import java.util.Random;
 
+import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
+import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.passive.EntityHorse;
@@ -9,6 +12,10 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenBigTree;
+import net.minecraft.world.gen.feature.WorldGenTallGrass;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,6 +34,16 @@ public class BiomeEnchantedForest extends Biome {
 		theBiomeDecorator.grassPerChunk = 12;
 		theBiomeDecorator.waterlilyPerChunk = 6;
 		theBiomeDecorator.mushroomsPerChunk = 6;
+	}
+
+	@Override
+	public WorldGenAbstractTree genBigTreeChance(Random rand) {
+		return rand.nextInt(10) == 0 ? new WorldGenGreatwoodTree(false) : rand.nextInt(14) == 0 ? new WorldGenSilverwoodTree(false, 8, 5) : new WorldGenBigTree(false);
+	}
+
+	@Override
+	public WorldGenerator getRandomWorldGenForGrass(Random rand) {
+		return rand.nextInt(4) == 0 ? new WorldGenTallGrass(BlockTallGrass.EnumType.FERN) : new WorldGenTallGrass(BlockTallGrass.EnumType.GRASS);
 	}
 
 	@Override

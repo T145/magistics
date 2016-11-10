@@ -5,6 +5,9 @@ import java.util.Random;
 import T145.magistics.Magistics;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.aura.AuraHandler;
+import T145.magistics.lib.world.biomes.BiomeHandler;
+import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
+import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
 import T145.magistics.load.ModBlocks;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -48,8 +51,6 @@ public class WorldGenerator implements IWorldGenerator {
 	}
 
 	private void generateSurface(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		Magistics.logger.info("Beginning Overworld generation...");
-
 		for (int rarity = 0; rarity < 8; ++rarity) {
 			int randX = chunkX * 16 + random.nextInt(16);
 			int randZ = chunkZ * 16 + random.nextInt(16);
@@ -65,16 +66,31 @@ public class WorldGenerator implements IWorldGenerator {
 
 			try {
 				new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
-				//Magistics.logger.info("Generating InfusedOre:Meta{" + meta + "} at " + pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
+			}
+		}
+
+		decorateOverworldBiomes(world, random, chunkX, chunkZ);
+	}
+
+	private void decorateOverworldBiomes(World world, Random random, int chunkX, int chunkZ) {
+		int x = chunkX * 16 + random.nextInt(16);
+		int z = chunkZ * 16 + random.nextInt(16);
+		BlockPos pos = world.getPrecipitationHeight(new BlockPos(x, 0, z));
+
+		if (world.getBiomeForCoordsBody(pos).equals(BiomeHandler.biomeEnchantedForest)) {
+			if (random.nextInt(60) == 3) {
+				new WorldGenSilverwoodTree(false, 7, 4).generate(world, random, pos);
+			}
+
+			if (random.nextInt(25) == 7) {
+				new WorldGenGreatwoodTree(false).generate(world, random, pos);
 			}
 		}
 	}
 
 	private void generateNether(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		Magistics.logger.info("Beginning Nether generation...");
-
 		for (int rarity = 0; rarity < 4; ++rarity) {
 			int randX = chunkX * 16 + random.nextInt(16);
 			int randZ = chunkZ * 16 + random.nextInt(16);
@@ -84,7 +100,6 @@ public class WorldGenerator implements IWorldGenerator {
 
 			try {
 				new WorldGenMinable(ModBlocks.blockNetherOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
-				Magistics.logger.info("Generating NetherInfusedOre:Meta{" + meta + "} at " + pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}
@@ -92,8 +107,6 @@ public class WorldGenerator implements IWorldGenerator {
 	}
 
 	private void generateEnd(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		Magistics.logger.info("Beginning End generation...");
-
 		for (int rarity = 0; rarity < 4; ++rarity) {
 			int randX = chunkX * 16 + random.nextInt(16);
 			int randZ = chunkZ * 16 + random.nextInt(16);
@@ -103,7 +116,6 @@ public class WorldGenerator implements IWorldGenerator {
 
 			try {
 				new WorldGenMinable(ModBlocks.blockEndOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.END_STONE)).generate(world, random, pos);
-				Magistics.logger.info("Generating EndInfusedOre:Meta{" + meta + "} at " + pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}
