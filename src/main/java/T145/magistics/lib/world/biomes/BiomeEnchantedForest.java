@@ -38,7 +38,7 @@ public class BiomeEnchantedForest extends Biome {
 
 	@Override
 	public WorldGenAbstractTree genBigTreeChance(Random rand) {
-		return rand.nextInt(10) == 0 ? new WorldGenGreatwoodTree(false) : rand.nextInt(14) == 0 ? new WorldGenSilverwoodTree(false, 8, 5) : new WorldGenBigTree(false);
+		return rand.nextInt(60) == 3 ? new WorldGenSilverwoodTree(false, 7, 4) : rand.nextInt(25) == 7 ? new WorldGenGreatwoodTree(false) : new WorldGenBigTree(false);
 	}
 
 	@Override
@@ -47,7 +47,9 @@ public class BiomeEnchantedForest extends Biome {
 	}
 
 	@Override
-	public void decorate(World world, Random random, BlockPos pos) {}
+	public void decorate(World world, Random random, BlockPos pos) {
+		super.decorate(world, random, pos);
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
