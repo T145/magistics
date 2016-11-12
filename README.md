@@ -8,9 +8,9 @@ Logistical magic!
 
 1. [Dependencies](https://github.com/T145/magistics#dependencies)
 2. [Workspace Setup](https://github.com/T145/magistics#workspace-setup)
-3. [Development](https://github.com/T145/magistics#development)
-4. [License](https://github.com/T145/magistics#development)
-5. [Contributing](https://github.com/T145/magistics#contributing)
+3. [License](https://github.com/T145/magistics#development)
+4. [Contributing](https://github.com/T145/magistics#contributing)
+5. [Support](https://github.com/T145/magistics#support)
 
 ---
 
@@ -32,17 +32,7 @@ To begin coding, start by executing the following command:
 ```
 gradle setupWorkspace eclipse
 ```
-It may take a while to complete, depending on your internet connection and the processing power of your machine. On average it takes about 10 minutes for most people. Again, if you don't have Gradle installed, then just replace the `gradle` in that command with `gradlew`. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
-
----
-
-## Development
-
-When run in the workspace for the first time, CodeChickenCore will prompt you for access to the MCP source mappings. These can be found at:
-```
-(User)\.gradle\caches\minecraft\net\minecraftforge\forge\(MinecraftForge Version)\unpacked\conf
-```
-It will remember this path for consecutive executions, so you're all set for here on out.
+It may take a while to complete, depending on your internet connection and the processing power of your machine. On average it takes about 10 minutes for most people. Again, if you don't have Gradle installed, then just replace the `gradle` in that command with `gradlew`. The `eclipse` task may need to be re-run. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
 
 ---
 
@@ -56,4 +46,8 @@ Please consult the license if you wish to use the source code. You may contact [
 
 This project is made specifically for the community and mainstream use! If you see something wrong with it or want to add a new feature, then please fork it and make a contribution.
 
-*Enjoy!*
+---
+
+## Support
+
+If you like my work and are interested in supporting me, go check out [Patreon](https://www.patreon.com/user?u=152139).
