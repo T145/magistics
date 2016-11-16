@@ -21,10 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BiomeEnchantedForest extends Biome {
 
-	private final static int COLOR = 6728396;
-
 	public BiomeEnchantedForest() {
-		super(new BiomeProperties("Enchanted Forest").setWaterColor(COLOR).setTemperature(0.7F).setRainfall(0.6F).setBaseHeight(0.2F));
+		super(new BiomeProperties("Enchanted Forest").setWaterColor(6747307).setTemperature(0.7F).setRainfall(0.6F).setBaseHeight(0.2F));
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 2, 1, 3));
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 2, 1, 3));
 		spawnableMonsterList.add(new Biome.SpawnListEntry(EntityWitch.class, 3, 1, 1));
@@ -54,13 +52,13 @@ public class BiomeEnchantedForest extends Biome {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getGrassColorAtPos(BlockPos pos) {
-		return COLOR;
+		return 5635969;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getFoliageColorAtPos(BlockPos pos) {
-		return 7851246;
+		return 6750149;
 	}
 
 	@Override

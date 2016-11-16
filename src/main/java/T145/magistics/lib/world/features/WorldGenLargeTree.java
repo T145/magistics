@@ -14,61 +14,42 @@ import net.minecraftforge.common.IPlantable;
 
 public class WorldGenLargeTree extends WorldGenAbstractTree {
 
-	static final byte otherCoordPairs[] = { 2, 0, 0, 1, 2, 1 };
-	Random rand;
-	int rootRand;
-	int rootAlt;
-	int tapRootRand;
-	int basePos[] = { 0, 0, 0 };
-	int heightLimit;
-	int height;
-	double heightAttenuation;
-	double branchDensity;
-	double branchSlope;
-	double scaleWidth;
-	double leafDensity;
-	int trunkSize;
-	int heightLimitLimit;
-	int leafDistanceLimit;
-	int[][] leafNodes;
-	Block trunkBlock;
-	private int trunkMeta;
-	Block leafBlock;
-	private int leafMeta;
-	private int heightmin;
-	private int heightmax;
-	World world;
+	private static final byte COORD_PAIRS[] = { 2, 0, 0, 1, 2, 1 };
+	private final IBlockState trunkState;
+	private final IBlockState leafState;
+	private final int heightMin;
+	private final int heightMax;
+	private World world;
+	private Random rand = new Random();
+	private int basePos[] = { 0, 0, 0 };
+	private int rootRand;
+	private int rootAlt;
+	private int tapRootRand;
+	protected int trunkSize = 1;
+	protected int height;
+	private int heightLimit;
+	protected double heightAttenuation = 0.318D;
+	protected double branchDensity = 1D;
+	protected double branchSlope = 0.618D;
+	protected double scaleWidth = 1D;
+	protected double leafDensity = 1D;
+	protected int leafDistanceLimit = 4;
+	private int[][] leafNodes;
 
-	public WorldGenLargeTree(boolean notify, Block trunkBlock, int trunkMeta, Block leafBlock, int leafMeta, int heightMin, int heightMax) {
+	public WorldGenLargeTree(boolean notify, IBlockState trunkState, IBlockState leafState, int heightMin, int heightMax) {
 		super(notify);
-		rand = new Random();
-		rootRand = 0;
-		rootAlt = 0;
-		tapRootRand = 0;
-		heightLimit = 0;
-		heightAttenuation = 0.318D;
-		branchDensity = 1.0D;
-		branchSlope = 0.618D;
-		scaleWidth = 1.0D;
-		leafDensity = 1.0D;
-		trunkSize = 1;
-		heightLimitLimit = 12;
-		leafDistanceLimit = 4;
 
-		this.trunkBlock = trunkBlock;
-		this.trunkMeta = trunkMeta;
-		this.leafBlock = leafBlock;
-		this.leafMeta = leafMeta;
-
-		heightmin = heightMin;
-		heightmax = heightMax;
+		this.trunkState = trunkState;
+		this.leafState = leafState;
+		this.heightMin = heightMin;
+		this.heightMax = heightMax;
 	}
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		this.world = world;
-		long l = rand.nextLong();
-		rand.setSeed(l);
+		long seed = rand.nextLong();
+		rand.setSeed(seed);
 		basePos[0] = pos.getX();
 		basePos[1] = pos.getY();
 		basePos[2] = pos.getZ();
@@ -78,8 +59,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			return false;
 		}
 
-		int[] heightvector = { heightmin, heightmax - heightmin };
-		heightLimit = vary(rand, heightvector);
+		int[] heightVector = { heightMin, heightMax - heightMin };
+		heightLimit = vary(rand, heightVector);
 		rootRand = rand.nextInt(4);
 
 		if (generateLeafNodeList()) {
@@ -190,8 +171,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 
 	void generateLeaves(int i, int j, int k, float f, byte byte0) {
 		int i1 = (int) ((double) f + 0.618D);
-		byte byte1 = otherCoordPairs[byte0];
-		byte byte2 = otherCoordPairs[byte0 + 3];
+		byte byte1 = COORD_PAIRS[byte0];
+		byte byte2 = COORD_PAIRS[byte0 + 3];
 		int ai[] = { i, j, k };
 		int ai1[] = { 0, 0, 0 };
 		int j1 = -i1;
@@ -214,7 +195,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 					if (i2 != Blocks.AIR && i2 != Blocks.LEAVES) {
 						l1++;
 					} else {
-						this.setBlockAndNotifyAdequately(world, pos, leafBlock.getStateFromMeta(leafMeta));
+						this.setBlockAndNotifyAdequately(world, pos, leafState);
 						l1++;
 					}
 				}
@@ -296,8 +277,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			return;
 		}
 
-		byte byte1 = otherCoordPairs[j];
-		byte byte2 = otherCoordPairs[j + 3];
+		byte byte1 = COORD_PAIRS[j];
+		byte byte2 = COORD_PAIRS[j + 3];
 		byte byte3;
 
 		if (ai2[j] > 0) {
@@ -315,7 +296,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			ai3[j] = MathHelper.floor_double((double) (ai[j] + k) + 0.5D);
 			ai3[byte1] = MathHelper.floor_double((double) ai[byte1] + (double) k * d + 0.5D);
 			ai3[byte2] = MathHelper.floor_double((double) ai[byte2] + (double) k * d1 + 0.5D);
-			this.setBlockAndNotifyAdequately(world, new BlockPos(ai3[0], ai3[1], ai3[2]), trunkBlock.getStateFromMeta(trunkMeta));
+			this.setBlockAndNotifyAdequately(world, new BlockPos(ai3[0], ai3[1], ai3[2]), trunkState);
 		}
 	}
 
@@ -525,7 +506,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 		tapRootRand = len;
 
 		for (int jj = 1; jj <= len; jj++) {
-			this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - jj, k), trunkBlock.getStateFromMeta(trunkMeta));
+			this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - jj, k), trunkState);
 		}
 	}
 
@@ -594,12 +575,12 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			k2 = (int) z2;
 
 			if (i2 != i || j2 != j || k2 != k) {
-				this.setBlockAndNotifyAdequately(world, new BlockPos(i, j, k), trunkBlock.getStateFromMeta(trunkMeta));
+				this.setBlockAndNotifyAdequately(world, new BlockPos(i, j, k), trunkState);
 				cnt++;
 
 				if (cnt < 4) {
 					if (j2 != j - 1 || i2 != i || k2 != k) {
-						this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - 1, k), trunkBlock.getStateFromMeta(trunkMeta));
+						this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - 1, k), trunkState);
 					}
 				}
 
@@ -865,8 +846,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			return -1;
 		}
 
-		byte byte1 = otherCoordPairs[i];
-		byte byte2 = otherCoordPairs[i + 3];
+		byte byte1 = COORD_PAIRS[i];
+		byte byte2 = COORD_PAIRS[i + 3];
 		byte byte3;
 
 		if (ai2[i] > 0) {

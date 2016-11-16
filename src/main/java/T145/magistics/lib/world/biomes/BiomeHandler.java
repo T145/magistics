@@ -30,8 +30,8 @@ public class BiomeHandler {
 
 		biomeEnchantedForest = registerBiome(new BiomeEnchantedForest());
 		registerBiomeToDictionary(biomeEnchantedForest, Type.MAGICAL, Type.FOREST);
-		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, 10));
-		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, 10));
+		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
 
 		loadAuraMapping();
 	}

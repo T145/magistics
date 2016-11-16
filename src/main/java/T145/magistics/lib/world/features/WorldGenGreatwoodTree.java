@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class WorldGenGreatwoodTree extends WorldGenLargeTree {
 
 	public WorldGenGreatwoodTree(boolean notify) {
-		super(notify, ModBlocks.blockLogs, 4, ModBlocks.blockLeaves, 0, 19, 24);
+		super(notify, ModBlocks.blockLogs.getStateFromMeta(4), ModBlocks.blockLeaves.getDefaultState(), 19, 24);
 	}
 
 	@Override
@@ -17,7 +17,6 @@ public class WorldGenGreatwoodTree extends WorldGenLargeTree {
 		heightAttenuation = 0.3D;
 		scaleWidth = 1.0D;
 		trunkSize = 2;
-		heightLimitLimit = 3;
 		leafDistanceLimit = 4;
 		return super.generate(world, random, pos);
 	}
