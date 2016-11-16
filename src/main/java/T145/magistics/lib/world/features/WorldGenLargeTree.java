@@ -2,6 +2,7 @@ package T145.magistics.lib.world.features;
 
 import java.util.Random;
 
+import T145.magistics.Magistics;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -195,7 +196,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 					if (i2 != Blocks.AIR && i2 != Blocks.LEAVES) {
 						l1++;
 					} else {
-						this.setBlockAndNotifyAdequately(world, pos, leafState);
+						setBlockAndNotifyAdequately(world, pos, leafState);
 						l1++;
 					}
 				}
@@ -296,15 +297,15 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			ai3[j] = MathHelper.floor_double((double) (ai[j] + k) + 0.5D);
 			ai3[byte1] = MathHelper.floor_double((double) ai[byte1] + (double) k * d + 0.5D);
 			ai3[byte2] = MathHelper.floor_double((double) ai[byte2] + (double) k * d1 + 0.5D);
-			this.setBlockAndNotifyAdequately(world, new BlockPos(ai3[0], ai3[1], ai3[2]), trunkState);
+			setBlockAndNotifyAdequately(world, new BlockPos(ai3[0], ai3[1], ai3[2]), trunkState);
 		}
 	}
 
 	void generateLeaves() {
-		for (int i = 0; i < this.leafNodes.length; i++) {
-			int k = this.leafNodes[i][0];
-			int l = this.leafNodes[i][1];
-			int i1 = this.leafNodes[i][2];
+		for (int i = 0; i < leafNodes.length; i++) {
+			int k = leafNodes[i][0];
+			int l = leafNodes[i][1];
+			int i1 = leafNodes[i][2];
 			generateLeafNode(k, l, i1);
 		}
 	}
@@ -485,327 +486,329 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 	}
 
 	void growTapRoot(int i, int j, int k, double flen) {
-		// if(KTreeCfg.rootsEnable == false) return;
-		int med;
-		int len = (int) ((6.0 + rand.nextFloat() * 6.0) * flen);
+		if (Magistics.config.generateRoots) {
+			int med;
+			int len = (int) ((6.0 + rand.nextFloat() * 6.0) * flen);
 
-		if (len == tapRootRand || len == tapRootRand + 1 || len == tapRootRand - 1) {
-			len = (int) ((6.0 + rand.nextFloat() * 6.0) * flen);
-		}
-
-		for (int jj = 1; jj <= len; jj++) {
-			med = getMedium(i, j - jj, k);
-			if (med == 1) {
-				len -= 1;
-			} else if (med == 0) {
-				len = Math.min(len, jj - 1);
-				break;
+			if (len == tapRootRand || len == tapRootRand + 1 || len == tapRootRand - 1) {
+				len = (int) ((6.0 + rand.nextFloat() * 6.0) * flen);
 			}
-		}
 
-		tapRootRand = len;
+			for (int jj = 1; jj <= len; jj++) {
+				med = getMedium(i, j - jj, k);
+				if (med == 1) {
+					len -= 1;
+				} else if (med == 0) {
+					len = Math.min(len, jj - 1);
+					break;
+				}
+			}
 
-		for (int jj = 1; jj <= len; jj++) {
-			this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - jj, k), trunkState);
+			tapRootRand = len;
+
+			for (int jj = 1; jj <= len; jj++) {
+				setBlockAndNotifyAdequately(world, new BlockPos(i, j - jj, k), trunkState);
+			}
 		}
 	}
 
 	void growRoot(int l, int m, int n, double theta, double phi) {
-		// if(KTreeCfg.rootsEnable == false) return;
-		if (rootAlt == 1) {
-			rootRand = rand.nextInt(2);
-			m -= rootRand;
-			rootAlt = 2;
-		} else if (rootAlt == 2) {
-			if (rootRand == 0)
-				m -= 1;
-			rootAlt = 0;
-		} else if (rootAlt == 10) {
-			m -= rand.nextInt(2);
-		}
-
-		m += 1;
-		phi -= (double) rand.nextFloat() * 0.05;
-		theta += (double) rand.nextFloat() * 0.1 - 0.05;
-
-		double direction = (2.0 * Math.PI) * theta;
-		double curl = rand.nextFloat() * 0.4F - 0.2F;
-		double pitch = (2.0 * Math.PI) * phi;
-		int length = 2 + (3 * trunkSize) + rand.nextInt(2);
-		double x, y, z;
-
-		if (l > 0) {
-			x = (double) l + 0.5;
-		} else {
-			x = (double) l - 0.5;
-		}
-
-		y = (double) m + 0.5;
-
-		if (n > 0) {
-			z = (double) n + 0.5;
-		} else {
-			z = (double) n - 0.5;
-		}
-
-		double x2, y2, z2, hoz;
-		int i = (int) x;
-		int j = (int) y;
-		int k = (int) z;
-		int i2, j2, k2, di, dk;
-		int med = getMedium(i, j, k);
-		int cnt = 0;
-
-		while (length > 0.0) {
-			length--;
-			curl = curl + rand.nextFloat() * 0.06F - 0.03F;
-
-			if (med == 1) {
-				pitch = (pitch + Math.PI / 2.0) * 0.7 - Math.PI / 2.0;
-			} else {
-				pitch = (pitch + Math.PI / 2.0) * 0.9 - Math.PI / 2.0;
+		if (Magistics.config.generateRoots) {
+			if (rootAlt == 1) {
+				rootRand = rand.nextInt(2);
+				m -= rootRand;
+				rootAlt = 2;
+			} else if (rootAlt == 2) {
+				if (rootRand == 0)
+					m -= 1;
+				rootAlt = 0;
+			} else if (rootAlt == 10) {
+				m -= rand.nextInt(2);
 			}
 
-			hoz = Math.cos(pitch);
-			x2 = x + Math.cos(direction) * hoz;
-			y2 = y + Math.sin(pitch);
-			z2 = z + Math.sin(direction) * hoz;
-			i2 = (int) x2;
-			j2 = (int) y2;
-			k2 = (int) z2;
+			m += 1;
+			phi -= (double) rand.nextFloat() * 0.05;
+			theta += (double) rand.nextFloat() * 0.1 - 0.05;
 
-			if (i2 != i || j2 != j || k2 != k) {
-				this.setBlockAndNotifyAdequately(world, new BlockPos(i, j, k), trunkState);
-				cnt++;
+			double direction = (2.0 * Math.PI) * theta;
+			double curl = rand.nextFloat() * 0.4F - 0.2F;
+			double pitch = (2.0 * Math.PI) * phi;
+			int length = 2 + (3 * trunkSize) + rand.nextInt(2);
+			double x, y, z;
 
-				if (cnt < 4) {
-					if (j2 != j - 1 || i2 != i || k2 != k) {
-						this.setBlockAndNotifyAdequately(world, new BlockPos(i, j - 1, k), trunkState);
-					}
+			if (l > 0) {
+				x = (double) l + 0.5;
+			} else {
+				x = (double) l - 0.5;
+			}
+
+			y = (double) m + 0.5;
+
+			if (n > 0) {
+				z = (double) n + 0.5;
+			} else {
+				z = (double) n - 0.5;
+			}
+
+			double x2, y2, z2, hoz;
+			int i = (int) x;
+			int j = (int) y;
+			int k = (int) z;
+			int i2, j2, k2, di, dk;
+			int med = getMedium(i, j, k);
+			int cnt = 0;
+
+			while (length > 0.0) {
+				length--;
+				curl = curl + rand.nextFloat() * 0.06F - 0.03F;
+
+				if (med == 1) {
+					pitch = (pitch + Math.PI / 2.0) * 0.7 - Math.PI / 2.0;
+				} else {
+					pitch = (pitch + Math.PI / 2.0) * 0.9 - Math.PI / 2.0;
 				}
 
-				med = getMedium(i2, j2, k2);
+				hoz = Math.cos(pitch);
+				x2 = x + Math.cos(direction) * hoz;
+				y2 = y + Math.sin(pitch);
+				z2 = z + Math.sin(direction) * hoz;
+				i2 = (int) x2;
+				j2 = (int) y2;
+				k2 = (int) z2;
 
-				if (med != 0) {
-					x = x2;
-					y = y2;
-					z = z2;
-					i = i2;
-					j = j2;
-					k = k2;
-				} else {
-					med = getMedium(i, j - 1, k);
+				if (i2 != i || j2 != j || k2 != k) {
+					setBlockAndNotifyAdequately(world, new BlockPos(i, j, k), trunkState);
+					cnt++;
+
+					if (cnt < 4) {
+						if (j2 != j - 1 || i2 != i || k2 != k) {
+							setBlockAndNotifyAdequately(world, new BlockPos(i, j - 1, k), trunkState);
+						}
+					}
+
+					med = getMedium(i2, j2, k2);
 
 					if (med != 0) {
-						y = y - 1.0;
-						j = j - 1;
-						pitch = -Math.PI / 2.0;
+						x = x2;
+						y = y2;
+						z = z2;
+						i = i2;
+						j = j2;
+						k = k2;
 					} else {
-						x2 = x + Math.cos(direction);
-						z2 = z + Math.sin(direction);
-						i2 = (int) x2;
-						k2 = (int) z2;
-						med = getMedium(i2, j, k2);
+						med = getMedium(i, j - 1, k);
 
 						if (med != 0) {
-							x = x2;
-							z = z2;
-							i = i2;
-							k = k2;
-							pitch = 0.0;
+							y = y - 1.0;
+							j = j - 1;
+							pitch = -Math.PI / 2.0;
 						} else {
-							int dir = ((int) (direction * 8.0 / Math.PI));
-							if (dir < 0) {
-								dir = 15 - (15 - dir) % 16;
+							x2 = x + Math.cos(direction);
+							z2 = z + Math.sin(direction);
+							i2 = (int) x2;
+							k2 = (int) z2;
+							med = getMedium(i2, j, k2);
+
+							if (med != 0) {
+								x = x2;
+								z = z2;
+								i = i2;
+								k = k2;
+								pitch = 0.0;
 							} else {
-								dir = dir % 16;
-							}
-
-							int pol = dir % 2;
-							di = i2 - i;
-							dk = k2 - k;
-							int[] tdir = { 0, 0, 0, 0 };
-
-							if (di == 0 && dk == 0) {
-								if (dir < 1) {
-									di = 1;
-									dk = 0;
-								} else if (dir < 3) {
-									di = 1;
-									dk = 1;
-								} else if (dir < 5) {
-									di = 0;
-									dk = 1;
-								} else if (dir < 7) {
-									di = -1;
-									dk = 1;
-								} else if (dir < 9) {
-									di = -1;
-									dk = 0;
-								} else if (dir < 11) {
-									di = -1;
-									dk = -1;
-								} else if (dir < 13) {
-									di = 0;
-									dk = -1;
-								} else if (dir < 15) {
-									di = 1;
-									dk = -1;
+								int dir = ((int) (direction * 8.0 / Math.PI));
+								if (dir < 0) {
+									dir = 15 - (15 - dir) % 16;
 								} else {
-									di = 1;
-									dk = 0;
-								}
-							}
-							if (dk == 0) {
-								if (di > 0) {
-									if (pol == 1) {
-										tdir[0] = 2;
-										tdir[1] = 14;
-										tdir[2] = 4;
-										tdir[3] = 12;
-									} else {
-										tdir[0] = 14;
-										tdir[1] = 2;
-										tdir[2] = 12;
-										tdir[3] = 4;
-									}
-								} else {
-									if (pol == 1) {
-										tdir[0] = 6;
-										tdir[1] = 10;
-										tdir[2] = 4;
-										tdir[3] = 12;
-									} else {
-										tdir[0] = 10;
-										tdir[1] = 6;
-										tdir[2] = 12;
-										tdir[3] = 4;
-									}
-								}
-							} else if (di == 0) {
-								if (dk > 0) {
-									if (pol == 1) {
-										tdir[0] = 2;
-										tdir[1] = 6;
-										tdir[2] = 0;
-										tdir[3] = 8;
-									} else {
-										tdir[0] = 6;
-										tdir[1] = 2;
-										tdir[2] = 8;
-										tdir[3] = 0;
-									}
-								} else {
-									if (pol == 1) {
-										tdir[0] = 10;
-										tdir[1] = 14;
-										tdir[2] = 8;
-										tdir[3] = 0;
-									} else {
-										tdir[0] = 14;
-										tdir[1] = 10;
-										tdir[2] = 0;
-										tdir[3] = 8;
-									}
-								}
-							} else if (dk > 0) {
-								if (di > 0) {
-									if (pol == 1) {
-										tdir[0] = 0;
-										tdir[1] = 4;
-										tdir[2] = 14;
-										tdir[3] = 6;
-									} else {
-										tdir[0] = 4;
-										tdir[1] = 0;
-										tdir[2] = 6;
-										tdir[3] = 14;
-									}
-								} else {
-									if (pol == 1) {
-										tdir[0] = 4;
-										tdir[1] = 8;
-										tdir[2] = 2;
-										tdir[3] = 10;
-									} else {
-										tdir[0] = 8;
-										tdir[1] = 4;
-										tdir[2] = 10;
-										tdir[3] = 2;
-									}
-								}
-							} else {
-								if (di > 0) {
-									if (pol == 1) {
-										tdir[0] = 12;
-										tdir[1] = 0;
-										tdir[2] = 10;
-										tdir[3] = 2;
-									} else {
-										tdir[0] = 0;
-										tdir[1] = 12;
-										tdir[2] = 2;
-										tdir[3] = 10;
-									}
-								} else {
-									if (pol == 1) {
-										tdir[0] = 8;
-										tdir[1] = 12;
-										tdir[2] = 6;
-										tdir[3] = 14;
-									} else {
-										tdir[0] = 12;
-										tdir[1] = 8;
-										tdir[2] = 14;
-										tdir[3] = 6;
-									}
-								}
-							}
-
-							for (int q = 0; q < 4; q++) {
-								if (tdir[q] == 0) {
-									di = 1;
-									dk = 0;
-								} else if (tdir[q] == 2) {
-									di = 1;
-									dk = 1;
-								} else if (tdir[q] == 4) {
-									di = 0;
-									dk = 1;
-								} else if (tdir[q] == 6) {
-									di = -1;
-									dk = 1;
-								} else if (tdir[q] == 8) {
-									di = -1;
-									dk = 0;
-								} else if (tdir[q] == 10) {
-									di = -1;
-									dk = -1;
-								} else if (tdir[q] == 12) {
-									di = 0;
-									dk = -1;
-								} else {
-									di = 1;
-									dk = -1;
+									dir = dir % 16;
 								}
 
-								i2 = i + di;
-								k2 = k + dk;
-								med = getMedium(i2, j, k2);
+								int pol = dir % 2;
+								di = i2 - i;
+								dk = k2 - k;
+								int[] tdir = { 0, 0, 0, 0 };
 
-								if (med != 0) {
-									i = i2;
-									k = k2;
-									x = (double) i + 0.5;
-									z = (double) k + 0.5;
-									pitch = 0;
-									direction = (double) tdir[q] * 2.0 * Math.PI / 16.0;
-									break;
+								if (di == 0 && dk == 0) {
+									if (dir < 1) {
+										di = 1;
+										dk = 0;
+									} else if (dir < 3) {
+										di = 1;
+										dk = 1;
+									} else if (dir < 5) {
+										di = 0;
+										dk = 1;
+									} else if (dir < 7) {
+										di = -1;
+										dk = 1;
+									} else if (dir < 9) {
+										di = -1;
+										dk = 0;
+									} else if (dir < 11) {
+										di = -1;
+										dk = -1;
+									} else if (dir < 13) {
+										di = 0;
+										dk = -1;
+									} else if (dir < 15) {
+										di = 1;
+										dk = -1;
+									} else {
+										di = 1;
+										dk = 0;
+									}
 								}
-							}
+								if (dk == 0) {
+									if (di > 0) {
+										if (pol == 1) {
+											tdir[0] = 2;
+											tdir[1] = 14;
+											tdir[2] = 4;
+											tdir[3] = 12;
+										} else {
+											tdir[0] = 14;
+											tdir[1] = 2;
+											tdir[2] = 12;
+											tdir[3] = 4;
+										}
+									} else {
+										if (pol == 1) {
+											tdir[0] = 6;
+											tdir[1] = 10;
+											tdir[2] = 4;
+											tdir[3] = 12;
+										} else {
+											tdir[0] = 10;
+											tdir[1] = 6;
+											tdir[2] = 12;
+											tdir[3] = 4;
+										}
+									}
+								} else if (di == 0) {
+									if (dk > 0) {
+										if (pol == 1) {
+											tdir[0] = 2;
+											tdir[1] = 6;
+											tdir[2] = 0;
+											tdir[3] = 8;
+										} else {
+											tdir[0] = 6;
+											tdir[1] = 2;
+											tdir[2] = 8;
+											tdir[3] = 0;
+										}
+									} else {
+										if (pol == 1) {
+											tdir[0] = 10;
+											tdir[1] = 14;
+											tdir[2] = 8;
+											tdir[3] = 0;
+										} else {
+											tdir[0] = 14;
+											tdir[1] = 10;
+											tdir[2] = 0;
+											tdir[3] = 8;
+										}
+									}
+								} else if (dk > 0) {
+									if (di > 0) {
+										if (pol == 1) {
+											tdir[0] = 0;
+											tdir[1] = 4;
+											tdir[2] = 14;
+											tdir[3] = 6;
+										} else {
+											tdir[0] = 4;
+											tdir[1] = 0;
+											tdir[2] = 6;
+											tdir[3] = 14;
+										}
+									} else {
+										if (pol == 1) {
+											tdir[0] = 4;
+											tdir[1] = 8;
+											tdir[2] = 2;
+											tdir[3] = 10;
+										} else {
+											tdir[0] = 8;
+											tdir[1] = 4;
+											tdir[2] = 10;
+											tdir[3] = 2;
+										}
+									}
+								} else {
+									if (di > 0) {
+										if (pol == 1) {
+											tdir[0] = 12;
+											tdir[1] = 0;
+											tdir[2] = 10;
+											tdir[3] = 2;
+										} else {
+											tdir[0] = 0;
+											tdir[1] = 12;
+											tdir[2] = 2;
+											tdir[3] = 10;
+										}
+									} else {
+										if (pol == 1) {
+											tdir[0] = 8;
+											tdir[1] = 12;
+											tdir[2] = 6;
+											tdir[3] = 14;
+										} else {
+											tdir[0] = 12;
+											tdir[1] = 8;
+											tdir[2] = 14;
+											tdir[3] = 6;
+										}
+									}
+								}
 
-							if (med == 0) {
-								return; // Root cannot grow any further.
+								for (int q = 0; q < 4; q++) {
+									if (tdir[q] == 0) {
+										di = 1;
+										dk = 0;
+									} else if (tdir[q] == 2) {
+										di = 1;
+										dk = 1;
+									} else if (tdir[q] == 4) {
+										di = 0;
+										dk = 1;
+									} else if (tdir[q] == 6) {
+										di = -1;
+										dk = 1;
+									} else if (tdir[q] == 8) {
+										di = -1;
+										dk = 0;
+									} else if (tdir[q] == 10) {
+										di = -1;
+										dk = -1;
+									} else if (tdir[q] == 12) {
+										di = 0;
+										dk = -1;
+									} else {
+										di = 1;
+										dk = -1;
+									}
+
+									i2 = i + di;
+									k2 = k + dk;
+									med = getMedium(i2, j, k2);
+
+									if (med != 0) {
+										i = i2;
+										k = k2;
+										x = (double) i + 0.5;
+										z = (double) k + 0.5;
+										pitch = 0;
+										direction = (double) tdir[q] * 2.0 * Math.PI / 16.0;
+										break;
+									}
+								}
+
+								if (med == 0) {
+									return; // Root cannot grow any further.
+								}
 							}
 						}
 					}
@@ -890,9 +893,9 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 
 	boolean validTreeLocation() {
 		BlockPos pos = new BlockPos(basePos[0], basePos[1] - 1, basePos[2]);
-		IBlockState state = this.world.getBlockState(pos);
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		boolean isSoil = block.canSustainPlant(state, this.world, pos, EnumFacing.UP, (IPlantable) Blocks.SAPLING);
+		boolean isSoil = block.canSustainPlant(state, world, pos, EnumFacing.UP, (IPlantable) Blocks.SAPLING);
 		return isSoil;
 	}
 }
