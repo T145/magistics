@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockModeled;
+import T145.magistics.api.objects.IObjectModeled;
 import T145.magistics.blocks.BlockLogs.BlockType;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -16,7 +16,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -30,7 +29,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSaplings extends BlockBush implements IBlockModeled, IGrowable {
+public class BlockSaplings extends BlockBush implements IObjectModeled, IGrowable {
 
 	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);

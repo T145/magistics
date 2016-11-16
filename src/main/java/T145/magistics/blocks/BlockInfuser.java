@@ -5,9 +5,9 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockModeled;
-import T145.magistics.api.blocks.IBlockTileRendered;
-import T145.magistics.api.blocks.IBlockType;
+import T145.magistics.api.objects.IBlockTileRendered;
+import T145.magistics.api.objects.IBlockType;
+import T145.magistics.api.objects.IObjectModeled;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
@@ -44,7 +44,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfuser extends Block implements IBlockModeled, IBlockTileRendered {
+public class BlockInfuser extends Block implements IObjectModeled, IBlockTileRendered {
 
 	public static enum BlockType implements IBlockType {
 

@@ -3,7 +3,7 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.blocks.IBlockModeled;
+import T145.magistics.api.objects.IObjectModeled;
 import T145.magistics.blocks.BlockLogs.BlockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPlanks extends Block implements IBlockModeled {
+public class BlockPlanks extends Block implements IObjectModeled {
 
 	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 

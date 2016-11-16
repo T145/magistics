@@ -1,4 +1,4 @@
-package T145.magistics.api.blocks;
+package T145.magistics.api.objects;
 
 import net.minecraft.util.IStringSerializable;
 
