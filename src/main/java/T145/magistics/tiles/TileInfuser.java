@@ -1,7 +1,7 @@
 package T145.magistics.tiles;
 
-import T145.magistics.api.crafting.InfuserRecipes;
-import T145.magistics.api.crafting.recipes.InfuserRecipe;
+import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.sounds.SoundHandler;
@@ -299,7 +299,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 			--soundDelay;
 		}
 
-		InfuserRecipe recipe = InfuserRecipes.getMatchingInfuserRecipe(inventoryStacks, isDark());
+		InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(inventoryStacks, isDark());
 
 		if (isDormant()) {
 			angle = facing;

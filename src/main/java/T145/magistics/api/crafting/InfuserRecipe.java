@@ -1,4 +1,4 @@
-package T145.magistics.api.crafting.recipes;
+package T145.magistics.api.crafting;
 
 import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.item.ItemStack;
@@ -9,21 +9,15 @@ public class InfuserRecipe {
 	private ItemStack[] components;
 	private float visCost;
 	private float miasmaCost;
-	private boolean isDark;
 
-	public InfuserRecipe(ItemStack result, ItemStack[] components, float visCost, boolean isDark) {
+	public InfuserRecipe(ItemStack result, ItemStack[] components, float visCost) {
 		this.result = result;
 		this.components = components;
 		this.visCost = visCost;
-		this.isDark = isDark;
-	}
-
-	public InfuserRecipe(ItemStack result, ItemStack[] components, float visCost) {
-		this(result, components, visCost, false);
 	}
 
 	public InfuserRecipe(ItemStack result, ItemStack[] components, float visCost, float miasmaCost) {
-		this(result, components, visCost, true);
+		this(result, components, visCost);
 		this.miasmaCost = miasmaCost;
 	}
 
@@ -44,7 +38,7 @@ public class InfuserRecipe {
 	}
 
 	public boolean isDark() {
-		return isDark;
+		return miasmaCost > 0F;
 	}
 
 	public boolean matches(ItemStack[] recipe, boolean isDark) {

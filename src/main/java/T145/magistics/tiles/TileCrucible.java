@@ -2,7 +2,7 @@ package T145.magistics.tiles;
 
 import java.util.List;
 
-import T145.magistics.api.crafting.CrucibleRecipes;
+import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;
@@ -155,7 +155,7 @@ public class TileCrucible extends TileVisManager {
 				if (list.size() > 0) {
 					EntityItem entity = (EntityItem) list.get(worldObj.rand.nextInt(list.size()));
 					ItemStack stack = entity.getEntityItem();
-					float visOutput = CrucibleRecipes.getResult(stack);
+					float visOutput = MagisticsApi.getCrucibleResult(stack);
 
 					if (visOutput > 0F) {
 						// check for arcane furnace below
