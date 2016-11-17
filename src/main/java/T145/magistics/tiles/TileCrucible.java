@@ -21,8 +21,8 @@ import net.minecraft.world.chunk.Chunk;
 
 public class TileCrucible extends TileVisManager {
 
-	public float vis = 0F;
-	public float miasma = 0F;
+	public float vis;
+	public float miasma;
 	private float pureBuffer;
 	private float taintedBuffer;
 
@@ -133,11 +133,7 @@ public class TileCrucible extends TileVisManager {
 			if (getBlockMetadata() == 1 || getBlockMetadata() == 2) {
 				boolean oldPower = powering;
 
-				if (totalVis >= maxVis * 0.9D) {
-					powering = true;
-				} else {
-					powering = false;
-				}
+				powering = totalVis >= maxVis * 0.9D;
 
 				if (oldPower != powering) {
 					for (int i = -1; i < 2; i++) {
@@ -205,10 +201,10 @@ public class TileCrucible extends TileVisManager {
 	@Override
 	public boolean getConnectable(EnumFacing face) {
 		switch (face) {
-		case NORTH: case SOUTH: case EAST: case WEST:
-			return true;
-		default:
+		case UP: case DOWN:
 			return false;
+		default:
+			return true;
 		}
 	}
 

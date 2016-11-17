@@ -74,7 +74,7 @@ public class BlockInfuser extends Block implements IObjectModeled, IBlockTileRen
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.LIGHT));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.STONE);
 		setHardness(2F);

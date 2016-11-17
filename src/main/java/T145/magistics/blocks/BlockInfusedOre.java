@@ -42,7 +42,7 @@ public class BlockInfusedOre extends Block implements IObjectModeled, IBlockColo
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, ItemShard.ItemType.AIR));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.STONE);
 		setResistance(5F);

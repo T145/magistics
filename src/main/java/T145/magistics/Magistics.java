@@ -39,7 +39,7 @@ public class Magistics {
 
 	public static Logger logger = LogManager.getLogger(NAME);
 	public static ConfigHandler config = new ConfigHandler();
-	public static final CreativeTabs tab = new CreativeTabMagistics();
+	public static final CreativeTabs TAB = new CreativeTabMagistics();
 
 	public boolean isDeobfuscated() {
 		return VERSION.equals("$version");

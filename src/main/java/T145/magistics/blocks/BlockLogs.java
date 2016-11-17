@@ -53,7 +53,7 @@ public class BlockLogs extends BlockLog implements IObjectModeled {
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.WOOD);
 		setHarvestLevel("axe", 0);

@@ -11,6 +11,7 @@ import T145.magistics.api.objects.IBlockType;
 import T145.magistics.api.objects.IObjectModeled;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderCrucible;
+import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.tiles.TileCrucible;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -76,7 +77,7 @@ public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRe
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.BASIC));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
@@ -156,7 +157,8 @@ public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRe
 				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
 
 				item.setPickupDelay(10);
-			} else if (entity instanceof EntityLiving) {
+				item.lifespan = 0;
+			} else if (entity instanceof EntityLiving && !(entity instanceof EntityVisSlime)) {
 				entity.attackEntityFrom(DamageSource.magic, 1);
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
 			}

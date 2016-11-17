@@ -32,7 +32,7 @@ public class BlockPlanks extends Block implements IObjectModeled {
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.WOOD);
 		setHarvestLevel("axe", 0);

@@ -48,7 +48,7 @@ public class BlockSaplings extends BlockBush implements IObjectModeled, IGrowabl
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(STAGE, 0));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.PLANT);
 		setHardness(0F);
@@ -100,15 +100,6 @@ public class BlockSaplings extends BlockBush implements IObjectModeled, IGrowabl
 				grow(world, rand, pos, state);
 			}
 		}
-	}
-
-	private boolean isTwoByTwoOfType(World world, BlockPos pos, int x, int z, BlockType type) {
-		return isTypeAt(world, pos.add(x, 0, z), type) && isTypeAt(world, pos.add(x + 1, 0, z), type) && isTypeAt(world, pos.add(x, 0, z + 1), type) && isTypeAt(world, pos.add(x + 1, 0, z + 1), type);
-	}
-
-	public boolean isTypeAt(World world, BlockPos pos, BlockType type) {
-		IBlockState state = world.getBlockState(pos);
-		return state.getBlock() == this && state.getValue(VARIANT) == type;
 	}
 
 	@Override

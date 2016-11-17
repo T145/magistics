@@ -44,7 +44,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IObj
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 
 		GameRegistry.register(this);

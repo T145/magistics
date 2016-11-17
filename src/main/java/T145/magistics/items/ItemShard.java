@@ -47,7 +47,7 @@ public class ItemShard extends Item implements IObjectModeled, IItemColor {
 
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
-		setCreativeTab(Magistics.tab);
+		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setHasSubtypes(true);
 
