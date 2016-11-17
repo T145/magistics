@@ -6,6 +6,8 @@ import java.util.Random;
 import T145.magistics.Magistics;
 import T145.magistics.api.objects.IObjectModeled;
 import T145.magistics.blocks.BlockLogs.BlockType;
+import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
+import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -16,6 +18,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +27,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenBigTree;
+import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -129,7 +136,26 @@ public class BlockSaplings extends BlockBush implements IObjectModeled, IGrowabl
 	}
 
 	public void generateTree(World world, BlockPos pos, IBlockState state, Random rand) {
-		// TODO: implement
+		if (TerrainGen.saplingGrowTree(world, rand, pos)) {
+			WorldGenAbstractTree generator = rand.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true);
+
+			switch (state.getValue(VARIANT)) {
+			case GREATWOOD:
+				generator = new WorldGenGreatwoodTree(false);
+				break;
+			case SILVERWOOD:
+				generator = new WorldGenSilverwoodTree(true, 7, 4);
+				break;
+			default:
+				break;
+			}
+
+			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
+
+			if (!generator.generate(world, rand, pos)) {
+				world.setBlockState(pos, state, 4);
+			}
+		}
 	}
 
 	@Override
