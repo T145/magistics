@@ -157,7 +157,6 @@ public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRe
 				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
 
 				item.setPickupDelay(10);
-				item.lifespan = 0;
 			} else if (entity instanceof EntityLiving && !(entity instanceof EntityVisSlime)) {
 				entity.attackEntityFrom(DamageSource.magic, 1);
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
@@ -166,15 +165,9 @@ public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRe
 	}
 
 	@Override
-	public boolean isPassable(IBlockAccess world, BlockPos pos) {
-		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
-		return crucible.hasWorldObj() && crucible.getBlockMetadata() < 3;
-	}
-
-	@Override
 	public TileEntity getTile(int meta) {
 		TileCrucible crucible = new TileCrucible();
-		crucible.setType(meta);
+		crucible.setTier(meta);
 		return crucible;
 	}
 

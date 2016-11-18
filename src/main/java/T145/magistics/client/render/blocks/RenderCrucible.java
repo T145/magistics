@@ -32,6 +32,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		GlStateManager.popMatrix();
 	}
 
+	// TODO: Fix brightness; remove rendering for Crucible of Souls
 	private void renderVis(TileCrucible crucible, float totalVis) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, getVisLevel(crucible, totalVis), 0.5);

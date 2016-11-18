@@ -65,11 +65,13 @@ public class CommonProxy implements IGuiHandler {
 
 	public void smallGreenFlameFX(World world, float x, float y, float z) {}
 
-	public void wispFX(World world, double x, double y, double z, float f, float g, float h, float i) {}
+	public void customWispFX(World world, double x, double y, double z, double destX, double destY, double destZ, float gravity, int type) {}
+
+	public void wispFX(World world, double x, double y, double z, float f, float g, float h, float gravity) {}
 
 	public void wispFX2(World world, double x, double y, double z, float size, int type, boolean shrink, boolean clip, float gravity) {}
 
-	public void wispFX3(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity) {}
+	public void wispFX3(World world, double x, double y, double z, double destX, double destY, double destZ, float size, int type, boolean shrink, float gravity) {}
 
 	public void wispFX4(World world, double x, double y, double z, Entity target, int type, boolean shrink, float gravity) {}
 }

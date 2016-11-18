@@ -81,6 +81,12 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
+	public void customWispFX(World world, double x, double y, double z, double destX, double destY, double destZ, float gravity, int type) {
+		ParticleWisp fx = new ParticleWisp(world, x, y, z, destX, destY, destZ, gravity, type);
+		ParticleEngine.INSTANCE.addEffect(world, fx);
+	}
+
+	@Override
 	public void wispFX(World world, double x, double y, double z, float f, float g, float h, float i) {
 		ParticleWisp fx = new ParticleWisp(world, x, y, z, f, g, h, i);
 		fx.setGravity(0.02F);
@@ -99,8 +105,8 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void wispFX3(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity) {
-		ParticleWisp fx = new ParticleWisp(world, x, y, z, x2, y2, z2, size, type);
+	public void wispFX3(World world, double x, double y, double z, double destX, double destY, double destZ, float size, int type, boolean shrink, float gravity) {
+		ParticleWisp fx = new ParticleWisp(world, x, y, z, destX, destY, destZ, size, type);
 
 		fx.setGravity(gravity);
 		fx.shrink = shrink;

@@ -307,7 +307,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 			angle = getCookProgressScaled(360);
 		}
 
-		if (active = hasWorldObj() && recipe != null && !isPowered()) {
+		if (active = hasWorldObj() && recipe != null && !worldObj.isBlockPowered(pos)) {
 			cookCost = recipe.getCost();
 
 			if (crafting = drainAvailableVis(cookCost, false) > 0F) {
