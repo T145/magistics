@@ -1,28 +1,36 @@
 package T145.magistics.api.tiles;
 
+import javax.annotation.Nullable;
+
+import T145.magistics.lib.events.WorldEventHandler;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileVisManager extends TileMagistics implements ITickable, IVisManager {
+public abstract class TileVisManager extends TileMagistics implements ITickable, IVisManager {
+
+	protected float vis;
+	protected float miasma;
 
 	private int visSuction = 0;
-	private int taintSuction = 0;
+	private int miasmaSuction = 0;
 
+	@Nullable
 	public IVisManager getConnectableTile(EnumFacing facing) {
 		BlockPos pos = new BlockPos(getPos().getX() + facing.getFrontOffsetX(), getPos().getY() + facing.getFrontOffsetY(), getPos().getZ() + facing.getFrontOffsetZ());
 		TileEntity tile = worldObj.getTileEntity(pos);
 		IVisManager visManager = null;
 
-		if (tile instanceof IVisManager) {
+		if (tile instanceof IVisManager && tile != null && ((IVisManager) tile).getConnectable(facing)) {
 			visManager = (IVisManager) tile;
 		}
 
 		return visManager;
 	}
 
-	public float drainAvailablePureVis(float amount, boolean drain) {
+	public float drainAvailableVis(float amount, boolean drain) {
 		setVisSuction(50);
 
 		float mod = 0F;
@@ -31,8 +39,8 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 			if (getConnectable(facing)) {
 				IVisManager visManager = getConnectableTile(facing);
 
-				if (visManager != null && (visManager.isVisConduit() || visManager.isVisSource())) {
-					float vis = Math.min(amount - mod, visManager.getPureVis());
+				if (visManager != null) {
+					float vis = Math.min(amount - mod, visManager.getVis());
 
 					if (vis < 0.001F) {
 						vis = 0F;
@@ -41,7 +49,7 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 					mod += vis;
 
 					if (drain) {
-						visManager.setPureVis(visManager.getPureVis() - vis);
+						visManager.setVis(visManager.getVis() - vis);
 					}
 				}
 
@@ -54,8 +62,8 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 		return Math.min(amount, mod);
 	}
 
-	public float drainAvailableTaintedVis(float amount, boolean drain) {
-		setTaintSuction(50);
+	public float drainAvailableMiasma(float amount, boolean drain) {
+		setMiasmaSuction(50);
 
 		float mod = 0F;
 
@@ -63,8 +71,8 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 			if (getConnectable(facing)) {
 				IVisManager visManager = getConnectableTile(facing);
 
-				if (visManager != null && (visManager.isVisConduit() || visManager.isVisSource())) {
-					float vis = Math.min(amount - mod, visManager.getTaintedVis());
+				if (visManager != null) {
+					float vis = Math.min(amount - mod, visManager.getMiasma());
 
 					if (vis < 0.001F) {
 						vis = 0F;
@@ -73,7 +81,7 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 					mod += vis;
 
 					if (drain) {
-						visManager.setTaintedVis(visManager.getTaintedVis() - vis);
+						visManager.setMiasma(visManager.getMiasma() - vis);
 					}
 				}
 
@@ -86,76 +94,105 @@ public class TileVisManager extends TileMagistics implements ITickable, IVisMana
 		return Math.min(amount, mod);
 	}
 
-	@Override
-	public boolean getConnectable(EnumFacing facing) {
-		return false;
-	}
-
-	@Override
-	public boolean isVisSource() {
-		return false;
-	}
-
-	@Override
-	public boolean isVisConduit() {
-		return false;
-	}
-
-	@Override
 	public float[] subtractVis(float amount) {
-		return new float[] { 0F, 0F };
+		float pureAmount = amount / 2F;
+		float taintAmount = amount / 2F;
+		float[] result = { 0F, 0F };
+
+		if (amount < 0.001F) {
+			return result;
+		}
+
+		if (vis < pureAmount) {
+			pureAmount = vis;
+		}
+
+		if (miasma < taintAmount) {
+			taintAmount = miasma;
+		}
+
+		if (pureAmount < amount / 2F && taintAmount == amount / 2F) {
+			taintAmount = Math.min(amount - pureAmount, miasma);
+		} else if (taintAmount < amount / 2F && pureAmount == amount / 2F) {
+			pureAmount = Math.min(amount - taintAmount, vis);
+		}
+
+		vis -= pureAmount;
+		miasma -= taintAmount;
+
+		result[0] = pureAmount;
+		result[1] = taintAmount;
+
+		return result;
 	}
 
 	@Override
-	public float getPureVis() {
-		return 0F;
+	public abstract boolean getConnectable(EnumFacing facing);
+
+	@Override
+	public float getVis() {
+		return vis;
 	}
 
 	@Override
-	public void setPureVis(float amount) {}
-
-	@Override
-	public float getTaintedVis() {
-		return 0F;
+	public float getMiasma() {
+		return miasma;
 	}
 
 	@Override
-	public void setTaintedVis(float amount) {}
-
-	@Override
-	public float getMaxVis() {
-		return 0F;
-	}
-
-	@Override
-	public int getVisSuction(BlockPos pos) {
+	public int getVisSuction() {
 		return visSuction;
 	}
 
 	@Override
-	public void setVisSuction(int amount) {
-		visSuction = amount;
+	public int getMiasmaSuction() {
+		return miasmaSuction;
 	}
 
 	@Override
-	public int getTaintSuction(BlockPos pos) {
-		return taintSuction;
+	public int getSuction() {
+		return Math.max(visSuction, miasmaSuction);
 	}
 
 	@Override
-	public void setTaintSuction(int amount) {
-		taintSuction = amount;
+	public void setVis(float amount) {
+		vis = amount;
+	}
+
+	@Override
+	public void setMiasma(float amount) {
+		miasma = amount;
+	}
+
+	@Override
+	public void setVisSuction(int pressure) {
+		visSuction = pressure;
+	}
+
+	@Override
+	public void setMiasmaSuction(int pressure) {
+		miasmaSuction = pressure;
 	}
 
 	@Override
 	public void setSuction(int pressure) {
 		setVisSuction(pressure);
-		setTaintSuction(pressure);
+		setMiasmaSuction(pressure);
 	}
 
 	@Override
-	public int getSuction(BlockPos amount) {
-		return Math.max(visSuction, taintSuction);
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		vis = tag.getFloat(WorldEventHandler.KEY_VIS);
+		miasma = tag.getFloat(WorldEventHandler.KEY_MIASMA);
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+		tag.setFloat(WorldEventHandler.KEY_VIS, vis);
+		tag.setFloat(WorldEventHandler.KEY_MIASMA, miasma);
+		return tag;
 	}
 
 	@Override

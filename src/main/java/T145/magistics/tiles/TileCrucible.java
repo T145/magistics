@@ -6,7 +6,6 @@ import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;
-import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.sounds.SoundHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
@@ -21,20 +20,26 @@ import net.minecraft.world.chunk.Chunk;
 
 public class TileCrucible extends TileVisManager {
 
-	public float vis;
-	public float miasma;
-	private float pureBuffer;
-	private float taintedBuffer;
-
-	private float maxVis;
-	private float conversion;
+	private int type;
+	public int smeltDelay;
+	private int updateDelay;
+	private int soundDelay = 25;
+	private float max;
 	private float speed;
-	private float wait;
-	private boolean updateNextPeriod;
+	private float conversion;
 	private boolean powering = false;
 
-	public int smeltDelay;
-	private int soundDelay = 25;
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int meta) {
+		type = meta;
+	}
+
+	public float getMax() {
+		return max;
+	}
 
 	public boolean isPowering() {
 		return powering;
@@ -43,22 +48,22 @@ public class TileCrucible extends TileVisManager {
 	public void setTier(int meta) {
 		switch (meta) {
 		case 3:
-			maxVis = 750F;
+			max = 750F;
 			conversion = 0.4F;
 			speed = 0.75F;
 			break;
 		case 2:
-			maxVis = 750F;
+			max = 750F;
 			conversion = 0.7F;
 			speed = 0.75F;
 			break;
 		case 1:
-			maxVis = 600F;
+			max = 600F;
 			conversion = 0.6F;
 			speed = 0.5F;
 			break;
 		default:
-			maxVis = 500F;
+			max = 500F;
 			conversion = 0.5F;
 			speed = 0.25F;
 			break;
@@ -66,17 +71,25 @@ public class TileCrucible extends TileVisManager {
 	}
 
 	@Override
+	public boolean getConnectable(EnumFacing facing) {
+		return facing != EnumFacing.UP && facing != EnumFacing.DOWN;
+	}
+
+	public List<EntityItem> getContents() {
+		return worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() + 1.0D, getPos().getY() + 1.0D, getPos().getZ() + 1.0D));
+	}
+
+	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-		vis = tag.getFloat(WorldEventHandler.KEY_VIS);
-		miasma = tag.getFloat(WorldEventHandler.KEY_MIASMA);
+		type = tag.getInteger("Type");
+		this.setTier(type);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setFloat(WorldEventHandler.KEY_VIS, vis);
-		tag.setFloat(WorldEventHandler.KEY_MIASMA, miasma);
+		tag.setInteger("Type", type);
 		return tag;
 	}
 
@@ -84,22 +97,15 @@ public class TileCrucible extends TileVisManager {
 	public void update() {
 		super.update();
 
-		if (hasWorldObj()) {
+		if (this.hasWorldObj()) {
 			float totalVis = vis + miasma;
 
 			--smeltDelay;
-			--wait;
+			--updateDelay;
 
-			if (pureBuffer != vis || taintedBuffer != miasma) {
-				taintedBuffer = miasma;
-				pureBuffer = vis;
-				updateNextPeriod = true;
-			}
-
-			if (wait <= 0 && updateNextPeriod) {
+			if (updateDelay <= 0) {
 				worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
-				updateNextPeriod = false;
-				wait = 10;
+				updateDelay = 10;
 			}
 
 			--soundDelay;
@@ -108,8 +114,8 @@ public class TileCrucible extends TileVisManager {
 				soundDelay = 15 + worldObj.rand.nextInt(15);
 			}
 
-			if (totalVis > maxVis) {
-				float overflowSplit = Math.min((vis + miasma - maxVis) / 2F, 1F);
+			if (totalVis > max) {
+				float overflowSplit = Math.min((vis + miasma - max) / 2F, 1F);
 
 				if (vis >= overflowSplit) {
 					vis -= overflowSplit;
@@ -133,7 +139,7 @@ public class TileCrucible extends TileVisManager {
 			if (getBlockMetadata() == 1 || getBlockMetadata() == 2) {
 				boolean oldPower = powering;
 
-				powering = totalVis >= maxVis * 0.9D;
+				powering = totalVis >= max * 0.9D;
 
 				if (oldPower != powering) {
 					for (int i = -1; i < 2; i++) {
@@ -150,10 +156,10 @@ public class TileCrucible extends TileVisManager {
 			if (smeltDelay <= 0 && getBlockMetadata() != 3) {
 				smeltDelay = 5;
 
-				List list = getContents();
+				List<EntityItem> list = getContents();
 
 				if (list.size() > 0) {
-					EntityItem entity = (EntityItem) list.get(worldObj.rand.nextInt(list.size()));
+					EntityItem entity = list.get(worldObj.rand.nextInt(list.size()));
 					ItemStack stack = entity.getEntityItem();
 					float visOutput = MagisticsApi.getCrucibleResult(stack);
 
@@ -165,12 +171,14 @@ public class TileCrucible extends TileVisManager {
 						float pureCook = visOutput * conversion;
 						float taintCook = visOutput - pureCook;
 
-						if (getBlockMetadata() != 2 || totalVis + visOutput <= maxVis) {
+						if (getBlockMetadata() != 2 || totalVis + visOutput <= max) {
 							vis += pureCook;
 							miasma += taintCook;
-							smeltDelay = (10 + Math.round(visOutput / 5F / speed));
+							smeltDelay = 10 + Math.round(visOutput / 5F / speed);
 
 							// decrease delay if above arcane furnace
+
+							// discharge this chunk's aura
 
 							--stack.stackSize;
 
@@ -179,7 +187,7 @@ public class TileCrucible extends TileVisManager {
 							}
 
 							worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
-							worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, entity.posX, entity.posY, entity.posZ, 0.0D, 0.0D, 0.0D);
+							worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, entity.posX, entity.posY, entity.posZ, 0D, 0D, 0D);
 							worldObj.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + worldObj.rand.nextFloat() * 0.2F);
 						}
 					} else {
@@ -192,87 +200,5 @@ public class TileCrucible extends TileVisManager {
 				}
 			}
 		}
-	}
-
-	private List getContents() {
-		return worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() + 1.0D, getPos().getY() + 1.0D, getPos().getZ() + 1.0D));
-	}
-
-	@Override
-	public boolean getConnectable(EnumFacing face) {
-		switch (face) {
-		case UP: case DOWN:
-			return false;
-		default:
-			return true;
-		}
-	}
-
-	@Override
-	public boolean isVisSource() {
-		return true;
-	}
-
-	@Override
-	public boolean isVisConduit() {
-		return false;
-	}
-
-	@Override
-	public float getPureVis() {
-		return vis;
-	}
-
-	@Override
-	public void setPureVis(float amount) {
-		vis = amount;
-	}
-
-	@Override
-	public float getTaintedVis() {
-		return miasma;
-	}
-
-	@Override
-	public void setTaintedVis(float amount) {
-		miasma = amount;
-	}
-
-	@Override
-	public float getMaxVis() {
-		return maxVis;
-	}
-
-	@Override
-	public float[] subtractVis(float amount) {
-		float pureAmount = amount / 2F;
-		float taintAmount = amount / 2F;
-		float[] result = { 0F, 0F };
-
-		if (amount < 0.001F) {
-			return result;
-		}
-
-		if (vis < pureAmount) {
-			pureAmount = vis;
-		}
-
-		if (miasma < taintAmount) {
-			taintAmount = miasma;
-		}
-
-		if (pureAmount < amount / 2F && taintAmount == amount / 2F) {
-			taintAmount = Math.min(amount - pureAmount, miasma);
-		} else if (taintAmount < amount / 2F && pureAmount == amount / 2F) {
-			pureAmount = Math.min(amount - taintAmount, vis);
-		}
-
-		vis -= pureAmount;
-		miasma -= taintAmount;
-
-		result[0] = pureAmount;
-		result[1] = taintAmount;
-
-		return result;
 	}
 }

@@ -310,8 +310,8 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		if (active = hasWorldObj() && recipe != null && !isPowered()) {
 			cookCost = recipe.getCost();
 
-			if (crafting = drainAvailablePureVis(cookCost, false) > 0F) {
-				cookTime += drainAvailablePureVis(Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F), true);
+			if (crafting = drainAvailableVis(cookCost, false) > 0F) {
+				cookTime += drainAvailableVis(Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F), true);
 
 				if (soundDelay == 0) {
 					worldObj.playSound(null, new BlockPos(getPos().getX() + 0.5F, getPos().getY() + 0.5F, getPos().getZ() + 0.5F), SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);

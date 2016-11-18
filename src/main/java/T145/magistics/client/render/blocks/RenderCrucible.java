@@ -24,7 +24,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 
-		float totalVis = crucible.vis + crucible.miasma;
+		float totalVis = crucible.getVis() + crucible.getMiasma();
 		if (totalVis > 0F) {
 			renderVis(crucible, totalVis);
 		}
@@ -68,10 +68,10 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 	}
 
 	private double getVisLevel(TileCrucible crucible, float totalVis) {
-		float height = Math.min(totalVis, crucible.getMaxVis());
-		float level = 0.75F * (height / crucible.getMaxVis());
+		float height = Math.min(totalVis, crucible.getMax());
+		float level = 0.75F * (height / crucible.getMax());
 
-		if (crucible.getMaxVis() == totalVis) {
+		if (crucible.getMax() == totalVis) {
 			level -= 0.001F;
 		}
 
