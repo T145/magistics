@@ -46,7 +46,7 @@ public class ParticleWisp extends Particle {
 		}
 
 		Entity entity = FMLClientHandler.instance().getClient().getRenderViewEntity();
-		if (entity.getDistance(posX, posY, posZ) > visibleDistance) {
+		if (entity != null && entity.getDistance(posX, posY, posZ) > visibleDistance) {
 			particleMaxAge = 0;
 		}
 
