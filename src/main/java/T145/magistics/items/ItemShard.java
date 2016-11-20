@@ -3,7 +3,7 @@ package T145.magistics.items;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.IModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemShard extends Item implements IObjectModeled, IItemColor {
+public class ItemShard extends Item implements IModel, IItemColor {
 
 	public static final int[] COLORS = { 16777086, 16727041, 37119, 40960, 16711935, 9699539 };
 	private final String name;

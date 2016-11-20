@@ -3,8 +3,8 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IBlockType;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.IVariant;
+import T145.magistics.api.objects.IModel;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -24,9 +24,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLogs extends BlockLog implements IObjectModeled {
+public class BlockLogs extends BlockLog implements IModel {
 
-	public static enum BlockType implements IBlockType {
+	public static enum BlockType implements IVariant {
 
 		GREATWOOD, SILVERWOOD;
 

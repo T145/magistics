@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.blocks.BlockLogs.BlockType;
 import T145.magistics.load.ModBlocks;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -34,7 +34,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IObjectModeled, IBlockColor {
+public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IModel, IBlockColor {
 
 	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 

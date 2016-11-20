@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.blocks.BlockLogs.BlockType;
 import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
 import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSaplings extends BlockBush implements IObjectModeled, IGrowable {
+public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 
 	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);

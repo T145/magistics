@@ -6,9 +6,9 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IBlockTileRendered;
-import T145.magistics.api.objects.IBlockType;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.ITile;
+import T145.magistics.api.objects.IVariant;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.entities.EntityVisSlime;
@@ -43,9 +43,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRendered {
+public class BlockCrucible extends Block implements IModel, ITile {
 
-	public static enum BlockType implements IBlockType {
+	public static enum BlockType implements IVariant {
 
 		BASIC, EYES, THAUMIUM, SOULS;
 

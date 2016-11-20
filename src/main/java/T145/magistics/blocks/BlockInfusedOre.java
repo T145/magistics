@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IObjectModeled;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.items.ItemShard;
 import T145.magistics.load.ModItems;
 import net.minecraft.block.Block;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfusedOre extends Block implements IObjectModeled, IBlockColor {
+public class BlockInfusedOre extends Block implements IModel, IBlockColor {
 
 	public static final PropertyEnum<ItemShard.ItemType> VARIANT = PropertyEnum.<ItemShard.ItemType>create("variant", ItemShard.ItemType.class);
 	private Random rand = new Random();
