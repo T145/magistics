@@ -165,15 +165,10 @@ public class BlockCrucible extends Block implements IObjectModeled, IBlockTileRe
 	}
 
 	@Override
-	public TileEntity getTile(int meta) {
+	public TileEntity createNewTileEntity(World world, int meta) {
 		TileCrucible crucible = new TileCrucible();
 		crucible.setTier(meta);
 		return crucible;
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return getTile(meta);
 	}
 
 	@Override

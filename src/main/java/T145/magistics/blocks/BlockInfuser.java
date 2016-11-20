@@ -166,13 +166,8 @@ public class BlockInfuser extends Block implements IObjectModeled, IBlockTileRen
 	}
 
 	@Override
-	public TileEntity getTile(int meta) {
-		return meta == 1 ? new TileInfuserDark() : new TileInfuser();
-	}
-
-	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return getTile(meta);
+		return meta == 1 ? new TileInfuserDark() : new TileInfuser();
 	}
 
 	@Override
