@@ -5,15 +5,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
 import T145.magistics.api.objects.IVariant;
-import T145.magistics.api.objects.IModel;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -130,7 +129,7 @@ public class BlockInfuser extends Block implements IModel, ITile {
 		TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
 		if (infuser != null) {
-			infuser.setFacing(BlockPistonBase.getFacingFromEntity(pos, placer).getIndex());
+			infuser.setFacing(placer.getHorizontalFacing().getIndex());
 		}
 	}
 

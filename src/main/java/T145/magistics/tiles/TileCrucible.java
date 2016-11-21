@@ -4,7 +4,7 @@ import java.util.List;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.MagisticsApi;
-import T145.magistics.api.tiles.TileVisManager;
+import T145.magistics.api.tiles.TileVisContainer;
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;
 import T145.magistics.lib.sounds.SoundHandler;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 
-public class TileCrucible extends TileVisManager {
+public class TileCrucible extends TileVisContainer {
 
 	private float max;
 	private float conversion;
@@ -78,7 +78,7 @@ public class TileCrucible extends TileVisManager {
 		super.update();
 
 		if (hasWorldObj()) {
-			Chunk chunk = worldObj.getChunkFromBlockCoords(getPos());
+			Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
 			AuraChunk aura = AuraHandler.getAuraChunk(chunk);
 			float totalVis = vis + miasma;
 
@@ -86,7 +86,7 @@ public class TileCrucible extends TileVisManager {
 			--updateDelay;
 
 			if (updateDelay <= 0) {
-				worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+				worldObj.scheduleUpdate(pos, getBlockType(), 0);
 				updateDelay = 10;
 			}
 
@@ -112,7 +112,7 @@ public class TileCrucible extends TileVisManager {
 					}
 				}
 
-				worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+				worldObj.scheduleUpdate(pos, getBlockType(), 0);
 			}
 
 			if (getBlockMetadata() == 1 || getBlockMetadata() == 2) {
@@ -124,8 +124,8 @@ public class TileCrucible extends TileVisManager {
 					for (int i = -1; i < 2; i++) {
 						for (int j = -1; j < 2; j++) {
 							for (int k = -1; k < 2; k++) {
-								worldObj.scheduleUpdate(new BlockPos(getPos().getX() + i, getPos().getY() + j, getPos().getZ() + k), getBlockType(), 0);
-								worldObj.notifyNeighborsOfStateChange(new BlockPos(getPos().getX() + i, getPos().getY() + j, getPos().getZ() + k), getBlockType());
+								worldObj.scheduleUpdate(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k), getBlockType(), 0);
+								worldObj.notifyNeighborsOfStateChange(new BlockPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k), getBlockType());
 							}
 						}
 					}
@@ -136,7 +136,7 @@ public class TileCrucible extends TileVisManager {
 				if (getBlockMetadata() != 3) {
 					smeltDelay = 5;
 
-					List<EntityItem> list = worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(getPos().getX(), getPos().getY(), getPos().getZ(), getPos().getX() + 1.0D, getPos().getY() + 1.0D, getPos().getZ() + 1.0D));;
+					List<EntityItem> list = worldObj.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D));;
 
 					if (list.size() > 0) {
 						EntityItem item = list.get(worldObj.rand.nextInt(list.size()));
@@ -166,7 +166,7 @@ public class TileCrucible extends TileVisManager {
 									item.setDead();
 								}
 
-								worldObj.scheduleUpdate(getPos(), getBlockType(), 0);
+								worldObj.scheduleUpdate(pos, getBlockType(), 0);
 								worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
 								worldObj.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + worldObj.rand.nextFloat() * 0.2F);
 							}

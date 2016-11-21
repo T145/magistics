@@ -21,15 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
-import net.minecraft.world.ILockableContainer;
-import net.minecraft.world.LockCode;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileInfuser extends TileVisManager implements IInteractionObject, ISidedInventory, ILockableContainer {
+public class TileInfuser extends TileVisManager implements IInteractionObject, ISidedInventory {
 
 	protected ItemStack[] inventoryStacks = new ItemStack[8];
-	private LockCode code = LockCode.EMPTY_CODE;
 
 	private boolean active = false;
 	private boolean crafting = false;
@@ -176,21 +173,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	}
 
 	@Override
-	public boolean isLocked() {
-		return code != null && !code.isEmpty();
-	}
-
-	@Override
-	public LockCode getLockCode() {
-		return code;
-	}
-
-	@Override
-	public void setLockCode(LockCode code) {
-		this.code = code;
-	}
-
-	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
 		switch (side) {
 		case UP: case DOWN:
@@ -223,7 +205,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-		code = LockCode.fromNBT(tag);
 
 		NBTTagList nbttaglist = tag.getTagList("Items", 10);
 		inventoryStacks = new ItemStack[getSizeInventory()];
@@ -245,10 +226,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-
-		if (code != null) {
-			code.toNBT(tag);
-		}
 
 		tag.setInteger("Facing", facing);
 		tag.setFloat("CookCost", cookCost);
@@ -307,14 +284,14 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 			angle = getCookProgressScaled(360);
 		}
 
-		if (active = hasWorldObj() && recipe != null && !worldObj.isBlockPowered(pos)) {
+		if (active = hasWorldObj() && recipe != null && !isPowered()) {
 			cookCost = recipe.getCost();
 
 			if (crafting = drainAvailableVis(cookCost, false) > 0F) {
 				cookTime += drainAvailableVis(Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F), true);
 
 				if (soundDelay == 0) {
-					worldObj.playSound(null, new BlockPos(getPos().getX() + 0.5F, getPos().getY() + 0.5F, getPos().getZ() + 0.5F), SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);
+					worldObj.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
@@ -328,7 +305,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 			}
 		} else {
 			if (crafting) {
-				worldObj.playSound(null, new BlockPos(getPos().getX() + 0.5F, getPos().getY() + 0.5F, getPos().getZ() + 0.5F), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+				worldObj.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
 			}
 
 			reset();

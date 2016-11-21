@@ -6,9 +6,9 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
 import T145.magistics.api.objects.IVariant;
-import T145.magistics.api.objects.IModel;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.entities.EntityVisSlime;

@@ -3,8 +3,8 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.objects.IVariant;
 import T145.magistics.api.objects.IModel;
+import T145.magistics.api.objects.IVariant;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
