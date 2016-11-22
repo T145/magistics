@@ -7,10 +7,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileMagistics extends TileEntity {
+public class TileMagistics extends TileEntity implements IFacing {
+
+	protected EnumFacing facing;
 
 	public void markDirtyClient() {
 		markDirty();
@@ -56,5 +59,35 @@ public class TileMagistics extends TileEntity {
 
 	public boolean isPowered() {
 		return worldObj.isBlockPowered(getPos());
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+
+		if (facing != null) {
+			facing = EnumFacing.getFront(tag.getInteger("Facing"));
+		}
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+
+		if (facing != null) {
+			tag.setInteger("Facing", facing.getIndex());
+		}
+
+		return tag;
+	}
+
+	@Override
+	public EnumFacing getFacing() {
+		return facing;
+	}
+
+	@Override
+	public void setFacing(EnumFacing facing) {
+		this.facing = facing;
 	}
 }

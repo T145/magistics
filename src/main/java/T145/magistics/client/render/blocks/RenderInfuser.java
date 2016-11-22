@@ -38,7 +38,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(getDefaultAngle(infuser.getFacing()), 0F, 1F, 0F);
+			GlStateManager.rotate(getDefaultAngle(infuser.getFacing().getIndex()), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);

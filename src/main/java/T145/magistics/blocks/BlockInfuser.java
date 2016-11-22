@@ -129,7 +129,7 @@ public class BlockInfuser extends Block implements IModel, ITile {
 		TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
 		if (infuser != null) {
-			infuser.setFacing(placer.getHorizontalFacing().getIndex());
+			infuser.setFacing(placer.getHorizontalFacing());
 		}
 	}
 

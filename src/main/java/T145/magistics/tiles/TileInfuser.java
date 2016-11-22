@@ -37,7 +37,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	protected int angle;
 	protected int soundDelay;
 
-	private int facing;
 	private int boost;
 	private int boostDelay = 20;
 
@@ -63,14 +62,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 
 	public int getBoost() {
 		return boost;
-	}
-
-	public void setFacing(int dir) {
-		facing = dir;
-	}
-
-	public int getFacing() {
-		return facing;
 	}
 
 	@Override
@@ -218,7 +209,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 			}
 		}
 
-		facing = tag.getInteger("Facing");
 		cookCost = tag.getFloat("CookCost");
 		cookTime = tag.getFloat("CookTime");
 	}
@@ -227,7 +217,6 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
 
-		tag.setInteger("Facing", facing);
 		tag.setFloat("CookCost", cookCost);
 		tag.setFloat("cookTime", cookTime);
 
@@ -279,7 +268,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(inventoryStacks, isDark());
 
 		if (isDormant()) {
-			angle = facing;
+			angle = facing.getIndex();
 		} else if (crafting) {
 			angle = getCookProgressScaled(360);
 		}
