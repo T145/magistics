@@ -2,18 +2,19 @@ package T145.magistics.api.tiles;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileMagistics extends TileEntity implements IFacing {
 
-	protected EnumFacing facing;
+	protected int facing = -1;
 
 	public void markDirtyClient() {
 		markDirty();
@@ -64,30 +65,33 @@ public class TileMagistics extends TileEntity implements IFacing {
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-
-		if (facing != null) {
-			facing = EnumFacing.getFront(tag.getInteger("Facing"));
-		}
+		facing = tag.getInteger("Facing");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-
-		if (facing != null) {
-			tag.setInteger("Facing", facing.getIndex());
-		}
-
+		tag.setInteger("Facing", facing);
 		return tag;
 	}
 
 	@Override
-	public EnumFacing getFacing() {
+	public int getFacing() {
 		return facing;
 	}
 
 	@Override
-	public void setFacing(EnumFacing facing) {
-		this.facing = facing;
+	public int getFacingFromEntity(EntityLivingBase placer) {
+		return BlockPistonBase.getFacingFromEntity(pos, placer).getIndex();
+	}
+
+	@Override
+	public void setFacing(int front) {
+		facing = front;
+	}
+
+	@Override
+	public void setFacingFromEntity(EntityLivingBase placer) {
+		setFacing(getFacingFromEntity(placer));
 	}
 }

@@ -1,10 +1,12 @@
 package T145.magistics.api.tiles;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.EntityLivingBase;
 
 public interface IFacing {
 
-	public EnumFacing getFacing();
+	public int getFacing();
+	public int getFacingFromEntity(EntityLivingBase placer);
 
-	public void setFacing(EnumFacing facing);
+	public void setFacing(int front);
+	public void setFacingFromEntity(EntityLivingBase placer);
 }

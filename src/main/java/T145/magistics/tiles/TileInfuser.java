@@ -268,7 +268,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(inventoryStacks, isDark());
 
 		if (isDormant()) {
-			angle = facing.getIndex();
+			angle = facing;
 		} else if (crafting) {
 			angle = getCookProgressScaled(360);
 		}
