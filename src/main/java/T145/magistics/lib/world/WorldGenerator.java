@@ -3,9 +3,9 @@ package T145.magistics.lib.world;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.objects.ModBlocks;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.aura.AuraHandler;
-import T145.magistics.load.ModBlocks;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -62,7 +62,7 @@ public class WorldGenerator implements IWorldGenerator {
 			}
 
 			try {
-				new WorldGenMinable(ModBlocks.blockOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
+				new WorldGenMinable(ModBlocks.infusedOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}
@@ -78,7 +78,7 @@ public class WorldGenerator implements IWorldGenerator {
 			int meta = random.nextInt(6);
 
 			try {
-				new WorldGenMinable(ModBlocks.blockNetherOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
+				new WorldGenMinable(ModBlocks.infusedOreNether.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}
@@ -94,7 +94,7 @@ public class WorldGenerator implements IWorldGenerator {
 			int meta = random.nextInt(6);
 
 			try {
-				new WorldGenMinable(ModBlocks.blockEndOre.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.END_STONE)).generate(world, random, pos);
+				new WorldGenMinable(ModBlocks.infusedOreEnd.getStateFromMeta(meta), 6, BlockMatcher.forBlock(Blocks.END_STONE)).generate(world, random, pos);
 			} catch (Exception err) {
 				Magistics.logger.catching(err);
 			}

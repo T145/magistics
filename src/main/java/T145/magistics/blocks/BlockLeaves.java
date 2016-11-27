@@ -7,8 +7,8 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.objects.IModel;
+import T145.magistics.api.objects.ModBlocks;
 import T145.magistics.blocks.BlockLogs.BlockType;
-import T145.magistics.load.ModBlocks;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -170,7 +170,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IMod
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ModBlocks.blockSaplings);
+		return Item.getItemFromBlock(ModBlocks.saplings);
 	}
 
 	@Override

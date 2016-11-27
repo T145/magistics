@@ -2,9 +2,6 @@ package T145.magistics.network;
 
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.world.biomes.BiomeHandler;
-import T145.magistics.load.ModBlocks;
-import T145.magistics.load.ModEntities;
-import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,23 +36,11 @@ public class CommonProxy implements IGuiHandler {
 	public void preInit(FMLPreInitializationEvent event) {
 		BiomeHandler.registerBiomes();
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
-
-		ModBlocks.preInit(event);
-		ModItems.preInit(event);
-		ModEntities.preInit(event);
 	}
 
-	public void init(FMLInitializationEvent event) {
-		ModBlocks.init(event);
-		ModItems.init(event);
-		ModEntities.init(event);
-	}
+	public void init(FMLInitializationEvent event) {}
 
-	public void postInit(FMLPostInitializationEvent event) {
-		ModBlocks.postInit(event);
-		ModItems.postInit(event);
-		ModEntities.postInit(event);
-	}
+	public void postInit(FMLPostInitializationEvent event) {}
 
 	public World getClientWorld() {
 		return null;

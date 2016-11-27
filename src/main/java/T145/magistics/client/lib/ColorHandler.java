@@ -1,11 +1,12 @@
 package T145.magistics.client.lib;
 
-import T145.magistics.load.ModBlocks;
-import T145.magistics.load.ModItems;
+import T145.magistics.api.objects.ModBlocks;
+import T145.magistics.api.objects.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
@@ -25,10 +26,10 @@ public class ColorHandler {
 	}
 
 	private static void registerBlockColorHandlers(final BlockColors blockColors) {
-		blockColors.registerBlockColorHandler(ModBlocks.blockOre, new Block[] {
-				ModBlocks.blockOre, ModBlocks.blockNetherOre, ModBlocks.blockEndOre
+		blockColors.registerBlockColorHandler((IBlockColor) ModBlocks.infusedOre, new Block[] {
+				ModBlocks.infusedOre, ModBlocks.infusedOreNether, ModBlocks.infusedOreEnd
 		});
-		blockColors.registerBlockColorHandler(ModBlocks.blockLeaves, new Block[] { ModBlocks.blockLeaves });
+		blockColors.registerBlockColorHandler((IBlockColor) ModBlocks.leaves, new Block[] { ModBlocks.leaves });
 	}
 
 	private static void registerItemColorHandlers(final BlockColors blockColors, final ItemColors itemColors) {
@@ -43,13 +44,13 @@ public class ColorHandler {
 			}
 		};
 
-		itemColors.registerItemColorHandler(blockColorHandler, new Block[] { ModBlocks.blockLeaves });
+		itemColors.registerItemColorHandler(blockColorHandler, new Block[] { ModBlocks.leaves });
 
-		itemColors.registerItemColorHandler(ModItems.itemShard, new Item[] { ModItems.itemShard });
-		itemColors.registerItemColorHandler(ModItems.itemShardFragment, new Item[] { ModItems.itemShardFragment });
+		itemColors.registerItemColorHandler((IItemColor) ModItems.shard, new Item[] { ModItems.shard });
+		itemColors.registerItemColorHandler((IItemColor) ModItems.shardFragment, new Item[] { ModItems.shardFragment });
 
-		itemColors.registerItemColorHandler(ModItems.itemShardFragment, new Block[] {
-				ModBlocks.blockOre, ModBlocks.blockNetherOre, ModBlocks.blockEndOre
+		itemColors.registerItemColorHandler((IItemColor) ModItems.shardFragment, new Block[] {
+				ModBlocks.infusedOre, ModBlocks.infusedOreNether, ModBlocks.infusedOreEnd
 		});
 	}
 }

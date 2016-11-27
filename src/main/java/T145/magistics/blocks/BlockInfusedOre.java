@@ -6,8 +6,8 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.objects.IModel;
+import T145.magistics.api.objects.ModItems;
 import T145.magistics.items.ItemShard;
-import T145.magistics.load.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -104,7 +104,7 @@ public class BlockInfusedOre extends Block implements IModel, IBlockColor {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
 
 		for (int i = 0; i < 1 + rand.nextInt(2 + fortune); ++i) {
-			drops.add(new ItemStack(ModItems.itemShardFragment, 1, getMetaFromState(state)));
+			drops.add(new ItemStack(ModItems.shardFragment, 1, getMetaFromState(state)));
 		}
 
 		return drops;

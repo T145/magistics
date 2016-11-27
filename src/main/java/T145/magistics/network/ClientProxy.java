@@ -1,5 +1,6 @@
 package T145.magistics.network;
 
+import T145.magistics.Magistics;
 import T145.magistics.client.fx.ParticleEngine;
 import T145.magistics.client.fx.particles.ParticleGreenFlame;
 import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
@@ -8,9 +9,6 @@ import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.lib.sounds.SoundHandler;
-import T145.magistics.load.ModBlocks;
-import T145.magistics.load.ModEntities;
-import T145.magistics.load.ModItems;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -46,9 +44,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(ParticleEngine.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
 
-		ModBlocks.initClient();
-		ModItems.initClient();
-		ModEntities.initClient();
+		Magistics.config.initClient();
 	}
 
 	@Override

@@ -69,11 +69,13 @@ public class Magistics {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		config.init(event);
 		proxy.init(event);
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		config.postInit(event);
 		proxy.postInit(event);
 	}
 

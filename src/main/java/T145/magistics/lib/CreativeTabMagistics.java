@@ -1,7 +1,7 @@
 package T145.magistics.lib;
 
 import T145.magistics.Magistics;
-import T145.magistics.load.ModBlocks;
+import T145.magistics.api.objects.ModBlocks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class CreativeTabMagistics extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
-		return new ItemStack(ModBlocks.blockInfuser, 1, 0);
+		return new ItemStack(ModBlocks.infuser, 1, 0);
 	}
 
 	@Override

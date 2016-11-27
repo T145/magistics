@@ -3,8 +3,8 @@ package T145.magistics.entities;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import T145.magistics.api.objects.ModItems;
 import T145.magistics.load.LootTables;
-import T145.magistics.load.ModItems;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySlime;
@@ -30,7 +30,7 @@ public class EntityVisSlime extends EntitySlime {
 	@Nonnull
 	@Override
 	public EntityItem dropItemWithOffset(@Nonnull Item itemIn, int size, float offsetY) {
-		ItemStack stack = new ItemStack(ModItems.itemShardFragment, size, 4);
+		ItemStack stack = new ItemStack(ModItems.shardFragment, size, 4);
 		return entityDropItem(stack, offsetY);
 	}
 

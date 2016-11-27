@@ -9,33 +9,33 @@ public abstract class TileVisContainer extends TileVisManager implements IVisCon
 	protected float miasma;
 
 	public float[] subtractVis(float amount) {
-		float pureAmount = amount / 2F;
-		float taintAmount = amount / 2F;
+		float visAmount = amount / 2F;
+		float miasmaAmount = amount / 2F;
 		float[] result = { 0F, 0F };
 
 		if (amount < 0.001F) {
 			return result;
 		}
 
-		if (vis < pureAmount) {
-			pureAmount = vis;
+		if (vis < visAmount) {
+			visAmount = vis;
 		}
 
-		if (miasma < taintAmount) {
-			taintAmount = miasma;
+		if (miasma < miasmaAmount) {
+			miasmaAmount = miasma;
 		}
 
-		if (pureAmount < amount / 2F && taintAmount == amount / 2F) {
-			taintAmount = Math.min(amount - pureAmount, miasma);
-		} else if (taintAmount < amount / 2F && pureAmount == amount / 2F) {
-			pureAmount = Math.min(amount - taintAmount, vis);
+		if (visAmount < amount / 2F && miasmaAmount == amount / 2F) {
+			miasmaAmount = Math.min(amount - visAmount, miasma);
+		} else if (miasmaAmount < amount / 2F && visAmount == amount / 2F) {
+			visAmount = Math.min(amount - miasmaAmount, vis);
 		}
 
-		vis -= pureAmount;
-		miasma -= taintAmount;
+		vis -= visAmount;
+		miasma -= miasmaAmount;
 
-		result[0] = pureAmount;
-		result[1] = taintAmount;
+		result[0] = visAmount;
+		result[1] = miasmaAmount;
 
 		return result;
 	}
