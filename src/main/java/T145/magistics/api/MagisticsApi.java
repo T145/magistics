@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nullable;
 
 import T145.magistics.api.crafting.InfuserRecipe;
-import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +40,7 @@ public class MagisticsApi {
 
 	public static float getCrucibleResult(ItemStack stack) {
 		for (Entry<ItemStack, Float> entry : crucibleRecipes.entrySet()) {
-			if (InventoryUtils.areStacksEqual(stack, entry.getKey())) {
+			if (InventoryHelper.areStacksEqual(stack, entry.getKey())) {
 				return entry.getValue();
 			}
 		}

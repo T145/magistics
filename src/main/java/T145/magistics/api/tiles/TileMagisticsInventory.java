@@ -1,6 +1,6 @@
 package T145.magistics.api.tiles;
 
-import T145.magistics.lib.utils.InventoryUtils;
+import T145.magistics.api.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -75,7 +75,7 @@ public abstract class TileMagisticsInventory extends TileMagistics implements II
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		InventoryUtils.setInventorySlotContents(inventoryStacks, stack, getInventoryStackLimit(), index);
+		InventoryHelper.setInventorySlotContents(inventoryStacks, stack, getInventoryStackLimit(), index);
 	}
 
 	@Override
