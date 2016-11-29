@@ -3,8 +3,8 @@ package T145.magistics.entities;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import T145.magistics.Magistics;
 import T145.magistics.api.objects.ModItems;
-import T145.magistics.load.LootTables;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySlime;
@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 
 public class EntityVisSlime extends EntitySlime {
+
+	public static final ResourceLocation LOOT_TABLE = LootTableList.register(new ResourceLocation(Magistics.MODID, "entities/slime_vis"));
 
 	public EntityVisSlime(World world) {
 		super(world);
@@ -37,7 +39,7 @@ public class EntityVisSlime extends EntitySlime {
 	@Override
 	@Nullable
 	protected ResourceLocation getLootTable() {
-		return getSlimeSize() == 1 ? LootTables.ENTITIES_VIS_SLIME : LootTableList.EMPTY;
+		return getSlimeSize() == 1 ? LOOT_TABLE : LootTableList.EMPTY;
 	}
 
 	@Override
