@@ -13,6 +13,7 @@ import T145.magistics.blocks.BlockLeaves;
 import T145.magistics.blocks.BlockLogs;
 import T145.magistics.blocks.BlockPlanks;
 import T145.magistics.blocks.BlockSaplings;
+import T145.magistics.blocks.BlockWoodChest;
 import T145.magistics.client.render.entities.RenderColoredSlime.RenderColoredSlimeFactory;
 import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.items.ItemShard;
@@ -111,6 +112,7 @@ public class ConfigHandler {
 	public void preInit() {
 		ModBlocks.crucible = new BlockCrucible("crucible");
 		ModBlocks.infuser = new BlockInfuser("infuser");
+		ModBlocks.woodChest = new BlockWoodChest("chest_wood");
 
 		ModBlocks.infusedOre = new BlockInfusedOre("ore_overworld");
 		ModBlocks.infusedOreNether = new BlockInfusedOre("ore_nether");
@@ -134,6 +136,9 @@ public class ConfigHandler {
 
 		((IModel) ModBlocks.infuser).registerModel();
 		((ITile) ModBlocks.infuser).registerRenderer();
+
+		((IModel) ModBlocks.woodChest).registerModel();
+		((ITile) ModBlocks.woodChest).registerRenderer();
 
 		((IModel) ModBlocks.infusedOre).registerModel();
 		((IModel) ModBlocks.infusedOreNether).registerModel();

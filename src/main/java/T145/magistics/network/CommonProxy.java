@@ -3,6 +3,7 @@ package T145.magistics.network;
 import T145.magistics.lib.events.WorldEventHandler;
 import T145.magistics.lib.world.biomes.BiomeHandler;
 import T145.magistics.tiles.TileInfuser;
+import T145.magistics.tiles.TileWoodChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +24,9 @@ public class CommonProxy implements IGuiHandler {
 		case 0:
 			TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 			return infuser.createContainer(player.inventory, player);
+		case 1:
+			TileWoodChest chest = (TileWoodChest) world.getTileEntity(pos);
+			return chest.createContainer(player.inventory, player);
 		default:
 			return null;
 		}

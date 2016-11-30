@@ -1,10 +1,13 @@
 package T145.magistics.blocks;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
+import T145.magistics.client.render.blocks.RenderWoodChest;
 import T145.magistics.tiles.TileWoodChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -13,6 +16,8 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -20,6 +25,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -30,6 +36,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -53,16 +61,29 @@ public class BlockWoodChest extends Block implements IModel, ITile {
 
 		GameRegistry.register(this);
 		GameRegistry.register(new BlockMagisticsItem(this, BlockLogs.BlockType.class), getRegistryName());
+		GameRegistry.registerTileEntity(TileWoodChest.class, TileWoodChest.class.getSimpleName());
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
+		for (BlockLogs.BlockType type : BlockLogs.BlockType.values()) {
+			list.add(new ItemStack(item, 1, type.ordinal()));
+		}
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerRenderer() {
+		ClientRegistry.bindTileEntitySpecialRenderer(TileWoodChest.class, new RenderWoodChest());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
+		for (BlockLogs.BlockType type : BlockLogs.BlockType.values()) {
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
+		}
 	}
 
 	@Override
@@ -85,23 +106,27 @@ public class BlockWoodChest extends Block implements IModel, ITile {
 	}
 
 	@Override
-	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-		super.onBlockAdded(world, pos, state);
-		world.notifyBlockUpdate(pos, state, state, 3);
-	}
-
-	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		TileEntity tile = world.getTileEntity(pos);
-		TileWoodChest chest = (TileWoodChest) tile;
+		TileWoodChest chest = (TileWoodChest) world.getTileEntity(pos);
 
 		if (chest != null) {
-			world.notifyBlockUpdate(pos, state, state, 3);
+			chest.setFacingFromEntity(placer);
 		}
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote) {
+			for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL) {
+				BlockPos offset = pos.offset(facing);
+
+				if (!isBlocked(world, offset)) {
+					player.openGui(Magistics.MODID, 1, world, pos.getX(), pos.getY(), pos.getZ());
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 

@@ -6,6 +6,7 @@ public class ModBlocks {
 
 	public static Block infuser;
 	public static Block crucible;
+	public static Block woodChest;
 
 	public static Block infusedOre;
 	public static Block infusedOreNether;

@@ -11,8 +11,10 @@ import T145.magistics.client.lib.events.IconAtlas;
 import T145.magistics.lib.sounds.SoundHandler;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,6 +32,8 @@ public class ClientProxy extends CommonProxy {
 		switch (ID) {
 		case 0:
 			return new GuiInfuser(player.inventory, (TileInfuser) world.getTileEntity(pos));
+		case 1:
+			return new GuiChest(player.inventory, (IInventory) world.getTileEntity(pos));
 		default:
 			return null;
 		}

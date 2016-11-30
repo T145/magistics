@@ -37,7 +37,7 @@ public class RenderInfuser extends RenderFacing<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(getAngleFromFront(infuser.getFacing()), 0F, 1F, 0F);
+			GlStateManager.rotate(getAngleFromFront(infuser.getFacing(), false), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);

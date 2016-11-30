@@ -6,6 +6,9 @@ entity.magistics.slime.taint.name=Corrupted Slime
 tile.infuser.light.name=Infuser
 tile.infuser.dark.name=Dark Infuser
 
+tile.chest_wood.greatwood.name=Greatwood Chest
+tile.chest_wood.silverwood.name=Silverwood Chest
+
 tile.crucible.basic.name=Crucible
 tile.crucible.eyes.name=Crucible of Eyes
 tile.crucible.thaumium.name=Thaumium Crucible
