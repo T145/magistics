@@ -16,13 +16,13 @@ public abstract class TileVisManager extends TileMagistics implements ITickable,
 	public IVisManager getConnectableTile(EnumFacing facing) {
 		BlockPos dest = new BlockPos(pos.getX() + facing.getFrontOffsetX(), pos.getY() + facing.getFrontOffsetY(), pos.getZ() + facing.getFrontOffsetZ());
 		TileEntity tile = worldObj.getTileEntity(dest);
-		IVisManager visManager = null;
+		IVisManager manager = (IVisManager) tile;
 
-		if (tile instanceof IVisManager && tile != null && ((IVisManager) tile).getConnectable(facing)) {
-			visManager = (IVisManager) tile;
+		if (manager != null && manager.getConnectable(facing)) {
+			return manager;
 		}
 
-		return visManager;
+		return null;
 	}
 
 	public float drainAvailableVis(float amount, boolean drain) {
@@ -66,16 +66,16 @@ public abstract class TileVisManager extends TileMagistics implements ITickable,
 
 			if (visManager != null && visManager instanceof IVisContainer) {
 				IVisContainer visContainer = (IVisContainer) visManager;
-				float vis = Math.min(amount - mod, visContainer.getMiasma());
+				float miasma = Math.min(amount - mod, visContainer.getMiasma());
 
-				if (vis < 0.001F) {
-					vis = 0F;
+				if (miasma < 0.001F) {
+					miasma = 0F;
 				}
 
-				mod += vis;
+				mod += miasma;
 
 				if (drain) {
-					visContainer.setMiasma(visContainer.getMiasma() - vis);
+					visContainer.setMiasma(visContainer.getMiasma() - miasma);
 				}
 			}
 
@@ -86,9 +86,6 @@ public abstract class TileVisManager extends TileMagistics implements ITickable,
 
 		return Math.min(amount, mod);
 	}
-
-	@Override
-	public abstract boolean getConnectable(EnumFacing facing);
 
 	@Override
 	public int getVisSuction() {

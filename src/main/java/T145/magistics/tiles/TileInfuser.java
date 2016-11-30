@@ -1,11 +1,11 @@
 package T145.magistics.tiles;
 
+import T145.magistics.api.InventoryHelper;
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.tiles.TileVisManager;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.sounds.SoundHandler;
-import T145.magistics.lib.utils.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -101,7 +101,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		InventoryUtils.setInventorySlotContents(inventoryStacks, stack, getInventoryStackLimit(), index);
+		InventoryHelper.setInventorySlotContents(inventoryStacks, stack, getInventoryStackLimit(), index);
 	}
 
 	@Override
@@ -165,12 +165,11 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		switch (side) {
-		case UP: case DOWN:
-			return new int[] {};
-		default:
+		if (getConnectable(side)) {
 			return isDark() ? new int[] { 0, 1, 2, 3, 4, 5 } : new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
 		}
+
+		return new int[] {};
 	}
 
 	@Override
@@ -218,7 +217,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		super.writeToNBT(tag);
 
 		tag.setFloat("CookCost", cookCost);
-		tag.setFloat("cookTime", cookTime);
+		tag.setFloat("CookTime", cookTime);
 
 		NBTTagList nbttaglist = new NBTTagList();
 
@@ -280,7 +279,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 				cookTime += drainAvailableVis(Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F), true);
 
 				if (soundDelay == 0) {
-					worldObj.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);
+					worldObj.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), isDark() ? SoundHandler.infuserDark : SoundHandler.infuser, SoundCategory.BLOCKS, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
@@ -337,7 +336,7 @@ public class TileInfuser extends TileVisManager implements IInteractionObject, I
 		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (inventoryStacks[slot] != null) {
 				for (ItemStack component : components) {
-					if (InventoryUtils.areStacksEqual(component, inventoryStacks[slot])) {
+					if (InventoryHelper.areStacksEqual(component, inventoryStacks[slot])) {
 
 						// add dull shard if light infuser
 

@@ -137,9 +137,10 @@ public class BlockInfuser extends Block implements IModel, ITile {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			player.openGui(Magistics.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
