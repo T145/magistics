@@ -94,4 +94,21 @@ public class TileMagistics extends TileEntity implements IFacing {
 	public void setFacingFromEntity(EntityLivingBase placer) {
 		setFacing(getFacingFromEntity(placer));
 	}
+
+	public boolean hasFront() {
+		return facing > 0;
+	}
+
+	public int getFrontAngle(boolean rotateNorthSouth, boolean rotateEastWest) {
+		switch (facing) {
+		case 2:
+			return rotateEastWest ? -180 : 180;
+		case 4:
+			return rotateNorthSouth ? 90 : -90;
+		case 5:
+			return rotateNorthSouth ? -90 : 90;
+		default:
+			return 0;
+		}
+	}
 }

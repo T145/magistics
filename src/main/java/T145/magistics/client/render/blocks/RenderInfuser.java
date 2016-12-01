@@ -9,13 +9,14 @@ import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.TileInfuser;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderInfuser extends RenderFacing<TileInfuser> {
+public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileInfuser infuser, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -37,7 +38,7 @@ public class RenderInfuser extends RenderFacing<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(getAngleFromFront(infuser.getFacing(), false), 0F, 1F, 0F);
+			GlStateManager.rotate(infuser.getFrontAngle(false, false), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);

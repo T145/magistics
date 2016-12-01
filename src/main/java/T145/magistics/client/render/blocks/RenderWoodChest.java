@@ -4,9 +4,10 @@ import T145.magistics.Magistics;
 import T145.magistics.tiles.TileWoodChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderWoodChest extends RenderFacing<TileWoodChest> {
+public class RenderWoodChest extends TileEntitySpecialRenderer<TileWoodChest> {
 
 	private static final ResourceLocation[] TEXTURES = {
 			new ResourceLocation(Magistics.MODID, "textures/models/chest_greatwood.png"),
@@ -37,7 +38,7 @@ public class RenderWoodChest extends RenderFacing<TileWoodChest> {
 		GlStateManager.translate(x, y + 1F, z + 1F);
 		GlStateManager.scale(1F, -1F, -1F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		GlStateManager.rotate(getAngleFromFront(chest.getFacing(), true), 0F, 1F, 0F);
+		GlStateManager.rotate(chest.getFrontAngle(true, false), 0F, 1F, 0F);
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 		float f = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * partialTicks;
 		f = 1F - f;
