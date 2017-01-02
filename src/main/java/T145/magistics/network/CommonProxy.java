@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonProxy implements IGuiHandler {
+public class CommonProxy implements IGuiHandler, IProxy {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -37,13 +37,16 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
+	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		BiomeHandler.registerBiomes();
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 	}
 
+	@Override
 	public void init(FMLInitializationEvent event) {}
 
+	@Override
 	public void postInit(FMLPostInitializationEvent event) {}
 
 	public World getClientWorld() {

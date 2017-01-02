@@ -6,35 +6,28 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.enums.EnumCrucible;
 import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
-import T145.magistics.api.objects.IVariant;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.tiles.TileCrucible;
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -43,28 +36,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends Block implements IModel, ITile {
+public class BlockCrucible extends MBlock<EnumCrucible> implements IModel, ITile {
 
-	public static enum BlockType implements IVariant {
-
-		BASIC, EYES, THAUMIUM, SOULS;
-
-		@Override
-		public String getName() {
-			return name().toLowerCase();
-		}
-
-		@Override
-		public String getClientName() {
-			return "variant=" + getName();
-		}
-
-		public static BlockType byMetadata(int meta) {
-			return values()[MathHelper.clamp_int(meta, 0, meta)];
-		}
-	}
-
-	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
 	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, BlockRenderer.W14, 1D, 1D, 1D);
@@ -72,19 +45,16 @@ public class BlockCrucible extends Block implements IModel, ITile {
 	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, BlockRenderer.W2, 1D, 1D);
 
 	public BlockCrucible(String name) {
-		super(Material.IRON);
+		super(Material.IRON, EnumCrucible.class);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.BASIC));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-
-		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
 		setResistance(17F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
+		GameRegistry.register(new MBlockItem(this, EnumCrucible.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
 	}
 
@@ -126,14 +96,6 @@ public class BlockCrucible extends Block implements IModel, ITile {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (BlockType type : BlockType.values()) {
-			list.add(new ItemStack(item, 1, type.ordinal()));
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerRenderer() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 	}
@@ -141,7 +103,7 @@ public class BlockCrucible extends Block implements IModel, ITile {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (BlockType type : BlockType.values()) {
+		for (EnumCrucible type : EnumCrucible.values()) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
@@ -169,25 +131,5 @@ public class BlockCrucible extends Block implements IModel, ITile {
 		TileCrucible crucible = new TileCrucible();
 		crucible.setTier(meta);
 		return crucible;
-	}
-
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, BlockType.byMetadata(meta));
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIANT).ordinal();
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { VARIANT });
 	}
 }

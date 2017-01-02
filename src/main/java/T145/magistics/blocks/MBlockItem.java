@@ -4,11 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class BlockMagisticsItem extends ItemBlock {
+public class MBlockItem extends ItemBlock {
 
 	private final Class<? extends Enum> blockTypes;
 
-	public BlockMagisticsItem(Block block, Class<? extends Enum> blockTypes) {
+	public MBlockItem(Block block, Class<? extends Enum> blockTypes) {
 		super(block);
 		setHasSubtypes(true);
 		this.blockTypes = blockTypes;

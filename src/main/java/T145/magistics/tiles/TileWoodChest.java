@@ -1,7 +1,7 @@
 package T145.magistics.tiles;
 
+import T145.magistics.api.enums.EnumWood;
 import T145.magistics.api.tiles.TileMagisticsLockableLoot;
-import T145.magistics.blocks.BlockLogs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -34,7 +34,7 @@ public class TileWoodChest extends TileMagisticsLockableLoot implements ITickabl
 
 	@Override
 	public String getName() {
-		return "tile.chest_wood." + BlockLogs.BlockType.byMetadata(getBlockMetadata()).getName() + ".name";
+		return "tile.chest_wood." + EnumWood.byMetadata(getBlockMetadata()).getName() + ".name";
 	}
 
 	@Override

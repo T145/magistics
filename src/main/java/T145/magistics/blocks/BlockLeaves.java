@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.enums.EnumWood;
 import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ModBlocks;
-import T145.magistics.blocks.BlockLogs.BlockType;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -36,25 +36,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IModel, IBlockColor {
 
-	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
+	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 
 	public BlockLeaves(String name) {
 		super();
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
+		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -66,7 +66,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IMod
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			registerPath(type.ordinal(), type.getClientName());
 			registerPath(type.ordinal(), "check_decay=false,decayable=false," + type.getClientName());
 			registerPath(type.ordinal(), "check_decay=true,decayable=false," + type.getClientName());
@@ -136,8 +136,8 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IMod
 		return null;
 	}
 
-	public BlockType getProperWoodType(int meta) {
-		return BlockType.byMetadata(meta & 3);
+	public EnumWood getProperWoodType(int meta) {
+		return EnumWood.byMetadata(meta & 3);
 	}
 
 	@Override

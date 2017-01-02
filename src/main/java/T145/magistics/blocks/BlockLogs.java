@@ -3,8 +3,8 @@ package T145.magistics.blocks;
 import java.util.List;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.enums.EnumWood;
 import T145.magistics.api.objects.IModel;
-import T145.magistics.api.objects.IVariant;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -17,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -26,31 +25,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLogs extends BlockLog implements IModel {
 
-	public static enum BlockType implements IVariant {
-
-		GREATWOOD, SILVERWOOD;
-
-		@Override
-		public String getName() {
-			return name().toLowerCase();
-		}
-
-		@Override
-		public String getClientName() {
-			return "variant=" + getName();
-		}
-
-		public static BlockType byMetadata(int meta) {
-			return values()[MathHelper.clamp_int(meta, 0, meta)];
-		}
-	}
-
-	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
+	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 
 	public BlockLogs(String name) {
 		super();
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.TAB);
@@ -61,13 +41,13 @@ public class BlockLogs extends BlockLog implements IModel {
 		setResistance(5F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
+		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -75,7 +55,7 @@ public class BlockLogs extends BlockLog implements IModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			for (BlockLog.EnumAxis axis : BlockLog.EnumAxis.values()) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), "axis=" + axis.getName() + "," + type.getClientName()));
 			}
@@ -104,7 +84,7 @@ public class BlockLogs extends BlockLog implements IModel {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.values()[meta >> 2]).withProperty(VARIANT, BlockType.byMetadata(meta & 3));
+		return getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.values()[meta >> 2]).withProperty(VARIANT, EnumWood.byMetadata(meta & 3));
 	}
 
 	@Override

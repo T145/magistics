@@ -7,6 +7,7 @@ import T145.magistics.commands.CommandMagistics;
 import T145.magistics.config.ConfigHandler;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
+import T145.magistics.network.IProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
-public class Magistics {
+public class Magistics implements IProxy {
 
 	public static final String MODID = "magistics";
 	public static final String NAME = "Magistics";
@@ -45,6 +46,7 @@ public class Magistics {
 		return VERSION.equals("$version");
 	}
 
+	@Override
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger.info("Hello World!");
@@ -67,12 +69,14 @@ public class Magistics {
 		proxy.preInit(event);
 	}
 
+	@Override
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		config.init(event);
 		proxy.init(event);
 	}
 
+	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		config.postInit(event);

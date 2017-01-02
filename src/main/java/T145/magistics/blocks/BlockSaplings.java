@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.enums.EnumWood;
 import T145.magistics.api.objects.IModel;
-import T145.magistics.blocks.BlockLogs.BlockType;
 import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
 import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockBush;
@@ -38,14 +38,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 
-	public static final PropertyEnum<BlockType> VARIANT = PropertyEnum.<BlockType>create("variant", BlockType.class);
+	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
 	protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
 
 	public BlockSaplings(String name) {
 		super();
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockType.GREATWOOD).withProperty(STAGE, 0));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(STAGE, 0));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.TAB);
@@ -54,7 +54,7 @@ public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 		setHardness(0F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockMagisticsItem(this, BlockType.class), getRegistryName());
+		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -73,7 +73,7 @@ public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (BlockType type : BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			for (int stage = 0; stage < 2; ++stage) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), "stage=" + stage + "," + type.getClientName()));
 			}
@@ -151,7 +151,7 @@ public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, BlockType.byMetadata(meta & 7)).withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
+		return getDefaultState().withProperty(VARIANT, EnumWood.byMetadata(meta & 7)).withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
 	}
 
 	@Override

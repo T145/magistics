@@ -1,23 +1,17 @@
 package T145.magistics.blocks;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.enums.EnumWood;
 import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
 import T145.magistics.client.render.blocks.RenderWoodChest;
 import T145.magistics.tiles.TileWoodChest;
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -42,34 +36,22 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockWoodChest extends Block implements IModel, ITile {
+public class BlockWoodChest extends MBlock<EnumWood> implements IModel, ITile {
 
-	public static final PropertyEnum<BlockLogs.BlockType> VARIANT = PropertyEnum.<BlockLogs.BlockType>create("variant", BlockLogs.BlockType.class);
 	public static final AxisAlignedBB CHEST_AABB = new AxisAlignedBB(0.0625D, 0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
 	public BlockWoodChest(String name) {
-		super(Material.WOOD);
+		super(Material.WOOD, EnumWood.class);
 
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, BlockLogs.BlockType.GREATWOOD));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-
-		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.WOOD);
 		setHardness(3F);
 		setResistance(17F);
 
 		GameRegistry.register(this);
-		GameRegistry.register(new BlockMagisticsItem(this, BlockLogs.BlockType.class), getRegistryName());
+		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileWoodChest.class, TileWoodChest.class.getSimpleName());
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-		for (BlockLogs.BlockType type : BlockLogs.BlockType.values()) {
-			list.add(new ItemStack(item, 1, type.ordinal()));
-		}
 	}
 
 	@Override
@@ -81,7 +63,7 @@ public class BlockWoodChest extends Block implements IModel, ITile {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModel() {
-		for (BlockLogs.BlockType type : BlockLogs.BlockType.values()) {
+		for (EnumWood type : EnumWood.values()) {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
@@ -175,25 +157,5 @@ public class BlockWoodChest extends Block implements IModel, ITile {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileWoodChest();
-	}
-
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, BlockLogs.BlockType.byMetadata(meta));
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIANT).ordinal();
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { VARIANT });
 	}
 }
