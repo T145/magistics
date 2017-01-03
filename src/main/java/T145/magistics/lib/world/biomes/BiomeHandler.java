@@ -33,10 +33,6 @@ public class BiomeHandler {
 		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
 		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
 
-		loadAuraMapping();
-	}
-
-	private static void loadAuraMapping() {
 		biomeLowAura.add(Biomes.DESERT);
 		biomeLowAura.add(Biomes.DESERT_HILLS);
 		biomeLowAura.add(Biomes.HELL);
@@ -45,6 +41,7 @@ public class BiomeHandler {
 		biomeHighAura.add(Biomes.FOREST);
 		biomeHighAura.add(Biomes.FOREST_HILLS);
 		biomeHighAura.add(Biomes.TAIGA_HILLS);
+		biomeHighAura.add(biomeEnchantedForest);
 
 		biomeGoodAura.add(Biomes.MUSHROOM_ISLAND);
 		biomeGoodAura.add(Biomes.MUSHROOM_ISLAND_SHORE);

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import T145.magistics.Magistics;
 import T145.magistics.api.enums.EnumShard;
 import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ModItems;
@@ -18,12 +17,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,17 +29,12 @@ public class BlockInfusedOre extends MBlock<EnumShard> implements IModel, IBlock
 	private Random rand = new Random();
 
 	public BlockInfusedOre(String name) {
-		super(Material.ROCK, EnumShard.class);
+		super(name, Material.ROCK, EnumShard.class);
 
-		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-		setUnlocalizedName(name);
 		setSoundType(SoundType.STONE);
 		setResistance(5F);
 		setHardness(1.5F);
 		setTickRandomly(true);
-
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumShard.class), getRegistryName());
 	}
 
 	@Override

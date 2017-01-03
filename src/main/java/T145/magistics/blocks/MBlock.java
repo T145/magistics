@@ -13,6 +13,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,7 +24,7 @@ public class MBlock<T extends Enum<T> & IStringSerializable> extends Block {
 	public final T[] VARIANT_VALUES;
 	private static IProperty[] tempVariants;
 
-	public MBlock(Material material, Class variants) {
+	public MBlock(String name, Material material, Class variants) {
 		super(createProperties(material, variants));
 
 		if (variants == Object.class) {
@@ -35,11 +37,19 @@ public class MBlock<T extends Enum<T> & IStringSerializable> extends Block {
 			setDefaultState(blockState.getBaseState().withProperty(VARIANT, VARIANT_VALUES[0]));
 		}
 
+		setRegistryName(new ResourceLocation(Magistics.MODID, name));
+		setUnlocalizedName(name);
 		setCreativeTab(Magistics.TAB);
+
+		GameRegistry.register(this);
+
+		if (variants != null) {
+			GameRegistry.register(new MBlockItem(this, variants), getRegistryName());
+		}
 	}
 
-	public MBlock(Material material) {
-		this(material, Object.class);
+	public MBlock(String name, Material material) {
+		this(name, material, Object.class);
 	}
 
 	protected static Material createProperties(Material material, Class variants) {
@@ -52,6 +62,7 @@ public class MBlock<T extends Enum<T> & IStringSerializable> extends Block {
 		return material;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		if (VARIANT != null) {

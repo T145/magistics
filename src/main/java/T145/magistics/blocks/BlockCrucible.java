@@ -24,7 +24,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -45,16 +44,12 @@ public class BlockCrucible extends MBlock<EnumCrucible> implements IModel, ITile
 	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, BlockRenderer.W2, 1D, 1D);
 
 	public BlockCrucible(String name) {
-		super(Material.IRON, EnumCrucible.class);
+		super(name, Material.IRON, EnumCrucible.class);
 
-		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-		setUnlocalizedName(name);
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
 		setResistance(17F);
 
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumCrucible.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileCrucible.class, TileCrucible.class.getSimpleName());
 	}
 

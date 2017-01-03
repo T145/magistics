@@ -25,7 +25,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -41,16 +40,12 @@ public class BlockWoodChest extends MBlock<EnumWood> implements IModel, ITile {
 	public static final AxisAlignedBB CHEST_AABB = new AxisAlignedBB(0.0625D, 0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
 	public BlockWoodChest(String name) {
-		super(Material.WOOD, EnumWood.class);
+		super(name, Material.WOOD, EnumWood.class);
 
-		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-		setUnlocalizedName(name);
 		setSoundType(SoundType.WOOD);
 		setHardness(3F);
 		setResistance(17F);
 
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileWoodChest.class, TileWoodChest.class.getSimpleName());
 	}
 

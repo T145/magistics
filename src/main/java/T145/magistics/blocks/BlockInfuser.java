@@ -24,7 +24,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -40,16 +39,12 @@ public class BlockInfuser extends MBlock<EnumInfuser> implements IModel, ITile {
 	protected static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
 
 	public BlockInfuser(String name) {
-		super(Material.ROCK, EnumInfuser.class);
+		super(name, Material.ROCK, EnumInfuser.class);
 
-		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-		setUnlocalizedName(name);
 		setSoundType(SoundType.STONE);
 		setHardness(2F);
 		setResistance(15F);
 
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumInfuser.class), getRegistryName());
 		GameRegistry.registerTileEntity(TileInfuser.class, TileInfuser.class.getSimpleName());
 		GameRegistry.registerTileEntity(TileInfuserDark.class, TileInfuserDark.class.getSimpleName());
 	}
