@@ -37,7 +37,7 @@
                 "textures": {
                     "particle": "magistics:blocks/crucible/souls_inside",
                     "bottom": "magistics:blocks/crucible/souls_bottom",
-                    "top": "magistics:blocks/crucible/souls_top",
+                    "top": "magistics:blocks/crucible/souls_top_opaque",
                     "side": "magistics:blocks/crucible/souls_side_off"
                 }
             }

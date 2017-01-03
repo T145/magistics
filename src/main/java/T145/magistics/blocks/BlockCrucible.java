@@ -61,6 +61,8 @@ public class BlockCrucible extends MBlock<EnumCrucible> implements IModel, ITile
 			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
 			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
 			addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+		} else {
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, FULL_BLOCK_AABB);
 		}
 	}
 
