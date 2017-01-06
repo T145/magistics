@@ -1,9 +1,8 @@
 package T145.magistics.lib.world.biomes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import T145.magistics.Magistics;
+import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.MagisticsApi.AuraType;
 import T145.magistics.config.ConfigHandler;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
@@ -12,11 +11,6 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
 
 public class BiomeHandler {
-
-	public static List<Biome> biomeLowAura = new ArrayList<Biome>();
-	public static List<Biome> biomeHighAura = new ArrayList<Biome>();
-	public static List<Biome> biomeGoodAura = new ArrayList<Biome>();
-	public static List<Biome> biomeBadAura = new ArrayList<Biome>();
 
 	public static Biome biomeTaint;
 	public static Biome biomeGreatwoodGrove;
@@ -33,23 +27,23 @@ public class BiomeHandler {
 		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
 		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
 
-		biomeLowAura.add(Biomes.DESERT);
-		biomeLowAura.add(Biomes.DESERT_HILLS);
-		biomeLowAura.add(Biomes.HELL);
+		MagisticsApi.registerBiomeAura(Biomes.DESERT, AuraType.LOW);
+		MagisticsApi.registerBiomeAura(Biomes.DESERT_HILLS, AuraType.LOW);
+		MagisticsApi.registerBiomeAura(Biomes.HELL, AuraType.LOW);
 
-		biomeHighAura.add(Biomes.TAIGA);
-		biomeHighAura.add(Biomes.FOREST);
-		biomeHighAura.add(Biomes.FOREST_HILLS);
-		biomeHighAura.add(Biomes.TAIGA_HILLS);
-		biomeHighAura.add(biomeEnchantedForest);
+		MagisticsApi.registerBiomeAura(Biomes.TAIGA, AuraType.HIGH);
+		MagisticsApi.registerBiomeAura(Biomes.TAIGA_HILLS, AuraType.HIGH);
+		MagisticsApi.registerBiomeAura(Biomes.FOREST, AuraType.HIGH);
+		MagisticsApi.registerBiomeAura(Biomes.FOREST_HILLS, AuraType.HIGH);
+		MagisticsApi.registerBiomeAura(biomeEnchantedForest, AuraType.HIGH);
 
-		biomeGoodAura.add(Biomes.MUSHROOM_ISLAND);
-		biomeGoodAura.add(Biomes.MUSHROOM_ISLAND_SHORE);
-		biomeGoodAura.add(Biomes.JUNGLE);
-		biomeGoodAura.add(Biomes.JUNGLE_HILLS);
+		MagisticsApi.registerBiomeAura(Biomes.MUSHROOM_ISLAND, AuraType.GOOD);
+		MagisticsApi.registerBiomeAura(Biomes.MUSHROOM_ISLAND_SHORE, AuraType.GOOD);
+		MagisticsApi.registerBiomeAura(Biomes.JUNGLE, AuraType.GOOD);
+		MagisticsApi.registerBiomeAura(Biomes.JUNGLE_HILLS, AuraType.GOOD);
 
-		biomeBadAura.add(Biomes.SWAMPLAND);
-		biomeBadAura.add(biomeTaint);
+		MagisticsApi.registerBiomeAura(Biomes.SWAMPLAND, AuraType.BAD);
+		MagisticsApi.registerBiomeAura(biomeTaint, AuraType.BAD);
 	}
 
 	public static int getNextFreeBiomeId() {
