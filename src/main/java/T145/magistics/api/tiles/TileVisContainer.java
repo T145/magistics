@@ -8,6 +8,7 @@ public abstract class TileVisContainer extends TileVisManager implements IVisCon
 	protected float vis;
 	protected float miasma;
 
+	@Override
 	public float[] subtractVis(float amount) {
 		float visAmount = amount / 2F;
 		float miasmaAmount = amount / 2F;

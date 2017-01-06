@@ -7,4 +7,6 @@ public interface IVisContainer extends IVisManager {
 
 	public void setVis(float amount);
 	public void setMiasma(float amount);
+
+	public float[] subtractVis(float amount);
 }

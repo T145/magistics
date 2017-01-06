@@ -17,6 +17,7 @@ public class IconAtlas {
 	public static final IconAtlas INSTANCE = new IconAtlas();
 
 	public TextureAtlasSprite spriteVis;
+	public TextureAtlasSprite spriteConduit;
 
 	@SubscribeEvent
 	public void onModelBake(ModelBakeEvent event) {}
@@ -24,6 +25,7 @@ public class IconAtlas {
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent.Pre event) {
 		spriteVis = registerSprite(event.getMap(), "vis", "misc");
+		spriteConduit = registerSprite(event.getMap(), "conduit", "blocks");
 	}
 
 	public TextureAtlasSprite registerSprite(TextureMap map, String name) {
