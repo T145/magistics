@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.MagisticsApi;
 import T145.magistics.config.ConfigHandler;
+import T145.magistics.lib.world.biomes.BiomeHandler;
 import T145.magistics.lib.world.biomes.BiomeTaint;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -26,27 +26,20 @@ public class AuraHandler {
 		float floor = ConfigHandler.auraMax / 5;
 		boolean discharge = false;
 
-		switch (MagisticsApi.getRegisteredBiomeAuras().get(biome)) {
-		case LOW:
+		if (BiomeHandler.biomeLowAura.contains(biome)) {
 			ceiling = ConfigHandler.auraMax / 8;
 			floor = ConfigHandler.auraMax / 20;
 			discharge = biome instanceof BiomeHell;
-			break;
-		case HIGH:
+		} else if (BiomeHandler.biomeHighAura.contains(biome)) {
 			ceiling = ConfigHandler.auraMax * 0.6F;
 			floor = ConfigHandler.auraMax / 3;
-			break;
-		case GOOD:
+		} else if (BiomeHandler.biomeGoodAura.contains(biome)) {
 			ceiling = ConfigHandler.auraMax * 0.7F;
 			floor = ConfigHandler.auraMax / 2;
-			break;
-		case BAD:
+		} else if (BiomeHandler.biomeBadAura.contains(biome)) {
 			ceiling = ConfigHandler.auraMax * 0.5F;
 			floor = ConfigHandler.auraMax / 3;
 			discharge = true;
-			break;
-		default:
-			break;
 		}
 
 		float auraVis = floor + random.nextInt((int) (ceiling - floor));

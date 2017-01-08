@@ -12,17 +12,11 @@ import T145.magistics.api.crafting.InfuserRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.Biome;
 
 public class MagisticsApi {
 
-	public static enum AuraType {
-		LOW, HIGH, GOOD, BAD;
-	}
-
 	private static Map<ItemStack, Float> crucibleRecipes = new HashMap<ItemStack, Float>();
 	private static List<InfuserRecipe> infuserRecipes = new ArrayList<InfuserRecipe>();
-	private static Map<Biome, AuraType> auraTypes = new HashMap<Biome, AuraType>();
 
 	public static void addCrucibleRecipe(ItemStack input, float visOutput) {
 		crucibleRecipes.put(input, visOutput);
@@ -63,13 +57,5 @@ public class MagisticsApi {
 		}
 
 		return null;
-	}
-
-	public static void registerBiomeAura(Biome biome, AuraType auraType) {
-		auraTypes.put(biome, auraType);
-	}
-
-	public static Map<Biome, AuraType> getRegisteredBiomeAuras() {
-		return auraTypes;
 	}
 }
