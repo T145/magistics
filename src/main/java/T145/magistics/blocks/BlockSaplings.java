@@ -5,7 +5,6 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.enums.EnumWood;
-import T145.magistics.api.objects.IModel;
 import T145.magistics.lib.world.features.WorldGenGreatwoodTree;
 import T145.magistics.lib.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockBush;
@@ -16,7 +15,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -30,13 +28,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSaplings extends BlockBush implements IModel, IGrowable {
+public class BlockSaplings extends BlockBush implements IGrowable {
 
 	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
@@ -67,17 +64,6 @@ public class BlockSaplings extends BlockBush implements IModel, IGrowable {
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
 		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModel() {
-		for (EnumWood type : EnumWood.values()) {
-			for (int stage = 0; stage < 2; ++stage) {
-				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), "stage=" + stage + "," + type.getClientName()));
-			}
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
 

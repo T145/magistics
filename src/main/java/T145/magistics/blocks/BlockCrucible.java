@@ -7,21 +7,17 @@ import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.enums.EnumCrucible;
-import T145.magistics.api.objects.IModel;
-import T145.magistics.api.objects.ITile;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.tiles.TileCrucible;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -29,13 +25,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends MBlock<EnumCrucible> implements IModel, ITile {
+public class BlockCrucible extends MBlock<EnumCrucible> implements ITileEntityProvider {
 
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
@@ -88,20 +82,6 @@ public class BlockCrucible extends MBlock<EnumCrucible> implements IModel, ITile
 
 		if (crucible.hasWorldObj() && crucible.getBlockMetadata() < 3) {
 			Magistics.proxy.greenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerRenderer() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModel() {
-		for (EnumCrucible type : EnumCrucible.values()) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
 		}
 	}
 

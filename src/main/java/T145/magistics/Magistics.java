@@ -4,10 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.commands.CommandMagistics;
-import T145.magistics.config.ConfigHandler;
+import T145.magistics.config.Config;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.network.CommonProxy;
-import T145.magistics.network.IProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +22,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
-public class Magistics implements IProxy {
+public class Magistics {
 
 	public static final String MODID = "magistics";
 	public static final String NAME = "Magistics";
@@ -39,14 +38,9 @@ public class Magistics implements IProxy {
 	private static ModMetadata meta;
 
 	public static Logger logger = LogManager.getLogger(NAME);
-	public static ConfigHandler config = new ConfigHandler();
+	public static Config config = new Config();
 	public static final CreativeTabs TAB = new CreativeTabMagistics();
 
-	public boolean isDeobfuscated() {
-		return VERSION.equals("$version");
-	}
-
-	@Override
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger.info("Hello World!");
@@ -65,21 +59,17 @@ public class Magistics implements IProxy {
 		MinecraftForge.EVENT_BUS.register(config);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
-		config.preInit(event);
+		config.load(event);
 		proxy.preInit(event);
 	}
 
-	@Override
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		config.init(event);
 		proxy.init(event);
 	}
 
-	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		config.postInit(event);
 		proxy.postInit(event);
 	}
 

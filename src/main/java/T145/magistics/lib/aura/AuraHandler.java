@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import T145.magistics.Magistics;
-import T145.magistics.config.ConfigHandler;
+import T145.magistics.config.Config;
 import T145.magistics.lib.world.biomes.BiomeHandler;
 import T145.magistics.lib.world.biomes.BiomeTaint;
 import net.minecraft.util.math.BlockPos;
@@ -22,23 +22,23 @@ public class AuraHandler {
 		World world = chunk.getWorld();
 		BlockPos pos = new BlockPos(chunk.xPosition * 16 + 8, 50, chunk.zPosition * 16 + 8);
 		Biome biome = world.getBiomeForCoordsBody(pos);
-		float ceiling = ConfigHandler.auraMax / 3;
-		float floor = ConfigHandler.auraMax / 5;
+		float ceiling = Config.auraMax / 3;
+		float floor = Config.auraMax / 5;
 		boolean discharge = false;
 
 		if (BiomeHandler.biomeLowAura.contains(biome)) {
-			ceiling = ConfigHandler.auraMax / 8;
-			floor = ConfigHandler.auraMax / 20;
+			ceiling = Config.auraMax / 8;
+			floor = Config.auraMax / 20;
 			discharge = biome instanceof BiomeHell;
 		} else if (BiomeHandler.biomeHighAura.contains(biome)) {
-			ceiling = ConfigHandler.auraMax * 0.6F;
-			floor = ConfigHandler.auraMax / 3;
+			ceiling = Config.auraMax * 0.6F;
+			floor = Config.auraMax / 3;
 		} else if (BiomeHandler.biomeGoodAura.contains(biome)) {
-			ceiling = ConfigHandler.auraMax * 0.7F;
-			floor = ConfigHandler.auraMax / 2;
+			ceiling = Config.auraMax * 0.7F;
+			floor = Config.auraMax / 2;
 		} else if (BiomeHandler.biomeBadAura.contains(biome)) {
-			ceiling = ConfigHandler.auraMax * 0.5F;
-			floor = ConfigHandler.auraMax / 3;
+			ceiling = Config.auraMax * 0.5F;
+			floor = Config.auraMax / 3;
 			discharge = true;
 		}
 
@@ -47,7 +47,7 @@ public class AuraHandler {
 
 		if (biome instanceof BiomeTaint) {
 			auraVis = floor + random.nextInt((int) (ceiling - floor)) / 2;
-			auraMiasma = ConfigHandler.auraMax * (ConfigHandler.taintSeverity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (ConfigHandler.auraMax * 0.2F));
+			auraMiasma = Config.auraMax * (Config.taintSeverity == 2 ? 0.8F : 0.5F) + random.nextInt((int) (Config.auraMax * 0.2F));
 		}
 
 		if (discharge) {

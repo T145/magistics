@@ -5,26 +5,22 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.api.enums.EnumShard;
-import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ModItems;
 import T145.magistics.items.ItemShard;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfusedOre extends MBlock<EnumShard> implements IModel, IBlockColor {
+public class BlockInfusedOre extends MBlock<EnumShard> implements IBlockColor {
 
 	private Random rand = new Random();
 
@@ -56,14 +52,6 @@ public class BlockInfusedOre extends MBlock<EnumShard> implements IModel, IBlock
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModel() {
-		for (EnumShard type : EnumShard.values()) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
-		}
 	}
 
 	@Override

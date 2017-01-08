@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.config.ConfigHandler;
+import T145.magistics.config.Config;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -25,13 +25,13 @@ public class BiomeHandler {
 	public static void registerBiomes() {
 		biomeTaint = registerBiome(new BiomeTaint());
 		registerBiomeToDictionary(biomeTaint, Type.MAGICAL, Type.WASTELAND);
-		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeTaint, ConfigHandler.taintWeight));
-		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeTaint, ConfigHandler.taintWeight));
+		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeTaint, Config.taintWeight));
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeTaint, Config.taintWeight));
 
 		biomeEnchantedForest = registerBiome(new BiomeEnchantedForest());
 		registerBiomeToDictionary(biomeEnchantedForest, Type.MAGICAL, Type.FOREST);
-		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
-		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, ConfigHandler.enchantedForestWeight));
+		BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(biomeEnchantedForest, Config.enchantedForestWeight));
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(biomeEnchantedForest, Config.enchantedForestWeight));
 
 		biomeLowAura.add(Biomes.DESERT);
 		biomeLowAura.add(Biomes.DESERT_HILLS);

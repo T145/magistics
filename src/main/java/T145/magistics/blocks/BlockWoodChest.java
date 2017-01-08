@@ -4,14 +4,11 @@ import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.enums.EnumWood;
-import T145.magistics.api.objects.IModel;
-import T145.magistics.api.objects.ITile;
-import T145.magistics.client.render.blocks.RenderWoodChest;
 import T145.magistics.tiles.TileWoodChest;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -19,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -29,13 +25,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockWoodChest extends MBlock<EnumWood> implements IModel, ITile {
+public class BlockWoodChest extends MBlock<EnumWood> implements ITileEntityProvider {
 
 	public static final AxisAlignedBB CHEST_AABB = new AxisAlignedBB(0.0625D, 0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
@@ -47,20 +39,6 @@ public class BlockWoodChest extends MBlock<EnumWood> implements IModel, ITile {
 		setResistance(17F);
 
 		GameRegistry.registerTileEntity(TileWoodChest.class, TileWoodChest.class.getSimpleName());
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerRenderer() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileWoodChest.class, new RenderWoodChest());
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModel() {
-		for (EnumWood type : EnumWood.values()) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.ordinal(), new ModelResourceLocation(getRegistryName(), type.getClientName()));
-		}
 	}
 
 	@Override

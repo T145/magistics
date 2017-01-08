@@ -4,7 +4,7 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.objects.ModBlocks;
-import T145.magistics.config.ConfigHandler;
+import T145.magistics.config.Config;
 import T145.magistics.lib.aura.AuraHandler;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -32,7 +32,7 @@ public class WorldGenerator implements IWorldGenerator {
 	private void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 		int dimension = world.provider.getDimension();
 
-		if (ConfigHandler.isDimensionWhitelisted(dimension)) {
+		if (Config.isDimensionWhitelisted(dimension)) {
 			switch (dimension) {
 			case -1:
 				generateNether(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);

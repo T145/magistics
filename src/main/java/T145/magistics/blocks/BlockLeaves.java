@@ -7,7 +7,6 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.enums.EnumWood;
-import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ModBlocks;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.material.MapColor;
@@ -15,7 +14,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -29,12 +27,11 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IModel, IBlockColor {
+public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IBlockColor {
 
 	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 
@@ -56,22 +53,6 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IMod
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
 		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
-		}
-	}
-
-	public void registerPath(int meta, String path) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), meta, new ModelResourceLocation(getRegistryName(), path));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerModel() {
-		for (EnumWood type : EnumWood.values()) {
-			registerPath(type.ordinal(), type.getClientName());
-			registerPath(type.ordinal(), "check_decay=false,decayable=false," + type.getClientName());
-			registerPath(type.ordinal(), "check_decay=true,decayable=false," + type.getClientName());
-			registerPath(type.ordinal(), "check_decay=false,decayable=true," + type.getClientName());
-			registerPath(type.ordinal(), "check_decay=true,decayable=true," + type.getClientName());
 		}
 	}
 
