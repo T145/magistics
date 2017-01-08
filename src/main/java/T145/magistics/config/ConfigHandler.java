@@ -6,6 +6,7 @@ import T145.magistics.api.objects.IModel;
 import T145.magistics.api.objects.ITile;
 import T145.magistics.api.objects.ModBlocks;
 import T145.magistics.api.objects.ModItems;
+import T145.magistics.blocks.BlockConduit;
 import T145.magistics.blocks.BlockCrucible;
 import T145.magistics.blocks.BlockInfusedOre;
 import T145.magistics.blocks.BlockInfuser;
@@ -110,6 +111,7 @@ public class ConfigHandler {
 	private int entityId;
 
 	public void preInit() {
+		ModBlocks.conduit = new BlockConduit();
 		ModBlocks.crucible = new BlockCrucible("crucible");
 		ModBlocks.infuser = new BlockInfuser("infuser");
 		ModBlocks.woodChest = new BlockWoodChest("chest_wood");
@@ -131,6 +133,9 @@ public class ConfigHandler {
 
 	@SideOnly(Side.CLIENT)
 	public void initClient() {
+		((IModel) ModBlocks.conduit).registerModel();
+		((ITile) ModBlocks.conduit).registerRenderer();
+		
 		((IModel) ModBlocks.crucible).registerModel();
 		((ITile) ModBlocks.crucible).registerRenderer();
 

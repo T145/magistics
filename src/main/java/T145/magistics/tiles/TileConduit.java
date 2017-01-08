@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class TileConduit extends TileVisContainer {
 
-	protected static int[] connections = new int[5];
+	protected static int[] connections = new int[EnumFacing.VALUES.length];
 
 	public float maxVis = 4F;
 	private float fillAmount = 4F;
@@ -55,7 +55,7 @@ public class TileConduit extends TileVisContainer {
 
 			// distribute vis appropriately
 			if (prevDisplayPure != displayPure || prevDisplayMiasma != displayMiasma) {
-				worldObj.scheduleUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ()), blockType, 0);
+				worldObj.scheduleUpdate(pos, getBlockType(), 0);
 				prevDisplayPure = displayPure;
 				prevDisplayMiasma = displayMiasma;
 			}
@@ -96,10 +96,12 @@ public class TileConduit extends TileVisContainer {
 
 	protected void equalizeWithNeighbours() {
 		for (EnumFacing dir : EnumFacing.VALUES) {
-			if (hasConnection(dir)) {
-				IVisContainer container = (IVisContainer) getConnectableTile(dir);
+			IVisManager manager = this.getConnectableTile(dir);
 
-				if (container != null && vis + miasma < maxVis && (getVisSuction() > container.getVisSuction() || getMiasmaSuction() > container.getMiasmaSuction())) {
+			if (manager != null && manager instanceof IVisContainer) {
+				IVisContainer container = (IVisContainer) manager;
+
+				if (vis + miasma < maxVis && (getVisSuction() > container.getVisSuction() || getMiasmaSuction() > container.getMiasmaSuction())) {
 					float min = Math.min((container.getVis() + container.getMiasma()) / 4F, fillAmount);
 					float[] total = container.subtractVis(Math.min(min, maxVis - (vis + miasma)));
 

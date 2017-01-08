@@ -3,6 +3,8 @@ itemGroup.magistics=Magistics
 entity.magistics.slime.vis.name=Vis Slime
 entity.magistics.slime.taint.name=Corrupted Slime
 
+tile.conduit.name=Vis Conduit
+
 tile.infuser.light.name=Infuser
 tile.infuser.dark.name=Dark Infuser
 

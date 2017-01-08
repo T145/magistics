@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 
 public class ModBlocks {
 
+	public static Block conduit;
 	public static Block infuser;
 	public static Block crucible;
 	public static Block woodChest;
