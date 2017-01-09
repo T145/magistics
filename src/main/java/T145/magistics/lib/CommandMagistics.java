@@ -1,4 +1,4 @@
-package T145.magistics.commands;
+package T145.magistics.lib;
 
 import T145.magistics.lib.aura.AuraChunk;
 import T145.magistics.lib.aura.AuraHandler;

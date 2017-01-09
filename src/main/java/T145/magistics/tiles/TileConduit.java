@@ -5,37 +5,26 @@ import T145.magistics.api.tiles.IVisManager;
 import T145.magistics.api.tiles.TileVisContainer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 public class TileConduit extends TileVisContainer {
 
-	protected static int[] connections = new int[EnumFacing.VALUES.length];
+	public static final float MAX_VIS = 4F;
+	protected static final float FILL_AMOUNT = 4F;
 
-	public float maxVis = 4F;
-	private float fillAmount = 4F;
 	public float displayPure;
 	public float displayMiasma;
 	public float prevDisplayPure;
 	public float prevDisplayMiasma;
 
-	public static boolean hasConnection(EnumFacing facing) {
-		return connections[facing.getIndex()] > 0;
-	}
-
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-
-		connections = tag.getIntArray("Connections");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-
-		tag.setIntArray("Connections", connections);
-
 		return tag;
 	}
 
@@ -43,15 +32,6 @@ public class TileConduit extends TileVisContainer {
 	public void update() {
 		if (hasWorldObj()) {
 			// check for connections
-			for (EnumFacing dir : EnumFacing.VALUES) {
-				IVisManager manager = getConnectableTile(dir);
-
-				if (manager != null && manager.getConnectable(dir)) {
-					connections[dir.getIndex()] = 1;
-				} else {
-					connections[dir.getIndex()] = 0;
-				}
-			}
 
 			// distribute vis appropriately
 			if (prevDisplayPure != displayPure || prevDisplayMiasma != displayMiasma) {
@@ -66,8 +46,8 @@ public class TileConduit extends TileVisContainer {
 				equalizeWithNeighbours();
 			}
 
-			displayMiasma = Math.max(displayMiasma, MathHelper.clamp_float(vis, 0F, maxVis));
-			displayPure = Math.max(displayPure, MathHelper.clamp_float(miasma, 0F, maxVis));
+			displayMiasma = Math.max(displayMiasma, MathHelper.clamp_float(vis, 0F, MAX_VIS));
+			displayPure = Math.max(displayPure, MathHelper.clamp_float(miasma, 0F, MAX_VIS));
 
 			if (displayMiasma + displayPure < 0.1F) {
 				displayMiasma = 0F;
@@ -101,9 +81,9 @@ public class TileConduit extends TileVisContainer {
 			if (manager != null && manager instanceof IVisContainer) {
 				IVisContainer container = (IVisContainer) manager;
 
-				if (vis + miasma < maxVis && (getVisSuction() > container.getVisSuction() || getMiasmaSuction() > container.getMiasmaSuction())) {
-					float min = Math.min((container.getVis() + container.getMiasma()) / 4F, fillAmount);
-					float[] total = container.subtractVis(Math.min(min, maxVis - (vis + miasma)));
+				if (vis + miasma < MAX_VIS && (getVisSuction() > container.getVisSuction() || getMiasmaSuction() > container.getMiasmaSuction())) {
+					float min = Math.min((container.getVis() + container.getMiasma()) / 4F, FILL_AMOUNT);
+					float[] total = container.subtractVis(Math.min(min, MAX_VIS - (vis + miasma)));
 
 					if (getVisSuction() > container.getVisSuction()) {
 						vis += total[0];
@@ -120,8 +100,8 @@ public class TileConduit extends TileVisContainer {
 			}
 		}
 
-		vis = MathHelper.clamp_float(vis, 0F, maxVis);
-		miasma = MathHelper.clamp_float(miasma, 0F, maxVis);
+		vis = MathHelper.clamp_float(vis, 0F, MAX_VIS);
+		miasma = MathHelper.clamp_float(miasma, 0F, MAX_VIS);
 	}
 
 	@Override

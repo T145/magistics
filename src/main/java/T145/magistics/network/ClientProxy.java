@@ -15,14 +15,12 @@ import T145.magistics.client.fx.particles.ParticleWisp;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.events.IconAtlas;
-import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderWoodChest;
 import T145.magistics.client.render.entities.RenderColoredSlime.RenderColoredSlimeFactory;
 import T145.magistics.entities.EntityVisSlime;
 import T145.magistics.lib.sounds.SoundHandler;
-import T145.magistics.tiles.TileConduit;
 import T145.magistics.tiles.TileCrucible;
 import T145.magistics.tiles.TileInfuser;
 import T145.magistics.tiles.TileInfuserDark;
@@ -82,6 +80,7 @@ public class ClientProxy extends CommonProxy {
 
 		for (EnumConduit type : EnumConduit.values()) {
 			registerBlockModel(ModBlocks.conduit, type.ordinal(), type);
+			registerBlockModel(ModBlocks.conduit, type.ordinal(), "inventory," + type.getClientName());
 		}
 
 		for (EnumCrucible type : EnumCrucible.values()) {
@@ -122,7 +121,6 @@ public class ClientProxy extends CommonProxy {
 			registerBlockModel(ModBlocks.woodChest, type.ordinal(), type);
 		}
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());

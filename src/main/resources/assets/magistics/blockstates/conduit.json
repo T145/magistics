@@ -1,13 +1,24 @@
 {
-	"forge_marker": 1,
-	"defaults": {
-		"transform": "forge:default-block",
-		"model": "magistics:conduit"
-	},
-	"variants": {
-		"variant": {
-			"base": {
-			}
-		}
-	}
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "inventory,variant=base": [
+            {
+                "model": "magistics:conduit_inv",
+                "textures": {
+                    "all": "magistics:blocks/conduit"
+                }
+            }
+        ],
+        "variant": {
+            "base": {
+                "model": "magistics:conduit",
+                "textures": {
+                    "all": "magistics:blocks/conduit"
+                }
+            }
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package T145.magistics.api.tiles;
 
-import T145.magistics.lib.events.WorldEventHandler;
 import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class TileVisContainer extends TileVisManager implements IVisContainer {
@@ -44,15 +43,15 @@ public abstract class TileVisContainer extends TileVisManager implements IVisCon
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-		vis = tag.getFloat(WorldEventHandler.KEY_VIS);
-		miasma = tag.getFloat(WorldEventHandler.KEY_MIASMA);
+		vis = tag.getFloat("Vis");
+		miasma = tag.getFloat("Miasma");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setFloat(WorldEventHandler.KEY_VIS, vis);
-		tag.setFloat(WorldEventHandler.KEY_MIASMA, miasma);
+		tag.setFloat("Vis", vis);
+		tag.setFloat("Miasma", miasma);
 		return tag;
 	}
 
