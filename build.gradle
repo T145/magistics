@@ -21,18 +21,18 @@ buildscript {
 	}
 	
 	dependencies {
-		classpath 'de.undercouch:gradle-download-task:3.0.0'
+		classpath 'de.undercouch:gradle-download-task:3.2.0'
 		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-		classpath 'org.ajoberstar:grgit:1.4.1'
+		classpath 'org.ajoberstar:grgit:1.7.1'
 	}
 }
 
-repositories {
+/*repositories {
 	maven {
 		name 'ChickenBones'
 		url 'http://chickenbones.net/maven'
 	}
-}
+}*/
 
 apply plugin: 'java'
 
@@ -48,7 +48,7 @@ ext {
 	
 	try {
 		revision = git.describe().toString().trim()
-	} catch (Throwable err) {
+	} catch (Exception err) {
 		println 'Unable to describe anything!'
 	}
 }
@@ -72,10 +72,9 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 	}
 }
 
-
 minecraft {
     version = forge_version
-    mappings = "snapshot_20161011"
+    mappings = forge_mappings
     runDir = "run"
 }
 
@@ -83,7 +82,13 @@ version = revision
 group = mod_group
 archivesBaseName = mod_id
 
-dependencies {}
+sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
+
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.6"
+}
+
+// dependencies {}
 
 build {
 	doLast {
