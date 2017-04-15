@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class MBlockTile<T extends Enum<T> & IVariant> extends MBlock<T> implements ITileEntityProvider {
 
-	protected boolean keepInventory = false;
+	protected boolean keepInventory;
 	protected boolean spillQuintessence = true;
 
 	protected final TileEntity[] tiles;

@@ -3,8 +3,8 @@ package T145.magistics.blocks;
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.client.BlockRenderer;
-import T145.magistics.tiles.TileInfuser;
-import T145.magistics.tiles.TileInfuserDark;
+import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,16 +51,16 @@ public class BlockInfuser extends MBlockTile<EnumInfuser> {
 		TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
 		if (infuser != null) {
-			// infuser.setFacingFromEntity(placer);
+			infuser.setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer).getIndex());
 		}
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
+		/*if (!world.isRemote) {
 			player.openGui(Magistics.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
-		}
+		}*/
 
 		return false;
 	}

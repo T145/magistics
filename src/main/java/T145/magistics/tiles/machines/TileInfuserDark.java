@@ -1,9 +1,8 @@
-package T145.magistics.tiles;
+package T145.magistics.tiles.machines;
 
 public class TileInfuserDark extends TileInfuser {
 
 	public TileInfuserDark() {
-		// TODO Auto-generated constructor stub
+		super(6);
 	}
-
 }
