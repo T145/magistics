@@ -1,6 +1,7 @@
 package T145.magistics.blocks;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.variants.IVariant;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -11,14 +12,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MBlock<T extends Enum<T> & IStringSerializable> extends Block {
+public class MBlock<T extends Enum<T> & IVariant> extends Block {
 
 	public final PropertyEnum<T> VARIANT;
 	public final T[] VARIANT_VALUES;

@@ -8,6 +8,7 @@ import T145.magistics.network.CommonProxy;
 import T145.magistics.network.FMLProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.Mod.Metadata;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -35,6 +36,7 @@ public class Magistics extends FMLProxy {
 	private ModMetadata meta;
 
 	@Override
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		LOGGER.info("Hello World!");
 
@@ -53,11 +55,13 @@ public class Magistics extends FMLProxy {
 	}
 
 	@Override
+	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init(event);
 	}
 
 	@Override
+	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
