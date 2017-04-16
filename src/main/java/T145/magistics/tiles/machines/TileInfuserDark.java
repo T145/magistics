@@ -2,7 +2,8 @@ package T145.magistics.tiles.machines;
 
 public class TileInfuserDark extends TileInfuser {
 
-	public TileInfuserDark() {
-		super(6);
+	@Override
+	public boolean isCorrupt() {
+		return true;
 	}
 }

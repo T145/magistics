@@ -1,20 +1,18 @@
 package T145.magistics.blocks;
 
-import T145.magistics.Magistics;
 import T145.magistics.api.variants.EnumInfuser;
-import T145.magistics.client.BlockRenderer;
+import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -25,7 +23,7 @@ public class BlockInfuser extends MBlockTile<EnumInfuser> {
 	protected static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
 
 	public BlockInfuser() {
-		super("infuser", Material.ROCK, EnumInfuser.class, new TileInfuser(), new TileInfuserDark());
+		super("infuser", Material.ROCK, EnumInfuser.class, TileInfuser.class, TileInfuserDark.class);
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(2F);
 		this.setResistance(15F);
@@ -51,18 +49,8 @@ public class BlockInfuser extends MBlockTile<EnumInfuser> {
 		TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
 		if (infuser != null) {
-			infuser.setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer).getIndex());
+			infuser.setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
 		}
-	}
-
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		/*if (!world.isRemote) {
-			player.openGui(Magistics.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
-			return true;
-		}*/
-
-		return false;
 	}
 
 	@Override
@@ -73,5 +61,10 @@ public class BlockInfuser extends MBlockTile<EnumInfuser> {
 	@Override
 	public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos) {
 		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World world, int meta) {
+		return meta == 1 ? new TileInfuserDark() : new TileInfuser();
 	}
 }

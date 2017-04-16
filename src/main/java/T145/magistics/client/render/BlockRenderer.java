@@ -1,4 +1,4 @@
-package T145.magistics.client;
+package T145.magistics.client.render;
 
 public class BlockRenderer {
 	public static double W1 = 0.0625D;

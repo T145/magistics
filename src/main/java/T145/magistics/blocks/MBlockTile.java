@@ -1,5 +1,6 @@
 package T145.magistics.blocks;
 
+import T145.magistics.api.magic.IQuintessenceHandler;
 import T145.magistics.api.variants.IVariant;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -13,32 +14,22 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class MBlockTile<T extends Enum<T> & IVariant> extends MBlock<T> implements ITileEntityProvider {
+public abstract class MBlockTile<T extends Enum<T> & IVariant> extends MBlock<T> implements ITileEntityProvider {
 
 	protected boolean keepInventory;
 	protected boolean spillQuintessence = true;
 
-	protected final TileEntity[] tiles;
-
-	public MBlockTile(String name, Material material, TileEntity... tiles) {
-		this(name, material, Object.class, tiles);
-	}
-
-	public MBlockTile(String name, Material material, Class variants, TileEntity... tiles) {
+	public MBlockTile(String name, Material material, Class variants, Class... tileClasses) {
 		super(name, material, variants);
-		this.tiles = tiles;
 		this.isBlockContainer = true;
 
-		for (TileEntity tile : tiles) {
-			Class tileClass = tile.getClass();
+		for (Class tileClass : tileClasses) {
 			GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 		}
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return tiles[meta];
-	}
+	public abstract TileEntity createNewTileEntity(World world, int meta);
 
 	@Override
 	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
@@ -56,11 +47,12 @@ public class MBlockTile<T extends Enum<T> & IVariant> extends MBlock<T> implemen
 
 		if (tile != null) {
 			if (tile instanceof IInventory && !keepInventory) {
-				IInventory inv = (IInventory) tile;
-				InventoryHelper.dropInventoryItems(world, pos, inv);
+				InventoryHelper.dropInventoryItems(world, pos, (IInventory) tile);
 			}
 
-			// if tile instanceof quinthandler && spillQuint && hasWorld then spill
+			if (tile instanceof IQuintessenceHandler && spillQuintessence && !world.isRemote) {
+				// spill quints
+			}
 		}
 
 		super.breakBlock(world, pos, state);
@@ -69,9 +61,9 @@ public class MBlockTile<T extends Enum<T> & IVariant> extends MBlock<T> implemen
 	}
 
 	@Override
-	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
-		super.eventReceived(state, world, pos, id, param);
-		TileEntity tile = world.getTileEntity(pos);
+	public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param) {
+		super.eventReceived(state, worldIn, pos, id, param);
+		TileEntity tile = worldIn.getTileEntity(pos);
 		return tile == null ? false : tile.receiveClientEvent(id, param);
 	}
 }

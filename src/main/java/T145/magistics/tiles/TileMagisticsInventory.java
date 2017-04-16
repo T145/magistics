@@ -1,11 +1,11 @@
 package T145.magistics.tiles;
 
-import T145.magistics.api.InventoryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -79,7 +79,18 @@ public class TileMagisticsInventory extends TileMagistics implements ISidedInven
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		InventoryHelper.setInventorySlotContents(inventoryStacks, stack, invSize, index);
+		ItemStack itemstack = inventoryStacks.get(index);
+		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+
+		inventoryStacks.set(index, stack);
+
+		if (stack.getCount() > getInventoryStackLimit()) {
+			stack.setCount(getInventoryStackLimit());
+		}
+
+		if (index == 0 && !flag) {
+			markDirty();
+		}
 	}
 
 	@Override

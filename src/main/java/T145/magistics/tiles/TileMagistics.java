@@ -2,77 +2,72 @@ package T145.magistics.tiles;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.ITickable;
 
-public class TileMagistics extends TileEntity {
+public class TileMagistics extends TileEntity implements ITickable {
 
-	protected int facing = -1;
+	private EnumFacing facing = EnumFacing.SOUTH;
 
-	public int getFacing() {
-		return facing;
-	}
-
-	public void setFacing(int facing) {
+	public void setFacing(EnumFacing facing) {
 		this.facing = facing;
 	}
 
-	public boolean hasFacing() {
-		return facing > 0;
+	public EnumFacing getFacing() {
+		return facing;
+	}
+
+	public int getFrontAngle(boolean rotateNorthSouth, boolean rotateEastWest) {
+		switch (facing.ordinal()) {
+		case 2:
+			return rotateEastWest ? -180 : 180;
+		case 4:
+			return rotateNorthSouth ? 90 : -90;
+		case 5:
+			return rotateNorthSouth ? -90 : 90;
+		default:
+			return 0;
+		}
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		facing = nbt.getInteger("Facing");
-		readSyncNBT(nbt);
-	}
-
-	public void readSyncNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("facing", facing.ordinal());
+		return compound;
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("Facing", facing);
-		return writeSyncNBT(super.writeToNBT(nbt));
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		facing = EnumFacing.getFront(compound.getInteger("facing"));
 	}
 
-	public NBTTagCompound writeSyncNBT(NBTTagCompound nbt) {
-		return nbt;
-	}
-
-	public void syncTile(boolean render) {
-		IBlockState state = world.getBlockState(pos);
-		world.notifyBlockUpdate(pos, state, state, 2 + (render ? 4 : 0));
-	}
-
-	@Override
 	@Nullable
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(pos, -9, getUpdateTag());
-	}
-
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		readSyncNBT(pkt.getNbtCompound());
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		NBTTagCompound compound = getUpdateTag();
+		return new SPacketUpdateTileEntity(getPos(), 0, compound);
 	}
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		NBTTagCompound nbt = super.writeToNBT(new NBTTagCompound());
-		nbt.removeTag("ForgeData");
-		nbt.removeTag("ForgeCaps");
-		return writeSyncNBT(nbt);
+		NBTTagCompound compound = new NBTTagCompound();
+		writeToNBT(compound);
+		return compound;
 	}
 
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-		return oldState.getBlock() != newState.getBlock();
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
+	}
+
+	@Override
+	public void update() {
+		//Magistics.LOGGER.info("Facing: " + facing.ordinal());
 	}
 }

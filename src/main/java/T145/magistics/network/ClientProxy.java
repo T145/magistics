@@ -2,12 +2,16 @@ package T145.magistics.network;
 
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.IVariant;
+import T145.magistics.client.render.blocks.RenderInfuser;
+import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -35,6 +39,9 @@ public class ClientProxy extends CommonProxy {
 			registerBlockModel(infuser, type.ordinal(), type);
 			registerBlockModel(infuser, type.ordinal(), "inventory," + type.getClientName());
 		}
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
 	}
 
 	private void registerBlockModel(Block block, int meta, String variant) {
