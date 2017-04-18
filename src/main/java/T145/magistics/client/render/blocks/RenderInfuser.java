@@ -38,7 +38,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(infuser.getFrontAngle(false, false), 0F, 1F, 0F);
+			GlStateManager.rotate(BlockRenderer.getFrontAngle(infuser.getFacing(), false, false), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);
@@ -51,7 +51,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		}
 
-		if (infuser.isCorrupt()) {
+		if (infuser.isDark()) {
 			bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/dark_symbol.png"));
 		} else {
 			bindTexture(new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/symbol.png"));

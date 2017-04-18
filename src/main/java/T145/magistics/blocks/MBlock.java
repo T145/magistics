@@ -2,7 +2,10 @@ package T145.magistics.blocks;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.IVariant;
+import T145.magistics.lib.helpers.InventoryHelper;
+import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -12,17 +15,21 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MBlock<T extends Enum<T> & IVariant> extends Block {
+public abstract class MBlock<T extends Enum<T> & IVariant> extends Block implements ITileEntityProvider {
 
 	public final PropertyEnum<T> VARIANT;
 	public final T[] VARIANT_VALUES;
 	private static IProperty[] tempVariants;
+	private boolean hasTile;
 
 	private class MBlockItem extends ItemBlock {
 
@@ -64,7 +71,26 @@ public class MBlock<T extends Enum<T> & IVariant> extends Block {
 
 		if (variants != null) {
 			GameRegistry.register(new MBlockItem(this), getRegistryName());
+
+			for (T variant : VARIANT_VALUES) {
+				TileEntity tile = createNewTileEntity(null, variant.ordinal());
+				Class tileClass = tile.getClass();
+
+				if (tile != null) {
+					hasTile = true;
+					GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
+				}
+			}
+		} else {
+			TileEntity tile = createNewTileEntity(null, 0);
+			Class tileClass = tile.getClass();
+
+			if (hasTile = tile != null) {
+				GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
+			}
 		}
+
+		isBlockContainer = hasTile;
 	}
 
 	public MBlock(String name, Material material) {
@@ -88,6 +114,8 @@ public class MBlock<T extends Enum<T> & IVariant> extends Block {
 			for (T variant : VARIANT_VALUES) {
 				list.add(new ItemStack(item, 1, variant.ordinal()));
 			}
+		} else {
+			list.add(new ItemStack(item));
 		}
 	}
 
@@ -125,5 +153,27 @@ public class MBlock<T extends Enum<T> & IVariant> extends Block {
 		}
 
 		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+	}
+
+	@Override
+	public abstract TileEntity createNewTileEntity(World world, int meta);
+
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return hasTile;
+	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		MTileInventory inv = (MTileInventory) world.getTileEntity(pos);
+		InventoryHelper.dropInventory(inv, world, state, pos);
+		super.breakBlock(world, pos, state);
+	}
+
+	@Override
+	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param) {
+		super.eventReceived(state, world, pos, id, param);
+		TileEntity tile = world.getTileEntity(pos);
+		return tile == null ? false : tile.receiveClientEvent(id, param);
 	}
 }

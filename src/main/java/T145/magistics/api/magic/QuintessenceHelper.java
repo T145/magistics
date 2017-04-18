@@ -15,7 +15,7 @@ public class QuintessenceHelper {
 			TileEntity dest = source.getWorld().getTileEntity(destPos);
 			IQuintessenceManager connected = (IQuintessenceManager) dest;
 
-			if (connected != null && ((IQuintessenceManager) source).hasConnection(facing) && connected.hasConnection(facing.getOpposite())) {
+			if (connected != null && ((IQuintessenceManager) source).canConnect(facing) && connected.canConnect(facing.getOpposite())) {
 				return connected;
 			}
 		}
@@ -31,9 +31,9 @@ public class QuintessenceHelper {
 			manager.setSuction(50);
 
 			for (EnumFacing facing : EnumFacing.VALUES) {
-				IQuintessenceManager source = getConnectedTile(dest, facing);
+				IQuintessenceContainer source = (IQuintessenceContainer) getConnectedTile(dest, facing);
 
-				if (source != null && source.isContainer()) {
+				if (source != null) {
 					float quint = Math.min(amount - mod, source.getQuintessence());
 
 					if (quint < 0.001F) {

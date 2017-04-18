@@ -1,20 +1,25 @@
 package T145.magistics.network;
 
-import T145.magistics.blocks.BlockInfuser;
+import T145.magistics.blocks.machines.BlockInfuser;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonProxy extends FMLProxy implements IGuiHandler {
+public class CommonProxy implements IGuiHandler {
 
 	public static Block infuser;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity tile = world.getTileEntity(pos);
+
 		switch (ID) {
 		default:
 			return null;
@@ -26,16 +31,13 @@ public class CommonProxy extends FMLProxy implements IGuiHandler {
 		return null;
 	}
 
-	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		infuser = new BlockInfuser();
 	}
 
-	@Override
 	public void init(FMLInitializationEvent event) {
 	}
 
-	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 	}
 }

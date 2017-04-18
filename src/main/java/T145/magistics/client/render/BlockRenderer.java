@@ -1,6 +1,9 @@
 package T145.magistics.client.render;
 
+import net.minecraft.util.EnumFacing;
+
 public class BlockRenderer {
+
 	public static double W1 = 0.0625D;
 	public static double W2 = 0.125D;
 	public static double W3 = 0.1875D;
@@ -17,4 +20,17 @@ public class BlockRenderer {
 	public static double W14 = 0.875D;
 	public static double W15 = 0.9375D;
 	public static double W16 = 0.9475D;
+
+	public static int getFrontAngle(EnumFacing facing, boolean rotateNorthSouth, boolean rotateEastWest) {
+		switch (facing.ordinal()) {
+		case 2:
+			return rotateEastWest ? -180 : 180;
+		case 4:
+			return rotateNorthSouth ? 90 : -90;
+		case 5:
+			return rotateNorthSouth ? -90 : 90;
+		default:
+			return 0;
+		}
+	}
 }

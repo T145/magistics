@@ -9,22 +9,41 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
+	private void registerBlockModel(Block block, int meta, String variant) {
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), variant));
+	}
+
+	private void registerBlockModel(Block block, int meta, IVariant variant) {
+		registerBlockModel(block, meta, variant.getClientName());
+	}
+
+	private void registerItemModel(Item item, int meta, String variant) {
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), variant));
+	}
+
+	private void registerItemModel(Item item, int meta, IVariant variant) {
+		registerItemModel(item, meta, variant.getClientName());
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity tile = world.getTileEntity(pos);
+
 		switch (ID) {
 		default:
 			return null;
@@ -42,22 +61,6 @@ public class ClientProxy extends CommonProxy {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
-	}
-
-	private void registerBlockModel(Block block, int meta, String variant) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), variant));
-	}
-
-	private void registerBlockModel(Block block, int meta, IVariant variant) {
-		registerBlockModel(block, meta, variant.getClientName());
-	}
-
-	private void registerItemModel(Item item, int meta, String variant) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), variant));
-	}
-
-	private void registerItemModel(Item item, int meta, IVariant variant) {
-		registerItemModel(item, meta, variant.getClientName());
 	}
 
 	@Override
