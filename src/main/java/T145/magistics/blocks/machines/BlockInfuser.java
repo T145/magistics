@@ -1,5 +1,6 @@
 package T145.magistics.blocks.machines;
 
+import T145.magistics.Magistics;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.render.BlockRenderer;
@@ -61,11 +62,14 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		/*if (!world.isRemote) {
-			player.openGui(Magistics.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
-			return true;
-		}*/
+		if (!world.isRemote && hand.equals(EnumHand.MAIN_HAND)) {
+			TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
-		return false;
+			if (infuser != null) {
+				player.openGui(Magistics.MODID, getMetaFromState(state), world, pos.getX(), pos.getY(), pos.getZ());
+			}
+		}
+
+		return true;
 	}
 }

@@ -1,6 +1,8 @@
 package T145.magistics.network;
 
 import T145.magistics.blocks.machines.BlockInfuser;
+import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -21,6 +23,10 @@ public class CommonProxy implements IGuiHandler {
 		TileEntity tile = world.getTileEntity(pos);
 
 		switch (ID) {
+		case 0:
+			return ((TileInfuser) tile).createContainer(player.inventory, player);
+		case 1:
+			return ((TileInfuserDark) tile).createContainer(player.inventory, player);
 		default:
 			return null;
 		}

@@ -2,6 +2,7 @@ package T145.magistics.tiles.machines;
 
 import T145.magistics.api.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
+import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintessenceManager {
 
@@ -111,7 +114,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 	@Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
-		return null;
+		return new ContainerInfuser(playerInventory, this);
 	}
 
 	@Override
@@ -142,6 +145,16 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		suction = compound.getInteger("Suction");
 		cookCost = compound.getFloat("CookCost");
 		cookTime = compound.getFloat("CookTime");
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getCookProgressScaled(int pixels) {
+		return 0;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getBoostScaled() {
+		return 0;
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package T145.magistics.network;
 
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.IVariant;
+import T145.magistics.client.gui.GuiInfuser;
+import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
@@ -45,6 +47,10 @@ public class ClientProxy extends CommonProxy {
 		TileEntity tile = world.getTileEntity(pos);
 
 		switch (ID) {
+		case 0:
+			return new GuiInfuser(player.inventory, ((TileInfuser) tile));
+		case 1:
+			return new GuiInfuserDark(player.inventory, ((TileInfuserDark) tile));
 		default:
 			return null;
 		}

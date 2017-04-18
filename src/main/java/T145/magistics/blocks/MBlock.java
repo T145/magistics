@@ -2,7 +2,7 @@ package T145.magistics.blocks;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.IVariant;
-import T145.magistics.lib.helpers.InventoryHelper;
+import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -166,7 +166,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		MTileInventory inv = (MTileInventory) world.getTileEntity(pos);
-		InventoryHelper.dropInventory(inv, world, state, pos);
+		InventoryManager.dropInventory(inv, world, state, pos);
 		super.breakBlock(world, pos, state);
 	}
 

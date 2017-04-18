@@ -1,8 +1,9 @@
-package T145.magistics.lib.helpers;
+package T145.magistics.lib.managers;
 
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -14,7 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.VanillaDoubleChestItemHandler;
 
-public class InventoryHelper {
+public class InventoryManager {
 
 	public static IItemHandler getInventory(World world, BlockPos pos, EnumFacing side) {
 		TileEntity tile = world.getTileEntity(pos);
@@ -46,7 +47,7 @@ public class InventoryHelper {
 				ItemStack stack = inv.getItemHandler().getStackInSlot(slot);
 
 				if (!stack.isEmpty()) {
-					net.minecraft.inventory.InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 				}
 			}
 
