@@ -7,6 +7,8 @@ tile.conduit.base.name=Vis Conduit
 
 tile.infuser.light.name=Infuser
 tile.infuser.dark.name=Dark Infuser
+tile.tank.normal.name=Tank
+tile.tank.reinforced.name=Reinforced Tank
 
 tile.chest_wood.greatwood.name=Greatwood Chest
 tile.chest_wood.silverwood.name=Silverwood Chest

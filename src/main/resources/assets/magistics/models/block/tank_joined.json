@@ -1,0 +1,7 @@
+{
+    "parent": "magistics:block/tank",
+    "textures": {
+        "particle": "magistics:blocks/tank/side_joined",
+        "side": "magistics:blocks/tank/side_joined"
+    }
+}

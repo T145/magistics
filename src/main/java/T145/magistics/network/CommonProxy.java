@@ -1,6 +1,7 @@
 package T145.magistics.network;
 
 import T145.magistics.blocks.machines.BlockInfuser;
+import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.block.Block;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class CommonProxy implements IGuiHandler {
 
 	public static Block infuser;
+	public static Block tank;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -39,6 +41,7 @@ public class CommonProxy implements IGuiHandler {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		infuser = new BlockInfuser();
+		tank = new BlockTank();
 	}
 
 	public void init(FMLInitializationEvent event) {

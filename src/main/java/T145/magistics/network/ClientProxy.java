@@ -1,6 +1,7 @@
 package T145.magistics.network;
 
 import T145.magistics.api.variants.EnumInfuser;
+import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
@@ -63,6 +64,10 @@ public class ClientProxy extends CommonProxy {
 		for (EnumInfuser type : EnumInfuser.values()) {
 			registerBlockModel(infuser, type.ordinal(), type);
 			registerBlockModel(infuser, type.ordinal(), "inventory," + type.getClientName());
+		}
+
+		for (EnumTank type : EnumTank.values()) {
+			registerBlockModel(tank, type.ordinal(), type);
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());

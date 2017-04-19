@@ -165,8 +165,12 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		MTileInventory inv = (MTileInventory) world.getTileEntity(pos);
-		InventoryManager.dropInventory(inv, world, state, pos);
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile != null && tile instanceof MTileInventory) {
+			InventoryManager.dropInventory((MTileInventory) tile, world, state, pos);
+		}
+
 		super.breakBlock(world, pos, state);
 	}
 

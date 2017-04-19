@@ -122,7 +122,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
-		return isDark() ? slot > 0 : slot > 1;
+		return slot > (isDark() ? 0 : 1);
 	}
 
 	@Override
