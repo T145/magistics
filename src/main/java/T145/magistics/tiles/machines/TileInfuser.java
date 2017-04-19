@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
@@ -21,11 +22,11 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	public float cookCost;
 	public float cookTime;
 
+	protected boolean active;
+	protected boolean crafting;
 	protected int angle;
 	protected int soundDelay;
 
-	private boolean active;
-	private boolean crafting;
 	private int boost;
 	private int boostDelay = 20;
 	private int suction;
@@ -35,24 +36,8 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		return active;
 	}
 
-	protected void setActive(boolean active) {
-		this.active = active;
-	}
-
 	public boolean isCrafting() {
 		return crafting;
-	}
-
-	protected void setCrafting(boolean crafting) {
-		this.crafting = crafting;
-	}
-
-	public int getBoost() {
-		return boost;
-	}
-
-	public void setBoost(int boost) {
-		this.boost = boost;
 	}
 
 	public boolean isDark() {
@@ -65,6 +50,14 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 	public float getDiskAngle() {
 		return angle;
+	}
+
+	public int getBoost() {
+		return boost;
+	}
+
+	public void setBoost(int boost) {
+		this.boost = boost;
 	}
 
 	@Override
@@ -125,6 +118,16 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	@Override
 	public int getSizeInventory() {
 		return 8;
+	}
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
+		return isDark() ? slot > 0 : slot > 1;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, int amount, boolean simulate) {
+		return true;
 	}
 
 	@Override

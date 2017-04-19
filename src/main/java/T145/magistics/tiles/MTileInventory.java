@@ -12,7 +12,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class MTileInventory extends MTile {
 
-	protected SimpleItemStackHandler itemHandler = createItemHandler();
+	protected ItemStackHandler itemHandler = createItemHandler();
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
@@ -27,8 +27,12 @@ public abstract class MTileInventory extends MTile {
 
 	public abstract int getSizeInventory();
 
-	protected SimpleItemStackHandler createItemHandler() {
-		return new SimpleItemStackHandler(this, true);
+	public abstract boolean canInsertItem(int slot, @Nonnull ItemStack stack, boolean simulate);
+
+	public abstract boolean canExtractItem(int slot, int amount, boolean simulate);
+
+	protected ItemStackHandler createItemHandler() {
+		return new SimpleItemStackHandler(this);
 	}
 
 	public IItemHandlerModifiable getItemHandler() {
@@ -51,19 +55,17 @@ public abstract class MTileInventory extends MTile {
 
 	protected static class SimpleItemStackHandler extends ItemStackHandler {
 
-		private final boolean allowWrite;
 		private final MTileInventory inv;
 
-		public SimpleItemStackHandler(MTileInventory inv, boolean allowWrite) {
+		public SimpleItemStackHandler(MTileInventory inv) {
 			super(inv.getSizeInventory());
-			this.allowWrite = allowWrite;
 			this.inv = inv;
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (allowWrite) {
+			if (inv.canInsertItem(slot, stack, simulate)) {
 				return super.insertItem(slot, stack, simulate);
 			} else {
 				return stack;
@@ -73,7 +75,7 @@ public abstract class MTileInventory extends MTile {
 		@Nonnull
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate) {
-			if (allowWrite) {
+			if (inv.canExtractItem(slot, amount, simulate)) {
 				return super.extractItem(slot, amount, simulate);
 			} else {
 				return ItemStack.EMPTY;
