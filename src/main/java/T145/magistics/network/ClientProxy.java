@@ -1,5 +1,6 @@
 package T145.magistics.network;
 
+import T145.magistics.api.variants.EnumConduit;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
@@ -68,6 +69,11 @@ public class ClientProxy extends CommonProxy {
 
 		for (EnumTank type : EnumTank.values()) {
 			registerBlockModel(tank, type.ordinal(), type);
+		}
+
+		for (EnumConduit type : EnumConduit.values()) {
+			registerBlockModel(conduit, type.ordinal(), type);
+			registerBlockModel(conduit, type.ordinal(), "inventory," + type.getClientName());
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());

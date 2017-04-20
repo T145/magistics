@@ -1,6 +1,8 @@
 package T145.magistics.tiles.storage;
 
 import T145.magistics.api.magic.IQuintessenceContainer;
+import T145.magistics.api.magic.IQuintessenceManager;
+import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -31,6 +33,11 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 	}
 
 	@Override
+	public float getMaxQuintessence() {
+		return getBlockMetadata() == 1 ? 1000F : 500F;
+	}
+
+	@Override
 	public void setQuintessence(float amount) {
 		this.quintessence = amount;
 	}
@@ -50,5 +57,40 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 	@Override
 	public void update() {
 		// TODO Implement
+	}
+
+	public void calculateSuction() {
+		this.setSuction(10);
+
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			IQuintessenceManager manager = QuintessenceHelper.getConnectedTile(this, facing);
+
+			if (manager != null) {
+				// if influenced by pump, then suction += 10
+			}
+		}
+	}
+
+	protected void equalizeWithNeighbors() {
+	}
+
+	public float subtractQuints(float amount) {
+		float quints = amount / 2F;
+		float mod = 0F;
+
+		if (!(amount < 0.001F)) {
+			if (this.quintessence < quints) {
+				quints = this.quintessence;
+			}
+
+			if (quints < amount / 2F) {
+				quints = Math.min(amount - quints, quintessence);
+			}
+
+			this.quintessence -= quints;
+			mod = quints;
+		}
+
+		return mod;
 	}
 }

@@ -53,7 +53,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	public MBlock(String name, Material material, Class variants) {
 		super(createProperties(material, variants));
 
-		if (variants == Object.class) {
+		if (variants == Object.class || variants == null) {
 			VARIANT = null;
 			VARIANT_VALUES = null;
 		} else {
@@ -69,7 +69,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 		GameRegistry.register(this);
 
-		if (variants != null) {
+		if (VARIANT != null && VARIANT_VALUES != null) {
 			GameRegistry.register(new MBlockItem(this), getRegistryName());
 
 			for (T variant : VARIANT_VALUES) {
