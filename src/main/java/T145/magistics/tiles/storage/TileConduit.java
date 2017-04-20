@@ -1,11 +1,16 @@
 package T145.magistics.tiles.storage;
 
 import T145.magistics.api.magic.IQuintessenceContainer;
+import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.MathHelper;
 
 public class TileConduit extends MTile implements IQuintessenceContainer {
+
+	private int suction;
+	private float quintessence;
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {
@@ -14,49 +19,85 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public int getSuction() {
-		// TODO Auto-generated method stub
-		return 0;
+		return suction;
 	}
 
 	@Override
 	public void setSuction(int suction) {
-		// TODO Auto-generated method stub
-
+		this.suction = suction;
 	}
 
 	@Override
 	public float getMaxQuintessence() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 4;
 	}
 
 	@Override
 	public float getQuintessence() {
-		// TODO Auto-generated method stub
-		return 0;
+		return quintessence;
 	}
 
 	@Override
 	public void setQuintessence(float amount) {
-		// TODO Auto-generated method stub
-
+		quintessence = amount;
 	}
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-
+		compound.setInteger("Suction", suction);
+		compound.setFloat("Quintessence", quintessence);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
-
+		setSuction(compound.getInteger("Suction"));
+		setQuintessence(compound.getFloat("Quintessence"));
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		if (!world.isRemote) {
+			calculateSuction();
 
+			if (suction > 0) {
+				world.scheduleUpdate(pos, blockType, 10);
+				equalizeWithNeighbors();
+			}
+		}
+	}
+
+	protected void calculateSuction() {
+		setSuction(0);
+
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+
+			if (source != null && getSuction() < source.getSuction() - 1) {
+				setSuction(source.getSuction() - 1);
+			}
+		}
+	}
+
+	protected void equalizeWithNeighbors() {
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+
+			if (quintessence < getMaxQuintessence() && suction > source.getSuction()) {
+				float mod = Math.min(quintessence / getMaxQuintessence(), getMaxQuintessence());
+				float diff = QuintessenceHelper.subtractQuints(source, Math.min(mod, getMaxQuintessence() - quintessence));
+
+				if (suction > source.getSuction()) {
+					quintessence += diff;
+				} else {
+					source.setQuintessence(diff + source.getQuintessence());
+				}
+			}
+		}
+
+		quintessence = MathHelper.clamp(quintessence, 0F, getMaxQuintessence());
+	}
+
+	public boolean isConnected(EnumFacing side) {
+		return QuintessenceHelper.getConnectedManager(world, pos, side) != null;
 	}
 }

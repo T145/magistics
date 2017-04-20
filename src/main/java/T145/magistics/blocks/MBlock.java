@@ -29,7 +29,6 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	public final PropertyEnum<T> VARIANT;
 	public final T[] VARIANT_VALUES;
 	private static IProperty[] tempVariants;
-	private boolean hasTile;
 
 	private class MBlockItem extends ItemBlock {
 
@@ -76,8 +75,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 				TileEntity tile = createNewTileEntity(null, variant.ordinal());
 				Class tileClass = tile.getClass();
 
-				if (tile != null) {
-					hasTile = true;
+				if (isBlockContainer = tile != null) {
 					GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 				}
 			}
@@ -85,12 +83,10 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			TileEntity tile = createNewTileEntity(null, 0);
 			Class tileClass = tile.getClass();
 
-			if (hasTile = tile != null) {
+			if (isBlockContainer = tile != null) {
 				GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 			}
 		}
-
-		isBlockContainer = hasTile;
 	}
 
 	public MBlock(String name, Material material) {
@@ -160,7 +156,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
-		return hasTile;
+		return isBlockContainer;
 	}
 
 	@Override
