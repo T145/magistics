@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 public class TileTank extends MTile implements IQuintessenceContainer {
 
 	private int suction;
-	private float quintessence;
+	private float quintessence = 500; // TODO: temporarily non zero for testing
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {
@@ -33,7 +33,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public float getMaxQuintessence() {
-		return getBlockMetadata() == 1 ? 1000F : 500F;
+		return 500F;
 	}
 
 	@Override

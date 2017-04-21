@@ -1,6 +1,6 @@
 package T145.magistics.tiles.machines;
 
-import T145.magistics.api.IFacing;
+import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.tiles.MTileInventory;

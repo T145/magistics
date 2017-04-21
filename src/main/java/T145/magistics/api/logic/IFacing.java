@@ -1,4 +1,4 @@
-package T145.magistics.api;
+package T145.magistics.api.logic;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;

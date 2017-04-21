@@ -4,6 +4,7 @@ import T145.magistics.api.variants.EnumTank;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.storage.TileTank;
+import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTank extends MBlock<EnumTank> {
 
-	protected static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(BlockRenderer.W1, 0D, BlockRenderer.W1, 1D - BlockRenderer.W1, 1D, 1D - BlockRenderer.W1);
+	public static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(BlockRenderer.W1, 0D, BlockRenderer.W1, 1D - BlockRenderer.W1, 1D, 1D - BlockRenderer.W1);
 
 	public BlockTank() {
 		super("tank", Material.GLASS, EnumTank.class);
@@ -29,7 +30,7 @@ public class BlockTank extends MBlock<EnumTank> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileTank();
+		return meta == 1 ? new TileTankReinforced() : new TileTank();
 	}
 
 	@Override

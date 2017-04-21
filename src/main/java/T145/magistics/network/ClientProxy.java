@@ -1,14 +1,21 @@
 package T145.magistics.network;
 
+import T145.magistics.api.ModBlocks;
 import T145.magistics.api.variants.EnumConduit;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
+import T145.magistics.client.lib.IconAtlas;
+import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderInfuser;
+import T145.magistics.client.render.blocks.RenderTank;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
+import T145.magistics.tiles.storage.TileConduit;
+import T145.magistics.tiles.storage.TileTank;
+import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -62,22 +70,28 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 
+		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
+
 		for (EnumInfuser type : EnumInfuser.values()) {
-			registerBlockModel(infuser, type.ordinal(), type);
-			registerBlockModel(infuser, type.ordinal(), "inventory," + type.getClientName());
+			registerBlockModel(ModBlocks.infuser, type.ordinal(), type);
+			registerBlockModel(ModBlocks.infuser, type.ordinal(), "inventory," + type.getClientName());
 		}
 
 		for (EnumTank type : EnumTank.values()) {
-			registerBlockModel(tank, type.ordinal(), type);
+			registerBlockModel(ModBlocks.tank, type.ordinal(), type);
 		}
 
 		for (EnumConduit type : EnumConduit.values()) {
-			registerBlockModel(conduit, type.ordinal(), type);
-			registerBlockModel(conduit, type.ordinal(), "inventory," + type.getClientName());
+			registerBlockModel(ModBlocks.conduit, type.ordinal(), type);
+			registerBlockModel(ModBlocks.conduit, type.ordinal(), "inventory," + type.getClientName());
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileTankReinforced.class, new RenderTank());
 	}
 
 	@Override
