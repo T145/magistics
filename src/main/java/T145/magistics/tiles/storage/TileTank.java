@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 public class TileTank extends MTile implements IQuintessenceContainer {
 
 	private int suction;
-	private float quintessence = 500; // TODO: temporarily non zero for testing
+	private float quintessence;
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {

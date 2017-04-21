@@ -82,7 +82,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (quintessence < getMaxQuintessence() && suction > source.getSuction()) {
+			if (source != null && quintessence < getMaxQuintessence() && suction > source.getSuction()) {
 				float mod = Math.min(quintessence / getMaxQuintessence(), getMaxQuintessence());
 				float diff = QuintessenceHelper.subtractQuints(source, Math.min(mod, getMaxQuintessence() - quintessence));
 

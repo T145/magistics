@@ -1,6 +1,5 @@
 package T145.magistics.client.lib;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -14,8 +13,6 @@ public class RenderCubes {
 	public IBlockAccess blockAccess;
 	public boolean flipTexture;
 	public boolean inventoryRender;
-	public boolean renderAllFaces;
-	public boolean useInventoryTint = true;
 	public boolean renderFromInside = false;
 	public double renderMinX;
 	public double renderMaxX;
@@ -32,62 +29,6 @@ public class RenderCubes {
 	public int uvRotateNorth;
 	public int uvRotateTop;
 	public int uvRotateBottom;
-	public float aoLightValueScratchXYZNNN;
-	public float aoLightValueScratchXYNN;
-	public float aoLightValueScratchXYZNNP;
-	public float aoLightValueScratchYZNN;
-	public float aoLightValueScratchYZNP;
-	public float aoLightValueScratchXYZPNN;
-	public float aoLightValueScratchXYPN;
-	public float aoLightValueScratchXYZPNP;
-	public float aoLightValueScratchXYZNPN;
-	public float aoLightValueScratchXYNP;
-	public float aoLightValueScratchXYZNPP;
-	public float aoLightValueScratchYZPN;
-	public float aoLightValueScratchXYZPPN;
-	public float aoLightValueScratchXYPP;
-	public float aoLightValueScratchYZPP;
-	public float aoLightValueScratchXYZPPP;
-	public float aoLightValueScratchXZNN;
-	public float aoLightValueScratchXZPN;
-	public float aoLightValueScratchXZNP;
-	public float aoLightValueScratchXZPP;
-	public int aoBrightnessXYZNNN;
-	public int aoBrightnessXYNN;
-	public int aoBrightnessXYZNNP;
-	public int aoBrightnessYZNN;
-	public int aoBrightnessYZNP;
-	public int aoBrightnessXYZPNN;
-	public int aoBrightnessXYPN;
-	public int aoBrightnessXYZPNP;
-	public int aoBrightnessXYZNPN;
-	public int aoBrightnessXYNP;
-	public int aoBrightnessXYZNPP;
-	public int aoBrightnessYZPN;
-	public int aoBrightnessXYZPPN;
-	public int aoBrightnessXYPP;
-	public int aoBrightnessYZPP;
-	public int aoBrightnessXYZPPP;
-	public int aoBrightnessXZNN;
-	public int aoBrightnessXZPN;
-	public int aoBrightnessXZNP;
-	public int aoBrightnessXZPP;
-	public int brightnessTopLeft;
-	public int brightnessBottomLeft;
-	public int brightnessBottomRight;
-	public int brightnessTopRight;
-	public float colorRedTopLeft;
-	public float colorRedBottomLeft;
-	public float colorRedBottomRight;
-	public float colorRedTopRight;
-	public float colorGreenTopLeft;
-	public float colorGreenBottomLeft;
-	public float colorGreenBottomRight;
-	public float colorGreenTopRight;
-	public float colorBlueTopLeft;
-	public float colorBlueBottomLeft;
-	public float colorBlueBottomRight;
-	public float colorBlueTopRight;
 	private static RenderCubes instance;
 
 	public RenderCubes() {
@@ -124,7 +65,7 @@ public class RenderCubes {
 		partialRenderBounds = ((mc.gameSettings.ambientOcclusion >= 2) && ((renderMinX > 0.0D) || (renderMaxX < 1.0D) || (renderMinY > 0.0D) || (renderMaxY < 1.0D) || (renderMinZ > 0.0D) || (renderMaxZ < 1.0D)));
 	}
 
-	public void renderFaceYNeg(Block p_147768_1_, double p_147768_2_, double p_147768_4_, double p_147768_6_, TextureAtlasSprite p_147768_8_, float red, float green, float blue, int bright) {
+	public void renderFaceYNeg(double p_147768_2_, double p_147768_4_, double p_147768_6_, TextureAtlasSprite p_147768_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147768_8_.getInterpolatedU(renderMinX * 16.0D);
@@ -201,7 +142,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceYPos(Block p_147806_1_, double p_147806_2_, double p_147806_4_, double p_147806_6_, TextureAtlasSprite p_147806_8_, float red, float green, float blue, int bright) {
+	public void renderFaceYPos(double p_147806_2_, double p_147806_4_, double p_147806_6_, TextureAtlasSprite p_147806_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147806_8_.getInterpolatedU(renderMinX * 16.0D);
@@ -278,7 +219,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceZNeg(Block p_147761_1_, double p_147761_2_, double p_147761_4_, double p_147761_6_, TextureAtlasSprite p_147761_8_, float red, float green, float blue, int bright) {
+	public void renderFaceZNeg(double p_147761_2_, double p_147761_4_, double p_147761_6_, TextureAtlasSprite p_147761_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147761_8_.getInterpolatedU(renderMinX * 16.0D);
@@ -367,7 +308,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceZPos(Block p_147734_1_, double p_147734_2_, double p_147734_4_, double p_147734_6_, TextureAtlasSprite p_147734_8_, float red, float green, float blue, int bright) {
+	public void renderFaceZPos(double p_147734_2_, double p_147734_4_, double p_147734_6_, TextureAtlasSprite p_147734_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147734_8_.getInterpolatedU(renderMinX * 16.0D);
@@ -450,7 +391,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d12, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceXNeg(Block p_147798_1_, double p_147798_2_, double p_147798_4_, double p_147798_6_, TextureAtlasSprite p_147798_8_, float red, float green, float blue, int bright) {
+	public void renderFaceXNeg(double p_147798_2_, double p_147798_4_, double p_147798_6_, TextureAtlasSprite p_147798_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147798_8_.getInterpolatedU(renderMinZ * 16.0D);
@@ -533,7 +474,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d12, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceXPos(Block p_147764_1_, double p_147764_2_, double p_147764_4_, double p_147764_6_, TextureAtlasSprite p_147764_8_, float red, float green, float blue, int bright) {
+	public void renderFaceXPos(double p_147764_2_, double p_147764_4_, double p_147764_6_, TextureAtlasSprite p_147764_8_, float red, float green, float blue, int bright) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double d3 = p_147764_8_.getInterpolatedU(renderMinZ * 16.0D);

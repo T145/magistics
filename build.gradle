@@ -27,13 +27,6 @@ buildscript {
 	}
 }
 
-/*repositories {
-	maven {
-		name 'ChickenBones'
-		url 'http://chickenbones.net/maven'
-	}
-}*/
-
 apply plugin: 'java'
 
 apply plugin: 'de.undercouch.download'
@@ -82,13 +75,10 @@ version = revision
 group = mod_group
 archivesBaseName = mod_id
 
-sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
-
+sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
-    sourceCompatibility = targetCompatibility = "1.6"
+    sourceCompatibility = targetCompatibility = "1.8"
 }
-
-// dependencies {}
 
 build {
 	doLast {

@@ -3,7 +3,7 @@ itemGroup.magistics=Magistics
 entity.magistics.slime.vis.name=Vis Slime
 entity.magistics.slime.taint.name=Corrupted Slime
 
-tile.conduit.base.name=Vis Conduit
+tile.conduit.base.name=Conduit
 
 tile.infuser.light.name=Infuser
 tile.infuser.dark.name=Dark Infuser
@@ -17,8 +17,6 @@ tile.crucible.basic.name=Crucible
 tile.crucible.eyes.name=Crucible of Eyes
 tile.crucible.thaumium.name=Thaumium Crucible
 tile.crucible.souls.name=Crucible of Souls
-
-tile.conduit.name=Vis Conduit
 
 tile.ore_overworld.air.name=Air Infused Stone
 tile.ore_overworld.fire.name=Fire Infused Stone

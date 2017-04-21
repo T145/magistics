@@ -7,7 +7,7 @@ import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
-import T145.magistics.client.lib.IconAtlas;
+import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
@@ -70,7 +70,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 
-		MinecraftForge.EVENT_BUS.register(IconAtlas.INSTANCE);
+		MinecraftForge.EVENT_BUS.register(ClientBakery.INSTANCE);
 
 		for (EnumInfuser type : EnumInfuser.values()) {
 			registerBlockModel(ModBlocks.infuser, type.ordinal(), type);

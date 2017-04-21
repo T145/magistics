@@ -7,24 +7,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class IconAtlas {
+public class ClientBakery {
 
-	public static final IconAtlas INSTANCE = new IconAtlas();
+	public static final ClientBakery INSTANCE = new ClientBakery();
 
 	public TextureAtlasSprite quintFluid;
-
-	@SubscribeEvent
-	public void onModelBake(ModelBakeEvent event) {}
-
-	@SubscribeEvent
-	public void onTextureStitch(TextureStitchEvent.Pre event) {
-		quintFluid = registerSprite(event.getMap(), "vis", "fluids");
-	}
 
 	public TextureAtlasSprite registerSprite(TextureMap map, String name) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, name));
@@ -32,6 +24,15 @@ public class IconAtlas {
 
 	public TextureAtlasSprite registerSprite(TextureMap map, String name, String dir) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, dir + "/" + name));
+	}
+
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onModelBake(ModelBakeEvent event) {}
+
+	@SubscribeEvent
+	public void onTextureStitch(TextureStitchEvent event) {
+		quintFluid = registerSprite(event.getMap(), "vis", "fluids");
 	}
 
 	@SubscribeEvent
