@@ -47,9 +47,9 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 		RenderCubes renderBlocks = RenderCubes.getInstance();
 		Tessellator tessellator = Tessellator.getInstance();
-		float level = tank.getQuintessence() / tank.getMaxQuintessence() * 0.625F;
+		float level = tank.getQuintessence() / tank.getMaxQuintessence();
 
-		renderBlocks.setRenderBounds(BlockRenderer.W1 + 0.01D, 0.0625D, BlockRenderer.W1 + 0.01D, 0.99D - BlockRenderer.W1, 0.0625D + level, 0.99D - BlockRenderer.W1);
+		renderBlocks.setRenderBounds(BlockRenderer.W1 + 0.001D, 0.001D, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, level - 0.02D, 0.999D - BlockRenderer.W1);
 		tessellator.getBuffer().begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 
 		TextureAtlasSprite icon = IconAtlas.INSTANCE.quintFluid;
@@ -58,12 +58,12 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		// Color co = new Color(16761087);
 		Color co = new Color(0xFFFFFF);
 
-		renderBlocks.renderFaceYNeg(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
-		renderBlocks.renderFaceYPos(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
-		renderBlocks.renderFaceZNeg(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
-		renderBlocks.renderFaceZPos(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
-		renderBlocks.renderFaceXNeg(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
-		renderBlocks.renderFaceXPos(ModBlocks.tank, -0.5D, 0.0D, -0.5D, icon, co.getRed() / 255.0F, co.getGreen() / 255.0F, co.getBlue() / 255.0F, 200);
+		renderBlocks.renderFaceYNeg(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+		renderBlocks.renderFaceYPos(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+		renderBlocks.renderFaceZNeg(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+		renderBlocks.renderFaceZPos(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+		renderBlocks.renderFaceXNeg(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+		renderBlocks.renderFaceXPos(ModBlocks.tank, -0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
 		tessellator.draw();
 
 		GlStateManager.enableLighting();
