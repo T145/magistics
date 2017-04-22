@@ -13,6 +13,17 @@ import net.minecraft.world.World;
 
 public abstract class MTile extends TileEntity implements ITickable {
 
+	public IBlockState getState() {
+		return world.getBlockState(pos);
+	}
+
+	public void sendUpdates() {
+		world.markBlockRangeForRenderUpdate(pos, pos);
+		world.notifyBlockUpdate(pos, getState(), getState(), 3);
+		world.scheduleBlockUpdate(pos, getBlockType(), 0, 0);
+		markDirty();
+	}
+
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, @Nonnull IBlockState oldState, @Nonnull IBlockState newState) {
 		return oldState.getBlock() != newState.getBlock();

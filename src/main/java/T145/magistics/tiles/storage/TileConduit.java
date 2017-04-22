@@ -29,7 +29,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public float getMaxQuintessence() {
-		return 4;
+		return 4F;
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 			calculateSuction();
 
 			if (suction > 0) {
-				world.scheduleUpdate(pos, blockType, 10);
 				equalizeWithNeighbors();
+				sendUpdates();
 			}
 		}
 	}
