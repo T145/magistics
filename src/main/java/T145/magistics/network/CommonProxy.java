@@ -1,6 +1,7 @@
 package T145.magistics.network;
 
 import T145.magistics.api.ModBlocks;
+import T145.magistics.blocks.machines.BlockCrucible;
 import T145.magistics.blocks.machines.BlockInfuser;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
@@ -38,6 +39,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
+		ModBlocks.crucible = new BlockCrucible();
 		ModBlocks.infuser = new BlockInfuser();
 		ModBlocks.tank = new BlockTank();
 		ModBlocks.conduit = new BlockConduit();
@@ -48,4 +50,8 @@ public class CommonProxy implements IGuiHandler {
 
 	public void postInit(FMLPostInitializationEvent event) {
 	}
+
+	public void greenFlameFX(World world, float x, float y, float z) {}
+
+	public void smallGreenFlameFX(World world, float x, float y, float z) {}
 }

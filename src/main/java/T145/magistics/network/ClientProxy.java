@@ -2,21 +2,27 @@ package T145.magistics.network;
 
 import T145.magistics.api.ModBlocks;
 import T145.magistics.api.variants.EnumConduit;
+import T145.magistics.api.variants.EnumCrucible;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
+import T145.magistics.client.fx.particles.ParticleGreenFlame;
+import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.render.blocks.RenderConduit;
+import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
+import T145.magistics.tiles.machines.TileCrucible;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
 import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -86,6 +92,11 @@ public class ClientProxy extends CommonProxy {
 			registerBlockModel(ModBlocks.conduit, type.ordinal(), "inventory," + type.getClientName());
 		}
 
+		for (EnumCrucible type : EnumCrucible.values()) {
+			registerBlockModel(ModBlocks.crucible, type.ordinal(), type);
+		}
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
 
@@ -102,5 +113,17 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
+	}
+
+	@Override
+	public void greenFlameFX(World world, float x, float y, float z) {
+		ParticleGreenFlame flame = new ParticleGreenFlame(world, x, y, z, 0F, 0F, 0F);
+		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
+	}
+
+	@Override
+	public void smallGreenFlameFX(World world, float x, float y, float z) {
+		ParticleGreenFlame flame = new ParticleSmallGreenFlame(world, x, y, z, 0F, 0F, 0F);
+		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
 	}
 }
