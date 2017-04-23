@@ -1,5 +1,6 @@
 package T145.magistics.network;
 
+import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.ModBlocks;
 import T145.magistics.blocks.machines.BlockCrucible;
 import T145.magistics.blocks.machines.BlockInfuser;
@@ -8,6 +9,8 @@ import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -49,6 +52,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
+		MagisticsApi.addCrucibleRecipe(new ItemStack(Blocks.STONE, 1, 0), 1F);
 	}
 
 	public void greenFlameFX(World world, float x, float y, float z) {}

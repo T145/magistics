@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper;
 public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	private int suction;
-	private float quintessence;
+	private float quints;
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {
@@ -34,18 +34,18 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public float getQuintessence() {
-		return quintessence;
+		return quints;
 	}
 
 	@Override
 	public void setQuintessence(float amount) {
-		quintessence = amount;
+		quints = amount;
 	}
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setInteger("Suction", suction);
-		compound.setFloat("Quintessence", quintessence);
+		compound.setFloat("Quintessence", quints);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 			if (suction > 0) {
 				equalizeWithNeighbors();
-				sendUpdates();
+				refresh();
 			}
 		}
 	}
@@ -82,19 +82,19 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (source != null && quintessence < getMaxQuintessence() && suction > source.getSuction()) {
-				float mod = Math.min(quintessence / getMaxQuintessence(), getMaxQuintessence());
-				float diff = QuintessenceHelper.subtractQuints(source, Math.min(mod, getMaxQuintessence() - quintessence));
+			if (source != null && quints < getMaxQuintessence() && suction > source.getSuction()) {
+				float mod = Math.min(quints / getMaxQuintessence(), getMaxQuintessence());
+				float diff = QuintessenceHelper.subtractQuints(source, Math.min(mod, getMaxQuintessence() - quints));
 
 				if (suction > source.getSuction()) {
-					quintessence += diff;
+					quints += diff;
 				} else {
 					source.setQuintessence(diff + source.getQuintessence());
 				}
 			}
 		}
 
-		quintessence = MathHelper.clamp(quintessence, 0F, getMaxQuintessence());
+		quints = MathHelper.clamp(quints, 0F, getMaxQuintessence());
 	}
 
 	public boolean isConnected(EnumFacing side) {

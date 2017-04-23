@@ -44,7 +44,9 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible(meta);
+		TileCrucible crucible = new TileCrucible();
+		crucible.setTier(meta);
+		return crucible;
 	}
 
 	@Override

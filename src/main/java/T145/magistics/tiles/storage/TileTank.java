@@ -11,7 +11,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	private int delay;
 	private int suction;
-	private float quintessence = 250;
+	private float quints;
 
 	public boolean isReinforced() {
 		return false;
@@ -34,7 +34,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public float getQuintessence() {
-		return quintessence;
+		return quints;
 	}
 
 	@Override
@@ -44,13 +44,13 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void setQuintessence(float amount) {
-		quintessence = amount;
+		quints = amount;
 	}
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setInteger("Suction", suction);
-		compound.setFloat("Quintessence", quintessence);
+		compound.setFloat("Quintessence", quints);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 				// explode if certain conditions are met
 
 				equalizeWithNeighbors();
-				sendUpdates();
+				refresh();
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 			TileTank tank = (TileTank) tile;
 
 			if (isReinforced() == tank.isReinforced()) {
-				quintessence += tank.getQuintessence();
+				quints += tank.getQuintessence();
 				tempMax += tank.getMaxQuintessence();
 			}
 		}
@@ -97,18 +97,18 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && !(container instanceof TileTank) && quintessence < tempMax && getSuction() > container.getSuction()) {
-				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, tempMax - quintessence));
+			if (container != null && !(container instanceof TileTank) && quints < tempMax && getSuction() > container.getSuction()) {
+				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, tempMax - quints));
 
 				if (getSuction() > container.getSuction()) {
-					quintessence += diff;
+					quints += diff;
 				} else {
 					container.setQuintessence(diff + container.getQuintessence());
 				}
 			}
 		}
 
-		float tempQuints = quintessence;
+		float tempQuints = quints;
 
 		if (Math.round(tempQuints) >= tempMax) {
 			setSuction(0);
@@ -123,14 +123,14 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 				if (empty) {
 					tank.setQuintessence(0F);
 				} else if (tempQuints <= tank.getMaxQuintessence()) {
-					tank.setQuintessence(quintessence);
+					tank.setQuintessence(quints);
 					empty = true;
 				} else {
-					tank.setQuintessence(tank.getMaxQuintessence() * (quintessence / tempQuints));
-					quintessence -= tank.getQuintessence();
+					tank.setQuintessence(tank.getMaxQuintessence() * (quints / tempQuints));
+					quints -= tank.getQuintessence();
 				}
 
-				tempQuints = quintessence;
+				tempQuints = quints;
 			}
 		}
 	}
