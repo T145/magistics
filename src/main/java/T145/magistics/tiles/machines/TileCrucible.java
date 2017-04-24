@@ -94,17 +94,23 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setFloat("Quintessence", quints);
+		compound.setFloat("Quints", quints);
+		compound.setFloat("MaxQuints", maxQuints);
+		compound.setFloat("ConversionRate", conversion);
+		compound.setFloat("Speed", speed);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		quints = compound.getFloat("Quintessence");
+		quints = compound.getFloat("Quints");
+		maxQuints = compound.getFloat("MaxQuints");
+		conversion = compound.getFloat("ConversionRate");
+		speed = compound.getFloat("speed");
 	}
 
 	@Override
 	public void update() {
-		if (hasWorld()) {
+		if (!world.isRemote) {
 			--smeltDelay;
 			--updateDelay;
 

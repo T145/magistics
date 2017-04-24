@@ -15,8 +15,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -44,9 +46,7 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		TileCrucible crucible = new TileCrucible();
-		crucible.setTier(meta);
-		return crucible;
+		return new TileCrucible();
 	}
 
 	@Override
@@ -85,6 +85,15 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 
 		if (crucible.hasWorld() && crucible.getBlockMetadata() < 3) {
 			Magistics.proxy.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+		}
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
+
+		if (crucible != null) {
+			crucible.setTier(stack.getMetadata());
 		}
 	}
 
