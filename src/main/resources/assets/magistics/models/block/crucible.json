@@ -1,8 +1,7 @@
 {
-    "__comment": "Designed by T145",
     "ambientocclusion": false,
     "textures": {
-        "particle": "#inner"
+        "particle": "#side"
     },
     "elements": [
         {   "from": [ 0, 3, 0 ],

@@ -1,11 +1,9 @@
 package T145.magistics.client.render.blocks;
 
-import java.awt.Color;
-
 import javax.annotation.Nonnull;
 
 import T145.magistics.api.ModBlocks;
-import T145.magistics.client.lib.RenderCubes;
+import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.block.Block;
@@ -47,10 +45,9 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (conduit.isConnected(facing)) {
-				RenderCubes renderBlocks = RenderCubes.getInstance();
+				RenderBlocks renderBlocks = RenderBlocks.getWorldInstance(conduit.getWorld());
 				Tessellator tessellator = Tessellator.getInstance();
 				TextureAtlasSprite icon = BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0);
-				Color co = new Color(0xFFFFFF);
 
 				switch (facing.getOpposite().ordinal()) {
 				case 0:
@@ -76,12 +73,12 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 				tessellator.getBuffer().begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 				bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
-				renderBlocks.renderFaceYNeg(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
-				renderBlocks.renderFaceYPos(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
-				renderBlocks.renderFaceZNeg(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
-				renderBlocks.renderFaceZPos(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
-				renderBlocks.renderFaceXNeg(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
-				renderBlocks.renderFaceXPos(-0.5D, 0D, -0.5D, icon, co.getRed() / 255F, co.getGreen() / 255F, co.getBlue() / 255F, 200);
+				renderBlocks.renderFaceYNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
+				renderBlocks.renderFaceYPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
+				renderBlocks.renderFaceZNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
+				renderBlocks.renderFaceZPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
+				renderBlocks.renderFaceXNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
+				renderBlocks.renderFaceXPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
 
 				tessellator.draw();
 			}
@@ -92,6 +89,6 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		GlStateManager.color(1F, 1F, 1F, 1F);
 	}
 
-	private void renderLiquid(World world, RenderCubes renderBlocks, double x, double y, double z, Block block, int side, float partialTicks) {
+	private void renderLiquid(World world, RenderBlocks renderBlocks, double x, double y, double z, Block block, int side, float partialTicks) {
 	}
 }

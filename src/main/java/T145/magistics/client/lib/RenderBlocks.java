@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCubes {
+public class RenderBlocks {
 
 	public IBlockAccess blockAccess;
 	public boolean flipTexture;
@@ -29,27 +29,41 @@ public class RenderCubes {
 	public int uvRotateNorth;
 	public int uvRotateTop;
 	public int uvRotateBottom;
-	private static RenderCubes instance;
+	private static RenderBlocks instance;
 
-	public RenderCubes() {
+	public RenderBlocks() {
 		mc = Minecraft.getMinecraft();
 	}
 
-	public RenderCubes(IBlockAccess world) {
+	public RenderBlocks(IBlockAccess world) {
 		this();
 		blockAccess = world;
 		inventoryRender = false;
 		flipTexture = false;
 	}
 
-	public void setRenderBounds(double p_147782_1_, double p_147782_3_, double p_147782_5_, double p_147782_7_, double p_147782_9_, double p_147782_11_) {
+	public static RenderBlocks getInstance() {
+		if (instance == null) {
+			instance = new RenderBlocks();
+		}
+		return instance;
+	}
+
+	public static RenderBlocks getWorldInstance(IBlockAccess world) {
+		if (instance == null) {
+			instance = new RenderBlocks(world);
+		}
+		return instance;
+	}
+
+	public void setRenderBounds(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 		if (!lockBlockBounds) {
-			renderMinX = p_147782_1_;
-			renderMaxX = p_147782_7_;
-			renderMinY = p_147782_3_;
-			renderMaxY = p_147782_9_;
-			renderMinZ = p_147782_5_;
-			renderMaxZ = p_147782_11_;
+			renderMinX = minX;
+			renderMaxX = maxX;
+			renderMinY = minY;
+			renderMaxY = maxY;
+			renderMinZ = minZ;
+			renderMaxZ = maxZ;
 			partialRenderBounds = ((mc.gameSettings.ambientOcclusion >= 2) && ((renderMinX > 0.0D) || (renderMaxX < 1.0D) || (renderMinY > 0.0D) || (renderMaxY < 1.0D) || (renderMinZ > 0.0D) || (renderMaxZ < 1.0D)));
 		}
 	}
@@ -561,12 +575,5 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d12, d14).tex(d4, d6).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
-	}
-
-	public static RenderCubes getInstance() {
-		if (instance == null) {
-			instance = new RenderCubes();
-		}
-		return instance;
 	}
 }
