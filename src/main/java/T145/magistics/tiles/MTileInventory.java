@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -12,7 +13,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class MTileInventory extends MTile {
 
-	protected ItemStackHandler itemHandler = createItemHandler();
+	protected SimpleItemStackHandler itemHandler = createItemHandler();
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
@@ -31,7 +32,7 @@ public abstract class MTileInventory extends MTile {
 
 	public abstract boolean canExtractItem(int slot, int amount, boolean simulate);
 
-	protected ItemStackHandler createItemHandler() {
+	protected SimpleItemStackHandler createItemHandler() {
 		return new SimpleItemStackHandler(this);
 	}
 
@@ -60,6 +61,10 @@ public abstract class MTileInventory extends MTile {
 		public SimpleItemStackHandler(MTileInventory inv) {
 			super(inv.getSizeInventory());
 			this.inv = inv;
+		}
+
+		public NonNullList<ItemStack> getStacks() {
+			return stacks;
 		}
 
 		@Nonnull

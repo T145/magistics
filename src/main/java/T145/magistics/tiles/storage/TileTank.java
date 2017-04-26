@@ -4,7 +4,6 @@ import T145.magistics.api.magic.IQuintessenceContainer;
 import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 public class TileTank extends MTile implements IQuintessenceContainer {
@@ -49,13 +48,11 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("Suction", suction);
 		compound.setFloat("Quintessence", quints);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setSuction(compound.getInteger("Suction"));
 		setQuintessence(compound.getFloat("Quintessence"));
 	}
 
@@ -82,17 +79,6 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		float tempMax = getMaxQuintessence();
-		/*TileEntity tile;
-		int yOffset;
-
-		for (yOffset = 1; (tile = world.getTileEntity(pos.offset(EnumFacing.UP, yOffset))) instanceof TileTank; ++yOffset) {
-			TileTank tank = (TileTank) tile;
-
-			if (isReinforced() == tank.isReinforced()) {
-				quints += tank.getQuintessence();
-				tempMax += tank.getMaxQuintessence();
-			}
-		}*/
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
@@ -107,31 +93,5 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 				}
 			}
 		}
-
-		/*float tempQuints = quints;
-
-		if (Math.round(tempQuints) >= tempMax) {
-			setSuction(0);
-		}
-
-		yOffset = 0;
-
-		for (boolean empty = false; (tile = world.getTileEntity(pos.offset(EnumFacing.UP, yOffset))) instanceof TileTank; ++yOffset) {
-			TileTank tank = (TileTank) tile;
-
-			if (isReinforced() == tank.isReinforced()) {
-				if (empty) {
-					tank.setQuintessence(0F);
-				} else if (tempQuints <= tank.getMaxQuintessence()) {
-					tank.setQuintessence(quints);
-					empty = true;
-				} else {
-					tank.setQuintessence(tank.getMaxQuintessence() * (quints / tempQuints));
-					quints -= tank.getQuintessence();
-				}
-
-				tempQuints = quints;
-			}
-		}*/
 	}
 }

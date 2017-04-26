@@ -26,6 +26,10 @@ public class Magistics {
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	public static final CreativeTabs TAB = new CreativeTabMagistics();
 
+	public static boolean isDeobfuscated() {
+		return VERSION.equals("$version");
+	}
+
 	@Instance(MODID)
 	public static Magistics instance;
 

@@ -2,6 +2,7 @@ package T145.magistics.api.magic;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,9 +11,10 @@ public class QuintessenceHelper {
 
 	@Nullable
 	public static IQuintessenceManager getConnectedManager(World world, BlockPos pos, EnumFacing facing) {
-		IQuintessenceManager manager = (IQuintessenceManager) world.getTileEntity(pos);
+		TileEntity tile = world.getTileEntity(pos);
 
-		if (manager != null) {
+		if (tile != null && tile instanceof IQuintessenceManager) {
+			IQuintessenceManager manager = (IQuintessenceManager) world.getTileEntity(pos);
 			IQuintessenceManager neighbor = (IQuintessenceManager) world.getTileEntity(pos.offset(facing));
 
 			if (neighbor != null && manager.canConnect(facing) && neighbor.canConnect(facing.getOpposite())) {
@@ -29,9 +31,9 @@ public class QuintessenceHelper {
 
 		if (manager != null && manager instanceof IQuintessenceContainer) {
 			return (IQuintessenceContainer) manager;
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	public static float drainQuints(World world, BlockPos dest, float amount, boolean drain) {

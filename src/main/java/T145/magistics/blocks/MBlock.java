@@ -75,7 +75,8 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 				TileEntity tile = createNewTileEntity(null, variant.ordinal());
 				Class tileClass = tile.getClass();
 
-				if (isBlockContainer = tile != null) {
+				if (tile != null) {
+					isBlockContainer = true;
 					GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 				}
 			}

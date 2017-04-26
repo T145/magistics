@@ -1,8 +1,12 @@
 package T145.magistics.tiles.machines;
 
+import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
+import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.containers.ContainerInfuser;
+import T145.magistics.lib.events.SoundEvents;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +15,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
@@ -151,19 +157,85 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getCookProgressScaled(int pixels) {
-		return 0;
+	public int getCookProgressScaled(int time) {
+		return Math.round(cookTime / cookCost * time);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getBoostScaled() {
-		return 0;
+		return Math.round(0.1F + (float) boost / 2F) * 6;
 	}
 
 	@Override
 	public void update() {
 		if (isDormant()) {
 			setSuction(0);
+			angle = facing.ordinal();
+		} else {
+			angle = getCookProgressScaled(360);
 		}
+
+		if (soundDelay > 0) {
+			--soundDelay;
+		}
+
+		InfuserRecipe infuserRecipe = MagisticsApi.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[this.getSizeInventory()]), isDark());
+
+		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
+			cookCost = infuserRecipe.getCost();
+
+			if (crafting = QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
+				cookTime += QuintessenceHelper.drainQuints(world, pos, cookCost, true);
+
+				if (soundDelay == 0) {
+					world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), isDark() ? SoundEvents.INFUSER_DARK : SoundEvents.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
+					soundDelay = 62;
+				}
+
+				if (cookTime >= cookCost) {
+					addProcessedItem(infuserRecipe.getResult(), infuserRecipe.getComponents());
+					reset();
+					markDirty();
+					//refresh();
+				}
+			} else {
+				// pause infusing
+			}
+		} else if (crafting) {
+			world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), net.minecraft.init.SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+			reset();
+		}
+	}
+
+	private void addProcessedItem(ItemStack result, ItemStack[] components) {
+		// put items in output slots
+		// 0 for regular output, 1 for shard output
+		// reduce all recipe items consumed
+
+		if (itemHandler.getStackInSlot(0).isEmpty()) {
+			itemHandler.setStackInSlot(0, result.copy());
+		} else if (MagisticsApi.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
+			itemHandler.getStackInSlot(0).grow(result.getCount());
+		}
+
+		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
+			if (!itemHandler.getStackInSlot(slot).isEmpty()) {
+				for (ItemStack component : components) {
+					if (MagisticsApi.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
+						itemHandler.getStackInSlot(slot).shrink(1);
+
+						if (itemHandler.getStackInSlot(slot).isEmpty()) {
+							itemHandler.setStackInSlot(slot, ItemStack.EMPTY);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void reset() {
+		cookCost = 0F;
+		cookTime = 0F;
+		crafting = false;
 	}
 }

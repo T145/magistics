@@ -53,5 +53,9 @@ public class CommonProxy implements IGuiHandler {
 
 	public void postInit(FMLPostInitializationEvent event) {
 		MagisticsApi.addCrucibleRecipe(new ItemStack(Blocks.STONE, 1, 0), 1F);
+		MagisticsApi.addInfuserRecipe(new ItemStack(Blocks.DISPENSER), new ItemStack[] {
+				new ItemStack(Blocks.PISTON),
+				new ItemStack(Blocks.FURNACE)
+		}, 1F, false);
 	}
 }
