@@ -6,8 +6,7 @@ import T145.magistics.api.variants.EnumCrucible;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
-import T145.magistics.client.fx.particles.ParticleGreenFlame;
-import T145.magistics.client.fx.particles.ParticleSmallGreenFlame;
+import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.client.lib.ClientBakery;
@@ -23,7 +22,6 @@ import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -80,6 +78,7 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 
 		MinecraftForge.EVENT_BUS.register(ClientBakery.INSTANCE);
+		MinecraftForge.EVENT_BUS.register(FXEngine.INSTANCE);
 
 		for (EnumInfuser type : EnumInfuser.values()) {
 			registerBlockModel(ModBlocks.infuser, type.ordinal(), type);
@@ -116,17 +115,5 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
-	}
-
-	@Override
-	public void greenFlameFX(World world, float x, float y, float z) {
-		ParticleGreenFlame flame = new ParticleGreenFlame(world, x, y, z, 0F, 0F, 0F);
-		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
-	}
-
-	@Override
-	public void smallGreenFlameFX(World world, float x, float y, float z) {
-		ParticleGreenFlame flame = new ParticleSmallGreenFlame(world, x, y, z, 0F, 0F, 0F);
-		Minecraft.getMinecraft().effectRenderer.addEffect(flame);
 	}
 }

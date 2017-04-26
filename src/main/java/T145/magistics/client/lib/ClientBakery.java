@@ -32,7 +32,7 @@ public class ClientBakery {
 
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent event) {
-		quintFluid = registerSprite(event.getMap(), "vis", "fluids");
+		quintFluid = registerSprite(event.getMap(), "vis", "misc");
 	}
 
 	@SubscribeEvent

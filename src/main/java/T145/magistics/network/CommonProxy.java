@@ -54,8 +54,4 @@ public class CommonProxy implements IGuiHandler {
 	public void postInit(FMLPostInitializationEvent event) {
 		MagisticsApi.addCrucibleRecipe(new ItemStack(Blocks.STONE, 1, 0), 1F);
 	}
-
-	public void greenFlameFX(World world, float x, float y, float z) {}
-
-	public void smallGreenFlameFX(World world, float x, float y, float z) {}
 }

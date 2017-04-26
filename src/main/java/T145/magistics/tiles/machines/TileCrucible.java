@@ -4,6 +4,7 @@ import java.util.List;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.magic.IQuintessenceContainer;
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.lib.events.SoundEvents;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLiving;
@@ -225,7 +226,7 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 							// slightly discharge this chunk's aura
 
 							for (int b = 0; b < 3; b++) {
-								//Magistics.proxy.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
+								FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
 							}
 						}
 					}

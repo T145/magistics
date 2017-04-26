@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.Magistics;
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.render.BlockRenderer;
 import T145.magistics.tiles.machines.TileInfuser;
 import net.minecraft.client.renderer.GlStateManager;
@@ -26,7 +27,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
 			double yy = infuser.getPos().getY() + BlockRenderer.W16;
 			double zz = infuser.getPos().getZ() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
-			//Magistics.proxy.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
+			FXCreator.INSTANCE.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
 		}
 	}
 
