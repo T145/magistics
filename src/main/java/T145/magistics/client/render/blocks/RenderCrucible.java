@@ -2,6 +2,8 @@ package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
+import org.lwjgl.opengl.GL11;
+
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.client.render.BlockRenderer;
@@ -20,48 +22,37 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileCrucible crucible, double x, double y, double z, float partialTicks, int destroyStage) {
-		GlStateManager.pushMatrix();
-		GlStateManager.disableCull();
-
-		GlStateManager.translate(x + 0.5D, y + 0.01D + BlockRenderer.W5, z + 0.5D);
-		GlStateManager.rotate(180F, 1F, 0F, 0F);
-		GlStateManager.color(1F, 1F, 1F, 1F);
-		GlStateManager.disableLighting();
-
 		if (crucible.getQuintessence() > 0) {
 			renderLiquid(crucible, x, y, z, partialTicks);
 		}
-
-		GlStateManager.enableLighting();
-		GlStateManager.enableCull();
-		GlStateManager.popMatrix();
 	}
 
 	private void renderLiquid(TileCrucible crucible, double x, double y, double z, float partialTicks) {
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(180F, 1F, 0F, 0F);
-		GlStateManager.disableLighting();
+		float quints = Math.min(crucible.getQuintessence(), crucible.getMaxQuintessence());
+		float level = 0.75F * (quints / crucible.getMaxQuintessence());
 
-		RenderBlocks renderBlocks = RenderBlocks.getWorldInstance(crucible.getWorld());
-		Tessellator tessellator = Tessellator.getInstance();
-		float level = crucible.getQuintessence() / crucible.getMaxQuintessence();
+		if (crucible.isFull() || crucible.isOverflowing()) {
+			level -= 0.001D;
+		}
+
+		Tessellator tess = Tessellator.getInstance();
+		RenderBlocks render = new RenderBlocks();
 		TextureAtlasSprite icon = ClientBakery.INSTANCE.quintFluid;
 
-		renderBlocks.setRenderBounds(BlockRenderer.W1 + 0.001D, 0.001D, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, level - 0.02D, 0.999D - BlockRenderer.W1);
-		tessellator.getBuffer().begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x + 0.5D, y, z + 0.5D);
+		GlStateManager.disableCull();
+		GlStateManager.disableLighting();
 
+		render.setRenderBounds(BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
+		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-
-		renderBlocks.renderFaceYNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		renderBlocks.renderFaceYPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		renderBlocks.renderFaceZNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		renderBlocks.renderFaceZPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		renderBlocks.renderFaceXNeg(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		renderBlocks.renderFaceXPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 200);
-		tessellator.draw();
+		render.renderFaces(tess, -0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
+		tess.draw();
 
 		GlStateManager.enableLighting();
-		GlStateManager.popMatrix();
+		GlStateManager.enableCull();
 		GlStateManager.color(1F, 1F, 1F, 1F);
+		GlStateManager.popMatrix();
 	}
 }

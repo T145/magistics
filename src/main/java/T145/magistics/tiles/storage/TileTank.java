@@ -82,7 +82,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		float tempMax = getMaxQuintessence();
-		TileEntity tile;
+		/*TileEntity tile;
 		int yOffset;
 
 		for (yOffset = 1; (tile = world.getTileEntity(pos.offset(EnumFacing.UP, yOffset))) instanceof TileTank; ++yOffset) {
@@ -92,9 +92,9 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 				quints += tank.getQuintessence();
 				tempMax += tank.getMaxQuintessence();
 			}
-		}
+		}*/
 
-		for (EnumFacing facing : EnumFacing.VALUES) {
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
 			if (container != null && !(container instanceof TileTank) && quints < tempMax && getSuction() > container.getSuction()) {
@@ -108,7 +108,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 			}
 		}
 
-		float tempQuints = quints;
+		/*float tempQuints = quints;
 
 		if (Math.round(tempQuints) >= tempMax) {
 			setSuction(0);
@@ -132,6 +132,6 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 				tempQuints = quints;
 			}
-		}
+		}*/
 	}
 }

@@ -64,6 +64,14 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 		return powering;
 	}
 
+	public boolean isFull() {
+		return quints == maxQuints;
+	}
+
+	public boolean isOverflowing() {
+		return quints > maxQuints;
+	}
+
 	@Override
 	public boolean canConnect(EnumFacing facing) {
 		return facing.getAxis() != EnumFacing.Axis.Y;
