@@ -1,11 +1,11 @@
 package T145.magistics.tiles.storage;
 
 import T145.magistics.api.magic.IQuintessenceContainer;
+import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
 
 public class TileConduit extends MTile implements IQuintessenceContainer {
 
@@ -44,14 +44,12 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("Suction", suction);
-		compound.setFloat("Quintessence", quints);
+		compound.setFloat("Quints", quints);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setSuction(compound.getInteger("Suction"));
-		setQuintessence(compound.getFloat("Quintessence"));
+		setQuintessence(compound.getFloat("Quints"));
 	}
 
 	@Override
@@ -70,7 +68,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 		setSuction(0);
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+			IQuintessenceManager source = QuintessenceHelper.getConnectedManager(world, pos, facing);
 
 			if (source != null && getSuction() < source.getSuction() - 1) {
 				setSuction(source.getSuction() - 1);
@@ -80,21 +78,18 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			IQuintessenceContainer source = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (source != null && quints < getMaxQuintessence() && suction > source.getSuction()) {
-				float mod = Math.min(quints / getMaxQuintessence(), getMaxQuintessence());
-				float diff = QuintessenceHelper.subtractQuints(source, Math.min(mod, getMaxQuintessence() - quints));
+			if (container != null && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
+				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
 
-				if (suction > source.getSuction()) {
+				if (getSuction() > container.getSuction()) {
 					quints += diff;
 				} else {
-					source.setQuintessence(diff + source.getQuintessence());
+					container.setQuintessence(diff + container.getQuintessence());
 				}
 			}
 		}
-
-		quints = MathHelper.clamp(quints, 0F, getMaxQuintessence());
 	}
 
 	public boolean isConnected(EnumFacing side) {

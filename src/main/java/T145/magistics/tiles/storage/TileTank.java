@@ -48,12 +48,12 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setFloat("Quintessence", quints);
+		compound.setFloat("Quints", quints);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setQuintessence(compound.getFloat("Quintessence"));
+		setQuintessence(compound.getFloat("Quints"));
 	}
 
 	@Override
@@ -78,13 +78,11 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 	}
 
 	protected void equalizeWithNeighbors() {
-		float tempMax = getMaxQuintessence();
-
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && !(container instanceof TileTank) && quints < tempMax && getSuction() > container.getSuction()) {
-				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, tempMax - quints));
+			if (container != null && !(container instanceof TileTank) && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
+				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
 
 				if (getSuction() > container.getSuction()) {
 					quints += diff;
