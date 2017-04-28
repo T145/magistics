@@ -90,6 +90,7 @@ build {
 
 processResources {
 	exclude '**/*.db'
+	exclude '**/*.DS_Store'
 }
 
 task devJar(type: Jar) {
