@@ -1,6 +1,7 @@
 package T145.magistics.blocks;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
@@ -12,6 +13,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -158,6 +160,15 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return isBlockContainer;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile != null && tile instanceof IFacing) {
+			((IFacing) tile).setFacingFromEntity(placer);
+		}
 	}
 
 	@Override

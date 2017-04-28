@@ -1,8 +1,6 @@
 package T145.magistics.tiles.machines;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuserDark extends TileInfuser {
 
@@ -34,11 +32,6 @@ public class TileInfuserDark extends TileInfuser {
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		super.readPacketNBT(compound);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public int getDarkCookProgressScaled(int pixels) {
-		return 0;
 	}
 
 	@Override

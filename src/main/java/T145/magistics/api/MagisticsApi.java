@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import T145.magistics.api.crafting.InfuserRecipe;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class MagisticsApi {
@@ -27,6 +29,14 @@ public class MagisticsApi {
 
 	public static void addCrucibleRecipe(ItemStack input, float quintOutput) {
 		crucibleRecipes.put(input, quintOutput);
+	}
+
+	public static void addCrucibleRecipe(Block block, float quintOutput) {
+		addCrucibleRecipe(new ItemStack(block), quintOutput);
+	}
+
+	public static void addCrucibleRecipe(Item item, float quintOutput) {
+		addCrucibleRecipe(new ItemStack(item), quintOutput);
 	}
 
 	@Nonnull

@@ -4,7 +4,7 @@ import T145.magistics.Magistics;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
-public class SoundEvents {
+public class SoundHandler {
 
 	public static SoundEvent BUBBLING;
 	public static SoundEvent INFUSER;

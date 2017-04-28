@@ -6,11 +6,12 @@ import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.containers.ContainerInfuser;
-import T145.magistics.lib.events.SoundEvents;
+import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -141,7 +142,6 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		super.writePacketNBT(compound);
 
 		compound.setInteger("Facing", facing.ordinal());
-		compound.setInteger("Suction", suction);
 		compound.setFloat("CookCost", cookCost);
 		compound.setFloat("CookTime", cookTime);
 	}
@@ -151,7 +151,6 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		super.readPacketNBT(compound);
 
 		setFacing(EnumFacing.getFront(compound.getInteger("Facing")));
-		suction = compound.getInteger("Suction");
 		cookCost = compound.getFloat("CookCost");
 		cookTime = compound.getFloat("CookTime");
 	}
@@ -184,26 +183,43 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
 
-			if (crafting = QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
-				cookTime += QuintessenceHelper.drainQuints(world, pos, cookCost, true);
+			if (crafting = canCraft(infuserRecipe) && QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
+				float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
+				cookTime += QuintessenceHelper.drainQuints(world, pos, quintDrain, true);
 
-				if (soundDelay == 0) {
-					world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), isDark() ? SoundEvents.INFUSER_DARK : SoundEvents.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
+				if (soundDelay == 0 && cookTime > 0.025F) {
+					world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
 				if (cookTime >= cookCost) {
 					addProcessedItem(infuserRecipe.getResult(), infuserRecipe.getComponents());
 					reset();
-					markDirty();
-					//refresh();
+					refresh();
 				}
-			} else {
-				// pause infusing
 			}
-		} else if (crafting) {
-			world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), net.minecraft.init.SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+		} else {
+			if (crafting) {
+				world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+				refresh();
+			}
+
 			reset();
+		}
+	}
+
+	public boolean canCraft(InfuserRecipe infuserRecipe) {
+		ItemStack result = infuserRecipe.getResult();
+
+		if (result.isEmpty()) {
+			return false;
+		} else if (itemHandler.getStackInSlot(0).isEmpty()) {
+			return true;
+		} else if (!MagisticsApi.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
+			return false;
+		} else {
+			int resultCount = this.itemHandler.getStackInSlot(0).getCount() + result.getCount();
+			return resultCount <= itemHandler.getSlotLimit(0) && resultCount <= result.getMaxStackSize();
 		}
 	}
 
@@ -236,6 +252,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	private void reset() {
 		cookCost = 0F;
 		cookTime = 0F;
+		active = false;
 		crafting = false;
 	}
 }

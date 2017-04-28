@@ -13,7 +13,7 @@ import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
-import T145.magistics.lib.events.SoundEvents;
+import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.machines.TileCrucible;
 import T145.magistics.tiles.machines.TileInfuser;
 import T145.magistics.tiles.machines.TileInfuserDark;
@@ -70,7 +70,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		SoundEvents.registerSounds();
+		SoundHandler.registerSounds();
 
 		super.preInit(event);
 

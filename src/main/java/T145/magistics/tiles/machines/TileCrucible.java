@@ -2,10 +2,11 @@ package T145.magistics.tiles.machines;
 
 import java.util.List;
 
+import T145.magistics.Magistics;
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.magic.IQuintessenceContainer;
 import T145.magistics.client.fx.FXCreator;
-import T145.magistics.lib.events.SoundEvents;
+import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -114,7 +115,7 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 		quints = compound.getFloat("Quints");
 		maxQuints = compound.getFloat("MaxQuints");
 		conversion = compound.getFloat("ConversionRate");
-		speed = compound.getFloat("speed");
+		speed = compound.getFloat("Speed");
 	}
 
 	@Override
@@ -188,7 +189,7 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 
 								refresh();
 								world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
-								world.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundEvents.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+								world.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 							}
 						} else {
 							item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;

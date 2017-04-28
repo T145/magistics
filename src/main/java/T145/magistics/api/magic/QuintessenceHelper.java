@@ -12,14 +12,10 @@ public class QuintessenceHelper {
 	@Nullable
 	public static IQuintessenceManager getConnectedManager(World world, BlockPos pos, EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos);
+		TileEntity neighbor = world.getTileEntity(pos.offset(facing));
 
-		if (tile != null && tile instanceof IQuintessenceManager) {
-			IQuintessenceManager manager = (IQuintessenceManager) world.getTileEntity(pos);
-			IQuintessenceManager neighbor = (IQuintessenceManager) world.getTileEntity(pos.offset(facing));
-
-			if (neighbor != null && manager.canConnect(facing) && neighbor.canConnect(facing.getOpposite())) {
-				return neighbor;
-			}
+		if (tile != null && neighbor != null && tile instanceof IQuintessenceManager && neighbor instanceof IQuintessenceManager && ((IQuintessenceManager) tile).canConnect(facing) && ((IQuintessenceManager) neighbor).canConnect(facing.getOpposite())) {
+			return (IQuintessenceManager) neighbor;
 		}
 
 		return null;
