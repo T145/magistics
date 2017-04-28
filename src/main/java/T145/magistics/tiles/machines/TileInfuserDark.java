@@ -1,9 +1,5 @@
 package T145.magistics.tiles.machines;
 
-import T145.magistics.containers.ContainerInfuserDark;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,11 +14,6 @@ public class TileInfuserDark extends TileInfuser {
 	@Override
 	public String getName() {
 		return "tile.infuser.dark.name";
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
-		return new ContainerInfuserDark(playerInventory, this);
 	}
 
 	@Override

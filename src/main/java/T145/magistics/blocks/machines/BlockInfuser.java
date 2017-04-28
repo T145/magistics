@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class BlockInfuser extends MBlock<EnumInfuser> {
 
-	protected static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
+	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
 
 	public BlockInfuser() {
 		super("infuser", Material.ROCK, EnumInfuser.class);
@@ -66,7 +66,7 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 			TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
 
 			if (infuser != null) {
-				player.openGui(Magistics.MODID, getMetaFromState(state), world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(Magistics.MODID, 0, world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		}
 

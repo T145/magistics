@@ -8,7 +8,6 @@ import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiInfuser;
-import T145.magistics.client.gui.GuiInfuserDark;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
@@ -64,8 +63,6 @@ public class ClientProxy extends CommonProxy {
 		switch (ID) {
 		case 0:
 			return new GuiInfuser(player.inventory, ((TileInfuser) tile));
-		case 1:
-			return new GuiInfuserDark(player.inventory, ((TileInfuserDark) tile));
 		default:
 			return null;
 		}

@@ -1,10 +1,10 @@
 package T145.magistics.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
+import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.tiles.machines.TileInfuser;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,33 +18,46 @@ public class GuiInfuser extends GuiContainer {
 	public GuiInfuser(InventoryPlayer playerInventory, TileInfuser infuser) {
 		super(new ContainerInfuser(playerInventory, infuser));
 		this.infuser = infuser;
-		this.ySize = 239;
+		ySize = 239;
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		fontRendererObj.drawString("Infuser", 8, 5, 4210752);
+		fontRenderer.drawString(infuser.getDisplayName().getFormattedText(), 8, 5, infuser.isDark() ? 6307936 : 4210752);
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		GL11.glColor4f(1F, 1F, 1F, 1F);
-
-		mc.renderEngine.bindTexture(new ResourceLocation("magistics", "textures/gui/gui_infuser.png"));
-
 		int offsetX = (width - xSize) / 2;
 		int offsetY = (height - ySize) / 2;
+		int craftingProgress = infuser.getCookProgressScaled(46);
 
-		drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
+		GlStateManager.color(1F, 1F, 1F, 1F);
 
-		if (infuser.isCrafting()) {
-			int cookProgress = infuser.getCookProgressScaled(46);
-			drawTexturedModalRect(offsetX + 160, offsetY + 151 - cookProgress, 176, 46 - cookProgress, 9, cookProgress);
-		}
+		if (infuser.isDark()) {
+			mc.renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"));
 
-		if (infuser.getBoost() > 0) {
-			int boost = infuser.getBoostScaled();
-			drawTexturedModalRect(offsetX + 161, offsetY + 38 - boost, 192, 30 - boost, 7, boost);
+			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
+
+			if (infuser.isCrafting()) {
+				drawTexturedModalRect(offsetX + 158, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 6, craftingProgress);
+				drawTexturedModalRect(offsetX + 164, offsetY + 151 - craftingProgress, 182, 46 - craftingProgress, 6, craftingProgress);
+			}
+
+			drawTexturedModalRect(offsetX + 160, offsetY + 8, 192, mc.world.getMoonPhase() * 8, 8, 8);
+		} else {
+			mc.renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser.png"));
+
+			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
+
+			if (infuser.isCrafting()) {
+				drawTexturedModalRect(offsetX + 160, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 9, craftingProgress);
+			}
+
+			if (infuser.getBoost() > 0) {
+				int boostScaled = infuser.getBoostScaled();
+				drawTexturedModalRect(offsetX + 161, offsetY + 38 - boostScaled, 192, 30 - boostScaled, 7, boostScaled);
+			}
 		}
 	}
 }
