@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.tiles.machines.TileCrucible;
+import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

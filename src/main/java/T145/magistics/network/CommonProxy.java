@@ -2,11 +2,11 @@ package T145.magistics.network;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.ModBlocks;
-import T145.magistics.blocks.machines.BlockCrucible;
-import T145.magistics.blocks.machines.BlockInfuser;
+import T145.magistics.blocks.crafting.BlockCrucible;
+import T145.magistics.blocks.crafting.BlockInfuser;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
-import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

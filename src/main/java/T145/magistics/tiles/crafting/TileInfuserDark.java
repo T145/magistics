@@ -1,4 +1,4 @@
-package T145.magistics.tiles.machines;
+package T145.magistics.tiles.crafting;
 
 import net.minecraft.nbt.NBTTagCompound;
 

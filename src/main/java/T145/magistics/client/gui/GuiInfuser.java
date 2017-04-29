@@ -2,7 +2,7 @@ package T145.magistics.client.gui;
 
 import T145.magistics.Magistics;
 import T145.magistics.containers.ContainerInfuser;
-import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;

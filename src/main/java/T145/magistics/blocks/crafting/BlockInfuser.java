@@ -1,11 +1,11 @@
-package T145.magistics.blocks.machines;
+package T145.magistics.blocks.crafting;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.tiles.machines.TileInfuser;
-import T145.magistics.tiles.machines.TileInfuserDark;
+import T145.magistics.tiles.crafting.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuserDark;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

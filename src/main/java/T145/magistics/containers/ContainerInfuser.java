@@ -1,6 +1,6 @@
 package T145.magistics.containers;
 
-import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

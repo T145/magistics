@@ -8,7 +8,7 @@
             {
                 "model": "magistics:conduit_inv",
                 "textures": {
-                    "all": "magistics:blocks/conduit"
+                    "all": "magistics:blocks/transport/conduit"
                 }
             }
         ],
@@ -16,7 +16,7 @@
             "base": {
                 "model": "magistics:conduit",
                 "textures": {
-                    "all": "magistics:blocks/conduit"
+                    "all": "magistics:blocks/transport/conduit"
                 }
             }
         }

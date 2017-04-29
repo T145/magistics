@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import T145.magistics.Magistics;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.tiles.machines.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

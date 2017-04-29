@@ -1,4 +1,4 @@
-package T145.magistics.tiles.machines;
+package T145.magistics.tiles.crafting;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;

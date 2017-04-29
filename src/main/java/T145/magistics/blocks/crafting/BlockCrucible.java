@@ -1,4 +1,4 @@
-package T145.magistics.blocks.machines;
+package T145.magistics.blocks.crafting;
 
 import java.util.List;
 import java.util.Random;
@@ -9,7 +9,7 @@ import T145.magistics.api.variants.EnumCrucible;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.render.BlockRenderer;
-import T145.magistics.tiles.machines.TileCrucible;
+import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
