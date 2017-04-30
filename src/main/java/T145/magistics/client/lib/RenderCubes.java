@@ -3,6 +3,7 @@ package T145.magistics.client.lib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,6 +49,10 @@ public class RenderCubes {
 		if (!lockBlockBounds) {
 			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
 		}
+	}
+
+	public void setRenderBounds(AxisAlignedBB box) {
+		setRenderBounds(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
 	}
 
 	public void overrideBlockBounds(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {

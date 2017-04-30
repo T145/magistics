@@ -2,8 +2,7 @@ package T145.magistics.tiles.crafting;
 
 import java.util.List;
 
-import T145.magistics.Magistics;
-import T145.magistics.api.MagisticsApi;
+import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.magic.IQuintessenceContainer;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.lib.events.SoundHandler;
@@ -166,7 +165,7 @@ public class TileCrucible extends MTile implements IQuintessenceContainer {
 					if (list.size() > 0) {
 						EntityItem item = list.get(world.rand.nextInt(list.size()));
 						ItemStack stack = item.getEntityItem();
-						float quintOutput = MagisticsApi.getCrucibleResult(stack);
+						float quintOutput = RecipeRegistry.getCrucibleResult(stack);
 
 						if (quintOutput > 0F) {
 							// boost conversion rate if above arcane furnace

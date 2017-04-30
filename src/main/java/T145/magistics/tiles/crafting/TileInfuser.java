@@ -1,7 +1,7 @@
 package T145.magistics.tiles.crafting;
 
-import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;
+import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.api.magic.QuintessenceHelper;
@@ -178,7 +178,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 			--soundDelay;
 		}
 
-		InfuserRecipe infuserRecipe = MagisticsApi.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[this.getSizeInventory()]), isDark());
+		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[this.getSizeInventory()]), isDark());
 
 		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
@@ -215,7 +215,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 			return false;
 		} else if (itemHandler.getStackInSlot(0).isEmpty()) {
 			return true;
-		} else if (!MagisticsApi.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
+		} else if (!RecipeRegistry.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
 			return false;
 		} else {
 			int resultCount = this.itemHandler.getStackInSlot(0).getCount() + result.getCount();
@@ -230,14 +230,14 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 		if (itemHandler.getStackInSlot(0).isEmpty()) {
 			itemHandler.setStackInSlot(0, result.copy());
-		} else if (MagisticsApi.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
+		} else if (RecipeRegistry.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
 			itemHandler.getStackInSlot(0).grow(result.getCount());
 		}
 
 		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (!itemHandler.getStackInSlot(slot).isEmpty()) {
 				for (ItemStack component : components) {
-					if (MagisticsApi.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
+					if (RecipeRegistry.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
 						itemHandler.getStackInSlot(slot).shrink(1);
 
 						if (itemHandler.getStackInSlot(slot).isEmpty()) {

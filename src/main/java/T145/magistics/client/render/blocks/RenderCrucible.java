@@ -41,7 +41,6 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5D, y, z + 0.5D);
-		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
 		render.setRenderBounds(BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
@@ -51,7 +50,6 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		tess.draw();
 
 		GlStateManager.enableLighting();
-		GlStateManager.enableCull();
 		GlStateManager.color(1F, 1F, 1F, 1F);
 		GlStateManager.popMatrix();
 	}

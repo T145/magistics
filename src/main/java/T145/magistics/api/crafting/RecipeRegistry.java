@@ -1,4 +1,4 @@
-package T145.magistics.api;
+package T145.magistics.api.crafting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,12 +9,11 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import T145.magistics.api.crafting.InfuserRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class MagisticsApi {
+public class RecipeRegistry {
 
 	private static Map<ItemStack, Float> crucibleRecipes = new HashMap<ItemStack, Float>();
 	private static List<InfuserRecipe> infuserRecipes = new ArrayList<InfuserRecipe>();
