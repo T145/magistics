@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import T145.magistics.api.variants.EnumCrucible;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.fx.FXCreator;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

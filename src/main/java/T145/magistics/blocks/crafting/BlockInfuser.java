@@ -3,7 +3,7 @@ package T145.magistics.blocks.crafting;
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.EnumInfuser;
 import T145.magistics.blocks.MBlock;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.crafting.TileInfuserDark;
 import net.minecraft.block.SoundType;

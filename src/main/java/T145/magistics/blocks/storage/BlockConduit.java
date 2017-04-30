@@ -2,7 +2,7 @@ package T145.magistics.blocks.storage;
 
 import T145.magistics.api.variants.EnumConduit;
 import T145.magistics.blocks.MBlock;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

@@ -5,8 +5,8 @@ import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.api.ModBlocks;
-import T145.magistics.client.lib.RenderBlocks;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.RenderCubes;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -34,7 +34,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (conduit.isConnected(facing)) {
 				Tessellator tess = Tessellator.getInstance();
-				RenderBlocks render = new RenderBlocks();
+				RenderCubes render = new RenderCubes();
 				TextureAtlasSprite icon = BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0);
 
 				GlStateManager.pushMatrix();
@@ -63,7 +63,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 				tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 				bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-				render.renderFaces(tess, -0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
+				render.renderFaces(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
 				tess.draw();
 
 				GlStateManager.popMatrix();

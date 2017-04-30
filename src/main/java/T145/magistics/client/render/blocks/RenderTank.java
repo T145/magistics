@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.client.lib.ClientBakery;
-import T145.magistics.client.lib.RenderBlocks;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.RenderCubes;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -30,8 +30,12 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 	private void renderLiquid(TileTank tank, double x, double y, double z, float partialTicks) {
 		float level = tank.getQuintessence() / tank.getMaxQuintessence();
 
+		if (level == 1F) {
+			level -= 0.02D;
+		}
+
 		Tessellator tess = Tessellator.getInstance();
-		RenderBlocks render = new RenderBlocks();
+		RenderCubes render = new RenderCubes();
 		TextureAtlasSprite icon = ClientBakery.INSTANCE.quintFluid;
 
 		GlStateManager.pushMatrix();
@@ -39,10 +43,10 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
-		render.setRenderBounds(BlockRenderer.W1 + 0.001D, 0.001D, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, level - 0.02D, 0.999D - BlockRenderer.W1);
+		render.setRenderBounds(BlockRenderer.W1 + 0.001D, 0.001D, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, level, 0.999D - BlockRenderer.W1);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderFaces(tess, -0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
+		render.renderFaces(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
 		tess.draw();
 
 		GlStateManager.enableLighting();

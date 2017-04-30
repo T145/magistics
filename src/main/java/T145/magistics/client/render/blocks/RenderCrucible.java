@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
+import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.client.lib.ClientBakery;
-import T145.magistics.client.lib.RenderBlocks;
-import T145.magistics.client.render.BlockRenderer;
+import T145.magistics.client.lib.RenderCubes;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -36,7 +36,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		}
 
 		Tessellator tess = Tessellator.getInstance();
-		RenderBlocks render = new RenderBlocks();
+		RenderCubes render = new RenderCubes();
 		TextureAtlasSprite icon = ClientBakery.INSTANCE.quintFluid;
 
 		GlStateManager.pushMatrix();
@@ -47,7 +47,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		render.setRenderBounds(BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderFaces(tess, -0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
+		render.renderFaceYPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
 		tess.draw();
 
 		GlStateManager.enableLighting();
