@@ -27,6 +27,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableCull();
+		GlStateManager.disableLighting();
 
 		renderCenter(conduit, x, y, z);
 
@@ -36,7 +37,9 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 			}
 		}
 
+		GlStateManager.enableLighting();
 		GlStateManager.enableCull();
+		GlStateManager.color(1F, 1F, 1F, 1F);
 		GlStateManager.popMatrix();
 	}
 
@@ -64,7 +67,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		wall.setRenderBounds(BlockConduit.BOX_FACES[facing.ordinal()]);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		wall.renderFaces(0D, 0D, 0D, BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), 1F, 1F, 1F, 210);
+		wall.renderFaces(0D, 0D, 0D, BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), 1F, 1F, 1F, 255);
 
 		if (conduit.hasQuints()) {
 			RenderCubes fluid = new RenderCubes();
