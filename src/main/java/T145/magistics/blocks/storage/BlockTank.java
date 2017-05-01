@@ -1,6 +1,6 @@
 package T145.magistics.blocks.storage;
 
-import T145.magistics.api.variants.EnumTank;
+import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileTank;
@@ -39,12 +39,17 @@ public class BlockTank extends MBlock<EnumTank> {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 

@@ -73,6 +73,7 @@ public class TileElevator extends MTile {
 				}
 			} else {
 				blocked = false;
+				return;
 			}
 		}
 	}

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import T145.magistics.api.variants.EnumCrucible;
+import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.lib.BlockRenderer;
@@ -69,12 +69,17 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 

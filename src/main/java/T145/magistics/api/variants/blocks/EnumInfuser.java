@@ -1,5 +1,6 @@
-package T145.magistics.api.variants;
+package T145.magistics.api.variants.blocks;
 
+import T145.magistics.api.variants.IVariant;
 import net.minecraft.util.math.MathHelper;
 
 public enum EnumInfuser implements IVariant {

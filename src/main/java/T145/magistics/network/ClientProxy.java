@@ -1,11 +1,11 @@
 package T145.magistics.network;
 
 import T145.magistics.api.ModBlocks;
-import T145.magistics.api.variants.EnumConduit;
-import T145.magistics.api.variants.EnumCrucible;
-import T145.magistics.api.variants.EnumInfuser;
-import T145.magistics.api.variants.EnumTank;
 import T145.magistics.api.variants.IVariant;
+import T145.magistics.api.variants.blocks.EnumConduit;
+import T145.magistics.api.variants.blocks.EnumCrucible;
+import T145.magistics.api.variants.blocks.EnumInfuser;
+import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ClientBakery;

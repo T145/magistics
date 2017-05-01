@@ -1,5 +1,7 @@
 package T145.magistics.blocks;
 
+import javax.annotation.Nullable;
+
 import T145.magistics.Magistics;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.IVariant;
@@ -160,6 +162,15 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return isBlockContainer;
+	}
+
+	@Override
+	@Nullable
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		if (isBlockContainer) {
+			return ((ITileEntityProvider) this).createNewTileEntity(world, getMetaFromState(state));
+		}
+		return null;
 	}
 
 	@Override

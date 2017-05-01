@@ -2,7 +2,7 @@ package T145.magistics.blocks.storage;
 
 import java.util.List;
 
-import T145.magistics.api.variants.EnumConduit;
+import T145.magistics.api.variants.blocks.EnumConduit;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileConduit;

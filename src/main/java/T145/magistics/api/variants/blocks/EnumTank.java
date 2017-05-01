@@ -1,10 +1,11 @@
-package T145.magistics.api.variants;
+package T145.magistics.api.variants.blocks;
 
+import T145.magistics.api.variants.IVariant;
 import net.minecraft.util.math.MathHelper;
 
-public enum EnumCrucible implements IVariant {
+public enum EnumTank implements IVariant {
 
-	BASIC, EYES, THAUMIUM, SOULS;
+	NORMAL, REINFORCED;
 
 	@Override
 	public String getName() {
@@ -16,7 +17,7 @@ public enum EnumCrucible implements IVariant {
 		return "variant=" + getName();
 	}
 
-	public static EnumCrucible byMetadata(int meta) {
+	public static EnumTank byMetadata(int meta) {
 		return values()[MathHelper.clamp(meta, 0, meta)];
 	}
 }

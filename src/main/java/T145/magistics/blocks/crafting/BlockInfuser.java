@@ -1,7 +1,7 @@
 package T145.magistics.blocks.crafting;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.EnumInfuser;
+import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.crafting.TileInfuser;
@@ -40,12 +40,17 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullBlock(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
