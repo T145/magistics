@@ -40,13 +40,13 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 		TextureAtlasSprite icon = ClientBakery.INSTANCE.quintFluid;
 
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5D, y, z + 0.5D);
+		GlStateManager.translate(x, y, z);
 		GlStateManager.disableLighting();
 
 		render.setRenderBounds(BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderFaceYPos(-0.5D, 0D, -0.5D, icon, 1F, 1F, 1F, 210);
+		render.renderFaceYPos(0D, 0D, 0D, icon, 1F, 1F, 1F, 210);
 		tess.draw();
 
 		GlStateManager.enableLighting();

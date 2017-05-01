@@ -71,17 +71,18 @@ public class BlockConduit extends MBlock<EnumConduit> {
 
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity, boolean isPistonMoving) {
+		AxisAlignedBB box = BOX_CENTER;
 		TileConduit conduit = (TileConduit) world.getTileEntity(pos);
-
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOX_CENTER);
 
 		if (conduit != null) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (conduit.isConnected(facing)) {
-					addCollisionBoxToList(pos, entityBox, collidingBoxes, BOX_FACES[facing.ordinal()]);
+					box.intersect(BOX_FACES[facing.ordinal()]);
 				}
 			}
 		}
+
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, box);
 	}
 
 	@Override

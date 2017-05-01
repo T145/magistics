@@ -79,24 +79,28 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			if (facing.getAxis() == EnumFacing.Axis.Y) {
-				equalizeWithTanks(facing);
-			} else {
-				IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-				if (container != null && !(container instanceof TileTank) && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
-					float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
-
-					if (getSuction() > container.getSuction()) {
-						quints += diff;
-					} else {
-						container.setQuintessence(diff + container.getQuintessence());
-					}
+			if (container != null && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
+				if (container instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
+					equalizeWithTanks((TileTank) container, facing);
+				} else {
+					equalizeWithContainers(container, facing);
 				}
 			}
 		}
 	}
 
-	protected void equalizeWithTanks(EnumFacing facing) {
+	private void equalizeWithTanks(TileTank neighbor, EnumFacing facing) {
+	}
+
+	private void equalizeWithContainers(IQuintessenceContainer container, EnumFacing facing) {
+		float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
+
+		if (getSuction() > container.getSuction()) {
+			quints += diff;
+		} else {
+			container.setQuintessence(diff + container.getQuintessence());
+		}
 	}
 }
