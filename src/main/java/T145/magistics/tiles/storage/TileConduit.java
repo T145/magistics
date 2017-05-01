@@ -12,6 +12,10 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 	private int suction;
 	private float quints;
 
+	public boolean hasQuints() {
+		return quints > 0;
+	}
+
 	@Override
 	public boolean canConnect(EnumFacing facing) {
 		return true;
@@ -90,9 +94,5 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 				}
 			}
 		}
-	}
-
-	public boolean isConnected(EnumFacing side) {
-		return QuintessenceHelper.getConnectedManager(world, pos, side) != null;
 	}
 }
