@@ -4,6 +4,7 @@ import T145.magistics.api.ModBlocks;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockInfuser;
+import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.tiles.crafting.TileInfuser;
@@ -44,6 +45,7 @@ public class CommonProxy implements IGuiHandler {
 		ModBlocks.infuser = new BlockInfuser();
 		ModBlocks.tank = new BlockTank();
 		ModBlocks.conduit = new BlockConduit();
+		ModBlocks.elevator = new BlockElevator();
 	}
 
 	public void init(FMLInitializationEvent event) {

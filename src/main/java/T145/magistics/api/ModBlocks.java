@@ -8,4 +8,5 @@ public class ModBlocks {
 	public static Block tank;
 	public static Block conduit;
 	public static Block crucible;
+	public static Block elevator;
 }

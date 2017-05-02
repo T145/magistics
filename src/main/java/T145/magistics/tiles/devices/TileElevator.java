@@ -8,18 +8,23 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileElevator extends MTile {
 
-	private final int range = world.getActualHeight() / 4;
-	private int delay;
 	private boolean blocked;
+	private int range;
+	private int delay;
 
 	public boolean isBlocked() {
 		return blocked;
+	}
+
+	public boolean isPowered() {
+		return world.isBlockPowered(pos);
 	}
 
 	@Override
@@ -31,6 +36,10 @@ public class TileElevator extends MTile {
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			if (range == 0) {
+				range = world.getActualHeight() / 4;
+			}
+
 			double xx = pos.getX() + 0.5D;
 			double yy = pos.getY() + 1D;
 			double zz = pos.getZ() + 0.5D;
@@ -39,16 +48,17 @@ public class TileElevator extends MTile {
 
 			if (targets.size() == 1) {
 				EntityPlayer player = targets.get(0);
-				double destY;
-				double endY;
+				double destY = 0;
+				double endY = 0;
+
 				++delay;
 				blocked = true;
 
-				if (world.isBlockPowered(pos)) {
-					destY = yy - 1;
+				if (isPowered()) {
+					destY = yy - 1D;
 					endY = range - destY;
 				} else {
-					destY = yy + 1;
+					destY = yy + 1D;
 					endY = range + destY;
 				}
 
@@ -56,17 +66,19 @@ public class TileElevator extends MTile {
 					delay = 0;
 
 					while (destY != endY) {
-						if (world.isBlockPowered(pos)) {
+						if (isPowered()) {
 							--destY;
 						} else {
 							++destY;
 						}
 
-						TileElevator elevator = (TileElevator) world.getTileEntity(new BlockPos(pos.getX(), destY, pos.getZ()));
+						BlockPos destPos = new BlockPos(pos.getX(), destY, pos.getZ());
+						TileEntity tile = world.getTileEntity(destPos);
+						TileElevator elevator = (TileElevator) tile;
 
-						if (elevator != null && !elevator.isBlocked() && !world.isBlockPowered(elevator.getPos()) && canTeleportTo(pos.getX(), destY, pos.getZ())) {
+						if (elevator != null && !elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(destPos)) {
 							player.setPositionAndUpdate(player.posX, destY + 1D, player.posZ);
-							world.playSound(player, pos.getX(), pos.getY(), pos.getX(), SoundEvents.ENTITY_ENDERMEN_AMBIENT, SoundCategory.AMBIENT, 1F, 1F);
+							world.playSound(null, pos.getX(), pos.getY(), pos.getX(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F, 1.0F);
 							return;
 						}
 					}
@@ -78,20 +90,19 @@ public class TileElevator extends MTile {
 		}
 	}
 
-	private boolean canTeleportTo(double x, double y, double z) {
-		return canTeleportAt(x, y + 1D, z) && canTeleportAt(x, y + 2D, z);
+	private boolean canTeleportTo(BlockPos pos) {
+		return canTeleportAt(pos.up()) && canTeleportAt(pos.up(2));
 	}
 
-	private boolean canTeleportAt(double x, double y, double z) {
-		BlockPos destPos = new BlockPos(x, y, z);
-		IBlockState state = world.getBlockState(destPos);
+	private boolean canTeleportAt(BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 
-		if (block == null || block.isAir(state, world, destPos)) {
+		if (block == null || block.isAir(state, world, pos)) {
 			return true;
 		}
 
-		AxisAlignedBB boundingBox = block.getCollisionBoundingBox(state, world, destPos);
-		return boundingBox == null || boundingBox.getAverageEdgeLength() < 0.7D;
+		final AxisAlignedBB box = block.getCollisionBoundingBox(state, world, pos);
+		return box == null || box.getAverageEdgeLength() < 0.7;
 	}
 }

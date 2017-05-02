@@ -14,6 +14,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -32,14 +33,13 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	public final PropertyEnum<T> VARIANT;
 	public final T[] VARIANT_VALUES;
-	private static IProperty[] tempVariants;
+	protected static IProperty[] tempVariants;
 
 	private class MBlockItem extends ItemBlock {
 
-		public MBlockItem(Block block) {
+		public MBlockItem(Block block, boolean hasVariants) {
 			super(block);
-			setHasSubtypes(true);
-			setMaxDamage(0);
+			setHasSubtypes(hasVariants);
 		}
 
 		@Override
@@ -49,7 +49,13 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 		@Override
 		public String getUnlocalizedName(ItemStack stack) {
-			return super.getUnlocalizedName() + "." + VARIANT_VALUES[stack.getMetadata()].getName();
+			String name = super.getUnlocalizedName();
+
+			if (hasSubtypes) {
+				name += "." + VARIANT_VALUES[stack.getMetadata()].getName();
+			}
+
+			return name;
 		}
 	}
 
@@ -73,10 +79,10 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 		GameRegistry.register(this);
 
 		if (VARIANT != null && VARIANT_VALUES != null) {
-			GameRegistry.register(new MBlockItem(this), getRegistryName());
+			GameRegistry.register(new MBlockItem(this, true), getRegistryName());
 
 			for (T variant : VARIANT_VALUES) {
-				TileEntity tile = createNewTileEntity(null, variant.ordinal());
+				TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, variant.ordinal());
 				Class tileClass = tile.getClass();
 
 				if (tile != null) {
@@ -85,7 +91,9 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 				}
 			}
 		} else {
-			TileEntity tile = createNewTileEntity(null, 0);
+			GameRegistry.register(new MBlockItem(this, false), getRegistryName());
+
+			TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, 0);
 			Class tileClass = tile.getClass();
 
 			if (isBlockContainer = tile != null) {
@@ -116,7 +124,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 				list.add(new ItemStack(item, 1, variant.ordinal()));
 			}
 		} else {
-			list.add(new ItemStack(item));
+			super.getSubBlocks(item, tab, list);
 		}
 	}
 
@@ -154,6 +162,29 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 		}
 
 		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+	}
+
+	public IProperty[] getVariants() {
+		return new IProperty[] { VARIANT == null ? null : VARIANT };
+	}
+
+	public boolean hasVariants() {
+		return getVariants() != null;
+	}
+
+	public String getVariantName(IBlockState state) {
+		if (VARIANT == null) {
+			String name = state.getBlock().getUnlocalizedName();
+			return name.substring(name.indexOf(".") + 1);
+		}
+		return state.getValue(VARIANT).getName();
+	}
+
+	public boolean isVariant(IBlockState state, IVariant type) {
+		if (VARIANT == null) {
+			return false;
+		}
+		return state.getValue(VARIANT) == type;
 	}
 
 	@Override
