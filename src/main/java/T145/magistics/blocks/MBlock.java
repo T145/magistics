@@ -83,10 +83,10 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 			for (T variant : VARIANT_VALUES) {
 				TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, variant.ordinal());
-				Class tileClass = tile.getClass();
 
 				if (tile != null) {
 					isBlockContainer = true;
+					Class tileClass = tile.getClass();
 					GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 				}
 			}
@@ -94,9 +94,9 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			GameRegistry.register(new MBlockItem(this, false), getRegistryName());
 
 			TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, 0);
-			Class tileClass = tile.getClass();
 
 			if (isBlockContainer = tile != null) {
+				Class tileClass = tile.getClass();
 				GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 			}
 		}
