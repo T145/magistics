@@ -9,4 +9,5 @@ public class ModBlocks {
 	public static Block conduit;
 	public static Block crucible;
 	public static Block elevator;
+	public static Block forge;
 }

@@ -93,11 +93,6 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	@Override
-	public void setFacingFromEntity(EntityLivingBase placer) {
-		setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
-	}
-
-	@Override
 	public String getName() {
 		return "tile.infuser.light.name";
 	}

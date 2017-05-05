@@ -21,7 +21,6 @@ import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -97,6 +96,16 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		registerBlockModel(ModBlocks.elevator, 0, "normal");
+
+		registerBlockModel(ModBlocks.forge, 0, "inventory");
+		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=north");
+		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=north");
+		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=south");
+		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=south");
+		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=east");
+		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=east");
+		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=west");
+		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=west");
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());

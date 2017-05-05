@@ -1,13 +1,18 @@
 package T145.magistics.network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import T145.magistics.api.ModBlocks;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.blocks.crafting.BlockCrucible;
+import T145.magistics.blocks.crafting.BlockForge;
 import T145.magistics.blocks.crafting.BlockInfuser;
 import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.tiles.crafting.TileInfuser;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,6 +26,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
+
+	protected static List<Block> blockRegistry = new ArrayList<Block>();
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -41,11 +48,12 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		ModBlocks.crucible = new BlockCrucible();
-		ModBlocks.infuser = new BlockInfuser();
-		ModBlocks.tank = new BlockTank();
-		ModBlocks.conduit = new BlockConduit();
-		ModBlocks.elevator = new BlockElevator();
+		blockRegistry.add(ModBlocks.crucible = new BlockCrucible());
+		blockRegistry.add(ModBlocks.infuser = new BlockInfuser());
+		blockRegistry.add(ModBlocks.tank = new BlockTank());
+		blockRegistry.add(ModBlocks.conduit = new BlockConduit());
+		blockRegistry.add(ModBlocks.elevator = new BlockElevator());
+		blockRegistry.add(ModBlocks.forge = new BlockForge());
 	}
 
 	public void init(FMLInitializationEvent event) {

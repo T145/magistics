@@ -1,6 +1,7 @@
 package T145.magistics.blocks.crafting;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
@@ -9,7 +10,9 @@ import T145.magistics.tiles.crafting.TileInfuserDark;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -65,5 +68,14 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile != null && tile instanceof IFacing) {
+			((IFacing) tile).setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
+		}
 	}
 }

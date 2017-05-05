@@ -3,7 +3,6 @@ package T145.magistics.blocks;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
@@ -16,7 +15,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -31,8 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class MBlock<T extends Enum<T> & IVariant> extends Block implements ITileEntityProvider {
 
-	public final PropertyEnum<T> VARIANT;
-	public final T[] VARIANT_VALUES;
+	public final PropertyEnum<T> variant;
+	public final T[] variantValues;
 	protected static IProperty[] tempVariants;
 
 	private class MBlockItem extends ItemBlock {
@@ -52,7 +50,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			String name = super.getUnlocalizedName();
 
 			if (hasSubtypes) {
-				name += "." + VARIANT_VALUES[stack.getMetadata()].getName();
+				name += "." + variantValues[stack.getMetadata()].getName();
 			}
 
 			return name;
@@ -63,13 +61,13 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 		super(createProperties(material, variants));
 
 		if (variants == Object.class || variants == null) {
-			VARIANT = null;
-			VARIANT_VALUES = null;
+			variant = null;
+			variantValues = null;
 		} else {
-			VARIANT = PropertyEnum.create("variant", variants);
-			VARIANT_VALUES = VARIANT.getValueClass().getEnumConstants();
+			variant = PropertyEnum.create("variant", variants);
+			variantValues = variant.getValueClass().getEnumConstants();
 
-			setDefaultState(blockState.getBaseState().withProperty(VARIANT, VARIANT_VALUES[0]));
+			setDefaultState(blockState.getBaseState().withProperty(variant, variantValues[0]));
 		}
 
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
@@ -78,10 +76,10 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 		GameRegistry.register(this);
 
-		if (VARIANT != null && VARIANT_VALUES != null) {
+		if (variant != null && variantValues != null) {
 			GameRegistry.register(new MBlockItem(this, true), getRegistryName());
 
-			for (T variant : VARIANT_VALUES) {
+			for (T variant : variantValues) {
 				TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, variant.ordinal());
 
 				if (tile != null) {
@@ -119,8 +117,8 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-		if (VARIANT != null) {
-			for (T variant : VARIANT_VALUES) {
+		if (variant != null) {
+			for (T variant : variantValues) {
 				list.add(new ItemStack(item, 1, variant.ordinal()));
 			}
 		} else {
@@ -135,12 +133,12 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (VARIANT == null) {
+		if (variant == null) {
 			return super.getStateFromMeta(meta);
 		}
 
-		if (meta < VARIANT_VALUES.length) {
-			return getDefaultState().withProperty(VARIANT, VARIANT_VALUES[meta]);
+		if (meta < variantValues.length) {
+			return getDefaultState().withProperty(variant, variantValues[meta]);
 		}
 
 		return getDefaultState();
@@ -148,12 +146,12 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return VARIANT == null ? super.getMetaFromState(state) : state.getValue(VARIANT).ordinal();
+		return variant == null ? super.getMetaFromState(state) : state.getValue(variant).ordinal();
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState() {
-		if (VARIANT == null) {
+		if (variant == null) {
 			if (tempVariants == null) {
 				return super.createBlockState();
 			}
@@ -161,11 +159,11 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			return new BlockStateContainer(this, tempVariants);
 		}
 
-		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+		return new BlockStateContainer(this, new IProperty[] { variant });
 	}
 
 	public IProperty[] getVariants() {
-		return new IProperty[] { VARIANT == null ? null : VARIANT };
+		return new IProperty[] { variant == null ? null : variant };
 	}
 
 	public boolean hasVariants() {
@@ -173,18 +171,18 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 	}
 
 	public String getVariantName(IBlockState state) {
-		if (VARIANT == null) {
+		if (variant == null) {
 			String name = state.getBlock().getUnlocalizedName();
 			return name.substring(name.indexOf(".") + 1);
 		}
-		return state.getValue(VARIANT).getName();
+		return state.getValue(variant).getName();
 	}
 
 	public boolean isVariant(IBlockState state, IVariant type) {
-		if (VARIANT == null) {
+		if (variant == null) {
 			return false;
 		}
-		return state.getValue(VARIANT) == type;
+		return state.getValue(variant) == type;
 	}
 
 	@Override
@@ -202,15 +200,6 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			return ((ITileEntityProvider) this).createNewTileEntity(world, getMetaFromState(state));
 		}
 		return null;
-	}
-
-	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		TileEntity tile = world.getTileEntity(pos);
-
-		if (tile != null && tile instanceof IFacing) {
-			((IFacing) tile).setFacingFromEntity(placer);
-		}
 	}
 
 	@Override
