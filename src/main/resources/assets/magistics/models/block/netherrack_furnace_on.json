@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {          
+        "north": "magistics:blocks/netherrack_furnace_on",  
+        "south": "blocks/netherrack",      
+        "east": "blocks/netherrack",
+        "west": "blocks/netherrack",
+        "particle": "blocks/netherrack",   
+        "up": "blocks/netherrack",
+        "down": "blocks/netherrack"
+    }
+}

@@ -4,6 +4,7 @@ import T145.magistics.api.ModBlocks;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.api.variants.blocks.EnumConduit;
 import T145.magistics.api.variants.blocks.EnumCrucible;
+import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.client.fx.FXEngine;
@@ -97,15 +98,16 @@ public class ClientProxy extends CommonProxy {
 
 		registerBlockModel(ModBlocks.elevator, 0, "normal");
 
-		registerBlockModel(ModBlocks.forge, 0, "inventory");
-		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=north");
-		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=north");
-		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=south");
-		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=south");
-		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=east");
-		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=east");
-		registerBlockModel(ModBlocks.forge, 0, "active=false,facing=west");
-		registerBlockModel(ModBlocks.forge, 0, "active=true,facing=west");
+		for (EnumForge type : EnumForge.values()) {
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=north," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=north," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=south," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=south," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=east," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=east," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=west," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=west," + type.getClientName());
+		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
