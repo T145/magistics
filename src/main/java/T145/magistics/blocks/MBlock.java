@@ -13,7 +13,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -80,7 +79,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 			GameRegistry.register(new MBlockItem(this, true), getRegistryName());
 
 			for (T variant : variantValues) {
-				TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, variant.ordinal());
+				TileEntity tile = createNewTileEntity(null, variant.ordinal());
 
 				if (tile != null) {
 					isBlockContainer = true;
@@ -91,7 +90,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 		} else {
 			GameRegistry.register(new MBlockItem(this, false), getRegistryName());
 
-			TileEntity tile = createNewTileEntity(Minecraft.getMinecraft().world, 0);
+			TileEntity tile = createNewTileEntity(null, 0);
 
 			if (isBlockContainer = tile != null) {
 				Class tileClass = tile.getClass();
