@@ -8,7 +8,6 @@ import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTileInventory;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -21,8 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintessenceManager {
 
@@ -150,12 +147,10 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		cookTime = compound.getFloat("CookTime");
 	}
 
-	@SideOnly(Side.CLIENT)
 	public int getCookProgressScaled(int time) {
 		return Math.round(cookTime / cookCost * time);
 	}
 
-	@SideOnly(Side.CLIENT)
 	public int getBoostScaled() {
 		return Math.round(0.1F + (float) boost / 2F) * 6;
 	}
