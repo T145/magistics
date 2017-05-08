@@ -17,6 +17,7 @@ public class ClientBakery {
 	public static final ClientBakery INSTANCE = new ClientBakery();
 
 	public TextureAtlasSprite quintFluid;
+	public TextureAtlasSprite conduitPart;
 
 	public TextureAtlasSprite registerSprite(TextureMap map, String name) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, name));
@@ -33,6 +34,7 @@ public class ClientBakery {
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent event) {
 		quintFluid = registerSprite(event.getMap(), "vis", "misc");
+		conduitPart = registerSprite(event.getMap(), "conduit_valve", "blocks/transport");
 	}
 
 	@SubscribeEvent
