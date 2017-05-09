@@ -93,20 +93,21 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		for (EnumCrucible type : EnumCrucible.values()) {
-			registerBlockModel(ModBlocks.crucible, type.ordinal(), type);
+			registerBlockModel(ModBlocks.crucible, type.ordinal(), type.getClientName() + ",working=false");
+			registerBlockModel(ModBlocks.crucible, type.ordinal(), type.getClientName() + ",working=true");
 		}
 
 		registerBlockModel(ModBlocks.elevator, 0, "normal");
 
 		for (EnumForge type : EnumForge.values()) {
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=north," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=north," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=south," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=south," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=east," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=east," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=false,facing=west," + type.getClientName());
-			registerBlockModel(ModBlocks.forge, type.ordinal(), "active=true,facing=west," + type.getClientName());
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=north," + type.getClientName() + ",working=false");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=north," + type.getClientName() + ",working=true");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=south," + type.getClientName() + ",working=false");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=south," + type.getClientName() + ",working=true");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=east," + type.getClientName() + ",working=false");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=east," + type.getClientName() + ",working=true");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=west," + type.getClientName() + ",working=false");
+			registerBlockModel(ModBlocks.forge, type.ordinal(), "facing=west," + type.getClientName() + ",working=true");
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());

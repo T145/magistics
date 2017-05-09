@@ -5,7 +5,7 @@
     },
     "variants": {
         "variant": {
-            "basic": {
+            "basic,working=false": {
                 "model": "magistics:crucible",
                 "textures": {
                     "inner": "magistics:blocks/crucible/base_inner",
@@ -14,7 +14,7 @@
                     "top": "magistics:blocks/crucible/base_top"
                 }
             },
-            "eyes": {
+            "eyes,working=false": {
                 "model": "magistics:crucible",
                 "textures": {
                     "inner": "magistics:blocks/crucible/eyes_inner",
@@ -23,7 +23,7 @@
                     "top": "magistics:blocks/crucible/eyes_top"
                 }
             },
-            "thaumium": {
+            "thaumium,working=false": {
                 "model": "magistics:crucible",
                 "textures": {
                     "inner": "magistics:blocks/crucible/thaumium_inner",
@@ -32,13 +32,49 @@
                     "top": "magistics:blocks/crucible/thaumium_top"
                 }
             },
-            "souls": {
+            "souls,working=false": {
                 "model": "minecraft:cube_bottom_top",
                 "textures": {
                     "particle": "magistics:blocks/crucible/souls_inside",
                     "bottom": "magistics:blocks/crucible/souls_bottom",
                     "top": "magistics:blocks/crucible/souls_top_opaque",
                     "side": "magistics:blocks/crucible/souls_side_off"
+                }
+            },
+            "basic,working=true": {
+                "model": "magistics:crucible",
+                "textures": {
+                    "inner": "magistics:blocks/crucible/base_inner",
+                    "bottom": "magistics:blocks/crucible/base_bottom",
+                    "side": "magistics:blocks/crucible/base_side",
+                    "top": "magistics:blocks/crucible/base_top"
+                }
+            },
+            "eyes,working=true": {
+                "model": "magistics:crucible",
+                "textures": {
+                    "inner": "magistics:blocks/crucible/eyes_inner",
+                    "bottom": "magistics:blocks/crucible/eyes_bottom",
+                    "side": "magistics:blocks/crucible/eyes_side_on",
+                    "top": "magistics:blocks/crucible/eyes_top"
+                }
+            },
+            "thaumium,working=true": {
+                "model": "magistics:crucible",
+                "textures": {
+                    "inner": "magistics:blocks/crucible/thaumium_inner",
+                    "bottom": "magistics:blocks/crucible/thaumium_bottom",
+                    "side": "magistics:blocks/crucible/thaumium_side_on",
+                    "top": "magistics:blocks/crucible/thaumium_top"
+                }
+            },
+            "souls,working=true": {
+                "model": "minecraft:cube_bottom_top",
+                "textures": {
+                    "particle": "magistics:blocks/crucible/souls_inside",
+                    "bottom": "magistics:blocks/crucible/souls_bottom",
+                    "top": "magistics:blocks/crucible/souls_top_opaque",
+                    "side": "magistics:blocks/crucible/souls_side_on"
                 }
             }
         }

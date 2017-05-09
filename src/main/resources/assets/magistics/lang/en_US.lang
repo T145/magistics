@@ -12,6 +12,7 @@ tile.tank.reinforced.name=Reinforced Tank
 
 tile.forge.netherrack.name=Netherrack Furnace
 tile.forge.nether_forge.name=Nether Forge
+tile.elevator.name=Elevator
 
 tile.chest_wood.greatwood.name=Greatwood Chest
 tile.chest_wood.silverwood.name=Silverwood Chest

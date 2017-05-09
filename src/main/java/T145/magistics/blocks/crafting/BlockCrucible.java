@@ -6,7 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.api.variants.blocks.EnumCrucible;
-import T145.magistics.blocks.MBlock;
+import T145.magistics.blocks.MBlockDevice;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.crafting.TileCrucible;
@@ -21,6 +21,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends MBlock<EnumCrucible> {
+public class BlockCrucible extends MBlockDevice<EnumCrucible> {
 
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
@@ -88,7 +89,7 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
-		if (crucible.hasWorld() && crucible.getBlockMetadata() < 3) {
+		if (crucible.isNormal()) {
 			FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
 		}
 	}
@@ -98,7 +99,7 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
 		if (crucible != null) {
-			crucible.setTier(stack.getMetadata());
+			crucible.setTier(EnumCrucible.values()[stack.getMetadata()]);
 		}
 	}
 
@@ -118,5 +119,16 @@ public class BlockCrucible extends MBlock<EnumCrucible> {
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
 			}
 		}
+	}
+
+	@Override
+	public boolean canProvidePower(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
+		return crucible.isPowering() ? 15 : 0;
 	}
 }

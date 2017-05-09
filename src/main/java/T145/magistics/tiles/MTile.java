@@ -28,6 +28,7 @@ public abstract class MTile extends TileEntity implements ITickable {
 		world.markBlockRangeForRenderUpdate(pos, pos);
 		world.notifyBlockUpdate(pos, getState(), getState(), 3);
 		world.scheduleBlockUpdate(pos, getBlockType(), 0, 0);
+		world.notifyNeighborsOfStateChange(pos, blockType, true);
 		markDirty();
 	}
 
