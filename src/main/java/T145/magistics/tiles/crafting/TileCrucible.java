@@ -2,12 +2,10 @@ package T145.magistics.tiles.crafting;
 
 import java.util.List;
 
-import T145.magistics.api.ModBlocks;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintessenceContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
-import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTile;
