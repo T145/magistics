@@ -5,6 +5,7 @@ import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.api.magic.QuintessenceHelper;
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTileInventory;
@@ -16,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
@@ -28,6 +28,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 	protected boolean active;
 	protected boolean crafting;
+	protected boolean enchanted;
 	protected int angle;
 	protected int soundDelay;
 
@@ -60,8 +61,12 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		return boost;
 	}
 
-	public void setBoost(int boost) {
-		this.boost = boost;
+	public void setBoost() {
+		if (boostDelay <= 0 || boostDelay == 10) {
+			if (boost < 10) {
+				++boost;
+			}
+		}
 	}
 
 	@Override
@@ -148,11 +153,11 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	public int getCookProgressScaled(int time) {
-		return Math.round(cookTime / cookCost * time);
+		return Math.round(cookTime / (cookCost * time));
 	}
 
 	public int getBoostScaled() {
-		return Math.round(0.1F + (float) boost / 2F) * 6;
+		return Math.round(0.1F + boost / 2F) * 6;
 	}
 
 	@Override
@@ -168,9 +173,23 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 			--soundDelay;
 		}
 
-		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[this.getSizeInventory()]), isDark());
+		if (boostDelay <= 0) {
+			if (boost > 0) {
+				--boost;
+			}
 
-		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
+			boostDelay = 20;
+		} else {
+			--boostDelay;
+		}
+
+		if (boost < 0) {
+			boost = 0;
+		}
+
+		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
+
+		if (active = infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
 
 			if (crafting = canCraft(infuserRecipe) && QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
@@ -178,8 +197,27 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 				cookTime += QuintessenceHelper.drainQuints(world, pos, quintDrain, true);
 
 				if (soundDelay == 0 && cookTime > 0.025F) {
-					world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
+					// slightly discharge this chunk's aura
+
+					world.playSound(null, pos, isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
 					soundDelay = 62;
+				}
+
+				if (enchanted) {
+					switch (world.rand.nextInt(4)) {
+					case 0:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
+						break;
+					case 1:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
+						break;
+					case 2:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
+						break;
+					case 3:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
+						break;
+					}
 				}
 
 				if (cookTime >= cookCost) {
@@ -190,7 +228,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 			}
 		} else {
 			if (crafting) {
-				world.playSound(null, new BlockPos(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+				world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
 				refresh();
 			}
 
@@ -208,7 +246,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		} else if (!RecipeRegistry.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
 			return false;
 		} else {
-			int resultCount = this.itemHandler.getStackInSlot(0).getCount() + result.getCount();
+			int resultCount = itemHandler.getStackInSlot(0).getCount() + result.getCount();
 			return resultCount <= itemHandler.getSlotLimit(0) && resultCount <= result.getMaxStackSize();
 		}
 	}

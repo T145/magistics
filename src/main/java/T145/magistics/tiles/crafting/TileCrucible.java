@@ -171,13 +171,13 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 							refresh();
 
 							world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, item.posX, item.posY, item.posZ, 0D, 0D, 0D, new int[0]);
-							world.playSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+							world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
 						item.motionY = 0.2F + world.rand.nextFloat() * 0.3F;
 						item.motionZ = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
+						world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
 						item.setPickupDelay(10);
 					}
 				}
