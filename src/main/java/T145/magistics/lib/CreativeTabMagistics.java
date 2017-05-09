@@ -1,7 +1,7 @@
 package T145.magistics.lib;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.ModBlocks;
+import T145.magistics.init.ModBlocks;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
