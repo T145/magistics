@@ -2,31 +2,29 @@ package T145.magistics.tiles.devices;
 
 import java.util.Stack;
 
-import T145.magistics.tiles.MTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileElevator extends MTile {
+public class TileElevator extends TileEntity implements ITickable {
 
 	private final int RANGE = 14;
-	private int cooldown;
 	private int delay;
 	private boolean clear;
 
-	public int getCooldown() {
-		return cooldown;
+	public int getDelay() {
+		return delay;
 	}
 
-	public void setCooldown(int cooldown) {
-		this.cooldown = cooldown;
+	public void setDelay(int delay) {
+		this.delay = delay;
 	}
 
 	public boolean isClear() {
@@ -48,46 +46,35 @@ public class TileElevator extends MTile {
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("Cooldown", cooldown);
-	}
+	public void update() { // "signal strength" can also be weakened by subtracting consecutive delay
+		Stack<Entity> entitiesAbove = getEntitiesAbove();
 
-	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		cooldown = compound.getInteger("Cooldown");
-	}
+		if (!(clear = entitiesAbove.isEmpty())) {
+			Entity target = entitiesAbove.pop();
 
-	@Override
-	public void update() { // "signal strength" can also be weakened by adding consecutive cooldowns
-		if ((cooldown = Math.max(cooldown - 1, 0)) == 0) {
-			Stack<Entity> entitiesAbove = getEntitiesAbove();
+			if (++delay % 45 == 0) {
+				delay = 0;
 
-			if (!(clear = entitiesAbove.isEmpty())) {
-				Entity target = entitiesAbove.pop();
+				for (int offsetY = 1; offsetY <= RANGE; ++offsetY) {
+					BlockPos destPos = pos.offset(isPowered() ? EnumFacing.DOWN : EnumFacing.UP, offsetY);
 
-				if (++delay % 30 == 0) {
-					delay = 0;
+					if (destPos.getY() < 0) {
+						destPos = new BlockPos(pos.getX(), 0, pos.getZ());
+					} else if (destPos.getY() > world.getActualHeight()) {
+						destPos = pos;
+					}
 
-					for (int offsetY = 1; offsetY <= RANGE; ++offsetY) {
-						BlockPos destPos = pos.offset(isPowered() ? EnumFacing.DOWN : EnumFacing.UP, offsetY);
+					TileEntity tile = world.getTileEntity(destPos);
 
-						if (destPos.getY() < 0) {
-							destPos = new BlockPos(pos.getX(), 0, pos.getZ());
-						} else if (destPos.getY() > world.getActualHeight()) {
-							destPos = pos;
-						}
+					if (tile instanceof TileElevator && tile != this) {
+						TileElevator dest = (TileElevator) tile;
 
-						TileEntity tile = world.getTileEntity(destPos);
-
-						if (tile instanceof TileElevator && tile != this) {
-							TileElevator dest = (TileElevator) tile;
-
-							if (dest.canTeleportTo()) {
-								target.setPositionAndUpdate(target.posX, destPos.getY() + 1D, target.posZ);
-								world.playSound(null, pos.getX(), pos.getY(), pos.getX(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
-								dest.setCooldown(20);
-								break;
-							}
+						if (dest.canTeleportTo()) {
+							target.setPositionAndUpdate(target.posX, destPos.getY() + 1D, target.posZ);
+							world.playSound(null, target.posX, destPos.getY() + 1D, target.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
+							delay -= 20;
+							dest.setDelay(delay);
+							break;
 						}
 					}
 				}
