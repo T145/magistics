@@ -168,8 +168,11 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 
 							refresh();
 
-							world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, item.posX, item.posY, item.posZ, 0D, 0D, 0D, new int[0]);
-							world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+							if (world.isRemote) {
+								world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D, new int[0]);
+							}
+
+							world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
@@ -206,8 +209,10 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 
 						// slightly discharge this chunk's aura
 
-						for (int b = 0; b < 3; b++) {
-							FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
+						if (world.isRemote) {
+							for (int b = 0; b < 3; b++) {
+								FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
+							}
 						}
 					}
 				}

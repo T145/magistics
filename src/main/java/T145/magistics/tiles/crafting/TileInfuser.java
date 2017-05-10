@@ -185,7 +185,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 
-		if (active = infuserRecipe != null && !world.isBlockPowered(pos)) {
+		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
 
 			if (crafting = canCraft(infuserRecipe) && QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
@@ -195,7 +195,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 				if (soundDelay == 0 && cookTime > 0.025F) {
 					// slightly discharge this chunk's aura
 
-					world.playSound(null, pos, isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.BLOCKS, 0.2F, 1F);
+					world.playSound(null, pos, isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.MASTER, 0.2F, 1F);
 					soundDelay = 62;
 				}
 

@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileElevator extends MTile {
 
 	private boolean blocked;
-	private int range;
+	private int range = 14;
 	private int delay;
 
 	public boolean isBlocked() {
@@ -35,58 +35,60 @@ public class TileElevator extends MTile {
 
 	@Override
 	public void update() {
-		if (!world.isRemote) {
-			if (range == 0) {
-				range = world.getActualHeight() / 4;
-			}
+		double xx = pos.getX() + 0.5D;
+		double yy = pos.getY() + 1D;
+		double zz = pos.getZ() + 0.5D;
 
-			double xx = pos.getX() + 0.5D;
-			double yy = pos.getY() + 1D;
-			double zz = pos.getZ() + 0.5D;
+		List<EntityPlayer> targets = world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(xx, yy, zz, xx, yy + 1D, zz));
 
-			List<EntityPlayer> targets = world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(xx, yy, zz, xx, yy + 1D, zz));
+		if (targets.size() == 1) {
+			EntityPlayer player = targets.get(0);
+			double destY = 0;
+			double endY = 0;
 
-			if (targets.size() == 1) {
-				EntityPlayer player = targets.get(0);
-				double destY = 0;
-				double endY = 0;
+			++delay;
+			blocked = true;
 
-				++delay;
-				blocked = true;
+			if (isPowered()) {
+				destY = yy - 1D;
+				endY = range - destY;
 
-				if (isPowered()) {
-					destY = yy - 1D;
-					endY = range - destY;
-				} else {
-					destY = yy + 1D;
-					endY = range + destY;
-				}
-
-				if (delay % 45 == 0) {
-					delay = 0;
-
-					while (destY != endY) {
-						if (isPowered()) {
-							--destY;
-						} else {
-							++destY;
-						}
-
-						BlockPos destPos = new BlockPos(pos.getX(), destY, pos.getZ());
-						TileEntity tile = world.getTileEntity(destPos);
-						TileElevator elevator = (TileElevator) tile;
-
-						if (elevator != null && !elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(destPos)) {
-							player.setPositionAndUpdate(player.posX, destY + 1D, player.posZ);
-							world.playSound(null, pos.getX(), pos.getY(), pos.getX(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F, 1.0F);
-							return;
-						}
-					}
+				if (endY < 0) {
+					endY = 0;
 				}
 			} else {
-				blocked = false;
-				return;
+				destY = yy + 1D;
+				endY = range + destY;
+
+				if (endY > world.getActualHeight()) {
+					endY = world.getActualHeight();
+				}
 			}
+
+			if (delay % 45 == 0) {
+				delay = 0;
+
+				while (destY != endY) {
+					if (isPowered()) {
+						--destY;
+					} else {
+						++destY;
+					}
+
+					BlockPos destPos = new BlockPos(pos.getX(), destY, pos.getZ());
+					TileEntity tile = world.getTileEntity(destPos);
+					TileElevator elevator = (TileElevator) tile;
+
+					if (elevator != null && !elevator.isBlocked() && !elevator.isPowered() && canTeleportTo(destPos)) {
+						player.setPositionAndUpdate(player.posX, destY + 1D, player.posZ);
+						world.playSound(null, pos.getX(), pos.getY(), pos.getX(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
+						return;
+					}
+				}
+			}
+		} else {
+			blocked = false;
+			return;
 		}
 	}
 
