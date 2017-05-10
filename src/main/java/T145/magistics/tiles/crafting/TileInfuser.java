@@ -153,7 +153,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	public int getCookProgressScaled(int time) {
-		return Math.round(cookTime / (cookCost * time));
+		return Math.round(cookTime / cookCost * time);
 	}
 
 	public int getBoostScaled() {
@@ -181,10 +181,6 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 			boostDelay = 20;
 		} else {
 			--boostDelay;
-		}
-
-		if (boost < 0) {
-			boost = 0;
 		}
 
 		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
