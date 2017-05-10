@@ -2,6 +2,8 @@ package T145.magistics.tiles.devices;
 
 import java.util.Stack;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -45,41 +47,27 @@ public class TileElevator extends TileEntity implements ITickable {
 		return entitiesAbove;
 	}
 
-	@Override
-	public void update() { // "signal strength" can also be weakened by subtracting consecutive delay
-		Stack<Entity> entitiesAbove = getEntitiesAbove();
+	@Nullable
+	private BlockPos getDestination() {
+		BlockPos destPos = null;
 
-		if (!(clear = entitiesAbove.isEmpty())) {
-			Entity target = entitiesAbove.pop();
+		for (int offsetY = 1; offsetY <= RANGE; ++offsetY) {
+			destPos = pos.offset(isPowered() ? EnumFacing.DOWN : EnumFacing.UP, offsetY);
 
-			if (++delay % 45 == 0) {
-				delay = 0;
+			if (destPos.getY() < 0) {
+				destPos = new BlockPos(pos.getX(), 0, pos.getZ());
+			} else if (destPos.getY() > world.getActualHeight()) {
+				destPos = pos;
+			}
 
-				for (int offsetY = 1; offsetY <= RANGE; ++offsetY) {
-					BlockPos destPos = pos.offset(isPowered() ? EnumFacing.DOWN : EnumFacing.UP, offsetY);
+			TileEntity tile = world.getTileEntity(destPos);
 
-					if (destPos.getY() < 0) {
-						destPos = new BlockPos(pos.getX(), 0, pos.getZ());
-					} else if (destPos.getY() > world.getActualHeight()) {
-						destPos = pos;
-					}
-
-					TileEntity tile = world.getTileEntity(destPos);
-
-					if (tile instanceof TileElevator && tile != this) {
-						TileElevator dest = (TileElevator) tile;
-
-						if (dest.canTeleportTo()) {
-							target.setPositionAndUpdate(target.posX, destPos.getY() + 1D, target.posZ);
-							world.playSound(null, target.posX, destPos.getY() + 1D, target.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
-							delay -= 20;
-							dest.setDelay(delay);
-							break;
-						}
-					}
-				}
+			if (tile instanceof TileElevator && tile != this) {
+				return destPos;
 			}
 		}
+
+		return destPos;
 	}
 
 	public boolean canTeleportTo() {
@@ -96,5 +84,32 @@ public class TileElevator extends TileEntity implements ITickable {
 
 		final AxisAlignedBB box = block.getCollisionBoundingBox(state, world, pos);
 		return box == null || box.getAverageEdgeLength() < 0.7;
+	}
+
+	@Override
+	public void update() {
+		Stack<Entity> entitiesAbove = getEntitiesAbove();
+
+		if (!(clear = entitiesAbove.isEmpty())) {
+			Entity target = entitiesAbove.pop();
+
+			if (++delay % 45 == 0) {
+				delay = 0;
+
+				BlockPos destPos = getDestination();
+				TileEntity destTile = world.getTileEntity(destPos);
+
+				if (destPos != null && destTile instanceof TileElevator) {
+					TileElevator dest = (TileElevator) destTile;
+
+					if (dest.canTeleportTo()) {
+						target.setPositionAndUpdate(target.posX, destPos.getY() + 1D, target.posZ);
+						world.playSound(null, target.posX, destPos.getY() + 1D, target.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
+						delay -= 20;
+						dest.setDelay(delay);
+					}
+				}
+			}
+		}
 	}
 }
