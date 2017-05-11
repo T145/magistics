@@ -33,11 +33,10 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	protected boolean enchanted;
 	protected int angle;
 	protected int soundDelay;
-
-	private int boost;
-	private int boostDelay = 20;
-	private int suction;
-	private EnumFacing facing = EnumFacing.SOUTH;
+	protected int boost;
+	protected int boostDelay = 20;
+	protected int suction;
+	protected EnumFacing facing = EnumFacing.SOUTH;
 
 	public boolean isActive() {
 		return active;

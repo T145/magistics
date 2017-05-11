@@ -157,5 +157,6 @@ public class CommonProxy implements IGuiHandler {
 
 	private void registerInfuserRecipes() {
 		RecipeRegistry.addInfuserRecipe(new ItemStack(Blocks.STONE), new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.SAND) }, 20F, false);
+		RecipeRegistry.addInfuserRecipe(new ItemStack(Blocks.RED_NETHER_BRICK), new ItemStack[] { new ItemStack(Blocks.NETHERRACK), new ItemStack(Blocks.STONE) }, 20F, true);
 	}
 }
