@@ -14,7 +14,7 @@ public class QuintessenceHelper {
 		TileEntity tile = world.getTileEntity(pos);
 		TileEntity neighbor = world.getTileEntity(pos.offset(facing));
 
-		if (tile != null && neighbor != null && tile instanceof IQuintessenceManager && neighbor instanceof IQuintessenceManager && ((IQuintessenceManager) tile).canConnect(facing) && ((IQuintessenceManager) neighbor).canConnect(facing.getOpposite())) {
+		if (tile instanceof IQuintessenceManager && neighbor instanceof IQuintessenceManager && ((IQuintessenceManager) tile).canConnect(facing) && ((IQuintessenceManager) neighbor).canConnect(facing.getOpposite())) {
 			return (IQuintessenceManager) neighbor;
 		}
 
@@ -25,7 +25,7 @@ public class QuintessenceHelper {
 	public static IQuintessenceContainer getConnectedContainer(World world, BlockPos pos, EnumFacing facing) {
 		IQuintessenceManager manager = getConnectedManager(world, pos, facing);
 
-		if (manager != null && manager instanceof IQuintessenceContainer) {
+		if (manager instanceof IQuintessenceContainer) {
 			return (IQuintessenceContainer) manager;
 		}
 
@@ -33,10 +33,11 @@ public class QuintessenceHelper {
 	}
 
 	public static float drainQuints(World world, BlockPos dest, float amount, boolean drain) {
-		IQuintessenceManager manager = (IQuintessenceManager) world.getTileEntity(dest);
+		TileEntity destTile = world.getTileEntity(dest);
 		float mod = 0F;
 
-		if (manager != null) {
+		if (destTile instanceof IQuintessenceManager) {
+			IQuintessenceManager manager = (IQuintessenceManager) destTile;
 			manager.setSuction(50);
 
 			for (EnumFacing facing : EnumFacing.VALUES) {
