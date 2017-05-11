@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.variants.items.EnumShard;
 import T145.magistics.api.variants.items.ResearchType;
+import T145.magistics.items.ItemShard;
 import T145.magistics.items.research.ItemDiscovery;
 import T145.magistics.items.research.ItemFragment;
 import T145.magistics.items.research.ItemNote;
@@ -18,11 +20,13 @@ public class ModItems {
 
 	public static List<Item> itemRegistry = new ArrayList<Item>();
 
+	public static Item crystalShard;
 	public static Item researchFragment;
 	public static Item researchNote;
 	public static Item researchDiscovery;
 
 	public static void init() {
+		itemRegistry.add(crystalShard = new ItemShard());
 		itemRegistry.add(researchFragment = new ItemFragment());
 		itemRegistry.add(researchNote = new ItemNote());
 		itemRegistry.add(researchDiscovery = new ItemDiscovery());
@@ -38,6 +42,10 @@ public class ModItems {
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() {
+		for (EnumShard type : EnumShard.values()) {
+			registerItemModel(crystalShard, type.ordinal(), "shards/" + type.getName());
+		}
+
 		for (ResearchType type : ResearchType.values()) {
 			registerItemModel(researchFragment, type.ordinal(), "research/fragment/" + type.getName());
 			registerItemModel(researchNote, type.ordinal(), "research/note/" + type.getName());

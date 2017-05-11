@@ -52,16 +52,10 @@ tile.leaves.silverwood.name=Silverwood Leaves
 tile.saplings.greatwood.name=Greatwood Sapling
 tile.saplings.silverwood.name=Silverwood Sapling
 
+item.shard.dull.name=Dull Crystal
 item.shard.air.name=Air Crystal
 item.shard.fire.name=Fire Crystal
 item.shard.water.name=Water Crystal
 item.shard.earth.name=Earth Crystal
-item.shard.light.name=Vis Crystal
-item.shard.dark.name=Taint Crystal
-
-item.fragment.air.name=Air Crystal Fragment
-item.fragment.fire.name=Fire Crystal Fragment
-item.fragment.water.name=Water Crystal Fragment
-item.fragment.earth.name=Earth Crystal Fragment
-item.fragment.light.name=Vis Crystal Fragment
-item.fragment.dark.name=Taint Crystal Fragment
+item.shard.magic.name=Vis Crystal
+item.shard.void.name=Taint Crystal

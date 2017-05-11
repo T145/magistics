@@ -7,6 +7,8 @@ import T145.magistics.api.magic.IQuintessenceManager;
 import T145.magistics.api.magic.QuintessenceHelper;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
+import T145.magistics.init.ModItems;
+import T145.magistics.items.ItemShard;
 import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -248,10 +250,6 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	private void addProcessedItem(ItemStack result, ItemStack[] components) {
-		// put items in output slots
-		// 0 for regular output, 1 for shard output
-		// reduce all recipe items consumed
-
 		if (itemHandler.getStackInSlot(0).isEmpty()) {
 			itemHandler.setStackInSlot(0, result.copy());
 		} else if (RecipeRegistry.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
@@ -263,6 +261,16 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 				for (ItemStack component : components) {
 					if (RecipeRegistry.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
 						itemHandler.getStackInSlot(slot).shrink(1);
+
+						// fluid container compatibility
+
+						if (!isDark() && component.getItem() instanceof ItemShard) {
+							if (itemHandler.getStackInSlot(1).isEmpty()) {
+								itemHandler.setStackInSlot(1, new ItemStack(ModItems.crystalShard, 1, 0));
+							} else {
+								itemHandler.getStackInSlot(1).grow(1);
+							}
+						}
 
 						if (itemHandler.getStackInSlot(slot).isEmpty()) {
 							itemHandler.setStackInSlot(slot, ItemStack.EMPTY);
