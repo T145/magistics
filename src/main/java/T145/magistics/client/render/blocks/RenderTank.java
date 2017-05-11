@@ -67,7 +67,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderFaces(0D, 0D, 0D, BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), 1F, 1F, 1F, 210);
+		render.renderNormalFaces(BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), RenderConduit.CONDUIT_BRIGHTNESS);
 		tess.draw();
 	}
 
@@ -77,12 +77,11 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 		float mod = 0.003F;
 		float level = (1F - mod * 2F) * (tank.getQuintessence() / tank.getMaxQuintessence());
-		//int brightness = 20 + (int) (Math.min(1F, conduit.getQuintessence() / conduit.getMaxQuintessence()) * 210F);
 
 		render.setRenderBounds(mod + BlockRenderer.W1, mod, mod + BlockRenderer.W1, 1F - mod - BlockRenderer.W1, mod + level, 1F - mod - BlockRenderer.W1);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderFaces(0D, 0D, 0D, ClientBakery.INSTANCE.quintFluid, 1F, 1F, 1F, 210);
+		render.renderNormalFaces(ClientBakery.INSTANCE.quintFluid, 210);
 		tess.draw();
 	}
 }

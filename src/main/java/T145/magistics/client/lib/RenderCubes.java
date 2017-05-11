@@ -69,6 +69,14 @@ public class RenderCubes {
 		renderFaceXPos(x, y, z, icon, red, green, blue, brightness);
 	}
 
+	public void renderNormalFaces(TextureAtlasSprite icon, int brightness) {
+		renderFaces(0D, 0D, 0D, icon, 1F, 1F, 1F, brightness);
+	}
+
+	public void renderNormalFaces(TextureAtlasSprite icon) {
+		renderFaces(0D, 0D, 0D, icon, 1F, 1F, 1F, 255);
+	}
+
 	public void renderFaceYNeg(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 

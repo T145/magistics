@@ -20,6 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
+	public static final int CONDUIT_BRIGHTNESS = 244;
+
 	@Override
 	public void renderTileEntityAt(@Nonnull TileConduit conduit, double x, double y, double z, float partialTicks, int destroyStage) {
 		GlStateManager.pushMatrix();
@@ -48,12 +50,11 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 			float mod = 0.38125F;
 			float level = (1F - mod * 2F) * (Math.min(conduit.getQuintessence(), conduit.getMaxQuintessence()) / conduit.getMaxQuintessence());
-			//int brightness = 20 + (int) (Math.min(1F, conduit.getQuintessence() / conduit.getMaxQuintessence()) * 210F);
 
 			fluid.setRenderBounds(mod, mod, mod, 1F - mod, mod + level, 1F - mod);
 			tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 			bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			fluid.renderFaces(0D, 0D, 0D, ClientBakery.INSTANCE.quintFluid, 1F, 1F, 1F, 210);
+			fluid.renderNormalFaces(ClientBakery.INSTANCE.quintFluid, 210);
 			tess.draw();
 		}
 	}
@@ -65,14 +66,13 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		wall.setRenderBounds(BlockConduit.BOX_FACES[facing.ordinal()]);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		wall.renderFaces(0D, 0D, 0D, ClientBakery.INSTANCE.conduitPart, 1F, 1F, 1F, 255);
+		wall.renderNormalFaces(ClientBakery.INSTANCE.conduitPart, CONDUIT_BRIGHTNESS);
 
 		if (conduit.hasQuints()) {
 			RenderCubes fluid = new RenderCubes();
 
 			float mod = 0.38125F;
 			float level = (1F - mod * 2F) * (Math.min(conduit.getQuintessence(), conduit.getMaxQuintessence()) / conduit.getMaxQuintessence());
-			//int brightness = 20 + (int) (Math.min(1F, conduit.getQuintessence() / conduit.getMaxQuintessence()) * 210F);
 
 			switch (facing) {
 			case UP:
@@ -95,7 +95,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 				break;
 			}
 
-			fluid.renderFaces(0D, 0D, 0D, ClientBakery.INSTANCE.quintFluid, 1F, 1F, 1F, 210);
+			fluid.renderNormalFaces(ClientBakery.INSTANCE.quintFluid, 210);
 		}
 
 		tess.draw();
