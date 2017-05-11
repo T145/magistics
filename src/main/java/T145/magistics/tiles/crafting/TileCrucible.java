@@ -31,7 +31,6 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 	private float maxQuints;
 	private float conversion;
 	private float speed;
-	private int updateDelay;
 	private boolean powering;
 
 	public void setTier(EnumCrucible type) {
@@ -109,12 +108,6 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 	@Override
 	public void update() {
 		--smeltDelay;
-		--updateDelay;
-
-		if (updateDelay <= 0) {
-			refresh();
-			updateDelay = 10;
-		}
 
 		if (quints > maxQuints) {
 			float overflowSplit = Math.min((quints - maxQuints) / 2F, 1F);
@@ -208,6 +201,8 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 						mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
 
 						// slightly discharge this chunk's aura
+
+						refresh();
 
 						if (world.isRemote) {
 							for (int b = 0; b < 3; b++) {

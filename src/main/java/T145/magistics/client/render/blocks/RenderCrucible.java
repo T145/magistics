@@ -21,7 +21,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileCrucible crucible, double x, double y, double z, float partialTicks, int destroyStage) {
-		if (crucible.getQuintessence() > 0) {
+		if (crucible.getQuintessence() > 0 && crucible.isNormal()) {
 			renderLiquid(crucible, x, y, z, partialTicks);
 		}
 	}

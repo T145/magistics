@@ -22,7 +22,7 @@ public class Magistics {
 
 	public static final String MODID = "magistics";
 	public static final String NAME = "Magistics";
-	public static final String VERSION = "AR-1.11.2-9-ge23658c";
+	public static final String VERSION = "$version";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	public static final CreativeTabs TAB = new CreativeTabMagistics();
 
