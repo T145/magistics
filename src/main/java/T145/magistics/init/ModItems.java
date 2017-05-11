@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.IVariant;
 import T145.magistics.api.variants.items.ResearchType;
 import T145.magistics.items.research.ItemDiscovery;
 import T145.magistics.items.research.ItemFragment;
@@ -29,24 +28,20 @@ public class ModItems {
 		itemRegistry.add(researchDiscovery = new ItemDiscovery());
 	}
 
-	private static void registerItemModel(Item item, int meta, String path, String variant) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(path, variant));
+	private static void registerItemModel(Item item, int meta, String path) {
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Magistics.MODID + ":" + path, "inventory"));
 	}
 
-	private static void registerItemModel(Item item, int meta, String variant) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), variant));
-	}
-
-	private static void registerItemModel(Item item, int meta, IVariant variant) {
-		registerItemModel(item, meta, variant.getClientName());
+	private static void registerItemModel(Item item, int meta) {
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() {
 		for (ResearchType type : ResearchType.values()) {
-			registerItemModel(researchFragment, type.ordinal(), Magistics.MODID + ":research/fragment/" + type.getName(), "inventory");
-			registerItemModel(researchNote, type.ordinal(), Magistics.MODID + ":research/note/" + type.getName(), "inventory");
-			registerItemModel(researchDiscovery, type.ordinal(), Magistics.MODID + ":research/discovery/" + type.getName(), "inventory");
+			registerItemModel(researchFragment, type.ordinal(), "research/fragment/" + type.getName());
+			registerItemModel(researchNote, type.ordinal(), "research/note/" + type.getName());
+			registerItemModel(researchDiscovery, type.ordinal(), "research/discovery/" + type.getName());
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package T145.magistics.api.variants.blocks;
 
 import T145.magistics.api.variants.IVariant;
-import net.minecraft.util.math.MathHelper;
 
 public enum EnumCrucible implements IVariant {
 
@@ -40,9 +39,5 @@ public enum EnumCrucible implements IVariant {
 	@Override
 	public String getClientName() {
 		return "variant=" + getName();
-	}
-
-	public static EnumCrucible byMetadata(int meta) {
-		return values()[MathHelper.clamp(meta, 0, meta)];
 	}
 }

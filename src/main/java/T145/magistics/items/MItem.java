@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.Magistics;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -59,16 +58,5 @@ public class MItem extends Item {
 		} else {
 			super.getSubItems(item, tab, subItems);
 		}
-	}
-
-	public List<String> getVariantNames() {
-		return variants;
-	}
-
-	public ModelResourceLocation getCustomModelResourceLocation(String variant) {
-		if (variant.equals(name)) {
-			return new ModelResourceLocation("magistics:" + name);
-		}
-		return new ModelResourceLocation("magistics:" + name, variant);
 	}
 }
