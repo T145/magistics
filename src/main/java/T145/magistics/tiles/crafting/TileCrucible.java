@@ -4,7 +4,7 @@ import java.util.List;
 
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IWorker;
-import T145.magistics.api.magic.IQuintessenceContainer;
+import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.lib.events.SoundHandler;
@@ -22,7 +22,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class TileCrucible extends MTile implements IQuintessenceContainer, IWorker {
+public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 	public int smeltDelay;
 
@@ -76,17 +76,17 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 	public void setSuction(int suction) {}
 
 	@Override
-	public float getMaxQuintessence() {
+	public float getMaxQuints() {
 		return maxQuints;
 	}
 
 	@Override
-	public float getQuintessence() {
+	public float getQuints() {
 		return quints;
 	}
 
 	@Override
-	public void setQuintessence(float amount) {
+	public void setQuints(float amount) {
 		quints = amount;
 	}
 

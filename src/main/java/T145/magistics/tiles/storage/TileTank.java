@@ -1,12 +1,12 @@
 package T145.magistics.tiles.storage;
 
-import T145.magistics.api.magic.IQuintessenceContainer;
-import T145.magistics.api.magic.QuintessenceHelper;
+import T145.magistics.api.magic.IQuintContainer;
+import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileTank extends MTile implements IQuintessenceContainer {
+public class TileTank extends MTile implements IQuintContainer {
 
 	private int delay;
 	private int suction;
@@ -32,17 +32,17 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 	}
 
 	@Override
-	public float getQuintessence() {
+	public float getQuints() {
 		return quints;
 	}
 
 	@Override
-	public float getMaxQuintessence() {
+	public float getMaxQuints() {
 		return 500F;
 	}
 
 	@Override
-	public void setQuintessence(float amount) {
+	public void setQuints(float amount) {
 		quints = amount;
 	}
 
@@ -53,7 +53,7 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setQuintessence(compound.getFloat("Quints"));
+		setQuints(compound.getFloat("Quints"));
 	}
 
 	@Override
@@ -78,9 +78,9 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
+			if (container != null && quints < getMaxQuints() && getSuction() > container.getSuction()) {
 				if (container instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
 					equalizeWithTanks((TileTank) container, facing);
 				} else {
@@ -93,13 +93,13 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 	private void equalizeWithTanks(TileTank neighbor, EnumFacing facing) {
 	}
 
-	private void equalizeWithContainers(IQuintessenceContainer container, EnumFacing facing) {
-		float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
+	private void equalizeWithContainers(IQuintContainer container, EnumFacing facing) {
+		float diff = QuintHelper.subtractQuints(container, Math.min(1F, getMaxQuints() - quints));
 
 		if (getSuction() > container.getSuction()) {
 			quints += diff;
 		} else {
-			container.setQuintessence(diff + container.getQuintessence());
+			container.setQuints(diff + container.getQuints());
 		}
 	}
 }

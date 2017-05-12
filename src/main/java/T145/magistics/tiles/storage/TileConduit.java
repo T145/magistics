@@ -1,13 +1,13 @@
 package T145.magistics.tiles.storage;
 
-import T145.magistics.api.magic.IQuintessenceContainer;
-import T145.magistics.api.magic.IQuintessenceManager;
-import T145.magistics.api.magic.QuintessenceHelper;
+import T145.magistics.api.magic.IQuintContainer;
+import T145.magistics.api.magic.IQuintManager;
+import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
-public class TileConduit extends MTile implements IQuintessenceContainer {
+public class TileConduit extends MTile implements IQuintContainer {
 
 	private int suction;
 	private float quints;
@@ -30,19 +30,19 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 	public void setSuction(int suction) {
 		this.suction = suction;
 	}
-
+	
 	@Override
-	public float getMaxQuintessence() {
+	public float getMaxQuints() {
 		return 4F;
 	}
 
 	@Override
-	public float getQuintessence() {
+	public float getQuints() {
 		return quints;
 	}
 
 	@Override
-	public void setQuintessence(float amount) {
+	public void setQuints(float amount) {
 		quints = amount;
 	}
 
@@ -53,7 +53,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setQuintessence(compound.getFloat("Quints"));
+		setQuints(compound.getFloat("Quints"));
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 		setSuction(0);
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			IQuintessenceManager source = QuintessenceHelper.getConnectedManager(world, pos, facing);
+			IQuintManager source = QuintHelper.getConnectedManager(world, pos, facing);
 
 			if (source != null && getSuction() < source.getSuction() - 1) {
 				setSuction(source.getSuction() - 1);
@@ -82,16 +82,16 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 
 	protected void equalizeWithNeighbors() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
+			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && quints < getMaxQuintessence() && suction > container.getSuction()) {
-				float ratio = Math.min(container.getQuintessence() / getMaxQuintessence(), 4F);
-				float diff = QuintessenceHelper.subtractQuints(container, Math.min(ratio, getMaxQuintessence() - quints));
+			if (container != null && quints < getMaxQuints() && suction > container.getSuction()) {
+				float ratio = Math.min(container.getQuints() / getMaxQuints(), 4F);
+				float diff = QuintHelper.subtractQuints(container, Math.min(ratio, getMaxQuints() - quints));
 
 				if (suction > container.getSuction()) {
 					quints += diff;
 				} else {
-					container.setQuintessence(diff + container.getQuintessence());
+					container.setQuints(diff + container.getQuints());
 				}
 			}
 		}

@@ -28,7 +28,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
-		if (tank.getQuintessence() > 0) {
+		if (tank.getQuints() > 0) {
 			renderLiquid(tank, x, y, z);
 		}
 
@@ -76,7 +76,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		RenderCubes render = new RenderCubes();
 
 		float mod = 0.003F;
-		float level = (1F - mod * 2F) * (tank.getQuintessence() / tank.getMaxQuintessence());
+		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());
 
 		render.setRenderBounds(mod + BlockRenderer.W1, mod, mod + BlockRenderer.W1, 1F - mod - BlockRenderer.W1, mod + level, 1F - mod - BlockRenderer.W1);
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);

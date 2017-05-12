@@ -8,7 +8,7 @@ public class TileTankReinforced extends TileTank {
 	}
 
 	@Override
-	public float getMaxQuintessence() {
+	public float getMaxQuints() {
 		return 1000F;
 	}
 }

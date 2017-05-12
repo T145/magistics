@@ -3,8 +3,8 @@ package T145.magistics.tiles.crafting;
 import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
-import T145.magistics.api.magic.IQuintessenceManager;
-import T145.magistics.api.magic.QuintessenceHelper;
+import T145.magistics.api.magic.IQuintManager;
+import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
@@ -23,7 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 
-public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintessenceManager {
+public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintManager {
 
 	public float cookCost;
 	public float cookTime;
@@ -189,9 +189,9 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
 
-			if (crafting = canCraft(infuserRecipe) && QuintessenceHelper.drainQuints(world, pos, cookCost, false) > 0F) {
+			if (crafting = canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
 				float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
-				cookTime += QuintessenceHelper.drainQuints(world, pos, quintDrain, true);
+				cookTime += QuintHelper.drainQuints(world, pos, quintDrain, true);
 
 				if (soundDelay == 0 && cookTime > 0.025F) {
 					// slightly discharge this chunk's aura

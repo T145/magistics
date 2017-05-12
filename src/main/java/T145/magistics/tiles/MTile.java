@@ -2,7 +2,7 @@ package T145.magistics.tiles;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.api.magic.QuintessenceHelper;
+import T145.magistics.api.magic.QuintHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public abstract class MTile extends TileEntity implements ITickable {
 
 	public boolean isConnected(EnumFacing side) {
-		return QuintessenceHelper.getConnectedManager(world, pos, side) != null;
+		return QuintHelper.getConnectedManager(world, pos, side) != null;
 	}
 
 	public IBlockState getState() {

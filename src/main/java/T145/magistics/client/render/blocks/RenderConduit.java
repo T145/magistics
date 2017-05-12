@@ -33,8 +33,8 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 		TextureAtlasSprite partSprite = ClientBakery.INSTANCE.conduitPart;
 		TextureAtlasSprite fluidSprite = ClientBakery.INSTANCE.quintFluid;
 		float mod = 0.38125F;
-		float amount = Math.min(conduit.getQuintessence(), conduit.getMaxQuintessence());
-		float level = (1F - mod * 2F) * (amount / conduit.getMaxQuintessence());
+		float amount = Math.min(conduit.getQuints(), conduit.getMaxQuints());
+		float level = (1F - mod * 2F) * (amount / conduit.getMaxQuints());
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
