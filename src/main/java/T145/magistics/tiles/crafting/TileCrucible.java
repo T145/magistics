@@ -108,114 +108,112 @@ public class TileCrucible extends MTile implements IQuintessenceContainer, IWork
 
 	@Override
 	public void update() {
-		if (hasWorld()) {
-			--smeltDelay;
-			--updateDelay;
+		--smeltDelay;
+		--updateDelay;
 
-			if (updateDelay <= 0) {
-				refresh();
-				updateDelay = 10;
+		if (updateDelay <= 0) {
+			refresh();
+			updateDelay = 10;
+		}
+
+		if (quints > maxQuints) {
+			float overflowSplit = Math.min((quints - maxQuints) / 2F, 1F);
+
+			if (quints >= overflowSplit) {
+				quints -= overflowSplit;
 			}
 
-			if (quints > maxQuints) {
-				float overflowSplit = Math.min((quints - maxQuints) / 2F, 1F);
-
-				if (quints >= overflowSplit) {
-					quints -= overflowSplit;
-				}
-
-				if (overflowSplit >= 1F) {
-					// pollute aura
-				}
-
-				refresh();
+			if (overflowSplit >= 1F) {
+				// pollute aura
 			}
 
-			powering = conversion >= EnumCrucible.EYES.getConversion() && quints >= maxQuints * 0.9D;
+			refresh();
+		}
 
-			if (powering) {
-				refresh();
-			}
+		powering = conversion >= EnumCrucible.EYES.getConversion() && quints >= maxQuints * 0.9D;
 
-			if (smeltDelay <= 0) {
-				// check if above arcane furnace
+		if (powering) {
+			refresh();
+		}
 
-				if (isNormal()) {
-					smeltDelay = 5;
+		if (smeltDelay <= 0) {
+			// check if above arcane furnace
 
-					List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D));;
+			if (isNormal()) {
+				smeltDelay = 5;
 
-					if (!items.isEmpty()) {
-						EntityItem item = items.get(world.rand.nextInt(items.size()));
-						ItemStack stack = item.getEntityItem();
-						float quintOutput = RecipeRegistry.getCrucibleResult(stack);
+				List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D));;
 
-						if (quintOutput > 0F) {
-							// boost conversion rate if above arcane furnace
+				if (!items.isEmpty()) {
+					EntityItem item = items.get(world.rand.nextInt(items.size()));
+					ItemStack stack = item.getEntityItem();
+					float quintOutput = RecipeRegistry.getCrucibleResult(stack);
 
-							float pureCook = quintOutput * conversion;
-							float miasmaCook = quintOutput - pureCook;
+					if (quintOutput > 0F) {
+						// boost conversion rate if above arcane furnace
 
-							if (getBlockMetadata() != 2 || quints + quintOutput <= maxQuints) {
-								quints += pureCook;
-								smeltDelay = 10 + Math.round(quintOutput / 5F / speed);
+						float pureCook = quintOutput * conversion;
+						float miasmaCook = quintOutput - pureCook;
 
-								// decrease delay if above arcane furnace
-								// slightly discharge this chunk's aura
+						if (getBlockMetadata() != 2 || quints + quintOutput <= maxQuints) {
+							quints += pureCook;
+							smeltDelay = 10 + Math.round(quintOutput / 5F / speed);
 
-								stack.shrink(1);
-
-								if (stack.isEmpty()) {
-									item.setDead();
-								}
-
-								refresh();
-
-								world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
-								world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
-							}
-						} else {
-							item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
-							item.motionY = 0.2F + world.rand.nextFloat() * 0.3F;
-							item.motionZ = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
-							world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), net.minecraft.init.SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
-							item.setPickupDelay(10);
-						}
-					}
-				} else if (Math.round(quints + 1F) <= maxQuints) {
-					smeltDelay = 20;
-
-					List<EntityLiving> mobs = world.getEntitiesWithinAABB(EntityLiving.class, new AxisAlignedBB(pos.getX() - 4, pos.getY() - 4, pos.getZ() - 4, pos.getX() + 5, pos.getY() + 5, pos.getZ() + 5));
-
-					if (draining = !mobs.isEmpty()) {
-						for (EntityLiving mob : mobs) {
-							if (mob instanceof EntitySnowman) {
-								mob.spawnExplosionParticle();
-								mob.setDead();
-							}
-
-							// check if mob isn't invincible, and drain iff the mob is damaged
 							// decrease delay if above arcane furnace
-
-							float mod = 1F;
-
-							if (mob.isEntityUndead()) {
-								mod = 0.5F;
-							}
-
-							quints += mod * conversion;
-
-							mob.attackEntityFrom(DamageSource.MAGIC, 1);
-							mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
-
 							// slightly discharge this chunk's aura
+
+							stack.shrink(1);
+
+							if (stack.isEmpty()) {
+								item.setDead();
+							}
 
 							refresh();
 
-							if (world.isRemote) {
-								for (int b = 0; b < 3; b++) {
-									FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
-								}
+							world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
+							world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+						}
+					} else {
+						item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
+						item.motionY = 0.2F + world.rand.nextFloat() * 0.3F;
+						item.motionZ = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
+						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), net.minecraft.init.SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
+						item.setPickupDelay(10);
+					}
+				}
+			} else if (Math.round(quints + 1F) <= maxQuints) {
+				smeltDelay = 20;
+
+				List<EntityLiving> mobs = world.getEntitiesWithinAABB(EntityLiving.class, new AxisAlignedBB(pos.getX() - 4, pos.getY() - 4, pos.getZ() - 4, pos.getX() + 5, pos.getY() + 5, pos.getZ() + 5));
+
+				if (draining = !mobs.isEmpty()) {
+					for (EntityLiving mob : mobs) {
+						if (mob instanceof EntitySnowman) {
+							mob.spawnExplosionParticle();
+							mob.setDead();
+						}
+
+						// check if mob isn't invincible, and drain iff the mob is damaged
+						// decrease delay if above arcane furnace
+
+						float mod = 1F;
+
+						if (mob.isEntityUndead()) {
+							mod = 0.5F;
+						}
+
+						quints += mod * conversion;
+
+						mob.attackEntityFrom(DamageSource.MAGIC, 1);
+						mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
+
+						// slightly discharge this chunk's aura
+
+						refresh();
+
+						if (world.isRemote) {
+							for (int b = 0; b < 3; b++) {
+								FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
 							}
 						}
 					}

@@ -61,19 +61,18 @@ public class TileTank extends MTile implements IQuintessenceContainer {
 		if (!world.isRemote) {
 			--delay;
 
-			if (delay < 0) {
+			if (delay <= 0) {
+				refresh();
+
 				delay = 10;
 				calculateSuction();
-
-				// explode if certain conditions are met
-
-				equalizeWithNeighbors();
-				refresh();
 			}
+
+			equalizeWithNeighbors();
 		}
 	}
 
-	protected void calculateSuction() {
+	public void calculateSuction() {
 		setSuction(10);
 	}
 

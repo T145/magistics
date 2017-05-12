@@ -59,11 +59,11 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			refresh();
 			calculateSuction();
 
 			if (suction > 0) {
 				equalizeWithNeighbors();
-				refresh();
 			}
 		}
 	}
@@ -84,10 +84,11 @@ public class TileConduit extends MTile implements IQuintessenceContainer {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintessenceContainer container = QuintessenceHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && quints < getMaxQuintessence() && getSuction() > container.getSuction()) {
-				float diff = QuintessenceHelper.subtractQuints(container, Math.min(1F, getMaxQuintessence() - quints));
+			if (container != null && quints < getMaxQuintessence() && suction > container.getSuction()) {
+				float ratio = Math.min(container.getQuintessence() / getMaxQuintessence(), 4F);
+				float diff = QuintessenceHelper.subtractQuints(container, Math.min(ratio, getMaxQuintessence() - quints));
 
-				if (getSuction() > container.getSuction()) {
+				if (suction > container.getSuction()) {
 					quints += diff;
 				} else {
 					container.setQuintessence(diff + container.getQuintessence());
