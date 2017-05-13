@@ -66,23 +66,32 @@ public class QuintHelper {
 		return Math.min(amount, mod);
 	}
 
-	public static float subtractQuints(IQuintContainer container, float amount) {
-		float quints = amount / 2F;
-		float mod = 0F;
+	public static float subtractQuints(IQuintContainer source, float amount) {
+		float magicAmount = amount / 2F;
+		float voidAmount = amount / 2F;
+		float[] diff = new float[] { 0F, 0F };
 
-		if (amount > 0.001F) {
-			if (container.getQuints() < quints) {
-				quints = container.getQuints();
+		if (amount < 0.001F) {
+			return 0F;
+		} else {
+			if (source.getQuints() < magicAmount) {
+				magicAmount = source.getQuints();
 			}
 
-			if (quints < amount / 2F) {
-				quints = Math.min(amount - quints, container.getQuints());
+			if (source.getQuints() < voidAmount) {
+				voidAmount = source.getQuints();
 			}
 
-			container.setQuints(container.getQuints() - quints);
-			mod = quints;
+			if (magicAmount < amount / 2F && voidAmount == amount / 2F) {
+				voidAmount = Math.min(amount - magicAmount, source.getQuints());
+			} else if (voidAmount < amount / 2F && magicAmount == amount / 2F) {
+				magicAmount = Math.min(amount - voidAmount, source.getQuints());
+			}
+
+			source.setQuints(source.getQuints() - magicAmount);
+			diff[0] = magicAmount;
+			diff[1] = voidAmount;
+			return magicAmount;
 		}
-
-		return mod;
 	}
 }

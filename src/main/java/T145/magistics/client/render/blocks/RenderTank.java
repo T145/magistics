@@ -28,7 +28,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
-		if (tank.getQuints() > 0) {
+		if (tank.hasQuints()) {
 			renderLiquid(tank, x, y, z);
 		}
 

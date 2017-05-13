@@ -13,7 +13,7 @@ public class TileConduit extends MTile implements IQuintContainer {
 	private float quints;
 
 	public boolean hasQuints() {
-		return quints > 0;
+		return quints >= 0.1F;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class TileConduit extends MTile implements IQuintContainer {
 	public void setSuction(int suction) {
 		this.suction = suction;
 	}
-	
+
 	@Override
 	public float getMaxQuints() {
 		return 4F;
@@ -85,7 +85,7 @@ public class TileConduit extends MTile implements IQuintContainer {
 			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
 			if (container != null && quints < getMaxQuints() && suction > container.getSuction()) {
-				float ratio = Math.min(container.getQuints() / getMaxQuints(), 4F);
+				float ratio = Math.min(container.getQuints() / getMaxQuints(), getMaxQuints());
 				float diff = QuintHelper.subtractQuints(container, Math.min(ratio, getMaxQuints() - quints));
 
 				if (suction > container.getSuction()) {
