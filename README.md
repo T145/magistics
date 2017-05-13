@@ -20,20 +20,29 @@ Logistical magic!
 In order to get started with Minecraft mod development in this workspace, a few prerequisites are required:
 
 1. [Git](https://git-scm.com/downloads)
-2. [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (JDK)
+2. [Java Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (JDK 8)
 3. *(Optional)* [Gradle](http://gradle.org/gradle-download/)
 
-Each of the listed requirements contains a hyperlink that should take you directly to the correspondant download page. Just download and install what is compatible with your OS. The reason Gradle is optional is because this workspace includes a Gradle wrapper, so when executing commands that begin with `gradle`, such a prefix can be replaced with `gradlew` and function normally.
+Each of the listed requirements contains a hyperlink that should take you directly to the correspondant download page. Just download and install what is compatible with your OS. Gradle is optional is because this workspace includes a Gradle wrapper, so when executing commands that begin with `gradle`, execute them with `gradlew` instead and everything will function normally.
+
+If you're using OSX, I highly recommend using [Homebrew](https://brew.sh/), and installing everything by executing the following commands:
+```
+brew cask install java
+brew install gradle
+```
+If you don't have Apple's Command Line Utilities installed before installing Homebrew, Hombrew will install them automatically.
 
 ---
 
 ## Workspace Setup
 
-To begin coding, start by executing the following command:
+Executing the following commands to prepare the workspace:
 ```
-gradle setupWorkspace eclipse
+gradle setupWorkspace
+gradle eclipse
+gradle build
 ```
-It may take a while to complete, depending on your internet connection and the processing power of your machine. On average it takes about 10 minutes for most people. Again, if you don't have Gradle installed, then just replace the `gradle` in that command with `gradlew`. The `eclipse` task may need to be re-run. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
+Depending on your internet connection and the processing power of your machine, it may take a while to build. For most people it takes about 10 minutes. Again, if you don't have Gradle installed, then just replace the `gradle` in those commands with `gradlew`. Once it completes, just open up the generated `eclipse` directory in your IDE of choice. If you're using IntelliJ's IDEA, there should be an Eclipse plugin that's automatically installed with it from version 13 and on for compatibility.
 
 ---
 
