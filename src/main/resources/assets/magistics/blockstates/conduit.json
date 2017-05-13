@@ -4,7 +4,7 @@
         "transform": "forge:default-block"
     },
     "variants": {
-        "inventory,variant=base": [
+        "inventory": [
             {
                 "model": "magistics:conduit_inv",
                 "textures": {
@@ -12,13 +12,13 @@
                 }
             }
         ],
-        "variant": {
-            "base": {
+        "normal": [
+            {
                 "model": "magistics:conduit",
                 "textures": {
                     "all": "magistics:blocks/transport/conduit"
                 }
             }
-        }
+        ]
     }
 }

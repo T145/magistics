@@ -5,7 +5,6 @@ import java.util.List;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.IVariant;
-import T145.magistics.api.variants.blocks.EnumConduit;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.api.variants.blocks.EnumInfuser;
@@ -78,10 +77,8 @@ public class ModBlocks {
 			registerBlockModel(tank, type.ordinal(), type);
 		}
 
-		for (EnumConduit type : EnumConduit.values()) {
-			registerBlockModel(conduit, type.ordinal(), type);
-			registerBlockModel(conduit, type.ordinal(), "inventory," + type.getClientName());
-		}
+		registerBlockModel(conduit, 0, "normal");
+		registerBlockModel(conduit, 0, "inventory");
 
 		for (EnumCrucible type : EnumCrucible.values()) {
 			registerBlockModel(crucible, type.ordinal(), type.getClientName() + ",working=true");

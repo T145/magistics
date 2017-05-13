@@ -2,7 +2,6 @@ package T145.magistics.blocks.storage;
 
 import java.util.List;
 
-import T145.magistics.api.variants.blocks.EnumConduit;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileConduit;
@@ -20,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockConduit extends MBlock<EnumConduit> {
+public class BlockConduit extends MBlock {
 
 	public static final AxisAlignedBB BOX_CENTER = new AxisAlignedBB(BlockRenderer.W4, BlockRenderer.W4, BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4);
 	public static final AxisAlignedBB BOX_UP = new AxisAlignedBB(BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, 1D, BlockRenderer.W6 + BlockRenderer.W4);
@@ -32,7 +31,7 @@ public class BlockConduit extends MBlock<EnumConduit> {
 	public static final AxisAlignedBB[] BOX_FACES = { BOX_DOWN, BOX_UP, BOX_NORTH, BOX_SOUTH, BOX_WEST, BOX_EAST };
 
 	public BlockConduit() {
-		super("conduit", Material.CIRCUITS, EnumConduit.class);
+		super("conduit", Material.CIRCUITS);
 		setSoundType(SoundType.WOOD);
 		setHardness(1F);
 	}
@@ -77,7 +76,7 @@ public class BlockConduit extends MBlock<EnumConduit> {
 		if (conduit != null) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (conduit.isConnected(facing)) {
-					box.intersect(BOX_FACES[facing.ordinal()]);
+					box = box.union(BOX_FACES[facing.ordinal()]);
 				}
 			}
 		}
@@ -94,7 +93,7 @@ public class BlockConduit extends MBlock<EnumConduit> {
 		if (conduit != null) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (conduit.isConnected(facing)) {
-					box.intersect(BOX_FACES[facing.ordinal()]);
+					box = box.union(BOX_FACES[facing.ordinal()]);
 				}
 			}
 		}
