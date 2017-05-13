@@ -6,7 +6,6 @@ import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
-import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -37,8 +36,6 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		SoundHandler.registerSounds();
-
 		super.preInit(event);
 
 		MinecraftForge.EVENT_BUS.register(ClientBakery.INSTANCE);

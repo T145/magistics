@@ -8,8 +8,8 @@ import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
+import T145.magistics.init.ModSounds;
 import T145.magistics.items.ItemShard;
-import T145.magistics.lib.events.SoundHandler;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -196,7 +196,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 				if (soundDelay == 0 && cookTime > 0.025F) {
 					// slightly discharge this chunk's aura
 
-					world.playSound(null, pos, isDark() ? SoundHandler.INFUSER_DARK : SoundHandler.INFUSER, SoundCategory.MASTER, 0.2F, 1F);
+					world.playSound(null, pos, isDark() ? ModSounds.infuserDark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
 					soundDelay = 62;
 				}
 

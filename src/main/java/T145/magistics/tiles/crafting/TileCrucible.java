@@ -7,7 +7,7 @@ import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.client.fx.FXCreator;
-import T145.magistics.lib.events.SoundHandler;
+import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -171,7 +171,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 							refresh();
 
 							world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
-							world.playSound(null, pos, SoundHandler.BUBBLING, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;

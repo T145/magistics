@@ -4,6 +4,7 @@ import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
+import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -44,6 +45,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void init(FMLInitializationEvent event) {
+		ModSounds.registerSounds();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
