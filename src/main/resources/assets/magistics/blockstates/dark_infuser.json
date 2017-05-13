@@ -1,0 +1,73 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:infuser",
+        "textures": {
+            "top": "magistics:blocks/infuser/dark_top_clear",
+            "bottom": "magistics:blocks/infuser/dark_bottom",
+            "particle": "magistics:blocks/infuser/dark_side"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/dark_top",
+                    "north": "magistics:blocks/infuser/dark_side",
+                    "south": "#north",
+                    "west": "#north",
+                    "east": "#north"
+                }
+            }
+        ],
+        "north": {
+            "true": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/dark_side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/dark_side"
+                }
+            }
+        },
+        "south": {
+            "true": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/dark_side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/dark_side"
+                }
+            }
+        },
+        "west": {
+            "true": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/dark_side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/dark_side"
+                }
+            }
+        },
+        "east": {
+            "true": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/dark_side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/dark_side"
+                }
+            }
+        }
+    }
+}

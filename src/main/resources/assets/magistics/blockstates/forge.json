@@ -4,6 +4,16 @@
         "transform": "forge:default-block"
     },
     "variants": {
+        "inventory,variant=netherrack": [
+            {
+                "model": "magistics:netherrack_furnace_off"
+            }
+        ],
+        "inventory,variant=nether_forge": [
+            {
+                "model": "magistics:nether_forge_off"
+            }
+        ],
         "facing=north,variant=netherrack,working=false":    { "model": "magistics:netherrack_furnace_off" },
         "facing=north,variant=netherrack,working=true":     { "model": "magistics:netherrack_furnace_on" },
         

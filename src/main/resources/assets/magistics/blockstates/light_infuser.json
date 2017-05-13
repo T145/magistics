@@ -1,0 +1,73 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:infuser",
+        "textures": {
+            "top": "magistics:blocks/infuser/top_clear",
+            "bottom": "magistics:blocks/infuser/bottom",
+            "particle": "magistics:blocks/infuser/side"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/top",
+                    "north": "magistics:blocks/infuser/side",
+                    "south": "#north",
+                    "west": "#north",
+                    "east": "#north"
+                }
+            }
+        ],
+        "north": {
+            "true": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/side"
+                }
+            }
+        },
+        "south": {
+            "true": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/side"
+                }
+            }
+        },
+        "west": {
+            "true": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/side"
+                }
+            }
+        },
+        "east": {
+            "true": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/side_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/side"
+                }
+            }
+        }
+    }
+}
