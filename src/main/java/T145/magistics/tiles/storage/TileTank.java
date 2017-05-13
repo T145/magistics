@@ -4,6 +4,7 @@ import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 public class TileTank extends MTile implements IQuintContainer {
@@ -81,29 +82,57 @@ public class TileTank extends MTile implements IQuintContainer {
 	}
 
 	protected void equalizeWithNeighbors() {
-		for (EnumFacing facing : EnumFacing.VALUES) {
+		float tempQuints = quints;
+		float tempMaxQuints = getMaxQuints();
+		TileEntity tile;
+		int offsetY = 1;
+
+		while ((tile = world.getTileEntity(pos.up(offsetY))) instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
+			tempQuints += tank.getQuints();
+			tempMaxQuints += tank.getMaxQuints();
+			++offsetY;
+		}
+
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && quints < getMaxQuints() && getSuction() > container.getSuction()) {
-				if (container instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
-					equalizeWithTanks((TileTank) container, facing);
+			if (container != null && !(container instanceof TileTank) && tempQuints < tempMaxQuints && suction > container.getSuction()) {
+				float diff = QuintHelper.subtractQuints(container, Math.min(1F, tempMaxQuints - tempQuints));
+
+				if (suction > container.getSuction()) {
+					tempQuints += diff;
 				} else {
-					equalizeWithContainers(container, facing);
+					container.setQuints(diff + container.getQuints());
 				}
 			}
 		}
-	}
 
-	private void equalizeWithTanks(TileTank neighbor, EnumFacing facing) {
-	}
+		float prevTempQuints = tempQuints;
 
-	private void equalizeWithContainers(IQuintContainer container, EnumFacing facing) {
-		float diff = QuintHelper.subtractQuints(container, Math.min(1F, getMaxQuints() - quints));
+		if (Math.round(prevTempQuints) >= tempMaxQuints) {
+			setSuction(0);
+		}
 
-		if (getSuction() > container.getSuction()) {
-			quints += diff;
-		} else {
-			container.setQuints(diff + container.getQuints());
+		float quintRatio = tempQuints / prevTempQuints;
+		boolean empty = false;
+		offsetY = 0;
+
+		while ((tile = world.getTileEntity(pos.up(offsetY))) instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
+
+			if (empty) {
+				tank.setQuints(0F);
+			} else if (prevTempQuints <= tank.getMaxQuints()) {
+				tank.setQuints(tempQuints);
+				empty = true;
+			} else {
+				tank.setQuints(tank.getMaxQuints() * quintRatio);
+				tempQuints -= tank.getQuints();
+			}
+
+			prevTempQuints = tempQuints;
+			++offsetY;
 		}
 	}
 }
