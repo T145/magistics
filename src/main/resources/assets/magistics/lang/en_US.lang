@@ -59,3 +59,13 @@ item.shard.water.name=Water Crystal
 item.shard.earth.name=Earth Crystal
 item.shard.magic.name=Vis Crystal
 item.shard.void.name=Taint Crystal
+
+item.research_fragment.lost.name=Fragment of Lost Knowledge
+item.research_fragment.forbidden.name=Fragment of Forbidden Knowledge
+item.research_fragment.blighted.name=Fragment of Blighted Knowledge
+item.research_fragment.eldritch.name=Fragment of Eldritch Knowledge
+
+item.research_note.lost.name=Lost Theory
+item.research_note.forbidden.name=Forbidden Theory
+item.research_note.blighted.name=Blighted Theory
+item.research_note.eldritch.name=Eldritch Theory

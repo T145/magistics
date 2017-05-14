@@ -1,24 +1,101 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "transform": "forge:default-block"
+        "transform": "forge:default-block",
+        "model": "magistics:conduit",
+        "textures": {
+            "all": "magistics:blocks/transport/conduit"
+        },
+        "uvlock": true
     },
     "variants": {
         "inventory": [
             {
-                "model": "magistics:conduit_inv",
-                "textures": {
-                    "all": "magistics:blocks/transport/conduit"
-                }
+                "model": "magistics:conduit_inv"
             }
         ],
-        "normal": [
-            {
-                "model": "magistics:conduit",
-                "textures": {
-                    "all": "magistics:blocks/transport/conduit"
+        "down": {
+            "true": {
+                "submodel": {
+                    "pipe_down": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        },
+                        "x": 90
+                    }
                 }
-            }
-        ]
+            },
+            "false": { }
+        },
+        "up": {
+            "true": {
+                "submodel": {
+                    "pipe_up": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        },
+                        "x": -90
+                    }
+                }
+            },
+            "false": { }
+        },
+        "north": {
+            "true": {
+                "submodel": {
+                    "pipe_north": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        }
+                    }
+                }
+            },
+            "false": { }
+        },
+        "south": {
+            "true": {
+                "submodel": {
+                    "pipe_south": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        },
+                        "y": 180
+                    }
+                }
+            },
+            "false": { }
+        },
+        "east": {
+            "true": {
+                "submodel": {
+                    "pipe_east": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        },
+                        "y": 90
+                    }
+                }
+            },
+            "false": { }
+        },
+        "west": {
+            "true": {
+                "submodel": {
+                    "pipe_west": {
+                        "model": "magistics:conduit_part",
+                        "textures": {
+                            "all": "magistics:blocks/transport/conduit_valve"
+                        },
+                        "y": -90
+                    }
+                }
+            },
+            "false": { }
+        }
     }
 }

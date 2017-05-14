@@ -77,25 +77,15 @@ public class ModBlocks {
 			registerBlockModel(tank, type.ordinal(), type);
 		}
 
-		registerBlockModel(conduit, 0, "normal");
 		registerBlockModel(conduit, 0, "inventory");
 
 		for (EnumCrucible type : EnumCrucible.values()) {
-			registerBlockModel(crucible, type.ordinal(), type.getClientName() + ",working=true");
 			registerBlockModel(crucible, type.ordinal(), type.getClientName() + ",working=false");
 		}
 
 		registerBlockModel(elevator, 0, "normal");
 
 		for (EnumForge type : EnumForge.values()) {
-			registerBlockModel(forge, type.ordinal(), "facing=north," + type.getClientName() + ",working=false");
-			registerBlockModel(forge, type.ordinal(), "facing=north," + type.getClientName() + ",working=true");
-			registerBlockModel(forge, type.ordinal(), "facing=south," + type.getClientName() + ",working=false");
-			registerBlockModel(forge, type.ordinal(), "facing=south," + type.getClientName() + ",working=true");
-			registerBlockModel(forge, type.ordinal(), "facing=east," + type.getClientName() + ",working=false");
-			registerBlockModel(forge, type.ordinal(), "facing=east," + type.getClientName() + ",working=true");
-			registerBlockModel(forge, type.ordinal(), "facing=west," + type.getClientName() + ",working=false");
-			registerBlockModel(forge, type.ordinal(), "facing=west," + type.getClientName() + ",working=true");
 			registerBlockModel(forge, type.ordinal(), "inventory," + type.getClientName());
 		}
 

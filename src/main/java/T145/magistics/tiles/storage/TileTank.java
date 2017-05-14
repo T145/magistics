@@ -14,7 +14,7 @@ public class TileTank extends MTile implements IQuintContainer {
 	private float quints;
 
 	public boolean hasQuints() {
-		return quints >= 0.1F;
+		return quints >= 0.5F;
 	}
 
 	public boolean isReinforced() {

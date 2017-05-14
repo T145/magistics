@@ -1,12 +1,19 @@
 package T145.magistics.blocks.storage;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.google.common.collect.ImmutableList;
 
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -21,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockConduit extends MBlock {
 
+	public static final ImmutableList<IProperty<Boolean>> CONNECTIONS = ImmutableList.copyOf(Stream.of(EnumFacing.VALUES).map(facing -> PropertyBool.create(facing.getName())).collect(Collectors.toList()));
 	public static final AxisAlignedBB BOX_CENTER = new AxisAlignedBB(BlockRenderer.W4, BlockRenderer.W4, BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4);
 	public static final AxisAlignedBB BOX_UP = new AxisAlignedBB(BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, 1D, BlockRenderer.W6 + BlockRenderer.W4);
 	public static final AxisAlignedBB BOX_DOWN = new AxisAlignedBB(BlockRenderer.W6, 0D, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4);
@@ -34,6 +42,26 @@ public class BlockConduit extends MBlock {
 		super("conduit", Material.CIRCUITS);
 		setSoundType(SoundType.WOOD);
 		setHardness(1F);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, CONNECTIONS.toArray(new IProperty[CONNECTIONS.size()]));
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile instanceof TileConduit) {
+			TileConduit conduit = (TileConduit) tile;
+
+			for (EnumFacing facing : EnumFacing.VALUES) {
+				state = state.withProperty(CONNECTIONS.get(facing.getIndex()), conduit.isConnected(facing));
+			}
+		}
+
+		return state;
 	}
 
 	@Override
@@ -64,8 +92,8 @@ public class BlockConduit extends MBlock {
 
 	@Override
 	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
-		TileConduit conduit = (TileConduit) world.getTileEntity(pos);
-		return conduit != null && conduit.canConnect(facing);
+		TileEntity tile = world.getTileEntity(pos);
+		return tile instanceof TileConduit && ((TileConduit) tile).canConnect(facing);
 	}
 
 	@Override

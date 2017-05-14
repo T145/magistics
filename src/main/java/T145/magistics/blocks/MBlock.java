@@ -145,7 +145,7 @@ public abstract class MBlock<T extends Enum<T> & IVariant> extends Block impleme
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return variant == null ? super.getMetaFromState(state) : state.getValue(variant).ordinal();
+		return variant == null ? 0 : state.getValue(variant).ordinal();
 	}
 
 	@Override

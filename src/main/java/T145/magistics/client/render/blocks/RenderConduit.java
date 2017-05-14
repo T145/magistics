@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
-import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.lib.RenderCubes;
 import T145.magistics.tiles.storage.TileConduit;
@@ -28,9 +27,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 	public void renderTileEntityAt(@Nonnull TileConduit conduit, double x, double y, double z, float partialTicks, int destroyStage) {
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer buffer = tess.getBuffer();
-		RenderCubes part = new RenderCubes();
 		RenderCubes fluid = new RenderCubes();
-		TextureAtlasSprite partSprite = ClientBakery.INSTANCE.conduitPart;
 		TextureAtlasSprite fluidSprite = ClientBakery.INSTANCE.quintFluid;
 		float mod = 0.38125F;
 		float amount = Math.min(conduit.getQuints(), conduit.getMaxQuints());
@@ -45,15 +42,9 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 		if (conduit.hasQuints()) {
 			fluid.setRenderBounds(mod, mod, mod, 1F - mod, mod + level, 1F - mod);
-			fluid.renderNormalFaces(fluidSprite, 210);
-		}
 
-		for (EnumFacing facing : EnumFacing.VALUES) {
-			if (conduit.isConnected(facing)) {
-				part.setRenderBounds(BlockConduit.BOX_FACES[facing.getIndex()]);
-				part.renderNormalFaces(partSprite, CONDUIT_BRIGHTNESS);
-
-				if (conduit.hasQuints()) {
+			for (EnumFacing facing : EnumFacing.VALUES) {
+				if (conduit.isConnected(facing)) {
 					switch (facing) {
 					case UP:
 						fluid.setRenderBounds(0.5F - level / 2F, mod + level, 0.5F - level / 2F, 0.5F + level / 2F, 1F, 0.5F + level / 2F);
@@ -74,9 +65,9 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 						fluid.setRenderBounds(0F, mod, mod, mod, mod + level, 1F - mod);
 						break;
 					}
-
-					fluid.renderNormalFaces(fluidSprite, 210);
 				}
+
+				fluid.renderNormalFaces(fluidSprite, 210);
 			}
 		}
 
