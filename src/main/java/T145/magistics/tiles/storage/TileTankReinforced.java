@@ -4,7 +4,7 @@ public class TileTankReinforced extends TileTank {
 
 	@Override
 	public boolean isReinforced() {
-		return false;
+		return true;
 	}
 
 	@Override

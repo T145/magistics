@@ -1,5 +1,7 @@
 package T145.magistics.tiles.storage;
 
+import javax.annotation.Nullable;
+
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
@@ -23,6 +25,12 @@ public class TileTank extends MTile implements IQuintContainer {
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {
+		TileEntity tile = world.getTileEntity(pos.offset(facing));
+
+		if (tile instanceof TileTank) {
+			return ((TileTank) tile).isReinforced() == isReinforced();
+		}
+
 		return true;
 	}
 
@@ -81,14 +89,28 @@ public class TileTank extends MTile implements IQuintContainer {
 		setSuction(10);
 	}
 
+	@Nullable
+	protected TileTank getValidTank(int offsetY) {
+		TileEntity tile = world.getTileEntity(pos.up(offsetY));
+
+		if (tile instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
+
+			if (tank.canConnect(EnumFacing.UP)) {
+				return tank;
+			}
+		}
+
+		return null;
+	}
+
 	protected void equalizeWithNeighbors() {
 		float tempQuints = quints;
 		float tempMaxQuints = getMaxQuints();
-		TileEntity tile;
+		TileTank tank;
 		int offsetY = 1;
 
-		while ((tile = world.getTileEntity(pos.up(offsetY))) instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
+		while ((tank = getValidTank(offsetY)) != null) {
 			tempQuints += tank.getQuints();
 			tempMaxQuints += tank.getMaxQuints();
 			++offsetY;
@@ -118,9 +140,7 @@ public class TileTank extends MTile implements IQuintContainer {
 		boolean empty = false;
 		offsetY = 0;
 
-		while ((tile = world.getTileEntity(pos.up(offsetY))) instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
-
+		while ((tank = getValidTank(offsetY)) != null) {
 			if (empty) {
 				tank.setQuints(0F);
 			} else if (prevTempQuints <= tank.getMaxQuints()) {
