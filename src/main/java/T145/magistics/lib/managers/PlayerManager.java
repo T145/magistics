@@ -75,7 +75,7 @@ public class PlayerManager {
 		return null;
 	}
 
-	public static NBTTagCompound proifleToNBT(GameProfile profile) {
+	public static NBTTagCompound profileToNBT(GameProfile profile) {
 		NBTTagCompound tag = new NBTTagCompound();
 
 		tag.setString("Name", profile.getName());

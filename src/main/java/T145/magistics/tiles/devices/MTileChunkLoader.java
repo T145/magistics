@@ -52,7 +52,7 @@ public class MTileChunkLoader extends MTile {
 		compound.setLong("loaded", PlayerManager.PlayerLoader.serializeChunkPos(loaded));
 
 		if (owner != null) {
-			compound.setTag("profile", PlayerManager.proifleToNBT(owner));
+			compound.setTag("profile", PlayerManager.profileToNBT(owner));
 		}
 	}
 
