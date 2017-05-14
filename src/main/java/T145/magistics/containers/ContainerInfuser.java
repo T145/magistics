@@ -52,12 +52,12 @@ public class ContainerInfuser extends Container {
 		}
 	}
 
-	protected void updateContainer(IContainerListener listener) {
-		if (cookCost != infuser.cookCost) {
+	protected void updateContainer(IContainerListener listener, boolean add) {
+		if (add || cookCost != infuser.cookCost) {
 			listener.sendProgressBarUpdate(this, 0, (int) infuser.cookCost);
 		}
 
-		if (cookTime != infuser.cookTime) {
+		if (add || cookTime != infuser.cookTime) {
 			listener.sendProgressBarUpdate(this, 1, (int) infuser.cookTime);
 		}
 	}
@@ -65,7 +65,7 @@ public class ContainerInfuser extends Container {
 	@Override
 	public void addListener(IContainerListener listener) {
 		super.addListener(listener);
-		updateContainer(listener);
+		updateContainer(listener, true);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ContainerInfuser extends Container {
 		super.detectAndSendChanges();
 
 		for (int i = 0; i < listeners.size(); ++i) {
-			updateContainer(listeners.get(i));
+			updateContainer(listeners.get(i), false);
 		}
 
 		cookCost = infuser.cookCost;

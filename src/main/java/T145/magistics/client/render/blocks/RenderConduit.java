@@ -42,9 +42,12 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 		if (conduit.hasQuints()) {
 			fluid.setRenderBounds(mod, mod, mod, 1F - mod, mod + level, 1F - mod);
+			fluid.renderNormalFaces(fluidSprite, 210);
+		}
 
-			for (EnumFacing facing : EnumFacing.VALUES) {
-				if (conduit.isConnected(facing)) {
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			if (conduit.isConnected(facing)) {
+				if (conduit.hasQuints()) {
 					switch (facing) {
 					case UP:
 						fluid.setRenderBounds(0.5F - level / 2F, mod + level, 0.5F - level / 2F, 0.5F + level / 2F, 1F, 0.5F + level / 2F);
@@ -65,9 +68,9 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 						fluid.setRenderBounds(0F, mod, mod, mod, mod + level, 1F - mod);
 						break;
 					}
-				}
 
-				fluid.renderNormalFaces(fluidSprite, 210);
+					fluid.renderNormalFaces(fluidSprite, 210);
+				}
 			}
 		}
 
