@@ -28,7 +28,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
-		if (tank.hasQuints()) {
+		if (tank.getDisplayQuints() > 0F) {
 			renderLiquid(tank, x, y, z);
 		}
 
@@ -67,7 +67,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 		tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		render.renderNormalFaces(BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), RenderConduit.CONDUIT_BRIGHTNESS);
+		render.renderNormalFaces(BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0), 245);
 		tess.draw();
 	}
 

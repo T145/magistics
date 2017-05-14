@@ -11,12 +11,17 @@ import net.minecraft.util.EnumFacing;
 
 public class TileTank extends MTile implements IQuintContainer {
 
-	private int delay;
-	private int suction;
-	private float quints;
+	protected int delay;
+	protected int suction;
+	protected float quints;
+	protected float displayQuints;
 
-	public boolean hasQuints() {
-		return quints >= 0.5F;
+	public float getDisplayQuints() {
+		return displayQuints;
+	}
+
+	public void setDisplayQuints(float displayQuints) {
+		this.displayQuints = displayQuints;
 	}
 
 	public boolean isReinforced() {
@@ -27,7 +32,7 @@ public class TileTank extends MTile implements IQuintContainer {
 	public boolean canConnect(EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos.offset(facing));
 
-		if (tile instanceof TileTank) {
+		if (tile instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
 			return ((TileTank) tile).isReinforced() == isReinforced();
 		}
 
@@ -62,27 +67,13 @@ public class TileTank extends MTile implements IQuintContainer {
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setFloat("Quints", quints);
+		compound.setFloat("DisplayQuints", displayQuints);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		setQuints(compound.getFloat("Quints"));
-	}
-
-	@Override
-	public void update() {
-		if (!world.isRemote) {
-			--delay;
-
-			if (delay <= 0) {
-				refresh();
-
-				delay = 10;
-				calculateSuction();
-			}
-
-			equalizeWithNeighbors();
-		}
+		setDisplayQuints(compound.getFloat("DisplayQuints"));
 	}
 
 	public void calculateSuction() {
@@ -153,6 +144,35 @@ public class TileTank extends MTile implements IQuintContainer {
 
 			prevTempQuints = tempQuints;
 			++offsetY;
+		}
+	}
+
+	protected void calculateDisplayQuints() {
+		if (quints >= 0.5F) {
+			displayQuints = quints;
+		} else {
+			displayQuints = 0F;
+		}
+
+		if (quints < 0.0F) {
+			quints = 0.0F;
+		}
+	}
+
+	@Override
+	public void update() {
+		if (!world.isRemote) {
+			--delay;
+
+			if (delay <= 0) {
+				refresh();
+
+				delay = 10;
+				calculateSuction();
+			}
+
+			equalizeWithNeighbors();
+			calculateDisplayQuints();
 		}
 	}
 }

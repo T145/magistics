@@ -9,11 +9,16 @@ import net.minecraft.util.EnumFacing;
 
 public class TileConduit extends MTile implements IQuintContainer {
 
-	private int suction;
-	private float quints;
+	protected int suction;
+	protected float quints;
+	protected float displayQuints;
 
-	public boolean hasQuints() {
-		return quints >= 0.1F;
+	public float getDisplayQuints() {
+		return displayQuints;
+	}
+
+	public void setDisplayQuints(float displayQuints) {
+		this.displayQuints = displayQuints;
 	}
 
 	@Override
@@ -49,23 +54,13 @@ public class TileConduit extends MTile implements IQuintContainer {
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setFloat("Quints", quints);
+		compound.setFloat("DisplayQuints", displayQuints);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		setQuints(compound.getFloat("Quints"));
-	}
-
-	@Override
-	public void update() {
-		if (!world.isRemote) {
-			refresh();
-			calculateSuction();
-
-			if (suction > 0) {
-				equalizeWithNeighbors();
-			}
-		}
+		setDisplayQuints(compound.getFloat("DisplayQuints"));
 	}
 
 	protected void calculateSuction() {
@@ -74,7 +69,7 @@ public class TileConduit extends MTile implements IQuintContainer {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintManager source = QuintHelper.getConnectedManager(world, pos, facing);
 
-			if (source != null && getSuction() < source.getSuction() - 1) {
+			if (source != null && suction < source.getSuction() - 1) {
 				setSuction(source.getSuction() - 1);
 			}
 		}
@@ -93,6 +88,35 @@ public class TileConduit extends MTile implements IQuintContainer {
 				} else {
 					container.setQuints(diff + container.getQuints());
 				}
+			}
+		}
+	}
+
+	protected void calculateDisplayQuints() {
+		if (quints >= 3.1F) {
+			if (displayQuints < getMaxQuints()) {
+				displayQuints += 0.2F;
+			}
+		} else if (quints <= 0.1F) {
+			displayQuints = 0F;
+		} else {
+			displayQuints = quints;
+		}
+
+		if (quints < 0F) {
+			quints = 0F;
+		}
+	}
+
+	@Override
+	public void update() {
+		if (!world.isRemote) {
+			refresh();
+			calculateSuction();
+
+			if (suction > 0) {
+				equalizeWithNeighbors();
+				calculateDisplayQuints();
 			}
 		}
 	}
