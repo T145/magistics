@@ -91,6 +91,13 @@ public class BlockConduit extends MBlock {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess world, BlockPos pos, EnumFacing side) {
+		TileConduit conduit = (TileConduit) world.getTileEntity(pos);
+		return !(conduit.isConnected(side));
+	}
+
+	@Override
 	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos);
 		return tile instanceof TileConduit && ((TileConduit) tile).canConnect(facing);
