@@ -56,10 +56,6 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		return quints > maxQuints;
 	}
 
-	public boolean hasQuints() {
-		return quints >= 0.1F;
-	}
-
 	@Override
 	public boolean isWorking() {
 		markDirty();
@@ -87,6 +83,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 	@Override
 	public float getQuints() {
 		return quints;
+	}
+
+	@Override
+	public float getDisplayQuints() {
+		return quints >= 0.1F ? quints : 0F;
 	}
 
 	@Override

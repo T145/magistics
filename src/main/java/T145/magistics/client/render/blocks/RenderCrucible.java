@@ -21,19 +21,13 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileCrucible crucible, double x, double y, double z, float partialTicks, int destroyStage) {
-		if (crucible.getQuints() > 0 && crucible.isNormal()) {
-			renderLiquid(crucible, x, y, z, partialTicks);
-		}
-	}
+		if (crucible.isNormal() && crucible.getDisplayQuints() > 0F) {
+			float level = 0.75F * (crucible.getDisplayQuints() / crucible.getMaxQuints());
 
-	private void renderLiquid(TileCrucible crucible, double x, double y, double z, float partialTicks) {
-		float level = 0.75F * (crucible.getQuints() / crucible.getMaxQuints());
+			if (crucible.isFull() || crucible.isOverflowing()) {
+				level -= 0.001D;
+			}
 
-		if (crucible.isFull() || crucible.isOverflowing()) {
-			level -= 0.001D;
-		}
-
-		if (crucible.hasQuints()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y, z);
 			GlStateManager.disableLighting();

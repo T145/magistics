@@ -6,5 +6,7 @@ public interface IQuintContainer extends IQuintManager {
 
 	public float getQuints();
 
+	public float getDisplayQuints();
+
 	public void setQuints(float amount);
 }

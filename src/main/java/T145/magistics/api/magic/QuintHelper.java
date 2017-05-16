@@ -69,7 +69,6 @@ public class QuintHelper {
 	public static float subtractQuints(IQuintContainer source, float amount) {
 		float magicAmount = amount / 2F;
 		float voidAmount = amount / 2F;
-		float[] diff = new float[] { 0F, 0F };
 
 		if (amount < 0.001F) {
 			return 0F;
@@ -89,8 +88,6 @@ public class QuintHelper {
 			}
 
 			source.setQuints(source.getQuints() - magicAmount);
-			diff[0] = magicAmount;
-			diff[1] = voidAmount;
 			return magicAmount;
 		}
 	}
