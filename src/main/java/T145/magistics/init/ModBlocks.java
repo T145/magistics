@@ -21,10 +21,8 @@ import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
 import T145.magistics.tiles.crafting.TileCrucible;
 import T145.magistics.tiles.crafting.TileInfuser;
-import T145.magistics.tiles.crafting.TileInfuserDark;
 import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
-import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -91,10 +89,8 @@ public class ModBlocks {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuserDark.class, new RenderInfuser());
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileTankReinforced.class, new RenderTank());
 	}
 }

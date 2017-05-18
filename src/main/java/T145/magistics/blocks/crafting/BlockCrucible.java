@@ -15,10 +15,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -47,7 +45,7 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible();
+		return new TileCrucible(EnumCrucible.values()[meta]);
 	}
 
 	@Override
@@ -94,14 +92,14 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
 		if (crucible != null) {
 			crucible.setTier(EnumCrucible.values()[stack.getMetadata()]);
 		}
-	}
+	}*/
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
