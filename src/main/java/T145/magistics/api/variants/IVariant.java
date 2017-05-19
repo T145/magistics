@@ -4,5 +4,5 @@ import net.minecraft.util.IStringSerializable;
 
 public interface IVariant extends IStringSerializable {
 
-	public String getClientName();
+	String getClientName();
 }

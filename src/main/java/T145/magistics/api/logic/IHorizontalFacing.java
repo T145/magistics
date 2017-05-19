@@ -5,5 +5,5 @@ import net.minecraft.block.properties.PropertyDirection;
 
 public interface IHorizontalFacing {
 
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	static final PropertyDirection FACING = BlockHorizontal.FACING;
 }

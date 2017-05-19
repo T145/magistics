@@ -4,7 +4,7 @@ import net.minecraft.util.EnumFacing;
 
 public interface IFacing {
 
-	public EnumFacing getFacing();
+	EnumFacing getFacing();
 
-	public void setFacing(EnumFacing facing);
+	void setFacing(EnumFacing facing);
 }
