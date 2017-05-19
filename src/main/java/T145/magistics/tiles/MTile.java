@@ -65,7 +65,7 @@ public abstract class MTile extends TileEntity implements ITickable {
 	public final SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writePacketNBT(tag);
-		return new SPacketUpdateTileEntity(pos, -999, tag);
+		return new SPacketUpdateTileEntity(pos, -9, tag);
 	}
 
 	@Override
