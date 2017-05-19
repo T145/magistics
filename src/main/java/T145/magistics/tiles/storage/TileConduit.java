@@ -6,15 +6,20 @@ import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
 
 public class TileConduit extends MTile implements IQuintContainer {
 
-	protected final float maxQuints = 4F;
+	protected int suction;
 	protected float quints;
 	protected float displayQuints;
-	protected float prevDisplayQuints;
-	protected int suction;
+
+	public float getDisplayQuints() {
+		return displayQuints;
+	}
+
+	public void setDisplayQuints(float displayQuints) {
+		this.displayQuints = displayQuints;
+	}
 
 	@Override
 	public boolean canConnect(EnumFacing facing) {
@@ -27,23 +32,18 @@ public class TileConduit extends MTile implements IQuintContainer {
 	}
 
 	@Override
-	public void setSuction(int pressure) {
-		suction = pressure;
+	public void setSuction(int suction) {
+		this.suction = suction;
 	}
 
 	@Override
 	public float getMaxQuints() {
-		return maxQuints;
+		return 4F;
 	}
 
 	@Override
 	public float getQuints() {
 		return quints;
-	}
-
-	@Override
-	public float getDisplayQuints() {
-		return displayQuints;
 	}
 
 	@Override
@@ -55,41 +55,15 @@ public class TileConduit extends MTile implements IQuintContainer {
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setFloat("Quints", quints);
 		compound.setFloat("DisplayQuints", displayQuints);
-		compound.setFloat("PrevDisplayQuints", prevDisplayQuints);
-		compound.setInteger("Suction", suction);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		quints = compound.getFloat("Quints");
-		displayQuints = compound.getFloat("DisplayQuints");
-		prevDisplayQuints = compound.getFloat("PrevDisplayQuints");
-		suction = compound.getInteger("Suction");
+		setQuints(compound.getFloat("Quints"));
+		setDisplayQuints(compound.getFloat("DisplayQuints"));
 	}
 
-	@Override
-	public void update() {
-		if (!world.isRemote) {
-			if (prevDisplayQuints != displayQuints) {
-				refresh();
-				prevDisplayQuints = displayQuints;
-			}
-
-			calculateSuction();
-
-			if (suction > 0) {
-				distributeQuints();
-			}
-
-			displayQuints = Math.max(displayQuints, MathHelper.clamp(quints, 0F, maxQuints));
-
-			if (displayQuints < 0.1F) {
-				displayQuints = 0F;
-			}
-		}
-	}
-
-	private void calculateSuction() {
+	protected void calculateSuction() {
 		setSuction(0);
 
 		for (EnumFacing facing : EnumFacing.VALUES) {
@@ -101,7 +75,7 @@ public class TileConduit extends MTile implements IQuintContainer {
 		}
 	}
 
-	private void distributeQuints() {
+	protected void equalizeWithNeighbors() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
@@ -114,6 +88,35 @@ public class TileConduit extends MTile implements IQuintContainer {
 				} else {
 					container.setQuints(diff + container.getQuints());
 				}
+			}
+		}
+	}
+
+	protected void calculateDisplayQuints() {
+		if (quints >= 3.1F) {
+			if (displayQuints < getMaxQuints()) {
+				displayQuints += 0.2F;
+			}
+		} else if (quints <= 0.1F) {
+			displayQuints = 0F;
+		} else {
+			displayQuints = quints;
+		}
+
+		if (quints < 0F) {
+			quints = 0F;
+		}
+	}
+
+	@Override
+	public void update() {
+		if (!world.isRemote) {
+			refresh();
+			calculateSuction();
+
+			if (suction > 0) {
+				equalizeWithNeighbors();
+				calculateDisplayQuints();
 			}
 		}
 	}

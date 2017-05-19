@@ -19,18 +19,12 @@ public abstract class MTileInventory extends MTile {
 	public void readPacketNBT(NBTTagCompound compound) {
 		itemHandler = createItemHandler();
 		itemHandler.deserializeNBT(compound);
-		superReadPacketNBT(compound);
 	}
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.merge(itemHandler.serializeNBT());
-		superWritePacketNBT(compound);
 	}
-
-	public abstract void superWritePacketNBT(NBTTagCompound compound);
-
-	public abstract void superReadPacketNBT(NBTTagCompound compound);
 
 	public abstract int getSizeInventory();
 

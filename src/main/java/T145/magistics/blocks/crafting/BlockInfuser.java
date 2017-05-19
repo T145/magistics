@@ -13,6 +13,7 @@ import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.crafting.TileInfuser;
+import T145.magistics.tiles.crafting.TileInfuserDark;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -84,7 +85,7 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileInfuser(meta == 1);
+		return meta == 1 ? new TileInfuserDark() : new TileInfuser();
 	}
 
 	@Override

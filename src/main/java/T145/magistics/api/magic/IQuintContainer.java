@@ -2,11 +2,11 @@ package T145.magistics.api.magic;
 
 public interface IQuintContainer extends IQuintManager {
 
-	float getMaxQuints();
+	public float getMaxQuints();
 
-	float getQuints();
+	public float getQuints();
 
-	float getDisplayQuints();
+	public float getDisplayQuints();
 
-	void setQuints(float amount);
+	public void setQuints(float amount);
 }

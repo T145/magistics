@@ -1,11 +1,11 @@
 package T145.magistics.tiles.crafting;
 
-import T145.magistics.Magistics;
 import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintManager;
 import T145.magistics.api.magic.QuintHelper;
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
 import T145.magistics.init.ModSounds;
@@ -23,31 +23,35 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 
-public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
+public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintManager {
 
 	public float cookCost;
 	public float cookTime;
 
-	private final boolean dark;
-	private boolean crafting;
-	private boolean upgraded;
-	private int angle;
-	private int soundDelay;
-	private int boost;
-	private int boostDelay = 20;
-	private int suction;
-	private EnumFacing facing = EnumFacing.NORTH;
+	protected boolean active;
+	protected boolean crafting;
+	protected boolean enchanted;
+	protected int angle;
+	protected int soundDelay;
+	protected int boost;
+	protected int boostDelay = 20;
+	protected int suction;
+	protected EnumFacing facing = EnumFacing.SOUTH;
 
-	public TileInfuser(boolean dark) {
-		this.dark = dark;
-	}
-
-	public boolean isDark() {
-		return dark;
+	public boolean isActive() {
+		return active;
 	}
 
 	public boolean isCrafting() {
 		return crafting;
+	}
+
+	public boolean isDark() {
+		return false;
+	}
+
+	public boolean isDormant() {
+		return !active && !crafting;
 	}
 
 	public float getDiskAngle() {
@@ -67,28 +71,18 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	@Override
-	public String getName() {
-		return "tile.infuser." + (dark ? "dark" : "light") + ".name";
+	public boolean canConnect(EnumFacing facing) {
+		return facing != EnumFacing.UP;
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TextComponentTranslation(getName(), new Object[0]);
+	public int getSuction() {
+		return suction;
 	}
 
 	@Override
-	public boolean hasCustomName() {
-		return true;
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
-		return new ContainerInfuser(playerInventory, this);
-	}
-
-	@Override
-	public String getGuiID() {
-		return Magistics.MODID + ":infuser" + (dark ? "_dark" : "");
+	public void setSuction(int suction) {
+		this.suction = suction;
 	}
 
 	@Override
@@ -102,28 +96,38 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	@Override
-	public boolean canConnect(EnumFacing facing) {
-		return facing != EnumFacing.UP;
+	public String getName() {
+		return "tile.infuser.light.name";
 	}
 
 	@Override
-	public int getSuction() {
-		return suction;
+	public boolean hasCustomName() {
+		return true;
 	}
 
 	@Override
-	public void setSuction(int pressure) {
-		suction = pressure;
+	public ITextComponent getDisplayName() {
+		return new TextComponentTranslation(getName(), new Object[0]);
+	}
+
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
+		return new ContainerInfuser(playerInventory, this);
+	}
+
+	@Override
+	public String getGuiID() {
+		return "magistics:infuser";
 	}
 
 	@Override
 	public int getSizeInventory() {
-		return dark ? 6 : 8;
+		return 8;
 	}
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
-		return slot > (dark ? 0 : 1);
+		return slot > (isDark() ? 0 : 1);
 	}
 
 	@Override
@@ -132,15 +136,19 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	@Override
-	public void superWritePacketNBT(NBTTagCompound compound) {
-		compound.setString("Facing", facing.toString());
+	public void writePacketNBT(NBTTagCompound compound) {
+		super.writePacketNBT(compound);
+
+		compound.setInteger("Facing", facing.ordinal());
 		compound.setFloat("CookCost", cookCost);
 		compound.setFloat("CookTime", cookTime);
 	}
 
 	@Override
-	public void superReadPacketNBT(NBTTagCompound compound) {
-		facing = EnumFacing.valueOf(compound.getString("Facing"));
+	public void readPacketNBT(NBTTagCompound compound) {
+		super.readPacketNBT(compound);
+
+		setFacing(EnumFacing.getFront(compound.getInteger("Facing")));
 		cookCost = compound.getFloat("CookCost");
 		cookTime = compound.getFloat("CookTime");
 	}
@@ -155,46 +163,67 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 
 	@Override
 	public void update() {
-		setSuction(0);
+		if (isDormant()) {
+			setSuction(0);
+			angle = facing.ordinal();
+		} else {
+			angle = getCookProgressScaled(360);
+		}
 
-		angle = getCookProgressScaled(360);
-		crafting = cookTime > 0 && cookTime > 0;
+		if (soundDelay > 0) {
+			--soundDelay;
+		}
 
-		if (!world.isRemote && !world.isBlockPowered(pos)) {
-			InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), dark);
-
-			if (canCraft(infuserRecipe)) {
-				cookCost = infuserRecipe.getCost();
-
-				if (QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
-					float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
-					cookTime += QuintHelper.drainQuints(world, pos, quintDrain, true);
-
-					if (soundDelay == 0 && cookTime > 0.025F) {
-						// slightly discharge this chunk's aura
-
-						world.playSound(null, pos, isDark() ? ModSounds.infuserDark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
-						soundDelay = 62;
-					}
-
-					if (cookTime >= cookCost) {
-						addProcessedItem(infuserRecipe.getResult(), infuserRecipe.getComponents());
-						reset();
-						refresh();
-					}
-				}
+		if (boostDelay <= 0) {
+			if (boost > 0) {
+				--boost;
 			}
 
-			if (boostDelay <= 0) {
-				if (boost > 0) {
-					--boost;
+			boostDelay = 20;
+		} else {
+			--boostDelay;
+		}
+
+		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
+
+		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
+			cookCost = infuserRecipe.getCost();
+
+			if (crafting = canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
+				float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
+				cookTime += QuintHelper.drainQuints(world, pos, quintDrain, true);
+
+				if (soundDelay == 0 && cookTime > 0.025F) {
+					// slightly discharge this chunk's aura
+
+					world.playSound(null, pos, isDark() ? ModSounds.infuserDark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
+					soundDelay = 62;
 				}
 
-				boostDelay = 20;
-			} else {
-				--boostDelay;
+				if (enchanted) {
+					switch (world.rand.nextInt(4)) {
+					case 0:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
+						break;
+					case 1:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
+						break;
+					case 2:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
+						break;
+					case 3:
+						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
+						break;
+					}
+				}
+
+				if (cookTime >= cookCost) {
+					addProcessedItem(infuserRecipe.getResult(), infuserRecipe.getComponents());
+					reset();
+					refresh();
+				}
 			}
-		} else { // can optimize?
+		} else {
 			if (crafting) {
 				world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
 				refresh();
@@ -205,10 +234,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	public boolean canCraft(InfuserRecipe infuserRecipe) {
-		if (infuserRecipe == null) {
-			return false;
-		}
-
 		ItemStack result = infuserRecipe.getResult();
 
 		if (result.isEmpty()) {
@@ -258,6 +283,7 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	private void reset() {
 		cookCost = 0F;
 		cookTime = 0F;
+		active = false;
 		crafting = false;
 	}
 }

@@ -4,6 +4,7 @@ import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.tiles.storage.TileTank;
+import T145.magistics.tiles.storage.TileTankReinforced;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +30,7 @@ public class BlockTank extends MBlock<EnumTank> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileTank(meta == 1);
+		return meta == 1 ? new TileTankReinforced() : new TileTank();
 	}
 
 	@Override

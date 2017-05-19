@@ -4,9 +4,9 @@ import net.minecraft.util.EnumFacing;
 
 public interface IQuintManager {
 
-	boolean canConnect(EnumFacing facing);
+	public boolean canConnect(EnumFacing facing);
 
-	int getSuction();
+	public int getSuction();
 
-	void setSuction(int pressure);
+	public void setSuction(int suction);
 }
