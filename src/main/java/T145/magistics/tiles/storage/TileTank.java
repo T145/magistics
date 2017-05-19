@@ -11,21 +11,19 @@ import net.minecraft.util.EnumFacing;
 
 public class TileTank extends MTile implements IQuintContainer {
 
-	protected int delay;
-	protected int suction;
+	protected final boolean reinforced;
+	protected final float maxQuints;
 	protected float quints;
-	protected float displayQuints;
+	protected int suction;
+	private int updateDelay;
 
-	public float getDisplayQuints() {
-		return displayQuints;
-	}
-
-	public void setDisplayQuints(float displayQuints) {
-		this.displayQuints = displayQuints;
+	public TileTank(boolean reinforced) {
+		this.reinforced = reinforced;
+		maxQuints = reinforced ? 1000F : 500F;
 	}
 
 	public boolean isReinforced() {
-		return false;
+		return reinforced;
 	}
 
 	@Override
@@ -33,7 +31,8 @@ public class TileTank extends MTile implements IQuintContainer {
 		TileEntity tile = world.getTileEntity(pos.offset(facing));
 
 		if (tile instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
-			return ((TileTank) tile).isReinforced() == isReinforced();
+			TileTank neighborTank = (TileTank) tile;
+			return reinforced == neighborTank.isReinforced();
 		}
 
 		return true;
@@ -45,8 +44,13 @@ public class TileTank extends MTile implements IQuintContainer {
 	}
 
 	@Override
-	public void setSuction(int suction) {
-		this.suction = suction;
+	public void setSuction(int pressure) {
+		suction = pressure;
+	}
+
+	@Override
+	public float getMaxQuints() {
+		return maxQuints;
 	}
 
 	@Override
@@ -55,8 +59,8 @@ public class TileTank extends MTile implements IQuintContainer {
 	}
 
 	@Override
-	public float getMaxQuints() {
-		return 500F;
+	public float getDisplayQuints() {
+		return quints > 0.1F ? quints : 0F;
 	}
 
 	@Override
@@ -67,35 +71,36 @@ public class TileTank extends MTile implements IQuintContainer {
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setFloat("Quints", quints);
-		compound.setFloat("DisplayQuints", displayQuints);
+		compound.setInteger("Suction", suction);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		setQuints(compound.getFloat("Quints"));
-		setDisplayQuints(compound.getFloat("DisplayQuints"));
+		quints = compound.getFloat("Quints");
+		suction = compound.getInteger("Suction");
 	}
 
-	public void calculateSuction() {
+	@Override
+	public void update() {
+		if (!world.isRemote) {
+			--updateDelay;
+
+			if (updateDelay <= 0) {
+				refresh();
+
+				updateDelay = 10;
+				calculateSuction();
+			}
+
+			distributeQuints();
+		}
+	}
+
+	private void calculateSuction() {
 		setSuction(10);
 	}
 
-	@Nullable
-	protected TileTank getValidTank(int offsetY) {
-		TileEntity tile = world.getTileEntity(pos.up(offsetY));
-
-		if (tile instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
-
-			if (tank.canConnect(EnumFacing.UP)) {
-				return tank;
-			}
-		}
-
-		return null;
-	}
-
-	protected void equalizeWithNeighbors() {
+	private void distributeQuints() {
 		float tempQuints = quints;
 		float tempMaxQuints = getMaxQuints();
 		TileTank tank;
@@ -147,32 +152,18 @@ public class TileTank extends MTile implements IQuintContainer {
 		}
 	}
 
-	protected void calculateDisplayQuints() {
-		if (quints >= 0.5F) {
-			displayQuints = quints;
-		} else {
-			displayQuints = 0F;
-		}
+	@Nullable
+	protected TileTank getValidTank(int offsetY) {
+		TileEntity tile = world.getTileEntity(pos.up(offsetY));
 
-		if (quints < 0.0F) {
-			quints = 0.0F;
-		}
-	}
+		if (tile instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
 
-	@Override
-	public void update() {
-		if (!world.isRemote) {
-			--delay;
-
-			if (delay <= 0) {
-				refresh();
-
-				delay = 10;
-				calculateSuction();
+			if (tank.canConnect(EnumFacing.UP)) {
+				return tank;
 			}
-
-			equalizeWithNeighbors();
-			calculateDisplayQuints();
 		}
+
+		return null;
 	}
 }
