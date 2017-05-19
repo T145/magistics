@@ -6,7 +6,9 @@ import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.entities.EntitySpecialItem;
+import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -19,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileCrucible extends MTile implements IQuintContainer, IWorker {
@@ -34,6 +37,10 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 	public TileCrucible(EnumCrucible type) {
 		this.type = type;
+	}
+
+	public TileCrucible() {
+		this(EnumCrucible.BASIC);
 	}
 
 	public EnumCrucible getCrucibleType() {
@@ -218,9 +225,9 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 						discharge = true;
 
-						/*for (int b = 0; b < 3; ++b) {
+						for (int b = 0; b < 3; ++b) {
 							FXCreator.INSTANCE.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
-						}*/
+						}
 					}
 				}
 
@@ -255,12 +262,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 								item.setDead();
 							}
 
-							//world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, item.posX, item.posY, item.posZ, 0D, 0D, 0D);
-							//world.playSound(null, pos, ModSounds.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
 						ejectItem(stack);
-						//world.playSound(null, pos, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
+						//world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
 					}
 				}
 			}
