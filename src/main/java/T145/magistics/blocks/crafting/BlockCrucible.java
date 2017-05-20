@@ -93,18 +93,22 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (!world.isRemote && entity.getEntityBoundingBox().minY <= pos.getY() + 0.7D) {
-			if (entity instanceof EntityItem) {
-				EntityItem item = (EntityItem) entity;
+		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
-				item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
-				item.motionY += world.rand.nextFloat() * 0.1F;
-				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+		if (crucible.isNormal()) {
+			if (!world.isRemote && entity.getEntityBoundingBox().minY <= pos.getY() + 0.7D) {
+				if (entity instanceof EntityItem) {
+					EntityItem item = (EntityItem) entity;
 
-				item.setPickupDelay(10);
-			} else if (entity instanceof EntityLiving) {
-				entity.attackEntityFrom(DamageSource.MAGIC, 1);
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
+					item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+					item.motionY += world.rand.nextFloat() * 0.1F;
+					item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+
+					item.setPickupDelay(10);
+				} else if (entity instanceof EntityLiving) {
+					entity.attackEntityFrom(DamageSource.MAGIC, 1);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
+				}
 			}
 		}
 	}

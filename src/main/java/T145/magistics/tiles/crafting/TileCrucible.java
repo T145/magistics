@@ -21,8 +21,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.WorldServer;
 
 public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
@@ -87,11 +89,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 			stack.setCount(stack.getCount() - ejectedStack.getCount());
 
-			EntitySpecialItem item = new EntitySpecialItem(this.world, this.pos.getX() + 0.5F, this.pos.getY() + 0.71F, this.pos.getZ() + 0.5F, ejectedStack);
+			EntitySpecialItem item = new EntitySpecialItem(world, pos.getX() + 0.5F, pos.getY() + 0.71F, pos.getZ() + 0.5F, ejectedStack);
 
 			item.motionY = 0.075D;
-			item.motionX = (first ? 0.0D : (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.01F);
-			item.motionZ = (first ? 0.0D : (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.01F);
+			item.motionX = (first ? 0.0D : (world.rand.nextFloat() - world.rand.nextFloat()) * 0.01F);
+			item.motionZ = (first ? 0.0D : (world.rand.nextFloat() - world.rand.nextFloat()) * 0.01F);
 			world.spawnEntity(item);
 
 			first = false;
@@ -207,7 +209,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 				smeltDelay = 20;
 
 				for (EntityLivingBase mob : getSurroundingMobs()) {
-					if (working = !(mob instanceof EntityPlayer) && !(mob instanceof EntityTameable) && mob.hurtTime <= 0 && mob.deathTime <= 0) {
+					if (!(mob instanceof EntityPlayer) && !(mob instanceof EntityTameable) && mob.hurtTime <= 0 && mob.deathTime <= 0) {
 						if (mob instanceof EntitySnowman) {
 							EntitySnowman snowman = (EntitySnowman) mob;
 							snowman.spawnExplosionParticle();
@@ -231,7 +233,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 					}
 				}
 
-				if (discharge) {
+				if (working = discharge) {
 					// discharge chunk aura
 					// play draining sound fx
 					// refresh()
@@ -262,6 +264,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 								item.setDead();
 							}
 
+							((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
 							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
