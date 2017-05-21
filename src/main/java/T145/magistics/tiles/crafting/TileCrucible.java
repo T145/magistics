@@ -126,12 +126,14 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setString("Type", type.toString());
 		compound.setFloat("Quints", quints);
+		compound.setBoolean("Working", working);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		type = EnumCrucible.valueOf(compound.getString("Type"));
 		quints = compound.getFloat("Quints");
+		working = compound.getBoolean("Working");
 	}
 
 	@Override
@@ -219,6 +221,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (working = discharge) {
 					// discharge chunk aura
+					refresh();
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.suck, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 				}
 			} else {
@@ -247,6 +250,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 								item.setDead();
 							}
 
+							refresh();
 							((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
 							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
