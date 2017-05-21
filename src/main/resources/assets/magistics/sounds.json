@@ -28,6 +28,8 @@
 	"shock1": {"category": "master","sounds": [{"name": "magistics:shock1","stream": false}]},
 	"shock2": {"category": "master","sounds": [{"name": "magistics:shock2","stream": false}]},
 	"singularity": {"category": "master","sounds": [{"name": "magistics:singularity","stream": false}]},
+	"stomp1": {"category": "master","sounds": [{"name": "magistics:stomp1","stream": false}]},
+	"stomp2": {"category": "master","sounds": [{"name": "magistics:stomp2","stream": false}]},
 	"stoneclose": {"category": "master","sounds": [{"name": "magistics:stoneclose","stream": false}]},
 	"stoneopen": {"category": "master","sounds": [{"name": "magistics:stoneopen","stream": false}]},
 	"suck": {"category": "master","sounds": [{"name": "magistics:suck","stream": false}]},
@@ -41,5 +43,5 @@
 	"wind1": {"category": "master","sounds": [{"name": "magistics:wind1","stream": false}]},
 	"wind2": {"category": "master","sounds": [{"name": "magistics:wind2","stream": false}]},
 	"zap1": {"category": "master","sounds": [{"name": "magistics:zap1","stream": false}]},
-	"zap2": {"category": "master","sounds": [{"name": "magistics:zap2","stream": false}]},
+	"zap2": {"category": "master","sounds": [{"name": "magistics:zap2","stream": false}]}
 }

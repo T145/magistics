@@ -94,7 +94,7 @@ public class ModSounds {
 		tool1 = registerSound("tool1");
 		tool2 = registerSound("tool2");
 		upgrade = registerSound("upgrade");
-		upgrade = registerSound("upgrade");
+		whisper = registerSound("whisper");
 		wind1 = registerSound("wind1");
 		wind2 = registerSound("wind2");
 		zap1 = registerSound("zap1");
