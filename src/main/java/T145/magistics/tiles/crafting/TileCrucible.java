@@ -7,7 +7,6 @@ import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.client.fx.FXCreator;
-import T145.magistics.entities.EntitySpecialItem;
 import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +15,7 @@ import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -77,27 +77,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		return world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos.getX() - 4D, pos.getY() - 4D, pos.getZ() - 4D, pos.getX() + 5D, pos.getY() + 5D, pos.getZ() + 5D));
 	}
 
-	public void ejectItem(ItemStack stack) {
-		boolean first = true;
-
-		while (!stack.isEmpty()) {
-			ItemStack ejectedStack = stack.copy();
-
-			if (ejectedStack.getCount() > ejectedStack.getMaxStackSize()) {
-				ejectedStack.setCount(ejectedStack.getMaxStackSize());
-			}
-
-			stack.setCount(stack.getCount() - ejectedStack.getCount());
-
-			EntitySpecialItem item = new EntitySpecialItem(world, pos.getX() + 0.5F, pos.getY() + 0.71F, pos.getZ() + 0.5F, ejectedStack);
-
-			item.motionY = 0.075D;
-			item.motionX = (first ? 0.0D : (world.rand.nextFloat() - world.rand.nextFloat()) * 0.01F);
-			item.motionZ = (first ? 0.0D : (world.rand.nextFloat() - world.rand.nextFloat()) * 0.01F);
-			world.spawnEntity(item);
-
-			first = false;
-		}
+	public void ejectItem(EntityItem item) {
+		item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
+		item.motionY = 0.2F + world.rand.nextFloat() * 0.3F;
+		item.motionZ = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
+		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
 	}
 
 	@Override
@@ -235,8 +219,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (working = discharge) {
 					// discharge chunk aura
-					// play draining sound fx
-					// refresh()
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.suck, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 				}
 			} else {
 				smeltDelay = 5;
@@ -265,11 +248,10 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 							}
 
 							((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
-							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.BLOCKS, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 						}
 					} else {
-						ejectItem(stack);
-						//world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
+						ejectItem(item);
 					}
 				}
 			}

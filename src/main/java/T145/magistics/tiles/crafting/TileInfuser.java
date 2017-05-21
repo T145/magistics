@@ -196,7 +196,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 				if (soundDelay == 0 && cookTime > 0.025F) {
 					// slightly discharge this chunk's aura
 
-					world.playSound(null, pos, isDark() ? ModSounds.infuserDark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
+					world.playSound(null, pos, isDark() ? ModSounds.infuserdark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
