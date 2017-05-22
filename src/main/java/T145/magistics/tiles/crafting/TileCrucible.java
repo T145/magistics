@@ -172,6 +172,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 			if (spiltQuints >= 1F) {
 				// pollute chunk aura
+				FXCreator.INSTANCE.customWispFX(world, (pos.getX() + world.rand.nextFloat()), (pos.getY() + 0.8F), (pos.getZ() + world.rand.nextFloat()), (pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat())), (pos.getY() + 3.0F + world.rand.nextFloat()), (pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat())), 0.5F, 5);
 			}
 
 			refresh();
@@ -221,8 +222,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (working = discharge) {
 					// discharge chunk aura
-					refresh();
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.suck, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
+				}
+
+				if (working != discharge) {
+					refresh();
 				}
 			} else {
 				smeltDelay = 5;

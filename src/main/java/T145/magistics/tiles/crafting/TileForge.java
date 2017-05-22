@@ -22,12 +22,12 @@ public class TileForge extends MTile implements IFacing {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("facing", facing.getIndex());
+		compound.setInteger("Facing", facing.getIndex());
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		facing = EnumFacing.getFront(compound.getInteger("facing"));
+		facing = EnumFacing.getFront(compound.getInteger("Facing"));
 	}
 
 	@Override

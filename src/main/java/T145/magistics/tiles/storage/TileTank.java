@@ -22,6 +22,10 @@ public class TileTank extends MTile implements IQuintContainer {
 		maxQuints = reinforced ? 1000F : 500F;
 	}
 
+	public TileTank() {
+		this(false);
+	}
+
 	public boolean isReinforced() {
 		return reinforced;
 	}
