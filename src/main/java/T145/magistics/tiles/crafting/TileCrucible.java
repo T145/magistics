@@ -134,6 +134,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		type = EnumCrucible.valueOf(compound.getString("Type"));
 		quints = compound.getFloat("Quints");
 		working = compound.getBoolean("Working");
+		world.notifyBlockUpdate(pos, getState(), getState(), 1);
 	}
 
 	@Override
@@ -192,6 +193,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		// check for and handle smelting items / draining mobs
 		if (smeltDelay <= 0) {
 			if (type == EnumCrucible.SOULS && Math.round(quints + 1F) <= getMaxQuints()) {
+				boolean wasWorking = isDraining();
 				boolean discharge = false;
 				smeltDelay = 20;
 
@@ -222,10 +224,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (working = discharge) {
 					// discharge chunk aura
+					//refresh();
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.suck, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 				}
 
-				if (working != discharge) {
+				if (working != wasWorking) {
 					refresh();
 				}
 			} else {
