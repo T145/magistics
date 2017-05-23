@@ -131,10 +131,15 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
+		boolean wasWorking = isWorking();
+
 		type = EnumCrucible.valueOf(compound.getString("Type"));
 		quints = compound.getFloat("Quints");
 		working = compound.getBoolean("Working");
-		world.notifyBlockUpdate(pos, getState(), getState(), 1);
+
+		if (working != wasWorking) {
+			world.notifyBlockUpdate(pos, getState(), getState(), 1);
+		}
 	}
 
 	@Override
@@ -173,7 +178,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 			if (spiltQuints >= 1F) {
 				// pollute chunk aura
-				FXCreator.INSTANCE.customWispFX(world, (pos.getX() + world.rand.nextFloat()), (pos.getY() + 0.8F), (pos.getZ() + world.rand.nextFloat()), (pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat())), (pos.getY() + 3.0F + world.rand.nextFloat()), (pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat())), 0.5F, 5);
+				FXCreator.INSTANCE.customWispFX(world, pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5);
 			}
 
 			refresh();
