@@ -5,7 +5,6 @@ import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintManager;
 import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.client.fx.FXCreator;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
 import T145.magistics.init.ModSounds;
@@ -23,38 +22,32 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 
-public class TileInfuser extends MTileInventory implements IInteractionObject, IFacing, IQuintManager {
+public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
 	public float cookCost;
 	public float cookTime;
 
-	protected boolean active;
-	protected boolean crafting;
-	protected boolean enchanted;
-	protected int angle;
-	protected int soundDelay;
-	protected int boost;
-	protected int boostDelay = 20;
-	protected int suction;
-	protected EnumFacing facing = EnumFacing.SOUTH;
+	private final boolean dark;
+	private int angle;
+	private int soundDelay;
+	private int boost;
+	private int boostDelay = 20;
+	private int suction;
+	private EnumFacing facing = EnumFacing.NORTH;
 
-	public boolean isActive() {
-		return active;
+	public TileInfuser(boolean dark) {
+		this.dark = dark;
 	}
 
-	public boolean isCrafting() {
-		return crafting;
+	public TileInfuser() {
+		this(false);
 	}
 
 	public boolean isDark() {
-		return false;
+		return dark;
 	}
 
-	public boolean isDormant() {
-		return !active && !crafting;
-	}
-
-	public float getDiskAngle() {
+	public int getDiskAngle() {
 		return angle;
 	}
 
@@ -62,42 +55,9 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		return boost;
 	}
 
-	public void setBoost() {
-		if (boostDelay <= 0 || boostDelay == 10) {
-			if (boost < 10) {
-				++boost;
-			}
-		}
-	}
-
-	@Override
-	public boolean canConnect(EnumFacing facing) {
-		return facing != EnumFacing.UP;
-	}
-
-	@Override
-	public int getSuction() {
-		return suction;
-	}
-
-	@Override
-	public void setSuction(int suction) {
-		this.suction = suction;
-	}
-
-	@Override
-	public EnumFacing getFacing() {
-		return facing;
-	}
-
-	@Override
-	public void setFacing(EnumFacing facing) {
-		this.facing = facing;
-	}
-
 	@Override
 	public String getName() {
-		return "tile.infuser.light.name";
+		return dark ? "tile.infuser.dark.name" : "tile.infuser.light.name";
 	}
 
 	@Override
@@ -117,17 +77,42 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 	@Override
 	public String getGuiID() {
-		return "magistics:infuser";
+		return dark ? "magistics:infuserdark" : "magistics:infuser";
+	}
+
+	@Override
+	public EnumFacing getFacing() {
+		return facing;
+	}
+
+	@Override
+	public void setFacing(EnumFacing facing) {
+		this.facing = facing;
+	}
+
+	@Override
+	public boolean canConnect(EnumFacing facing) {
+		return facing != EnumFacing.UP;
+	}
+
+	@Override
+	public int getSuction() {
+		return suction;
+	}
+
+	@Override
+	public void setSuction(int suction) {
+		this.suction = suction;
 	}
 
 	@Override
 	public int getSizeInventory() {
-		return 8;
+		return dark ? 6 : 8;
 	}
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
-		return slot > (isDark() ? 0 : 1);
+		return slot > (dark ? 0 : 1);
 	}
 
 	@Override
@@ -136,21 +121,25 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		super.writePacketNBT(compound);
+	public void readPacketNBT(NBTTagCompound compound) {
+		super.readPacketNBT(compound);
+		facing = EnumFacing.getFront(compound.getInteger("Facing"));
+		cookCost = compound.getFloat("CookCost");
+		cookTime = compound.getFloat("CookTime");
+		angle = compound.getInteger("Angle");
 
-		compound.setInteger("Facing", facing.ordinal());
-		compound.setFloat("CookCost", cookCost);
-		compound.setFloat("CookTime", cookTime);
+		if (isCrafting()) {
+			world.notifyBlockUpdate(pos, getState(), getState(), 1);
+		}
 	}
 
 	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		super.readPacketNBT(compound);
-
-		setFacing(EnumFacing.getFront(compound.getInteger("Facing")));
-		cookCost = compound.getFloat("CookCost");
-		cookTime = compound.getFloat("CookTime");
+	public void writePacketNBT(NBTTagCompound compound) {
+		super.writePacketNBT(compound);
+		compound.setInteger("Facing", facing.getIndex());
+		compound.setFloat("CookCost", cookCost);
+		compound.setFloat("CookTime", cookTime);
+		compound.setInteger("Angle", angle);
 	}
 
 	public int getCookProgressScaled(int time) {
@@ -161,35 +150,29 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		return Math.round(0.1F + boost / 2F) * 6;
 	}
 
+	public boolean isCrafting() {
+		return cookTime > 0F;
+	}
+
 	@Override
 	public void update() {
-		if (isDormant()) {
-			setSuction(0);
-			angle = facing.ordinal();
-		} else {
-			angle = getCookProgressScaled(360);
-		}
+		setSuction(0);
+		angle = getCookProgressScaled(360);
 
 		if (soundDelay > 0) {
 			--soundDelay;
 		}
 
-		if (boostDelay <= 0) {
-			if (boost > 0) {
-				--boost;
-			}
-
-			boostDelay = 20;
-		} else {
-			--boostDelay;
-		}
+		/*if (world.isRemote) {
+			return;
+		}*/
 
 		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 
-		if (active = hasWorld() && infuserRecipe != null && !world.isBlockPowered(pos)) {
+		if (infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
 
-			if (crafting = canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
+			if (canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
 				float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
 				cookTime += QuintHelper.drainQuints(world, pos, quintDrain, true);
 
@@ -200,40 +183,24 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 					soundDelay = 62;
 				}
 
-				if (enchanted) {
-					switch (world.rand.nextInt(4)) {
-					case 0:
-						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
-						break;
-					case 1:
-						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.1F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
-						break;
-					case 2:
-						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.1F);
-						break;
-					case 3:
-						FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.9F, pos.getY() + 1.15F, pos.getZ() + 0.9F);
-						break;
-					}
-				}
-
 				if (cookTime >= cookCost) {
-					addProcessedItem(infuserRecipe.getResult(), infuserRecipe.getComponents());
+					addProcessedItem(infuserRecipe);
 					reset();
 					refresh();
 				}
+			} else { // pause crafting
+				hardReset();
 			}
 		} else {
-			if (crafting) {
-				world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
-				refresh();
-			}
-
-			reset();
+			hardReset();
 		}
 	}
 
 	public boolean canCraft(InfuserRecipe infuserRecipe) {
+		if (infuserRecipe == null) {
+			return false;
+		}
+
 		ItemStack result = infuserRecipe.getResult();
 
 		if (result.isEmpty()) {
@@ -248,14 +215,17 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 		}
 	}
 
-	private void addProcessedItem(ItemStack result, ItemStack[] components) {
+	private void addProcessedItem(InfuserRecipe infuserRecipe) {
+		ItemStack result = infuserRecipe.getResult();
+		ItemStack[] components = infuserRecipe.getComponents();
+
 		if (itemHandler.getStackInSlot(0).isEmpty()) {
 			itemHandler.setStackInSlot(0, result.copy());
 		} else if (RecipeRegistry.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
 			itemHandler.getStackInSlot(0).grow(result.getCount());
 		}
 
-		for (int slot = isDark() ? 1 : 2; slot < getSizeInventory(); ++slot) {
+		for (int slot = dark ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (!itemHandler.getStackInSlot(slot).isEmpty()) {
 				for (ItemStack component : components) {
 					if (RecipeRegistry.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
@@ -263,7 +233,7 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 
 						// fluid container compatibility
 
-						if (!isDark() && component.getItem() instanceof ItemShard) {
+						if (!dark && component.getItem() instanceof ItemShard) {
 							if (itemHandler.getStackInSlot(1).isEmpty()) {
 								itemHandler.setStackInSlot(1, new ItemStack(ModItems.crystalShard, 1, 0));
 							} else {
@@ -283,7 +253,14 @@ public class TileInfuser extends MTileInventory implements IInteractionObject, I
 	private void reset() {
 		cookCost = 0F;
 		cookTime = 0F;
-		active = false;
-		crafting = false;
+	}
+
+	private void hardReset() {
+		if (isCrafting()) {
+			world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1.6F);
+			refresh();
+		}
+
+		reset();
 	}
 }

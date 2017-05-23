@@ -72,8 +72,8 @@ public class ContainerInfuser extends Container {
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 
-		for (int i = 0; i < listeners.size(); ++i) {
-			updateContainer(listeners.get(i), false);
+		for (IContainerListener listener : listeners) {
+			updateContainer(listener, false);
 		}
 
 		cookCost = infuser.cookCost;
