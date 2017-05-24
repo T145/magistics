@@ -7,13 +7,16 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 
 public class TileElevator extends TileEntity implements ITickable {
 
@@ -88,28 +91,53 @@ public class TileElevator extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		Stack<Entity> entitiesAbove = getEntitiesAbove();
+		if (!world.isRemote) {
+			Stack<Entity> entitiesAbove = getEntitiesAbove();
 
-		if (!(clear = entitiesAbove.isEmpty())) {
-			Entity target = entitiesAbove.pop();
+			if (!(clear = entitiesAbove.isEmpty())) {
+				Entity target = entitiesAbove.pop();
 
-			if (++delay % 45 == 0) {
-				delay = 0;
+				if (++delay % 45 == 0) {
+					delay = 0;
 
-				BlockPos destPos = getDestination();
-				TileEntity destTile = world.getTileEntity(destPos);
+					BlockPos destPos = getDestination();
+					TileEntity destTile = world.getTileEntity(destPos);
 
-				if (destPos != null && destTile instanceof TileElevator) {
-					TileElevator dest = (TileElevator) destTile;
+					if (destPos != null && destTile instanceof TileElevator) {
+						TileElevator dest = (TileElevator) destTile;
 
-					if (dest.canTeleportTo()) {
-						target.setPositionAndUpdate(target.posX, destPos.getY() + 1D, target.posZ);
-						world.playSound(null, target.posX, destPos.getY() + 1D, target.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
-						delay -= 20;
-						dest.setDelay(delay);
+						if (dest.canTeleportTo()) {
+							teleportEntity((WorldServer) world, target, target.posX, destPos.getY() + 1D, target.posZ);
+							world.playSound(null, target.posX, destPos.getY() + 1D, target.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1F, 1F);
+							delay -= 20;
+							dest.setDelay(delay);
+						}
 					}
 				}
 			}
+		}
+	}
+
+	private void teleportEntity(WorldServer world, Entity entity, double x, double y, double z) {
+		double prevPosX = entity.posX;
+		double prevPosY = entity.posY;
+		double prevPosZ = entity.posZ;
+
+		entity.setPositionAndUpdate(x, y, z);
+
+		for (int j = 0; j < 128; ++j) {
+			double d6 = j / 127.0D;
+			float f = (world.rand.nextFloat() - 0.5F) * 0.2F;
+			float f1 = (world.rand.nextFloat() - 0.5F) * 0.2F;
+			float f2 = (world.rand.nextFloat() - 0.5F) * 0.2F;
+			double d3 = prevPosX + (entity.posX - prevPosX) * d6 + (world.rand.nextDouble() - 0.5D) * entity.width * 2.0D;
+			double d4 = prevPosY + (entity.posY - prevPosY) * d6 + world.rand.nextDouble() * entity.height;
+			double d5 = prevPosZ + (entity.posZ - prevPosZ) * d6 + (world.rand.nextDouble() - 0.5D) * entity.width * 2.0D;
+			world.spawnParticle(EnumParticleTypes.PORTAL, false, d3, d4, d5, 1, f, f1, f2, 0D);
+		}
+
+		if (entity instanceof EntityCreature) {
+			((EntityCreature) entity).getNavigator().clearPathEntity();
 		}
 	}
 }
