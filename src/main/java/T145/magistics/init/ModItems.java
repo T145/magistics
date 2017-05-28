@@ -8,8 +8,8 @@ import T145.magistics.api.variants.items.EnumShard;
 import T145.magistics.api.variants.items.ResearchType;
 import T145.magistics.items.ItemShard;
 import T145.magistics.items.research.ItemDiscovery;
-import T145.magistics.items.research.ItemFragment;
 import T145.magistics.items.research.ItemNote;
+import T145.magistics.items.research.ItemTheory;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -21,14 +21,14 @@ public class ModItems {
 	public static List<Item> itemRegistry = new ArrayList<Item>();
 
 	public static Item crystalShard;
-	public static Item researchFragment;
 	public static Item researchNote;
+	public static Item researchTheory;
 	public static Item researchDiscovery;
 
 	public static void init() {
 		itemRegistry.add(crystalShard = new ItemShard());
-		itemRegistry.add(researchFragment = new ItemFragment());
 		itemRegistry.add(researchNote = new ItemNote());
+		itemRegistry.add(researchTheory = new ItemTheory());
 		itemRegistry.add(researchDiscovery = new ItemDiscovery());
 	}
 
@@ -47,8 +47,8 @@ public class ModItems {
 		}
 
 		for (ResearchType type : ResearchType.values()) {
-			registerItemModel(researchFragment, type.ordinal(), "research/fragment/" + type.getName());
 			registerItemModel(researchNote, type.ordinal(), "research/note/" + type.getName());
+			registerItemModel(researchTheory, type.ordinal(), "research/theory/" + type.getName());
 			registerItemModel(researchDiscovery, type.ordinal(), "research/discovery/" + type.getName());
 		}
 	}

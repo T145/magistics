@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "magistics:items/research/fragment_eldritch"
+        "layer0": "magistics:items/research/note_forbidden"
     }
 }
