@@ -10,6 +10,7 @@ import T145.magistics.init.ModItems;
 import T145.magistics.init.ModSounds;
 import T145.magistics.items.ItemShard;
 import T145.magistics.tiles.MTileInventory;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -21,6 +22,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
@@ -81,13 +84,23 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	@Override
-	public EnumFacing getFacing() {
+	public boolean isHorizontalFacing() {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public EnumFacing getClientFacing() {
 		return facing;
 	}
 
 	@Override
-	public void setFacing(EnumFacing facing) {
-		this.facing = facing;
+	public EnumFacing getFacing(IBlockState state) {
+		return facing;
+	}
+
+	@Override
+	public void setFacing(IBlockState state, EnumFacing side) {
+		facing = side;
 	}
 
 	@Override

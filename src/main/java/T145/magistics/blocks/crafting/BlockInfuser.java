@@ -121,7 +121,7 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 		TileEntity tile = world.getTileEntity(pos);
 
 		if (tile instanceof IFacing) {
-			((IFacing) tile).setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
+			((IFacing) tile).setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
 		}
 	}
 }

@@ -9,6 +9,7 @@ import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySnowman;
@@ -98,7 +99,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 	public void setSuction(int pressure) {}
 
 	@Override
-	public boolean isWorking() {
+	public boolean isWorking(IBlockState state) {
 		return working;
 	}
 
@@ -131,7 +132,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		boolean wasWorking = isWorking();
+		boolean wasWorking = working;
 
 		type = EnumCrucible.valueOf(compound.getString("Type"));
 		quints = compound.getFloat("Quints");

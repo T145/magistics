@@ -1,10 +1,19 @@
 package T145.magistics.api.logic;
 
+import net.minecraft.block.BlockDirectional;
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 
 public interface IFacing {
 
-	EnumFacing getFacing();
+	static final PropertyDirection HORIZONTAL_FACING = BlockHorizontal.FACING;
+	static final PropertyDirection DIRECTIONAL_FACING = BlockDirectional.FACING;
 
-	void setFacing(EnumFacing facing);
+	boolean isHorizontalFacing();
+
+	EnumFacing getFacing(IBlockState state);
+
+	void setFacing(IBlockState state, EnumFacing side);
 }

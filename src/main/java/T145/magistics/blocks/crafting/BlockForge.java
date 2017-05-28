@@ -3,7 +3,8 @@ package T145.magistics.blocks.crafting;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IHorizontalFacing;
+import T145.magistics.api.logic.IFacing;
+import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.blocks.MBlockDevice;
 import T145.magistics.init.ModBlocks;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForge extends MBlockDevice<EnumForge> implements IHorizontalFacing {
+public class BlockForge extends MBlockDevice<EnumForge> implements IFacing, IWorker {
 
 	public BlockForge() {
 		super("forge", Material.ROCK, EnumForge.class);
@@ -36,10 +37,30 @@ public class BlockForge extends MBlockDevice<EnumForge> implements IHorizontalFa
 	}
 
 	@Override
+	public boolean isHorizontalFacing() {
+		return true;
+	}
+
+	@Override
+	public EnumFacing getFacing(IBlockState state) {
+		return state.getValue(HORIZONTAL_FACING);
+	}
+
+	@Override
+	public void setFacing(IBlockState state, EnumFacing side) {
+		state = state.withProperty(HORIZONTAL_FACING, side);
+	}
+
+	@Override
+	public boolean isWorking(IBlockState state) {
+		return state.getValue(WORKING);
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("incomplete-switch")
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-		if (state.getValue(WORKING)) {
+		if (isWorking(state)) {
 			double d0 = pos.getX() + 0.5D;
 			double d1 = pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
 			double d2 = pos.getZ() + 0.5D;
@@ -50,7 +71,7 @@ public class BlockForge extends MBlockDevice<EnumForge> implements IHorizontalFa
 				world.playSound(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 
-			switch (state.getValue(FACING)) {
+			switch (getFacing(state)) {
 			case WEST:
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 				world.spawnParticle(EnumParticleTypes.FLAME, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
@@ -84,8 +105,8 @@ public class BlockForge extends MBlockDevice<EnumForge> implements IHorizontalFa
 		IBlockState state = world.getBlockState(pos);
 		TileEntity tile = world.getTileEntity(pos);
 
-		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(FACING, state.getValue(FACING)), 3);
-		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(FACING, state.getValue(FACING)), 3);
+		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
+		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
 
 		if (tile != null) {
 			tile.validate();

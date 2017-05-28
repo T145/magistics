@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.blocks.MBlockDevice;
 import T145.magistics.client.fx.FXCreator;
@@ -28,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends MBlockDevice<EnumCrucible> {
+public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker {
 
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
@@ -46,6 +47,11 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileCrucible(EnumCrucible.values()[meta]);
+	}
+
+	@Override
+	public boolean isWorking(IBlockState state) {
+		return state.getValue(WORKING);
 	}
 
 	@Override
