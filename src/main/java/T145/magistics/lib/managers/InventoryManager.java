@@ -1,5 +1,7 @@
 package T145.magistics.lib.managers;
 
+import javax.annotation.Nonnull;
+
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -67,5 +69,33 @@ public class InventoryManager {
 				break;
 			}
 		}
+	}
+
+	public static ItemStack tryInsertItemStackToInventory(IItemHandler inv, @Nonnull ItemStack stack) {
+		return tryInsertItemStackToInventoryWithinSlotRange(inv, stack, new SlotRange(inv));
+	}
+
+	public static ItemStack tryInsertItemStackToInventoryWithinSlotRange(IItemHandler inv, @Nonnull ItemStack stack, SlotRange slotRange) {
+		final int lastSlot = Math.min(slotRange.lastInc, inv.getSlots() - 1);
+
+		for (int slot = slotRange.first; slot <= lastSlot; slot++) {
+			if (inv.getStackInSlot(slot).isEmpty() == false) {
+				stack = inv.insertItem(slot, stack, false);
+
+				if (stack.isEmpty()) {
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+
+		for (int slot = slotRange.first; slot <= lastSlot; slot++) {
+			stack = inv.insertItem(slot, stack, false);
+
+			if (stack.isEmpty()) {
+				return ItemStack.EMPTY;
+			}
+		}
+
+		return stack;
 	}
 }

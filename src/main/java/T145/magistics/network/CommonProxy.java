@@ -6,6 +6,7 @@ import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
 import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.crafting.TileInfuser;
+import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,6 +29,8 @@ public class CommonProxy implements IGuiHandler {
 		switch (ID) {
 		case 0:
 			return ((TileInfuser) tile).createContainer(player.inventory, player);
+		case 1:
+			return ((TileChestHungry) tile).createContainer(player.inventory, player);
 		default:
 			return null;
 		}

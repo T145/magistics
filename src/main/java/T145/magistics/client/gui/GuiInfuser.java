@@ -35,7 +35,7 @@ public class GuiInfuser extends GuiContainer {
 		GlStateManager.color(1F, 1F, 1F, 1F);
 
 		if (infuser.isDark()) {
-			mc.renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"));
+			mc.getTextureManager().bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"));
 
 			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
@@ -46,7 +46,7 @@ public class GuiInfuser extends GuiContainer {
 
 			drawTexturedModalRect(offsetX + 160, offsetY + 8, 192, mc.world.getMoonPhase() * 8, 8, 8);
 		} else {
-			mc.renderEngine.bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser.png"));
+			mc.getTextureManager().bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser.png"));
 
 			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 

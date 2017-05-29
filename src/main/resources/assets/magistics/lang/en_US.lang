@@ -15,6 +15,10 @@ tile.forge.netherrack.name=Netherrack Furnace
 tile.forge.nether_forge.name=Nether Forge
 tile.elevator.name=Elevator
 
+tile.chest_hungry.basic.name=Hungry Chest
+tile.chest_hungry.trapped.name=Hungry Trapped Chest
+tile.chest_hungry.ender.name=Hungry Ender Chest
+
 tile.chest_wood.greatwood.name=Greatwood Chest
 tile.chest_wood.silverwood.name=Silverwood Chest
 

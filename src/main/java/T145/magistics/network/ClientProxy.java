@@ -1,12 +1,14 @@
 package T145.magistics.network;
 
 import T145.magistics.client.fx.FXEngine;
+import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
 import T145.magistics.tiles.crafting.TileInfuser;
+import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +28,8 @@ public class ClientProxy extends CommonProxy {
 		switch (ID) {
 		case 0:
 			return new GuiInfuser(player.inventory, ((TileInfuser) tile));
+		case 1:
+			return new GuiChestHungry(player.inventory, ((TileChestHungry) tile));
 		default:
 			return null;
 		}
