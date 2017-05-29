@@ -18,12 +18,16 @@
             }
         },
         "check_decay": {
-            "true": {},
-            "false": {}
+            "true": {
+            },
+            "false": {
+            }
         },
         "decayable": {
-            "true": {},
-            "false": {}
+            "true": {
+            },
+            "false": {
+            }
         },
         "variant=greatwood": {
             "model": "leaves",

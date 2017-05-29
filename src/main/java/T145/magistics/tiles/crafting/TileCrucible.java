@@ -2,11 +2,11 @@ package T145.magistics.tiles.crafting;
 
 import java.util.List;
 
-import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.client.fx.FXCreator;
+import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
 import net.minecraft.block.state.IBlockState;
@@ -245,7 +245,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 				if (!items.isEmpty()) {
 					EntityItem item = items.get(world.rand.nextInt(items.size()));
 					ItemStack stack = item.getEntityItem();
-					float quintYield = RecipeRegistry.getCrucibleResult(stack);
+					float quintYield = ModRecipes.getCrucibleResult(stack);
 
 					if (quintYield > 0F) {
 						// boost conversion rate iff above arcane furnace

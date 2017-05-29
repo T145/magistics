@@ -10,12 +10,18 @@
     },
     "variants": {
         "variant": {
-            "air": {},
-            "fire": {},
-            "water": {},
-            "earth": {},
-            "light": {},
-            "dark": {}
+            "air": {
+            },
+            "fire": {
+            },
+            "water": {
+            },
+            "earth": {
+            },
+            "light": {
+            },
+            "dark": {
+            }
         }
     }
 }

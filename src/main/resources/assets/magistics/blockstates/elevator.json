@@ -6,15 +6,15 @@
     "variants": {
         "normal": {
             "model": "cube",
-        "textures": {
-            "particle": "#down",
-            "down": "magistics:blocks/infusion/base/0",
-            "up": "blocks/quartz_block_chiseled_top",
-            "north": "magistics:blocks/elevator",
-            "east": "#north",
-            "south": "#north",
-            "west": "#north"
-        }
+            "textures": {
+                "particle": "#down",
+                "down": "magistics:blocks/infusion/base/0",
+                "up": "blocks/quartz_block_chiseled_top",
+                "north": "magistics:blocks/elevator",
+                "east": "#north",
+                "south": "#north",
+                "west": "#north"
+            }
         }
     }
 }

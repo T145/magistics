@@ -1,12 +1,13 @@
 package T145.magistics.tiles.crafting;
 
+import T145.magistics.api.MagisticsApiHelper;
 import T145.magistics.api.crafting.InfuserRecipe;
-import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintManager;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
+import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
 import T145.magistics.items.ItemShard;
 import T145.magistics.tiles.MTileInventory;
@@ -180,7 +181,7 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 			return;
 		}*/
 
-		InfuserRecipe infuserRecipe = RecipeRegistry.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
+		InfuserRecipe infuserRecipe = ModRecipes.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 
 		if (infuserRecipe != null && !world.isBlockPowered(pos)) {
 			cookCost = infuserRecipe.getCost();
@@ -220,7 +221,7 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 			return false;
 		} else if (itemHandler.getStackInSlot(0).isEmpty()) {
 			return true;
-		} else if (!RecipeRegistry.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
+		} else if (!MagisticsApiHelper.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
 			return false;
 		} else {
 			int resultCount = itemHandler.getStackInSlot(0).getCount() + result.getCount();
@@ -234,14 +235,14 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 
 		if (itemHandler.getStackInSlot(0).isEmpty()) {
 			itemHandler.setStackInSlot(0, result.copy());
-		} else if (RecipeRegistry.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
+		} else if (MagisticsApiHelper.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
 			itemHandler.getStackInSlot(0).grow(result.getCount());
 		}
 
 		for (int slot = dark ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (!itemHandler.getStackInSlot(slot).isEmpty()) {
 				for (ItemStack component : components) {
-					if (RecipeRegistry.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
+					if (MagisticsApiHelper.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
 						itemHandler.getStackInSlot(slot).shrink(1);
 
 						// fluid container compatibility

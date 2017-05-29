@@ -1,47 +1,407 @@
 {
-	"attach": {"category": "master","sounds": [{"name": "magistics:attach","stream": false}]},
-	"beamloop": {"category": "master","sounds": [{"name": "magistics:beamloop","stream": false}]},
-	"bubbling": {"category": "master","sounds": [{"name": "magistics:bubbling","stream": false}]},
-	"creaking1": {"category": "master","sounds": [{"name": "magistics:creaking1","stream": false}]},
-	"creaking2": {"category": "master","sounds": [{"name": "magistics:creaking2","stream": false}]},
-	"elecloop": {"category": "master","sounds": [{"name": "magistics:elecloop","stream": false}]},
-	"fireloop": {"category": "master","sounds": [{"name": "magistics:fireloop","stream": false}]},
-	"gore1": {"category": "master","sounds": [{"name": "magistics:gore1","stream": false}]},
-	"gore2": {"category": "master","sounds": [{"name": "magistics:gore2","stream": false}]},
-	"heal": {"category": "master","sounds": [{"name": "magistics:heal","stream": false}]},
-	"infuser": {"category": "master","sounds": [{"name": "magistics:infuser","stream": false}]},
-	"infuserdark": {"category": "master","sounds": [{"name": "magistics:infuserdark","stream": false}]},
-	"learn": {"category": "master","sounds": [{"name": "magistics:learn","stream": false}]},
-	"monolith": {"category": "master","sounds": [{"name": "magistics:monolith","stream": false}]},
-	"monolithfound": {"category": "master","sounds": [{"name": "magistics:monolithfound","stream": false}]},
-	"page1": {"category": "master","sounds": [{"name": "magistics:page1","stream": false}]},
-	"page2": {"category": "master","sounds": [{"name": "magistics:page2","stream": false}]},
-	"pclose": {"category": "master","sounds": [{"name": "magistics:pclose","stream": false}]},
-	"place": {"category": "master","sounds": [{"name": "magistics:place","stream": false}]},
-	"podburst": {"category": "master","sounds": [{"name": "magistics:podburst","stream": false}]},
-	"popen": {"category": "master","sounds": [{"name": "magistics:popen","stream": false}]},
-	"recover": {"category": "master","sounds": [{"name": "magistics:recover","stream": false}]},
-	"roots": {"category": "master","sounds": [{"name": "magistics:roots","stream": false}]},
-	"rumble": {"category": "master","sounds": [{"name": "magistics:rumble","stream": false}]},
-	"rune_set": {"category": "master","sounds": [{"name": "magistics:rune_set","stream": false}]},
-	"scribble": {"category": "master","sounds": [{"name": "magistics:scribble","stream": false}]},
-	"shock1": {"category": "master","sounds": [{"name": "magistics:shock1","stream": false}]},
-	"shock2": {"category": "master","sounds": [{"name": "magistics:shock2","stream": false}]},
-	"singularity": {"category": "master","sounds": [{"name": "magistics:singularity","stream": false}]},
-	"stomp1": {"category": "master","sounds": [{"name": "magistics:stomp1","stream": false}]},
-	"stomp2": {"category": "master","sounds": [{"name": "magistics:stomp2","stream": false}]},
-	"stoneclose": {"category": "master","sounds": [{"name": "magistics:stoneclose","stream": false}]},
-	"stoneopen": {"category": "master","sounds": [{"name": "magistics:stoneopen","stream": false}]},
-	"suck": {"category": "master","sounds": [{"name": "magistics:suck","stream": false}]},
-	"swing1": {"category": "master","sounds": [{"name": "magistics:swing1","stream": false}]},
-	"swing2": {"category": "master","sounds": [{"name": "magistics:swing2","stream": false}]},
-	"tinkering": {"category": "master","sounds": [{"name": "magistics:tinkering","stream": false}]},
-	"tool1": {"category": "master","sounds": [{"name": "magistics:tool1","stream": false}]},
-	"tool2": {"category": "master","sounds": [{"name": "magistics:tool2","stream": false}]},
-	"upgrade": {"category": "master","sounds": [{"name": "magistics:upgrade","stream": false}]},
-	"whisper": {"category": "master","sounds": [{"name": "magistics:whisper","stream": false}]},
-	"wind1": {"category": "master","sounds": [{"name": "magistics:wind1","stream": false}]},
-	"wind2": {"category": "master","sounds": [{"name": "magistics:wind2","stream": false}]},
-	"zap1": {"category": "master","sounds": [{"name": "magistics:zap1","stream": false}]},
-	"zap2": {"category": "master","sounds": [{"name": "magistics:zap2","stream": false}]}
+    "attach": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:attach",
+                "stream": false
+            }
+        ]
+    },
+    "beamloop": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:beamloop",
+                "stream": false
+            }
+        ]
+    },
+    "bubbling": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:bubbling",
+                "stream": false
+            }
+        ]
+    },
+    "creaking1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:creaking1",
+                "stream": false
+            }
+        ]
+    },
+    "creaking2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:creaking2",
+                "stream": false
+            }
+        ]
+    },
+    "elecloop": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:elecloop",
+                "stream": false
+            }
+        ]
+    },
+    "fireloop": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:fireloop",
+                "stream": false
+            }
+        ]
+    },
+    "gore1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:gore1",
+                "stream": false
+            }
+        ]
+    },
+    "gore2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:gore2",
+                "stream": false
+            }
+        ]
+    },
+    "heal": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:heal",
+                "stream": false
+            }
+        ]
+    },
+    "infuser": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:infuser",
+                "stream": false
+            }
+        ]
+    },
+    "infuserdark": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:infuserdark",
+                "stream": false
+            }
+        ]
+    },
+    "learn": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:learn",
+                "stream": false
+            }
+        ]
+    },
+    "monolith": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:monolith",
+                "stream": false
+            }
+        ]
+    },
+    "monolithfound": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:monolithfound",
+                "stream": false
+            }
+        ]
+    },
+    "page1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:page1",
+                "stream": false
+            }
+        ]
+    },
+    "page2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:page2",
+                "stream": false
+            }
+        ]
+    },
+    "pclose": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:pclose",
+                "stream": false
+            }
+        ]
+    },
+    "place": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:place",
+                "stream": false
+            }
+        ]
+    },
+    "podburst": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:podburst",
+                "stream": false
+            }
+        ]
+    },
+    "popen": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:popen",
+                "stream": false
+            }
+        ]
+    },
+    "recover": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:recover",
+                "stream": false
+            }
+        ]
+    },
+    "roots": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:roots",
+                "stream": false
+            }
+        ]
+    },
+    "rumble": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:rumble",
+                "stream": false
+            }
+        ]
+    },
+    "rune_set": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:rune_set",
+                "stream": false
+            }
+        ]
+    },
+    "scribble": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:scribble",
+                "stream": false
+            }
+        ]
+    },
+    "shock1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:shock1",
+                "stream": false
+            }
+        ]
+    },
+    "shock2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:shock2",
+                "stream": false
+            }
+        ]
+    },
+    "singularity": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:singularity",
+                "stream": false
+            }
+        ]
+    },
+    "stomp1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:stomp1",
+                "stream": false
+            }
+        ]
+    },
+    "stomp2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:stomp2",
+                "stream": false
+            }
+        ]
+    },
+    "stoneclose": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:stoneclose",
+                "stream": false
+            }
+        ]
+    },
+    "stoneopen": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:stoneopen",
+                "stream": false
+            }
+        ]
+    },
+    "suck": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:suck",
+                "stream": false
+            }
+        ]
+    },
+    "swing1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:swing1",
+                "stream": false
+            }
+        ]
+    },
+    "swing2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:swing2",
+                "stream": false
+            }
+        ]
+    },
+    "tinkering": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:tinkering",
+                "stream": false
+            }
+        ]
+    },
+    "tool1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:tool1",
+                "stream": false
+            }
+        ]
+    },
+    "tool2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:tool2",
+                "stream": false
+            }
+        ]
+    },
+    "upgrade": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:upgrade",
+                "stream": false
+            }
+        ]
+    },
+    "whisper": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:whisper",
+                "stream": false
+            }
+        ]
+    },
+    "wind1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:wind1",
+                "stream": false
+            }
+        ]
+    },
+    "wind2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:wind2",
+                "stream": false
+            }
+        ]
+    },
+    "zap1": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:zap1",
+                "stream": false
+            }
+        ]
+    },
+    "zap2": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "magistics:zap2",
+                "stream": false
+            }
+        ]
+    }
 }

@@ -1,4 +1,5 @@
 {
+    "__comment": "Designed by T145",
     "parent": "block/block",
     "display": {
         "gui": {

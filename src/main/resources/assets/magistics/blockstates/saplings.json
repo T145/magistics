@@ -18,8 +18,10 @@
             }
         },
         "stage": {
-            "0": {},
-            "1": {}
+            "0": {
+            },
+            "1": {
+            }
         },
         "variant=greatwood": {
             "model": "forge:item-layer",
