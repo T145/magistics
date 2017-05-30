@@ -33,7 +33,7 @@ public class Magistics {
 	@Instance(MODID)
 	public static Magistics instance;
 
-	@SidedProxy(serverSide = "T145.magistics.network.CommonProxy", clientSide = "T145.magistics.network.ClientProxy")
+	@SidedProxy(serverSide = "T145.magistics.proxies.CommonProxy", clientSide = "T145.magistics.proxies.ClientProxy")
 	public static CommonProxy proxy;
 
 	@Metadata

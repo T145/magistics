@@ -32,6 +32,21 @@ apply plugin: 'java'
 apply plugin: 'de.undercouch.download'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+repositories {
+	mavenCentral()
+    maven {
+        name 'Mobius Repo'
+        url 'http://tehnut.info/maven'
+    }
+    maven {
+        url 'http://modmaven.k-4u.nl/'
+    }
+	maven {
+		name 'DVS1 Maven FS'
+		url 'http://dvs1.progwml6.com/files/maven'
+	}
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = gradle_version
 }
@@ -68,16 +83,23 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 minecraft {
     version = forge_version
     mappings = forge_mappings
-    runDir = "run"
+    runDir = 'run'
+	useDepAts = true
 }
 
 version = revision
 group = mod_group
 archivesBaseName = mod_id
 
-sourceCompatibility = targetCompatibility = "1.8"
+sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+dependencies {
+    deobfCompile 'mcp.mobius.waila:Hwyla:1.8.13-B26_1.11'
+    deobfCompile 'mezz.jei:jei_1.11.2:4.3.5.277'
+	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.19.803'
 }
 
 build {
