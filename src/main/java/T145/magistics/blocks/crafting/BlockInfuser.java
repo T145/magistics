@@ -12,6 +12,7 @@ import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -123,5 +124,15 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 		if (tile instanceof IFacing) {
 			((IFacing) tile).setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
 		}
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+		return InventoryManager.calcRedstone(world.getTileEntity(pos));
 	}
 }

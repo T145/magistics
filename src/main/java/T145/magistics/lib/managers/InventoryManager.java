@@ -1,6 +1,7 @@
 package T145.magistics.lib.managers;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.state.IBlockState;
@@ -11,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -18,6 +20,31 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.VanillaDoubleChestItemHandler;
 
 public class InventoryManager {
+
+	public static int calcRedstone(@Nullable TileEntity tile) {
+		return tile instanceof MTileInventory ? calcRedstoneFromInventory((MTileInventory) tile) : 0;
+	}
+
+	public static int calcRedstoneFromInventory(@Nullable MTileInventory inv) {
+		if (inv == null) {
+			return 0;
+		} else {
+			int i = 0;
+			float f = 0.0F;
+
+			for (int j = 0; j < inv.getSizeInventory(); ++j) {
+				ItemStack itemstack = inv.getItemHandler().getStackInSlot(j);
+
+				if (!itemstack.isEmpty()) {
+					f += itemstack.getCount() / Math.min(64, itemstack.getMaxStackSize());
+					++i;
+				}
+			}
+
+			f = f / inv.getSizeInventory();
+			return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
+		}
+	}
 
 	public static IItemHandler getInventory(World world, BlockPos pos, EnumFacing side) {
 		TileEntity tile = world.getTileEntity(pos);

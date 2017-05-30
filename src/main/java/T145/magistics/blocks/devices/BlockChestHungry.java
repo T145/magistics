@@ -18,7 +18,6 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -219,6 +218,6 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	@Override
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
-		return Container.calcRedstone(world.getTileEntity(pos));
+		return InventoryManager.calcRedstone(world.getTileEntity(pos));
 	}
 }

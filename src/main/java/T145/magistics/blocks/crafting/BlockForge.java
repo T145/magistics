@@ -8,12 +8,12 @@ import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.blocks.MBlockDevice;
 import T145.magistics.init.ModBlocks;
+import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.crafting.TileForge;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -126,6 +126,6 @@ public class BlockForge extends MBlockDevice<EnumForge> implements IFacing, IWor
 
 	@Override
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
-		return Container.calcRedstone(world.getTileEntity(pos));
+		return InventoryManager.calcRedstone(world.getTileEntity(pos));
 	}
 }
