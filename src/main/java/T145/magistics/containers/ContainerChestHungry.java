@@ -43,19 +43,19 @@ public class ContainerChestHungry extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-		ItemStack itemStack = ItemStack.EMPTY;
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+		ItemStack copyStack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack slotStack = slot.getStack();
-			itemStack = slotStack.copy();
+			copyStack = slotStack.copy();
 
-			if (index < 27) {
-				if (!mergeItemStack(slotStack, 27, inventorySlots.size(), true)) {
+			if (index < chest.getSizeInventory()) {
+				if (!mergeItemStack(slotStack, chest.getSizeInventory(), inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!mergeItemStack(slotStack, 0, 27, false)) {
+			} else if (!mergeItemStack(slotStack, 0, chest.getSizeInventory(), false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -66,7 +66,7 @@ public class ContainerChestHungry extends Container {
 			}
 		}
 
-		return itemStack;
+		return copyStack;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IOwned;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.containers.ContainerChestHungry;
+import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.state.IBlockState;
@@ -20,6 +21,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class TileChestHungry extends MTileInventory implements IOwned, IFacing, IInteractionObject {
 
@@ -190,6 +193,53 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 				lidAngle = 0.0F;
 			}
 		}
+
+		if (!world.isRemote && isEnderChest() && world.isBlockPowered(pos)) {
+			syncWithEnderChest();
+		}
+	}
+
+	private void syncWithEnderChest() {
+		boolean movedSomething = false;
+
+		for (int slot = 0; slot < itemHandler.getSlots(); ++slot) {
+			movedSomething = moveStackFromSlotToEnderChest(slot);
+		}
+
+		if (movedSomething) {
+			world.playSound(null, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+		}
+	}
+
+	private boolean moveStackFromSlotToEnderChest(int slot) {
+		if (itemHandler.getStackInSlot(slot).isEmpty() || owner == null || owner.getId() == null) {
+			return false;
+		}
+
+		EntityPlayer player = getOwner();
+
+		if (player == null) {
+			return false;
+		}
+
+		ItemStack stack = itemHandler.extractItem(slot, 64, false);
+
+		if (stack.isEmpty()) {
+			return false;
+		}
+
+		int origSize = stack.getCount();
+		IItemHandler inv = new InvWrapper(player.getInventoryEnderChest());
+		stack = InventoryManager.tryInsertItemStackToInventory(inv, stack);
+
+		if (stack.isEmpty()) {
+			return true;
+		}
+
+		boolean movedItems = origSize != stack.getCount();
+		itemHandler.insertItem(slot, stack, false);
+
+		return movedItems;
 	}
 
 	@Override

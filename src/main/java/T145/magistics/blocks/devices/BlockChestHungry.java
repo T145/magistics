@@ -143,9 +143,10 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		TileChestHungry chest = (TileChestHungry) world.getTileEntity(pos);
+		TileEntity tile = world.getTileEntity(pos);
 
-		if (chest != null && entity instanceof EntityItem && !entity.isDead) {
+		if (tile instanceof TileChestHungry && entity instanceof EntityItem && !entity.isDead) {
+			TileChestHungry chest = (TileChestHungry) tile;
 			EntityItem item = (EntityItem) entity;
 			ItemStack stack = item.getEntityItem();
 			ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(chest.getItemHandler(), stack);
@@ -161,7 +162,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 				entity.setDead();
 			}
 
-			chest.markDirty();
+			chest.refresh();
 		}
 	}
 
