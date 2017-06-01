@@ -24,7 +24,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -34,8 +33,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockChestHungry extends MBlock<EnumChestHungry> {
-
-	public static final AxisAlignedBB CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
 	public BlockChestHungry() {
 		super("chest_hungry", Material.WOOD, EnumChestHungry.class);
@@ -56,7 +53,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return CHEST_AABB;
+		return Blocks.ENDER_CHEST.getBoundingBox(state, source, pos);
 	}
 
 	@Override
@@ -84,17 +81,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		if (isEnderChest(state)) {
-			for (int i = 0; i < 3; ++i) {
-				int j = rand.nextInt(2) * 2 - 1;
-				int k = rand.nextInt(2) * 2 - 1;
-				double minX = pos.getX() + 0.5D + 0.25D * j;
-				double minY = pos.getY() + rand.nextFloat();
-				double minZ = pos.getZ() + 0.5D + 0.25D * k;
-				double maxX = rand.nextFloat() * j;
-				double maxY = (rand.nextFloat() - 0.5D) * 0.125D;
-				double maxZ = rand.nextFloat() * k;
-				world.spawnParticle(EnumParticleTypes.PORTAL, minX, minY, minZ, maxX, maxY, maxZ, new int[0]);
-			}
+			Blocks.ENDER_CHEST.randomDisplayTick(state, world, pos, rand);
 		}
 	}
 

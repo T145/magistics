@@ -14,18 +14,16 @@ public class RenderChestHungry extends TileEntitySpecialRenderer<TileChestHungry
 
 	private final ModelChest modelChest = new ModelChest();
 
-	public void renderTileEntityAt(TileChestHungry te, double x, double y, double z, float partialTicks, int destroyStage) {
-		int i = te.getFacing(te.getState()).getIndex();
-
+	public void renderTileEntityAt(TileChestHungry chest, double x, double y, double z, float partialTicks, int destroyStage) {
 		if (destroyStage >= 0) {
-			this.bindTexture(DESTROY_STAGES[destroyStage]);
+			bindTexture(DESTROY_STAGES[destroyStage]);
 			GlStateManager.matrixMode(5890);
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(4.0F, 4.0F, 1.0F);
 			GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
 			GlStateManager.matrixMode(5888);
 		} else {
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/chest_hungry/" + te.getType().getName() + ".png"));
+			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/chest_hungry/" + chest.getType().getName() + ".png"));
 		}
 
 		GlStateManager.pushMatrix();
@@ -34,31 +32,31 @@ public class RenderChestHungry extends TileEntitySpecialRenderer<TileChestHungry
 		GlStateManager.translate((float) x, (float) y + 1.0F, (float) z + 1.0F);
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		int j = 0;
 
-		if (i == 2) {
-			j = 180;
+		switch (chest.getFacing(chest.getState())) {
+		case NORTH:
+			GlStateManager.rotate(180F, 0F, 1F, 0F);
+			break;
+		case SOUTH:
+			GlStateManager.rotate(0F, 0F, 1F, 0F);
+			break;
+		case WEST:
+			GlStateManager.rotate(90F, 0F, 1F, 0F);
+			break;
+		case EAST:
+			GlStateManager.rotate(270F, 0F, 1F, 0F);
+			break;
+		default:
+			GlStateManager.rotate(0F, 0F, 1F, 0F);
+			break;
 		}
 
-		if (i == 3) {
-			j = 0;
-		}
-
-		if (i == 4) {
-			j = 90;
-		}
-
-		if (i == 5) {
-			j = -90;
-		}
-
-		GlStateManager.rotate((float) j, 0.0F, 1.0F, 0.0F);
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-		float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+		float f = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * partialTicks;
 		f = 1.0F - f;
 		f = 1.0F - f * f * f;
-		this.modelChest.chestLid.rotateAngleX = -(f * ((float) Math.PI / 2F));
-		this.modelChest.renderAll();
+		modelChest.chestLid.rotateAngleX = -(f * ((float) Math.PI / 2F));
+		modelChest.renderAll();
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
