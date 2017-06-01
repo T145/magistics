@@ -1,5 +1,6 @@
 package T145.magistics.proxies;
 
+import T145.magistics.addons.ModAddons;
 import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
@@ -45,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 		ModBlocks.initClient();
 		ModItems.initClient();
 		ModEntities.initClient();
+		ModAddons.initClient();
 	}
 
 	@Override
