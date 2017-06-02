@@ -1,8 +1,5 @@
 package T145.magistics.init;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.IVariant;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
@@ -37,8 +34,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
-	public static List<Block> blockRegistry = new ArrayList<Block>();
-
 	public static Block infuser;
 	public static Block tank;
 	public static Block conduit;
@@ -48,13 +43,13 @@ public class ModBlocks {
 	public static Block chestHungry;
 
 	public static void init() {
-		blockRegistry.add(crucible = new BlockCrucible());
-		blockRegistry.add(infuser = new BlockInfuser());
-		blockRegistry.add(tank = new BlockTank());
-		blockRegistry.add(conduit = new BlockConduit());
-		blockRegistry.add(elevator = new BlockElevator());
-		blockRegistry.add(forge = new BlockForge());
-		blockRegistry.add(chestHungry = new BlockChestHungry());
+		crucible = new BlockCrucible();
+		infuser = new BlockInfuser();
+		tank = new BlockTank();
+		conduit = new BlockConduit();
+		elevator = new BlockElevator();
+		forge = new BlockForge();
+		chestHungry = new BlockChestHungry();
 	}
 
 	private static void registerBlockModel(Block block, int meta, String path, String variant) {

@@ -1,8 +1,5 @@
 package T145.magistics.init;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.items.EnumShard;
 import T145.magistics.api.variants.items.ResearchType;
@@ -18,18 +15,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems {
 
-	public static List<Item> itemRegistry = new ArrayList<Item>();
-
 	public static Item crystalShard;
 	public static Item researchNote;
 	public static Item researchTheory;
 	public static Item researchDiscovery;
 
 	public static void init() {
-		itemRegistry.add(crystalShard = new ItemShard());
-		itemRegistry.add(researchNote = new ItemNote());
-		itemRegistry.add(researchTheory = new ItemTheory());
-		itemRegistry.add(researchDiscovery = new ItemDiscovery());
+		crystalShard = new ItemShard();
+		researchNote = new ItemNote();
+		researchTheory = new ItemTheory();
+		researchDiscovery = new ItemDiscovery();
 	}
 
 	private static void registerItemModel(Item item, int meta, String path) {

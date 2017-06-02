@@ -1,6 +1,5 @@
 package T145.magistics.proxies;
 
-import T145.magistics.addons.ModAddons;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
@@ -43,16 +42,13 @@ public class CommonProxy implements IGuiHandler {
 		ModBlocks.init();
 		ModItems.init();
 		ModEntities.init();
-		ModAddons.preInit(event);
 	}
 
 	public void init(FMLInitializationEvent event) {
 		ModSounds.registerSounds();
-		ModAddons.init(event);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
 		ModRecipes.registerRecipes();
-		ModAddons.postInit(event);
 	}
 }

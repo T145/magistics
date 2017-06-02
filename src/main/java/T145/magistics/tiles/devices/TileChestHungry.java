@@ -96,6 +96,11 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 	}
 
 	@Override
+	public GameProfile getOwnerProfile() {
+		return owner;
+	}
+
+	@Override
 	public void setOwner(EntityPlayer player) {
 		if (player != null) {
 			owner = player.getGameProfile();
