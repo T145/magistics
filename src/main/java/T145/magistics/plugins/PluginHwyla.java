@@ -1,7 +1,8 @@
-package T145.magistics.addons;
+package T145.magistics.plugins;
 
 import java.util.List;
 
+import T145.magistics.Magistics;
 import T145.magistics.tiles.devices.TileChestHungry;
 import mcp.mobius.waila.addons.HUDHandlerBase;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -16,25 +17,25 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@WailaPlugin
-public class AddonHwyla extends HUDHandlerBase implements IWailaPlugin {
+@WailaPlugin(value = Magistics.MODID)
+public class PluginHwyla extends HUDHandlerBase implements IWailaPlugin {
 
 	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		if (accessor.getTileEntity() instanceof TileChestHungry) {
 			TileChestHungry chest = (TileChestHungry) accessor.getTileEntity();
 
 			if (chest.isEnderChest() && chest.getOwnerProfile() != null) {
-				currenttip.add("Owner: " + chest.getOwnerProfile().getName());
+				tooltip.add("Owner: " + chest.getOwnerProfile().getName());
 			}
 		}
 
-		return currenttip;
+		return tooltip;
 	}
 
 	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-		return te.writeToNBT(tag);
+	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, BlockPos pos) {
+		return tile.writeToNBT(tag);
 	}
 
 	@Override
