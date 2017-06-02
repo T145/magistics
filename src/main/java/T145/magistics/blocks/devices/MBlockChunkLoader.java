@@ -1,6 +1,5 @@
 package T145.magistics.blocks.devices;
 
-import T145.magistics.api.variants.IVariant;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.tiles.devices.MTileChunkLoader;
 import net.minecraft.block.material.Material;
@@ -11,10 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MBlockChunkLoader<T extends Enum<T> & IVariant> extends MBlock<T> {
+public class MBlockChunkLoader<T extends Enum<T> & IStringSerializable> extends MBlock<T> {
 
 	public MBlockChunkLoader(String name, Material material, Class variants) {
 		super(name, material, variants);

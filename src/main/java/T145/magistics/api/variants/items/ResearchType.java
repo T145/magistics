@@ -3,9 +3,9 @@ package T145.magistics.api.variants.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import T145.magistics.api.variants.IVariant;
+import net.minecraft.util.IStringSerializable;
 
-public enum ResearchType implements IVariant {
+public enum ResearchType implements IStringSerializable {
 
 	LOST, FORBIDDEN, BLIGHTED, ELDRITCH;
 
@@ -23,10 +23,5 @@ public enum ResearchType implements IVariant {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
-	}
-
-	@Override
-	public String getClientName() {
-		return "variant=" + getName();
 	}
 }

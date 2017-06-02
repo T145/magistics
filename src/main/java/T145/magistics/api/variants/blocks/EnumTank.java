@@ -1,18 +1,13 @@
 package T145.magistics.api.variants.blocks;
 
-import T145.magistics.api.variants.IVariant;
+import net.minecraft.util.IStringSerializable;
 
-public enum EnumTank implements IVariant {
+public enum EnumTank implements IStringSerializable {
 
 	NORMAL, REINFORCED;
 
 	@Override
 	public String getName() {
 		return name().toLowerCase();
-	}
-
-	@Override
-	public String getClientName() {
-		return "variant=" + getName();
 	}
 }

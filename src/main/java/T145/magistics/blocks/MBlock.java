@@ -3,7 +3,6 @@ package T145.magistics.blocks;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.IVariant;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.Block;
@@ -178,7 +177,7 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 		return state.getValue(variant).getName();
 	}
 
-	public boolean isVariant(IBlockState state, IVariant type) {
+	public boolean isVariant(IBlockState state, IStringSerializable type) {
 		if (variant == null) {
 			return false;
 		}

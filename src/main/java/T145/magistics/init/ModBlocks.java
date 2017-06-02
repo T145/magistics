@@ -1,7 +1,5 @@
 package T145.magistics.init;
 
-import T145.magistics.Magistics;
-import T145.magistics.api.variants.IVariant;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.api.variants.blocks.EnumForge;
@@ -14,6 +12,7 @@ import T145.magistics.blocks.devices.BlockChestHungry;
 import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
+import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.render.blocks.RenderChestHungry;
 import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
@@ -25,8 +24,6 @@ import T145.magistics.tiles.devices.TileChestHungry;
 import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,44 +49,32 @@ public class ModBlocks {
 		chestHungry = new BlockChestHungry();
 	}
 
-	private static void registerBlockModel(Block block, int meta, String path, String variant) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Magistics.MODID + ":" + path, variant));
-	}
-
-	private static void registerBlockModel(Block block, int meta, String variant) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), variant));
-	}
-
-	private static void registerBlockModel(Block block, int meta, IVariant variant) {
-		registerBlockModel(block, meta, variant.getClientName());
-	}
-
 	@SideOnly(Side.CLIENT)
 	public static void initClient() { // NOTE: ALWAYS REGISTER THE LAST MODEL TO BE RENDERED IN THE INVENTORY
 		ModelLoader.setCustomStateMapper(infuser, ((BlockInfuser) infuser).getStateMap());
 
 		for (EnumInfuser type : EnumInfuser.values()) {
-			registerBlockModel(infuser, type.ordinal(), type.getName() + "_infuser", "inventory");
+			ClientBakery.registerBlockModel(infuser, type.ordinal(), type.getName() + "_infuser", "inventory");
 		}
 
 		for (EnumTank type : EnumTank.values()) {
-			registerBlockModel(tank, type.ordinal(), type);
+			ClientBakery.registerBlockModel(tank, type.ordinal(), type);
 		}
 
-		registerBlockModel(conduit, 0, "inventory");
+		ClientBakery.registerBlockModel(conduit, 0, "inventory");
 
 		for (EnumCrucible type : EnumCrucible.values()) {
-			registerBlockModel(crucible, type.ordinal(), type.getClientName() + ",working=false");
+			ClientBakery.registerBlockModel(crucible, type.ordinal(), ClientBakery.getVariantName(type) + ",working=false");
 		}
 
-		registerBlockModel(elevator, 0, "normal");
+		ClientBakery.registerBlockModel(elevator, 0, "normal");
 
 		for (EnumForge type : EnumForge.values()) {
-			registerBlockModel(forge, type.ordinal(), "inventory," + type.getClientName());
+			ClientBakery.registerBlockModel(forge, type.ordinal(), "inventory," + ClientBakery.getVariantName(type));
 		}
 
 		for (EnumChestHungry type : EnumChestHungry.values()) {
-			registerBlockModel(chestHungry, type.ordinal(), type);
+			ClientBakery.registerBlockModel(chestHungry, type.ordinal(), type);
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());

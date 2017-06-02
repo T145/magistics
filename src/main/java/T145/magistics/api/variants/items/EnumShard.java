@@ -3,9 +3,9 @@ package T145.magistics.api.variants.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import T145.magistics.api.variants.IVariant;
+import net.minecraft.util.IStringSerializable;
 
-public enum EnumShard implements IVariant {
+public enum EnumShard implements IStringSerializable {
 
 	DULL, AIR, FIRE, WATER, EARTH, MAGIC, VOID;
 
@@ -26,10 +26,5 @@ public enum EnumShard implements IVariant {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
-	}
-
-	@Override
-	public String getClientName() {
-		return "variant=" + getName();
 	}
 }

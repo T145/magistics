@@ -26,7 +26,7 @@ tile.chest_hungry_metal.copper.name=Hungry Copper Chest
 tile.chest_hungry_metal.silver.name=Hungry Silver Chest
 tile.chest_hungry_metal.crystal.name=Hungry Crystal Chest
 tile.chest_hungry_metal.obsidian.name=Hungry Obsidian Chest
-tile.chest_hungry_metal.dirt.name=Hungry Dirt Chest
+tile.chest_hungry_metal.dirtchest9000.name=Hungry Dirt Chest
 
 tile.chest_wood.greatwood.name=Greatwood Chest
 tile.chest_wood.silverwood.name=Silverwood Chest

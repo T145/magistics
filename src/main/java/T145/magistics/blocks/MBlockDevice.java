@@ -5,7 +5,6 @@ import java.util.List;
 
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IWorker;
-import T145.magistics.api.variants.IVariant;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,11 +13,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class MBlockDevice<T extends Enum<T> & IVariant> extends MBlock<T> {
+public abstract class MBlockDevice<T extends Enum<T> & IStringSerializable> extends MBlock<T> {
 
 	public MBlockDevice(String name, Material material, Class variants) {
 		super(name, material, variants);

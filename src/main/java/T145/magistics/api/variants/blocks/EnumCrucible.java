@@ -1,8 +1,8 @@
 package T145.magistics.api.variants.blocks;
 
-import T145.magistics.api.variants.IVariant;
+import net.minecraft.util.IStringSerializable;
 
-public enum EnumCrucible implements IVariant {
+public enum EnumCrucible implements IStringSerializable {
 
 	BASIC(500F, 0.5F, 0.25F),
 	EYES(600F, 0.6F, 0.5F),
@@ -34,10 +34,5 @@ public enum EnumCrucible implements IVariant {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
-	}
-
-	@Override
-	public String getClientName() {
-		return "variant=" + getName();
 	}
 }
