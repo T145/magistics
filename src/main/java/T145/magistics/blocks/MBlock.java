@@ -18,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class MBlock<T extends Enum<T> & IVariant> extends Block implements ITileEntityProvider {
+public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Block implements ITileEntityProvider {
 
 	public final PropertyEnum<T> variant;
 	public final T[] variantValues;

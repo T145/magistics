@@ -2,9 +2,8 @@ package T145.magistics.proxies;
 
 import java.util.Set;
 
-import org.apache.logging.log4j.core.helpers.Strings;
-
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Strings;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.IMagisticsPlugin;
@@ -23,9 +22,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler {
@@ -54,38 +53,56 @@ public class CommonProxy implements IGuiHandler {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		plugins = event.getAsmData().getAll(MagisticsPlugin.class.getCanonicalName());
-
 		ModBlocks.init();
 		ModItems.init();
 		ModEntities.init();
+		registerPlugins(event, false);
 	}
 
 	public void init(FMLInitializationEvent event) {
 		ModSounds.registerSounds();
+		registerPlugins(event, false);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
 		ModRecipes.registerRecipes();
+		registerPlugins(event, false);
 	}
 
-	public void loadComplete(FMLLoadCompleteEvent event) {
+	protected void registerPlugins(FMLStateEvent event, boolean clientSide) {
 		for (ASMData data : plugins) {
 			try {
-				String pluginModid = (String) data.getAnnotationInfo().get(data);
+				String modid = (String) data.getAnnotationInfo().get("modid");
 
-				if (Strings.isNotEmpty(pluginModid) && Loader.isModLoaded(pluginModid)) {
+				if (!Strings.isNullOrEmpty(modid) && Loader.isModLoaded(modid)) {
 					Stopwatch stopwatch = Stopwatch.createStarted();
 					Class<?> asmClass = Class.forName(data.getClassName());
 
 					if (IMagisticsPlugin.class.isAssignableFrom(asmClass)) {
 						IMagisticsPlugin plugin = (IMagisticsPlugin) asmClass.newInstance();
-						plugin.loadPlugin();
-						Magistics.LOGGER.info("Registered plugin for {} from {} in {}", pluginModid, data.getClassName(), stopwatch.stop());
+
+						if (event instanceof FMLPreInitializationEvent) {
+							if (clientSide) {
+								plugin.initClient();
+								Magistics.LOGGER.info("Initialized client plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
+							} else {
+								plugin.preInit((FMLPreInitializationEvent) event);
+								Magistics.LOGGER.info("PreInitialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
+							}
+						} else if (event instanceof FMLInitializationEvent) {
+							plugin.init((FMLInitializationEvent) event);
+							Magistics.LOGGER.info("Initialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
+						} else if (event instanceof FMLPostInitializationEvent) {
+							plugin.postInit((FMLPostInitializationEvent) event);
+							Magistics.LOGGER.info("PostInitialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
+						}
 					} else {
-						Magistics.LOGGER.error("{} attempted to register a plugin for {} that did not implement IMagisticsPlugin", data.getClassName(), pluginModid);
+						Magistics.LOGGER.error("{} attempted to register a plugin for {} that did not implement IMagisticsPlugin", data.getClassName(), modid);
 					}
-				} else {
-					Magistics.LOGGER.error("{} is not loaded. Passing over plugin.", pluginModid);
+
+					if (stopwatch.isRunning()) {
+						stopwatch.stop();
+					}
 				}
 			} catch (Exception err) {
 				Magistics.LOGGER.error("Error registering plugin for class {}", data.getClassName());

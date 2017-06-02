@@ -45,6 +45,7 @@ public class ClientProxy extends CommonProxy {
 		ModBlocks.initClient();
 		ModItems.initClient();
 		ModEntities.initClient();
+		registerPlugins(event, true);
 	}
 
 	@Override
