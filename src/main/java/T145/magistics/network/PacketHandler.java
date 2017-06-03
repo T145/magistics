@@ -1,6 +1,8 @@
 package T145.magistics.network;
 
 import T145.magistics.Magistics;
+import T145.magistics.network.messages.MessageBase;
+import T145.magistics.network.messages.client.MessageInfuserProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.client.FMLClientHandler;

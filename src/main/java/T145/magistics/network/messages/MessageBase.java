@@ -1,4 +1,4 @@
-package T145.magistics.network;
+package T145.magistics.network.messages;
 
 import java.io.IOException;
 

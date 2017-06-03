@@ -1,7 +1,8 @@
-package T145.magistics.network;
+package T145.magistics.network.messages.client;
 
 import java.io.IOException;
 
+import T145.magistics.network.messages.MessageBase;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,7 +11,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
 
 public class MessageInfuserProgress extends MessageBase {
 
@@ -42,17 +42,12 @@ public class MessageInfuserProgress extends MessageBase {
 
 	@Override
 	public IMessage process(MessageContext context) {
-		if (context.side == Side.CLIENT) {
-			World world = FMLClientHandler.instance().getWorldClient();
-			TileEntity tile = world.getTileEntity(pos);
+		World world = FMLClientHandler.instance().getWorldClient();
+		TileEntity tile = world.getTileEntity(pos);
 
-			if (tile instanceof TileInfuser) {
-				TileInfuser infuser = (TileInfuser) tile;
-
-				if (infuser.isCrafting()) {
-					infuser.cookTime = progress;
-				}
-			}
+		if (tile instanceof TileInfuser) {
+			TileInfuser infuser = (TileInfuser) tile;
+			infuser.cookTime = progress;
 		}
 		return null;
 	}
