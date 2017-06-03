@@ -10,6 +10,8 @@ import T145.magistics.init.ModItems;
 import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
 import T145.magistics.items.ItemShard;
+import T145.magistics.network.MessageInfuserProgress;
+import T145.magistics.network.PacketHandler;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
@@ -154,6 +157,10 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 		return cookTime > 0F;
 	}
 
+	public void sendCraftingProgressPacket() {
+		PacketHandler.INSTANCE.sendToAllAround(new MessageInfuserProgress(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 64D));
+	}
+
 	@Override
 	public void update() {
 		setSuction(0);
@@ -162,9 +169,13 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 			--soundDelay;
 		}
 
-		/*if (world.isRemote) {
+		if (world.isRemote) {
 			return;
-		}*/
+		}
+
+		if (isCrafting()) {
+			sendCraftingProgressPacket();
+		}
 
 		InfuserRecipe infuserRecipe = ModRecipes.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 

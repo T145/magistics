@@ -13,6 +13,7 @@ import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
 import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
+import T145.magistics.network.PacketHandler;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,6 +54,7 @@ public class CommonProxy implements IGuiHandler {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		plugins = event.getAsmData().getAll(MagisticsPlugin.class.getCanonicalName());
+		PacketHandler.registerMessages();
 		ModBlocks.init();
 		ModItems.init();
 		ModEntities.init();
