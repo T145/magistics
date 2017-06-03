@@ -23,8 +23,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
@@ -32,7 +30,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	public float cookTime;
 
 	private final boolean dark;
-	private int angle;
 	private int soundDelay;
 	private int boost;
 	private int boostDelay = 20;
@@ -49,10 +46,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 
 	public boolean isDark() {
 		return dark;
-	}
-
-	public int getDiskAngle() {
-		return angle;
 	}
 
 	public int getBoost() {
@@ -87,11 +80,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	@Override
 	public boolean isHorizontalFacing() {
 		return true;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public EnumFacing getClientFacing() {
-		return facing;
 	}
 
 	@Override
@@ -140,7 +128,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 		facing = EnumFacing.getFront(compound.getInteger("Facing"));
 		cookCost = compound.getFloat("CookCost");
 		cookTime = compound.getFloat("CookTime");
-		angle = compound.getInteger("Angle");
 
 		if (isCrafting()) {
 			world.notifyBlockUpdate(pos, getState(), getState(), 1);
@@ -153,7 +140,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 		compound.setInteger("Facing", facing.getIndex());
 		compound.setFloat("CookCost", cookCost);
 		compound.setFloat("CookTime", cookTime);
-		compound.setInteger("Angle", angle);
 	}
 
 	public int getCookProgressScaled(int time) {
@@ -171,7 +157,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	@Override
 	public void update() {
 		setSuction(0);
-		angle = getCookProgressScaled(360);
 
 		if (soundDelay > 0) {
 			--soundDelay;

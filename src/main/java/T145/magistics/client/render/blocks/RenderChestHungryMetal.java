@@ -6,6 +6,7 @@ import com.google.common.primitives.SignedBytes;
 
 import T145.magistics.Magistics;
 import T145.magistics.blocks.devices.BlockChestHungryMetal;
+import T145.magistics.client.lib.BlockRenderer;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,6 @@ import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,18 +23,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntityIronChest> {
 
-	private Random random;
+	private Random random = new Random();
+	private ModelChest model = new ModelChest();
 	private RenderEntityItem itemRenderer;
-	private ModelChest model;
 
 	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F } };
 	private static EntityItem customitem = new EntityItem(null);
 	private static float halfPI = (float) (Math.PI / 2D);
-
-	public RenderChestHungryMetal() {
-		model = new ModelChest();
-		random = new Random();
-	}
 
 	public static ResourceLocation[] getChestTextures() {
 		ResourceLocation[] textures = new ResourceLocation[IronChestType.values().length];
@@ -54,7 +49,6 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntity
 			return;
 		}
 
-		EnumFacing facing = te.getFacing();
 		IronChestType type = te.getType();
 
 		if (destroyStage >= 0) {
@@ -75,28 +69,10 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntity
 		}
 
 		GlStateManager.color(1F, 1F, 1F, 1F);
-		GlStateManager.translate((float) x, (float) y + 1F, (float) z + 1F);
+		GlStateManager.translate(x, y + 1F, z + 1F);
 		GlStateManager.scale(1F, -1F, -1F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-
-		switch (facing) {
-		case NORTH:
-			GlStateManager.rotate(180F, 0F, 1F, 0F);
-			break;
-		case SOUTH:
-			GlStateManager.rotate(0F, 0F, 1F, 0F);
-			break;
-		case WEST:
-			GlStateManager.rotate(90F, 0F, 1F, 0F);
-			break;
-		case EAST:
-			GlStateManager.rotate(270F, 0F, 1F, 0F);
-			break;
-		default:
-			GlStateManager.rotate(0F, 0F, 1F, 0F);
-			break;
-		}
-
+		BlockRenderer.rotate(te.getFacing());
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 
 		float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;

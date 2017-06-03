@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,9 +38,9 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		GlStateManager.pushMatrix();
 
 		if (infuser.isCrafting()) {
-			GlStateManager.rotate(infuser.getDiskAngle(), 0F, 1F, 0F);
+			GlStateManager.rotate(infuser.getCookProgressScaled(360), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(BlockRenderer.getFrontAngle(infuser.getClientFacing(), false, false), 0F, 1F, 0F);
+			GlStateManager.rotate(getFrontAngle(infuser.getFacing(infuser.getState())), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);
@@ -79,5 +80,18 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		GlStateManager.depthMask(true);
 		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
+	}
+
+	public static float getFrontAngle(EnumFacing facing) {
+		switch (facing) {
+		case NORTH:
+			return 180F;
+		case WEST:
+			return 270F;
+		case EAST:
+			return 90F;
+		default:
+			return 0F;
+		}
 	}
 }
