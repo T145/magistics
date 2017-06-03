@@ -10,6 +10,7 @@ import T145.magistics.blocks.crafting.BlockForge;
 import T145.magistics.blocks.crafting.BlockInfuser;
 import T145.magistics.blocks.devices.BlockChestHungry;
 import T145.magistics.blocks.devices.BlockElevator;
+import T145.magistics.blocks.devices.BlockVoidBorder;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.client.lib.ClientBakery;
@@ -18,9 +19,11 @@ import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
+import T145.magistics.client.render.blocks.RenderVoidBorder;
 import T145.magistics.tiles.crafting.TileCrucible;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
+import T145.magistics.tiles.devices.TileVoidBorder;
 import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.Block;
@@ -38,6 +41,7 @@ public class ModBlocks {
 	public static Block elevator;
 	public static Block forge;
 	public static Block chestHungry;
+	public static Block voidBorder;
 
 	public static void init() {
 		crucible = new BlockCrucible();
@@ -47,6 +51,7 @@ public class ModBlocks {
 		elevator = new BlockElevator();
 		forge = new BlockForge();
 		chestHungry = new BlockChestHungry();
+		voidBorder = new BlockVoidBorder();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -77,10 +82,13 @@ public class ModBlocks {
 			ClientBakery.registerBlockModel(chestHungry, type.ordinal(), type);
 		}
 
+		ClientBakery.registerBlockModel(voidBorder, 0, "inventory");
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungry.class, new RenderChestHungry());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
 	}
 }
