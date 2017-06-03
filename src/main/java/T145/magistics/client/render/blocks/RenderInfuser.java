@@ -24,7 +24,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 	public void renderTileEntityAt(@Nonnull TileInfuser infuser, double x, double y, double z, float partialTicks, int destroyStage) {
 		drawDisk(infuser, x, y + BlockRenderer.W16, z);
 
-		if (infuser.isCrafting() && infuser.getWorld().rand.nextFloat() < infuser.cookTime) {
+		if (infuser.isCrafting() && infuser.getWorld().rand.nextFloat() < infuser.progress) {
 			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
 			double yy = infuser.getPos().getY() + BlockRenderer.W16;
 			double zz = infuser.getPos().getZ() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;

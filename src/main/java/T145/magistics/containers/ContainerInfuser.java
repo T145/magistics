@@ -16,8 +16,8 @@ public class ContainerInfuser extends Container {
 
 	private final TileInfuser infuser;
 	private final IItemHandlerModifiable infuserInventory;
-	private float cookCost;
-	private float cookTime;
+	private float progress;
+	private float quintCost;
 
 	public ContainerInfuser(InventoryPlayer playerInventory, TileInfuser infuser) {
 		this.infuser = infuser;
@@ -53,12 +53,12 @@ public class ContainerInfuser extends Container {
 	}
 
 	protected void updateContainer(IContainerListener listener, boolean add) {
-		if (add || cookCost != infuser.cookCost) {
-			listener.sendProgressBarUpdate(this, 0, (int) infuser.cookCost);
+		if (add || quintCost != infuser.quintCost) {
+			listener.sendProgressBarUpdate(this, 0, (int) infuser.quintCost);
 		}
 
-		if (add || cookTime != infuser.cookTime) {
-			listener.sendProgressBarUpdate(this, 1, (int) infuser.cookTime);
+		if (add || progress != infuser.progress) {
+			listener.sendProgressBarUpdate(this, 1, (int) infuser.progress);
 		}
 	}
 
@@ -76,8 +76,8 @@ public class ContainerInfuser extends Container {
 			updateContainer(listener, false);
 		}
 
-		cookCost = infuser.cookCost;
-		cookTime = infuser.cookTime;
+		quintCost = infuser.quintCost;
+		progress = infuser.progress;
 	}
 
 	@Override
@@ -85,10 +85,10 @@ public class ContainerInfuser extends Container {
 	public void updateProgressBar(int id, int data) {
 		switch (id) {
 		case 0:
-			cookCost = data;
+			quintCost = data;
 			break;
 		case 1:
-			cookTime = data;
+			progress = data;
 			break;
 		default:
 			break;

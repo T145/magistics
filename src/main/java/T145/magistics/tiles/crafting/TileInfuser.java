@@ -29,8 +29,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
-	public float cookCost;
-	public float cookTime;
+	public float progress;
+	public float quintCost;
 
 	private final boolean dark;
 	private int soundDelay;
@@ -129,8 +129,8 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	public void readPacketNBT(NBTTagCompound compound) {
 		super.readPacketNBT(compound);
 		facing = EnumFacing.getFront(compound.getInteger("Facing"));
-		cookCost = compound.getFloat("CookCost");
-		cookTime = compound.getFloat("CookTime");
+		progress = compound.getFloat("Progress");
+		quintCost = compound.getFloat("QuintCost");
 
 		if (isCrafting()) {
 			world.notifyBlockUpdate(pos, getState(), getState(), 1);
@@ -141,12 +141,12 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	public void writePacketNBT(NBTTagCompound compound) {
 		super.writePacketNBT(compound);
 		compound.setInteger("Facing", facing.getIndex());
-		compound.setFloat("CookCost", cookCost);
-		compound.setFloat("CookTime", cookTime);
+		compound.setFloat("Progress", progress);
+		compound.setFloat("QuintCost", quintCost);
 	}
 
 	public int getCookProgressScaled(int time) {
-		return Math.round(cookTime / cookCost * time);
+		return Math.round(progress / quintCost * time);
 	}
 
 	public int getBoostScaled() {
@@ -154,7 +154,7 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	public boolean isCrafting() {
-		return cookTime > 0F;
+		return progress > 0F;
 	}
 
 	public void sendCraftingProgressPacket() {
@@ -180,20 +180,20 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 		InfuserRecipe infuserRecipe = ModRecipes.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 
 		if (infuserRecipe != null && !world.isBlockPowered(pos)) {
-			cookCost = infuserRecipe.getCost();
+			quintCost = infuserRecipe.getCost();
 
-			if (canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, cookCost, false) > 0F) {
-				float quintDrain = Math.min(0.5F + 0.05F * boost, cookCost - cookTime + 0.01F);
-				cookTime += QuintHelper.drainQuints(world, pos, quintDrain, true);
+			if (canCraft(infuserRecipe) && QuintHelper.drainQuints(world, pos, quintCost, false) > 0F) {
+				float quintDrain = Math.min(0.5F + 0.05F * boost, quintCost - progress + 0.01F);
+				progress += QuintHelper.drainQuints(world, pos, quintDrain, true);
 
-				if (soundDelay == 0 && cookTime > 0.025F) {
+				if (soundDelay == 0 && progress > 0.025F) {
 					// slightly discharge this chunk's aura
 
 					world.playSound(null, pos, isDark() ? ModSounds.infuserdark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
-				if (cookTime >= cookCost) {
+				if (progress >= quintCost) {
 					addProcessedItem(infuserRecipe);
 					reset();
 					refresh();
@@ -261,8 +261,8 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	private void reset() {
-		cookCost = 0F;
-		cookTime = 0F;
+		progress = 0F;
+		quintCost = 0F;
 	}
 
 	private void hardReset() {

@@ -15,28 +15,32 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class MessageInfuserProgress extends MessageBase {
 
 	private float progress;
+	private float quintCost;
 	private BlockPos pos;
 
 	public MessageInfuserProgress() {}
 
-	public MessageInfuserProgress(TileInfuser infuser, float progress) {
+	public MessageInfuserProgress(TileInfuser infuser, float progress, float quintCost) {
 		this.progress = progress;
+		this.quintCost = quintCost;
 		pos = infuser.getPos();
 	}
 
 	public MessageInfuserProgress(TileInfuser infuser) {
-		this(infuser, infuser.cookTime);
+		this(infuser, infuser.progress, infuser.quintCost);
 	}
 
 	@Override
 	public void serialize(PacketBuffer buffer) {
 		buffer.writeFloat(progress);
+		buffer.writeFloat(quintCost);
 		buffer.writeBlockPos(pos);
 	}
 
 	@Override
 	public void deserialize(PacketBuffer buffer) throws IOException {
 		progress = buffer.readFloat();
+		quintCost = buffer.readFloat();
 		pos = buffer.readBlockPos();
 	}
 
@@ -47,7 +51,8 @@ public class MessageInfuserProgress extends MessageBase {
 
 		if (tile instanceof TileInfuser) {
 			TileInfuser infuser = (TileInfuser) tile;
-			infuser.cookTime = progress;
+			infuser.progress = progress;
+			infuser.quintCost = quintCost;
 		}
 		return null;
 	}
