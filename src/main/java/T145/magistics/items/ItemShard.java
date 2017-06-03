@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemShard extends MItem {
 
 	public ItemShard() {
-		super("shard", EnumShard.getTypes());
+		super("shard", new String[] { "dull", "air", "fire", "water", "earth", "magic", "void" });
 	}
 
 	@Override
