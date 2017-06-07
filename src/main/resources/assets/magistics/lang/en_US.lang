@@ -31,6 +31,7 @@ tile.chest_hungry_metal.dirtchest9000.name=Hungry Dirt Chest
 tile.chest_wood.greatwood.name=Greatwood Chest
 tile.chest_wood.silverwood.name=Silverwood Chest
 
+tile.chest_void.name=Void Chest
 tile.void_border.name=Void Border
 
 tile.crucible.basic.name=Crucible

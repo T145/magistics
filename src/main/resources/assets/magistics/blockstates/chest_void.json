@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "magistics:chest",
+        "transform": "forge:default-block",
+        "textures": {
+            "particle": "magistics:blocks/black",
+            "chest": "magistics:models/void_chest"
+        }
+    },
+    "variants": {
+        "normal": [
+            {
+            }
+        ],
+        "inventory": [
+            {
+            }
+        ]
+    }
+}
