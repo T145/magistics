@@ -108,7 +108,7 @@ public class RenderVoidBorder extends TileEntitySpecialRenderer<TileVoidBorder> 
 			GlStateManager.translate(0.5F, 0.5F, 0.0F);
 			GlStateManager.scale(0.5F, 0.5F, 1.0F);
 			float f1 = k + 1;
-			GlStateManager.translate(17.0F / f1, (2.0F + f1 / 1.5F) * ((float) Minecraft.getSystemTime() % 800000.0F / 800000.0F), 0.0F);
+			GlStateManager.translate(17.0F / f1, (2.0F + f1 / 1.5F) * (Minecraft.getSystemTime() % 800000.0F / 800000.0F), 0.0F);
 			GlStateManager.rotate((f1 * f1 * 4321.0F + f1 * 9.0F) * 2.0F, 0.0F, 0.0F, 1.0F);
 			GlStateManager.scale(4.5F - f1 / 4.0F, 4.5F - f1 / 4.0F, 1.0F);
 			GlStateManager.multMatrix(PROJECTION);

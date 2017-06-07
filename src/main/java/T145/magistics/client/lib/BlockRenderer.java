@@ -47,8 +47,7 @@ public class BlockRenderer {
 	}
 
 	public static TextureAtlasSprite getTextureFromBlock(Block block, int meta) {
-		IBlockState state = block.getStateFromMeta(meta);
-		return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+		return getTextureFromBlockstate(block.getStateFromMeta(meta));
 	}
 
 	public static TextureAtlasSprite getTextureFromBlockstate(IBlockState state) {

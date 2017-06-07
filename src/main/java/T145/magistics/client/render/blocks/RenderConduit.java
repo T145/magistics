@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 
 import T145.magistics.client.lib.ClientBakery;
-import T145.magistics.client.lib.RenderCubes;
+import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -25,7 +25,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 	public void renderTileEntityAt(@Nonnull TileConduit conduit, double x, double y, double z, float partialTicks, int destroyStage) {
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer buffer = tess.getBuffer();
-		RenderCubes fluid = new RenderCubes();
+		RenderBlocks fluid = new RenderBlocks();
 		TextureAtlasSprite fluidSprite = ClientBakery.INSTANCE.quintFluid;
 		float mod = 0.38125F;
 		float amount = Math.min(conduit.getDisplayQuints(), conduit.getMaxQuints());

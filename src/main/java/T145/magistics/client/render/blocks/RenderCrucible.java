@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.client.lib.ClientBakery;
-import T145.magistics.client.lib.RenderCubes;
+import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -33,12 +33,12 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 			GlStateManager.disableLighting();
 
 			Tessellator tess = Tessellator.getInstance();
-			RenderCubes render = new RenderCubes();
+			RenderBlocks render = new RenderBlocks();
 
 			render.setRenderBounds(BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
 			tess.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 			bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			render.renderFaceYPos(0D, 0D, 0D, ClientBakery.INSTANCE.quintFluid, 1F, 1F, 1F, 210);
+			render.renderFaceUp(0D, 0D, 0D, ClientBakery.INSTANCE.quintFluid, 1F, 1F, 1F, 210);
 			tess.draw();
 
 			GlStateManager.enableLighting();

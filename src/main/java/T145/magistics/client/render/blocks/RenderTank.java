@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import T145.magistics.client.lib.BlockRenderer;
 import T145.magistics.client.lib.ClientBakery;
-import T145.magistics.client.lib.RenderCubes;
+import T145.magistics.client.lib.RenderBlocks;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.client.renderer.GlStateManager;
@@ -46,7 +46,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 	private void renderConnection(TileTank tank, double x, double y, double z, EnumFacing facing) {
 		Tessellator tess = Tessellator.getInstance();
-		RenderCubes render = new RenderCubes();
+		RenderBlocks render = new RenderBlocks();
 
 		switch (facing) {
 		case NORTH:
@@ -73,7 +73,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 	private void renderLiquid(TileTank tank, double x, double y, double z) {
 		Tessellator tess = Tessellator.getInstance();
-		RenderCubes render = new RenderCubes();
+		RenderBlocks render = new RenderBlocks();
 
 		float mod = 0.003F;
 		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());

@@ -3,12 +3,13 @@ package T145.magistics.client.lib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCubes {
+public class RenderBlocks {
 
 	public boolean flipTexture;
 	public boolean field_152631_f;
@@ -30,7 +31,7 @@ public class RenderCubes {
 	public int uvRotateTop;
 	public int uvRotateBottom;
 
-	public RenderCubes() {
+	public RenderBlocks() {
 		field_152631_f = false;
 		flipTexture = false;
 	}
@@ -61,12 +62,12 @@ public class RenderCubes {
 	}
 
 	public void renderFaces(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
-		renderFaceYNeg(x, y, z, icon, red, green, blue, brightness);
-		renderFaceYPos(x, y, z, icon, red, green, blue, brightness);
-		renderFaceZNeg(x, y, z, icon, red, green, blue, brightness);
-		renderFaceZPos(x, y, z, icon, red, green, blue, brightness);
-		renderFaceXNeg(x, y, z, icon, red, green, blue, brightness);
-		renderFaceXPos(x, y, z, icon, red, green, blue, brightness);
+		renderFaceDown(x, y, z, icon, red, green, blue, brightness);
+		renderFaceUp(x, y, z, icon, red, green, blue, brightness);
+		renderFaceNorth(x, y, z, icon, red, green, blue, brightness);
+		renderFaceSouth(x, y, z, icon, red, green, blue, brightness);
+		renderFaceWest(x, y, z, icon, red, green, blue, brightness);
+		renderFaceEast(x, y, z, icon, red, green, blue, brightness);
 	}
 
 	public void renderNormalFaces(TextureAtlasSprite icon, int brightness) {
@@ -77,7 +78,7 @@ public class RenderCubes {
 		renderFaces(0D, 0D, 0D, icon, 1F, 1F, 1F, 255);
 	}
 
-	public void renderFaceYNeg(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceDown(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinX * 16.0D);
@@ -154,7 +155,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d12, d13, d15).tex(maxU, maxV).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceYPos(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceUp(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinX * 16.0D);
@@ -231,7 +232,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceZNeg(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceNorth(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinX * 16.0D);
@@ -320,7 +321,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d13, d15).tex(maxU, maxV).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceZPos(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceSouth(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinX * 16.0D);
@@ -403,7 +404,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d12, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceXNeg(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceWest(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinZ * 16.0D);
@@ -486,7 +487,7 @@ public class RenderCubes {
 		tessellator.getBuffer().pos(d11, d12, d15).tex(maxU, maxV).lightmap(j, k).color(red, green, blue, 1.0F).endVertex();
 	}
 
-	public void renderFaceXPos(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
+	public void renderFaceEast(double x, double y, double z, TextureAtlasSprite icon, float red, float green, float blue, int brightness) {
 		Tessellator tessellator = Tessellator.getInstance();
 
 		double minU = icon.getInterpolatedU(renderMinZ * 16.0D);
