@@ -15,7 +15,6 @@ import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
 import T145.magistics.client.lib.ClientBakery;
 import T145.magistics.client.render.blocks.RenderChestHungry;
-import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
@@ -24,7 +23,6 @@ import T145.magistics.tiles.crafting.TileCrucible;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
 import T145.magistics.tiles.devices.TileVoidBorder;
-import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.Block;
 import net.minecraftforge.client.model.ModelLoader;
@@ -86,7 +84,7 @@ public class ModBlocks {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungry.class, new RenderChestHungry());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
