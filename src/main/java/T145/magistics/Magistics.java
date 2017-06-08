@@ -3,9 +3,11 @@ package T145.magistics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import T145.magistics.config.ConfigMain;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.proxies.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -25,6 +27,7 @@ public class Magistics {
 	public static final String VERSION = "$version";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
 	public static final CreativeTabs TAB = new CreativeTabMagistics();
+	public static final ConfigMain CONFIG = new ConfigMain();
 
 	public static boolean isDeobfuscated() {
 		return VERSION.equals("$version");
@@ -52,8 +55,10 @@ public class Magistics {
 		meta.useDependencyInformation = false;
 		meta.version = VERSION;
 
+		MinecraftForge.EVENT_BUS.register(CONFIG);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
+		CONFIG.load(event);
 		proxy.preInit(event);
 	}
 
