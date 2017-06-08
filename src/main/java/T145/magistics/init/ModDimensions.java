@@ -10,7 +10,7 @@ public class ModDimensions {
 	public static DimensionType voidDimensionType;
 
 	public static void init() {
-		voidDimensionType = DimensionType.register("Void World", "void", ConfigMain.voidDimensionId, WorldProviderVoid.class, false);
+		voidDimensionType = DimensionType.register("The Void", "void", ConfigMain.voidDimensionId, WorldProviderVoid.class, false);
 		DimensionManager.registerDimension(ConfigMain.voidDimensionId, voidDimensionType);
 	}
 }
