@@ -257,9 +257,8 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 				lidAngle = data / 10F;
 			}
 			return true;
-		} else {
-			return super.receiveClientEvent(id, data);
 		}
+		return false;
 	}
 
 	@Override

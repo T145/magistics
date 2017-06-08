@@ -26,7 +26,7 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 			}
 			return true;
 		}
-		return super.receiveClientEvent(id, data);
+		return false;
 	}
 
 	@Override

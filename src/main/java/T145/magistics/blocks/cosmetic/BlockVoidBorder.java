@@ -1,4 +1,4 @@
-package T145.magistics.blocks.devices;
+package T145.magistics.blocks.cosmetic;
 
 import javax.annotation.Nonnull;
 
