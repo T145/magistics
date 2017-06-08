@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-@Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION)
+@Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
 public class Magistics {
 
 	public static final String MODID = "magistics";

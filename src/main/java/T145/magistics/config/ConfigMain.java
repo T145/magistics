@@ -7,10 +7,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigMain {
-	
+
 	public static int voidDimensionId = 14;
 
 	private Configuration config;
+
+	public Configuration getConfig() {
+		return config;
+	}
 
 	public void load(FMLPreInitializationEvent event) {
 		try {
