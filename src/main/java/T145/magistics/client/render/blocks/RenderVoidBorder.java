@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,41 +37,7 @@ public class RenderVoidBorder extends TileEntitySpecialRenderer<TileVoidBorder> 
 		GlStateManager.getFloat(2983, PROJECTION);
 
 		double d1 = x * x + y * y + z * z;
-		int i;
-
-		if (d1 > 36864.0D) {
-			i = 2;
-		} else {
-			if (d1 > 25600.0D) {
-				i = 4;
-			} else {
-				if (d1 > 16384.0D) {
-					i = 6;
-				} else {
-					if (d1 > 9216.0D) {
-						i = 8;
-					} else {
-						if (d1 > 4096.0D) {
-							i = 10;
-						} else {
-							if (d1 > 1024.0D) {
-								i = 12;
-							} else {
-								if (d1 > 576.0D) {
-									i = 14;
-								} else {
-									if (d1 > 256.0D) {
-										i = 15;
-									} else {
-										i = 16;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+		int i = (int) MathHelper.clamp(166D / 11 - d1 / 2816, 2, 16);
 
 		for (int k = 0; k < i; k++) {
 			GlStateManager.pushMatrix();
