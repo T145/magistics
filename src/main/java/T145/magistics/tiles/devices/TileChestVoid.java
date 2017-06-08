@@ -13,6 +13,8 @@ public class TileChestVoid extends MTile implements IFacing {
 	public float lidAngle;
 	public float prevLidAngle;
 	public int numPlayersUsing;
+	public int id = -1;
+
 	private int ticksSinceSync;
 	private EnumFacing facing = EnumFacing.NORTH;
 
@@ -34,11 +36,13 @@ public class TileChestVoid extends MTile implements IFacing {
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.setInteger("NumPlayersUsing", numPlayersUsing);
+		compound.setInteger("ID", id);
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		numPlayersUsing = compound.getInteger("NumPlayersUsing");
+		id = compound.getInteger("ID");
 	}
 
 	@Override

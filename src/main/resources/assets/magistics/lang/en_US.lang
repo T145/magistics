@@ -1,6 +1,8 @@
 
 itemGroup.magistics=Magistics
 
+tooltip.magistics.chest.id=Chest: %s
+
 entity.magistics.slime.vis.name=Vis Slime
 entity.magistics.slime.taint.name=Corrupted Slime
 

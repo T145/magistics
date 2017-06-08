@@ -2,12 +2,15 @@ package T145.magistics.world.providers;
 
 import javax.annotation.Nullable;
 
+import T145.magistics.Magistics;
 import T145.magistics.client.render.world.RenderHandlerVoidWorld;
 import T145.magistics.init.ModDimensions;
+import T145.magistics.world.generators.ChunkGeneratorVoid;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,6 +22,11 @@ public class WorldProviderVoid extends WorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
 		return ModDimensions.voidDimensionType;
+	}
+
+	@Override
+	public IChunkGenerator createChunkGenerator() {
+		return new ChunkGeneratorVoid(world);
 	}
 
 	@Override
@@ -51,7 +59,12 @@ public class WorldProviderVoid extends WorldProvider {
 
 	@Override
 	public boolean canRespawnHere() {
-		return false;
+		return Magistics.CONFIG.allowVoidRespawn;
+	}
+
+	@Override
+	public boolean isSurfaceWorld() {
+		return Magistics.CONFIG.allowVoidRespawn;
 	}
 
 	@Override

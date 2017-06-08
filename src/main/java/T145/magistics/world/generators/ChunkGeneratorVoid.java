@@ -2,11 +2,14 @@ package T145.magistics.world.generators;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableList;
+
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
@@ -21,19 +24,9 @@ public class ChunkGeneratorVoid implements IChunkGenerator {
 
 	@Override
 	public Chunk provideChunk(int x, int z) {
-		ChunkPrimer chunkprimer = new ChunkPrimer();
-		Chunk chunk = new Chunk(this.world, chunkprimer, x, z);
-
+		ChunkPrimer cp = new ChunkPrimer();
+		Chunk chunk = new Chunk(world, cp, x, z);
 		chunk.generateSkylightMap();
-
-		byte[] biomeIds = chunk.getBiomeArray();
-
-		for (int id = 0; id < biomeIds.length; ++id) {
-			biomeIds[id] = (byte) Biome.getIdForBiome(Biome.getBiome(1));
-		}
-
-		chunk.generateSkylightMap();
-
 		return chunk;
 	}
 
@@ -46,10 +39,11 @@ public class ChunkGeneratorVoid implements IChunkGenerator {
 	}
 
 	@Override
-	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
-		return null;
+	public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+		return ImmutableList.of();
 	}
 
+	@Nullable
 	@Override
 	public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position, boolean p_180513_4_) {
 		return null;
