@@ -5,6 +5,11 @@ import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.api.variants.blocks.EnumTank;
+import T145.magistics.api.variants.blocks.EnumWood;
+import T145.magistics.blocks.cosmetic.BlockLeaves;
+import T145.magistics.blocks.cosmetic.BlockLogs;
+import T145.magistics.blocks.cosmetic.BlockPlanks;
+import T145.magistics.blocks.cosmetic.BlockSaplings;
 import T145.magistics.blocks.cosmetic.BlockVoidBorder;
 import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockForge;
@@ -45,6 +50,11 @@ public class ModBlocks {
 	public static Block chestVoid;
 	public static Block voidBorder;
 
+	public static Block saplings;
+	public static Block planks;
+	public static Block logs;
+	public static Block leaves;
+
 	public static void init() {
 		crucible = new BlockCrucible();
 		infuser = new BlockInfuser();
@@ -55,6 +65,11 @@ public class ModBlocks {
 		chestHungry = new BlockChestHungry();
 		chestVoid = new BlockChestVoid();
 		voidBorder = new BlockVoidBorder();
+
+		saplings = new BlockSaplings();
+		planks = new BlockPlanks();
+		logs = new BlockLogs();
+		leaves = new BlockLeaves();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -87,6 +102,13 @@ public class ModBlocks {
 
 		ClientBakery.registerBlockModel(chestVoid, 0, "inventory");
 		ClientBakery.registerBlockModel(voidBorder, 0, "inventory");
+
+		for (EnumWood type : EnumWood.values()) {
+			ClientBakery.registerBlockModel(leaves, type.ordinal(), type);
+			ClientBakery.registerBlockModel(logs, type.ordinal(), "axis=y,variant=" + type.getName());
+			ClientBakery.registerBlockModel(planks, type.ordinal(), type);
+			ClientBakery.registerBlockModel(saplings, type.ordinal(), type);
+		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());

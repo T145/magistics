@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ConfigMain {
 
 	public static int voidDimensionId = 14;
+	public static boolean generateRoots;
 
 	private Configuration config;
 
@@ -42,6 +43,7 @@ public class ConfigMain {
 	}
 
 	public void sync() {
+		generateRoots = config.getBoolean("Generate Roots", config.CATEGORY_GENERAL, true, "Whether or not to generate tree roots");
 		voidDimensionId = config.getInt("Void Dimension Id", config.CATEGORY_GENERAL, 14, 2, 100, "ID for the void dimension");
 	}
 

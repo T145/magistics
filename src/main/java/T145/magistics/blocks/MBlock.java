@@ -32,30 +32,6 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 	public final T[] variantValues;
 	protected static IProperty[] tempVariants;
 
-	private class MBlockItem extends ItemBlock {
-
-		public MBlockItem(Block block, boolean hasVariants) {
-			super(block);
-			setHasSubtypes(hasVariants);
-		}
-
-		@Override
-		public int getMetadata(int meta) {
-			return meta;
-		}
-
-		@Override
-		public String getUnlocalizedName(ItemStack stack) {
-			String name = super.getUnlocalizedName();
-
-			if (hasSubtypes) {
-				name += "." + variantValues[stack.getMetadata()].getName();
-			}
-
-			return name;
-		}
-	}
-
 	public MBlock(String name, Material material, Class variants) {
 		super(createProperties(material, variants));
 
@@ -76,7 +52,7 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 		GameRegistry.register(this);
 
 		if (variant != null && variantValues != null) {
-			GameRegistry.register(new MBlockItem(this, true), getRegistryName());
+			GameRegistry.register(new MBlockItem(this, variant.getValueClass()), getRegistryName());
 
 			for (T variant : variantValues) {
 				TileEntity tile = createNewTileEntity(null, variant.ordinal());
@@ -88,7 +64,7 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 				}
 			}
 		} else {
-			GameRegistry.register(new MBlockItem(this, false), getRegistryName());
+			GameRegistry.register(new MBlockItem(this), getRegistryName());
 
 			TileEntity tile = createNewTileEntity(null, 0);
 
