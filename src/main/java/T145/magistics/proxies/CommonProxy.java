@@ -17,7 +17,7 @@ import T145.magistics.init.ModSounds;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
-import T145.magistics.world.providers.WorldSavedDataVoid;
+import T145.magistics.world.data.WorldDataVoidChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -58,7 +58,7 @@ public class CommonProxy implements IGuiHandler {
 	public void preInit(FMLPreInitializationEvent event) {
 		plugins = event.getAsmData().getAll(MagisticsPlugin.class.getCanonicalName());
 		PacketHandler.registerMessages();
-		MinecraftForge.EVENT_BUS.register(WorldSavedDataVoid.class);
+		MinecraftForge.EVENT_BUS.register(WorldDataVoidChest.class);
 
 		ModBlocks.init();
 		ModItems.init();

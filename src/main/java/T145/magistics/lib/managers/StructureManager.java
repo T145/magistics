@@ -6,7 +6,7 @@ import java.util.List;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModDimensions;
 import T145.magistics.tiles.devices.TileChestVoid;
-import T145.magistics.world.providers.WorldSavedDataVoid;
+import T145.magistics.world.data.WorldDataVoidChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,7 +18,7 @@ public class StructureManager {
 			return;
 		}
 
-		chest.id = WorldSavedDataVoid.reserveVoidChestId();
+		chest.id = WorldDataVoidChest.reserveVoidChestId();
 		chest.markDirty();
 
 		generateCube(chest);

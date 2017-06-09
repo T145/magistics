@@ -1,4 +1,4 @@
-package T145.magistics.world.providers;
+package T145.magistics.world.data;
 
 import java.util.HashMap;
 
@@ -12,15 +12,15 @@ import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class WorldSavedDataVoid extends WorldSavedData {
+public class WorldDataVoidChest extends WorldSavedData {
 
 	public int nextCoord = 0;
 	public HashMap<Integer, double[]> spawnPoints = new HashMap<>();
 	public HashMap<Integer, DimensionBlockPos> voidChestPositions = new HashMap<>();
 
-	public static WorldSavedDataVoid INSTANCE;
+	public static WorldDataVoidChest INSTANCE;
 
-	public WorldSavedDataVoid(String name) {
+	public WorldDataVoidChest(String name) {
 		super(name);
 	}
 
@@ -28,10 +28,16 @@ public class WorldSavedDataVoid extends WorldSavedData {
 		return voidChestPositions.get(coord);
 	}
 
-	public void addChestPosition(int coord, BlockPos pos, int dimension) {
+	public void addVoidChestPosition(int coord, BlockPos pos, int dimension) {
 		voidChestPositions.put(coord, new DimensionBlockPos(pos, dimension));
 		Magistics.LOGGER.debug("Adding chest position: coords=%d, pos=%s, dimension=%d", coord, pos, dimension);
-		this.markDirty();
+		markDirty();
+	}
+
+	public void removeVoidChestPosition(int coord) {
+		voidChestPositions.remove(coord);
+		Magistics.LOGGER.debug("Removing chest position by coord: coords=%d", coord);
+		markDirty();
 	}
 
 	private void addSpawnPoint(int coord, double[] destination) {
@@ -42,23 +48,17 @@ public class WorldSavedDataVoid extends WorldSavedData {
 
 		spawnPoints.put(coord, destination);
 		Magistics.LOGGER.debug("Setting spawn point: coords=%d, x=%.2f, y=%.2f, z=%.2f", coord, destination[0], destination[1], destination[2]);
-		this.markDirty();
+		markDirty();
 	}
 
 	public void addSpawnPoint(int coord, double x, double y, double z) {
 		addSpawnPoint(coord, new double[] { x, y, z });
 	}
 
-	public void removeChestPosition(int coord) {
-		voidChestPositions.remove(coord);
-		Magistics.LOGGER.debug("Removing chest position by coord: coords=%d", coord);
-		this.markDirty();
-	}
-
 	public static int reserveVoidChestId() {
-		int val = WorldSavedDataVoid.INSTANCE.nextCoord;
-		WorldSavedDataVoid.INSTANCE.nextCoord++;
-		WorldSavedDataVoid.INSTANCE.markDirty();
+		int val = WorldDataVoidChest.INSTANCE.nextCoord;
+		WorldDataVoidChest.INSTANCE.nextCoord++;
+		WorldDataVoidChest.INSTANCE.markDirty();
 		return val;
 	}
 
@@ -69,18 +69,18 @@ public class WorldSavedDataVoid extends WorldSavedData {
 		}
 
 		Magistics.LOGGER.info("Loading saved data for chest world");
-		WorldSavedDataVoid wsd = (WorldSavedDataVoid) event.getWorld().getMapStorage().getOrLoadData(WorldSavedDataVoid.class, "WorldSavedDataVoid");
+		WorldDataVoidChest wsd = (WorldDataVoidChest) event.getWorld().getMapStorage().getOrLoadData(WorldDataVoidChest.class, "WorldDataVoidChest");
 
 		if (wsd == null) {
-			wsd = new WorldSavedDataVoid("WorldSavedDataVoid");
+			wsd = new WorldDataVoidChest("WorldDataVoidChest");
 			wsd.markDirty();
 		}
 
 		Magistics.LOGGER.info(" > %d spawn points", wsd.spawnPoints.size());
 		Magistics.LOGGER.info(" > Next chest id: %d", wsd.nextCoord);
 
-		WorldSavedDataVoid.INSTANCE = wsd;
-		event.getWorld().getMapStorage().setData("WorldSavedDataVoid", wsd);
+		WorldDataVoidChest.INSTANCE = wsd;
+		event.getWorld().getMapStorage().setData("WorldDataVoidChest", wsd);
 	}
 
 	@Override

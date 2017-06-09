@@ -3,7 +3,7 @@ package T145.magistics.lib.managers;
 import T145.magistics.Magistics;
 import T145.magistics.init.ModDimensions;
 import T145.magistics.tiles.devices.TileChestVoid;
-import T145.magistics.world.providers.WorldSavedDataVoid;
+import T145.magistics.world.data.WorldDataVoidChest;
 import T145.magistics.world.teleporters.TeleporterVoidWorld;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -49,7 +49,7 @@ public class TeleportationManager {
 			playerNBT.setTag("void-coordHistory", coordHistory);
 		}
 
-		double[] destination = WorldSavedDataVoid.INSTANCE.spawnPoints.get(coords);
+		double[] destination = WorldDataVoidChest.INSTANCE.spawnPoints.get(coords);
 		player.setPositionAndUpdate(destination[0], destination[1], destination[2]);
 	}
 
@@ -83,7 +83,7 @@ public class TeleportationManager {
 			double x = chest.id * 1024 + 0.5 + size / 2;
 			double y = 42;
 			double z = 0.5 + size / 2;
-			WorldSavedDataVoid.INSTANCE.addSpawnPoint(chest.id, x, y, z);
+			WorldDataVoidChest.INSTANCE.addSpawnPoint(chest.id, x, y, z);
 		}
 
 		teleportPlayerToVoidChest(player, chest.id, false);

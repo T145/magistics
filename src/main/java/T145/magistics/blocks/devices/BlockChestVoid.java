@@ -7,7 +7,7 @@ import T145.magistics.blocks.MBlock;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.lib.managers.TeleportationManager;
 import T145.magistics.tiles.devices.TileChestVoid;
-import T145.magistics.world.providers.WorldSavedDataVoid;
+import T145.magistics.world.data.WorldDataVoidChest;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -119,7 +119,7 @@ public class BlockChestVoid extends MBlock {
 		}
 
 		TileChestVoid chest = (TileChestVoid) world.getTileEntity(pos);
-		WorldSavedDataVoid.INSTANCE.removeChestPosition(chest.id);
+		WorldDataVoidChest.INSTANCE.removeVoidChestPosition(chest.id);
 
 		spawnItemWithNBT(world, pos, chest);
 
@@ -203,7 +203,7 @@ public class BlockChestVoid extends MBlock {
 
 			if (chest.isOpen()) {
 				TeleportationManager.teleportPlayerToVoidChest((EntityPlayerMP) player, chest);
-				WorldSavedDataVoid.INSTANCE.addChestPosition(chest.id, pos, world.provider.getDimension());
+				WorldDataVoidChest.INSTANCE.addVoidChestPosition(chest.id, pos, world.provider.getDimension());
 				chest.closeChest();
 			}
 		}
