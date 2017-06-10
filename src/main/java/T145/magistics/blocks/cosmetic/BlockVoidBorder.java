@@ -1,8 +1,7 @@
 package T145.magistics.blocks.cosmetic;
 
-import javax.annotation.Nonnull;
-
 import T145.magistics.blocks.MBlock;
+import T145.magistics.init.ModBlocks;
 import T145.magistics.tiles.devices.TileVoidBorder;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,8 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockVoidBorder extends MBlock {
 
@@ -38,10 +35,9 @@ public class BlockVoidBorder extends MBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean shouldSideBeRendered(IBlockState state, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, EnumFacing side) {
-		IBlockState neighborState = blockAccess.getBlockState(pos.offset(side));
-		return !neighborState.isOpaqueCube() && neighborState.getBlock() != Blocks.END_GATEWAY;
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
+		IBlockState neighborState = world.getBlockState(pos.offset(face));
+		return !neighborState.isOpaqueCube() && neighborState.getBlock() != ModBlocks.voidBorder;
 	}
 
 	@Override
