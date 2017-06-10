@@ -10,11 +10,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
 public class BlockRenderer {
+
+	public static final VertexFormatElement NORMAL_3F = new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 3);
+	public static final VertexFormat POSITION_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(NORMAL_3F);
+	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(NORMAL_3F);
 
 	public static double W1 = 0.0625D;
 	public static double W2 = 0.125D;
@@ -76,7 +84,7 @@ public class BlockRenderer {
 	}
 
 	public static void renderQuadCentered(int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-		Tessellator tessellator = Tessellator.getInstance();
+		Tessellator buffers = Tessellator.getInstance();
 		boolean blendon = GL11.glIsEnabled(3042);
 
 		GlStateManager.enableBlend();
@@ -91,12 +99,76 @@ public class BlockRenderer {
 		Color c = new Color(red, green, blue);
 		TexturedQuad quad = new TexturedQuad(new PositionTextureVertex[] { new PositionTextureVertex(-0.5F, 0.5F, 0.0F, f2, f4), new PositionTextureVertex(0.5F, 0.5F, 0.0F, f2, f3), new PositionTextureVertex(0.5F, -0.5F, 0.0F, f1, f3), new PositionTextureVertex(-0.5F, -0.5F, 0.0F, f1, f4) });
 
-		quad.draw(tessellator.getBuffer(), scale, brightness, c.getRGB(), opacity);
+		quad.draw(buffers.getBuffer(), scale, brightness, c.getRGB(), opacity);
 
 		GlStateManager.blendFunc(770, 771);
 
 		if (!blendon) {
 			GlStateManager.disableBlend();
+		}
+	}
+
+	public static void renderCube(TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			renderFace(facing, icon, minX, minY, minZ, maxX, maxY, maxZ);
+		}
+	}
+
+	public static void renderFace(EnumFacing facing, TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		Tessellator tess = Tessellator.getInstance();
+		VertexBuffer buffer = tess.getBuffer();
+
+		switch (facing) {
+		case NORTH:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(minX, minY, minZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, maxY, minZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, minZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, minY, minZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		case SOUTH:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(minX, minY, maxZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, minY, maxZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, maxZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, maxY, maxZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		case WEST:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(minX, minY, minZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, minY, maxZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, maxY, maxZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, maxY, minZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		case EAST:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(maxX, minY, minZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, minZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, maxZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, minY, maxZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		case DOWN:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(minX, minY, minZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, minY, minZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, minY, maxZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, minY, maxZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		case UP:
+			buffer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF);
+			buffer.pos(minX, maxY, minZ).tex(icon.getMinU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			buffer.pos(minX, maxY, maxZ).tex(icon.getMinU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, maxZ).tex(icon.getMaxU(), icon.getMaxV()).normal(0, -1, 0).endVertex();
+			buffer.pos(maxX, maxY, minZ).tex(icon.getMaxU(), icon.getMinV()).normal(0, -1, 0).endVertex();
+			tess.draw();
+			break;
+		default: // null
+			break;
 		}
 	}
 }
