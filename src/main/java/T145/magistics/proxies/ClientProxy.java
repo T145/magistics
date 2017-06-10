@@ -4,6 +4,7 @@ import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.Shaders;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
 import T145.magistics.init.ModItems;
@@ -45,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 		ModBlocks.initClient();
 		ModItems.initClient();
 		ModEntities.initClient();
+		Shaders.init();
 		registerPlugins(event, true);
 	}
 

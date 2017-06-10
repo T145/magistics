@@ -76,8 +76,8 @@ public class WorldDataVoidChest extends WorldSavedData {
 			wsd.markDirty();
 		}
 
-		Magistics.LOGGER.info(" > %d spawn points", wsd.spawnPoints.size());
-		Magistics.LOGGER.info(" > Next chest id: %d", wsd.nextCoord);
+		Magistics.LOGGER.info(" > " + wsd.spawnPoints.size() + " spawn points");
+		Magistics.LOGGER.info(" > Next chest id: " + wsd.nextCoord);
 
 		WorldDataVoidChest.INSTANCE = wsd;
 		event.getWorld().getMapStorage().setData("WorldDataVoidChest", wsd);

@@ -1,11 +1,18 @@
 package T145.magistics.client.lib;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 
 public class BlockRenderer {
 
@@ -52,5 +59,44 @@ public class BlockRenderer {
 
 	public static TextureAtlasSprite getTextureFromBlockstate(IBlockState state) {
 		return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+	}
+
+	public static void renderQuadCentered(ResourceLocation texture, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
+		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		renderQuadCentered(1, 1, 0, scale, red, green, blue, brightness, blend, opacity);
+	}
+
+	public static void renderQuadCentered(ResourceLocation texture, int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
+		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		renderQuadCentered(gridX, gridY, frame, scale, red, green, blue, brightness, blend, opacity);
+	}
+
+	public static void renderQuadCentered() {
+		renderQuadCentered(1, 1, 0, 1.0F, 1.0F, 1.0F, 1.0F, 200, 771, 1.0F);
+	}
+
+	public static void renderQuadCentered(int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
+		Tessellator tessellator = Tessellator.getInstance();
+		boolean blendon = GL11.glIsEnabled(3042);
+
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(770, blend);
+
+		int xm = frame % gridX;
+		int ym = frame / gridY;
+		float f1 = xm / gridX;
+		float f2 = f1 + 1.0F / gridX;
+		float f3 = ym / gridY;
+		float f4 = f3 + 1.0F / gridY;
+		Color c = new Color(red, green, blue);
+		TexturedQuad quad = new TexturedQuad(new PositionTextureVertex[] { new PositionTextureVertex(-0.5F, 0.5F, 0.0F, f2, f4), new PositionTextureVertex(0.5F, 0.5F, 0.0F, f2, f3), new PositionTextureVertex(0.5F, -0.5F, 0.0F, f1, f3), new PositionTextureVertex(-0.5F, -0.5F, 0.0F, f1, f4) });
+
+		quad.draw(tessellator.getBuffer(), scale, brightness, c.getRGB(), opacity);
+
+		GlStateManager.blendFunc(770, 771);
+
+		if (!blendon) {
+			GlStateManager.disableBlend();
+		}
 	}
 }

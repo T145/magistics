@@ -46,7 +46,7 @@ public class BlockVoidBorder extends MBlock {
 
 	@Override
 	public int getLightValue(IBlockState state) {
-		return 7;
+		return 15;
 	}
 
 	@Override

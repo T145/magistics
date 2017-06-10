@@ -151,13 +151,12 @@ public class BlockChestVoid extends MBlock {
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
-
 		if (!(world.getTileEntity(pos) instanceof TileChestVoid)) {
 			return;
 		}
 
 		TileChestVoid chest = (TileChestVoid) world.getTileEntity(pos);
+		chest.setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
 
 		if (chest.id != -1) {
 			return;
