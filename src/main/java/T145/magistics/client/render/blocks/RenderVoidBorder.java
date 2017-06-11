@@ -9,7 +9,6 @@ import T145.magistics.tiles.devices.TileVoidBorder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,29 +29,10 @@ public class RenderVoidBorder extends TileEntitySpecialRenderer<TileVoidBorder> 
 	@Override
 	public void renderTileEntityAt(TileVoidBorder te, double x, double y, double z, float partialTicks, int destroyStage) {
 		GlStateManager.pushMatrix();
-
+		GlStateManager.translate(x, y, z);
 		bindTexture(new ResourceLocation("textures/entity/end_portal.png"));
 		Shaders.useShader(Shaders.endShader, shaderCallback);
-		GlStateManager.translate(x + 0.5D, y + 0.5D, z + 0.5D);
-
-		for (EnumFacing face : EnumFacing.VALUES) {
-			if (te.getBlockType().doesSideBlockRendering(te.getState(), te.getWorld(), te.getPos(), face)) {
-				GlStateManager.pushMatrix();
-				GlStateManager.rotate(90.0F, -face.getFrontOffsetY(), face.getFrontOffsetX(), -face.getFrontOffsetZ());
-
-				if (face.getFrontOffsetZ() < 0) {
-					GlStateManager.translate(0.0D, 0.0D, -0.5D);
-					GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-				} else {
-					GlStateManager.translate(0.0D, 0.0D, 0.5D);
-				}
-
-				GlStateManager.rotate(90.0F, 0.0F, 0.0F, -1.0F);
-				BlockRenderer.renderQuadCentered();
-				GlStateManager.popMatrix();
-			}
-		}
-
+		BlockRenderer.renderCube();
 		Shaders.releaseShader();
 		GlStateManager.popMatrix();
 	}
