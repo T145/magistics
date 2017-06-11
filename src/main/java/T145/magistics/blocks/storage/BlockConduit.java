@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
 import T145.magistics.blocks.MBlock;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,13 +29,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockConduit extends MBlock {
 
 	public static final ImmutableList<IProperty<Boolean>> CONNECTIONS = ImmutableList.copyOf(Stream.of(EnumFacing.VALUES).map(facing -> PropertyBool.create(facing.getName())).collect(Collectors.toList()));
-	public static final AxisAlignedBB BOX_CENTER = new AxisAlignedBB(BlockRenderer.W4, BlockRenderer.W4, BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4, 1D - BlockRenderer.W4);
-	public static final AxisAlignedBB BOX_UP = new AxisAlignedBB(BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, 1D, BlockRenderer.W6 + BlockRenderer.W4);
-	public static final AxisAlignedBB BOX_DOWN = new AxisAlignedBB(BlockRenderer.W6, 0D, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4);
-	public static final AxisAlignedBB BOX_SOUTH = new AxisAlignedBB(BlockRenderer.W6, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6 + BlockRenderer.W4, 1D);
-	public static final AxisAlignedBB BOX_NORTH = new AxisAlignedBB(BlockRenderer.W6, BlockRenderer.W6, 0D, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6);
-	public static final AxisAlignedBB BOX_EAST = new AxisAlignedBB(BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6, BlockRenderer.W6, 1.0F, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6 + BlockRenderer.W4);
-	public static final AxisAlignedBB BOX_WEST = new AxisAlignedBB(0D, BlockRenderer.W6, BlockRenderer.W6, BlockRenderer.W6, BlockRenderer.W6 + BlockRenderer.W4, BlockRenderer.W6 + BlockRenderer.W4);
+	public static final AxisAlignedBB BOX_CENTER = new AxisAlignedBB(Render.W4, Render.W4, Render.W4, 1D - Render.W4, 1D - Render.W4, 1D - Render.W4);
+	public static final AxisAlignedBB BOX_UP = new AxisAlignedBB(Render.W6, Render.W6 + Render.W4, Render.W6, Render.W6 + Render.W4, 1D, Render.W6 + Render.W4);
+	public static final AxisAlignedBB BOX_DOWN = new AxisAlignedBB(Render.W6, 0D, Render.W6, Render.W6 + Render.W4, Render.W6, Render.W6 + Render.W4);
+	public static final AxisAlignedBB BOX_SOUTH = new AxisAlignedBB(Render.W6, Render.W6, Render.W6 + Render.W4, Render.W6 + Render.W4, Render.W6 + Render.W4, 1D);
+	public static final AxisAlignedBB BOX_NORTH = new AxisAlignedBB(Render.W6, Render.W6, 0D, Render.W6 + Render.W4, Render.W6 + Render.W4, Render.W6);
+	public static final AxisAlignedBB BOX_EAST = new AxisAlignedBB(Render.W6 + Render.W4, Render.W6, Render.W6, 1.0F, Render.W6 + Render.W4, Render.W6 + Render.W4);
+	public static final AxisAlignedBB BOX_WEST = new AxisAlignedBB(0D, Render.W6, Render.W6, Render.W6, Render.W6 + Render.W4, Render.W6 + Render.W4);
 	public static final AxisAlignedBB[] BOX_FACES = { BOX_DOWN, BOX_UP, BOX_NORTH, BOX_SOUTH, BOX_WEST, BOX_EAST };
 
 	public BlockConduit() {

@@ -2,7 +2,7 @@ package T145.magistics.blocks.storage;
 
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.blocks.MBlock;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTank extends MBlock<EnumTank> {
 
-	public static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(BlockRenderer.W1, 0D, BlockRenderer.W1, 1D - BlockRenderer.W1, 1D, 1D - BlockRenderer.W1);
+	public static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(Render.W1, 0D, Render.W1, 1D - Render.W1, 1D, 1D - Render.W1);
 
 	public BlockTank() {
 		super("tank", Material.GLASS, EnumTank.class);

@@ -3,7 +3,7 @@ package T145.magistics.proxies;
 import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Shaders;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
@@ -40,7 +40,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 
-		MinecraftForge.EVENT_BUS.register(ClientBakery.INSTANCE);
+		MinecraftForge.EVENT_BUS.register(ModelBakery.INSTANCE);
 		MinecraftForge.EVENT_BUS.register(FXEngine.INSTANCE);
 
 		ModBlocks.initClient();

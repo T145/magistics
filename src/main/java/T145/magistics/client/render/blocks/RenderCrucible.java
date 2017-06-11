@@ -2,8 +2,8 @@ package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.client.lib.BlockRenderer;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
+import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -29,7 +29,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 			GlStateManager.disableLighting();
 
 			bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			BlockRenderer.renderFace(EnumFacing.UP, ClientBakery.INSTANCE.quintFluid, BlockRenderer.W1 + 0.001D, BlockRenderer.W4, BlockRenderer.W1 + 0.001D, 0.999D - BlockRenderer.W1, BlockRenderer.W4 + level, 0.999D - BlockRenderer.W1);
+			Render.face(EnumFacing.UP, ModelBakery.INSTANCE.quintFluid, Render.W1 + 0.001D, Render.W4, Render.W1 + 0.001D, 0.999D - Render.W1, Render.W4 + level, 0.999D - Render.W1);
 
 			GlStateManager.enableLighting();
 			GlStateManager.color(1F, 1F, 1F, 1F);

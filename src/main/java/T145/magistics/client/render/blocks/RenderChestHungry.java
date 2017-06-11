@@ -1,7 +1,7 @@
 package T145.magistics.client.render.blocks;
 
 import T145.magistics.Magistics;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -33,7 +33,7 @@ public class RenderChestHungry extends TileEntitySpecialRenderer<TileChestHungry
 		GlStateManager.translate((float) x, (float) y + 1.0F, (float) z + 1.0F);
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		BlockRenderer.rotate(chest.getFacing(chest.getState()));
+		Render.rotate(chest.getFacing(chest.getState()));
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 		float f = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * partialTicks;
 		f = 1.0F - f;

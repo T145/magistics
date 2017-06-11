@@ -19,7 +19,7 @@ import T145.magistics.blocks.devices.BlockChestVoid;
 import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockTank;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.render.blocks.RenderChestHungry;
 import T145.magistics.client.render.blocks.RenderChestVoid;
 import T145.magistics.client.render.blocks.RenderCrucible;
@@ -77,37 +77,37 @@ public class ModBlocks {
 		ModelLoader.setCustomStateMapper(infuser, ((BlockInfuser) infuser).getStateMap());
 
 		for (EnumInfuser type : EnumInfuser.values()) {
-			ClientBakery.registerBlockModel(infuser, type.ordinal(), type.getName() + "_infuser", "inventory");
+			ModelBakery.registerBlockModel(infuser, type.ordinal(), type.getName() + "_infuser", "inventory");
 		}
 
 		for (EnumTank type : EnumTank.values()) {
-			ClientBakery.registerBlockModel(tank, type.ordinal(), type);
+			ModelBakery.registerBlockModel(tank, type.ordinal(), type);
 		}
 
-		ClientBakery.registerBlockModel(conduit, 0, "inventory");
+		ModelBakery.registerBlockModel(conduit, 0, "inventory");
 
 		for (EnumCrucible type : EnumCrucible.values()) {
-			ClientBakery.registerBlockModel(crucible, type.ordinal(), ClientBakery.getVariantName(type) + ",working=false");
+			ModelBakery.registerBlockModel(crucible, type.ordinal(), ModelBakery.getVariantName(type) + ",working=false");
 		}
 
-		ClientBakery.registerBlockModel(elevator, 0, "normal");
+		ModelBakery.registerBlockModel(elevator, 0, "normal");
 
 		for (EnumForge type : EnumForge.values()) {
-			ClientBakery.registerBlockModel(forge, type.ordinal(), "inventory," + ClientBakery.getVariantName(type));
+			ModelBakery.registerBlockModel(forge, type.ordinal(), "inventory," + ModelBakery.getVariantName(type));
 		}
 
 		for (EnumChestHungry type : EnumChestHungry.values()) {
-			ClientBakery.registerBlockModel(chestHungry, type.ordinal(), type);
+			ModelBakery.registerBlockModel(chestHungry, type.ordinal(), type);
 		}
 
-		ClientBakery.registerBlockModel(chestVoid, 0, "inventory");
-		ClientBakery.registerBlockModel(voidBorder, 0, "inventory");
+		ModelBakery.registerBlockModel(chestVoid, 0, "inventory");
+		ModelBakery.registerBlockModel(voidBorder, 0, "inventory");
 
 		for (EnumWood type : EnumWood.values()) {
-			ClientBakery.registerBlockModel(leaves, type.ordinal(), type);
-			ClientBakery.registerBlockModel(logs, type.ordinal(), "axis=y,variant=" + type.getName());
-			ClientBakery.registerBlockModel(planks, type.ordinal(), type);
-			ClientBakery.registerBlockModel(saplings, type.ordinal(), type);
+			ModelBakery.registerBlockModel(leaves, type.ordinal(), type);
+			ModelBakery.registerBlockModel(logs, type.ordinal(), "axis=y,variant=" + type.getName());
+			ModelBakery.registerBlockModel(planks, type.ordinal(), type);
+			ModelBakery.registerBlockModel(saplings, type.ordinal(), type);
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());

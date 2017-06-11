@@ -6,7 +6,7 @@ import com.google.common.primitives.SignedBytes;
 
 import T145.magistics.Magistics;
 import T145.magistics.blocks.devices.BlockChestHungryMetal;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.client.Minecraft;
@@ -72,7 +72,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntity
 		GlStateManager.translate(x, y + 1F, z + 1F);
 		GlStateManager.scale(1F, -1F, -1F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		BlockRenderer.rotate(te.getFacing());
+		Render.rotate(te.getFacing());
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 
 		float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;

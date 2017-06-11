@@ -9,7 +9,7 @@ import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.blocks.MBlockDevice;
 import T145.magistics.client.fx.FXCreator;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -31,11 +31,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker {
 
-	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, BlockRenderer.W5, 1D);
-	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, BlockRenderer.W2);
-	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, BlockRenderer.W14, 1D, 1D, 1D);
-	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(BlockRenderer.W14, 0D, 0D, 1D, 1D, 1D);
-	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, BlockRenderer.W2, 1D, 1D);
+	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, Render.W5, 1D);
+	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, Render.W2);
+	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, Render.W14, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(Render.W14, 0D, 0D, 1D, 1D, 1D);
+	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, Render.W2, 1D, 1D);
 
 	public BlockCrucible() {
 		super("crucible", Material.IRON, EnumCrucible.class);

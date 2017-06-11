@@ -11,7 +11,7 @@ import T145.magistics.Magistics;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.block.SoundType;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockInfuser extends MBlock<EnumInfuser> {
 
 	public static final ImmutableList<IProperty<Boolean>> CONNECTIONS = ImmutableList.copyOf(Stream.of(EnumFacing.HORIZONTALS).map(facing -> PropertyBool.create(facing.getName())).collect(Collectors.toList()));
-	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - BlockRenderer.W1, 1D);
+	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - Render.W1, 1D);
 
 	public BlockInfuser() {
 		super("infuser", Material.ROCK, EnumInfuser.class);

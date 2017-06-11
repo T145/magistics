@@ -15,11 +15,11 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class BlockRenderer {
+public class Render {
 
 	public static final VertexFormatElement NORMAL_3F = new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 3);
 	public static final VertexFormat POSITION_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(NORMAL_3F);
-	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(NORMAL_3F);
+	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat(POSITION_NORMALF).addElement(DefaultVertexFormats.TEX_2F);
 
 	public static double W1 = 0.0625D;
 	public static double W2 = 0.125D;
@@ -66,49 +66,49 @@ public class BlockRenderer {
 		return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
 	}
 
-	public static void renderCube() {
+	public static void cube() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			renderFace(facing, null, 0F, 0F, 0F, 1F, 1F, 1F);
+			face(facing, null, 0F, 0F, 0F, 1F, 1F, 1F);
 		}
 	}
 
-	public static void renderCube(AxisAlignedBB box) {
+	public static void cube(AxisAlignedBB box) {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			renderFace(facing, null, box);
+			face(facing, null, box);
 		}
 	}
 
-	public static void renderCube(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+	public static void cube(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			renderFace(facing, null, minX, minY, minZ, maxX, maxY, maxZ);
+			face(facing, null, minX, minY, minZ, maxX, maxY, maxZ);
 		}
 	}
 
-	public static void renderCube(TextureAtlasSprite icon, AxisAlignedBB box) {
+	public static void cube(TextureAtlasSprite icon, AxisAlignedBB box) {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			renderFace(facing, icon, box);
+			face(facing, icon, box);
 		}
 	}
 
-	public static void renderCube(TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+	public static void cube(TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			renderFace(facing, icon, minX, minY, minZ, maxX, maxY, maxZ);
+			face(facing, icon, minX, minY, minZ, maxX, maxY, maxZ);
 		}
 	}
 
-	public static void renderFace(EnumFacing facing, AxisAlignedBB box) {
-		renderFace(facing, null, box);
+	public static void face(EnumFacing facing, AxisAlignedBB box) {
+		face(facing, null, box);
 	}
 
-	public static void renderFace(EnumFacing facing, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-		renderFace(facing, null, minX, minY, minZ, maxX, maxY, maxZ);
+	public static void face(EnumFacing facing, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+		face(facing, null, minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
-	public static void renderFace(EnumFacing facing, TextureAtlasSprite icon, AxisAlignedBB box) {
-		renderFace(facing, icon, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
+	public static void face(EnumFacing facing, TextureAtlasSprite icon, AxisAlignedBB box) {
+		face(facing, icon, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
 	}
 
-	public static void renderFace(EnumFacing facing, TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+	public static void face(EnumFacing facing, TextureAtlasSprite icon, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer buffer = tess.getBuffer();
 

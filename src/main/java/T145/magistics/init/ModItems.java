@@ -2,7 +2,7 @@ package T145.magistics.init;
 
 import T145.magistics.api.variants.items.EnumShard;
 import T145.magistics.api.variants.items.ResearchType;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.items.ItemShard;
 import T145.magistics.items.MItem;
 import T145.magistics.items.research.ItemDiscovery;
@@ -27,13 +27,13 @@ public class ModItems {
 	@SideOnly(Side.CLIENT)
 	public static void initClient() {
 		for (EnumShard type : EnumShard.values()) {
-			ClientBakery.registerItemModel(crystalShard, type.ordinal(), "shards/" + type.getName());
+			ModelBakery.registerItemModel(crystalShard, type.ordinal(), "shards/" + type.getName());
 		}
 
 		for (ResearchType type : ResearchType.values()) {
-			ClientBakery.registerItemModel(researchNote, type.ordinal(), "research/note/" + type.getName());
-			ClientBakery.registerItemModel(researchTheory, type.ordinal(), "research/theory/" + type.getName());
-			ClientBakery.registerItemModel(researchDiscovery, type.ordinal(), "research/discovery/" + type.getName());
+			ModelBakery.registerItemModel(researchNote, type.ordinal(), "research/note/" + type.getName());
+			ModelBakery.registerItemModel(researchTheory, type.ordinal(), "research/theory/" + type.getName());
+			ModelBakery.registerItemModel(researchDiscovery, type.ordinal(), "research/discovery/" + type.getName());
 		}
 	}
 }

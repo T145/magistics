@@ -2,8 +2,8 @@ package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.client.lib.BlockRenderer;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
+import T145.magistics.client.lib.Render;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.client.renderer.GlStateManager;
@@ -42,20 +42,20 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 	private void renderConnection(TileTank tank, double x, double y, double z, EnumFacing facing) {
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		TextureAtlasSprite icon = BlockRenderer.getTextureFromBlock(ModBlocks.conduit, 0);
+		TextureAtlasSprite icon = Render.getTextureFromBlock(ModBlocks.conduit, 0);
 
 		switch (facing) {
 		case NORTH:
-			BlockRenderer.renderCube(icon, 0.5F - BlockRenderer.W2, 0.5F - BlockRenderer.W2, 0F, 0.5F + BlockRenderer.W2, 0.5F + BlockRenderer.W2, BlockRenderer.W1);
+			Render.cube(icon, 0.5F - Render.W2, 0.5F - Render.W2, 0F, 0.5F + Render.W2, 0.5F + Render.W2, Render.W1);
 			break;
 		case SOUTH:
-			BlockRenderer.renderCube(icon, 0.5F - BlockRenderer.W2, 0.5F - BlockRenderer.W2, 1F - BlockRenderer.W1, 0.5F + BlockRenderer.W2, 0.5F + BlockRenderer.W2, 1F);
+			Render.cube(icon, 0.5F - Render.W2, 0.5F - Render.W2, 1F - Render.W1, 0.5F + Render.W2, 0.5F + Render.W2, 1F);
 			break;
 		case EAST:
-			BlockRenderer.renderCube(icon, 1F - BlockRenderer.W1, 0.5F - BlockRenderer.W2, 0.5F - BlockRenderer.W2, 1F, 0.5F + BlockRenderer.W2, 0.5F + BlockRenderer.W2);
+			Render.cube(icon, 1F - Render.W1, 0.5F - Render.W2, 0.5F - Render.W2, 1F, 0.5F + Render.W2, 0.5F + Render.W2);
 			break;
 		case WEST:
-			BlockRenderer.renderCube(icon, 0F, 0.5F - BlockRenderer.W2, 0.5F - BlockRenderer.W2, BlockRenderer.W1, 0.5F + BlockRenderer.W2, 0.5F + BlockRenderer.W2);
+			Render.cube(icon, 0F, 0.5F - Render.W2, 0.5F - Render.W2, Render.W1, 0.5F + Render.W2, 0.5F + Render.W2);
 			break;
 		default:
 			break;
@@ -67,6 +67,6 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());
 
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		BlockRenderer.renderCube(ClientBakery.INSTANCE.quintFluid, mod + BlockRenderer.W1, mod, mod + BlockRenderer.W1, 1F - mod - BlockRenderer.W1, mod + level, 1F - mod - BlockRenderer.W1);
+		Render.cube(ModelBakery.INSTANCE.quintFluid, mod + Render.W1, mod, mod + Render.W1, 1F - mod - Render.W1, mod + level, 1F - mod - Render.W1);
 	}
 }

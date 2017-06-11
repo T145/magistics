@@ -3,7 +3,7 @@ package T145.magistics.plugins;
 import T145.magistics.api.IMagisticsPlugin;
 import T145.magistics.api.MagisticsPlugin;
 import T145.magistics.blocks.devices.BlockChestHungryMetal;
-import T145.magistics.client.lib.ClientBakery;
+import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.render.blocks.RenderChestHungryMetal;
 import T145.magistics.tiles.devices.TileChestHungryMetal;
 import cpw.mods.ironchest.IronChestType;
@@ -35,7 +35,7 @@ public class PluginIronChest implements IMagisticsPlugin {
 	@SideOnly(Side.CLIENT)
 	public void initClient() {
 		for (IronChestType type : IronChestType.values()) {
-			ClientBakery.registerBlockModel(chestHungryMetal, type.ordinal(), ClientBakery.getVariantName(type));
+			ModelBakery.registerBlockModel(chestHungryMetal, type.ordinal(), ModelBakery.getVariantName(type));
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryMetal.class, new RenderChestHungryMetal());

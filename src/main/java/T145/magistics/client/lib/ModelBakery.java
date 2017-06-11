@@ -17,9 +17,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ClientBakery {
+public class ModelBakery {
 
-	public static final ClientBakery INSTANCE = new ClientBakery();
+	public static final ModelBakery INSTANCE = new ModelBakery();
 
 	public TextureAtlasSprite quintFluid;
 	public TextureAtlasSprite conduitPart;

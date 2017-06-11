@@ -2,7 +2,7 @@ package T145.magistics.client.render.blocks;
 
 import org.lwjgl.opengl.ARBShaderObjects;
 
-import T145.magistics.client.lib.BlockRenderer;
+import T145.magistics.client.lib.Render;
 import T145.magistics.client.lib.ShaderCallback;
 import T145.magistics.client.lib.Shaders;
 import T145.magistics.tiles.devices.TileVoidBorder;
@@ -32,7 +32,7 @@ public class RenderVoidBorder extends TileEntitySpecialRenderer<TileVoidBorder> 
 		GlStateManager.translate(x, y, z);
 		bindTexture(new ResourceLocation("textures/entity/end_portal.png"));
 		Shaders.useShader(Shaders.endShader, shaderCallback);
-		BlockRenderer.renderCube();
+		Render.cube();
 		Shaders.releaseShader();
 		GlStateManager.popMatrix();
 	}
