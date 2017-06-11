@@ -8,6 +8,7 @@ import com.google.common.base.Strings;
 import T145.magistics.Magistics;
 import T145.magistics.api.IMagisticsPlugin;
 import T145.magistics.api.MagisticsPlugin;
+import T145.magistics.init.ModBiomes;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModDimensions;
 import T145.magistics.init.ModEntities;
@@ -63,6 +64,7 @@ public class CommonProxy implements IGuiHandler {
 		ModBlocks.init();
 		ModItems.init();
 		ModEntities.init();
+		ModBiomes.init();
 		ModDimensions.init();
 		registerPlugins(event, false);
 	}

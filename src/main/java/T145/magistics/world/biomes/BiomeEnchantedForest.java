@@ -2,6 +2,7 @@ package T145.magistics.world.biomes;
 
 import java.util.Random;
 
+import T145.magistics.Magistics;
 import T145.magistics.world.features.WorldGenGreatwoodTree;
 import T145.magistics.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockTallGrass;
@@ -23,6 +24,7 @@ public class BiomeEnchantedForest extends Biome {
 
 	public BiomeEnchantedForest() {
 		super(new BiomeProperties("Enchanted Forest").setWaterColor(6747307).setTemperature(0.7F).setRainfall(0.6F).setBaseHeight(0.2F));
+		setRegistryName(Magistics.MODID, getBiomeName());
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityWolf.class, 2, 1, 3));
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 2, 1, 3));
 		spawnableMonsterList.add(new Biome.SpawnListEntry(EntityWitch.class, 3, 1, 1));
