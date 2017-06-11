@@ -19,7 +19,7 @@ public class Render {
 
 	public static final VertexFormatElement NORMAL_3F = new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 3);
 	public static final VertexFormat POSITION_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(NORMAL_3F);
-	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat(POSITION_NORMALF).addElement(DefaultVertexFormats.TEX_2F);
+	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(NORMAL_3F);
 
 	public static double W1 = 0.0625D;
 	public static double W2 = 0.125D;
