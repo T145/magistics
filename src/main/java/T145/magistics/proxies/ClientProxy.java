@@ -3,6 +3,7 @@ package T145.magistics.proxies;
 import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
+import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Shaders;
 import T145.magistics.init.ModBlocks;
@@ -53,6 +54,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+		ColorHandler.init();
 	}
 
 	@Override
