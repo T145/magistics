@@ -93,7 +93,7 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
 		if (crucible.isNormal()) {
-			FXCreator.INSTANCE.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+			FXCreator.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
 		}
 	}
 

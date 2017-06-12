@@ -1,10 +1,8 @@
 package T145.magistics.proxies;
 
-import T145.magistics.client.fx.FXEngine;
 import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ColorHandler;
-import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Shaders;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModEntities;
@@ -15,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -40,9 +37,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-
-		MinecraftForge.EVENT_BUS.register(ModelBakery.INSTANCE);
-		MinecraftForge.EVENT_BUS.register(FXEngine.INSTANCE);
 
 		ModBlocks.initClient();
 		ModItems.initClient();

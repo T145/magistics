@@ -12,23 +12,24 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
+@EventBusSubscriber(modid = Magistics.MODID, value = Side.CLIENT)
 public class ModelBakery {
 
-	public static final ModelBakery INSTANCE = new ModelBakery();
+	public static TextureAtlasSprite quintFluid;
+	public static TextureAtlasSprite conduitPart;
 
-	public TextureAtlasSprite quintFluid;
-	public TextureAtlasSprite conduitPart;
-
-	public TextureAtlasSprite registerSprite(TextureMap map, String name) {
+	public static TextureAtlasSprite registerSprite(TextureMap map, String name) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, name));
 	}
 
-	public TextureAtlasSprite registerSprite(TextureMap map, String name, String dir) {
+	public static TextureAtlasSprite registerSprite(TextureMap map, String name, String dir) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, dir + "/" + name));
 	}
 
@@ -58,14 +59,14 @@ public class ModelBakery {
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onModelBake(ModelBakeEvent event) {}
+	public static void onModelBake(ModelBakeEvent event) {}
 
 	@SubscribeEvent
-	public void onTextureStitch(TextureStitchEvent event) {
+	public static void onTextureStitch(TextureStitchEvent event) {
 		quintFluid = registerSprite(event.getMap(), "vis", "misc");
 		conduitPart = registerSprite(event.getMap(), "conduit_valve", "blocks/transport");
 	}
 
 	@SubscribeEvent
-	public void dumpAtlas(ArrowLooseEvent event) {}
+	public static void dumpAtlas(ArrowLooseEvent event) {}
 }

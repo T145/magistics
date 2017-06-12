@@ -28,7 +28,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
 			double yy = infuser.getPos().getY() + Render.W16;
 			double zz = infuser.getPos().getZ() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
-			FXCreator.INSTANCE.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
+			FXCreator.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
 		}
 	}
 

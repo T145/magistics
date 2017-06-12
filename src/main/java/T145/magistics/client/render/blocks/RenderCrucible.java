@@ -29,7 +29,7 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 			GlStateManager.disableLighting();
 
 			bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			Render.face(EnumFacing.UP, ModelBakery.INSTANCE.quintFluid, Render.W1 + 0.001D, Render.W4, Render.W1 + 0.001D, 0.999D - Render.W1, Render.W4 + level, 0.999D - Render.W1);
+			Render.face(EnumFacing.UP, ModelBakery.quintFluid, Render.W1 + 0.001D, Render.W4, Render.W1 + 0.001D, 0.999D - Render.W1, Render.W4 + level, 0.999D - Render.W1);
 
 			GlStateManager.enableLighting();
 			GlStateManager.color(1F, 1F, 1F, 1F);
