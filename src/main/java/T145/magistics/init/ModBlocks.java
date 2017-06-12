@@ -8,6 +8,7 @@ import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.api.variants.blocks.EnumWood;
 import T145.magistics.blocks.cosmetic.BlockLeaves;
 import T145.magistics.blocks.cosmetic.BlockLogs;
+import T145.magistics.blocks.cosmetic.BlockNitor;
 import T145.magistics.blocks.cosmetic.BlockPlanks;
 import T145.magistics.blocks.cosmetic.BlockSaplings;
 import T145.magistics.blocks.cosmetic.BlockVoidBorder;
@@ -33,6 +34,7 @@ import T145.magistics.tiles.devices.TileChestHungry;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,6 +57,9 @@ public class ModBlocks {
 	public static Block logs;
 	public static Block leaves;
 
+	public static Block crystal;
+	public static Block nitor;
+
 	public static void init() {
 		crucible = new BlockCrucible();
 		infuser = new BlockInfuser();
@@ -70,6 +75,8 @@ public class ModBlocks {
 		planks = new BlockPlanks();
 		logs = new BlockLogs();
 		leaves = new BlockLeaves();
+		//crystal = new BlockCrystal();
+		nitor = new BlockNitor();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -110,6 +117,10 @@ public class ModBlocks {
 			ModelBakery.registerBlockModel(saplings, type.ordinal(), type);
 		}
 
+		for (EnumDyeColor type : EnumDyeColor.values()) {
+			ModelBakery.registerBlockModel(nitor, type.ordinal(), "variant=" + type.getName());
+		}
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileConduit.class, new RenderConduit());
@@ -117,5 +128,6 @@ public class ModBlocks {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungry.class, new RenderChestHungry());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestVoid.class, new RenderChestVoid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new RenderCrystal());
 	}
 }

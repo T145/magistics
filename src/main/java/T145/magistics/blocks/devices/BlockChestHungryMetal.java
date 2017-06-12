@@ -5,6 +5,7 @@ import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.devices.TileChestHungryMetal;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,6 +35,8 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 
 	public BlockChestHungryMetal() {
 		super("chest_hungry_metal", Material.IRON, IronChestType.class);
+		setHardness(3.0F);
+		setSoundType(SoundType.METAL);
 	}
 
 	public static String getSimpleChestName(IronChestType type) {

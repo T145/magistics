@@ -1,5 +1,6 @@
 package T145.magistics.client.lib;
 
+import T145.magistics.blocks.cosmetic.BlockNitor;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -7,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
@@ -26,6 +28,15 @@ public class ColorHandler {
 	}
 
 	private static void registerBlockColors(BlockColors blockColors) {
+		IBlockColor basicColourHandler = (state, blockAccess, pos, tintIndex) -> {
+			if (state.getBlock() instanceof BlockNitor) {
+				return ((EnumDyeColor) state.getValue(((BlockNitor) state.getBlock()).variant)).getMapColor().colorValue;
+			}
+			return 16777215;
+		};
+
+		blockColors.registerBlockColorHandler(basicColourHandler, new Block[] { ModBlocks.nitor });
+
 		IBlockColor leafColourHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
 				return 16777215;
@@ -45,6 +56,6 @@ public class ColorHandler {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, new Block[] { ModBlocks.leaves });
+		}, new Block[] { ModBlocks.leaves, ModBlocks.nitor });
 	}
 }

@@ -8,6 +8,7 @@ import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.devices.TileChestHungry;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -35,6 +36,8 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	public BlockChestHungry() {
 		super("chest_hungry", Material.WOOD, EnumChestHungry.class);
+		setHardness(2.5F);
+	    setSoundType(SoundType.WOOD);
 	}
 
 	@Override

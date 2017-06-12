@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "magistics:blocks/nitor",
+        "layer1": "magistics:blocks/nitor_core"
+    }
+}
