@@ -2,7 +2,6 @@ package T145.magistics.tiles.devices;
 
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.tiles.MTile;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -24,12 +23,12 @@ public class TileChestVoid extends MTile implements IFacing {
 	}
 
 	@Override
-	public EnumFacing getFacing(IBlockState state) {
+	public EnumFacing getFacing() {
 		return facing;
 	}
 
 	@Override
-	public void setFacing(IBlockState state, EnumFacing side) {
+	public void setFacing(EnumFacing side) {
 		facing = side;
 	}
 

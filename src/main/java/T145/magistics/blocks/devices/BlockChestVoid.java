@@ -90,7 +90,7 @@ public class BlockChestVoid extends MBlock {
 	}
 
 	private String colorKeyValue(String input) {
-		return colorKeyValue(input, TextFormatting.LIGHT_PURPLE, TextFormatting.YELLOW);
+		return colorKeyValue(input, TextFormatting.LIGHT_PURPLE, TextFormatting.AQUA);
 	}
 
 	private String colorKeyValue(String input, TextFormatting key, TextFormatting value) {
@@ -156,7 +156,7 @@ public class BlockChestVoid extends MBlock {
 		}
 
 		TileChestVoid chest = (TileChestVoid) world.getTileEntity(pos);
-		chest.setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
+		chest.setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
 
 		if (chest.id != -1) {
 			return;

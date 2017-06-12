@@ -3,7 +3,7 @@ package T145.magistics.blocks.crafting;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IFacing;
+import T145.magistics.api.logic.IBlockFacing;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.blocks.MBlockDevice;
@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForge extends MBlockDevice<EnumForge> implements IFacing, IWorker {
+public class BlockForge extends MBlockDevice<EnumForge> implements IBlockFacing, IWorker {
 
 	public BlockForge() {
 		super("forge", Material.ROCK, EnumForge.class);

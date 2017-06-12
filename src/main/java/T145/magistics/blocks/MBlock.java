@@ -3,6 +3,7 @@ package T145.magistics.blocks;
 import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.logic.IFacing;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.Block;
@@ -13,9 +14,11 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -174,6 +177,15 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 			return ((ITileEntityProvider) this).createNewTileEntity(world, getMetaFromState(state));
 		}
 		return null;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile instanceof IFacing) {
+			((IFacing) tile).setFacing(EnumFacing.getDirectionFromEntityLiving(pos, placer));
+		}
 	}
 
 	@Override

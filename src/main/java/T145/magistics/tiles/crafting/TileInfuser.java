@@ -13,7 +13,6 @@ import T145.magistics.items.ItemShard;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageInfuserProgress;
 import T145.magistics.tiles.MTileInventory;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
@@ -86,12 +85,12 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	@Override
-	public EnumFacing getFacing(IBlockState state) {
+	public EnumFacing getFacing() {
 		return facing;
 	}
 
 	@Override
-	public void setFacing(IBlockState state, EnumFacing side) {
+	public void setFacing(EnumFacing side) {
 		facing = side;
 	}
 

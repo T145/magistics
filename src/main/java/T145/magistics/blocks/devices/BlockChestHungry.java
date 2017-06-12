@@ -3,7 +3,6 @@ package T145.magistics.blocks.devices;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IOwned;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.blocks.MBlock;
@@ -116,12 +115,10 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+
 		TileEntity tile = world.getTileEntity(pos);
 		EntityPlayer player = (EntityPlayer) placer;
-
-		if (tile instanceof IFacing) {
-			((IFacing) tile).setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
-		}
 
 		if (tile instanceof IOwned && player != null && isEnderChest(state)) {
 			((IOwned) tile).setOwner(player);

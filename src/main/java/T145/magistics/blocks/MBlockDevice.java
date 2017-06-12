@@ -3,6 +3,7 @@ package T145.magistics.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import T145.magistics.api.logic.IBlockFacing;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IWorker;
 import net.minecraft.block.material.Material;
@@ -29,12 +30,18 @@ public abstract class MBlockDevice<T extends Enum<T> & IStringSerializable> exte
 	}
 
 	public EnumFacing getFacing(TileEntity tile) {
-		return tile instanceof IFacing ? ((IFacing) tile).getFacing(blockState.getBaseState()) : EnumFacing.NORTH;
+		if (tile instanceof IFacing) {
+			IFacing orientable = (IFacing) tile;
+			orientable.getFacing();
+		}
+
+		return EnumFacing.NORTH;
 	}
 
 	public void setFacing(TileEntity tile, EnumFacing facing) {
 		if (tile instanceof IFacing) {
-			((IFacing) tile).setFacing(blockState.getBaseState(), facing);
+			IFacing orientable = (IFacing) tile;
+			orientable.setFacing(facing);
 		}
 	}
 
@@ -47,11 +54,11 @@ public abstract class MBlockDevice<T extends Enum<T> & IStringSerializable> exte
 			properties.addAll(variantContainer.getProperties());
 		}
 
-		if (this instanceof IFacing) {
-			if (((IFacing) this).isHorizontalFacing()) {
-				properties.add(IFacing.HORIZONTAL_FACING);
+		if (this instanceof IBlockFacing) {
+			if (((IBlockFacing) this).isHorizontalFacing()) {
+				properties.add(IBlockFacing.HORIZONTAL_FACING);
 			} else {
-				properties.add(IFacing.DIRECTIONAL_FACING);
+				properties.add(IBlockFacing.DIRECTIONAL_FACING);
 			}
 		}
 
@@ -66,11 +73,11 @@ public abstract class MBlockDevice<T extends Enum<T> & IStringSerializable> exte
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (this instanceof IFacing) {
-			if (((IFacing) this).isHorizontalFacing()) {
-				state = state.withProperty(IFacing.HORIZONTAL_FACING, getFacing(tile));
+		if (this instanceof IBlockFacing) {
+			if (((IBlockFacing) this).isHorizontalFacing()) {
+				state = state.withProperty(IBlockFacing.HORIZONTAL_FACING, getFacing(tile));
 			} else {
-				state = state.withProperty(IFacing.DIRECTIONAL_FACING, getFacing(tile));
+				state = state.withProperty(IBlockFacing.DIRECTIONAL_FACING, getFacing(tile));
 			}
 		}
 

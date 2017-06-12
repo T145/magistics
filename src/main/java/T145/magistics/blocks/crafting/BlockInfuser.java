@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.Render;
@@ -21,9 +20,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.StateMap;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -115,15 +112,6 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		TileEntity tile = world.getTileEntity(pos);
-
-		if (tile instanceof IFacing) {
-			((IFacing) tile).setFacing(state, EnumFacing.getDirectionFromEntityLiving(pos, placer));
-		}
 	}
 
 	@Override

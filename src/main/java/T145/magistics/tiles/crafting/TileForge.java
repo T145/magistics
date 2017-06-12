@@ -2,7 +2,6 @@ package T145.magistics.tiles.crafting;
 
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.tiles.MTileInventory;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,14 +16,13 @@ public class TileForge extends MTileInventory implements IFacing {
 	}
 
 	@Override
-	public EnumFacing getFacing(IBlockState state) {
+	public EnumFacing getFacing() {
 		return facing;
 	}
 
 	@Override
-	public void setFacing(IBlockState state, EnumFacing facing) {
+	public void setFacing(EnumFacing facing) {
 		this.facing = facing;
-		markDirty();
 	}
 
 	@Override

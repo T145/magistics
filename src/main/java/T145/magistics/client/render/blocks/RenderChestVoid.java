@@ -48,7 +48,7 @@ public class RenderChestVoid extends TileEntitySpecialRenderer<TileChestVoid> {
 		GlStateManager.translate(x, y + 1.0F, z + 1.0F);
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		Render.rotate(te.getFacing(te.getState()));
+		Render.rotate(te.getFacing());
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 		float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
 		f = 1.0F - f;
