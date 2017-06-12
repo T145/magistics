@@ -2,7 +2,7 @@ package T145.magistics.blocks.cosmetic;
 
 import T145.magistics.blocks.MBlock;
 import T145.magistics.init.ModBlocks;
-import T145.magistics.tiles.devices.TileVoidBorder;
+import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

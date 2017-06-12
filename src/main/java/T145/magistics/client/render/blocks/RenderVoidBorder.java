@@ -5,7 +5,7 @@ import org.lwjgl.opengl.ARBShaderObjects;
 import T145.magistics.client.lib.Render;
 import T145.magistics.client.lib.ShaderCallback;
 import T145.magistics.client.lib.Shaders;
-import T145.magistics.tiles.devices.TileVoidBorder;
+import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
