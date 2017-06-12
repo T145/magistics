@@ -42,6 +42,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
+	static {
+		crucible = new BlockCrucible();
+		infuser = new BlockInfuser();
+		tank = new BlockTank();
+		conduit = new BlockConduit();
+		elevator = new BlockElevator();
+		forge = new BlockForge();
+		chestHungry = new BlockChestHungry();
+		chestVoid = new BlockChestVoid();
+		voidBorder = new BlockVoidBorder();
+
+		saplings = new BlockSaplings();
+		planks = new BlockPlanks();
+		logs = new BlockLogs();
+		leaves = new BlockLeaves();
+		//crystal = new BlockCrystal();
+		nitor = new BlockNitor();
+	}
+
 	public static Block infuser;
 	public static Block tank;
 	public static Block conduit;
@@ -60,24 +79,7 @@ public class ModBlocks {
 	public static Block crystal;
 	public static Block nitor;
 
-	public static void init() {
-		crucible = new BlockCrucible();
-		infuser = new BlockInfuser();
-		tank = new BlockTank();
-		conduit = new BlockConduit();
-		elevator = new BlockElevator();
-		forge = new BlockForge();
-		chestHungry = new BlockChestHungry();
-		chestVoid = new BlockChestVoid();
-		voidBorder = new BlockVoidBorder();
-
-		saplings = new BlockSaplings();
-		planks = new BlockPlanks();
-		logs = new BlockLogs();
-		leaves = new BlockLeaves();
-		//crystal = new BlockCrystal();
-		nitor = new BlockNitor();
-	}
+	public static void init() {}
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() { // NOTE: ALWAYS REGISTER THE LAST MODEL TO BE RENDERED IN THE INVENTORY

@@ -1,7 +1,10 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "magistics:void_border"
+        "model": "cube_all",
+        "textures": {
+            "all": "magistics:blocks/black"
+        }
     },
     "variants": {
         "normal": [

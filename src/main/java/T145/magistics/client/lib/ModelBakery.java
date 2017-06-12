@@ -1,7 +1,9 @@
 package T145.magistics.client.lib;
 
 import T145.magistics.Magistics;
+import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -9,11 +11,11 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,6 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 @EventBusSubscriber(modid = Magistics.MODID, value = Side.CLIENT)
 public class ModelBakery {
+
+	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.chestVoid.getRegistryName(), "inventory");
 
 	public static TextureAtlasSprite quintFluid;
 	public static TextureAtlasSprite conduitPart;
@@ -57,9 +61,14 @@ public class ModelBakery {
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void onModelBake(ModelBakeEvent event) {}
+	@SubscribeEvent
+	public static void onModelRegister(ModelRegistryEvent event) {}
+
+	@SubscribeEvent
+	public static void onModelBake(ModelBakeEvent event) {
+		IBakedModel modelBase = event.getModelRegistry().getObject(MODEL_RESOURCE_CHEST_VOID);
+		event.getModelRegistry().putObject(MODEL_RESOURCE_CHEST_VOID, new CustomBakedModel(modelBase));
+	}
 
 	@SubscribeEvent
 	public static void onTextureStitch(TextureStitchEvent event) {
