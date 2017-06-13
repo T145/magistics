@@ -41,7 +41,7 @@ public class CustomBakedModel implements IBakedModel {
 	public boolean isBuiltInRenderer() {
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		//Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModBlocks.chestVoid), model);
+		// Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModBlocks.chestVoid), model);
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 		return true; // force tesr rendering
 	}
@@ -59,6 +59,7 @@ public class CustomBakedModel implements IBakedModel {
 	}
 
 	@Override
+	public ItemOverrideList getOverrides() {
 		return model.getOverrides();
 	}
 }
