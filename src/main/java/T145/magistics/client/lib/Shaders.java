@@ -17,6 +17,7 @@ public final class Shaders {
 	private static final int FRAG = 35632;
 
 	public static int endShader = 0;
+	public static ShaderCallback shaderCallback;
 
 	public static void init() {
 		if (!Shaders.useShaders()) {
@@ -24,6 +25,15 @@ public final class Shaders {
 		}
 
 		endShader = Shaders.createProgram("ender.vert", "ender.frag");
+		shaderCallback = new ShaderCallback() {
+			public void call(int shader) {
+				Minecraft mc = Minecraft.getMinecraft();
+				int x = ARBShaderObjects.glGetUniformLocationARB(shader, "yaw");
+				ARBShaderObjects.glUniform1fARB(x, (float) (mc.player.rotationYaw * 2.0F * Math.PI / 360.0D));
+				int z = ARBShaderObjects.glGetUniformLocationARB(shader, "pitch");
+				ARBShaderObjects.glUniform1fARB(z, -(float) (mc.player.rotationPitch * 2.0F * Math.PI / 360.0D));
+			}
+		};
 	}
 
 	public static void useShader(int shader, ShaderCallback callback) {

@@ -1,6 +1,8 @@
 package T145.magistics.client.lib;
 
 import T145.magistics.Magistics;
+import T145.magistics.client.render.blocks.RenderChestVoidModel;
+import T145.magistics.client.render.blocks.RenderVoidBorderModel;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -25,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModelBakery {
 
 	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.chestVoid.getRegistryName(), "inventory");
+	private static final ModelResourceLocation MODEL_RESOURCE_VOID_BORDER = new ModelResourceLocation(ModBlocks.voidBorder.getRegistryName(), "inventory");
 
 	public static TextureAtlasSprite quintFluid;
 	public static TextureAtlasSprite conduitPart;
@@ -66,8 +69,11 @@ public class ModelBakery {
 
 	@SubscribeEvent
 	public static void onModelBake(ModelBakeEvent event) {
-		IBakedModel modelBase = event.getModelRegistry().getObject(MODEL_RESOURCE_CHEST_VOID);
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CHEST_VOID, new CustomBakedModel(modelBase));
+		IBakedModel chestVoidModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CHEST_VOID);
+		IBakedModel voidBorderModel = event.getModelRegistry().getObject(MODEL_RESOURCE_VOID_BORDER);
+
+		event.getModelRegistry().putObject(MODEL_RESOURCE_CHEST_VOID, new RenderChestVoidModel(chestVoidModel));
+		event.getModelRegistry().putObject(MODEL_RESOURCE_VOID_BORDER, new RenderVoidBorderModel(voidBorderModel));
 	}
 
 	@SubscribeEvent

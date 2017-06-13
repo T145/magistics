@@ -2,24 +2,20 @@ package T145.magistics.client.lib;
 
 import java.util.List;
 
-import T145.magistics.init.ModBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
-public class CustomBakedModel implements IBakedModel {
+public abstract class CustomBakedModel implements IBakedModel {
 
 	private final IBakedModel model;
 
-	public CustomBakedModel(final IBakedModel modelIn) {
-		model = modelIn;
+	public CustomBakedModel(IBakedModel model) {
+		this.model = model;
 	}
 
 	@Override
@@ -39,12 +35,11 @@ public class CustomBakedModel implements IBakedModel {
 
 	@Override
 	public boolean isBuiltInRenderer() {
-		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		// Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModBlocks.chestVoid), model);
-		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-		return true; // force tesr rendering
+		render(model);
+		return true;
 	}
+
+	public abstract void render(IBakedModel model);
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
