@@ -1,110 +1,6 @@
 {
     "__comment": "Designed by T145",
     "parent": "block/block",
-    "display": {
-        "gui": {
-            "rotation": [
-                30,
-                225,
-                0
-            ],
-            "translation": [
-                0,
-                0,
-                0
-            ],
-            "scale": [
-                0.625,
-                0.625,
-                0.625
-            ]
-        },
-        "ground": {
-            "rotation": [
-                0,
-                0,
-                0
-            ],
-            "translation": [
-                0,
-                3,
-                0
-            ],
-            "scale": [
-                0.25,
-                0.25,
-                0.25
-            ]
-        },
-        "head": {
-            "rotation": [
-                0,
-                0,
-                0
-            ],
-            "translation": [
-                0,
-                0,
-                0
-            ],
-            "scale": [
-                1,
-                1,
-                1
-            ]
-        },
-        "fixed": {
-            "rotation": [
-                0,
-                0,
-                0
-            ],
-            "translation": [
-                0,
-                0,
-                0
-            ],
-            "scale": [
-                0.5,
-                0.5,
-                0.5
-            ]
-        },
-        "thirdperson_righthand": {
-            "rotation": [
-                75,
-                135,
-                0
-            ],
-            "translation": [
-                0,
-                2.5,
-                0
-            ],
-            "scale": [
-                0.375,
-                0.375,
-                0.375
-            ]
-        },
-        "firstperson_righthand": {
-            "rotation": [
-                0,
-                135,
-                0
-            ],
-            "translation": [
-                0,
-                0,
-                0
-            ],
-            "scale": [
-                0.4,
-                0.4,
-                0.4
-            ]
-        }
-    },
     "elements": [
         {
             "from": [
@@ -127,6 +23,15 @@
                     ],
                     "texture": "#chest"
                 },
+                "up": {
+                    "uv": [
+                        3.5,
+                        4.75,
+                        7,
+                        8.25
+                    ],
+                    "texture": "#chest"
+                },
                 "north": {
                     "uv": [
                         3.5,
@@ -138,6 +43,15 @@
                 },
                 "south": {
                     "uv": [
+                        10.5,
+                        8.25,
+                        14,
+                        10.75
+                    ],
+                    "texture": "#chest"
+                },
+                "west": {
+                    "uv": [
                         7,
                         8.25,
                         10.5,
@@ -145,20 +59,11 @@
                     ],
                     "texture": "#chest"
                 },
-                "west": {
+                "east": {
                     "uv": [
                         0,
                         8.25,
                         3.5,
-                        10.75
-                    ],
-                    "texture": "#chest"
-                },
-                "east": {
-                    "uv": [
-                        10.5,
-                        8.25,
-                        14,
                         10.75
                     ],
                     "texture": "#chest"
@@ -168,15 +73,24 @@
         {
             "from": [
                 1,
-                10,
+                9,
                 1
             ],
             "to": [
                 15,
-                15,
+                14,
                 15
             ],
             "faces": {
+                "down": {
+                    "uv": [
+                        7,
+                        0,
+                        10.5,
+                        3.5
+                    ],
+                    "texture": "#chest"
+                },
                 "up": {
                     "uv": [
                         3.5,
@@ -197,6 +111,15 @@
                 },
                 "south": {
                     "uv": [
+                        10.5,
+                        3.5,
+                        14,
+                        4.75
+                    ],
+                    "texture": "#chest"
+                },
+                "west": {
+                    "uv": [
                         7,
                         3.5,
                         10.5,
@@ -204,20 +127,11 @@
                     ],
                     "texture": "#chest"
                 },
-                "west": {
+                "east": {
                     "uv": [
                         0,
                         3.5,
                         3.5,
-                        4.75
-                    ],
-                    "texture": "#chest"
-                },
-                "east": {
-                    "uv": [
-                        10.5,
-                        3.5,
-                        14,
                         4.75
                     ],
                     "texture": "#chest"
@@ -227,30 +141,30 @@
         {
             "from": [
                 7,
-                8,
+                7,
                 0
             ],
             "to": [
                 9,
-                12,
+                11,
                 1
             ],
             "faces": {
                 "down": {
                     "uv": [
-                        0.75,
                         0,
+                        0.75,
                         1.25,
-                        0.25
+                        0.5
                     ],
                     "texture": "#chest"
                 },
                 "up": {
                     "uv": [
-                        0.25,
                         0,
+                        0.25,
                         0.75,
-                        0.25
+                        0.5
                     ],
                     "texture": "#chest"
                 },
@@ -263,20 +177,29 @@
                     ],
                     "texture": "#chest"
                 },
+                "south": {
+                    "uv": [
+                        1,
+                        0.25,
+                        1.5,
+                        1.25
+                    ],
+                    "texture": "#chest"
+                },
                 "west": {
                     "uv": [
-                        0,
+                        0.75,
                         0.25,
-                        0.25,
+                        1,
                         1.25
                     ],
                     "texture": "#chest"
                 },
                 "east": {
                     "uv": [
-                        1.25,
+                        0,
                         0.25,
-                        1.5,
+                        0.25,
                         1.25
                     ],
                     "texture": "#chest"
