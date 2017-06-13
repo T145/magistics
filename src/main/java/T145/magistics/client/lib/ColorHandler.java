@@ -1,5 +1,6 @@
 package T145.magistics.client.lib;
 
+import T145.magistics.blocks.cosmetic.BlockCandle;
 import T145.magistics.blocks.cosmetic.BlockNitor;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
@@ -20,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ColorHandler {
 
+	public static final int AMBIENT_GRASS = 16777215;
+
 	public static void init() {
 		BlockColors blockColors = Minecraft.getMinecraft().getBlockColors();
 		ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
@@ -28,18 +31,23 @@ public class ColorHandler {
 	}
 
 	private static void registerBlockColors(BlockColors blockColors) {
-		IBlockColor basicColourHandler = (state, blockAccess, pos, tintIndex) -> {
+		IBlockColor basicColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock() instanceof BlockNitor) {
 				return ((EnumDyeColor) state.getValue(((BlockNitor) state.getBlock()).variant)).getMapColor().colorValue;
 			}
-			return 16777215;
+
+			if (state.getBlock() instanceof BlockCandle) {
+				return ((EnumDyeColor) state.getValue(((BlockCandle) state.getBlock()).variant)).getMapColor().colorValue;
+			}
+
+			return AMBIENT_GRASS;
 		};
 
-		blockColors.registerBlockColorHandler(basicColourHandler, new Block[] { ModBlocks.NITOR });
+		blockColors.registerBlockColorHandler(basicColorHandler, new Block[] { ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE });
 
-		IBlockColor leafColourHandler = (state, blockAccess, pos, tintIndex) -> {
+		IBlockColor leafColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
-				return 16777215;
+				return AMBIENT_GRASS;
 			}
 
 			if (blockAccess != null && pos != null) {
@@ -49,13 +57,13 @@ public class ColorHandler {
 			return ColorizerFoliage.getFoliageColorBasic();
 		};
 
-		blockColors.registerBlockColorHandler(leafColourHandler, new Block[] { ModBlocks.LEAVES });
+		blockColors.registerBlockColorHandler(leafColorHandler, new Block[] { ModBlocks.LEAVES });
 	}
 
 	private static void registerItemColors(BlockColors blockColors, ItemColors itemColors) {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, new Block[] { ModBlocks.LEAVES, ModBlocks.NITOR });
+		}, new Block[] { ModBlocks.LEAVES, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE });
 	}
 }

@@ -6,6 +6,8 @@ import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.api.variants.blocks.EnumWood;
+import T145.magistics.blocks.cosmetic.BlockCandle;
+import T145.magistics.blocks.cosmetic.BlockFloatingCandle;
 import T145.magistics.blocks.cosmetic.BlockLeaves;
 import T145.magistics.blocks.cosmetic.BlockLogs;
 import T145.magistics.blocks.cosmetic.BlockNitor;
@@ -24,9 +26,11 @@ import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.render.blocks.RenderChestHungry;
 import T145.magistics.client.render.blocks.RenderChestVoid;
 import T145.magistics.client.render.blocks.RenderCrucible;
+import T145.magistics.client.render.blocks.RenderFloatingCandle;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
 import T145.magistics.client.render.blocks.RenderVoidBorder;
+import T145.magistics.tiles.cosmetic.TileFloatingCandle;
 import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import T145.magistics.tiles.crafting.TileCrucible;
 import T145.magistics.tiles.crafting.TileInfuser;
@@ -59,6 +63,8 @@ public class ModBlocks {
 
 	public static Block crystal;
 	public static final Block NITOR = new BlockNitor();
+	public static final Block CANDLE = new BlockCandle();
+	public static final Block FLOATING_CANDLE = new BlockFloatingCandle();
 
 	public static void init() {}
 
@@ -101,7 +107,9 @@ public class ModBlocks {
 		}
 
 		for (EnumDyeColor type : EnumDyeColor.values()) {
-			ModelBakery.registerBlockModel(NITOR, type.ordinal(), "variant=" + type.getName());
+			ModelBakery.registerBlockModel(NITOR, type.ordinal(), "inventory");
+			ModelBakery.registerBlockModel(CANDLE, type.ordinal(), "inventory");
+			ModelBakery.registerBlockModel(FLOATING_CANDLE, type.ordinal(), "inventory");
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
@@ -112,5 +120,6 @@ public class ModBlocks {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestVoid.class, new RenderChestVoid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new RenderCrystal());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileFloatingCandle.class, new RenderFloatingCandle());
 	}
 }
