@@ -132,7 +132,7 @@ public class BlockChestVoid extends MBlock {
 			return;
 		}
 
-		ItemStack stack = new ItemStack(ModBlocks.chestVoid, 1);
+		ItemStack stack = new ItemStack(ModBlocks.CHEST_VOID, 1);
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setInteger("id", te.id);
 		stack.setTagCompound(compound);

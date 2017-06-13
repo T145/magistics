@@ -23,7 +23,7 @@ public class CreativeTabMagistics extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
-		return new ItemStack(ModBlocks.infuser, 1, 0);
+		return new ItemStack(ModBlocks.INFUSER, 1, 0);
 	}
 
 	@Override

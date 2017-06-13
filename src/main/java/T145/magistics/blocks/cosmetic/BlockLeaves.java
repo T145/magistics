@@ -154,7 +154,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IBlo
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ModBlocks.saplings);
+		return Item.getItemFromBlock(ModBlocks.SAPLINGS);
 	}
 
 	@Override

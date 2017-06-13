@@ -37,7 +37,7 @@ public class BlockVoidBorder extends MBlock {
 	@Override
 	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
 		IBlockState neighborState = world.getBlockState(pos.offset(face));
-		return !neighborState.isOpaqueCube() && neighborState.getBlock() != ModBlocks.voidBorder;
+		return !neighborState.isOpaqueCube() && neighborState.getBlock() != ModBlocks.VOID_BORDER;
 	}
 
 	@Override

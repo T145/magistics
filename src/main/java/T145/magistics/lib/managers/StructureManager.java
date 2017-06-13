@@ -30,7 +30,7 @@ public class StructureManager {
 		int startY = 40 + size;
 		int startZ = size;
 
-		generateCube(ModDimensions.getServerVoidWorld(), new BlockPos(startX, startY, startZ), size, ModBlocks.voidBorder.getDefaultState());
+		generateCube(ModDimensions.getServerVoidWorld(), new BlockPos(startX, startY, startZ), size, ModBlocks.VOID_BORDER.getDefaultState());
 	}
 
 	public static void generateCube(World world, BlockPos cornerPos, int size, IBlockState state) {

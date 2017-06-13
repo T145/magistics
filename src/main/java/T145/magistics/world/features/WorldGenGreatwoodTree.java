@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class WorldGenGreatwoodTree extends WorldGenLargeTree {
 
 	public WorldGenGreatwoodTree(boolean notify) {
-		super(notify, ModBlocks.logs.getStateFromMeta(4), ModBlocks.leaves.getDefaultState(), 19, 24);
+		super(notify, ModBlocks.LOGS.getStateFromMeta(4), ModBlocks.LEAVES.getDefaultState(), 19, 24);
 	}
 
 	@Override

@@ -91,7 +91,7 @@ public class WorldGenSilverwoodTree extends WorldGenAbstractTree {
 							double distance = offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ;
 
 							if (distance < 10 + rand.nextInt(8) && nextBlock.canBeReplacedByLeaves(nextState, world, nextPos)) {
-								setBlockAndNotifyAdequately(world, new BlockPos(xx, j, zz), ModBlocks.leaves.getStateFromMeta(1));
+								setBlockAndNotifyAdequately(world, new BlockPos(xx, j, zz), ModBlocks.LEAVES.getStateFromMeta(1));
 							}
 						}
 					}
@@ -103,69 +103,69 @@ public class WorldGenSilverwoodTree extends WorldGenAbstractTree {
 					Block nextBlock = nextState.getBlock();
 
 					if (nextBlock.isAir(nextState, world, nextPos) || nextBlock.isLeaves(nextState, world, nextPos) || nextBlock.isReplaceable(world, nextPos)) {
-						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z), ModBlocks.logs.getStateFromMeta(5));
-						setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + j, z), ModBlocks.logs.getStateFromMeta(5));
-						setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + j, z), ModBlocks.logs.getStateFromMeta(5));
-						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z - 1), ModBlocks.logs.getStateFromMeta(5));
-						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z + 1), ModBlocks.logs.getStateFromMeta(5));
+						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z), ModBlocks.LOGS.getStateFromMeta(5));
+						setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + j, z), ModBlocks.LOGS.getStateFromMeta(5));
+						setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + j, z), ModBlocks.LOGS.getStateFromMeta(5));
+						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z - 1), ModBlocks.LOGS.getStateFromMeta(5));
+						setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z + 1), ModBlocks.LOGS.getStateFromMeta(5));
 					}
 				}
 
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y, z - 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y, z + 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y, z + 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y, z - 1), ModBlocks.logs.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y + j, z), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y, z - 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y, z + 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y, z + 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y, z - 1), ModBlocks.LOGS.getStateFromMeta(5));
 
 				if (rand.nextInt(3) != 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + 1, z - 1), ModBlocks.logs.getStateFromMeta(5));
-				}
-
-				if (rand.nextInt(3) != 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + 1, z + 1), ModBlocks.logs.getStateFromMeta(5));
+					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + 1, z - 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
 				if (rand.nextInt(3) != 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + 1, z + 1), ModBlocks.logs.getStateFromMeta(5));
+					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + 1, z + 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
 				if (rand.nextInt(3) != 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + 1, z - 1), ModBlocks.logs.getStateFromMeta(5));
+					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + 1, z + 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y, z), ModBlocks.logs.getStateFromMeta(1));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y, z), ModBlocks.logs.getStateFromMeta(1));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y, z - 2), ModBlocks.logs.getStateFromMeta(9));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y, z + 2), ModBlocks.logs.getStateFromMeta(9));
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y - 1, z), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y - 1, z), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y - 1, z - 2), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y - 1, z + 2), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 4), z - 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 4), z + 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 4), z + 1), ModBlocks.logs.getStateFromMeta(5));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 4), z - 1), ModBlocks.logs.getStateFromMeta(5));
-
-				if (rand.nextInt(3) == 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 5), z - 1), ModBlocks.logs.getStateFromMeta(5));
+				if (rand.nextInt(3) != 0) {
+					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + 1, z - 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
-				if (rand.nextInt(3) == 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 5), z + 1), ModBlocks.logs.getStateFromMeta(5));
-				}
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y, z), ModBlocks.LOGS.getStateFromMeta(1));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y, z), ModBlocks.LOGS.getStateFromMeta(1));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y, z - 2), ModBlocks.LOGS.getStateFromMeta(9));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y, z + 2), ModBlocks.LOGS.getStateFromMeta(9));
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y - 1, z), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y - 1, z), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y - 1, z - 2), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y - 1, z + 2), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 4), z - 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 4), z + 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 4), z + 1), ModBlocks.LOGS.getStateFromMeta(5));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 4), z - 1), ModBlocks.LOGS.getStateFromMeta(5));
 
 				if (rand.nextInt(3) == 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 5), z + 1), ModBlocks.logs.getStateFromMeta(5));
+					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 5), z - 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
 				if (rand.nextInt(3) == 0) {
-					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 5), z - 1), ModBlocks.logs.getStateFromMeta(5));
+					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 5), z + 1), ModBlocks.LOGS.getStateFromMeta(5));
 				}
 
-				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y + (height - 4), z), ModBlocks.logs.getStateFromMeta(1));
-				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y + (height - 4), z), ModBlocks.logs.getStateFromMeta(1));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y + (height - 4), z - 2), ModBlocks.logs.getStateFromMeta(9));
-				setBlockAndNotifyAdequately(world, new BlockPos(x, y + (height - 4), z + 2), ModBlocks.logs.getStateFromMeta(9));
+				if (rand.nextInt(3) == 0) {
+					setBlockAndNotifyAdequately(world, new BlockPos(x - 1, y + (height - 5), z + 1), ModBlocks.LOGS.getStateFromMeta(5));
+				}
+
+				if (rand.nextInt(3) == 0) {
+					setBlockAndNotifyAdequately(world, new BlockPos(x + 1, y + (height - 5), z - 1), ModBlocks.LOGS.getStateFromMeta(5));
+				}
+
+				setBlockAndNotifyAdequately(world, new BlockPos(x - 2, y + (height - 4), z), ModBlocks.LOGS.getStateFromMeta(1));
+				setBlockAndNotifyAdequately(world, new BlockPos(x + 2, y + (height - 4), z), ModBlocks.LOGS.getStateFromMeta(1));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y + (height - 4), z - 2), ModBlocks.LOGS.getStateFromMeta(9));
+				setBlockAndNotifyAdequately(world, new BlockPos(x, y + (height - 4), z + 2), ModBlocks.LOGS.getStateFromMeta(9));
 
 				if (generateFlowers) {
 					// do it

@@ -42,85 +42,66 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModBlocks {
 
-	static {
-		crucible = new BlockCrucible();
-		infuser = new BlockInfuser();
-		tank = new BlockTank();
-		conduit = new BlockConduit();
-		elevator = new BlockElevator();
-		forge = new BlockForge();
-		chestHungry = new BlockChestHungry();
-		chestVoid = new BlockChestVoid();
-		voidBorder = new BlockVoidBorder();
+	public static final Block INFUSER = new BlockInfuser();
+	public static final Block TANK = new BlockTank();
+	public static final Block CONDUIT = new BlockConduit();
+	public static final Block CRUCIBLE = new BlockCrucible();
+	public static final Block ELEVATOR = new BlockElevator();
+	public static final Block FORGE = new BlockForge();
+	public static final Block CHEST_HUNGRY = new BlockChestHungry();
+	public static final Block CHEST_VOID = new BlockChestVoid();
+	public static final Block VOID_BORDER = new BlockVoidBorder();
 
-		saplings = new BlockSaplings();
-		planks = new BlockPlanks();
-		logs = new BlockLogs();
-		leaves = new BlockLeaves();
-		//crystal = new BlockCrystal();
-		nitor = new BlockNitor();
-	}
-
-	public static Block infuser;
-	public static Block tank;
-	public static Block conduit;
-	public static Block crucible;
-	public static Block elevator;
-	public static Block forge;
-	public static Block chestHungry;
-	public static Block chestVoid;
-	public static Block voidBorder;
-
-	public static Block saplings;
-	public static Block planks;
-	public static Block logs;
-	public static Block leaves;
+	public static final Block SAPLINGS = new BlockSaplings();
+	public static final Block PLANKS = new  BlockPlanks();
+	public static final Block LOGS = new BlockLogs();
+	public static final Block LEAVES = new BlockLeaves();
 
 	public static Block crystal;
-	public static Block nitor;
+	public static final Block NITOR = new BlockNitor();
 
 	public static void init() {}
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() { // NOTE: ALWAYS REGISTER THE LAST MODEL TO BE RENDERED IN THE INVENTORY
-		ModelLoader.setCustomStateMapper(infuser, ((BlockInfuser) infuser).getStateMap());
+		ModelLoader.setCustomStateMapper(INFUSER, ((BlockInfuser) INFUSER).getStateMap());
 
 		for (EnumInfuser type : EnumInfuser.values()) {
-			ModelBakery.registerBlockModel(infuser, type.ordinal(), type.getName() + "_infuser", "inventory");
+			ModelBakery.registerBlockModel(INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
 		}
 
 		for (EnumTank type : EnumTank.values()) {
-			ModelBakery.registerBlockModel(tank, type.ordinal(), type);
+			ModelBakery.registerBlockModel(TANK, type.ordinal(), type);
 		}
 
-		ModelBakery.registerBlockModel(conduit, 0, "inventory");
+		ModelBakery.registerBlockModel(CONDUIT, 0, "inventory");
 
 		for (EnumCrucible type : EnumCrucible.values()) {
-			ModelBakery.registerBlockModel(crucible, type.ordinal(), ModelBakery.getVariantName(type) + ",working=false");
+			ModelBakery.registerBlockModel(CRUCIBLE, type.ordinal(), ModelBakery.getVariantName(type) + ",working=false");
 		}
 
-		ModelBakery.registerBlockModel(elevator, 0, "normal");
+		ModelBakery.registerBlockModel(ELEVATOR, 0, "normal");
 
 		for (EnumForge type : EnumForge.values()) {
-			ModelBakery.registerBlockModel(forge, type.ordinal(), "inventory," + ModelBakery.getVariantName(type));
+			ModelBakery.registerBlockModel(FORGE, type.ordinal(), "inventory," + ModelBakery.getVariantName(type));
 		}
 
 		for (EnumChestHungry type : EnumChestHungry.values()) {
-			ModelBakery.registerBlockModel(chestHungry, type.ordinal(), type);
+			ModelBakery.registerBlockModel(CHEST_HUNGRY, type.ordinal(), type);
 		}
 
-		ModelBakery.registerBlockModel(chestVoid, 0, "inventory");
-		ModelBakery.registerBlockModel(voidBorder, 0, "inventory");
+		ModelBakery.registerBlockModel(CHEST_VOID, 0, "inventory");
+		ModelBakery.registerBlockModel(VOID_BORDER, 0, "inventory");
 
 		for (EnumWood type : EnumWood.values()) {
-			ModelBakery.registerBlockModel(leaves, type.ordinal(), type);
-			ModelBakery.registerBlockModel(logs, type.ordinal(), "axis=y,variant=" + type.getName());
-			ModelBakery.registerBlockModel(planks, type.ordinal(), type);
-			ModelBakery.registerBlockModel(saplings, type.ordinal(), type);
+			ModelBakery.registerBlockModel(LEAVES, type.ordinal(), type);
+			ModelBakery.registerBlockModel(LOGS, type.ordinal(), "axis=y,variant=" + type.getName());
+			ModelBakery.registerBlockModel(PLANKS, type.ordinal(), type);
+			ModelBakery.registerBlockModel(SAPLINGS, type.ordinal(), type);
 		}
 
 		for (EnumDyeColor type : EnumDyeColor.values()) {
-			ModelBakery.registerBlockModel(nitor, type.ordinal(), "variant=" + type.getName());
+			ModelBakery.registerBlockModel(NITOR, type.ordinal(), "variant=" + type.getName());
 		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());

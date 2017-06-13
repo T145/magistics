@@ -35,7 +35,7 @@ public class ColorHandler {
 			return 16777215;
 		};
 
-		blockColors.registerBlockColorHandler(basicColourHandler, new Block[] { ModBlocks.nitor });
+		blockColors.registerBlockColorHandler(basicColourHandler, new Block[] { ModBlocks.NITOR });
 
 		IBlockColor leafColourHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
@@ -49,13 +49,13 @@ public class ColorHandler {
 			return ColorizerFoliage.getFoliageColorBasic();
 		};
 
-		blockColors.registerBlockColorHandler(leafColourHandler, new Block[] { ModBlocks.leaves });
+		blockColors.registerBlockColorHandler(leafColourHandler, new Block[] { ModBlocks.LEAVES });
 	}
 
 	private static void registerItemColors(BlockColors blockColors, ItemColors itemColors) {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, new Block[] { ModBlocks.leaves, ModBlocks.nitor });
+		}, new Block[] { ModBlocks.LEAVES, ModBlocks.NITOR });
 	}
 }

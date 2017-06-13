@@ -105,8 +105,8 @@ public class BlockForge extends MBlockDevice<EnumForge> implements IBlockFacing,
 		IBlockState state = world.getBlockState(pos);
 		TileEntity tile = world.getTileEntity(pos);
 
-		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
-		world.setBlockState(pos, ModBlocks.forge.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
+		world.setBlockState(pos, ModBlocks.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
+		world.setBlockState(pos, ModBlocks.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
 
 		if (tile != null) {
 			tile.validate();

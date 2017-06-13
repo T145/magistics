@@ -42,7 +42,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 
 	private void renderConnection(TileTank tank, double x, double y, double z, EnumFacing facing) {
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		TextureAtlasSprite icon = Render.getTextureFromBlock(ModBlocks.conduit, 0);
+		TextureAtlasSprite icon = Render.getTextureFromBlock(ModBlocks.CONDUIT, 0);
 
 		switch (facing) {
 		case NORTH:

@@ -26,8 +26,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber(modid = Magistics.MODID, value = Side.CLIENT)
 public class ModelBakery {
 
-	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.chestVoid.getRegistryName(), "inventory");
-	private static final ModelResourceLocation MODEL_RESOURCE_VOID_BORDER = new ModelResourceLocation(ModBlocks.voidBorder.getRegistryName(), "inventory");
+	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.CHEST_VOID.getRegistryName(), "inventory");
+	private static final ModelResourceLocation MODEL_RESOURCE_VOID_BORDER = new ModelResourceLocation(ModBlocks.VOID_BORDER.getRegistryName(), "inventory");
 
 	public static TextureAtlasSprite quintFluid;
 	public static TextureAtlasSprite conduitPart;
