@@ -54,11 +54,11 @@ public class ContainerInfuser extends Container {
 
 	protected void updateContainer(IContainerListener listener, boolean add) {
 		if (add || quintCost != infuser.quintCost) {
-			listener.sendProgressBarUpdate(this, 0, (int) infuser.quintCost);
+			listener.sendWindowProperty(this, 0, (int) infuser.quintCost);
 		}
 
 		if (add || progress != infuser.progress) {
-			listener.sendProgressBarUpdate(this, 1, (int) infuser.progress);
+			listener.sendWindowProperty(this, 1, (int) infuser.progress);
 		}
 	}
 

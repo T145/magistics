@@ -2,8 +2,8 @@ package T145.magistics.tiles.devices;
 
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageRecieveClientEvent;
-import cpw.mods.ironchest.IronChestType;
-import cpw.mods.ironchest.TileEntityIronChest;
+import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -17,7 +17,7 @@ public class ModDimensions {
 	}
 
 	public static WorldServer getWorldServerForDimension(int dim) {
-		return FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dim);
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dim);
 	}
 
 	public static WorldServer getServerVoidWorld() {

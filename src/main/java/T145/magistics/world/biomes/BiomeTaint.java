@@ -14,10 +14,10 @@ public class BiomeTaint extends Biome {
 	public BiomeTaint() {
 		super(new BiomeProperties("Tainted Land").setWaterColor(7160201));
 		setRegistryName(Magistics.MODID, getBiomeName());
-		theBiomeDecorator.treesPerChunk = 2;
-		theBiomeDecorator.flowersPerChunk = 64537;
-		theBiomeDecorator.grassPerChunk = 2;
-		theBiomeDecorator.reedsPerChunk = 64537;
+		decorator.treesPerChunk = 2;
+		decorator.flowersPerChunk = 64537;
+		decorator.grassPerChunk = 2;
+		decorator.reedsPerChunk = 64537;
 		spawnableCreatureList.clear();
 		spawnableMonsterList.clear();
 		spawnableWaterCreatureList.clear();

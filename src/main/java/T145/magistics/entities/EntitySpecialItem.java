@@ -11,7 +11,7 @@ public class EntitySpecialItem extends EntityItem {
 		super(world);
 		setSize(0.25F, 0.25F);
 		setPosition(x, y, z);
-		setEntityItemStack(stack);
+		setItem(stack);
 		rotationYaw = (float) (Math.random() * 360.0D);
 		motionX = Math.random() * 0.2D - 0.1D;
 		motionY = 0.2D;

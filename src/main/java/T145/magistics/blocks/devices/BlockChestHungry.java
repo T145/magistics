@@ -135,7 +135,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 		if (tile instanceof TileChestHungry && entity instanceof EntityItem && !entity.isDead) {
 			TileChestHungry chest = (TileChestHungry) tile;
 			EntityItem item = (EntityItem) entity;
-			ItemStack stack = item.getEntityItem();
+			ItemStack stack = item.getItem();
 			ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(chest.getItemHandler(), stack);
 
 			if (leftovers == null || leftovers.getCount() != stack.getCount()) {
@@ -144,7 +144,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 			}
 
 			if (leftovers != null) {
-				item.setEntityItemStack(leftovers);
+				item.setItem(leftovers);
 			} else {
 				entity.setDead();
 			}

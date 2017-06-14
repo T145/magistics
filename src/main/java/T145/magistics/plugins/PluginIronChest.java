@@ -6,7 +6,7 @@ import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.render.blocks.RenderChestHungryMetal;
 import T145.magistics.tiles.devices.TileChestHungryMetal;
-import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

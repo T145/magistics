@@ -244,7 +244,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (!items.isEmpty()) {
 					EntityItem item = items.get(world.rand.nextInt(items.size()));
-					ItemStack stack = item.getEntityItem();
+					ItemStack stack = item.getItem();
 					float quintYield = ModRecipes.getCrucibleResult(stack);
 
 					if (quintYield > 0F) {

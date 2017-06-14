@@ -101,13 +101,13 @@ public class FXEngine {
 								CrashReport report = CrashReport.makeCrashReport(err, "Rendering Particle");
 								CrashReportCategory reportCategory = report.makeCategory("Particle being rendered");
 
-								reportCategory.setDetail("Particle", new ICrashReportDetail() {
+								reportCategory.addDetail("Particle", new ICrashReportDetail() {
 									public String call() {
 										return particle.toString();
 									}
 								});
 
-								reportCategory.setDetail("Particle Type", new ICrashReportDetail() {
+								reportCategory.addDetail("Particle Type", new ICrashReportDetail() {
 									public String call() {
 										return "ENTITY_PARTICLE_TEXTURE";
 									}

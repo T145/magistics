@@ -7,8 +7,9 @@ import com.google.common.primitives.SignedBytes;
 import T145.magistics.Magistics;
 import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.client.lib.Render;
-import cpw.mods.ironchest.IronChestType;
-import cpw.mods.ironchest.TileEntityIronChest;
+import T145.magistics.tiles.devices.TileChestHungryMetal;
+import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,7 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntityIronChest> {
+public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestHungryMetal> {
 
 	private Random random = new Random();
 	private ModelChest model = new ModelChest();
@@ -44,7 +45,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntity
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void renderTileEntityAt(TileChestHungryMetal te, double x, double y, double z, float partialTicks, int destroyStage) {
 		if (te == null || te.isInvalid()) {
 			return;
 		}
@@ -140,7 +141,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileEntity
 				GlStateManager.rotate(timeD, 0F, 1F, 0F);
 				GlStateManager.scale(blockScale, blockScale, blockScale);
 
-				customitem.setEntityItemStack(item);
+				customitem.setItem(item);
 
 				if (itemRenderer == null) {
 					itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {

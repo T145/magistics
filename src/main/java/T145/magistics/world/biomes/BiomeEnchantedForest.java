@@ -29,11 +29,11 @@ public class BiomeEnchantedForest extends Biome {
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 2, 1, 3));
 		spawnableMonsterList.add(new Biome.SpawnListEntry(EntityWitch.class, 3, 1, 1));
 		spawnableMonsterList.add(new Biome.SpawnListEntry(EntityEnderman.class, 3, 1, 1));
-		theBiomeDecorator.treesPerChunk = 2;
-		theBiomeDecorator.flowersPerChunk = 10;
-		theBiomeDecorator.grassPerChunk = 12;
-		theBiomeDecorator.waterlilyPerChunk = 6;
-		theBiomeDecorator.mushroomsPerChunk = 6;
+		decorator.treesPerChunk = 2;
+		decorator.flowersPerChunk = 10;
+		decorator.grassPerChunk = 12;
+		decorator.waterlilyPerChunk = 6;
+		decorator.mushroomsPerChunk = 6;
 	}
 
 	@Override

@@ -3,8 +3,8 @@ package T145.magistics.blocks.devices;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.devices.TileChestHungryMetal;
-import cpw.mods.ironchest.IronChest;
-import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.common.ICContent;
+import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -91,7 +91,7 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return IronChest.ironChestBlock.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+		return ICContent.ironChestBlock.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
 	}
 
 	@Override
@@ -102,12 +102,12 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		IronChest.ironChestBlock.onBlockPlacedBy(world, pos, state, placer, stack);
+		ICContent.ironChestBlock.onBlockPlacedBy(world, pos, state, placer, stack);
 	}
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		IronChest.ironChestBlock.breakBlock(world, pos, state);
+		ICContent.ironChestBlock.breakBlock(world, pos, state);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 		if (tile instanceof TileChestHungryMetal && entity instanceof EntityItem && !entity.isDead) {
 			TileChestHungryMetal chest = (TileChestHungryMetal) tile;
 			EntityItem item = (EntityItem) entity;
-			ItemStack stack = item.getEntityItem();
+			ItemStack stack = item.getItem();
 			ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(InventoryManager.getInventory(world, pos, chest.getFacing()), stack);
 
 			if (leftovers == null || leftovers.getCount() != stack.getCount()) {
@@ -126,7 +126,7 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 			}
 
 			if (leftovers != null) {
-				item.setEntityItemStack(leftovers);
+				item.setItem(leftovers);
 			} else {
 				entity.setDead();
 			}
@@ -137,7 +137,7 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		return IronChest.ironChestBlock.getExplosionResistance(world, pos, exploder, explosion);
+		return ICContent.ironChestBlock.getExplosionResistance(world, pos, exploder, explosion);
 	}
 
 	@Override

@@ -274,7 +274,7 @@ public class PlayerManager {
 		}
 
 		public static long serializeChunkPos(ChunkPos chunk) {
-			return chunk.chunkXPos & 0xFFFFFFFF | (chunk.chunkZPos & 0xFFFFFFFF) << 32;
+			return chunk.x & 0xFFFFFFFF | (chunk.z & 0xFFFFFFFF) << 32;
 		}
 
 		public static ChunkPos deserializeChunkPos(long value) {

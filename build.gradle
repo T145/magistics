@@ -97,9 +97,9 @@ compileJava {
 }
 
 dependencies {
-    deobfCompile 'mcp.mobius.waila:Hwyla:1.8.13-B26_1.11'
-    deobfCompile 'mezz.jei:jei_1.11.2:4.3.5.277'
-	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.19.803'
+    deobfCompile 'mezz.jei:jei_1.11.2:4.5.0.287'
+    deobfCompile 'mcp.mobius.waila:Hwyla:1.8.17-B31_1.11'
+    deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
 }
 
 build {
