@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 
 public class TileCrystal extends MTileBase implements IFacing {
 
-	public int crystals = 2;
+	public int crystalCount = 2;
 	private EnumFacing facing = EnumFacing.NORTH;
 
 	@Override
@@ -27,13 +27,13 @@ public class TileCrystal extends MTileBase implements IFacing {
 
 	@Override
 	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("Crystals", crystals);
+		compound.setInteger("Crystals", crystalCount);
 		compound.setInteger("Facing", facing.getIndex());
 	}
 
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
-		crystals = compound.getInteger("Crystals");
+		crystalCount = compound.getInteger("Crystals");
 		facing = EnumFacing.getFront(compound.getInteger("Facing"));
 	}
 }

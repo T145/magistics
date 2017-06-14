@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL12;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.variants.blocks.EnumCrystal;
+import T145.magistics.client.lib.Render;
 import T145.magistics.client.render.models.blocks.ModelCrystal;
 import T145.magistics.tiles.cosmetic.TileCrystal;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -18,9 +19,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderCrystal extends TileEntitySpecialRenderer<TileCrystal> {
 
-	private final ModelCrystal model = new ModelCrystal();
+	private static final ModelCrystal MODEL = new ModelCrystal();
 
-	private void translateFromOrientation(double x, double y, double z, int facing) {
+	private static void translateFromOrientation(double x, double y, double z, int facing) {
 		if (facing == 0) {
 			GL11.glTranslated(x + 0.5F, y + 1.3F, z + 0.5F);
 			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
@@ -41,7 +42,7 @@ public class RenderCrystal extends TileEntitySpecialRenderer<TileCrystal> {
 		}
 	}
 
-	private void drawCrystal(EnumFacing facing, double x, double y, double z, float var5, float var6, float var7, Random rand) {
+	private static void drawCrystal(EnumFacing facing, double x, double y, double z, float var5, float var6, float var7, Random rand) {
 		GL11.glEnable(GL11.GL_NORMALIZE);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glPushMatrix();
@@ -54,7 +55,7 @@ public class RenderCrystal extends TileEntitySpecialRenderer<TileCrystal> {
 		GL11.glPushMatrix();
 		GL11.glColor4f(var7, var7, var7, 1.0F);
 		GL11.glScalef(0.15F + rand.nextFloat() * 0.075F, 0.5F + rand.nextFloat() * 0.1F, 0.15F + rand.nextFloat() * 0.05F);
-		model.render();
+		MODEL.render();
 		GL11.glScalef(1.0F, 1.0F, 1.0F);
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
@@ -66,36 +67,40 @@ public class RenderCrystal extends TileEntitySpecialRenderer<TileCrystal> {
 
 	@Override
 	public void renderTileEntityAt(TileCrystal crystal, double x, double y, double z, float partialTicks, int destroyStage) {
-		float mod = 1F;
+		renderShards(crystal.getBlockMetadata(), crystal.crystalCount, crystal.getFacing(), x, y, z);
+	}
 
-		switch (EnumCrystal.values()[crystal.getBlockMetadata()]) {
+	public static void renderShards(int meta, int crystalCount, EnumFacing facing, double x, double y, double z) {
+		float offsetZ = 1F;
+
+		switch (EnumCrystal.values()[meta]) {
 		case AIR:
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystaly.png"));
+			Render.bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystaly.png"));
 			break;
 		case EARTH:
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalg.png"));
+			Render.bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalg.png"));
 			break;
 		case FIRE:
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalr.png"));
+			Render.bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalr.png"));
 			break;
 		case VOID:
-			mod = 0.2F;
+			offsetZ = 0.2F;
 			break;
 		case WATER:
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalb.png"));
+			Render.bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystalb.png"));
 			break;
 		default:
-			bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystal.png"));
+			Render.bindTexture(new ResourceLocation(Magistics.MODID, "textures/models/crystals/crystal.png"));
 			break;
 		}
 
-		Random rand = new Random((long) (crystal.getBlockMetadata() + x + y * z));
-		drawCrystal(crystal.getFacing(), x, y, z, (rand.nextFloat() - rand.nextFloat()) * 5.0F, (rand.nextFloat() - rand.nextFloat()) * 5.0F, mod, rand);
+		Random rand = new Random((long) (meta + x + y * z));
+		drawCrystal(facing, x, y, z, (rand.nextFloat() - rand.nextFloat()) * 5.0F, (rand.nextFloat() - rand.nextFloat()) * 5.0F, offsetZ, rand);
 
-		for (int var12 = 1; var12 < crystal.crystals; ++var12) {
-			int var13 = rand.nextInt(45) + 90 * var12;
-			int var14 = 15 + rand.nextInt(15);
-			drawCrystal(crystal.getFacing(), x, y, z, (float) var13, (float) var14, mod, rand);
+		for (int count = 1; count < crystalCount; ++count) {
+			float offsetX = rand.nextInt(45) + 90 * count;
+			float offsetY = 15 + rand.nextInt(15);
+			drawCrystal(facing, x, y, z, offsetX, offsetY, offsetZ, rand);
 		}
 	}
 }

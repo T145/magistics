@@ -2,11 +2,13 @@ package T145.magistics.init;
 
 import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.api.variants.blocks.EnumCrucible;
+import T145.magistics.api.variants.blocks.EnumCrystal;
 import T145.magistics.api.variants.blocks.EnumForge;
 import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.api.variants.blocks.EnumWood;
 import T145.magistics.blocks.cosmetic.BlockCandle;
+import T145.magistics.blocks.cosmetic.BlockCrystal;
 import T145.magistics.blocks.cosmetic.BlockFloatingCandle;
 import T145.magistics.blocks.cosmetic.BlockLeaves;
 import T145.magistics.blocks.cosmetic.BlockLogs;
@@ -26,10 +28,12 @@ import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.render.blocks.RenderChestHungry;
 import T145.magistics.client.render.blocks.RenderChestVoid;
 import T145.magistics.client.render.blocks.RenderCrucible;
+import T145.magistics.client.render.blocks.RenderCrystal;
 import T145.magistics.client.render.blocks.RenderFloatingCandle;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
 import T145.magistics.client.render.blocks.RenderVoidBorder;
+import T145.magistics.tiles.cosmetic.TileCrystal;
 import T145.magistics.tiles.cosmetic.TileFloatingCandle;
 import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import T145.magistics.tiles.crafting.TileCrucible;
@@ -61,7 +65,7 @@ public class ModBlocks {
 	public static final Block LOGS = new BlockLogs();
 	public static final Block LEAVES = new BlockLeaves();
 
-	public static Block crystal;
+	public static final Block CRYSTAL = new BlockCrystal();
 	public static final Block NITOR = new BlockNitor();
 	public static final Block CANDLE = new BlockCandle();
 	public static final Block FLOATING_CANDLE = new BlockFloatingCandle();
@@ -106,6 +110,10 @@ public class ModBlocks {
 			ModelBakery.registerBlockModel(SAPLINGS, type.ordinal(), type);
 		}
 
+		for (EnumCrystal type : EnumCrystal.values()) {
+			ModelBakery.registerBlockModel(CRYSTAL, type.ordinal(), type);
+		}
+
 		for (EnumDyeColor type : EnumDyeColor.values()) {
 			ModelBakery.registerBlockModel(NITOR, type.ordinal(), "inventory");
 			ModelBakery.registerBlockModel(CANDLE, type.ordinal(), "inventory");
@@ -119,7 +127,7 @@ public class ModBlocks {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungry.class, new RenderChestHungry());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileChestVoid.class, new RenderChestVoid());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new RenderCrystal());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystal.class, new RenderCrystal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileFloatingCandle.class, new RenderFloatingCandle());
 	}
 }

@@ -1,0 +1,34 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_all",
+		"textures": {
+			"all": "magistics:blocks/blank"
+		},
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [
+			{
+			}
+		],
+		"inventory": [
+			{
+			}
+		],
+		"variant": {
+			"air": {
+			},
+			"fire": {
+			},
+			"water": {
+			},
+			"earth": {
+			},
+			"magic": {
+			},
+			"void": {
+			}
+		}
+	}
+}
