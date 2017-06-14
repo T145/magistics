@@ -1,5 +1,7 @@
 package T145.magistics.tiles.devices;
 
+import T145.magistics.network.PacketHandler;
+import T145.magistics.network.messages.client.MessageRecieveClientEvent;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +31,10 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 		return false;
 	}
 
+	public void sendRecieveEventPacket() {
+		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing), PacketHandler.getTargetPoint(world, pos));
+	}
+
 	@Override
 	public void openInventory(EntityPlayer player) {
 		if (world == null) {
@@ -36,7 +42,7 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 		}
 
 		numPlayersUsing++;
-		world.addBlockEvent(pos, blockType, 1, numPlayersUsing);
+		sendRecieveEventPacket();
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 		}
 
 		numPlayersUsing--;
-		world.addBlockEvent(pos, blockType, 1, numPlayersUsing);
+		sendRecieveEventPacket();
 	}
 
 	@Override
@@ -77,7 +83,7 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 	@Override
 	public void update() {
 		if (world != null && !world.isRemote && (int) ReflectionHelper.getPrivateValue(TileEntityIronChest.class, this, "ticksSinceSync") < 0) {
-			world.addBlockEvent(pos, blockType, 3, ((numPlayersUsing << 3) & 0xF8) | (getFacing().ordinal() & 0x7));
+			PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 3, ((numPlayersUsing << 3) & 0xF8) | (getFacing().ordinal() & 0x7)), PacketHandler.getTargetPoint(world, pos));
 		}
 
 		super.update();
@@ -86,6 +92,6 @@ public class TileChestHungryMetal extends TileEntityIronChest {
 	@Override
 	public void rotateAround() {
 		setFacing(getFacing().rotateY());
-		world.addBlockEvent(pos, blockType, 2, getFacing().ordinal());
+		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 2, getFacing().ordinal()), PacketHandler.getTargetPoint(world, pos));
 	}
 }

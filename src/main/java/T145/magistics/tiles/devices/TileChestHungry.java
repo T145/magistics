@@ -8,6 +8,8 @@ import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.containers.ContainerChestHungry;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
+import T145.magistics.network.PacketHandler;
+import T145.magistics.network.messages.client.MessageRecieveClientEvent;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -154,10 +156,14 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 		}
 	}
 
+	public void sendRecieveEventPacket() {
+		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing), PacketHandler.getTargetPoint(world, pos));
+	}
+
 	@Override
 	public void update() {
 		if (++ticksSinceSync % 20 * 4 == 0) {
-			world.addBlockEvent(pos, blockType, 1, numPlayersUsing);
+			sendRecieveEventPacket();
 		}
 
 		prevLidAngle = lidAngle;
@@ -273,7 +279,7 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 			}
 
 			++numPlayersUsing;
-			world.addBlockEvent(pos, blockType, 1, numPlayersUsing);
+			sendRecieveEventPacket();
 			world.notifyNeighborsOfStateChange(pos, blockType, false);
 
 			if (type == EnumChestHungry.TRAPPED) {
@@ -285,7 +291,7 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 	public void closeChest(EntityPlayer player) {
 		if (!player.isSpectator()) {
 			--numPlayersUsing;
-			world.addBlockEvent(pos, blockType, 1, numPlayersUsing);
+			sendRecieveEventPacket();
 			world.notifyNeighborsOfStateChange(pos, blockType, false);
 
 			if (type == EnumChestHungry.TRAPPED) {

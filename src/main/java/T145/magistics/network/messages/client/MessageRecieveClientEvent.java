@@ -3,7 +3,6 @@ package T145.magistics.network.messages.client;
 import java.io.IOException;
 
 import T145.magistics.network.messages.MessageBase;
-import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,36 +13,32 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MessageInfuserProgress extends MessageBase {
+public class MessageRecieveClientEvent extends MessageBase {
 
-	private float progress;
-	private float quintCost;
 	private BlockPos pos;
+	private int id;
+	private int data;
 
-	public MessageInfuserProgress() {}
+	public MessageRecieveClientEvent() {}
 
-	public MessageInfuserProgress(TileInfuser infuser, float progress, float quintCost) {
-		this.progress = progress;
-		this.quintCost = quintCost;
-		pos = infuser.getPos();
-	}
-
-	public MessageInfuserProgress(TileInfuser infuser) {
-		this(infuser, infuser.progress, infuser.quintCost);
+	public MessageRecieveClientEvent(BlockPos pos, int id, int data) {
+		this.pos = pos;
+		this.id = id;
+		this.data = data;
 	}
 
 	@Override
 	public void serialize(PacketBuffer buffer) {
-		buffer.writeFloat(progress);
-		buffer.writeFloat(quintCost);
 		buffer.writeBlockPos(pos);
+		buffer.writeInt(id);
+		buffer.writeInt(data);
 	}
 
 	@Override
 	public void deserialize(PacketBuffer buffer) throws IOException {
-		progress = buffer.readFloat();
-		quintCost = buffer.readFloat();
 		pos = buffer.readBlockPos();
+		id = buffer.readInt();
+		data = buffer.readInt();
 	}
 
 	@Override
@@ -52,10 +47,8 @@ public class MessageInfuserProgress extends MessageBase {
 		World world = FMLClientHandler.instance().getWorldClient();
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (tile instanceof TileInfuser) {
-			TileInfuser infuser = (TileInfuser) tile;
-			infuser.progress = progress;
-			infuser.quintCost = quintCost;
+		if (tile != null) {
+			tile.receiveClientEvent(id, data);
 		}
 
 		return null;
