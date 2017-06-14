@@ -5,9 +5,10 @@ import java.util.List;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.variants.blocks.EnumCrucible;
-import T145.magistics.client.fx.FXCreator;
 import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
+import T145.magistics.network.PacketHandler;
+import T145.magistics.network.messages.client.MessageSendCustomWispFX;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -178,7 +179,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 			if (spiltQuints >= 1F) {
 				// pollute chunk aura
-				FXCreator.customWispFX(world, pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5);
+				PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
 			}
 
 			refresh();
@@ -222,7 +223,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 						discharge = true;
 
 						for (int b = 0; b < 3; ++b) {
-							FXCreator.customWispFX(world, mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5);
+							PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5), PacketHandler.getTargetPoint(world, pos));
 						}
 					}
 				}

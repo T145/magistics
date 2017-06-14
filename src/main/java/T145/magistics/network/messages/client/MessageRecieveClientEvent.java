@@ -2,12 +2,12 @@ package T145.magistics.network.messages.client;
 
 import java.io.IOException;
 
+import T145.magistics.client.fx.FXCreator;
 import T145.magistics.network.messages.MessageBase;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,7 +44,7 @@ public class MessageRecieveClientEvent extends MessageBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IMessage process(MessageContext context) {
-		World world = FMLClientHandler.instance().getWorldClient();
+		World world = FXCreator.getWorld();
 		TileEntity tile = world.getTileEntity(pos);
 
 		if (tile != null) {

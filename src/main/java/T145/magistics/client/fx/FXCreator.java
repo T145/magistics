@@ -11,7 +11,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 public class FXCreator {
 
 	public static World getWorld() {
-		return FMLClientHandler.instance().getClient().world;
+		return FMLClientHandler.instance().getWorldClient();
 	}
 
 	public static int particleCount(int base) {
