@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MessageInfuserProgress extends MessageBase {
 
@@ -45,6 +47,7 @@ public class MessageInfuserProgress extends MessageBase {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IMessage process(MessageContext context) {
 		World world = FMLClientHandler.instance().getWorldClient();
 		TileEntity tile = world.getTileEntity(pos);

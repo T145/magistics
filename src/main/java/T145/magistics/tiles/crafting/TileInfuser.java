@@ -24,7 +24,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
 
@@ -157,7 +156,7 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 	}
 
 	public void sendCraftingProgressPacket() {
-		PacketHandler.INSTANCE.sendToAllAround(new MessageInfuserProgress(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 64D));
+		PacketHandler.INSTANCE.sendToAllAround(new MessageInfuserProgress(this), PacketHandler.getTargetPoint(world, pos));
 	}
 
 	@Override
