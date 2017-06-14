@@ -9,7 +9,6 @@ import T145.magistics.client.fx.FXCreator;
 import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
 import T145.magistics.tiles.MTile;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySnowman;
@@ -99,7 +98,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 	public void setSuction(int pressure) {}
 
 	@Override
-	public boolean isWorking(IBlockState state) {
+	public boolean isWorking() {
 		return working;
 	}
 

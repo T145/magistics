@@ -50,8 +50,8 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker
 	}
 
 	@Override
-	public boolean isWorking(IBlockState state) {
-		return state.getValue(WORKING);
+	public boolean isWorking() {
+		return getDefaultState().getValue(WORKING);
 	}
 
 	@Override

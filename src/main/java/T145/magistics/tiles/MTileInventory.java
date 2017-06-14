@@ -1,6 +1,7 @@
 package T145.magistics.tiles;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,12 +17,14 @@ public abstract class MTileInventory extends MTile {
 	protected SimpleItemStackHandler itemHandler = createItemHandler();
 
 	@Override
+	@OverridingMethodsMustInvokeSuper
 	public void readPacketNBT(NBTTagCompound compound) {
 		itemHandler = createItemHandler();
 		itemHandler.deserializeNBT(compound);
 	}
 
 	@Override
+	@OverridingMethodsMustInvokeSuper
 	public void writePacketNBT(NBTTagCompound compound) {
 		compound.merge(itemHandler.serializeNBT());
 	}
