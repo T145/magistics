@@ -15,7 +15,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -25,15 +24,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IBlockColor {
+public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 
 	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
 
@@ -57,19 +54,6 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves implements IBlo
 		for (EnumWood type : EnumWood.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
-	}
-
-	@Override
-	public int colorMultiplier(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		if (state.getBlock().damageDropped(state) != 0) {
-			return 16777215;
-		}
-
-		if (world != null && pos != null) {
-			return BiomeColorHelper.getFoliageColorAtPos(world, pos);
-		}
-
-		return ColorizerFoliage.getFoliageColorBasic();
 	}
 
 	@Override
