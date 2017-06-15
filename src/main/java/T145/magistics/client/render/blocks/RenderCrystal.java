@@ -135,6 +135,5 @@ public class RenderCrystal extends TileEntitySpecialRenderer<TileCrystal> {
 		}
 
 		GlStateManager.popMatrix();
-		GL11.glDisable(3042);
 	}
 }
