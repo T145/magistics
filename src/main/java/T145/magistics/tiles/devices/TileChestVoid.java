@@ -7,9 +7,10 @@ import T145.magistics.tiles.MTile;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileChestVoid extends MTile implements IFacing {
+public class TileChestVoid extends MTile implements ITickable, IFacing {
 
 	public float lidAngle;
 	public float prevLidAngle;

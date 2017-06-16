@@ -8,8 +8,9 @@ import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TileTank extends MTile implements IQuintContainer {
+public class TileTank extends MTile implements ITickable, IQuintContainer {
 
 	protected final boolean reinforced;
 	protected final float maxQuints;
@@ -19,7 +20,7 @@ public class TileTank extends MTile implements IQuintContainer {
 
 	public TileTank(boolean reinforced) {
 		this.reinforced = reinforced;
-		maxQuints = reinforced ? 1000F : 500F;
+		this.maxQuints = reinforced ? 1000F : 500F;
 	}
 
 	public TileTank() {

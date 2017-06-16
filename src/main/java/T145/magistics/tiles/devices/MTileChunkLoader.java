@@ -8,11 +8,12 @@ import T145.magistics.lib.managers.PlayerManager;
 import T145.magistics.tiles.MTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 
-public class MTileChunkLoader extends MTile {
+public class MTileChunkLoader extends MTile implements ITickable {
 
 	private ForgeChunkManager.Ticket ticket;
 	private GameProfile owner;

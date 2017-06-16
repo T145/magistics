@@ -2,7 +2,6 @@ package T145.magistics.client.lib;
 
 import T145.magistics.Magistics;
 import T145.magistics.client.render.blocks.RenderChestVoidModel;
-import T145.magistics.client.render.blocks.RenderCrystalModel;
 import T145.magistics.client.render.blocks.RenderVoidBorderModel;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
@@ -29,12 +28,6 @@ public class ModelBakery {
 
 	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.CHEST_VOID.getRegistryName(), "inventory");
 	private static final ModelResourceLocation MODEL_RESOURCE_VOID_BORDER = new ModelResourceLocation(ModBlocks.VOID_BORDER.getRegistryName(), "inventory");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_AIR = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=air");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_FIRE = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=fire");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_WATER = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=water");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_EARTH = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=earth");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_MAGIC = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=magic");
-	private static final ModelResourceLocation MODEL_RESOURCE_CRYSTAL_VOID = new ModelResourceLocation(ModBlocks.CRYSTAL.getRegistryName(), "variant=void");
 
 	public static TextureAtlasSprite quintFluid;
 	public static TextureAtlasSprite conduitPart;
@@ -78,21 +71,9 @@ public class ModelBakery {
 	public static void onModelBake(ModelBakeEvent event) {
 		IBakedModel chestVoidModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CHEST_VOID);
 		IBakedModel voidBorderModel = event.getModelRegistry().getObject(MODEL_RESOURCE_VOID_BORDER);
-		IBakedModel airCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_AIR);
-		IBakedModel fireCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_FIRE);
-		IBakedModel waterCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_WATER);
-		IBakedModel earthCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_EARTH);
-		IBakedModel magicCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_MAGIC);
-		IBakedModel voidCrystalModel = event.getModelRegistry().getObject(MODEL_RESOURCE_CRYSTAL_VOID);
 
 		event.getModelRegistry().putObject(MODEL_RESOURCE_CHEST_VOID, new RenderChestVoidModel(chestVoidModel));
 		event.getModelRegistry().putObject(MODEL_RESOURCE_VOID_BORDER, new RenderVoidBorderModel(voidBorderModel));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_AIR, new RenderCrystalModel(airCrystalModel, 0));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_FIRE, new RenderCrystalModel(fireCrystalModel, 1));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_WATER, new RenderCrystalModel(waterCrystalModel, 2));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_EARTH, new RenderCrystalModel(earthCrystalModel, 3));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_MAGIC, new RenderCrystalModel(magicCrystalModel, 4));
-		event.getModelRegistry().putObject(MODEL_RESOURCE_CRYSTAL_VOID, new RenderCrystalModel(voidCrystalModel, 5));
 	}
 
 	@SubscribeEvent

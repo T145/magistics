@@ -6,8 +6,9 @@ import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.tiles.MTile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TileConduit extends MTile implements IQuintContainer {
+public class TileConduit extends MTile implements ITickable, IQuintContainer {
 
 	protected final float maxQuints = 4F;
 	protected float quints;

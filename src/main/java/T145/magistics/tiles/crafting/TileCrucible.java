@@ -23,11 +23,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.WorldServer;
 
-public class TileCrucible extends MTile implements IQuintContainer, IWorker {
+public class TileCrucible extends MTile implements ITickable, IQuintContainer, IWorker {
 
 	private EnumCrucible type;
 	private float quints;
@@ -55,11 +56,11 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 	}
 
 	public boolean isPowering() {
-		return working && (type == EnumCrucible.EYES || type == EnumCrucible.THAUMIUM);
+		return working && type.canProvidePower();
 	}
 
 	public boolean isDraining() {
-		return working && type == EnumCrucible.SOULS;
+		return working && type.canDrainMobs();
 	}
 
 	public boolean isOverflowing() {
@@ -143,6 +144,42 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		}
 	}
 
+	public void smeltContents() {
+		smeltDelay = 5;
+
+		List<EntityItem> items = getItemsWithin();
+
+		if (!items.isEmpty()) {
+			EntityItem item = items.get(world.rand.nextInt(items.size()));
+			ItemStack stack = item.getItem();
+			float quintYield = ModRecipes.getCrucibleResult(stack);
+
+			if (quintYield > 0F) {
+				// boost conversion rate iff above arcane furnace
+
+				if (type != EnumCrucible.THAUMIUM || quints + quintYield <= getMaxQuints()) {
+					quints += quintYield * type.getConversion();
+					smeltDelay = 10 + Math.round(quintYield / 5F / type.getSpeed());
+
+					// decrease smeltDelay iff above arcane furnace
+					// discharge chunk aura
+
+					stack.shrink(1);
+
+					if (stack.isEmpty()) {
+						item.setDead();
+					}
+
+					refresh();
+					((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
+					world.playSound(null, pos, ModSounds.bubbling, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+				}
+			} else {
+				ejectItem(item);
+			}
+		}
+	}
+
 	@Override
 	public void update() {
 		if (world.isRemote) {
@@ -186,7 +223,7 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 		}
 
 		// check for and handle powering
-		if (type == EnumCrucible.EYES || type == EnumCrucible.THAUMIUM) {
+		if (type.canProvidePower()) {
 			boolean wasWorking = isPowering();
 
 			working = quints >= getMaxQuints() * 0.9D;
@@ -198,7 +235,9 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 		// check for and handle smelting items / draining mobs
 		if (smeltDelay <= 0) {
-			if (type == EnumCrucible.SOULS && Math.round(quints + 1F) <= getMaxQuints()) {
+			if (isNormal()) {
+				smeltContents();
+			} else if (Math.round(quints + 1F) <= getMaxQuints()) {
 				boolean wasWorking = isDraining();
 				boolean discharge = false;
 				smeltDelay = 20;
@@ -236,40 +275,6 @@ public class TileCrucible extends MTile implements IQuintContainer, IWorker {
 
 				if (working != wasWorking) {
 					refresh();
-				}
-			} else {
-				smeltDelay = 5;
-
-				List<EntityItem> items = getItemsWithin();
-
-				if (!items.isEmpty()) {
-					EntityItem item = items.get(world.rand.nextInt(items.size()));
-					ItemStack stack = item.getItem();
-					float quintYield = ModRecipes.getCrucibleResult(stack);
-
-					if (quintYield > 0F) {
-						// boost conversion rate iff above arcane furnace
-
-						if (type != EnumCrucible.THAUMIUM || quints + quintYield <= getMaxQuints()) {
-							quints += quintYield * type.getConversion();
-							smeltDelay = 10 + Math.round(quintYield / 5F / type.getSpeed());
-
-							// decrease smeltDelay iff above arcane furnace
-							// discharge chunk aura
-
-							stack.shrink(1);
-
-							if (stack.isEmpty()) {
-								item.setDead();
-							}
-
-							refresh();
-							((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
-							world.playSound(null, pos, ModSounds.bubbling, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
-						}
-					} else {
-						ejectItem(item);
-					}
 				}
 			}
 		}

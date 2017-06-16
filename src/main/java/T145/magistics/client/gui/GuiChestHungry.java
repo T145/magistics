@@ -32,7 +32,7 @@ public class GuiChestHungry extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		fontRenderer.drawString(chest.getDisplayName().getFormattedText(), 8, 6, 4210752);
+		fontRenderer.drawString(I18n.format("tile.chest_hungry." + chest.getType().getName() + ".name"), 8, 6, 4210752);
 		fontRenderer.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
 }

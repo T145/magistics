@@ -5,7 +5,6 @@ import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintManager;
 import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModItems;
 import T145.magistics.init.ModRecipes;
 import T145.magistics.init.ModSounds;
@@ -13,19 +12,14 @@ import T145.magistics.items.ItemShard;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageInfuserProgress;
 import T145.magistics.tiles.MTileInventory;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.IInteractionObject;
 
-public class TileInfuser extends MTileInventory implements IQuintManager, IFacing, IInteractionObject {
+public class TileInfuser extends MTileInventory implements ITickable, IQuintManager, IFacing {
 
 	public float progress;
 	public float quintCost;
@@ -51,31 +45,6 @@ public class TileInfuser extends MTileInventory implements IQuintManager, IFacin
 
 	public int getBoost() {
 		return boost;
-	}
-
-	@Override
-	public String getName() {
-		return dark ? "tile.infuser.dark.name" : "tile.infuser.light.name";
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		return true;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return new TextComponentTranslation(getName(), new Object[0]);
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
-		return new ContainerInfuser(playerInventory, this);
-	}
-
-	@Override
-	public String getGuiID() {
-		return dark ? "magistics:infuserdark" : "magistics:infuser";
 	}
 
 	@Override

@@ -5,27 +5,22 @@ import com.mojang.authlib.GameProfile;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IOwned;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
-import T145.magistics.containers.ContainerChestHungry;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageRecieveClientEvent;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.IInteractionObject;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class TileChestHungry extends MTileInventory implements IOwned, IFacing, IInteractionObject {
+public class TileChestHungry extends MTileInventory implements ITickable, IOwned, IFacing {
 
 	public float lidAngle;
 	public float prevLidAngle;
@@ -49,31 +44,6 @@ public class TileChestHungry extends MTileInventory implements IOwned, IFacing, 
 
 	public boolean isEnderChest() {
 		return type == EnumChestHungry.ENDER;
-	}
-
-	@Override
-	public String getName() {
-		return "tile.chest_hungry." + type.getName() + ".name";
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		return true;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return new TextComponentTranslation(getName(), new Object[0]);
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player) {
-		return new ContainerChestHungry(playerInventory, this);
-	}
-
-	@Override
-	public String getGuiID() {
-		return "magistics:chestHungry";
 	}
 
 	@Override

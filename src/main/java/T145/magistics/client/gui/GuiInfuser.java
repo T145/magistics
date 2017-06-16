@@ -5,6 +5,7 @@ import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,7 +24,7 @@ public class GuiInfuser extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		fontRenderer.drawString(infuser.getDisplayName().getFormattedText(), 8, 5, infuser.isDark() ? 6307936 : 4210752);
+		fontRenderer.drawString(I18n.format("tile.infuser." + (infuser.isDark() ? "dark" : "light") + ".name"), 8, 5, infuser.isDark() ? 6307936 : 4210752);
 	}
 
 	@Override

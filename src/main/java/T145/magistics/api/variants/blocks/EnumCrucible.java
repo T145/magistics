@@ -31,6 +31,14 @@ public enum EnumCrucible implements IStringSerializable {
 		return speed;
 	}
 
+	public boolean canProvidePower() {
+		return this == EYES || this == THAUMIUM;
+	}
+
+	public boolean canDrainMobs() {
+		return this == SOULS;
+	}
+
 	@Override
 	public String getName() {
 		return name().toLowerCase();

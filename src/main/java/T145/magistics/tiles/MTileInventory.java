@@ -3,6 +3,7 @@ package T145.magistics.tiles;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -15,6 +16,10 @@ import net.minecraftforge.items.ItemStackHandler;
 public abstract class MTileInventory extends MTile {
 
 	protected SimpleItemStackHandler itemHandler = createItemHandler();
+
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return world.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
+	}
 
 	@Override
 	@OverridingMethodsMustInvokeSuper

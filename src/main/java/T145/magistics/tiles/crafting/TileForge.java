@@ -5,8 +5,9 @@ import T145.magistics.tiles.MTileInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TileForge extends MTileInventory implements IFacing {
+public class TileForge extends MTileInventory implements ITickable, IFacing {
 
 	private EnumFacing facing = EnumFacing.NORTH;
 

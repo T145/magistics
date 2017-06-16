@@ -8,6 +8,8 @@ import com.google.common.base.Strings;
 import T145.magistics.Magistics;
 import T145.magistics.api.IMagisticsPlugin;
 import T145.magistics.api.MagisticsPlugin;
+import T145.magistics.containers.ContainerChestHungry;
+import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.init.ModBiomes;
 import T145.magistics.init.ModBlocks;
 import T145.magistics.init.ModDimensions;
@@ -43,9 +45,9 @@ public class CommonProxy implements IGuiHandler {
 
 		switch (ID) {
 		case 0:
-			return ((TileInfuser) tile).createContainer(player.inventory, player);
+			return new ContainerInfuser(player.inventory, (TileInfuser) tile);
 		case 1:
-			return ((TileChestHungry) tile).createContainer(player.inventory, player);
+			return new ContainerChestHungry(player.inventory, (TileChestHungry) tile);
 		default:
 			return null;
 		}
