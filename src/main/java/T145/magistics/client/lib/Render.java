@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -39,6 +40,21 @@ public class Render {
 	public static final VertexFormat POSITION_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(NORMAL_3F);
 	public static final VertexFormat POSITION_TEX_NORMALF = new VertexFormat().addElement(DefaultVertexFormats.POSITION_3F).addElement(DefaultVertexFormats.TEX_2F).addElement(NORMAL_3F);
 
+	public static final ResourceLocation[] DESTROY_STAGES = new ResourceLocation[] {
+			new ResourceLocation("textures/blocks/destroy_stage_0.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_1.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_2.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_3.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_4.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_5.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_6.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_7.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_8.png"),
+			new ResourceLocation("textures/blocks/destroy_stage_9.png")
+	};
+
+	private static final ModelChest CHEST_MODEL = new ModelChest();
+
 	public static void bindTexture(ResourceLocation texture) {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 	}
@@ -60,6 +76,42 @@ public class Render {
 		default:
 			GlStateManager.rotate(0F, 0F, 1F, 0F);
 			break;
+		}
+	}
+
+	public static void chest(ResourceLocation modelTexture, EnumFacing facing, float lidAngle, float prevLidAngle, double x, double y, double z, float partialTicks, int destroyStage) {
+		if (destroyStage >= 0) {
+			bindTexture(DESTROY_STAGES[destroyStage]);
+			GlStateManager.matrixMode(GL11.GL_TEXTURE);
+			GlStateManager.pushMatrix();
+			GlStateManager.scale(4F, 4F, 1F);
+			GlStateManager.translate(W1, W1, W1);
+			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+		} else {
+			bindTexture(modelTexture);
+		}
+
+		GlStateManager.pushMatrix();
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.color(1F, 1F, 1F, 1F);
+		GlStateManager.translate(x, y + 1F, z + 1F);
+		GlStateManager.scale(1F, -1F, -1F);
+		GlStateManager.translate(0.5F, 0.5F, 0.5F);
+		rotate(facing);
+		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
+		float f = prevLidAngle + (lidAngle - prevLidAngle) * partialTicks;
+		f = 1F - f;
+		f = 1F - f * f * f;
+		CHEST_MODEL.chestLid.rotateAngleX = -(f * ((float) Math.PI / 2F));
+		CHEST_MODEL.renderAll();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.popMatrix();
+		GlStateManager.color(1F, 1F, 1F, 1F);
+
+		if (destroyStage >= 0) {
+			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+			GlStateManager.popMatrix();
+			GlStateManager.matrixMode(5888);
 		}
 	}
 

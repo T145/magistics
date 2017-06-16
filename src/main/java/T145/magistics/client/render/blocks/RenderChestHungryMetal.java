@@ -9,7 +9,6 @@ import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.devices.TileChestHungryMetal;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
-import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,8 +28,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 	private RenderEntityItem itemRenderer;
 
 	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F } };
-	private static EntityItem customitem = new EntityItem(null);
-	private static float halfPI = (float) (Math.PI / 2D);
+	private static EntityItem customItem = new EntityItem(null);
 
 	public static ResourceLocation[] getChestTextures() {
 		ResourceLocation[] textures = new ResourceLocation[IronChestType.values().length];
@@ -45,62 +43,28 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 	}
 
 	@Override
-	public void renderTileEntityAt(TileChestHungryMetal te, double x, double y, double z, float partialTicks, int destroyStage) {
-		if (te == null || te.isInvalid()) {
+	public void renderTileEntityAt(TileChestHungryMetal chest, double x, double y, double z, float partialTicks, int destroyStage) {
+		if (chest == null || chest.isInvalid()) {
 			return;
 		}
 
-		IronChestType type = te.getType();
-
-		if (destroyStage >= 0) {
-			bindTexture(DESTROY_STAGES[destroyStage]);
-			GlStateManager.matrixMode(5890);
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(4F, 4F, 1F);
-			GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
-			GlStateManager.matrixMode(5888);
-		} else {
-			bindTexture(getChestTextures()[type.ordinal()]);
-		}
+		IronChestType type = chest.getType();
 
 		GlStateManager.pushMatrix();
 
-		if (type == IronChestType.CRYSTAL) {
+		if (type.isTransparent()) {
 			GlStateManager.disableCull();
 		}
 
-		GlStateManager.color(1F, 1F, 1F, 1F);
-		GlStateManager.translate(x, y + 1F, z + 1F);
-		GlStateManager.scale(1F, -1F, -1F);
-		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		Render.rotate(te.getFacing());
-		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-
-		float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
-		lidangle = 1F - lidangle;
-		lidangle = 1F - lidangle * lidangle * lidangle;
+		Render.chest(getChestTextures()[type.ordinal()], chest.getFacing(), chest.lidAngle, chest.prevLidAngle, x, y, z, partialTicks, destroyStage);
 
 		if (type.isTransparent()) {
-			GlStateManager.scale(1F, 0.99F, 1F);
-		}
-
-		model.chestLid.rotateAngleX = -lidangle * halfPI;
-		model.renderAll();
-
-		if (destroyStage >= 0) {
-			GlStateManager.matrixMode(5890);
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(5888);
-		}
-
-		if (type == IronChestType.CRYSTAL) {
 			GlStateManager.enableCull();
 		}
 
 		GlStateManager.popMatrix();
-		GlStateManager.color(1F, 1F, 1F, 1F);
 
-		if (type.isTransparent() && te.getDistanceSq(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ) < 128d) {
+		if (type.isTransparent() && chest.getDistanceSq(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ) < 128D) {
 			random.setSeed(254L);
 
 			float shiftX;
@@ -110,7 +74,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 			float blockScale = 0.70F;
 			float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTicks;
 
-			if (te.getTopItems().get(1).isEmpty()) {
+			if (chest.getTopItems().get(1).isEmpty()) {
 				shift = 8;
 				blockScale = 0.85F;
 			}
@@ -118,10 +82,10 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 			GlStateManager.pushMatrix();
 			GlStateManager.translate((float) x, (float) y, (float) z);
 
-			customitem.setWorld(getWorld());
-			customitem.hoverStart = 0F;
+			customItem.setWorld(getWorld());
+			customItem.hoverStart = 0F;
 
-			for (ItemStack item : te.getTopItems()) {
+			for (ItemStack item : chest.getTopItems()) {
 				if (shift > shifts.length) {
 					break;
 				}
@@ -141,7 +105,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 				GlStateManager.rotate(timeD, 0F, 1F, 0F);
 				GlStateManager.scale(blockScale, blockScale, blockScale);
 
-				customitem.setItem(item);
+				customItem.setItem(item);
 
 				if (itemRenderer == null) {
 					itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
@@ -162,7 +126,7 @@ public class RenderChestHungryMetal extends TileEntitySpecialRenderer<TileChestH
 					};
 				}
 
-				itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTicks);
+				itemRenderer.doRender(customItem, 0D, 0D, 0D, 0F, partialTicks);
 
 				GlStateManager.popMatrix();
 			}
