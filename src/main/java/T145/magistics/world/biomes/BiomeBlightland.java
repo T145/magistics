@@ -9,10 +9,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BiomeTaint extends Biome {
+public class BiomeBlightland extends Biome {
 
-	public BiomeTaint() {
-		super(new BiomeProperties("Tainted Land").setWaterColor(7160201));
+	public BiomeBlightland() {
+		super(new BiomeProperties("Blightland").setWaterColor(7160201));
 		setRegistryName(Magistics.MODID, getBiomeName());
 		decorator.treesPerChunk = 2;
 		decorator.flowersPerChunk = 64537;

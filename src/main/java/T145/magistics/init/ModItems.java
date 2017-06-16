@@ -1,6 +1,6 @@
 package T145.magistics.init;
 
-import T145.magistics.api.variants.items.EnumShard;
+import T145.magistics.api.variants.Aspect;
 import T145.magistics.api.variants.items.ResearchType;
 import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.items.ItemShard;
@@ -26,8 +26,10 @@ public class ModItems {
 
 	@SideOnly(Side.CLIENT)
 	public static void initClient() {
-		for (EnumShard type : EnumShard.values()) {
-			ModelBakery.registerItemModel(crystalShard, type.ordinal(), "shards/" + type.getName());
+		ModelBakery.registerItemModel(crystalShard, 0, "shards/dull");
+
+		for (Aspect type : Aspect.values()) {
+			ModelBakery.registerItemModel(crystalShard, type.ordinal() + 1, "shards/" + type.getName());
 		}
 
 		for (ResearchType type : ResearchType.values()) {

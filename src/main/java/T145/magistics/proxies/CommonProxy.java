@@ -20,12 +20,11 @@ import T145.magistics.init.ModSounds;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
-import T145.magistics.world.data.WorldDataVoidChest;
+import T145.magistics.world.generators.WorldGeneratorAura;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -33,6 +32,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -60,14 +60,16 @@ public class CommonProxy implements IGuiHandler {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		plugins = event.getAsmData().getAll(MagisticsPlugin.class.getCanonicalName());
-		PacketHandler.registerMessages();
-		MinecraftForge.EVENT_BUS.register(WorldDataVoidChest.class);
 
 		ModBlocks.init();
 		ModItems.init();
 		ModEntities.init();
 		ModBiomes.init();
 		ModDimensions.init();
+
+		PacketHandler.registerMessages();
+		GameRegistry.registerWorldGenerator(WorldGeneratorAura.INSTANCE, 0);
+
 		registerPlugins(event, false);
 	}
 

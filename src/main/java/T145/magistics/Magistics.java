@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import T145.magistics.config.ConfigMain;
+import T145.magistics.lib.CommandMagistics;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.proxies.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Magistics.MODID, name = Magistics.NAME, version = Magistics.VERSION, guiFactory = "T145.magistics.client.gui.config.GuiFactoryMagistics")
@@ -55,7 +56,6 @@ public class Magistics {
 		meta.useDependencyInformation = false;
 		meta.version = VERSION;
 
-		MinecraftForge.EVENT_BUS.register(CONFIG);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
 		CONFIG.load(event);
@@ -70,5 +70,10 @@ public class Magistics {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
+	}
+
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandMagistics());
 	}
 }
