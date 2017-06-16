@@ -39,25 +39,24 @@ public class FXEngine {
 	private static HashMap[] particles = { new HashMap(), new HashMap(), new HashMap(), new HashMap() };
 	private static ArrayList<ParticleDelay> particlesDelayed = new ArrayList();
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void onRenderWorldLast(RenderWorldLastEvent event) {
 		float frame = event.getPartialTicks();
-		EntityPlayer player = Minecraft.getMinecraft().player;
-		int dim = Minecraft.getMinecraft().world.provider.getDimension();
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.player;
+		World world = mc.world;
+		int dim = world.provider.getDimension();
 
-		GL11.glPushMatrix();
-		GL11.glColor4f(1F, 1F, 1F, 1F);
+		GlStateManager.pushMatrix();
+		GlStateManager.color(1F, 1F, 1F, 1F);
 		GlStateManager.enableBlend();
-
-		GL11.glEnable(3042);
-		GL11.glAlphaFunc(516, 0.003921569F);
-		Minecraft.getMinecraft().renderEngine.bindTexture(PARTICLE_TEXTURE);
+		GlStateManager.alphaFunc(516, 0.004F);
+		mc.renderEngine.bindTexture(PARTICLE_TEXTURE);
 		GlStateManager.depthMask(false);
 
 		for (int layer = 3; layer >= 0; layer--) {
-			if (particles[layer].containsKey(Integer.valueOf(dim))) {
-				ArrayList<Particle> parts = (ArrayList) particles[layer].get(Integer.valueOf(dim));
+			if (particles[layer].containsKey(dim)) {
+				ArrayList<Particle> parts = (ArrayList) particles[layer].get(dim);
 
 				if (parts.size() != 0) {
 					switch (layer) {
@@ -91,9 +90,7 @@ public class FXEngine {
 					VertexBuffer buffer = tessellator.getBuffer();
 					buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-					for (int j = 0; j < parts.size(); j++) {
-						Particle particle = parts.get(j);
-
+					for (Particle particle : parts) {
 						if (particle != null) {
 							try {
 								particle.renderParticle(buffer, player, frame, f1, f5, f2, f3, f4);
@@ -132,7 +129,7 @@ public class FXEngine {
 		GlStateManager.blendFunc(770, 771);
 		GlStateManager.disableBlend();
 		GlStateManager.alphaFunc(516, 0.1F);
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 	}
 
 	public static void addEffect(World world, Particle fx) {
@@ -144,25 +141,24 @@ public class FXEngine {
 	}
 
 	public static void addEffect(int dim, Particle fx) {
-		if (!particles[fx.getFXLayer()].containsKey(Integer.valueOf(dim))) {
-			particles[fx.getFXLayer()].put(Integer.valueOf(dim), new ArrayList());
+		if (!particles[fx.getFXLayer()].containsKey(dim)) {
+			particles[fx.getFXLayer()].put(dim, new ArrayList());
 		}
 
-		ArrayList<Particle> parts = (ArrayList<Particle>) particles[fx.getFXLayer()].get(Integer.valueOf(dim));
+		ArrayList<Particle> parts = (ArrayList<Particle>) particles[fx.getFXLayer()].get(dim);
 
 		if (parts.size() >= getParticleLimit()) {
 			parts.remove(0);
 		}
 
 		parts.add(fx);
-		particles[fx.getFXLayer()].put(Integer.valueOf(dim), parts);
+		particles[fx.getFXLayer()].put(dim, parts);
 	}
 
 	public static void addEffectWithDelay(World world, Particle fx, int delay) {
 		particlesDelayed.add(new ParticleDelay(fx, world.provider.getDimension(), delay));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void updateParticles(TickEvent.ClientTickEvent event) {
 		if (event.side == Side.SERVER) {
@@ -182,7 +178,7 @@ public class FXEngine {
 			Iterator<ParticleDelay> i = particlesDelayed.iterator();
 
 			while (i.hasNext()) {
-				ParticleDelay pd = (ParticleDelay) i.next();
+				ParticleDelay pd = i.next();
 				pd.delay -= 1;
 
 				if (pd.delay <= 0) {
@@ -195,12 +191,10 @@ public class FXEngine {
 			}
 
 			for (int layer = 0; layer < 4; layer++) {
-				if (particles[layer].containsKey(Integer.valueOf(dim))) {
-					ArrayList<Particle> parts = (ArrayList) particles[layer].get(Integer.valueOf(dim));
+				if (particles[layer].containsKey(dim)) {
+					ArrayList<Particle> parts = (ArrayList) particles[layer].get(dim);
 
-					for (int j = 0; j < parts.size(); j++) {
-						Particle particle = parts.get(j);
-
+					for (Particle particle : parts) {
 						try {
 							if (particle != null) {
 								particle.onUpdate();
@@ -225,8 +219,8 @@ public class FXEngine {
 						}
 
 						if (particle == null || !particle.isAlive()) {
-							parts.remove(j--);
-							particles[layer].put(Integer.valueOf(dim), parts);
+							parts.remove(particle);
+							particles[layer].put(dim, parts);
 						}
 					}
 				}
