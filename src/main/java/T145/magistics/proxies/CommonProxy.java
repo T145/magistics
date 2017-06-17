@@ -20,6 +20,7 @@ import T145.magistics.init.ModSounds;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
+import T145.magistics.world.features.VillageCreationHandler;
 import T145.magistics.world.generators.WorldGeneratorAura;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -69,6 +71,7 @@ public class CommonProxy implements IGuiHandler {
 
 		PacketHandler.registerMessages();
 		GameRegistry.registerWorldGenerator(WorldGeneratorAura.INSTANCE, 0);
+		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 
 		registerPlugins(event, false);
 	}
