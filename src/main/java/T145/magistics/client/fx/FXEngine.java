@@ -3,6 +3,7 @@ package T145.magistics.client.fx;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.lwjgl.opengl.GL11;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -37,28 +39,56 @@ public class FXEngine {
 	public static final ResourceLocation PARTICLE_TEXTURE = new ResourceLocation(Magistics.MODID, "textures/misc/particles.png");
 
 	private static HashMap[] particles = { new HashMap(), new HashMap(), new HashMap(), new HashMap() };
-	private static ArrayList<ParticleDelay> particlesDelayed = new ArrayList();
+	private static ArrayList<DelayedParticle> delayedParticles = new ArrayList();
+	private Random rand = new Random();
+
+	public static void addEffect(World world, Particle effect) {
+		addEffect(world.provider.getDimension(), effect);
+	}
+
+	private static int getParticleLimit() {
+		return FMLClientHandler.instance().getClient().gameSettings.particleSetting == 1 ? 2500 : FMLClientHandler.instance().getClient().gameSettings.particleSetting == 2 ? 1000 : 5000;
+	}
+
+	public static void addEffect(int dim, Particle effect) {
+		if (!particles[effect.getFXLayer()].containsKey(dim)) {
+			particles[effect.getFXLayer()].put(dim, new ArrayList());
+		}
+
+		ArrayList<Particle> fx = (ArrayList<Particle>) particles[effect.getFXLayer()].get(dim);
+
+		if (fx.size() >= getParticleLimit()) {
+			fx.remove(0);
+		}
+
+		fx.add(effect);
+
+		particles[effect.getFXLayer()].put(dim, fx);
+	}
+
+	public static void addEffectWithDelay(World world, Particle effect, int delay) {
+		delayedParticles.add(new DelayedParticle(effect, world.provider.getDimension(), delay));
+	}
 
 	@SubscribeEvent
-	public static void onRenderWorldLast(RenderWorldLastEvent event) {
+	public static void onPostRender(RenderWorldLastEvent event) {
 		float frame = event.getPartialTicks();
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.player;
-		World world = mc.world;
-		int dim = world.provider.getDimension();
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		TextureManager renderer = Minecraft.getMinecraft().renderEngine;
+		int dim = Minecraft.getMinecraft().world.provider.getDimension();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1F, 1F, 1F, 1F);
 		GlStateManager.enableBlend();
 		GlStateManager.alphaFunc(516, 0.004F);
-		mc.renderEngine.bindTexture(PARTICLE_TEXTURE);
-		GlStateManager.depthMask(false);
+		renderer.bindTexture(PARTICLE_TEXTURE);
+		GlStateManager.depthMask(false); // isTransparent = false
 
 		for (int layer = 3; layer >= 0; layer--) {
 			if (particles[layer].containsKey(dim)) {
-				ArrayList<Particle> parts = (ArrayList) particles[layer].get(dim);
+				ArrayList<Particle> fx = (ArrayList<Particle>) particles[layer].get(dim);
 
-				if (parts.size() != 0) {
+				if (fx.size() != 0) {
 					switch (layer) {
 					case 0:
 						GlStateManager.blendFunc(770, 1);
@@ -73,14 +103,13 @@ public class FXEngine {
 					case 3:
 						GlStateManager.blendFunc(770, 771);
 						GlStateManager.disableDepth();
-						break;
 					}
 
-					float f1 = ActiveRenderInfo.getRotationX();
-					float f2 = ActiveRenderInfo.getRotationZ();
-					float f3 = ActiveRenderInfo.getRotationYZ();
-					float f4 = ActiveRenderInfo.getRotationXY();
-					float f5 = ActiveRenderInfo.getRotationXZ();
+					float rotationX = ActiveRenderInfo.getRotationX();
+					float rotationZ = ActiveRenderInfo.getRotationZ();
+					float rotationYZ = ActiveRenderInfo.getRotationYZ();
+					float rotationXY = ActiveRenderInfo.getRotationXY();
+					float rotationXZ = ActiveRenderInfo.getRotationXZ();
 
 					Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * frame;
 					Particle.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * frame;
@@ -90,17 +119,21 @@ public class FXEngine {
 					VertexBuffer buffer = tessellator.getBuffer();
 					buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-					for (Particle particle : parts) {
-						if (particle != null) {
+					for (int j = 0; j < fx.size(); j++) {
+						final Particle effect = fx.get(j);
+
+						if (effect != null) {
 							try {
-								particle.renderParticle(buffer, player, frame, f1, f5, f2, f3, f4);
+								effect.renderParticle(buffer, player, frame, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 							} catch (Exception err) {
+								Magistics.LOGGER.catching(err);
+								
 								CrashReport report = CrashReport.makeCrashReport(err, "Rendering Particle");
 								CrashReportCategory reportCategory = report.makeCategory("Particle being rendered");
 
 								reportCategory.addDetail("Particle", new ICrashReportDetail() {
 									public String call() {
-										return particle.toString();
+										return effect.toString();
 									}
 								});
 
@@ -132,33 +165,6 @@ public class FXEngine {
 		GlStateManager.popMatrix();
 	}
 
-	public static void addEffect(World world, Particle fx) {
-		addEffect(world.provider.getDimension(), fx);
-	}
-
-	private static int getParticleLimit() {
-		return FMLClientHandler.instance().getClient().gameSettings.particleSetting == 1 ? 2500 : FMLClientHandler.instance().getClient().gameSettings.particleSetting == 2 ? 1000 : 5000;
-	}
-
-	public static void addEffect(int dim, Particle fx) {
-		if (!particles[fx.getFXLayer()].containsKey(dim)) {
-			particles[fx.getFXLayer()].put(dim, new ArrayList());
-		}
-
-		ArrayList<Particle> parts = (ArrayList<Particle>) particles[fx.getFXLayer()].get(dim);
-
-		if (parts.size() >= getParticleLimit()) {
-			parts.remove(0);
-		}
-
-		parts.add(fx);
-		particles[fx.getFXLayer()].put(dim, parts);
-	}
-
-	public static void addEffectWithDelay(World world, Particle fx, int delay) {
-		particlesDelayed.add(new ParticleDelay(fx, world.provider.getDimension(), delay));
-	}
-
 	@SubscribeEvent
 	public static void updateParticles(TickEvent.ClientTickEvent event) {
 		if (event.side == Side.SERVER) {
@@ -175,15 +181,15 @@ public class FXEngine {
 		int dim = world.provider.getDimension();
 
 		if (event.phase == TickEvent.Phase.START) {
-			Iterator<ParticleDelay> i = particlesDelayed.iterator();
+			Iterator<DelayedParticle> i = delayedParticles.iterator();
 
 			while (i.hasNext()) {
-				ParticleDelay pd = i.next();
-				pd.delay -= 1;
+				DelayedParticle effect = i.next();
+				effect.time -= 1;
 
-				if (pd.delay <= 0) {
-					if (pd.dim == dim) {
-						addEffect(pd.dim, pd.particle);
+				if (effect.time <= 0) {
+					if (effect.getDimensionId() == dim) {
+						addEffect(effect.getDimensionId(), effect.getEffect());
 					}
 
 					i.remove();
@@ -192,35 +198,43 @@ public class FXEngine {
 
 			for (int layer = 0; layer < 4; layer++) {
 				if (particles[layer].containsKey(dim)) {
-					ArrayList<Particle> parts = (ArrayList) particles[layer].get(dim);
+					ArrayList<Particle> fx = (ArrayList<Particle>) particles[layer].get(dim);
 
-					for (Particle particle : parts) {
+					for (int j = 0; j < fx.size(); j++) {
+						final Particle effect = fx.get(j);
+
 						try {
-							if (particle != null) {
-								particle.onUpdate();
+							if (effect != null) {
+								effect.onUpdate();
 							}
 						} catch (Exception err) {
-							CrashReport report = CrashReport.makeCrashReport(err, "Ticking Particle");
-							CrashReportCategory reportCategory = report.makeCategory("Particle being ticked");
+							try {
+								Magistics.LOGGER.catching(err);
 
-							reportCategory.addCrashSection("Particle", new Callable() {
-								public String call() {
-									return particle.toString();
-								}
-							});
+								CrashReport report = CrashReport.makeCrashReport(err, "Ticking Particle");
+								CrashReportCategory reportCategory = report.makeCategory("Particle being ticked");
 
-							reportCategory.addCrashSection("Particle Type", new Callable() {
-								public String call() {
-									return "ENTITY_PARTICLE_TEXTURE";
-								}
-							});
+								reportCategory.addCrashSection("Particle", new Callable() {
+									public String call() {
+										return effect.toString();
+									}
+								});
 
-							particle.setExpired();
+								reportCategory.addCrashSection("Particle Type", new Callable() {
+									public String call() {
+										return "ENTITY_PARTICLE_TEXTURE";
+									}
+								});
+
+								effect.setExpired();
+							} catch (Exception reportErr) {
+								Magistics.LOGGER.catching(reportErr);
+							}
 						}
 
-						if (particle == null || !particle.isAlive()) {
-							parts.remove(particle);
-							particles[layer].put(dim, parts);
+						if (effect == null || !effect.isAlive()) {
+							fx.remove(j--);
+							particles[layer].put(dim, fx);
 						}
 					}
 				}
