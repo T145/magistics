@@ -31,8 +31,7 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 		return reinforced;
 	}
 
-	@Override
-	public boolean canConnect(EnumFacing facing) {
+	public boolean canConnectToTank(EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos.offset(facing));
 
 		if (tile instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
@@ -40,6 +39,11 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 			return reinforced == neighborTank.isReinforced();
 		}
 
+		return false;
+	}
+
+	@Override
+	public boolean canConnect(EnumFacing facing) {
 		return true;
 	}
 
@@ -164,7 +168,7 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 		if (tile instanceof TileTank) {
 			TileTank tank = (TileTank) tile;
 
-			if (tank.canConnect(EnumFacing.UP)) {
+			if (tank.canConnectToTank(EnumFacing.UP)) {
 				return tank;
 			}
 		}

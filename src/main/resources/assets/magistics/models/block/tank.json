@@ -17,11 +17,11 @@
             ],
             "faces": {
                 "down": {
-                    "texture": "#bottom",
+                    "texture": "#end",
                     "cullface": "down"
                 },
                 "up": {
-                    "texture": "#top",
+                    "texture": "#end",
                     "cullface": "up"
                 },
                 "north": {

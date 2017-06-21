@@ -1,12 +1,19 @@
 package T145.magistics.blocks.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -20,11 +27,54 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockTank extends MBlock<EnumTank> {
 
 	public static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(Render.W1, 0D, Render.W1, 1D - Render.W1, 1D, 1D - Render.W1);
+	public static final PropertyBool JOINED_ABOVE = PropertyBool.create("joined_above");
+	public static final PropertyBool JOINED_BELOW = PropertyBool.create("joined_below");
+	public static final PropertyBool INBETWEEN = PropertyBool.create("inbetween");
 
 	public BlockTank() {
 		super("tank", Material.GLASS, EnumTank.class);
 		setSoundType(SoundType.GLASS);
 		setHardness(1F);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public StateMap getStateMap() {
+		StateMap.Builder builder = new StateMap.Builder();
+		builder.withName(variant);
+		builder.withSuffix("_tank");
+		return builder.build();
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		BlockStateContainer variantContainer = super.createBlockState();
+		List<IProperty> properties = new ArrayList<>();
+
+		if (hasVariants()) {
+			properties.addAll(variantContainer.getProperties());
+		}
+
+		properties.add(JOINED_ABOVE);
+		properties.add(JOINED_BELOW);
+		properties.add(INBETWEEN);
+
+		return properties.isEmpty() ? super.createBlockState() : new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
+			boolean joinedAbove = tank.canConnectToTank(EnumFacing.UP);
+			boolean joinedBelow = tank.canConnectToTank(EnumFacing.DOWN);
+			boolean inbetween = joinedAbove && joinedBelow;
+
+			state = state.withProperty(JOINED_ABOVE, joinedAbove).withProperty(JOINED_BELOW, joinedBelow).withProperty(INBETWEEN, inbetween);
+		}
+
+		return state;
 	}
 
 	@Override
@@ -60,12 +110,24 @@ public class BlockTank extends MBlock<EnumTank> {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		if (side.getAxis() == EnumFacing.Axis.Y) {
-			IBlockState stateBelow = world.getBlockState(pos.offset(side));
-			return !(stateBelow.getBlock() instanceof BlockTank && stateBelow == blockState);
-		} else {
-			return true;
+	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+		return side.getAxis() != EnumFacing.Axis.Y || !(world.getBlockState(pos.offset(side)).getBlock() instanceof BlockTank);
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+		TileEntity tile = world.getTileEntity(pos);
+
+		if (tile instanceof TileTank) {
+			TileTank tank = (TileTank) tile;
+			return (int) (tank.getQuints() * 15 / tank.getMaxQuints());
 		}
+
+		return 0;
 	}
 }

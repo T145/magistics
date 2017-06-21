@@ -70,13 +70,14 @@ public class ModBlocks {
 	@SideOnly(Side.CLIENT)
 	public static void initClient() { // NOTE: ALWAYS REGISTER THE LAST MODEL TO BE RENDERED IN THE INVENTORY
 		ModelLoader.setCustomStateMapper(INFUSER, ((BlockInfuser) INFUSER).getStateMap());
+		ModelLoader.setCustomStateMapper(TANK, ((BlockTank) TANK).getStateMap());
 
 		for (EnumInfuser type : EnumInfuser.values()) {
 			ModelBakery.registerBlockModel(INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
 		}
 
 		for (EnumTank type : EnumTank.values()) {
-			ModelBakery.registerBlockModel(TANK, type.ordinal(), type);
+			ModelBakery.registerBlockModel(TANK, type.ordinal(), type.getName() + "_tank", "inventory");
 		}
 
 		ModelBakery.registerBlockModel(CONDUIT, 0, "inventory");

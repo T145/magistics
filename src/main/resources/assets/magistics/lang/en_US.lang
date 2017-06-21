@@ -10,7 +10,7 @@ tile.conduit.name=Conduit
 
 tile.infuser.light.name=Infuser
 tile.infuser.dark.name=Dark Infuser
-tile.tank.normal.name=Tank
+tile.tank.base.name=Tank
 tile.tank.reinforced.name=Reinforced Tank
 
 tile.forge.netherrack.name=Netherrack Furnace

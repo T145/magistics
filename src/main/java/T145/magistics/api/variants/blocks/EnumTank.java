@@ -4,7 +4,7 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumTank implements IStringSerializable {
 
-	NORMAL, REINFORCED;
+	BASE, REINFORCED;
 
 	@Override
 	public String getName() {
