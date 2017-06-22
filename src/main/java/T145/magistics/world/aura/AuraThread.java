@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import T145.magistics.Magistics;
+import T145.magistics.world.WorldEvents;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -66,7 +67,7 @@ public class AuraThread implements Runnable {
 		}
 
 		Magistics.LOGGER.info("Stopping aura thread for dim " + dimID);
-		//ServerEvents.auraThreads.remove(dim));
+		WorldEvents.auraThreads.remove(dimID);
 	}
 
 	private void processAuraChunk(AuraWorld auraWorld, AuraChunk auraChunk) {

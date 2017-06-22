@@ -60,11 +60,6 @@ public class BlockLogs extends BlockLog {
 		}
 	}
 
-	/*@Override
-	protected ItemStack createStackedBlock(IBlockState state) {
-		return new ItemStack(Item.getItemFromBlock(this), 1, damageDropped(state));
-	}*/
-
 	@Override
 	public int damageDropped(IBlockState state) {
 		return state.getValue(VARIANT).ordinal();
@@ -77,7 +72,7 @@ public class BlockLogs extends BlockLog {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return ((BlockLog.EnumAxis) state.getValue(LOG_AXIS)).ordinal() * 4 + state.getValue(VARIANT).ordinal();
+		return state.getValue(LOG_AXIS).ordinal() * 4 + state.getValue(VARIANT).ordinal();
 	}
 
 	@Override

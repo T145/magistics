@@ -41,7 +41,7 @@ public class BlockCandle extends MBlock<EnumDyeColor> {
 
 	@Override
 	public MapColor getMapColor(IBlockState state) {
-		return ((EnumDyeColor) state.getValue(variant)).getMapColor();
+		return state.getValue(variant).getMapColor();
 	}
 
 	@Override

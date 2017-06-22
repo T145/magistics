@@ -50,11 +50,11 @@ public class BlockFloatingCandle extends BlockCandle {
 		int y = pos.getY();
 		int z = pos.getZ();
 		double offsetX = x + 0.5F;
-		double offsetY = y + 0.7F + 0.25F;
+		double offsetY = y + 0.95F;
 		double offsetZ = z + 0.5F;
 		int ticks = Minecraft.getMinecraft().player.ticksExisted;
 		int offset = x + y + z;
-		float move = 0.2F * MathHelper.sin(((offset * 10) + ticks) / 30.0F);
+		float move = 0.2F * MathHelper.sin(((offset * 10) + ticks) / 30F);
 
 		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, offsetX, offsetY + move, offsetZ, 0D, 0D, 0D, new int[0]);
 		world.spawnParticle(EnumParticleTypes.FLAME, offsetX, offsetY + move, offsetZ, 0D, 0D, 0D, new int[0]);

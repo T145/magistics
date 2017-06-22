@@ -13,9 +13,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @EventBusSubscriber(modid = Magistics.MODID)
-public class WorldServerEventBus {
-
-	private static final WorldServerEventBus INSTANCE = new WorldServerEventBus();
+public class WorldEvents {
 
 	public static ConcurrentHashMap<Integer, AuraThread> auraThreads = new ConcurrentHashMap();
 
@@ -57,6 +55,7 @@ public class WorldServerEventBus {
 	}
 
 	static {
-		MinecraftForge.TERRAIN_GEN_BUS.register(INSTANCE);
+		Magistics.LOGGER.info("Registered terrain gen bus!");
+		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldEvents());
 	}
 }
