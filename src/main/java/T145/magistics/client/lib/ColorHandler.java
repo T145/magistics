@@ -1,6 +1,7 @@
 package T145.magistics.client.lib;
 
 import T145.magistics.blocks.cosmetic.BlockCandle;
+import T145.magistics.blocks.cosmetic.BlockCrystal;
 import T145.magistics.blocks.cosmetic.BlockNitor;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
@@ -31,6 +32,17 @@ public class ColorHandler {
 	}
 
 	private static void registerBlockColors(BlockColors blockColors) {
+		IBlockColor crystalColorHandler = (state, blockAccess, pos, tintIndex) -> {
+			if (state.getBlock() instanceof BlockCrystal) {
+				BlockCrystal crystal = (BlockCrystal) state.getBlock();
+				return crystal.getAspect().getColor();
+			}
+
+			return 0;
+		};
+
+		blockColors.registerBlockColorHandler(crystalColorHandler, ModBlocks.CRYSTAL_AIR, ModBlocks.CRYSTAL_EARTH, ModBlocks.CRYSTAL_FIRE, ModBlocks.CRYSTAL_WATER, ModBlocks.CRYSTAL_VOID, ModBlocks.CRYSTAL_MAGIC);
+
 		IBlockColor basicColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock() instanceof BlockNitor) {
 				return ((EnumDyeColor) state.getValue(((BlockNitor) state.getBlock()).variant)).getMapColor().colorValue;
@@ -43,7 +55,7 @@ public class ColorHandler {
 			return AMBIENT_GRASS;
 		};
 
-		blockColors.registerBlockColorHandler(basicColorHandler, new Block[] { ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE });
+		blockColors.registerBlockColorHandler(basicColorHandler, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE);
 
 		IBlockColor leafColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
@@ -64,6 +76,6 @@ public class ColorHandler {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, new Block[] { ModBlocks.LEAVES, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE });
+		}, ModBlocks.LEAVES, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE);
 	}
 }

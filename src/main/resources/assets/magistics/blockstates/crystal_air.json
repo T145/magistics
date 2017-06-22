@@ -1,0 +1,38 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"inventory": [
+			{
+				"model": "magistics:crystal"
+			}
+		],
+		"facing=up": {
+			"model": "magistics:crystal"
+		},
+		"facing=down": {
+			"model": "magistics:crystal",
+			"x": 180
+		},
+		"facing=north": {
+			"model": "magistics:crystal",
+			"x": 90
+		},
+		"facing=south": {
+			"model": "magistics:crystal",
+			"x": 270
+		},
+		"facing=west": {
+			"model": "magistics:crystal",
+			"x": 90,
+			"y": 270
+		},
+		"facing=east": {
+			"model": "magistics:crystal",
+			"x": 90,
+			"y": 90
+		}
+	}
+}

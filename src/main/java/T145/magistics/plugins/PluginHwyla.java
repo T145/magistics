@@ -3,6 +3,7 @@ package T145.magistics.plugins;
 import java.util.List;
 
 import T145.magistics.Magistics;
+import T145.magistics.blocks.devices.BlockChestVoid;
 import T145.magistics.tiles.devices.TileChestHungry;
 import mcp.mobius.waila.addons.HUDHandlerBase;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -22,6 +23,10 @@ public class PluginHwyla extends HUDHandlerBase implements IWailaPlugin {
 
 	@Override
 	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		if (accessor.getBlock() instanceof BlockChestVoid) {
+			accessor.getBlock().addInformation(stack, accessor.getPlayer(), tooltip, true);
+		}
+
 		if (accessor.getTileEntity() instanceof TileChestHungry) {
 			TileChestHungry chest = (TileChestHungry) accessor.getTileEntity();
 

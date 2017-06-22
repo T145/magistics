@@ -8,6 +8,7 @@ import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.MTileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -34,8 +35,8 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 	public final T[] variantValues;
 	protected static IProperty[] tempVariants;
 
-	public MBlock(String name, Material material, Class variants) {
-		super(createProperties(material, variants));
+	public MBlock(String name, Material material, MapColor mapColor, Class variants) {
+		super(createProperties(material, variants), mapColor);
 
 		if (variants == Object.class || variants == null) {
 			variant = null;
@@ -75,6 +76,14 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 				GameRegistry.registerTileEntity(tileClass, tileClass.getSimpleName());
 			}
 		}
+	}
+
+	public MBlock(String name, Material material, Class variants) {
+		this(name, material, material.getMaterialMapColor(), variants);
+	}
+
+	public MBlock(String name, Material material, MapColor mapColor) {
+		this(name, material, mapColor, Object.class);
 	}
 
 	public MBlock(String name, Material material) {
