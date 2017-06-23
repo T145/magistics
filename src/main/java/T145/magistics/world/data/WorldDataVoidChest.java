@@ -12,9 +12,8 @@ import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(modid = Magistics.MODID, value = Side.SERVER)
+@EventBusSubscriber(modid = Magistics.MODID)
 public class WorldDataVoidChest extends WorldSavedData {
 
 	public int nextCoord = 0;
