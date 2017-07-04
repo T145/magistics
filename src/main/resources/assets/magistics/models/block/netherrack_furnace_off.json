@@ -1,7 +1,7 @@
 {
     "parent": "block/cube",
     "textures": {
-        "north": "magistics:blocks/netherrack_furnace_off",
+        "north": "magistics:blocks/forge/furn_f_off",
         "south": "blocks/netherrack",
         "east": "blocks/netherrack",
         "west": "blocks/netherrack",

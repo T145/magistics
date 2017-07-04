@@ -1,12 +1,12 @@
 {
     "parent": "block/cube",
     "textures": {
-        "north": "magistics:blocks/netherforge_front_off",
-        "south": "magistics:blocks/netherforge_side",
-        "east": "magistics:blocks/netherforge_side",
-        "west": "magistics:blocks/netherforge_side",
-        "particle": "magistics:blocks/netherforge_side",
-        "up": "magistics:blocks/netherforge_top",
-        "down": "magistics:blocks/netherforge_bottom"
+        "north": "magistics:blocks/forge/f_off",
+        "south": "magistics:blocks/forge/s",
+        "east": "magistics:blocks/forge/s",
+        "west": "magistics:blocks/forge/s",
+        "particle": "magistics:blocks/forge/s",
+        "up": "magistics:blocks/forge/t",
+        "down": "magistics:blocks/forge/b"
     }
 }
