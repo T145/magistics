@@ -1,4 +1,4 @@
-<p align="center"><img src="http://i1064.photobucket.com/albums/u370/MegaT145/Magistics/logo.png"/></p>
+<p align="center"><img src="https://github.com/T145/magistics/blob/1.11.2/src/main/resources/logo.png"/></p>
 
 ***
 
