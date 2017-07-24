@@ -1,12 +1,17 @@
 package T145.magistics.client.lib;
 
 import T145.magistics.Magistics;
+import T145.magistics.api.variants.Aspect;
 import T145.magistics.client.render.blocks.RenderChestVoidModel;
 import T145.magistics.client.render.blocks.RenderVoidBorderModel;
+import T145.magistics.client.render.models.blocks.ModelCrystal;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
@@ -19,6 +24,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,9 +34,24 @@ public class ModelBakery {
 
 	private static final ModelResourceLocation MODEL_RESOURCE_CHEST_VOID = new ModelResourceLocation(ModBlocks.CHEST_VOID.getRegistryName(), "inventory");
 	private static final ModelResourceLocation MODEL_RESOURCE_VOID_BORDER = new ModelResourceLocation(ModBlocks.VOID_BORDER.getRegistryName(), "inventory");
+	private static ModelResourceLocation[] crystalModels = new ModelResourceLocation[Aspect.values().length];
 
 	public static TextureAtlasSprite quintFluid;
 	public static TextureAtlasSprite conduitPart;
+
+	public static void init() {
+		for (int a = 0; a < Aspect.values().length; a++) {
+			crystalModels[a] = new ModelResourceLocation(GameData.getBlockRegistry().getNameForObject(Aspect.values()[a].getOre()), "normal");
+
+			final ModelResourceLocation model = crystalModels[a];
+
+			ModelLoader.setCustomStateMapper(Aspect.values()[a].getOre(), new StateMapperBase() {
+				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+					return model;
+				}
+			});
+		}
+	}
 
 	public static TextureAtlasSprite registerSprite(TextureMap map, String name) {
 		return map.registerSprite(new ResourceLocation(Magistics.MODID, name));
@@ -74,6 +95,12 @@ public class ModelBakery {
 
 		event.getModelRegistry().putObject(MODEL_RESOURCE_CHEST_VOID, new RenderChestVoidModel(chestVoidModel));
 		event.getModelRegistry().putObject(MODEL_RESOURCE_VOID_BORDER, new RenderVoidBorderModel(voidBorderModel));
+
+		TextureAtlasSprite crystalTexture = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("magistics:blocks/crystal");
+
+		for (int i = 0; i < Aspect.values().length; ++i) {
+			event.getModelRegistry().putObject(crystalModels[i], new ModelCrystal(crystalTexture));
+		}
 	}
 
 	@SubscribeEvent

@@ -1,15 +1,12 @@
 package T145.magistics.api.variants;
 
+import T145.magistics.init.ModBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 
 public enum Aspect implements IStringSerializable {
 
-	AIR("aer", 16777086, "e", 1),
-	EARTH("terra", 5685248, "2", 1),
-	FIRE("ignis", 16734721, "c", 1),
-	WATER("aqua", 3986684, "3", 1),
-	VOID("vacuos", 8947848, 771),
-	MAGIC("praecantatio", 13566207);
+	AIR("aer", 16777086, "e", 1), EARTH("terra", 5685248, "2", 1), FIRE("ignis", 16734721, "c", 1), WATER("aqua", 3986684, "3", 1), VOID("vacuos", 8947848, 771), MAGIC("praecantatio", 13566207);
 
 	private final String tag;
 	private final int color;
@@ -54,5 +51,22 @@ public enum Aspect implements IStringSerializable {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
+	}
+
+	public Block getOre() {
+		switch (this) {
+		case EARTH:
+			return ModBlocks.CRYSTAL_EARTH;
+		case FIRE:
+			return ModBlocks.CRYSTAL_FIRE;
+		case WATER:
+			return ModBlocks.CRYSTAL_WATER;
+		case MAGIC:
+			return ModBlocks.CRYSTAL_MAGIC;
+		case VOID:
+			return ModBlocks.CRYSTAL_VOID;
+		default:
+			return ModBlocks.CRYSTAL_AIR;
+		}
 	}
 }

@@ -46,7 +46,6 @@ public abstract class CustomBakedModel implements IBakedModel {
 		return model.getParticleTexture();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	@Deprecated
 	public ItemCameraTransforms getItemCameraTransforms() {
