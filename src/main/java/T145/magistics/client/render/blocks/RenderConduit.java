@@ -18,7 +18,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileConduit conduit, double x, double y, double z, float partialTicks, int destroyStage) {
-		TextureAtlasSprite fluidSprite = ModelBakery.quintFluid;
+		TextureAtlasSprite fluidSprite = ModelBakery.quintSprite;
 		float mod = 0.38125F;
 		float amount = Math.min(conduit.getDisplayQuints(), conduit.getMaxQuints());
 		float level = (1F - mod * 2F) * (amount / conduit.getMaxQuints());
