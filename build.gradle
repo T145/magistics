@@ -1,49 +1,35 @@
-import de.undercouch.gradle.tasks.download.*
-import org.ajoberstar.grgit.*
+import de.undercouch.gradle.tasks.download.Download
 
 buildscript {
 	repositories {
-		mavenCentral()
-		
+		jcenter()
 		maven {
 			name 'forge'
 			url 'http://files.minecraftforge.net/maven'
 		}
-		
-		maven {
-			name 'sonatype'
-			url 'https://oss.sonatype.org/content/repositories/snapshots/'
-		}
-		
-		maven {
-			url 'https://plugins.gradle.org/m2/'
-		}
 	}
-	
 	dependencies {
-		classpath 'de.undercouch:gradle-download-task:3.2.0'
 		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-		classpath 'org.ajoberstar:grgit:1.7.1'
 	}
 }
 
-apply plugin: 'java'
-
-apply plugin: 'de.undercouch.download'
-apply plugin: 'net.minecraftforge.gradle.forge'
+plugins {
+	id 'org.ajoberstar.grgit' version '2.1.0'
+	id 'de.undercouch.download' version '3.3.0'
+}
 
 repositories {
 	mavenCentral()
-    maven {
-        name 'Mobius Repo'
-        url 'http://tehnut.info/maven'
-    }
-    maven {
-		name 'JEI Repo'
-        url 'http://modmaven.k-4u.nl/'
-    }
 	maven {
-		name 'DVS1 Maven FS'
+		name 'Mobius Repo'
+		url 'http://tehnut.info/maven'
+	}
+	maven {
+		name 'JEI Repo'
+		url 'http://modmaven.k-4u.nl/'
+	}
+	maven {
+		name 'Progwm16 Repo'
 		url 'http://dvs1.progwml6.com/files/maven'
 	}
 	maven {
@@ -52,18 +38,10 @@ repositories {
 	}
 }
 
+apply plugin: 'net.minecraftforge.gradle.forge'
+
 task wrapper(type: Wrapper) {
 	gradleVersion = gradle_version
-}
-
-ext {
-	git = Grgit.open(project.projectDir)
-	
-	try {
-		revision = git.describe().toString().trim()
-	} catch (Exception err) {
-		println 'Unable to describe anything!'
-	}
 }
 
 task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
@@ -85,26 +63,38 @@ task setupWorkspace(type: Download, dependsOn: setupDecompWorkspace) {
 	}
 }
 
-minecraft {
-    version = forge_version
-    mappings = forge_mappings
-    runDir = 'run'
-	useDepAts = true
-}
-
-version = revision
+version = grgit.describe(longDescr: true)
 group = mod_group
 archivesBaseName = mod_id
 
-sourceCompatibility = targetCompatibility = '1.8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+compileApiJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+minecraft {
+	version = forge_version
+	mappings = forge_mappings
+	runDir = 'run'
+	useDepAts = true
+	makeObfSourceJar = false
+	
+	replaceIn 'Magistics.java'
+	replace "$version", project.version
 }
 
 dependencies {
-    deobfCompile 'mezz.jei:jei_1.11.2:4.5.0.287'
-    deobfCompile 'mcp.mobius.waila:Hwyla:1.8.17-B31_1.11'
-    deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
+	deobfCompile 'mezz.jei:jei_1.11.2:4.5.0.287'
+	deobfCompile 'mcp.mobius.waila:Hwyla:1.8.17-B31_1.11'
+	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
 	compile 'codechicken:CodeChickenLib:1.11.2-3.0.0.284:deobf'
 }
 
@@ -120,36 +110,3 @@ processResources {
 	exclude '**/*.db'
 	exclude '**/*.DS_Store'
 }
-
-task devJar(type: Jar) {
-	from sourceSets.main.output
-	classifier = 'dev'
-}
-
-artifacts {
-	archives devJar
-}
-
-def filteredSrc = project.file("$buildDir/filtered")
-
-sourceSets {
-	filtered {
-		java {
-			srcDir filteredSrc
-		}
-	}
-}
-
-compileJava.source = sourceSets.filtered.java
-
-task processVersion(type: Copy) {
-	from sourceSets.main.java
-	into filteredSrc
-	expand(version: project.version)
-}
-
-compileJava.dependsOn processVersion
-
-// be sure the filtered source is removed to prevent its source from colliding w/ the main workspace
-// execution by finalizedBy allows removal even if the build fails, preventing more crashes from the previously erroneous source
-compileJava.finalizedBy cleanProcessVersion
