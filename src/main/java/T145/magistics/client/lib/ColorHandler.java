@@ -1,7 +1,6 @@
 package T145.magistics.client.lib;
 
 import T145.magistics.blocks.cosmetic.BlockCandle;
-import T145.magistics.blocks.cosmetic.BlockCrystal;
 import T145.magistics.blocks.cosmetic.BlockNitor;
 import T145.magistics.init.ModBlocks;
 import net.minecraft.block.Block;
@@ -32,17 +31,6 @@ public class ColorHandler {
 	}
 
 	private static void registerBlockColors(BlockColors blockColors) {
-		IBlockColor crystalColorHandler = (state, blockAccess, pos, tintIndex) -> {
-			if (state.getBlock() instanceof BlockCrystal) {
-				BlockCrystal crystal = (BlockCrystal) state.getBlock();
-				return crystal.getAspect().getColor();
-			}
-
-			return 0;
-		};
-
-		blockColors.registerBlockColorHandler(crystalColorHandler, ModBlocks.CRYSTAL_AIR, ModBlocks.CRYSTAL_EARTH, ModBlocks.CRYSTAL_FIRE, ModBlocks.CRYSTAL_WATER, ModBlocks.CRYSTAL_VOID, ModBlocks.CRYSTAL_MAGIC);
-
 		IBlockColor basicColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock() instanceof BlockNitor) {
 				return ((EnumDyeColor) state.getValue(((BlockNitor) state.getBlock()).variant)).getMapColor().colorValue;

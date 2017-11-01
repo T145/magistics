@@ -1,6 +1,5 @@
 package T145.magistics.init;
 
-import T145.magistics.api.variants.Aspect;
 import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.api.variants.blocks.EnumForge;
@@ -8,7 +7,6 @@ import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.api.variants.blocks.EnumWood;
 import T145.magistics.blocks.cosmetic.BlockCandle;
-import T145.magistics.blocks.cosmetic.BlockCrystal;
 import T145.magistics.blocks.cosmetic.BlockFloatingCandle;
 import T145.magistics.blocks.cosmetic.BlockLeaves;
 import T145.magistics.blocks.cosmetic.BlockLogs;
@@ -41,7 +39,6 @@ import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.tiles.storage.TileTank;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -63,13 +60,6 @@ public class ModBlocks {
 	public static final Block PLANKS = new  BlockPlanks();
 	public static final Block LOGS = new BlockLogs();
 	public static final Block LEAVES = new BlockLeaves();
-
-	public static final Block CRYSTAL_AIR = new BlockCrystal(Aspect.AIR);
-	public static final Block CRYSTAL_EARTH = new BlockCrystal(Aspect.EARTH);
-	public static final Block CRYSTAL_FIRE = new BlockCrystal(Aspect.FIRE);
-	public static final Block CRYSTAL_WATER = new BlockCrystal(Aspect.WATER);
-	public static final Block CRYSTAL_VOID = new BlockCrystal(Aspect.VOID);
-	public static final Block CRYSTAL_MAGIC = new BlockCrystal(Aspect.MAGIC);
 
 	public static final Block CANDLE = new BlockCandle();
 	public static final Block NITOR = new BlockNitor();
@@ -114,16 +104,6 @@ public class ModBlocks {
 			ModelBakery.registerBlockModel(LOGS, type.ordinal(), "axis=y,variant=" + type.getName());
 			ModelBakery.registerBlockModel(PLANKS, type.ordinal(), type);
 			ModelBakery.registerBlockModel(SAPLINGS, type.ordinal(), type);
-		}
-
-		// register all meta values for waila compatibility
-		for (EnumFacing type : EnumFacing.VALUES) {
-			ModelBakery.registerBlockModel(CRYSTAL_AIR, type.ordinal(), "inventory");
-			ModelBakery.registerBlockModel(CRYSTAL_EARTH, type.ordinal(), "inventory");
-			ModelBakery.registerBlockModel(CRYSTAL_FIRE, type.ordinal(), "inventory");
-			ModelBakery.registerBlockModel(CRYSTAL_WATER, type.ordinal(), "inventory");
-			ModelBakery.registerBlockModel(CRYSTAL_MAGIC, type.ordinal(), "inventory");
-			ModelBakery.registerBlockModel(CRYSTAL_VOID, type.ordinal(), "inventory");
 		}
 
 		for (EnumDyeColor type : EnumDyeColor.values()) {

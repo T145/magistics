@@ -1,7 +1,5 @@
 package T145.magistics.api.variants;
 
-import T145.magistics.init.ModBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 
 public enum Aspect implements IStringSerializable {
@@ -51,22 +49,5 @@ public enum Aspect implements IStringSerializable {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
-	}
-
-	public Block getOre() {
-		switch (this) {
-		case EARTH:
-			return ModBlocks.CRYSTAL_EARTH;
-		case FIRE:
-			return ModBlocks.CRYSTAL_FIRE;
-		case WATER:
-			return ModBlocks.CRYSTAL_WATER;
-		case MAGIC:
-			return ModBlocks.CRYSTAL_MAGIC;
-		case VOID:
-			return ModBlocks.CRYSTAL_VOID;
-		default:
-			return ModBlocks.CRYSTAL_AIR;
-		}
 	}
 }
