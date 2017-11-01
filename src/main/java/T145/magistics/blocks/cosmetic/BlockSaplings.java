@@ -3,6 +3,7 @@ package T145.magistics.blocks.cosmetic;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.blocks.MBlockItem;
 import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
 import T145.magistics.world.features.WorldGenGreatwoodTree;
 import T145.magistics.world.features.WorldGenSilverwoodTree;
@@ -29,6 +30,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,6 +49,10 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 		setUnlocalizedName(name);
 		setSoundType(SoundType.PLANT);
 		setHardness(0F);
+
+		// delete this in 1.12
+		GameRegistry.register(this);
+		GameRegistry.register(new MBlockItem(this, WoodType.class), getRegistryName());
 	}
 
 	@Override

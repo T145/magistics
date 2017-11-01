@@ -32,10 +32,6 @@ repositories {
 		name 'Progwm16 Repo'
 		url 'http://dvs1.progwml6.com/files/maven'
 	}
-	maven {
-		name 'ChickenBones Repo'
-		url 'http://chickenbones.net/maven'
-	}
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -95,7 +91,6 @@ dependencies {
 	deobfCompile 'mezz.jei:jei_1.11.2:4.5.0.287'
 	deobfCompile 'mcp.mobius.waila:Hwyla:1.8.17-B31_1.11'
 	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
-	compile 'codechicken:CodeChickenLib:1.11.2-3.0.0.284:deobf'
 }
 
 build {

@@ -1,6 +1,7 @@
 package T145.magistics.blocks.cosmetic;
 
 import T145.magistics.Magistics;
+import T145.magistics.blocks.MBlockItem;
 import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
@@ -15,6 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,6 +35,10 @@ public class BlockLogs extends BlockLog {
 		setHarvestLevel("axe", 0);
 		setHardness(2F);
 		setResistance(5F);
+
+		// delete this in 1.12
+		GameRegistry.register(this);
+		GameRegistry.register(new MBlockItem(this, WoodType.class), getRegistryName());
 	}
 
 	@Override

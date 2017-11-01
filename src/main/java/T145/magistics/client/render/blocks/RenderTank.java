@@ -2,8 +2,8 @@ package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Render;
+import T145.magistics.client.lib.SpriteAtlas;
 import T145.magistics.core.Init;
 import T145.magistics.tiles.storage.TileQuintTank;
 import net.minecraft.client.renderer.GlStateManager;
@@ -67,6 +67,6 @@ public class RenderTank extends TileEntitySpecialRenderer<TileQuintTank> {
 		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());
 
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		Render.cube(ModelBakery.quintSprite, mod + Render.W1, mod, mod + Render.W1, 1F - mod - Render.W1, mod + level, 1F - mod - Render.W1);
+		Render.cube(SpriteAtlas.quintSprite, mod + Render.W1, mod, mod + Render.W1, 1F - mod - Render.W1, mod + level, 1F - mod - Render.W1);
 	}
 }

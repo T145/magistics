@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
+import T145.magistics.blocks.MBlockItem;
 import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
 import T145.magistics.core.Init;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -25,6 +26,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,13 +36,15 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 
 	public BlockLeaves() {
 		super();
-
 		String name = "leaves";
 		setDefaultState(blockState.getBaseState().withProperty(VARIANT, WoodType.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-
 		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
+
+		// delete this in 1.12
+		GameRegistry.register(this);
+		GameRegistry.register(new MBlockItem(this, WoodType.class), getRegistryName());
 	}
 
 	@Override

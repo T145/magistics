@@ -2,8 +2,8 @@ package T145.magistics.client.render.blocks;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Render;
+import T145.magistics.client.lib.SpriteAtlas;
 import T145.magistics.tiles.storage.TileConduit;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -18,7 +18,7 @@ public class RenderConduit extends TileEntitySpecialRenderer<TileConduit> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileConduit conduit, double x, double y, double z, float partialTicks, int destroyStage) {
-		TextureAtlasSprite fluidSprite = ModelBakery.quintSprite;
+		TextureAtlasSprite fluidSprite = SpriteAtlas.quintSprite;
 		float mod = 0.38125F;
 		float amount = Math.min(conduit.getDisplayQuints(), conduit.getMaxQuints());
 		float level = (1F - mod * 2F) * (amount / conduit.getMaxQuints());
