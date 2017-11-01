@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.blocks.EnumWood;
-import T145.magistics.blocks.MBlockItem;
-import T145.magistics.init.ModBlocks;
+import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
+import T145.magistics.core.Init;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -26,32 +25,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 
-	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
+	public static final PropertyEnum<WoodType> VARIANT = PropertyEnum.<WoodType>create("variant", WoodType.class);
 
 	public BlockLeaves() {
 		super();
 
 		String name = "leaves";
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, WoodType.GREATWOOD).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
 
 		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
-
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (EnumWood type : EnumWood.values()) {
+		for (WoodType type : WoodType.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -104,8 +99,8 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 		return null;
 	}
 
-	public EnumWood getProperWoodType(int meta) {
-		return EnumWood.byMetadata(meta & 3);
+	public WoodType getProperWoodType(int meta) {
+		return WoodType.byMetadata(meta & 3);
 	}
 
 	@Override
@@ -138,7 +133,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ModBlocks.SAPLINGS);
+		return Item.getItemFromBlock(Init.SAPLINGS);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package T145.magistics.config;
+package T145.magistics.core;
 
 import T145.magistics.Magistics;
 import net.minecraftforge.common.config.Configuration;
@@ -34,7 +34,7 @@ public class ConfigMain {
 			config.load();
 			update();
 		} catch (Exception err) {
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 		} finally {
 			save();
 		}

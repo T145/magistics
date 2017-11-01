@@ -2,7 +2,7 @@ package T145.magistics.client.lib;
 
 import T145.magistics.blocks.cosmetic.BlockCandle;
 import T145.magistics.blocks.cosmetic.BlockNitor;
-import T145.magistics.init.ModBlocks;
+import T145.magistics.core.Init;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -43,7 +43,7 @@ public class ColorHandler {
 			return AMBIENT_GRASS;
 		};
 
-		blockColors.registerBlockColorHandler(basicColorHandler, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE);
+		blockColors.registerBlockColorHandler(basicColorHandler, Init.NITOR, Init.CANDLE, Init.FLOATING_CANDLE);
 
 		IBlockColor leafColorHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
@@ -57,13 +57,13 @@ public class ColorHandler {
 			return ColorizerFoliage.getFoliageColorBasic();
 		};
 
-		blockColors.registerBlockColorHandler(leafColorHandler, new Block[] { ModBlocks.LEAVES });
+		blockColors.registerBlockColorHandler(leafColorHandler, new Block[] { Init.LEAVES });
 	}
 
 	private static void registerItemColors(BlockColors blockColors, ItemColors itemColors) {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, ModBlocks.LEAVES, ModBlocks.NITOR, ModBlocks.CANDLE, ModBlocks.FLOATING_CANDLE);
+		}, Init.LEAVES, Init.NITOR, Init.CANDLE, Init.FLOATING_CANDLE);
 	}
 }

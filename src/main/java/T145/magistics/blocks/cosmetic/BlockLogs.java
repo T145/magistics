@@ -1,8 +1,7 @@
 package T145.magistics.blocks.cosmetic;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.blocks.EnumWood;
-import T145.magistics.blocks.MBlockItem;
+import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -16,36 +15,30 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLogs extends BlockLog {
 
-	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
+	public static final PropertyEnum<WoodType> VARIANT = PropertyEnum.<WoodType>create("variant", WoodType.class);
 
 	public BlockLogs() {
 		super();
-
 		String name = "log";
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, WoodType.GREATWOOD).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-
 		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.WOOD);
 		setHarvestLevel("axe", 0);
 		setHardness(2F);
 		setResistance(5F);
-
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (EnumWood type : EnumWood.values()) {
+		for (WoodType type : WoodType.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -67,7 +60,7 @@ public class BlockLogs extends BlockLog {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.values()[meta >> 2]).withProperty(VARIANT, EnumWood.byMetadata(meta & 3));
+		return getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.values()[meta >> 2]).withProperty(VARIANT, WoodType.byMetadata(meta & 3));
 	}
 
 	@Override

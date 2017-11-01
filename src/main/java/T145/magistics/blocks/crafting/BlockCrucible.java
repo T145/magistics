@@ -6,8 +6,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import T145.magistics.api.logic.IWorker;
-import T145.magistics.api.variants.blocks.EnumCrucible;
 import T145.magistics.blocks.MBlockDevice;
+import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.crafting.TileCrucible;
@@ -21,6 +21,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker {
+public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker {
 
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, Render.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, Render.W2);
@@ -38,7 +39,7 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker
 	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0D, 0D, 0D, Render.W2, 1D, 1D);
 
 	public BlockCrucible() {
-		super("crucible", Material.IRON, EnumCrucible.class);
+		super("crucible", Material.IRON, CrucibleType.class);
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
 		setResistance(17F);
@@ -46,7 +47,7 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible(EnumCrucible.values()[meta]);
+		return new TileCrucible(CrucibleType.values()[meta]);
 	}
 
 	@Override
@@ -128,5 +129,48 @@ public class BlockCrucible extends MBlockDevice<EnumCrucible> implements IWorker
 	public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 		return crucible.isPowering() ? 15 : 0;
+	}
+
+	public static enum CrucibleType implements IStringSerializable {
+
+		BASIC(500F, 0.5F, 0.25F),
+		EYES(600F, 0.6F, 0.5F),
+		THAUMIUM(750F, 0.7F, 0.75F),
+		SOULS(750F, 0.4F, 0.75F);
+
+		private final float maxQuints;
+		private final float conversion;
+		private final float speed;
+
+		CrucibleType(float maxQuints, float conversion, float speed) {
+			this.maxQuints = maxQuints;
+			this.conversion = conversion;
+			this.speed = speed;
+		}
+
+		public float getMaxQuints() {
+			return maxQuints;
+		}
+
+		public float getConversion() {
+			return conversion;
+		}
+
+		public float getSpeed() {
+			return speed;
+		}
+
+		public boolean canProvidePower() {
+			return this == EYES || this == THAUMIUM;
+		}
+
+		public boolean canDrainMobs() {
+			return this == SOULS;
+		}
+
+		@Override
+		public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

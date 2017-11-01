@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 import com.google.common.collect.ImmutableList;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.blocks.EnumInfuser;
 import T145.magistics.blocks.MBlock;
+import T145.magistics.blocks.crafting.BlockInfuser.InfuserType;
 import T145.magistics.client.lib.Render;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.crafting.TileInfuser;
@@ -24,6 +24,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -31,13 +32,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockInfuser extends MBlock<EnumInfuser> {
+public class BlockInfuser extends MBlock<InfuserType> {
 
 	public static final ImmutableList<IProperty<Boolean>> CONNECTIONS = ImmutableList.copyOf(Stream.of(EnumFacing.HORIZONTALS).map(facing -> PropertyBool.create(facing.getName())).collect(Collectors.toList()));
 	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - Render.W1, 1D);
 
 	public BlockInfuser() {
-		super("infuser", Material.ROCK, EnumInfuser.class);
+		super("infuser", Material.ROCK, InfuserType.class);
 		setSoundType(SoundType.STONE);
 		setHardness(2F);
 		setResistance(15F);
@@ -122,5 +123,15 @@ public class BlockInfuser extends MBlock<EnumInfuser> {
 	@Override
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
 		return InventoryManager.calcRedstone(world.getTileEntity(pos));
+	}
+
+	public static enum InfuserType implements IStringSerializable {
+
+		LIGHT, DARK;
+
+		@Override
+		public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

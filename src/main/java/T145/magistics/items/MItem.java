@@ -30,7 +30,7 @@ public class MItem extends Item {
 			setHasSubtypes(true);
 		}
 
-		GameRegistry.register(this);
+		GameRegistry.register(this); // delete this in 1.12
 	}
 
 	public MItem(String name) {

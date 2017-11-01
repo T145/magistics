@@ -125,7 +125,7 @@ public final class Shaders {
 			return shader;
 		} catch (Exception err) {
 			ARBShaderObjects.glDeleteObjectARB(shader);
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 			return -1;
 		}
 	}

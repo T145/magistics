@@ -3,8 +3,7 @@ package T145.magistics.blocks.cosmetic;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.variants.blocks.EnumWood;
-import T145.magistics.blocks.MBlockItem;
+import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
 import T145.magistics.world.features.WorldGenGreatwoodTree;
 import T145.magistics.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockBush;
@@ -30,30 +29,24 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSaplings extends BlockBush implements IGrowable {
 
-	public static final PropertyEnum<EnumWood> VARIANT = PropertyEnum.<EnumWood>create("variant", EnumWood.class);
+	public static final PropertyEnum<WoodType> VARIANT = PropertyEnum.<WoodType>create("variant", WoodType.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
 	protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
 
 	public BlockSaplings() {
 		super();
-
 		String name = "saplings";
-		setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumWood.GREATWOOD).withProperty(STAGE, 0));
+		setDefaultState(blockState.getBaseState().withProperty(VARIANT, WoodType.GREATWOOD).withProperty(STAGE, 0));
 		setRegistryName(new ResourceLocation(Magistics.MODID, name));
-
 		setCreativeTab(Magistics.TAB);
 		setUnlocalizedName(name);
 		setSoundType(SoundType.PLANT);
 		setHardness(0F);
-
-		GameRegistry.register(this);
-		GameRegistry.register(new MBlockItem(this, EnumWood.class), getRegistryName());
 	}
 
 	@Override
@@ -64,7 +57,7 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (EnumWood type : EnumWood.values()) {
+		for (WoodType type : WoodType.values()) {
 			list.add(new ItemStack(item, 1, type.ordinal()));
 		}
 	}
@@ -139,7 +132,7 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumWood.byMetadata(meta & 7)).withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
+		return getDefaultState().withProperty(VARIANT, WoodType.byMetadata(meta & 7)).withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
 	}
 
 	@Override

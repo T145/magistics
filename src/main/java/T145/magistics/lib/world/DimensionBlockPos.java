@@ -1,6 +1,6 @@
 package T145.magistics.lib.world;
 
-import T145.magistics.init.ModDimensions;
+import T145.magistics.core.Init;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -23,6 +23,6 @@ public class DimensionBlockPos {
 	}
 
 	public TileEntity getTileEntity() {
-		return ModDimensions.getWorldServerForDimension(dimension).getTileEntity(pos);
+		return Init.getWorldServerForDimension(dimension).getTileEntity(pos);
 	}
 }

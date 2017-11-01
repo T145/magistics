@@ -2,7 +2,7 @@ package T145.magistics.world.aura;
 
 import java.lang.ref.WeakReference;
 
-import T145.magistics.config.ConfigMain;
+import T145.magistics.core.ConfigMain;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 

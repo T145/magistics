@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.logic.IOwned;
-import T145.magistics.api.variants.blocks.EnumChestHungry;
+import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
 import T145.magistics.network.PacketHandler;
@@ -26,24 +26,24 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	public float prevLidAngle;
 	public int numPlayersUsing;
 	private int ticksSinceSync;
-	private EnumChestHungry type;
+	private HungryChestType type;
 	private EnumFacing facing = EnumFacing.NORTH;
 	private GameProfile owner;
 
-	public TileChestHungry(EnumChestHungry type) {
+	public TileChestHungry(HungryChestType type) {
 		this.type = type;
 	}
 
 	public TileChestHungry() {
-		this(EnumChestHungry.BASIC);
+		this(HungryChestType.BASIC);
 	}
 
-	public EnumChestHungry getType() {
+	public HungryChestType getType() {
 		return type;
 	}
 
 	public boolean isEnderChest() {
-		return type == EnumChestHungry.ENDER;
+		return type == HungryChestType.ENDER;
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	@Override
 	public void readPacketNBT(NBTTagCompound compound) {
 		super.readPacketNBT(compound);
-		type = EnumChestHungry.valueOf(compound.getString("Type"));
+		type = HungryChestType.valueOf(compound.getString("Type"));
 		facing = EnumFacing.getFront(compound.getInteger("Facing"));
 		owner = PlayerManager.profileFromNBT(compound.getCompoundTag("Owner"));
 	}
@@ -252,7 +252,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 			sendRecieveEventPacket();
 			world.notifyNeighborsOfStateChange(pos, blockType, false);
 
-			if (type == EnumChestHungry.TRAPPED) {
+			if (type == HungryChestType.TRAPPED) {
 				world.notifyNeighborsOfStateChange(pos.down(), blockType, false);
 			}
 		}
@@ -264,7 +264,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 			sendRecieveEventPacket();
 			world.notifyNeighborsOfStateChange(pos, blockType, false);
 
-			if (type == EnumChestHungry.TRAPPED) {
+			if (type == HungryChestType.TRAPPED) {
 				world.notifyNeighborsOfStateChange(pos.down(), blockType, false);
 			}
 		}

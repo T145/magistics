@@ -1,4 +1,4 @@
-package T145.magistics.api;
+package T145.magistics.api.internal;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

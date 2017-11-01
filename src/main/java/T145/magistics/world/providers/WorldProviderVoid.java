@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import T145.magistics.Magistics;
 import T145.magistics.client.render.world.RenderHandlerVoidWorld;
-import T145.magistics.init.ModDimensions;
+import T145.magistics.core.Init;
 import T145.magistics.world.generators.ChunkGeneratorVoid;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
@@ -21,7 +21,7 @@ public class WorldProviderVoid extends WorldProvider {
 
 	@Override
 	public DimensionType getDimensionType() {
-		return ModDimensions.voidDimensionType;
+		return Init.VOID_TYPE;
 	}
 
 	@Override

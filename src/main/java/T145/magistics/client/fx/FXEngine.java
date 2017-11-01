@@ -126,7 +126,7 @@ public class FXEngine {
 							try {
 								effect.renderParticle(buffer, player, frame, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 							} catch (Exception err) {
-								Magistics.LOGGER.catching(err);
+								Magistics.LOG.catching(err);
 								
 								CrashReport report = CrashReport.makeCrashReport(err, "Rendering Particle");
 								CrashReportCategory reportCategory = report.makeCategory("Particle being rendered");
@@ -209,7 +209,7 @@ public class FXEngine {
 							}
 						} catch (Exception err) {
 							try {
-								Magistics.LOGGER.catching(err);
+								Magistics.LOG.catching(err);
 
 								CrashReport report = CrashReport.makeCrashReport(err, "Ticking Particle");
 								CrashReportCategory reportCategory = report.makeCategory("Particle being ticked");
@@ -228,7 +228,7 @@ public class FXEngine {
 
 								effect.setExpired();
 							} catch (Exception reportErr) {
-								Magistics.LOGGER.catching(reportErr);
+								Magistics.LOG.catching(reportErr);
 							}
 						}
 

@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import T145.magistics.client.lib.ModelBakery;
 import T145.magistics.client.lib.Render;
-import T145.magistics.init.ModBlocks;
-import T145.magistics.tiles.storage.TileTank;
+import T145.magistics.core.Init;
+import T145.magistics.tiles.storage.TileQuintTank;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -15,10 +15,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
+public class RenderTank extends TileEntitySpecialRenderer<TileQuintTank> {
 
 	@Override
-	public void renderTileEntityAt(@Nonnull TileTank tank, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void renderTileEntityAt(@Nonnull TileQuintTank tank, double x, double y, double z, float partialTicks, int destroyStage) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableCull();
@@ -29,7 +29,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		}
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			if (tank.isConnected(facing) && !(tank.getWorld().getTileEntity(tank.getPos().offset(facing)) instanceof TileTank)) {
+			if (tank.isConnected(facing) && !(tank.getWorld().getTileEntity(tank.getPos().offset(facing)) instanceof TileQuintTank)) {
 				renderConnection(tank, x, y, z, facing);
 			}
 		}
@@ -40,9 +40,9 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		GlStateManager.popMatrix();
 	}
 
-	private void renderConnection(TileTank tank, double x, double y, double z, EnumFacing facing) {
+	private void renderConnection(TileQuintTank tank, double x, double y, double z, EnumFacing facing) {
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		TextureAtlasSprite icon = Render.getTextureFromBlock(ModBlocks.CONDUIT, 0);
+		TextureAtlasSprite icon = Render.getTextureFromBlock(Init.CONDUIT, 0);
 
 		switch (facing) {
 		case NORTH:
@@ -62,7 +62,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileTank> {
 		}
 	}
 
-	private void renderLiquid(TileTank tank, double x, double y, double z) {
+	private void renderLiquid(TileQuintTank tank, double x, double y, double z) {
 		float mod = 0.003F;
 		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());
 

@@ -2,11 +2,11 @@ package T145.magistics.tiles.crafting;
 
 import java.util.List;
 
+import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
-import T145.magistics.api.variants.blocks.EnumCrucible;
-import T145.magistics.init.ModRecipes;
-import T145.magistics.init.ModSounds;
+import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
+import T145.magistics.core.Init;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageSendCustomWispFX;
 import T145.magistics.tiles.MTile;
@@ -30,7 +30,7 @@ import net.minecraft.world.WorldServer;
 
 public class TileCrucible extends MTile implements ITickable, IQuintContainer, IWorker {
 
-	private EnumCrucible type;
+	private CrucibleType type;
 	private float quints;
 	private float prevQuints;
 	private int smeltDelay;
@@ -39,20 +39,20 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	private boolean working;
 	private boolean update;
 
-	public TileCrucible(EnumCrucible type) {
+	public TileCrucible(CrucibleType type) {
 		this.type = type;
 	}
 
 	public TileCrucible() {
-		this(EnumCrucible.BASIC);
+		this(CrucibleType.BASIC);
 	}
 
-	public EnumCrucible getCrucibleType() {
+	public CrucibleType getCrucibleType() {
 		return type;
 	}
 
 	public boolean isNormal() {
-		return type != EnumCrucible.SOULS;
+		return type != CrucibleType.SOULS;
 	}
 
 	public boolean isPowering() {
@@ -135,7 +135,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	public void readPacketNBT(NBTTagCompound compound) {
 		boolean wasWorking = working;
 
-		type = EnumCrucible.valueOf(compound.getString("Type"));
+		type = CrucibleType.valueOf(compound.getString("Type"));
 		quints = compound.getFloat("Quints");
 		working = compound.getBoolean("Working");
 
@@ -152,12 +152,12 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 		if (!items.isEmpty()) {
 			EntityItem item = items.get(world.rand.nextInt(items.size()));
 			ItemStack stack = item.getItem();
-			float quintYield = ModRecipes.getCrucibleResult(stack);
+			float quintYield = MagisticsApi.getCrucibleResult(stack);
 
 			if (quintYield > 0F) {
 				// boost conversion rate iff above arcane furnace
 
-				if (type != EnumCrucible.THAUMIUM || quints + quintYield <= getMaxQuints()) {
+				if (type != CrucibleType.THAUMIUM || quints + quintYield <= getMaxQuints()) {
 					quints += quintYield * type.getConversion();
 					smeltDelay = 10 + Math.round(quintYield / 5F / type.getSpeed());
 
@@ -172,7 +172,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 
 					refresh();
 					((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
-					world.playSound(null, pos, ModSounds.bubbling, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+					world.playSound(null, pos, Init.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 				}
 			} else {
 				ejectItem(item);
@@ -270,7 +270,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 				if (working = discharge) {
 					// discharge chunk aura
 					//refresh();
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.suck, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), Init.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 				}
 
 				if (working != wasWorking) {

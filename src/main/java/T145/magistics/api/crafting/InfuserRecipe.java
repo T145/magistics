@@ -1,6 +1,6 @@
 package T145.magistics.api.crafting;
 
-import T145.magistics.api.MagisticsApiHelper;
+import T145.magistics.api.MagisticsApi;
 import net.minecraft.item.ItemStack;
 
 public class InfuserRecipe {
@@ -39,7 +39,7 @@ public class InfuserRecipe {
 		if (isDark == isDark()) {
 			for (int i = isDark ? 1 : 2; i < recipe.length; ++i) {
 				for (ItemStack component : components) {
-					if (MagisticsApiHelper.areItemStacksEqual(component, recipe[i])) {
+					if (MagisticsApi.areItemStacksEqual(component, recipe[i])) {
 						++matches;
 					}
 				}

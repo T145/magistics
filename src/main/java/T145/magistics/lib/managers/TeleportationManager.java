@@ -1,7 +1,7 @@
 package T145.magistics.lib.managers;
 
 import T145.magistics.Magistics;
-import T145.magistics.init.ModDimensions;
+import T145.magistics.core.Init;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.world.data.WorldDataVoidChest;
 import T145.magistics.world.teleporters.TeleporterVoidWorld;
@@ -24,7 +24,7 @@ public class TeleportationManager {
 			playerNBT.setDouble("void-oldPosY", player.posY);
 			playerNBT.setDouble("void-oldPosZ", player.posZ);
 
-			WorldServer voidWorld = ModDimensions.getServerVoidWorld();
+			WorldServer voidWorld = Init.getServerVoidWorld();
 			PlayerList playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
 
 			playerList.transferPlayerToDimension(player, Magistics.CONFIG.voidDimensionId, new TeleporterVoidWorld(voidWorld));
@@ -63,13 +63,13 @@ public class TeleportationManager {
 			double oldPosY = playerNBT.getDouble("void-oldPosY");
 			double oldPosZ = playerNBT.getDouble("void-oldPosZ");
 
-			playerList.transferPlayerToDimension(player, oldDimension, new TeleporterVoidWorld(ModDimensions.getWorldServerForDimension(oldDimension)));
+			playerList.transferPlayerToDimension(player, oldDimension, new TeleporterVoidWorld(Init.getWorldServerForDimension(oldDimension)));
 			player.setPositionAndUpdate(oldPosX, oldPosY, oldPosZ);
 		} else {
 			// TODO: Find a good nearby spawn position offset by facing
-			BlockPos spawnPoint = ModDimensions.getWorldServerForDimension(0).provider.getRandomizedSpawnPoint();
+			BlockPos spawnPoint = Init.getWorldServerForDimension(0).provider.getRandomizedSpawnPoint();
 
-			playerList.transferPlayerToDimension(player, 0, new TeleporterVoidWorld(ModDimensions.getWorldServerForDimension(0)));
+			playerList.transferPlayerToDimension(player, 0, new TeleporterVoidWorld(Init.getWorldServerForDimension(0)));
 			player.setPositionAndUpdate(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
 		}
 	}

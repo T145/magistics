@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.blocks.MBlock;
-import T145.magistics.init.ModBlocks;
+import T145.magistics.core.Init;
 import T145.magistics.lib.managers.TeleportationManager;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.world.data.WorldDataVoidChest;
@@ -132,7 +132,7 @@ public class BlockChestVoid extends MBlock {
 			return;
 		}
 
-		ItemStack stack = new ItemStack(ModBlocks.CHEST_VOID, 1);
+		ItemStack stack = new ItemStack(Init.CHEST_VOID, 1);
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setInteger("id", te.id);
 		stack.setTagCompound(compound);

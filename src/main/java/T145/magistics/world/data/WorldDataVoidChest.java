@@ -3,7 +3,7 @@ package T145.magistics.world.data;
 import java.util.HashMap;
 
 import T145.magistics.Magistics;
-import T145.magistics.config.ConfigMain;
+import T145.magistics.core.ConfigMain;
 import T145.magistics.lib.world.DimensionBlockPos;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -32,24 +32,24 @@ public class WorldDataVoidChest extends WorldSavedData {
 
 	public void addVoidChestPosition(int coord, BlockPos pos, int dimension) {
 		voidChestPositions.put(coord, new DimensionBlockPos(pos, dimension));
-		Magistics.LOGGER.debug("Adding chest position: coords=%d, pos=%s, dimension=%d", coord, pos, dimension);
+		Magistics.LOG.debug("Adding chest position: coords=%d, pos=%s, dimension=%d", coord, pos, dimension);
 		markDirty();
 	}
 
 	public void removeVoidChestPosition(int coord) {
 		voidChestPositions.remove(coord);
-		Magistics.LOGGER.debug("Removing chest position by coord: coords=%d", coord);
+		Magistics.LOG.debug("Removing chest position by coord: coords=%d", coord);
 		markDirty();
 	}
 
 	private void addSpawnPoint(int coord, double[] destination) {
 		if (destination.length != 3) {
-			Magistics.LOGGER.warn("Trying to set spawn point with invalid double[]=%s", destination);
+			Magistics.LOG.warn("Trying to set spawn point with invalid double[]=%s", destination);
 			return;
 		}
 
 		spawnPoints.put(coord, destination);
-		Magistics.LOGGER.debug("Setting spawn point: coords=%d, x=%.2f, y=%.2f, z=%.2f", coord, destination[0], destination[1], destination[2]);
+		Magistics.LOG.debug("Setting spawn point: coords=%d, x=%.2f, y=%.2f, z=%.2f", coord, destination[0], destination[1], destination[2]);
 		markDirty();
 	}
 
@@ -70,7 +70,7 @@ public class WorldDataVoidChest extends WorldSavedData {
 			return;
 		}
 
-		Magistics.LOGGER.info("Loading saved data for chest world");
+		Magistics.LOG.info("Loading saved data for chest world");
 		WorldDataVoidChest wsd = (WorldDataVoidChest) event.getWorld().getMapStorage().getOrLoadData(WorldDataVoidChest.class, "WorldDataVoidChest");
 
 		if (wsd == null) {
@@ -78,8 +78,8 @@ public class WorldDataVoidChest extends WorldSavedData {
 			wsd.markDirty();
 		}
 
-		Magistics.LOGGER.info(" > " + wsd.spawnPoints.size() + " spawn points");
-		Magistics.LOGGER.info(" > Next chest id: " + wsd.nextCoord);
+		Magistics.LOG.info(" > " + wsd.spawnPoints.size() + " spawn points");
+		Magistics.LOG.info(" > Next chest id: " + wsd.nextCoord);
 
 		WorldDataVoidChest.INSTANCE = wsd;
 		event.getWorld().getMapStorage().setData("WorldDataVoidChest", wsd);

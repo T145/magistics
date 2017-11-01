@@ -5,9 +5,6 @@ import T145.magistics.client.gui.GuiChestHungry;
 import T145.magistics.client.gui.GuiInfuser;
 import T145.magistics.client.lib.ColorHandler;
 import T145.magistics.client.lib.Shaders;
-import T145.magistics.init.ModBlocks;
-import T145.magistics.init.ModEntities;
-import T145.magistics.init.ModItems;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,12 +35,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		super.preInit(event);
 		OBJLoader.INSTANCE.addDomain(Magistics.MODID);
-
-		ModBlocks.initClient();
-		ModItems.initClient();
-		ModEntities.initClient();
+		super.preInit(event);
 		Shaders.init();
 		registerPlugins(event, true);
 	}

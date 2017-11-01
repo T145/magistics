@@ -4,8 +4,8 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.api.logic.IOwned;
-import T145.magistics.api.variants.blocks.EnumChestHungry;
 import T145.magistics.blocks.MBlock;
+import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.devices.TileChestHungry;
 import net.minecraft.block.SoundType;
@@ -24,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,21 +33,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockChestHungry extends MBlock<EnumChestHungry> {
+public class BlockChestHungry extends MBlock<HungryChestType> {
 
 	public BlockChestHungry() {
-		super("chest_hungry", Material.WOOD, EnumChestHungry.class);
+		super("chest_hungry", Material.WOOD, HungryChestType.class);
 		setHardness(2.5F);
-	    setSoundType(SoundType.WOOD);
+		setSoundType(SoundType.WOOD);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileChestHungry(EnumChestHungry.values()[meta]);
+		return new TileChestHungry(HungryChestType.values()[meta]);
 	}
 
 	public boolean isEnderChest(IBlockState state) {
-		return state.getValue(variant) == EnumChestHungry.ENDER;
+		return state.getValue(variant) == HungryChestType.ENDER;
 	}
 
 	public boolean isEnderChest() {
@@ -155,7 +156,7 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 
 	@Override
 	public boolean canProvidePower(IBlockState state) {
-		return state.getValue(variant) == EnumChestHungry.TRAPPED;
+		return state.getValue(variant) == HungryChestType.TRAPPED;
 	}
 
 	@Override
@@ -207,5 +208,15 @@ public class BlockChestHungry extends MBlock<EnumChestHungry> {
 	@Override
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
 		return InventoryManager.calcRedstone(world.getTileEntity(pos));
+	}
+
+	public static enum HungryChestType implements IStringSerializable {
+
+		BASIC, TRAPPED, ENDER;
+
+		@Override
+		public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

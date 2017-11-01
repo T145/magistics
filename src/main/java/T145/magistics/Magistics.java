@@ -3,7 +3,7 @@ package T145.magistics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.magistics.config.ConfigMain;
+import T145.magistics.core.ConfigMain;
 import T145.magistics.lib.CommandMagistics;
 import T145.magistics.lib.CreativeTabMagistics;
 import T145.magistics.proxies.CommonProxy;
@@ -26,13 +26,9 @@ public class Magistics {
 	public static final String MODID = "magistics";
 	public static final String NAME = "Magistics";
 	public static final String VERSION = "$version";
-	public static final Logger LOGGER = LogManager.getLogger(NAME);
+	public static final Logger LOG = LogManager.getLogger(NAME);
 	public static final CreativeTabs TAB = new CreativeTabMagistics();
 	public static final ConfigMain CONFIG = new ConfigMain();
-
-	public static boolean isDeobfuscated() {
-		return VERSION.equals("$version");
-	}
 
 	@Instance(MODID)
 	public static Magistics instance;

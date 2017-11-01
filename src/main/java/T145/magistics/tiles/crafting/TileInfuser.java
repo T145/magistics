@@ -1,13 +1,11 @@
 package T145.magistics.tiles.crafting;
 
-import T145.magistics.api.MagisticsApiHelper;
+import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintManager;
 import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.init.ModItems;
-import T145.magistics.init.ModRecipes;
-import T145.magistics.init.ModSounds;
+import T145.magistics.core.Init;
 import T145.magistics.items.ItemShard;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageInfuserProgress;
@@ -144,7 +142,7 @@ public class TileInfuser extends MTileInventory implements ITickable, IQuintMana
 			sendCraftingProgressPacket();
 		}
 
-		InfuserRecipe infuserRecipe = ModRecipes.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
+		InfuserRecipe infuserRecipe = MagisticsApi.getMatchingInfuserRecipe(itemHandler.getStacks().toArray(new ItemStack[getSizeInventory()]), isDark());
 
 		if (infuserRecipe != null && !world.isBlockPowered(pos)) {
 			quintCost = infuserRecipe.getCost();
@@ -156,7 +154,7 @@ public class TileInfuser extends MTileInventory implements ITickable, IQuintMana
 				if (soundDelay == 0 && progress > 0.025F) {
 					// slightly discharge this chunk's aura
 
-					world.playSound(null, pos, isDark() ? ModSounds.infuserdark : ModSounds.infuser, SoundCategory.MASTER, 0.2F, 1F);
+					world.playSound(null, pos, isDark() ? Init.SOUND_INFUSER_DARK : Init.SOUND_INFUSER, SoundCategory.MASTER, 0.2F, 1F);
 					soundDelay = 62;
 				}
 
@@ -184,7 +182,7 @@ public class TileInfuser extends MTileInventory implements ITickable, IQuintMana
 			return false;
 		} else if (itemHandler.getStackInSlot(0).isEmpty()) {
 			return true;
-		} else if (!MagisticsApiHelper.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
+		} else if (!MagisticsApi.areItemStacksEqual(result, itemHandler.getStackInSlot(0))) {
 			return false;
 		} else {
 			int resultCount = itemHandler.getStackInSlot(0).getCount() + result.getCount();
@@ -198,21 +196,21 @@ public class TileInfuser extends MTileInventory implements ITickable, IQuintMana
 
 		if (itemHandler.getStackInSlot(0).isEmpty()) {
 			itemHandler.setStackInSlot(0, result.copy());
-		} else if (MagisticsApiHelper.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
+		} else if (MagisticsApi.areItemStacksEqual(itemHandler.getStackInSlot(0), result) && itemHandler.getStackInSlot(0).getCount() < result.getMaxStackSize()) {
 			itemHandler.getStackInSlot(0).grow(result.getCount());
 		}
 
 		for (int slot = dark ? 1 : 2; slot < getSizeInventory(); ++slot) {
 			if (!itemHandler.getStackInSlot(slot).isEmpty()) {
 				for (ItemStack component : components) {
-					if (MagisticsApiHelper.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
+					if (MagisticsApi.areItemStacksEqual(component, itemHandler.getStackInSlot(slot))) {
 						itemHandler.getStackInSlot(slot).shrink(1);
 
 						// fluid container compatibility
 
 						if (!dark && component.getItem() instanceof ItemShard) {
 							if (itemHandler.getStackInSlot(1).isEmpty()) {
-								itemHandler.setStackInSlot(1, new ItemStack(ModItems.crystalShard, 1, 0));
+								itemHandler.setStackInSlot(1, new ItemStack(Init.CRYSTAL_SHARD, 1, 0));
 							} else {
 								itemHandler.getStackInSlot(1).grow(1);
 							}

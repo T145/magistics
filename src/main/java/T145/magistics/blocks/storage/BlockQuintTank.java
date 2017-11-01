@@ -3,10 +3,10 @@ package T145.magistics.blocks.storage;
 import java.util.ArrayList;
 import java.util.List;
 
-import T145.magistics.api.variants.blocks.EnumTank;
 import T145.magistics.blocks.MBlock;
+import T145.magistics.blocks.storage.BlockQuintTank.TankType;
 import T145.magistics.client.lib.Render;
-import T145.magistics.tiles.storage.TileTank;
+import T145.magistics.tiles.storage.TileQuintTank;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -24,15 +25,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTank extends MBlock<EnumTank> {
+public class BlockQuintTank extends MBlock<TankType> {
 
 	public static final AxisAlignedBB TANK_AABB = new AxisAlignedBB(Render.W1, 0D, Render.W1, 1D - Render.W1, 1D, 1D - Render.W1);
 	public static final PropertyBool JOINED_ABOVE = PropertyBool.create("joined_above");
 	public static final PropertyBool JOINED_BELOW = PropertyBool.create("joined_below");
 	public static final PropertyBool INBETWEEN = PropertyBool.create("inbetween");
 
-	public BlockTank() {
-		super("tank", Material.GLASS, EnumTank.class);
+	public BlockQuintTank() {
+		super("tank", Material.GLASS, TankType.class);
 		setSoundType(SoundType.GLASS);
 		setHardness(1F);
 	}
@@ -65,8 +66,8 @@ public class BlockTank extends MBlock<EnumTank> {
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (tile instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
+		if (tile instanceof TileQuintTank) {
+			TileQuintTank tank = (TileQuintTank) tile;
 			boolean joinedAbove = tank.canConnectToTank(EnumFacing.UP);
 			boolean joinedBelow = tank.canConnectToTank(EnumFacing.DOWN);
 			boolean inbetween = joinedAbove && joinedBelow;
@@ -79,7 +80,7 @@ public class BlockTank extends MBlock<EnumTank> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileTank(meta == 1);
+		return new TileQuintTank(meta == 1);
 	}
 
 	@Override
@@ -111,7 +112,7 @@ public class BlockTank extends MBlock<EnumTank> {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return side.getAxis() != EnumFacing.Axis.Y || !(world.getBlockState(pos.offset(side)).getBlock() instanceof BlockTank);
+		return side.getAxis() != EnumFacing.Axis.Y || !(world.getBlockState(pos.offset(side)).getBlock() instanceof BlockQuintTank);
 	}
 
 	@Override
@@ -123,11 +124,21 @@ public class BlockTank extends MBlock<EnumTank> {
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (tile instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
+		if (tile instanceof TileQuintTank) {
+			TileQuintTank tank = (TileQuintTank) tile;
 			return (int) (tank.getQuints() * 15 / tank.getMaxQuints());
 		}
 
 		return 0;
+	}
+
+	public static enum TankType implements IStringSerializable {
+
+		BASE, REINFORCED;
+
+		@Override
+		public String getName() {
+			return name().toLowerCase();
+		}
 	}
 }

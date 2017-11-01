@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import T145.magistics.Magistics;
-import T145.magistics.init.ModBiomes;
+import T145.magistics.core.Init;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -36,13 +36,13 @@ public class AuraManager {
 	public static void addAuraWorld(int dimID) {
 		if (!auras.containsKey(dimID)) {
 			auras.put(dimID, new AuraWorld(dimID));
-			Magistics.LOGGER.info("Creating aura cache for world " + dimID);
+			Magistics.LOG.info("Creating aura cache for world " + dimID);
 		}
 	}
 
 	public static void removeAuraWorld(int dimID) {
 		auras.remove(dimID);
-		Magistics.LOGGER.info("Removing aura cache for world " + dimID);
+		Magistics.LOG.info("Removing aura cache for world " + dimID);
 	}
 
 	public static void addAuraChunk(int dimID, Chunk chunk, short base, float vis, float flux) {
@@ -99,7 +99,7 @@ public class AuraManager {
 			AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
 			modifyVisInChunk(auraChunk, amount, true);
 		} catch (Exception err) {
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class AuraManager {
 			AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
 			modifyFluxInChunk(auraChunk, amount, true);
 		} catch (Exception err) {
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 		}
 	}
 
@@ -128,7 +128,7 @@ public class AuraManager {
 
 			modified = modifyVisInChunk(aura, -amount, !simulate);
 		} catch (Exception err) {
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 		}
 
 		return modified ? amount : 0.0F;
@@ -146,7 +146,7 @@ public class AuraManager {
 
 			modified = modifyFluxInChunk(auraChunk, -amount, !simulate);
 		} catch (Exception err) {
-			Magistics.LOGGER.catching(err);
+			Magistics.LOG.catching(err);
 		}
 
 		return modified ? amount : 0.0F;
@@ -179,15 +179,15 @@ public class AuraManager {
 	public static void generateAura(Chunk chunk, Random rand) {
 		Biome biome = chunk.getWorld().getBiome(new BlockPos(chunk.x * 16 + 8, 50, chunk.z * 16 + 8));
 
-		if (ModBiomes.getBiomeBlacklist(Biome.getIdForBiome(biome)) != -1) {
+		if (Init.getBiomeBlacklist(Biome.getIdForBiome(biome)) != -1) {
 			return;
 		}
 
-		float life = ModBiomes.getBiomeAuraModifier(biome);
+		float life = Init.getBiomeAuraModifier(biome);
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			biome = chunk.getWorld().getBiome(new BlockPos((chunk.x + facing.getFrontOffsetX()) * 16 + 8, 50, (chunk.z + facing.getFrontOffsetZ()) * 16 + 8));
-			life += ModBiomes.getBiomeAuraModifier(biome);
+			life += Init.getBiomeAuraModifier(biome);
 		}
 
 		life /= 5.0F;

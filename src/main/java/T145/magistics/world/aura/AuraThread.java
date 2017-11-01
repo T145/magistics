@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import T145.magistics.Magistics;
-import T145.magistics.world.WorldEvents;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -26,11 +25,11 @@ public class AuraThread implements Runnable {
 
 	@Override
 	public void run() {
-		Magistics.LOGGER.info("Starting aura thread for dim " + dimID);
+		Magistics.LOG.info("Starting aura thread for dim " + dimID);
 
 		while (!stop) {
 			if (AuraManager.auras.isEmpty()) {
-				Magistics.LOGGER.warn("No auras found!");
+				Magistics.LOG.warn("No auras found!");
 				break;
 			}
 
@@ -57,17 +56,17 @@ public class AuraThread implements Runnable {
 
 			try {
 				if (executionTime > 1000L) {
-					Magistics.LOGGER.warn("AURAS TAKING " + (executionTime - 1000L) + " ms LONGER THAN NORMAL IN DIM " + dimID);
+					Magistics.LOG.warn("AURAS TAKING " + (executionTime - 1000L) + " ms LONGER THAN NORMAL IN DIM " + dimID);
 				}
 
 				Thread.sleep(Math.max(1L, 1000L - executionTime - phaseTime));
 			} catch (InterruptedException err) {
-				Magistics.LOGGER.catching(err);
+				Magistics.LOG.catching(err);
 			}
 		}
 
-		Magistics.LOGGER.info("Stopping aura thread for dim " + dimID);
-		WorldEvents.auraThreads.remove(dimID);
+		Magistics.LOG.info("Stopping aura thread for dim " + dimID);
+		AuraEvents.auraThreads.remove(dimID);
 	}
 
 	private void processAuraChunk(AuraWorld auraWorld, AuraChunk auraChunk) {

@@ -1,4 +1,4 @@
-package T145.magistics.api;
+package T145.magistics.api.internal;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

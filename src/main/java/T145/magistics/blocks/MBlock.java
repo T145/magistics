@@ -52,6 +52,8 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 		setUnlocalizedName(name);
 		setCreativeTab(Magistics.TAB);
 
+		// delete everything below this line in 1.12
+
 		GameRegistry.register(this);
 
 		if (variant != null && variantValues != null) {

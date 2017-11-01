@@ -1,4 +1,4 @@
-package T145.magistics.api.variants;
+package T145.magistics.api.magic;
 
 import net.minecraft.util.IStringSerializable;
 

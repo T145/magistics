@@ -1,10 +1,8 @@
-package T145.magistics.world;
+package T145.magistics.world.aura;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 import T145.magistics.Magistics;
-import T145.magistics.world.aura.AuraManager;
-import T145.magistics.world.aura.AuraThread;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -13,7 +11,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @EventBusSubscriber(modid = Magistics.MODID)
-public class WorldEvents {
+public class AuraEvents {
 
 	public static ConcurrentHashMap<Integer, AuraThread> auraThreads = new ConcurrentHashMap();
 
@@ -25,7 +23,7 @@ public class WorldEvents {
 
 		int dimID = event.getWorld().provider.getDimension();
 		AuraManager.addAuraWorld(dimID);
-		Magistics.LOGGER.info("Loading aura world: " + dimID);
+		Magistics.LOG.info("Loading aura world: " + dimID);
 	}
 
 	@SubscribeEvent
@@ -36,7 +34,7 @@ public class WorldEvents {
 
 		int dimID = event.getWorld().provider.getDimension();
 		AuraManager.removeAuraWorld(dimID);
-		Magistics.LOGGER.info("Unloading aura world: " + dimID);
+		Magistics.LOG.info("Unloading aura world: " + dimID);
 	}
 
 	@SubscribeEvent
@@ -55,7 +53,7 @@ public class WorldEvents {
 	}
 
 	static {
-		Magistics.LOGGER.info("Registered terrain gen bus!");
-		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldEvents());
+		Magistics.LOG.info("Registered terrain gen bus!");
+		MinecraftForge.TERRAIN_GEN_BUS.register(new AuraEvents());
 	}
 }

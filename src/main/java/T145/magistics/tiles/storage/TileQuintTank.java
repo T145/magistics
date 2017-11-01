@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileTank extends MTile implements ITickable, IQuintContainer {
+public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 
 	protected final boolean reinforced;
 	protected final float maxQuints;
@@ -18,12 +18,12 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 	protected int suction;
 	private int updateDelay;
 
-	public TileTank(boolean reinforced) {
+	public TileQuintTank(boolean reinforced) {
 		this.reinforced = reinforced;
 		this.maxQuints = reinforced ? 1000F : 500F;
 	}
 
-	public TileTank() {
+	public TileQuintTank() {
 		this(false);
 	}
 
@@ -34,8 +34,8 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 	public boolean canConnectToTank(EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos.offset(facing));
 
-		if (tile instanceof TileTank && facing.getAxis() == EnumFacing.Axis.Y) {
-			TileTank neighborTank = (TileTank) tile;
+		if (tile instanceof TileQuintTank && facing.getAxis() == EnumFacing.Axis.Y) {
+			TileQuintTank neighborTank = (TileQuintTank) tile;
 			return reinforced == neighborTank.isReinforced();
 		}
 
@@ -112,7 +112,7 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 	private void distributeQuints() {
 		float tempQuints = quints;
 		float tempMaxQuints = getMaxQuints();
-		TileTank tank;
+		TileQuintTank tank;
 		int offsetY = 1;
 
 		while ((tank = getValidTank(offsetY)) != null) {
@@ -124,7 +124,7 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
 
-			if (container != null && !(container instanceof TileTank) && tempQuints < tempMaxQuints && suction > container.getSuction()) {
+			if (container != null && !(container instanceof TileQuintTank) && tempQuints < tempMaxQuints && suction > container.getSuction()) {
 				float diff = QuintHelper.subtractQuints(container, Math.min(1F, tempMaxQuints - tempQuints));
 
 				if (suction > container.getSuction()) {
@@ -162,11 +162,11 @@ public class TileTank extends MTile implements ITickable, IQuintContainer {
 	}
 
 	@Nullable
-	protected TileTank getValidTank(int offsetY) {
+	protected TileQuintTank getValidTank(int offsetY) {
 		TileEntity tile = world.getTileEntity(pos.up(offsetY));
 
-		if (tile instanceof TileTank) {
-			TileTank tank = (TileTank) tile;
+		if (tile instanceof TileQuintTank) {
+			TileQuintTank tank = (TileQuintTank) tile;
 
 			if (tank.canConnectToTank(EnumFacing.UP)) {
 				return tank;
