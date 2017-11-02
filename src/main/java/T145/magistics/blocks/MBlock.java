@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import T145.magistics.Magistics;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.lib.managers.InventoryManager;
-import T145.magistics.tiles.MTileInventory;
+import T145.magistics.tiles.base.TileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.MapColor;
@@ -203,8 +203,8 @@ public abstract class MBlock<T extends Enum<T> & IStringSerializable> extends Bl
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (tile instanceof MTileInventory) {
-			InventoryManager.dropInventory((MTileInventory) tile, world, state, pos);
+		if (tile instanceof TileInventory) {
+			InventoryManager.dropInventory((TileInventory) tile, world, state, pos);
 		}
 
 		super.breakBlock(world, pos, state);

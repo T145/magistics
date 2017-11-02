@@ -17,8 +17,8 @@ public class RenderCrucible extends TileEntitySpecialRenderer<TileCrucible> {
 
 	@Override
 	public void renderTileEntityAt(@Nonnull TileCrucible crucible, double x, double y, double z, float partialTicks, int destroyStage) {
-		if (crucible.isNormal() && crucible.getDisplayQuints() > 0F) {
-			float level = 0.75F * (crucible.getDisplayQuints() / crucible.getMaxQuints());
+		if (crucible.isNormal() && crucible.getQuints() > 0F) {
+			float level = 0.75F * (crucible.getQuints() / crucible.getCapacity());
 
 			if (crucible.isFull() || crucible.isOverflowing()) {
 				level -= 0.001D;

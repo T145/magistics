@@ -1,7 +1,8 @@
 package T145.magistics.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,6 +13,7 @@ import T145.magistics.api.crafting.InfuserRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class MagisticsApi {
 
@@ -24,7 +26,7 @@ public class MagisticsApi {
 	}
 
 	private static Map<ItemStack, Float> crucibleRecipes = new HashMap<ItemStack, Float>();
-	private static HashSet<InfuserRecipe> infuserRecipes = new HashSet<InfuserRecipe>();
+	private static List<InfuserRecipe> infuserRecipes = new ArrayList<InfuserRecipe>();
 
 	public static void addCrucibleRecipe(ItemStack input, float quintOutput) {
 		crucibleRecipes.put(input, quintOutput);
@@ -56,9 +58,9 @@ public class MagisticsApi {
 	}
 
 	@Nullable
-	public static InfuserRecipe getMatchingInfuserRecipe(ItemStack[] components, boolean isDark) {
+	public static InfuserRecipe getMatchingInfuserRecipe(NonNullList<ItemStack> invRecipe, boolean isDark) {
 		for (InfuserRecipe recipe : infuserRecipes) {
-			if (recipe.matches(components, isDark)) {
+			if (recipe.matches(invRecipe, isDark)) {
 				return recipe;
 			}
 		}

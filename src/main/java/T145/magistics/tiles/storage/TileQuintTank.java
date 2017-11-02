@@ -2,15 +2,18 @@ package T145.magistics.tiles.storage;
 
 import javax.annotation.Nullable;
 
+import T145.magistics.Magistics;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.tiles.MTile;
+import T145.magistics.network.PacketHandler;
+import T145.magistics.network.messages.client.MessageQuintLevel;
+import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
+public class TileQuintTank extends TileSynchronized implements ITickable, IQuintContainer {
 
 	protected final boolean reinforced;
 	protected final float maxQuints;
@@ -41,25 +44,10 @@ public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 
 		return false;
 	}
-
+	
 	@Override
-	public boolean canConnect(EnumFacing facing) {
+	public boolean canConnectAtSide(EnumFacing side) {
 		return true;
-	}
-
-	@Override
-	public int getSuction() {
-		return suction;
-	}
-
-	@Override
-	public void setSuction(int pressure) {
-		suction = pressure;
-	}
-
-	@Override
-	public float getMaxQuints() {
-		return maxQuints;
 	}
 
 	@Override
@@ -68,25 +56,35 @@ public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 	}
 
 	@Override
-	public float getDisplayQuints() {
-		return quints > 0.1F ? quints : 0F;
+	public void setQuints(float quints) {
+		this.quints = quints;
 	}
 
 	@Override
-	public void setQuints(float amount) {
-		quints = amount;
+	public float getCapacity() {
+		return maxQuints;
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setFloat("Quints", quints);
-		compound.setInteger("Suction", suction);
+	public int getSuction() {
+		return suction;
 	}
 
 	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		quints = compound.getFloat("Quints");
-		suction = compound.getInteger("Suction");
+	public void setSuction(int suction) {
+		this.suction = suction;
+	}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		nbt.setFloat("Quints", quints);
+		nbt.setInteger("Suction", suction);
+	}
+
+	@Override
+	public void readCustomNBT(NBTTagCompound nbt) {
+		quints = nbt.getFloat("Quints");
+		suction = nbt.getInteger("Suction");
 	}
 
 	@Override
@@ -95,10 +93,12 @@ public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 			--updateDelay;
 
 			if (updateDelay <= 0) {
-				refresh();
+				//markForUpdate();
+				PacketHandler.INSTANCE.sendToAllAround(new MessageQuintLevel(pos, quints, suction), PacketHandler.getTargetPoint(world, pos));
 
 				updateDelay = 10;
 				calculateSuction();
+				Magistics.LOG.info("Tank Quints: " + quints);
 			}
 
 			distributeQuints();
@@ -111,13 +111,13 @@ public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 
 	private void distributeQuints() {
 		float tempQuints = quints;
-		float tempMaxQuints = getMaxQuints();
+		float tempMaxQuints = getCapacity();
 		TileQuintTank tank;
 		int offsetY = 1;
 
 		while ((tank = getValidTank(offsetY)) != null) {
 			tempQuints += tank.getQuints();
-			tempMaxQuints += tank.getMaxQuints();
+			tempMaxQuints += tank.getCapacity();
 			++offsetY;
 		}
 
@@ -148,11 +148,11 @@ public class TileQuintTank extends MTile implements ITickable, IQuintContainer {
 		while ((tank = getValidTank(offsetY)) != null) {
 			if (empty) {
 				tank.setQuints(0F);
-			} else if (prevTempQuints <= tank.getMaxQuints()) {
+			} else if (prevTempQuints <= tank.getCapacity()) {
 				tank.setQuints(tempQuints);
 				empty = true;
 			} else {
-				tank.setQuints(tank.getMaxQuints() * quintRatio);
+				tank.setQuints(tank.getCapacity() * quintRatio);
 				tempQuints -= tank.getQuints();
 			}
 

@@ -3,7 +3,7 @@ package T145.magistics.lib.managers;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import T145.magistics.tiles.MTileInventory;
+import T145.magistics.tiles.base.TileInventory;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -22,17 +22,17 @@ import net.minecraftforge.items.VanillaDoubleChestItemHandler;
 public class InventoryManager {
 
 	public static int calcRedstone(@Nullable TileEntity tile) {
-		return tile instanceof MTileInventory ? calcRedstoneFromInventory((MTileInventory) tile) : 0;
+		return tile instanceof TileInventory ? calcRedstoneFromInventory((TileInventory) tile) : 0;
 	}
 
-	public static int calcRedstoneFromInventory(@Nullable MTileInventory inv) {
+	public static int calcRedstoneFromInventory(@Nullable TileInventory inv) {
 		if (inv == null) {
 			return 0;
 		} else {
 			int i = 0;
 			float f = 0.0F;
 
-			for (int j = 0; j < inv.getSizeInventory(); ++j) {
+			for (int j = 0; j < inv.getInventorySize(); ++j) {
 				ItemStack itemstack = inv.getItemHandler().getStackInSlot(j);
 
 				if (!itemstack.isEmpty()) {
@@ -41,7 +41,7 @@ public class InventoryManager {
 				}
 			}
 
-			f = f / inv.getSizeInventory();
+			f = f / inv.getInventorySize();
 			return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 		}
 	}
@@ -70,9 +70,9 @@ public class InventoryManager {
 		return handler;
 	}
 
-	public static void dropInventory(MTileInventory inv, World world, IBlockState state, BlockPos pos) {
+	public static void dropInventory(TileInventory inv, World world, IBlockState state, BlockPos pos) {
 		if (inv != null) {
-			for (int slot = 0; slot < inv.getSizeInventory(); ++slot) {
+			for (int slot = 0; slot < inv.getInventorySize(); ++slot) {
 				ItemStack stack = inv.getItemHandler().getStackInSlot(slot);
 
 				if (!stack.isEmpty()) {
@@ -84,8 +84,8 @@ public class InventoryManager {
 		}
 	}
 
-	public static void takeFromInventory(MTileInventory inv, EntityPlayer player) {
-		for (int slot = inv.getSizeInventory() - 1; slot >= 0; slot--) {
+	public static void takeFromInventory(TileInventory inv, EntityPlayer player) {
+		for (int slot = inv.getInventorySize() - 1; slot >= 0; slot--) {
 			ItemStack stack = inv.getItemHandler().getStackInSlot(slot);
 
 			if (!stack.isEmpty()) {
@@ -124,5 +124,15 @@ public class InventoryManager {
 		}
 
 		return stack;
+	}
+
+	public static ItemStack copyStackWithSize(@Nonnull ItemStack stack, int amount) {
+		if (stack.isEmpty() || amount <= 0) {
+			return ItemStack.EMPTY;
+		}
+
+		ItemStack s = stack.copy();
+		s.setCount(amount);
+		return s;
 	}
 }

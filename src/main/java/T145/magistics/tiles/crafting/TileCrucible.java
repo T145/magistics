@@ -3,13 +3,12 @@ package T145.magistics.tiles.crafting;
 import java.util.List;
 
 import T145.magistics.api.MagisticsApi;
-import T145.magistics.api.logic.IWorker;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
 import T145.magistics.core.Init;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageSendCustomWispFX;
-import T145.magistics.tiles.MTile;
+import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySnowman;
@@ -28,7 +27,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.WorldServer;
 
-public class TileCrucible extends MTile implements ITickable, IQuintContainer, IWorker {
+public class TileCrucible extends TileSynchronized implements ITickable, IQuintContainer {
 
 	private CrucibleType type;
 	private float quints;
@@ -54,6 +53,10 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	public boolean isNormal() {
 		return type != CrucibleType.SOULS;
 	}
+	
+	public boolean isWorking() {
+		return working;
+	}
 
 	public boolean isPowering() {
 		return working && type.canProvidePower();
@@ -64,11 +67,11 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	}
 
 	public boolean isOverflowing() {
-		return quints > getMaxQuints();
+		return quints > getCapacity();
 	}
 
 	public boolean isFull() {
-		return quints == getMaxQuints();
+		return quints == getCapacity();
 	}
 
 	public List<EntityItem> getItemsWithin() {
@@ -87,26 +90,8 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	}
 
 	@Override
-	public boolean canConnect(EnumFacing facing) {
-		return facing.getAxis() != EnumFacing.Axis.Y;
-	}
-
-	@Override
-	public int getSuction() {
-		return 0;
-	}
-
-	@Override
-	public void setSuction(int pressure) {}
-
-	@Override
-	public boolean isWorking() {
-		return working;
-	}
-
-	@Override
-	public float getMaxQuints() {
-		return type.getMaxQuints();
+	public boolean canConnectAtSide(EnumFacing side) {
+		return side.getAxis() != EnumFacing.Axis.Y;
 	}
 
 	@Override
@@ -115,29 +100,37 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 	}
 
 	@Override
-	public float getDisplayQuints() {
-		return quints > 0.1F ? quints : 0F;
+	public void setQuints(float quints) {
+		this.quints = quints;
 	}
 
 	@Override
-	public void setQuints(float amount) {
-		quints = amount;
+	public float getCapacity() {
+		return type.getCapacity();
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setString("Type", type.toString());
-		compound.setFloat("Quints", quints);
-		compound.setBoolean("Working", working);
+	public int getSuction() {
+		return 0;
 	}
 
 	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
+	public void setSuction(int suction) {}
+
+	@Override
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		nbt.setString("Type", type.toString());
+		nbt.setFloat("Quints", quints);
+		nbt.setBoolean("Working", working);
+	}
+
+	@Override
+	public void readCustomNBT(NBTTagCompound nbt) {
 		boolean wasWorking = working;
 
-		type = CrucibleType.valueOf(compound.getString("Type"));
-		quints = compound.getFloat("Quints");
-		working = compound.getBoolean("Working");
+		type = CrucibleType.valueOf(nbt.getString("Type"));
+		quints = nbt.getFloat("Quints");
+		working = nbt.getBoolean("Working");
 
 		if (working != wasWorking) {
 			world.notifyBlockUpdate(pos, getState(), getState(), 1);
@@ -157,7 +150,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 			if (quintYield > 0F) {
 				// boost conversion rate iff above arcane furnace
 
-				if (type != CrucibleType.THAUMIUM || quints + quintYield <= getMaxQuints()) {
+				if (type != CrucibleType.THAUMIUM || quints + quintYield <= getCapacity()) {
 					quints += quintYield * type.getConversion();
 					smeltDelay = 10 + Math.round(quintYield / 5F / type.getSpeed());
 
@@ -170,7 +163,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 						item.setDead();
 					}
 
-					refresh();
+					markForUpdate();
 					((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
 					world.playSound(null, pos, Init.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 				}
@@ -195,7 +188,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 		}
 
 		if (updateDelay <= 0 && update) {
-			refresh();
+			markForUpdate();
 			update = false;
 			updateDelay = 10;
 		}
@@ -208,7 +201,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 
 		// check for and handle overflow
 		if (isOverflowing()) {
-			float spiltQuints = Math.min((quints - getMaxQuints()) / 2F, 1F);
+			float spiltQuints = Math.min((quints - getCapacity()) / 2F, 1F);
 
 			if (quints >= spiltQuints) {
 				quints -= spiltQuints;
@@ -219,17 +212,17 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 				PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
 			}
 
-			refresh();
+			markForUpdate();
 		}
 
 		// check for and handle powering
 		if (type.canProvidePower()) {
 			boolean wasWorking = isPowering();
 
-			working = quints >= getMaxQuints() * 0.9D;
+			working = quints >= getCapacity() * 0.9D;
 
 			if (working != wasWorking) {
-				refresh();
+				markForUpdate();
 			}
 		}
 
@@ -237,7 +230,7 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 		if (smeltDelay <= 0) {
 			if (isNormal()) {
 				smeltContents();
-			} else if (Math.round(quints + 1F) <= getMaxQuints()) {
+			} else if (Math.round(quints + 1F) <= getCapacity()) {
 				boolean wasWorking = isDraining();
 				boolean discharge = false;
 				smeltDelay = 20;
@@ -269,12 +262,12 @@ public class TileCrucible extends MTile implements ITickable, IQuintContainer, I
 
 				if (working = discharge) {
 					// discharge chunk aura
-					//refresh();
+					//markForUpdate();
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), Init.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 				}
 
 				if (working != wasWorking) {
-					refresh();
+					markForUpdate();
 				}
 			}
 		}

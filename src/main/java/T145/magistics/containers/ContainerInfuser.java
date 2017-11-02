@@ -97,7 +97,7 @@ public class ContainerInfuser extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return infuser.isUsableByPlayer(player);
+		return infuser.canInteractWith(player);
 	}
 
 	@Override

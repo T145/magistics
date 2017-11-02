@@ -9,7 +9,7 @@ import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageRecieveClientEvent;
-import T145.magistics.tiles.MTileInventory;
+import T145.magistics.tiles.base.TileInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class TileChestHungry extends MTileInventory implements ITickable, IOwned, IFacing {
+public class TileChestHungry extends TileInventory implements ITickable, IOwned, IFacing {
 
 	public float lidAngle;
 	public float prevLidAngle;
@@ -31,6 +31,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	private GameProfile owner;
 
 	public TileChestHungry(HungryChestType type) {
+		super(27);
 		this.type = type;
 	}
 
@@ -93,36 +94,21 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	}
 
 	@Override
-	public int getSizeInventory() {
-		return 27;
+	public void readCustomNBT(NBTTagCompound nbt) {
+		super.readCustomNBT(nbt);
+		type = HungryChestType.valueOf(nbt.getString("Type"));
+		facing = EnumFacing.getFront(nbt.getInteger("Facing"));
+		owner = PlayerManager.profileFromNBT(nbt.getCompoundTag("Owner"));
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
-		return true;
-	}
-
-	@Override
-	public boolean canExtractItem(int slot, int amount, boolean simulate) {
-		return true;
-	}
-
-	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		super.readPacketNBT(compound);
-		type = HungryChestType.valueOf(compound.getString("Type"));
-		facing = EnumFacing.getFront(compound.getInteger("Facing"));
-		owner = PlayerManager.profileFromNBT(compound.getCompoundTag("Owner"));
-	}
-
-	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		super.writePacketNBT(compound);
-		compound.setString("Type", type.toString());
-		compound.setInteger("Facing", facing.getIndex());
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		super.writeCustomNBT(nbt);
+		nbt.setString("Type", type.toString());
+		nbt.setInteger("Facing", facing.getIndex());
 
 		if (owner != null) {
-			compound.setTag("Owner", PlayerManager.profileToNBT(owner));
+			nbt.setTag("Owner", PlayerManager.profileToNBT(owner));
 		}
 	}
 
@@ -182,7 +168,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	private void syncWithEnderChest() {
 		boolean movedSomething = false;
 
-		for (int slot = 0; slot < itemHandler.getSlots(); ++slot) {
+		for (int slot = 0; slot < handle.getSlots(); ++slot) {
 			movedSomething = moveStackFromSlotToEnderChest(slot);
 		}
 
@@ -192,7 +178,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 	}
 
 	private boolean moveStackFromSlotToEnderChest(int slot) {
-		if (itemHandler.getStackInSlot(slot).isEmpty() || owner == null || owner.getId() == null) {
+		if (handle.getStackInSlot(slot).isEmpty() || owner == null || owner.getId() == null) {
 			return false;
 		}
 
@@ -202,7 +188,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 			return false;
 		}
 
-		ItemStack stack = itemHandler.extractItem(slot, 64, false);
+		ItemStack stack = handle.extractItem(slot, 64, false);
 
 		if (stack.isEmpty()) {
 			return false;
@@ -217,7 +203,7 @@ public class TileChestHungry extends MTileInventory implements ITickable, IOwned
 		}
 
 		boolean movedItems = origSize != stack.getCount();
-		itemHandler.insertItem(slot, stack, false);
+		handle.insertItem(slot, stack, false);
 
 		return movedItems;
 	}

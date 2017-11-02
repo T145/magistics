@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.mojang.authlib.GameProfile;
 
 import T145.magistics.lib.managers.PlayerManager;
-import T145.magistics.tiles.MTile;
+import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 
-public class MTileChunkLoader extends MTile implements ITickable {
+public class MTileChunkLoader extends TileSynchronized implements ITickable {
 
 	private ForgeChunkManager.Ticket ticket;
 	private GameProfile owner;
@@ -49,21 +49,21 @@ public class MTileChunkLoader extends MTile implements ITickable {
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setLong("loaded", PlayerManager.PlayerLoader.serializeChunkPos(loaded));
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		nbt.setLong("loaded", PlayerManager.PlayerLoader.serializeChunkPos(loaded));
 
 		if (owner != null) {
-			compound.setTag("profile", PlayerManager.profileToNBT(owner));
+			nbt.setTag("profile", PlayerManager.profileToNBT(owner));
 		}
 	}
 
 	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		if (compound.hasKey("loaded")) {
-			loaded = PlayerManager.PlayerLoader.deserializeChunkPos(compound.getLong("loaded"));
+	public void readCustomNBT(NBTTagCompound nbt) {
+		if (nbt.hasKey("loaded")) {
+			loaded = PlayerManager.PlayerLoader.deserializeChunkPos(nbt.getLong("loaded"));
 		}
 
-		owner = PlayerManager.profileFromNBT(compound.getCompoundTag("profile"));
+		owner = PlayerManager.profileFromNBT(nbt.getCompoundTag("profile"));
 	}
 
 	public void setLoading(boolean load) {

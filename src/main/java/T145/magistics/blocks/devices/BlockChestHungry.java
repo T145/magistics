@@ -150,7 +150,7 @@ public class BlockChestHungry extends MBlock<HungryChestType> {
 				entity.setDead();
 			}
 
-			chest.refresh();
+			chest.markForUpdate();
 		}
 	}
 

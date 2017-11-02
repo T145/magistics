@@ -3,14 +3,14 @@ package T145.magistics.tiles.devices;
 import T145.magistics.api.logic.IFacing;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageRecieveClientEvent;
-import T145.magistics.tiles.MTile;
+import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileChestVoid extends MTile implements ITickable, IFacing {
+public class TileChestVoid extends TileSynchronized implements ITickable, IFacing {
 
 	public float lidAngle;
 	public float prevLidAngle;
@@ -36,15 +36,15 @@ public class TileChestVoid extends MTile implements ITickable, IFacing {
 	}
 
 	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		compound.setInteger("NumPlayersUsing", numPlayersUsing);
-		compound.setInteger("ID", id);
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		nbt.setInteger("NumPlayersUsing", numPlayersUsing);
+		nbt.setInteger("ID", id);
 	}
 
 	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		numPlayersUsing = compound.getInteger("NumPlayersUsing");
-		id = compound.getInteger("ID");
+	public void readCustomNBT(NBTTagCompound nbt) {
+		numPlayersUsing = nbt.getInteger("NumPlayersUsing");
+		id = nbt.getInteger("ID");
 	}
 
 	public void sendRecieveEventPacket() {

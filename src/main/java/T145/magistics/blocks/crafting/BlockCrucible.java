@@ -138,18 +138,18 @@ public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker
 		THAUMIUM(750F, 0.7F, 0.75F),
 		SOULS(750F, 0.4F, 0.75F);
 
-		private final float maxQuints;
+		private final float capacity;
 		private final float conversion;
 		private final float speed;
 
-		CrucibleType(float maxQuints, float conversion, float speed) {
-			this.maxQuints = maxQuints;
+		CrucibleType(float capacity, float conversion, float speed) {
+			this.capacity = capacity;
 			this.conversion = conversion;
 			this.speed = speed;
 		}
 
-		public float getMaxQuints() {
-			return maxQuints;
+		public float getCapacity() {
+			return capacity;
 		}
 
 		public float getConversion() {

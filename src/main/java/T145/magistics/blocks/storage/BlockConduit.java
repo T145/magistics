@@ -100,7 +100,7 @@ public class BlockConduit extends MBlock {
 	@Override
 	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos);
-		return tile instanceof TileConduit && ((TileConduit) tile).canConnect(facing);
+		return tile instanceof TileConduit && ((TileConduit) tile).canConnectAtSide(facing);
 	}
 
 	@Override

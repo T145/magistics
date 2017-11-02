@@ -126,7 +126,7 @@ public class BlockQuintTank extends MBlock<TankType> {
 
 		if (tile instanceof TileQuintTank) {
 			TileQuintTank tank = (TileQuintTank) tile;
-			return (int) (tank.getQuints() * 15 / tank.getMaxQuints());
+			return (int) (tank.getQuints() * 15 / tank.getCapacity());
 		}
 
 		return 0;

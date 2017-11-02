@@ -24,7 +24,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileQuintTank> {
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 
-		if (tank.getDisplayQuints() > 0F) {
+		if (tank.getQuints() > 0F) {
 			renderLiquid(tank, x, y, z);
 		}
 
@@ -64,7 +64,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileQuintTank> {
 
 	private void renderLiquid(TileQuintTank tank, double x, double y, double z) {
 		float mod = 0.003F;
-		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getMaxQuints());
+		float level = (1F - mod * 2F) * (tank.getQuints() / tank.getCapacity());
 
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		Render.cube(SpriteAtlas.quintSprite, mod + Render.W1, mod, mod + Render.W1, 1F - mod - Render.W1, mod + level, 1F - mod - Render.W1);

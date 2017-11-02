@@ -1,13 +1,16 @@
 package T145.magistics.tiles.crafting;
 
 import T145.magistics.api.logic.IFacing;
-import T145.magistics.tiles.MTileInventory;
-import net.minecraft.item.ItemStack;
+import T145.magistics.tiles.base.TileInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileForge extends MTileInventory implements ITickable, IFacing {
+public class TileForge extends TileInventory implements ITickable, IFacing {
+
+	public TileForge() {
+		super(3);
+	}
 
 	private EnumFacing facing = EnumFacing.NORTH;
 
@@ -27,30 +30,15 @@ public class TileForge extends MTileInventory implements ITickable, IFacing {
 	}
 
 	@Override
-	public int getSizeInventory() {
-		return 0;
+	public void writeCustomNBT(NBTTagCompound nbt) {
+		super.writeCustomNBT(nbt);
+		nbt.setInteger("Facing", facing.getIndex());
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, boolean simulate) {
-		return true;
-	}
-
-	@Override
-	public boolean canExtractItem(int slot, int amount, boolean simulate) {
-		return true;
-	}
-
-	@Override
-	public void writePacketNBT(NBTTagCompound compound) {
-		super.writePacketNBT(compound);
-		compound.setInteger("Facing", facing.getIndex());
-	}
-
-	@Override
-	public void readPacketNBT(NBTTagCompound compound) {
-		super.readPacketNBT(compound);
-		facing = EnumFacing.getFront(compound.getInteger("Facing"));
+	public void readCustomNBT(NBTTagCompound nbt) {
+		super.readCustomNBT(nbt);
+		facing = EnumFacing.getFront(nbt.getInteger("Facing"));
 	}
 
 	@Override

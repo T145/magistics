@@ -10,23 +10,12 @@ import net.minecraft.world.World;
 public class QuintHelper {
 
 	@Nullable
-	public static IQuintManager getConnectedManager(World world, BlockPos pos, EnumFacing facing) {
+	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing facing) {
 		TileEntity tile = world.getTileEntity(pos);
 		TileEntity neighbor = world.getTileEntity(pos.offset(facing));
 
-		if (tile instanceof IQuintManager && neighbor instanceof IQuintManager && ((IQuintManager) tile).canConnect(facing) && ((IQuintManager) neighbor).canConnect(facing.getOpposite())) {
-			return (IQuintManager) neighbor;
-		}
-
-		return null;
-	}
-
-	@Nullable
-	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing facing) {
-		IQuintManager manager = getConnectedManager(world, pos, facing);
-
-		if (manager instanceof IQuintContainer) {
-			return (IQuintContainer) manager;
+		if (tile instanceof IQuintContainer && neighbor instanceof IQuintContainer && ((IQuintContainer) tile).canConnectAtSide(facing) && ((IQuintContainer) neighbor).canConnectAtSide(facing.getOpposite())) {
+			return (IQuintContainer) neighbor;
 		}
 
 		return null;
@@ -36,8 +25,8 @@ public class QuintHelper {
 		TileEntity destTile = world.getTileEntity(dest);
 		float mod = 0F;
 
-		if (destTile instanceof IQuintManager) {
-			IQuintManager manager = (IQuintManager) destTile;
+		if (destTile instanceof IQuintContainer) {
+			IQuintContainer manager = (IQuintContainer) destTile;
 			manager.setSuction(50);
 
 			for (EnumFacing facing : EnumFacing.VALUES) {

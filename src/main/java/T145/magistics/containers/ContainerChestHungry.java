@@ -51,11 +51,11 @@ public class ContainerChestHungry extends Container {
 			ItemStack slotStack = slot.getStack();
 			copyStack = slotStack.copy();
 
-			if (index < chest.getSizeInventory()) {
-				if (!mergeItemStack(slotStack, chest.getSizeInventory(), inventorySlots.size(), true)) {
+			if (index < chest.getInventorySize()) {
+				if (!mergeItemStack(slotStack, chest.getInventorySize(), inventorySlots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!mergeItemStack(slotStack, 0, chest.getSizeInventory(), false)) {
+			} else if (!mergeItemStack(slotStack, 0, chest.getInventorySize(), false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -78,6 +78,6 @@ public class ContainerChestHungry extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return chest.isUsableByPlayer(player);
+		return chest.canInteractWith(player);
 	}
 }
