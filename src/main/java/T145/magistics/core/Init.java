@@ -25,12 +25,14 @@ import T145.magistics.blocks.crafting.BlockInfuser;
 import T145.magistics.blocks.crafting.BlockInfuser.InfuserType;
 import T145.magistics.blocks.devices.BlockChestHungry;
 import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
+import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.blocks.devices.BlockChestVoid;
 import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockQuintTank;
 import T145.magistics.blocks.storage.BlockQuintTank.TankType;
 import T145.magistics.client.render.blocks.RenderChestHungry;
+import T145.magistics.client.render.blocks.RenderChestHungryMetal;
 import T145.magistics.client.render.blocks.RenderChestVoid;
 import T145.magistics.client.render.blocks.RenderConduit;
 import T145.magistics.client.render.blocks.RenderCrucible;
@@ -47,12 +49,14 @@ import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import T145.magistics.tiles.crafting.TileCrucible;
 import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
+import T145.magistics.tiles.devices.TileChestHungryMetal;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.tiles.storage.TileConduit;
 import T145.magistics.tiles.storage.TileQuintTank;
 import T145.magistics.world.biomes.BiomeBlightland;
 import T145.magistics.world.biomes.BiomeEnchantedForest;
 import T145.magistics.world.providers.WorldProviderVoid;
+import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
@@ -72,6 +76,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -87,6 +92,7 @@ public class Init {
 	public static final BlockElevator ELEVATOR = new BlockElevator();
 	public static final BlockForge FORGE = new BlockForge();
 	public static final BlockChestHungry CHEST_HUNGRY = new BlockChestHungry();
+	public static BlockChestHungryMetal blockChestHungryMetal;
 	public static final BlockChestVoid CHEST_VOID = new BlockChestVoid();
 	public static final BlockVoidBorder VOID_BORDER = new BlockVoidBorder();
 	public static final BlockSaplings SAPLINGS = new BlockSaplings();
@@ -249,6 +255,10 @@ public class Init {
 	public static class RegistrationHandler {
 
 		static { // register everything that doesn't need a registry event here
+			if (Loader.isModLoaded("ironchest")) {
+				blockChestHungryMetal = new BlockChestHungryMetal();
+			}
+
 			DimensionManager.registerDimension(ConfigMain.voidDimensionId, VOID_TYPE);
 		}
 
@@ -473,6 +483,12 @@ public class Init {
 				registerBlockModel(Init.FLOATING_CANDLE, type.ordinal(), "inventory");
 			}
 
+			if (Loader.isModLoaded("ironchest")) {
+				for (IronChestType type : IronChestType.values()) {
+					registerBlockModel(blockChestHungryMetal, type.ordinal(), ClientRegistrationHandler.getVariantName(type));
+				}
+			}
+
 			Magistics.LOG.info("Registered Block Rendering!");
 		}
 
@@ -485,6 +501,11 @@ public class Init {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileChestVoid.class, new RenderChestVoid());
 			ClientRegistry.bindTileEntitySpecialRenderer(TileVoidBorder.class, new RenderVoidBorder());
 			ClientRegistry.bindTileEntitySpecialRenderer(TileFloatingCandle.class, new RenderFloatingCandle());
+
+			if (Loader.isModLoaded("ironchest")) {
+				ClientRegistry.bindTileEntitySpecialRenderer(TileChestHungryMetal.class, new RenderChestHungryMetal());
+			}
+
 			Magistics.LOG.info("Registered Tile Rendering!");
 		}
 

@@ -38,7 +38,6 @@ public class ClientProxy extends CommonProxy {
 		OBJLoader.INSTANCE.addDomain(Magistics.MODID);
 		super.preInit(event);
 		Shaders.init();
-		registerPlugins(event, true);
 	}
 
 	@Override

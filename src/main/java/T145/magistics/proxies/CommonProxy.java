@@ -1,14 +1,6 @@
 package T145.magistics.proxies;
 
-import java.util.Set;
-
-import com.google.common.base.Stopwatch;
-import com.google.common.base.Strings;
-
-import T145.magistics.Magistics;
 import T145.magistics.api.MagisticsApi;
-import T145.magistics.api.internal.IMagisticsPlugin;
-import T145.magistics.api.internal.MagisticsPlugin;
 import T145.magistics.containers.ContainerChestHungry;
 import T145.magistics.containers.ContainerInfuser;
 import T145.magistics.network.PacketHandler;
@@ -23,19 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class CommonProxy implements IGuiHandler {
-
-	protected Set<ASMData> plugins;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -58,21 +45,16 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void preInit(FMLPreInitializationEvent event) {
-		plugins = event.getAsmData().getAll(MagisticsPlugin.class.getCanonicalName());
 		PacketHandler.registerMessages();
 		GameRegistry.registerWorldGenerator(WorldGeneratorAura.INSTANCE, 0);
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
-		registerPlugins(event, false);
 	}
 
-	public void init(FMLInitializationEvent event) {
-		registerPlugins(event, false);
-	}
+	public void init(FMLInitializationEvent event) {}
 
 	public void postInit(FMLPostInitializationEvent event) {
 		registerCrucibleRecipes();
 		registerInfuserRecipes();
-		registerPlugins(event, false);
 	}
 
 	private void registerCrucibleRecipes() {
@@ -181,46 +163,5 @@ public class CommonProxy implements IGuiHandler {
 	private void registerInfuserRecipes() {
 		MagisticsApi.addInfuserRecipe(new ItemStack(Blocks.STONE), new ItemStack[] { new ItemStack(Blocks.DIRT), new ItemStack(Blocks.SAND) }, 20F, false);
 		MagisticsApi.addInfuserRecipe(new ItemStack(Blocks.RED_NETHER_BRICK), new ItemStack[] { new ItemStack(Blocks.NETHERRACK), new ItemStack(Blocks.STONE) }, 20F, true);
-	}
-
-	protected void registerPlugins(FMLStateEvent event, boolean clientSide) {
-		for (ASMData data : plugins) {
-			try {
-				String modid = (String) data.getAnnotationInfo().get("modid");
-
-				if (!Strings.isNullOrEmpty(modid) && Loader.isModLoaded(modid)) {
-					Stopwatch stopwatch = Stopwatch.createStarted();
-					Class<?> asmClass = Class.forName(data.getClassName());
-
-					if (IMagisticsPlugin.class.isAssignableFrom(asmClass)) {
-						IMagisticsPlugin plugin = (IMagisticsPlugin) asmClass.newInstance();
-
-						if (event instanceof FMLPreInitializationEvent) {
-							if (clientSide) {
-								plugin.initClient();
-								Magistics.LOG.info("Initialized client plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
-							} else {
-								plugin.preInit((FMLPreInitializationEvent) event);
-								Magistics.LOG.info("PreInitialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
-							}
-						} else if (event instanceof FMLInitializationEvent) {
-							plugin.init((FMLInitializationEvent) event);
-							Magistics.LOG.info("Initialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
-						} else if (event instanceof FMLPostInitializationEvent) {
-							plugin.postInit((FMLPostInitializationEvent) event);
-							Magistics.LOG.info("PostInitialized plugin for {} from {} in {}", modid, data.getClassName(), stopwatch.stop());
-						}
-					} else {
-						Magistics.LOG.error("{} attempted to register a plugin for {} that did not implement IMagisticsPlugin", data.getClassName(), modid);
-					}
-
-					if (stopwatch.isRunning()) {
-						stopwatch.stop();
-					}
-				}
-			} catch (Exception err) {
-				Magistics.LOG.error("Error registering plugin for class {}", data.getClassName());
-			}
-		}
 	}
 }
