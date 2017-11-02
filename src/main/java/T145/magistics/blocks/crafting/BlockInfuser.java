@@ -25,6 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -83,7 +84,7 @@ public class BlockInfuser extends MBlock<InfuserType> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileInfuser(meta == 1);
+		return new TileInfuser(InfuserType.values()[meta]);
 	}
 
 	@Override
@@ -127,7 +128,32 @@ public class BlockInfuser extends MBlock<InfuserType> {
 
 	public static enum InfuserType implements IStringSerializable {
 
-		LIGHT, DARK;
+		LIGHT(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser.png"), new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/symbol.png")),
+		DARK(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"), new ResourceLocation(Magistics.MODID, "textures/blocks/infuser/dark_symbol.png"));
+
+		private final ResourceLocation guiResource;
+		private final ResourceLocation symbolResource;
+
+		InfuserType(ResourceLocation guiResource, ResourceLocation symbolResource) {
+			this.guiResource = guiResource;
+			this.symbolResource = symbolResource;
+		}
+
+		public boolean isDark() {
+			return this == DARK;
+		}
+
+		public int getInventorySize() {
+			return isDark() ? 6 : 8;
+		}
+
+		public ResourceLocation getGuiResource() {
+			return guiResource;
+		}
+
+		public ResourceLocation getSymbolResource() {
+			return symbolResource;
+		}
 
 		@Override
 		public String getName() {

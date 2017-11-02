@@ -80,7 +80,7 @@ public class BlockQuintTank extends MBlock<TankType> {
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileQuintTank(meta == 1);
+		return new TileQuintTank(TankType.values()[meta]);
 	}
 
 	@Override
@@ -134,7 +134,18 @@ public class BlockQuintTank extends MBlock<TankType> {
 
 	public static enum TankType implements IStringSerializable {
 
-		BASE, REINFORCED;
+		BASE(500F),
+		REINFORCED(1000F);
+
+		private final float capacity;
+
+		TankType(float capacity) {
+			this.capacity = capacity;
+		}
+
+		public float getCapacity() {
+			return capacity;
+		}
 
 		@Override
 		public String getName() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.magic.IQuintContainer;
+import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
 import T145.magistics.core.Init;
 import T145.magistics.network.PacketHandler;
@@ -31,12 +32,10 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 	private CrucibleType type;
 	private float quints;
-	private float prevQuints;
-	private int smeltDelay;
-	private int updateDelay;
-	private int soundDelay;
+	private int smeltTicks;
+	private int soundTicks;
+	private short updateTicks;
 	private boolean working;
-	private boolean update;
 
 	public TileCrucible(CrucibleType type) {
 		this.type = type;
@@ -53,17 +52,9 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 	public boolean isNormal() {
 		return type != CrucibleType.SOULS;
 	}
-	
+
 	public boolean isWorking() {
 		return working;
-	}
-
-	public boolean isPowering() {
-		return working && type.canProvidePower();
-	}
-
-	public boolean isDraining() {
-		return working && type.canDrainMobs();
 	}
 
 	public boolean isOverflowing() {
@@ -72,6 +63,10 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 	public boolean isFull() {
 		return quints == getCapacity();
+	}
+
+	public boolean isEmpty() {
+		return quints == 0F;
 	}
 
 	public List<EntityItem> getItemsWithin() {
@@ -91,7 +86,7 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 	@Override
 	public boolean canConnectAtSide(EnumFacing side) {
-		return side.getAxis() != EnumFacing.Axis.Y;
+		return side != EnumFacing.UP && side != EnumFacing.DOWN;
 	}
 
 	@Override
@@ -126,21 +121,67 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
-		boolean wasWorking = working;
-
 		type = CrucibleType.valueOf(nbt.getString("Type"));
 		quints = nbt.getFloat("Quints");
 		working = nbt.getBoolean("Working");
+	}
 
-		if (working != wasWorking) {
-			world.notifyBlockUpdate(pos, getState(), getState(), 1);
+	@Override
+	public void update() {
+		if (world.isRemote) {
+			return;
+		}
+
+		--smeltTicks;
+		++updateTicks;
+
+		if (updateTicks % 10 == 0) {
+			updateTicks = 0;
+			markForUpdate();
+		}
+
+		--soundTicks;
+
+		if (soundTicks <= 0) { // may be used for ambient dripping or boiling noise
+			soundTicks = 15 + world.rand.nextInt(15);
+		}
+
+		if (isOverflowing()) {
+			float spiltQuints = Math.min((quints - getCapacity()) / 2F, 1F);
+
+			if (quints >= spiltQuints) {
+				quints -= spiltQuints;
+			}
+
+			if (spiltQuints >= 1F) {
+				// pollute chunk aura
+				PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
+			}
+
+			markForUpdate();
+		}
+
+		if (type.canProvidePower()) {
+			boolean wasWorking = working;
+			working = quints >= getCapacity() * 0.9D;
+
+			if (working != wasWorking) {
+				world.setBlockState(pos, getState().withProperty(BlockCrucible.WORKING, working));
+			}
+		}
+
+		if (smeltTicks <= 0) {
+			if (isNormal()) {
+				smeltContentsWithin();
+			} else if (Math.round(quints + 1F) < getCapacity()) {
+				drainSurroundingMobs();
+			}
 		}
 	}
 
-	public void smeltContents() {
-		smeltDelay = 5;
-
+	private void smeltContentsWithin() {
 		List<EntityItem> items = getItemsWithin();
+		smeltTicks = 5;
 
 		if (!items.isEmpty()) {
 			EntityItem item = items.get(world.rand.nextInt(items.size()));
@@ -152,9 +193,9 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 				if (type != CrucibleType.THAUMIUM || quints + quintYield <= getCapacity()) {
 					quints += quintYield * type.getConversion();
-					smeltDelay = 10 + Math.round(quintYield / 5F / type.getSpeed());
+					smeltTicks = 10 + Math.round(quintYield / 5F / type.getSpeed());
 
-					// decrease smeltDelay iff above arcane furnace
+					// decrease smeltTicks iff above arcane furnace
 					// discharge chunk aura
 
 					stack.shrink(1);
@@ -173,103 +214,41 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 		}
 	}
 
-	@Override
-	public void update() {
-		if (world.isRemote) {
-			return;
-		}
+	private void drainSurroundingMobs() {
+		boolean wasWorking = working;
+		working = false;
+		smeltTicks = 20;
 
-		--smeltDelay;
-		--updateDelay;
+		for (EntityLivingBase mob : getSurroundingMobs()) {
+			if (!(mob instanceof EntityPlayer) && !(mob instanceof EntityTameable) && mob.hurtTime <= 0 && mob.deathTime <= 0) {
+				if (working = !(mob instanceof EntitySnowman)) {
+					// increase conversion rate iff above arcane furnace (or heated?)
 
-		if (prevQuints != quints) {
-			prevQuints = quints;
-			update = true;
-		}
+					float quintYield = mob.isEntityUndead() ? 0.5F : 1F;
+					quints += quintYield * type.getConversion();
 
-		if (updateDelay <= 0 && update) {
-			markForUpdate();
-			update = false;
-			updateDelay = 10;
-		}
+					mob.attackEntityFrom(DamageSource.GENERIC, 1);
+					mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
 
-		--soundDelay;
-
-		if (soundDelay <= 0) {
-			soundDelay = 15 + world.rand.nextInt(15);
-		}
-
-		// check for and handle overflow
-		if (isOverflowing()) {
-			float spiltQuints = Math.min((quints - getCapacity()) / 2F, 1F);
-
-			if (quints >= spiltQuints) {
-				quints -= spiltQuints;
-			}
-
-			if (spiltQuints >= 1F) {
-				// pollute chunk aura
-				PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
-			}
-
-			markForUpdate();
-		}
-
-		// check for and handle powering
-		if (type.canProvidePower()) {
-			boolean wasWorking = isPowering();
-
-			working = quints >= getCapacity() * 0.9D;
-
-			if (working != wasWorking) {
-				markForUpdate();
-			}
-		}
-
-		// check for and handle smelting items / draining mobs
-		if (smeltDelay <= 0) {
-			if (isNormal()) {
-				smeltContents();
-			} else if (Math.round(quints + 1F) <= getCapacity()) {
-				boolean wasWorking = isDraining();
-				boolean discharge = false;
-				smeltDelay = 20;
-
-				for (EntityLivingBase mob : getSurroundingMobs()) {
-					if (!(mob instanceof EntityPlayer) && !(mob instanceof EntityTameable) && mob.hurtTime <= 0 && mob.deathTime <= 0) {
-						if (mob instanceof EntitySnowman) {
-							EntitySnowman snowman = (EntitySnowman) mob;
-							snowman.spawnExplosionParticle();
-							snowman.setDead();
-						}
-
-						// increase conversion rate iff above arcane furnace
-
-						float quintYield = mob.isEntityUndead() ? 0.5F : 1F;
-
-						quints += quintYield * type.getConversion();
-
-						mob.attackEntityFrom(DamageSource.GENERIC, 1);
-						mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
-
-						discharge = true;
-
-						for (int b = 0; b < 3; ++b) {
-							PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5), PacketHandler.getTargetPoint(world, pos));
-						}
+					for (int b = 0; b < 3; ++b) {
+						PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5), PacketHandler.getTargetPoint(world, pos));
 					}
-				}
-
-				if (working = discharge) {
-					// discharge chunk aura
-					//markForUpdate();
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), Init.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
-				}
-
-				if (working != wasWorking) {
-					markForUpdate();
+				} else {
+					EntitySnowman snowman = (EntitySnowman) mob;
+					snowman.spawnExplosionParticle();
+					snowman.setDead();
 				}
 			}
+		}
+
+		if (working) {
+			// discharge chunk aura
+			//markForUpdate();
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), Init.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
+		}
+
+		if (working != wasWorking) {
+			world.setBlockState(pos, getState().withProperty(BlockCrucible.WORKING, working));
 		}
 	}
 }

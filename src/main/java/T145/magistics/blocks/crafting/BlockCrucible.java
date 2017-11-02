@@ -128,7 +128,7 @@ public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker
 	@Override
 	public int getWeakPower(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
-		return crucible.isPowering() ? 15 : 0;
+		return crucible.isWorking() ? 15 : 0;
 	}
 
 	public static enum CrucibleType implements IStringSerializable {

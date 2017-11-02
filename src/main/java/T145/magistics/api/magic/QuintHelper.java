@@ -2,57 +2,65 @@ package T145.magistics.api.magic;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class QuintHelper {
 
-	@Nullable
-	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing facing) {
-		TileEntity tile = world.getTileEntity(pos);
-		TileEntity neighbor = world.getTileEntity(pos.offset(facing));
+	private QuintHelper() {}
 
-		if (tile instanceof IQuintContainer && neighbor instanceof IQuintContainer && ((IQuintContainer) tile).canConnectAtSide(facing) && ((IQuintContainer) neighbor).canConnectAtSide(facing.getOpposite())) {
-			return (IQuintContainer) neighbor;
+	@Nullable
+	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing side) {
+		IQuintContainer current = (IQuintContainer) world.getTileEntity(pos);
+		IQuintContainer neighbor = (IQuintContainer) world.getTileEntity(pos.offset(side));
+
+		if (current != null && neighbor != null && current.canConnectAtSide(side) && neighbor.canConnectAtSide(side.getOpposite())) {
+			return neighbor;
 		}
 
 		return null;
 	}
 
-	public static float drainQuints(World world, BlockPos dest, float amount, boolean drain) {
-		TileEntity destTile = world.getTileEntity(dest);
-		float mod = 0F;
+	public static float drainQuints(IQuintContainer container, float amount, boolean doDrain) {
+		float total = 0F;
+		float drainAmount = Math.min(amount - total, container.getQuints());
 
-		if (destTile instanceof IQuintContainer) {
-			IQuintContainer manager = (IQuintContainer) destTile;
-			manager.setSuction(50);
+		if (drainAmount < 0.001F) {
+			drainAmount = 0;
+		}
 
-			for (EnumFacing facing : EnumFacing.VALUES) {
-				IQuintContainer source = getConnectedContainer(world, dest, facing);
+		total += drainAmount;
 
-				if (source != null) {
-					float quint = Math.min(amount - mod, source.getQuints());
+		if (doDrain) {
+			container.setQuints(container.getQuints() - drainAmount);
+		}
 
-					if (quint < 0.001F) {
-						quint = 0;
-					}
+		return total;
+	}
 
-					mod += quint;
+	public static float fillWithQuints(World world, BlockPos pos, float amount, boolean doDrain) {
+		float total = 0F;
 
-					if (drain) {
-						source.setQuints(source.getQuints() - quint);
-					}
+		IQuintContainer dest = (IQuintContainer) world.getTileEntity(pos);
+
+		if (dest != null) {
+			dest.setSuction(dest.MAX_SUCTION);
+
+			for (EnumFacing side : EnumFacing.VALUES) {
+				IQuintContainer container = getConnectedContainer(world, pos, side);
+
+				if (container != null) {
+					total = drainQuints(container, amount, doDrain);
 				}
 
-				if (mod >= amount) {
+				if (total >= amount) {
 					break;
 				}
 			}
 		}
 
-		return Math.min(amount, mod);
+		return Math.min(amount, total);
 	}
 
 	public static float subtractQuints(IQuintContainer source, float amount) {

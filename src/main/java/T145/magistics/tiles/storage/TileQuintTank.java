@@ -1,12 +1,7 @@
 package T145.magistics.tiles.storage;
 
-import javax.annotation.Nullable;
-
-import T145.magistics.Magistics;
 import T145.magistics.api.magic.IQuintContainer;
-import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.network.PacketHandler;
-import T145.magistics.network.messages.client.MessageQuintLevel;
+import T145.magistics.blocks.storage.BlockQuintTank.TankType;
 import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,23 +10,21 @@ import net.minecraft.util.ITickable;
 
 public class TileQuintTank extends TileSynchronized implements ITickable, IQuintContainer {
 
-	protected final boolean reinforced;
-	protected final float maxQuints;
-	protected float quints;
-	protected int suction;
-	private int updateDelay;
+	private TankType type;
+	private float quints;
+	private int suction;
+	private short updateTicks;
 
-	public TileQuintTank(boolean reinforced) {
-		this.reinforced = reinforced;
-		this.maxQuints = reinforced ? 1000F : 500F;
+	public TileQuintTank(TankType type) {
+		this.type = type;
 	}
 
 	public TileQuintTank() {
-		this(false);
+		this(TankType.BASE);
 	}
 
-	public boolean isReinforced() {
-		return reinforced;
+	public TankType getTankType() {
+		return type;
 	}
 
 	public boolean canConnectToTank(EnumFacing facing) {
@@ -39,12 +32,12 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 
 		if (tile instanceof TileQuintTank && facing.getAxis() == EnumFacing.Axis.Y) {
 			TileQuintTank neighborTank = (TileQuintTank) tile;
-			return reinforced == neighborTank.isReinforced();
+			return type == neighborTank.getTankType();
 		}
 
 		return false;
 	}
-	
+
 	@Override
 	public boolean canConnectAtSide(EnumFacing side) {
 		return true;
@@ -62,7 +55,7 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 
 	@Override
 	public float getCapacity() {
-		return maxQuints;
+		return type.getCapacity();
 	}
 
 	@Override
@@ -77,23 +70,28 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
+		nbt.setString("Type", type.toString());
 		nbt.setFloat("Quints", quints);
 		nbt.setInteger("Suction", suction);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
+		type = TankType.valueOf(nbt.getString("Type"));
 		quints = nbt.getFloat("Quints");
 		suction = nbt.getInteger("Suction");
 	}
 
 	@Override
 	public void update() {
-		if (!world.isRemote) {
+		if (world.isRemote) {
+			return;
+		}
+		
+		/*if (!world.isRemote) {
 			--updateDelay;
 
 			if (updateDelay <= 0) {
-				//markForUpdate();
 				PacketHandler.INSTANCE.sendToAllAround(new MessageQuintLevel(pos, quints, suction), PacketHandler.getTargetPoint(world, pos));
 
 				updateDelay = 10;
@@ -102,10 +100,10 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 			}
 
 			distributeQuints();
-		}
+		}*/
 	}
 
-	private void calculateSuction() {
+	/*private void calculateSuction() {
 		setSuction(10);
 	}
 
@@ -174,5 +172,5 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 		}
 
 		return null;
-	}
+	}*/
 }

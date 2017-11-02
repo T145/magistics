@@ -13,7 +13,7 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 
 	protected float quints;
 	protected int suction;
-	
+
 	@Override
 	public boolean canConnectAtSide(EnumFacing side) {
 		return true;
@@ -56,15 +56,21 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 		suction = nbt.getInteger("Suction");
 	}
 
+	public void updateQuintLevel() {
+		PacketHandler.INSTANCE.sendToAllAround(new MessageQuintLevel(pos, quints, suction), PacketHandler.getTargetPoint(world, pos));
+	}
+
 	@Override
 	public void update() {
-		if (!world.isRemote) {
-			calculateSuction();
+		if (world.isRemote) {
+			return;
+		}
 
-			if (suction > 0) {
-				distributeQuints();
-				PacketHandler.INSTANCE.sendToAllAround(new MessageQuintLevel(pos, quints, suction), PacketHandler.getTargetPoint(world, pos));
-			}
+		calculateSuction();
+
+		if (suction > 0) {
+			distributeQuints();
+			updateQuintLevel();
 		}
 	}
 
