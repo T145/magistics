@@ -251,14 +251,16 @@ public class Init {
 		return biomeBlacklist.get(biome);
 	}
 
+	static {
+		if (Loader.isModLoaded("ironchest")) {
+			blockChestHungryMetal = new BlockChestHungryMetal();
+		}
+	}
+
 	@EventBusSubscriber(modid = Magistics.MODID)
 	public static class RegistrationHandler {
 
 		static { // register everything that doesn't need a registry event here
-			if (Loader.isModLoaded("ironchest")) {
-				blockChestHungryMetal = new BlockChestHungryMetal();
-			}
-
 			DimensionManager.registerDimension(ConfigMain.voidDimensionId, VOID_TYPE);
 		}
 
