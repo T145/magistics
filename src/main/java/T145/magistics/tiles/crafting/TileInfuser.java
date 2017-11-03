@@ -20,7 +20,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.MathHelper;
 
 public class TileInfuser extends TileInventory implements ITickable, IQuintContainer, IFacing {
 
@@ -33,7 +32,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 	private EnumFacing front;
 	private float quints;
 	private int suction;
-	private short updateTicks;
 	private int soundTicks;
 	private int boost;
 	private int boostTicks = 20;
@@ -128,7 +126,7 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 	@Override
 	public float getCapacity() {
-		return 250.0F;
+		return 150F;
 	}
 
 	@Override
@@ -178,14 +176,12 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 			--soundTicks;
 		}
 
-		++updateTicks;
-
 		if (isCrafting()) {
 			sendCraftingProgressPacket();
 		}
 
 		if (!isFull()) {
-			MathHelper.clamp(quints += QuintHelper.fillWithQuints(world, pos, 0.5F + 0.05F * boost, true), 0, getCapacity());
+			quints += QuintHelper.fillWithQuints(world, pos, 0.5F + 0.05F * boost, true);
 			Magistics.LOG.info("Quints: " + quints);
 		}
 
@@ -195,7 +191,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 		 * - executed at best when the inventory updates
 		 * - executed at worst all the time or every so often
 		 */
-
 		InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(getItemHandler().getStacks(), isDark());
 
 		if (!world.isBlockPowered(pos) && canCraft(recipe)) {
@@ -236,22 +231,22 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 	}
 
 	public boolean canCraft(InfuserRecipe recipe) {
-		if (recipe == null) {
-			return false;
+		if (recipe != null && quints <= recipe.getCost()) {
+			ItemStack result = recipe.getResult();
+
+			if (result.isEmpty()) {
+				return false;
+			} else if (getItemHandler().getStackInSlot(0).isEmpty()) {
+				return true;
+			} else if (!MagisticsApi.areItemStacksEqual(result, getItemHandler().getStackInSlot(0))) {
+				return false;
+			} else {
+				int resultCount = getItemHandler().getStackInSlot(0).getCount() + result.getCount();
+				return resultCount <= getItemHandler().getSlotLimit(0) && resultCount <= result.getMaxStackSize();
+			}
 		}
 
-		ItemStack result = recipe.getResult();
-
-		if (result.isEmpty()) {
-			return false;
-		} else if (getItemHandler().getStackInSlot(0).isEmpty()) {
-			return true;
-		} else if (!MagisticsApi.areItemStacksEqual(result, getItemHandler().getStackInSlot(0))) {
-			return false;
-		} else {
-			int resultCount = getItemHandler().getStackInSlot(0).getCount() + result.getCount();
-			return resultCount <= getItemHandler().getSlotLimit(0) && resultCount <= result.getMaxStackSize();
-		}
+		return false;
 	}
 
 	private void addResult(InfuserRecipe invRecipe) {

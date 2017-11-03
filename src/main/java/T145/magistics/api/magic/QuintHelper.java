@@ -23,20 +23,17 @@ public class QuintHelper {
 	}
 
 	public static float drainQuints(IQuintContainer container, float amount, boolean doDrain) {
-		float total = 0F;
-		float drainAmount = Math.min(amount - total, container.getQuints());
+		float drainAmount = Math.min(amount, container.getQuints());
 
 		if (drainAmount < 0.001F) {
 			drainAmount = 0;
 		}
 
-		total += drainAmount;
-
 		if (doDrain) {
 			container.setQuints(container.getQuints() - drainAmount);
 		}
 
-		return total;
+		return drainAmount;
 	}
 
 	public static float fillWithQuints(World world, BlockPos pos, float amount, boolean doDrain) {
@@ -63,7 +60,7 @@ public class QuintHelper {
 		return Math.min(amount, total);
 	}
 
-	public static float subtractQuints(IQuintContainer source, float amount) {
+	public static float getQuintDifference(IQuintContainer source, float amount) {
 		float magicAmount = amount / 2F;
 		float voidAmount = amount / 2F;
 
@@ -84,7 +81,7 @@ public class QuintHelper {
 				magicAmount = Math.min(amount - voidAmount, source.getQuints());
 			}
 
-			source.setQuints(source.getQuints() - magicAmount);
+			// source.setQuints(source.getQuints() - magicAmount);
 			return magicAmount;
 		}
 	}
