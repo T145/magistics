@@ -8,7 +8,7 @@ import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
 import T145.magistics.core.Init;
 import T145.magistics.network.PacketHandler;
-import T145.magistics.network.messages.client.MessageSendCustomWispFX;
+import T145.magistics.network.messages.client.MessageSendWispFX;
 import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -155,7 +155,7 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 			if (spiltQuints >= 1F) {
 				// pollute chunk aura
-				PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
+				PacketHandler.INSTANCE.sendToAllAround(new MessageSendWispFX(pos.getX() + world.rand.nextFloat(), pos.getY() + 0.8F, pos.getZ() + world.rand.nextFloat(), pos.getX() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), pos.getY() + 2F + world.rand.nextFloat(), pos.getZ() + 0.5F + (world.rand.nextFloat() - world.rand.nextFloat()), 0.5F, 5), PacketHandler.getTargetPoint(world, pos));
 			}
 
 			markForUpdate();
@@ -231,7 +231,7 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 					mob.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 3000, 0));
 
 					for (int b = 0; b < 3; ++b) {
-						PacketHandler.INSTANCE.sendToAllAround(new MessageSendCustomWispFX(mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5), PacketHandler.getTargetPoint(world, pos));
+						PacketHandler.INSTANCE.sendToAllAround(new MessageSendWispFX(mob.posX + world.rand.nextFloat() - world.rand.nextFloat(), mob.posY + mob.height / 2.0F + world.rand.nextFloat() - world.rand.nextFloat(), mob.posZ + world.rand.nextFloat() - world.rand.nextFloat(), pos.getX() + 0.5F, pos.getY() + 0.25F, pos.getZ() + 0.5F, 0.3F, 5), PacketHandler.getTargetPoint(world, pos));
 					}
 				} else {
 					EntitySnowman snowman = (EntitySnowman) mob;

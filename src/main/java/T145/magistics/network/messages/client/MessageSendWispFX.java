@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MessageSendCustomWispFX extends MessageBase {
+public class MessageSendWispFX extends MessageBase {
 
 	private double x;
 	private double y;
@@ -21,9 +21,9 @@ public class MessageSendCustomWispFX extends MessageBase {
 	private float gravity;
 	private int type;
 
-	public MessageSendCustomWispFX() {}
+	public MessageSendWispFX() {}
 
-	public MessageSendCustomWispFX(double x, double y, double z, double destX, double destY, double destZ, float gravity, int type) {
+	public MessageSendWispFX(double x, double y, double z, double destX, double destY, double destZ, float gravity, int type) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
