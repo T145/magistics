@@ -4,6 +4,9 @@
 
 Logistical magic!
 
+[![DownloadCount](http://cf.way2muchnoise.eu/magistics.svg)](https://minecraft.curseforge.com/projects/magistics)
+[![AvailableVersions](http://cf.way2muchnoise.eu/versions/For%20MC%20_magistics_all.svg)](https://minecraft.curseforge.com/projects/magistics)
+
 ---
 **_Table of Contents_**
 
