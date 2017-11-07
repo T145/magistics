@@ -28,4 +28,8 @@ public class AuraWorld {
 	public AuraChunk getAuraChunkAt(ChunkPos loc) {
 		return auraChunks.get(loc);
 	}
+
+	public AuraChunk getAuraChunkAt(int x, int z) {
+		return getAuraChunkAt(new ChunkPos(x, z));
+	}
 }

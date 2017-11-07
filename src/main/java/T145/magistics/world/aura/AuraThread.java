@@ -45,7 +45,7 @@ public class AuraThread implements Runnable {
 					phaseTime = Math.abs(phaseTime - 4) * 50;
 				}
 
-				for (AuraChunk auraChunk : auraWorld.auraChunks.values()) {
+				for (AuraChunk auraChunk : auraWorld.getAuraChunks().values()) {
 					processAuraChunk(auraWorld, auraChunk);
 				}
 			} else {
