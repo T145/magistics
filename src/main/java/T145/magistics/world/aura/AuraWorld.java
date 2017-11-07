@@ -7,7 +7,7 @@ import net.minecraft.util.math.ChunkPos;
 public class AuraWorld {
 
 	private final int dimID;
-	ConcurrentHashMap<ChunkPos, AuraChunk> auraChunks = new ConcurrentHashMap();
+	private ConcurrentHashMap<ChunkPos, AuraChunk> auraChunks = new ConcurrentHashMap();
 
 	public AuraWorld(int dimID) {
 		this.dimID = dimID;
@@ -23,10 +23,6 @@ public class AuraWorld {
 
 	public void setAuraChunks(ConcurrentHashMap<ChunkPos, AuraChunk> auraChunks) {
 		this.auraChunks = auraChunks;
-	}
-
-	public AuraChunk getAuraChunkAt(int x, int z) {
-		return getAuraChunkAt(new ChunkPos(x, z));
 	}
 
 	public AuraChunk getAuraChunkAt(ChunkPos loc) {
