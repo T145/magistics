@@ -5,7 +5,7 @@
 Logistical magic!
 
 [![DownloadCount](http://cf.way2muchnoise.eu/magistics.svg)](https://minecraft.curseforge.com/projects/magistics)
-[![AvailableVersions](http://cf.way2muchnoise.eu/versions/For%20MC%20_magistics_all.svg)](https://minecraft.curseforge.com/projects/magistics)
+[![SupportedVersions](http://cf.way2muchnoise.eu/versions/For%20MC%20_magistics_all.svg)](https://minecraft.curseforge.com/projects/magistics)
 
 ---
 **_Table of Contents_**
@@ -49,7 +49,7 @@ Depending on your internet connection and the processing power of your machine, 
 
 ---
 
-## License
+## License [![OfficialLicense](http://img.shields.io/badge/official%20license-Apache--2-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Please consult the license if you wish to use the source code. You may contact [myself](https://github.com/T145) for permission to use any of the assets.
 
