@@ -8,6 +8,7 @@ import T145.magistics.tiles.crafting.TileInfuser;
 import T145.magistics.tiles.devices.TileChestHungry;
 import T145.magistics.world.features.VillageCreationHandler;
 import T145.magistics.world.generators.WorldGeneratorAura;
+import T145.magistics.world.generators.WorldGeneratorOre;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -47,6 +48,7 @@ public class CommonProxy implements IGuiHandler {
 	public void preInit(FMLPreInitializationEvent event) {
 		PacketHandler.registerMessages();
 		GameRegistry.registerWorldGenerator(WorldGeneratorAura.INSTANCE, 0);
+		GameRegistry.registerWorldGenerator(WorldGeneratorOre.INSTANCE, 0);
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageCreationHandler());
 	}
 
