@@ -13,6 +13,6 @@ public class RenderChestHungry extends TileEntitySpecialRenderer<TileChestHungry
 
 	@Override
 	public void renderTileEntityAt(TileChestHungry chest, double x, double y, double z, float partialTicks, int destroyStage) {
-		Render.chest(new ResourceLocation(Magistics.MODID, "textures/models/chest_hungry/" + chest.getType().getName() + ".png"), chest.getFacing(), chest.lidAngle, chest.prevLidAngle, x, y, z, partialTicks, destroyStage);
+		Render.chest(new ResourceLocation(Magistics.MODID, "textures/models/chest_hungry/" + chest.getType().getName() + ".png"), chest.getFront(), chest.lidAngle, chest.prevLidAngle, x, y, z, partialTicks, destroyStage);
 	}
 }

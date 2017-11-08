@@ -20,7 +20,9 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -57,14 +59,9 @@ public class BlockInfuser extends MBlock<InfuserType> {
 	protected BlockStateContainer createBlockState() {
 		BlockStateContainer variantContainer = super.createBlockState();
 		List<IProperty> properties = new ArrayList<IProperty>();
-
-		if (hasVariants()) {
-			properties.addAll(variantContainer.getProperties());
-		}
-
+		properties.addAll(variantContainer.getProperties());
 		properties.addAll(CONNECTIONS);
-
-		return properties.isEmpty() ? super.createBlockState() : new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
+		return new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
 	}
 
 	@Override
@@ -114,6 +111,15 @@ public class BlockInfuser extends MBlock<InfuserType> {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileInfuser infuser = (TileInfuser) world.getTileEntity(pos);
+
+		if (infuser != null) {
+			infuser.setFront(EnumFacing.getDirectionFromEntityLiving(pos, placer));
+		}
 	}
 
 	@Override

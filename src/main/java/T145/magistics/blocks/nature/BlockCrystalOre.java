@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import T145.magistics.blocks.MBlock;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.items.ItemShard.ShardType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -59,7 +59,7 @@ public class BlockCrystalOre extends MBlock<ShardType> {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
 
 		for (int i = 0; i < 1 + rand.nextInt(2 + fortune); ++i) {
-			drops.add(new ItemStack(Init.CRYSTAL_SHARD_FRAGMENT, 1, getMetaFromState(state)));
+			drops.add(new ItemStack(ModInit.CRYSTAL_SHARD_FRAGMENT, 1, getMetaFromState(state) + 1));
 		}
 
 		return drops;

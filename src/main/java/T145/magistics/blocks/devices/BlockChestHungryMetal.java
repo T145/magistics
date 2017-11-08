@@ -11,10 +11,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,7 +88,8 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		return ICContent.ironChestBlock.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
 	}
 
@@ -101,7 +100,8 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
 		ICContent.ironChestBlock.onBlockPlacedBy(world, pos, state, placer, stack);
 	}
 
@@ -112,26 +112,11 @@ public class BlockChestHungryMetal extends MBlock<IronChestType> {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		TileEntity tile = world.getTileEntity(pos);
+		TileChestHungryMetal chest = (TileChestHungryMetal) world.getTileEntity(pos);
 
-		if (tile instanceof TileChestHungryMetal && entity instanceof EntityItem && !entity.isDead) {
-			TileChestHungryMetal chest = (TileChestHungryMetal) tile;
-			EntityItem item = (EntityItem) entity;
-			ItemStack stack = item.getItem();
-			ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(InventoryManager.getInventory(world, pos, chest.getFacing()), stack);
-
-			if (leftovers == null || leftovers.getCount() != stack.getCount()) {
-				entity.playSound(SoundEvents.ENTITY_GENERIC_EAT, 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-				world.addBlockEvent(pos, this, 4, 2);
-			}
-
-			if (leftovers != null) {
-				item.setItem(leftovers);
-			} else {
-				entity.setDead();
-			}
-
-			chest.markDirty();
+		if (chest != null) {
+			BlockChestHungry.ChestStomach.gobbleEntityItem(InventoryManager.getInventory(world, pos, chest.getFacing()),
+					entity, world, pos, this, 4, 2);
 		}
 	}
 

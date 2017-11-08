@@ -2,7 +2,7 @@ package T145.magistics.client.lib;
 
 import T145.magistics.blocks.cosmetic.BlockCandle;
 import T145.magistics.blocks.cosmetic.BlockNitor;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -43,7 +43,7 @@ public class ColorHandler {
 			return AMBIENT_GRASS;
 		};
 
-		blockColors.registerBlockColorHandler(basicColorHandler, Init.NITOR, Init.CANDLE, Init.FLOATING_CANDLE);
+		blockColors.registerBlockColorHandler(basicColorHandler, ModInit.NITOR, ModInit.CANDLE, ModInit.FLOATING_CANDLE);
 
 		IBlockColor leafColorHandler = (state, world, pos, tintIndex) -> {
 			if (state.getBlock().damageDropped(state) != 0) {
@@ -57,7 +57,7 @@ public class ColorHandler {
 			return ColorizerFoliage.getFoliageColorBasic();
 		};
 
-		blockColors.registerBlockColorHandler(leafColorHandler, Init.LEAVES);
+		blockColors.registerBlockColorHandler(leafColorHandler, ModInit.LEAVES);
 
 		IBlockColor crystalOreColorHandler = (state, world, pos, tintIndex) -> {
 			if (tintIndex == 1) {
@@ -67,14 +67,14 @@ public class ColorHandler {
 			return -1;
 		};
 
-		blockColors.registerBlockColorHandler(crystalOreColorHandler, Init.OVERWORLD_CRYSTAL_ORE, Init.NETHER_CRYSTAL_ORE, Init.END_CRYSTAL_ORE);
+		blockColors.registerBlockColorHandler(crystalOreColorHandler, ModInit.OVERWORLD_CRYSTAL_ORE, ModInit.NETHER_CRYSTAL_ORE, ModInit.END_CRYSTAL_ORE);
 	}
 
 	private static void registerItemColors(BlockColors blockColors, ItemColors itemColors) {
 		itemColors.registerItemColorHandler((stack, tintIndex) -> {
 			IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
-		}, Init.LEAVES, Init.NITOR, Init.CANDLE, Init.FLOATING_CANDLE);
+		}, ModInit.LEAVES, ModInit.NITOR, ModInit.CANDLE, ModInit.FLOATING_CANDLE);
 
 		IItemColor crystalColorHandler = (ItemStack stack, int tintIndex) -> {
 			if (stack.getItemDamage() > 0) {
@@ -88,7 +88,7 @@ public class ColorHandler {
 			return CRYSTAL_COLORS[stack.getItemDamage()];
 		};
 
-		itemColors.registerItemColorHandler(crystalColorHandler, Init.CRYSTAL_SHARD, Init.CRYSTAL_SHARD_FRAGMENT);
-		itemColors.registerItemColorHandler(crystalOreColorHandler, Init.OVERWORLD_CRYSTAL_ORE, Init.NETHER_CRYSTAL_ORE, Init.END_CRYSTAL_ORE);
+		itemColors.registerItemColorHandler(crystalColorHandler, ModInit.CRYSTAL_SHARD, ModInit.CRYSTAL_SHARD_FRAGMENT);
+		itemColors.registerItemColorHandler(crystalOreColorHandler, ModInit.OVERWORLD_CRYSTAL_ORE, ModInit.NETHER_CRYSTAL_ORE, ModInit.END_CRYSTAL_ORE);
 	}
 }

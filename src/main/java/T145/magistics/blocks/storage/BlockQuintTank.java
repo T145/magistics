@@ -50,24 +50,18 @@ public class BlockQuintTank extends MBlock<TankType> {
 	protected BlockStateContainer createBlockState() {
 		BlockStateContainer variantContainer = super.createBlockState();
 		List<IProperty> properties = new ArrayList<>();
-
-		if (hasVariants()) {
-			properties.addAll(variantContainer.getProperties());
-		}
-
+		properties.addAll(variantContainer.getProperties());
 		properties.add(JOINED_ABOVE);
 		properties.add(JOINED_BELOW);
 		properties.add(INBETWEEN);
-
-		return properties.isEmpty() ? super.createBlockState() : new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
+		return new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
 	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntity tile = world.getTileEntity(pos);
+		TileQuintTank tank = (TileQuintTank) world.getTileEntity(pos);
 
-		if (tile instanceof TileQuintTank) {
-			TileQuintTank tank = (TileQuintTank) tile;
+		if (tank != null) {
 			boolean joinedAbove = tank.canConnectToTank(EnumFacing.UP);
 			boolean joinedBelow = tank.canConnectToTank(EnumFacing.DOWN);
 			boolean inbetween = joinedAbove && joinedBelow;
@@ -122,10 +116,9 @@ public class BlockQuintTank extends MBlock<TankType> {
 
 	@Override
 	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
-		TileEntity tile = world.getTileEntity(pos);
+		TileQuintTank tank = (TileQuintTank) world.getTileEntity(pos);
 
-		if (tile instanceof TileQuintTank) {
-			TileQuintTank tank = (TileQuintTank) tile;
+		if (tank != null) {
 			return (int) (tank.getQuints() * 15 / tank.getCapacity());
 		}
 

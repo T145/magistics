@@ -1,10 +1,10 @@
-package T145.magistics.blocks.cosmetic;
+package T145.magistics.blocks.nature;
 
 import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.blocks.MBlockItem;
-import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
+import T145.magistics.blocks.nature.BlockPlanks.WoodType;
 import T145.magistics.world.features.WorldGenGreatwoodTree;
 import T145.magistics.world.features.WorldGenSilverwoodTree;
 import net.minecraft.block.BlockBush;
@@ -38,7 +38,8 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 
 	public static final PropertyEnum<WoodType> VARIANT = PropertyEnum.<WoodType>create("variant", WoodType.class);
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
-	protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
+	protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D,
+			0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
 
 	public BlockSaplings() {
 		super();
@@ -115,7 +116,8 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 
 	public void generateTree(World world, BlockPos pos, IBlockState state, Random rand) {
 		if (TerrainGen.saplingGrowTree(world, rand, pos)) {
-			WorldGenAbstractTree generator = rand.nextInt(10) == 0 ? new WorldGenBigTree(true) : new WorldGenTrees(true);
+			WorldGenAbstractTree generator = rand.nextInt(10) == 0 ? new WorldGenBigTree(true)
+					: new WorldGenTrees(true);
 
 			switch (state.getValue(VARIANT)) {
 			case GREATWOOD:
@@ -138,7 +140,8 @@ public class BlockSaplings extends BlockBush implements IGrowable {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, WoodType.byMetadata(meta & 7)).withProperty(STAGE, Integer.valueOf((meta & 8) >> 3));
+		return getDefaultState().withProperty(VARIANT, WoodType.byMetadata(meta & 7)).withProperty(STAGE,
+				Integer.valueOf((meta & 8) >> 3));
 	}
 
 	@Override

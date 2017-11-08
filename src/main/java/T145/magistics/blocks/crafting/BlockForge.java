@@ -1,19 +1,25 @@
 package T145.magistics.blocks.crafting;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-import T145.magistics.Magistics;
-import T145.magistics.api.logic.IFacing;
-import T145.magistics.api.logic.IWorker;
-import T145.magistics.blocks.MBlockDevice;
+import T145.magistics.blocks.MBlock;
 import T145.magistics.blocks.crafting.BlockForge.ForgeType;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.crafting.TileForge;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -26,10 +32,35 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWorker {
+public class BlockForge extends MBlock<ForgeType> {
+
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyBool WORKING = PropertyBool.create("working");
 
 	public BlockForge() {
 		super("forge", Material.ROCK, ForgeType.class);
+		setDefaultState(getDefaultState().withProperty(WORKING, false).withProperty(FACING, EnumFacing.NORTH));
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		BlockStateContainer variantContainer = super.createBlockState();
+		List<IProperty> properties = new ArrayList<IProperty>();
+		properties.addAll(variantContainer.getProperties());
+		properties.add(FACING);
+		properties.add(WORKING);
+		return new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileForge forge = (TileForge) world.getTileEntity(pos);
+
+		if (forge != null) {
+			state = state.withProperty(FACING, forge.getFront());
+		}
+
+		return state;
 	}
 
 	@Override
@@ -38,26 +69,7 @@ public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWor
 	}
 
 	@Override
-	public boolean isHorizontalFacing() {
-		return true;
-	}
-
-	@Override
-	public EnumFacing getFacing() {
-		return getDefaultState().getValue(HORIZONTAL_FACING);
-	}
-
-	@Override
-	public void setFacing(EnumFacing facing) {}
-
-	@Override
-	public boolean isWorking() {
-		return getDefaultState().getValue(WORKING);
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
-	@SuppressWarnings("incomplete-switch")
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		if (state.getValue(WORKING)) {
 			double d0 = pos.getX() + 0.5D;
@@ -70,7 +82,7 @@ public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWor
 				world.playSound(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 
-			switch (state.getValue(HORIZONTAL_FACING)) {
+			switch (state.getValue(FACING)) {
 			case WEST:
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 				world.spawnParticle(EnumParticleTypes.FLAME, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
@@ -87,6 +99,8 @@ public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWor
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
 				world.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
 				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -94,7 +108,7 @@ public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWor
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hand.equals(EnumHand.MAIN_HAND) && world.getTileEntity(pos) instanceof TileForge) {
-			player.openGui(Magistics.MODID, 1, world, pos.getX(), pos.getY(), pos.getZ());
+			//player.openGui(Magistics.MODID, 1, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 
 		return true;
@@ -104,12 +118,25 @@ public class BlockForge extends MBlockDevice<ForgeType> implements IFacing, IWor
 		IBlockState state = world.getBlockState(pos);
 		TileEntity tile = world.getTileEntity(pos);
 
-		world.setBlockState(pos, Init.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
-		//world.setBlockState(pos, Init.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING)), 3);
+		world.setBlockState(pos, ModInit.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(FACING, state.getValue(FACING)), 3);
+		//world.setBlockState(pos, Init.FORGE.getDefaultState().withProperty(WORKING, active).withProperty(FACING, state.getValue(FACING)), 3);
 
 		if (tile != null) {
 			tile.validate();
 			world.setTileEntity(pos, tile);
+		}
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		TileForge forge = (TileForge) world.getTileEntity(pos);
+
+		if (forge != null) {
+			EnumFacing front = EnumFacing.getDirectionFromEntityLiving(pos, placer);
+
+			if (front.getAxis() != EnumFacing.Axis.Y) {
+				forge.setFront(front);
+			}
 		}
 	}
 

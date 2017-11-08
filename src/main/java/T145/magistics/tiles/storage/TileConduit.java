@@ -12,13 +12,13 @@ import net.minecraft.util.ITickable;
 
 public class TileConduit extends TileSynchronized implements ITickable, IQuintContainer {
 
-	private ConduitPhase currentPhase;
+	private ConduitPhase phase;
 	private float quints;
 	private int suction;
 	private int faceIndex;
 
 	public TileConduit() {
-		this.currentPhase = ConduitPhase.CALCULATING;
+		this.phase = ConduitPhase.CALCULATING;
 	}
 
 	@Override
@@ -53,14 +53,14 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
-		nbt.setString("Phase", currentPhase.toString());
+		nbt.setString("Phase", phase.toString());
 		nbt.setFloat("Quints", quints);
 		nbt.setInteger("Suction", suction);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
-		currentPhase = ConduitPhase.valueOf(nbt.getString("Phase"));
+		phase = ConduitPhase.valueOf(nbt.getString("Phase"));
 		setQuints(nbt.getFloat("Quints"));
 		setSuction(nbt.getInteger("Suction"));
 	}
@@ -73,15 +73,15 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 
 		IQuintContainer neighbor = QuintHelper.getConnectedContainer(world, pos, EnumFacing.getFront(faceIndex));
 
-		Magistics.LOG.info("Phase: " + currentPhase.name());
+		Magistics.LOG.info("Phase: " + phase.name());
 		Magistics.LOG.info("Suction: " + suction);
 
 		if (neighbor != null && faceIndex < 6) {
-			if (currentPhase.isCalculation() && suction < neighbor.getSuction() - 1) {
+			if (phase.isCalculation() && suction < neighbor.getSuction() - 1) {
 				setSuction(neighbor.getSuction() - 1);
 			}
 
-			if (currentPhase.isDistribution()) {
+			if (phase.isDistribution()) {
 				if (suction > neighbor.getSuction()) {
 					if (quints < getCapacity() && neighbor.getQuints() > 0) {
 						++quints;
@@ -94,12 +94,12 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 		} else if (faceIndex == 6) {
 			faceIndex = 0;
 
-			if (currentPhase.isDistribution()) {
+			if (phase.isDistribution()) {
 				setSuction(0);
 				PacketHandler.sendToAllAround(new MessageQuintLevel(pos, quints, suction), world, pos);
 			}
 
-			currentPhase = currentPhase.shift();
+			phase = phase.shift();
 		}
 
 		++faceIndex;

@@ -113,7 +113,8 @@ public class PlayerManager {
 		return new GameProfile(uuid, name);
 	}
 
-	public static class PlayerLoader implements ForgeChunkManager.LoadingCallback, ForgeChunkManager.PlayerOrderedLoadingCallback {
+	public static class PlayerLoader
+			implements ForgeChunkManager.LoadingCallback, ForgeChunkManager.PlayerOrderedLoadingCallback {
 		private static Map<World, Map<GameProfile, ForgeChunkManager.Ticket>> playerTickets = new HashMap();
 		private boolean dirty = false;
 
@@ -126,7 +127,8 @@ public class PlayerManager {
 			return new PlayerLoader();
 		}
 
-		public ListMultimap<String, ForgeChunkManager.Ticket> playerTicketsLoaded(ListMultimap<String, ForgeChunkManager.Ticket> tickets, World world) {
+		public ListMultimap<String, ForgeChunkManager.Ticket> playerTicketsLoaded(
+				ListMultimap<String, ForgeChunkManager.Ticket> tickets, World world) {
 			return tickets;
 		}
 
@@ -184,7 +186,8 @@ public class PlayerManager {
 						ForgeChunkManager.Ticket tick = (ForgeChunkManager.Ticket) iterator.next();
 						ImmutableSet<ChunkPos> chunkList = tick.getChunkList();
 
-						for (UnmodifiableIterator localUnmodifiableIterator = chunkList.iterator(); localUnmodifiableIterator.hasNext();) {
+						for (UnmodifiableIterator localUnmodifiableIterator = chunkList
+								.iterator(); localUnmodifiableIterator.hasNext();) {
 							ChunkPos chunkPos = (ChunkPos) localUnmodifiableIterator.next();
 							ForgeChunkManager.forceChunk(tick, chunkPos);
 						}
@@ -205,7 +208,8 @@ public class PlayerManager {
 			ForgeChunkManager.Ticket tick = tickMap.get(profile);
 
 			if (tick == null) {
-				tick = ForgeChunkManager.requestPlayerTicket(Magistics.instance, profile.getName(), world, ForgeChunkManager.Type.NORMAL);
+				tick = ForgeChunkManager.requestPlayerTicket(Magistics.instance, profile.getName(), world,
+						ForgeChunkManager.Type.NORMAL);
 				writeProfileToNBT(profile, tick.getModData());
 				tickMap.put(profile, tick);
 			}

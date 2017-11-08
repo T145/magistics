@@ -19,7 +19,8 @@ public class MessageRecieveClientEvent extends MessageBase {
 	private int id;
 	private int data;
 
-	public MessageRecieveClientEvent() {}
+	public MessageRecieveClientEvent() {
+	}
 
 	public MessageRecieveClientEvent(BlockPos pos, int id, int data) {
 		this.pos = pos;

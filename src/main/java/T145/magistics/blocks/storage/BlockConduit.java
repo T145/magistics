@@ -1,6 +1,5 @@
 package T145.magistics.blocks.storage;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,7 +14,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -104,35 +102,7 @@ public class BlockConduit extends MBlock {
 	}
 
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity, boolean isPistonMoving) {
-		AxisAlignedBB box = BOX_CENTER;
-		TileConduit conduit = (TileConduit) world.getTileEntity(pos);
-
-		if (conduit != null) {
-			for (EnumFacing facing : EnumFacing.VALUES) {
-				if (conduit.isConnected(facing)) {
-					box = box.union(BOX_FACES[facing.ordinal()]);
-				}
-			}
-		}
-
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, box);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-		AxisAlignedBB box = BOX_CENTER;
-		TileConduit conduit = (TileConduit) world.getTileEntity(pos);
-
-		if (conduit != null) {
-			for (EnumFacing facing : EnumFacing.VALUES) {
-				if (conduit.isConnected(facing)) {
-					box = box.union(BOX_FACES[facing.ordinal()]);
-				}
-			}
-		}
-
-		return box;
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOX_CENTER;
 	}
 }

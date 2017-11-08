@@ -2,14 +2,14 @@ package T145.magistics.world.features;
 
 import java.util.Random;
 
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WorldGenGreatwoodTree extends WorldGenLargeTree {
 
 	public WorldGenGreatwoodTree(boolean notify) {
-		super(notify, Init.LOGS.getStateFromMeta(4), Init.LEAVES.getDefaultState(), 19, 24);
+		super(notify, ModInit.LOGS.getStateFromMeta(4), ModInit.LEAVES.getDefaultState(), 19, 24);
 	}
 
 	@Override

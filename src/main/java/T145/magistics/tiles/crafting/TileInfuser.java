@@ -2,14 +2,12 @@ package T145.magistics.tiles.crafting;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.Magistics;
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;
-import T145.magistics.api.logic.IFacing;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.blocks.crafting.BlockInfuser.InfuserType;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.items.ItemShard;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageInfuserProgress;
@@ -21,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileInfuser extends TileInventory implements ITickable, IQuintContainer, IFacing {
+public class TileInfuser extends TileInventory implements ITickable, IQuintContainer {
 
 	public static final EnumFacing[] VALID_SIDES = new EnumFacing[] { EnumFacing.DOWN, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.WEST };
 
@@ -92,21 +90,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 	public void sendCraftingProgressPacket() {
 		PacketHandler.INSTANCE.sendToAllAround(new MessageInfuserProgress(this), PacketHandler.getTargetPoint(world, pos));
-	}
-
-	@Override
-	public boolean isHorizontalFacing() {
-		return true;
-	}
-
-	@Override
-	public EnumFacing getFacing() {
-		return front;
-	}
-
-	@Override
-	public void setFacing(EnumFacing side) {
-		front = side;
 	}
 
 	@Override
@@ -182,7 +165,7 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 		if (!isFull()) {
 			quints += QuintHelper.fillWithQuints(world, pos, 0.5F + 0.05F * boost, true);
-			Magistics.LOG.info("Quints: " + quints);
+			//Magistics.LOG.info("Quints: " + quints);
 		}
 
 		/*
@@ -200,7 +183,7 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 			if (soundTicks == 0 && progress > 0.025F) {
 				soundTicks = 62;
 				// discharge chunk aura slightly
-				world.playSound(null, pos, isDark() ? Init.SOUND_INFUSER_DARK : Init.SOUND_INFUSER, SoundCategory.MASTER, 0.2F, 1F);
+				world.playSound(null, pos, isDark() ? ModInit.SOUND_INFUSER_DARK : ModInit.SOUND_INFUSER, SoundCategory.MASTER, 0.2F, 1F);
 			}
 
 			if (progress >= quintCost) {
@@ -269,7 +252,7 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 						if (!isDark() && ingredient.getItem() instanceof ItemShard) {
 							if (handle.getStackInSlot(1).isEmpty()) {
-								handle.setStackInSlot(1, new ItemStack(Init.CRYSTAL_SHARD, 1, 0));
+								handle.setStackInSlot(1, new ItemStack(ModInit.CRYSTAL_SHARD, 1, 0));
 							} else {
 								handle.getStackInSlot(1).grow(1);
 							}

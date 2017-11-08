@@ -31,7 +31,8 @@ public class ChunkGeneratorVoid implements IChunkGenerator {
 	}
 
 	@Override
-	public void populate(int x, int z) {}
+	public void populate(int x, int z) {
+	}
 
 	@Override
 	public boolean generateStructures(Chunk chunkIn, int x, int z) {
@@ -50,5 +51,6 @@ public class ChunkGeneratorVoid implements IChunkGenerator {
 	}
 
 	@Override
-	public void recreateStructures(Chunk chunkIn, int x, int z) {}
+	public void recreateStructures(Chunk chunkIn, int x, int z) {
+	}
 }

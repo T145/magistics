@@ -1,4 +1,4 @@
-package T145.magistics.blocks.cosmetic;
+package T145.magistics.blocks.nature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +7,8 @@ import java.util.Random;
 
 import T145.magistics.Magistics;
 import T145.magistics.blocks.MBlockItem;
-import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
-import T145.magistics.core.Init;
+import T145.magistics.blocks.nature.BlockPlanks.WoodType;
+import T145.magistics.core.ModInit;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.properties.IProperty;
@@ -137,7 +137,7 @@ public class BlockLeaves extends net.minecraft.block.BlockLeaves {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(Init.SAPLINGS);
+		return Item.getItemFromBlock(ModInit.SAPLINGS);
 	}
 
 	@Override

@@ -11,5 +11,6 @@ public class TeleporterVoidWorld extends Teleporter {
 	}
 
 	@Override
-	public void placeInPortal(Entity entity, float rotationYaw) {}
+	public void placeInPortal(Entity entity, float rotationYaw) {
+	}
 }

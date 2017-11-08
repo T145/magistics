@@ -1,18 +1,21 @@
 package T145.magistics.blocks.crafting;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import T145.magistics.api.logic.IWorker;
-import T145.magistics.blocks.MBlockDevice;
+import T145.magistics.blocks.MBlock;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
 import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.lib.Render;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -30,8 +33,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker {
+public class BlockCrucible extends MBlock<CrucibleType> {
 
+	public static final PropertyBool WORKING = PropertyBool.create("working");
 	public static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0D, 0D, 0D, 1D, Render.W5, 1D);
 	public static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D, Render.W2);
 	public static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0D, 0D, Render.W14, 1D, 1D, 1D);
@@ -40,19 +44,24 @@ public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker
 
 	public BlockCrucible() {
 		super("crucible", Material.IRON, CrucibleType.class);
+		setDefaultState(getDefaultState().withProperty(WORKING, false));
 		setSoundType(SoundType.METAL);
 		setHardness(3F);
 		setResistance(17F);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileCrucible(CrucibleType.values()[meta]);
+	protected BlockStateContainer createBlockState() {
+		BlockStateContainer variantContainer = super.createBlockState();
+		List<IProperty> properties = new ArrayList<IProperty>();
+		properties.addAll(variantContainer.getProperties());
+		properties.add(WORKING);
+		return new BlockStateContainer(this, properties.toArray(new IProperty[properties.size()]));
 	}
 
 	@Override
-	public boolean isWorking() {
-		return getDefaultState().getValue(WORKING);
+	public TileEntity createNewTileEntity(World world, int meta) {
+		return new TileCrucible(CrucibleType.values()[meta]);
 	}
 
 	@Override
@@ -102,20 +111,18 @@ public class BlockCrucible extends MBlockDevice<CrucibleType> implements IWorker
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
-		if (crucible.isNormal()) {
-			if (!world.isRemote && entity.getEntityBoundingBox().minY <= pos.getY() + 0.7D) {
-				if (entity instanceof EntityItem) {
-					EntityItem item = (EntityItem) entity;
+		if (crucible.isNormal() && !world.isRemote && entity.getEntityBoundingBox().minY <= pos.getY() + 0.7D) {
+			if (entity instanceof EntityItem) {
+				EntityItem item = (EntityItem) entity;
 
-					item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
-					item.motionY += world.rand.nextFloat() * 0.1F;
-					item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+				item.motionX += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
+				item.motionY += world.rand.nextFloat() * 0.1F;
+				item.motionZ += (world.rand.nextFloat() - world.rand.nextFloat()) * 0.05F;
 
-					item.setPickupDelay(10);
-				} else if (entity instanceof EntityLiving) {
-					entity.attackEntityFrom(DamageSource.MAGIC, 1);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
-				}
+				item.setPickupDelay(10);
+			} else if (entity instanceof EntityLiving) {
+				entity.attackEntityFrom(DamageSource.MAGIC, 1);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.4F, 2F + world.rand.nextFloat() * 0.4F);
 			}
 		}
 	}

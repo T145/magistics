@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import T145.magistics.Magistics;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -175,15 +175,15 @@ public class AuraManager {
 	public static void generateAura(Chunk chunk, Random rand) {
 		Biome biome = chunk.getWorld().getBiome(new BlockPos(chunk.x * 16 + 8, 50, chunk.z * 16 + 8));
 
-		if (Init.getBiomeBlacklist(Biome.getIdForBiome(biome)) != -1) {
+		if (ModInit.getBiomeBlacklist(Biome.getIdForBiome(biome)) != -1) {
 			return;
 		}
 
-		float life = Init.getBiomeAuraModifier(biome);
+		float life = ModInit.getBiomeAuraModifier(biome);
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			biome = chunk.getWorld().getBiome(new BlockPos((chunk.x + facing.getFrontOffsetX()) * 16 + 8, 50, (chunk.z + facing.getFrontOffsetZ()) * 16 + 8));
-			life += Init.getBiomeAuraModifier(biome);
+			life += ModInit.getBiomeAuraModifier(biome);
 		}
 
 		life /= 5.0F;

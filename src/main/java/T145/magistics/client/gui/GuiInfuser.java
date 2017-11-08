@@ -24,7 +24,8 @@ public class GuiInfuser extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		fontRenderer.drawString(I18n.format("tile.infuser." + (infuser.isDark() ? "dark" : "light") + ".name"), 8, 5, infuser.isDark() ? 6307936 : 4210752);
+		fontRenderer.drawString(I18n.format("tile.infuser." + (infuser.isDark() ? "dark" : "light") + ".name"), 8, 5,
+				infuser.isDark() ? 6307936 : 4210752);
 	}
 
 	@Override
@@ -36,13 +37,16 @@ public class GuiInfuser extends GuiContainer {
 		GlStateManager.color(1F, 1F, 1F, 1F);
 
 		if (infuser.isDark()) {
-			mc.getTextureManager().bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"));
+			mc.getTextureManager()
+					.bindTexture(new ResourceLocation(Magistics.MODID, "textures/gui/gui_infuser_dark.png"));
 
 			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
 			if (infuser.isCrafting()) {
-				drawTexturedModalRect(offsetX + 158, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 6, craftingProgress);
-				drawTexturedModalRect(offsetX + 164, offsetY + 151 - craftingProgress, 182, 46 - craftingProgress, 6, craftingProgress);
+				drawTexturedModalRect(offsetX + 158, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 6,
+						craftingProgress);
+				drawTexturedModalRect(offsetX + 164, offsetY + 151 - craftingProgress, 182, 46 - craftingProgress, 6,
+						craftingProgress);
 			}
 
 			drawTexturedModalRect(offsetX + 160, offsetY + 8, 192, mc.world.getMoonPhase() * 8, 8, 8);
@@ -52,7 +56,8 @@ public class GuiInfuser extends GuiContainer {
 			drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize);
 
 			if (infuser.isCrafting()) {
-				drawTexturedModalRect(offsetX + 160, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 9, craftingProgress);
+				drawTexturedModalRect(offsetX + 160, offsetY + 151 - craftingProgress, 176, 46 - craftingProgress, 9,
+						craftingProgress);
 			}
 
 			if (infuser.getBoost() > 0) {

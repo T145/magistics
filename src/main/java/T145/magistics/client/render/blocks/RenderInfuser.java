@@ -40,7 +40,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 		if (infuser.isCrafting()) {
 			GlStateManager.rotate(infuser.getCookProgressScaled(360), 0F, 1F, 0F);
 		} else {
-			GlStateManager.rotate(getFrontAngle(infuser.getFacing()), 0F, 1F, 0F);
+			GlStateManager.rotate(getFrontAngle(infuser.getFront()), 0F, 1F, 0F);
 		}
 
 		GlStateManager.translate(-0.45D, 0D, -0.45D);

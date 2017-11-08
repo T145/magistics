@@ -1,6 +1,5 @@
 package T145.magistics.tiles.devices;
 
-import T145.magistics.api.logic.IFacing;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageRecieveClientEvent;
 import T145.magistics.tiles.base.TileSynchronized;
@@ -10,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileChestVoid extends TileSynchronized implements ITickable, IFacing {
+public class TileChestVoid extends TileSynchronized implements ITickable {
 
 	public float lidAngle;
 	public float prevLidAngle;
@@ -18,37 +17,33 @@ public class TileChestVoid extends TileSynchronized implements ITickable, IFacin
 	public int id = -1;
 
 	private int ticksSinceSync;
-	private EnumFacing facing = EnumFacing.NORTH;
+	private EnumFacing front = EnumFacing.NORTH;
 
-	@Override
-	public boolean isHorizontalFacing() {
-		return true;
-	}
-
-	@Override
 	public EnumFacing getFacing() {
-		return facing;
+		return front;
 	}
 
-	@Override
-	public void setFacing(EnumFacing side) {
-		facing = side;
+	public void setFacing(EnumFacing front) {
+		this.front = front;
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
 		nbt.setInteger("NumPlayersUsing", numPlayersUsing);
 		nbt.setInteger("ID", id);
+		nbt.setInteger("Front", front.getIndex());
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
 		numPlayersUsing = nbt.getInteger("NumPlayersUsing");
 		id = nbt.getInteger("ID");
+		front = EnumFacing.getFront(nbt.getInteger("Front"));
 	}
 
 	public void sendRecieveEventPacket() {
-		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing), PacketHandler.getTargetPoint(world, pos));
+		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing),
+				PacketHandler.getTargetPoint(world, pos));
 	}
 
 	@Override
@@ -66,7 +61,8 @@ public class TileChestVoid extends TileSynchronized implements ITickable, IFacin
 		if (numPlayersUsing > 0 && lidAngle == 0.0F) {
 			double d0 = i + 0.5D;
 			double d1 = k + 0.5D;
-			world.playSound(null, d0, j + 0.5D, d1, SoundEvents.BLOCK_ENDERCHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+			world.playSound(null, d0, j + 0.5D, d1, SoundEvents.BLOCK_ENDERCHEST_OPEN, SoundCategory.BLOCKS, 0.5F,
+					world.rand.nextFloat() * 0.1F + 0.9F);
 		}
 
 		if (numPlayersUsing == 0 && lidAngle > 0.0F || numPlayersUsing > 0 && lidAngle < 1.0F) {
@@ -87,7 +83,8 @@ public class TileChestVoid extends TileSynchronized implements ITickable, IFacin
 			if (lidAngle < 0.5F && f2 >= 0.5F) {
 				double d3 = i + 0.5D;
 				double d2 = k + 0.5D;
-				world.playSound(null, d3, j + 0.5D, d2, SoundEvents.BLOCK_ENDERCHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+				world.playSound(null, d3, j + 0.5D, d2, SoundEvents.BLOCK_ENDERCHEST_CLOSE, SoundCategory.BLOCKS, 0.5F,
+						world.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
 			if (lidAngle < 0.0F) {

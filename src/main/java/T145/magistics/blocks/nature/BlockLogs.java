@@ -1,8 +1,8 @@
-package T145.magistics.blocks.cosmetic;
+package T145.magistics.blocks.nature;
 
 import T145.magistics.Magistics;
 import T145.magistics.blocks.MBlockItem;
-import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
+import T145.magistics.blocks.nature.BlockPlanks.WoodType;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;

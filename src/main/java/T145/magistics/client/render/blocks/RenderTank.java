@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import T145.magistics.client.lib.Render;
 import T145.magistics.client.lib.SpriteAtlas;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.tiles.storage.TileQuintTank;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -42,7 +42,7 @@ public class RenderTank extends TileEntitySpecialRenderer<TileQuintTank> {
 
 	private void renderConnection(TileQuintTank tank, double x, double y, double z, EnumFacing facing) {
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		TextureAtlasSprite icon = Render.getTextureFromBlock(Init.CONDUIT, 0);
+		TextureAtlasSprite icon = Render.getTextureFromBlock(ModInit.CONDUIT, 0);
 
 		switch (facing) {
 		case NORTH:

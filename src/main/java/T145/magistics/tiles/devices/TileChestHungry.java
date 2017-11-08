@@ -2,8 +2,6 @@ package T145.magistics.tiles.devices;
 
 import com.mojang.authlib.GameProfile;
 
-import T145.magistics.api.logic.IFacing;
-import T145.magistics.api.logic.IOwned;
 import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.lib.managers.PlayerManager;
@@ -20,14 +18,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class TileChestHungry extends TileInventory implements ITickable, IOwned, IFacing {
+public class TileChestHungry extends TileInventory implements ITickable {
 
 	public float lidAngle;
 	public float prevLidAngle;
 	public int numPlayersUsing;
 	private int ticksSinceSync;
 	private HungryChestType type;
-	private EnumFacing facing = EnumFacing.NORTH;
+	private EnumFacing front = EnumFacing.NORTH;
 	private GameProfile owner;
 
 	public TileChestHungry(HungryChestType type) {
@@ -47,44 +45,32 @@ public class TileChestHungry extends TileInventory implements ITickable, IOwned,
 		return type == HungryChestType.ENDER;
 	}
 
-	@Override
-	public boolean isHorizontalFacing() {
-		return true;
+	public EnumFacing getFront() {
+		return front;
 	}
 
-	@Override
-	public EnumFacing getFacing() {
-		return facing;
+	public void setFront(EnumFacing side) {
+		front = side;
 	}
 
-	@Override
-	public void setFacing(EnumFacing side) {
-		facing = side;
-	}
-
-	@Override
 	public EntityPlayer getOwner() {
 		return PlayerManager.getPlayerFromWorld(world, owner.getId());
 	}
 
-	@Override
 	public GameProfile getOwnerProfile() {
 		return owner;
 	}
 
-	@Override
 	public void setOwner(EntityPlayer player) {
 		if (player != null) {
 			owner = player.getGameProfile();
 		}
 	}
 
-	@Override
 	public boolean isOwned() {
 		return owner != null;
 	}
 
-	@Override
 	public boolean isOwnedBy(EntityPlayer player) {
 		if (isOwned()) {
 			return owner.getId().equals(player.getUniqueID());
@@ -97,7 +83,7 @@ public class TileChestHungry extends TileInventory implements ITickable, IOwned,
 	public void readCustomNBT(NBTTagCompound nbt) {
 		super.readCustomNBT(nbt);
 		type = HungryChestType.valueOf(nbt.getString("Type"));
-		facing = EnumFacing.getFront(nbt.getInteger("Facing"));
+		front = EnumFacing.getFront(nbt.getInteger("Front"));
 		owner = PlayerManager.profileFromNBT(nbt.getCompoundTag("Owner"));
 	}
 
@@ -105,7 +91,7 @@ public class TileChestHungry extends TileInventory implements ITickable, IOwned,
 	public void writeCustomNBT(NBTTagCompound nbt) {
 		super.writeCustomNBT(nbt);
 		nbt.setString("Type", type.toString());
-		nbt.setInteger("Facing", facing.getIndex());
+		nbt.setInteger("Front", front.getIndex());
 
 		if (owner != null) {
 			nbt.setTag("Owner", PlayerManager.profileToNBT(owner));

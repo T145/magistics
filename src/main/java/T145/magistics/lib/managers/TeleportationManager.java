@@ -1,7 +1,7 @@
 package T145.magistics.lib.managers;
 
 import T145.magistics.Magistics;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.world.data.WorldDataVoidChest;
 import T145.magistics.world.teleporters.TeleporterVoidWorld;
@@ -24,10 +24,11 @@ public class TeleportationManager {
 			playerNBT.setDouble("void-oldPosY", player.posY);
 			playerNBT.setDouble("void-oldPosZ", player.posZ);
 
-			WorldServer voidWorld = Init.getServerVoidWorld();
+			WorldServer voidWorld = ModInit.getServerVoidWorld();
 			PlayerList playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
 
-			playerList.transferPlayerToDimension(player, Magistics.CONFIG.voidDimensionId, new TeleporterVoidWorld(voidWorld));
+			playerList.transferPlayerToDimension(player, Magistics.CONFIG.voidDimensionId,
+					new TeleporterVoidWorld(voidWorld));
 
 			if (playerNBT.hasKey("void-coordHistory")) {
 				playerNBT.removeTag("void-coordHistory");
@@ -63,13 +64,15 @@ public class TeleportationManager {
 			double oldPosY = playerNBT.getDouble("void-oldPosY");
 			double oldPosZ = playerNBT.getDouble("void-oldPosZ");
 
-			playerList.transferPlayerToDimension(player, oldDimension, new TeleporterVoidWorld(Init.getWorldServerForDimension(oldDimension)));
+			playerList.transferPlayerToDimension(player, oldDimension,
+					new TeleporterVoidWorld(ModInit.getWorldServerForDimension(oldDimension)));
 			player.setPositionAndUpdate(oldPosX, oldPosY, oldPosZ);
 		} else {
 			// TODO: Find a good nearby spawn position offset by facing
-			BlockPos spawnPoint = Init.getWorldServerForDimension(0).provider.getRandomizedSpawnPoint();
+			BlockPos spawnPoint = ModInit.getWorldServerForDimension(0).provider.getRandomizedSpawnPoint();
 
-			playerList.transferPlayerToDimension(player, 0, new TeleporterVoidWorld(Init.getWorldServerForDimension(0)));
+			playerList.transferPlayerToDimension(player, 0,
+					new TeleporterVoidWorld(ModInit.getWorldServerForDimension(0)));
 			player.setPositionAndUpdate(spawnPoint.getX(), spawnPoint.getY(), spawnPoint.getZ());
 		}
 	}

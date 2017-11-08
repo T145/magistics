@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import T145.magistics.blocks.MBlock;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.lib.managers.TeleportationManager;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.world.data.WorldDataVoidChest;
@@ -94,7 +94,7 @@ public class BlockChestVoid extends MBlock {
 	}
 
 	private String colorKeyValue(String input, TextFormatting key, TextFormatting value) {
-		if(!input.contains(":")) {
+		if (!input.contains(":")) {
 			return input;
 		}
 
@@ -132,7 +132,7 @@ public class BlockChestVoid extends MBlock {
 			return;
 		}
 
-		ItemStack stack = new ItemStack(Init.CHEST_VOID, 1);
+		ItemStack stack = new ItemStack(ModInit.CHEST_VOID, 1);
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setInteger("id", te.id);
 		stack.setTagCompound(compound);
@@ -150,7 +150,8 @@ public class BlockChestVoid extends MBlock {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
 		if (!(world.getTileEntity(pos) instanceof TileChestVoid)) {
 			return;
 		}
@@ -176,7 +177,8 @@ public class BlockChestVoid extends MBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity tile = world.getTileEntity(pos);
 
 		if (tile instanceof TileChestVoid) {
@@ -196,7 +198,8 @@ public class BlockChestVoid extends MBlock {
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 		TileEntity tile = world.getTileEntity(pos);
 
-		if (!world.isRemote && tile instanceof TileChestVoid && entity instanceof EntityPlayer && entity.getEntityBoundingBox().minY <= pos.getY() + 1D) {
+		if (!world.isRemote && tile instanceof TileChestVoid && entity instanceof EntityPlayer
+				&& entity.getEntityBoundingBox().minY <= pos.getY() + 1D) {
 			TileChestVoid chest = (TileChestVoid) tile;
 			EntityPlayer player = (EntityPlayer) entity;
 

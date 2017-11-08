@@ -3,7 +3,7 @@ package T145.magistics.lib.managers;
 import java.util.ArrayList;
 import java.util.List;
 
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.tiles.devices.TileChestVoid;
 import T145.magistics.world.data.WorldDataVoidChest;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +29,7 @@ public class StructureManager {
 		int startY = 40 + size;
 		int startZ = size;
 
-		generateCube(Init.getServerVoidWorld(), new BlockPos(startX, startY, startZ), size, Init.VOID_BORDER.getDefaultState());
+		generateCube(ModInit.getServerVoidWorld(), new BlockPos(startX, startY, startZ), size, ModInit.VOID_BORDER.getDefaultState());
 	}
 
 	public static void generateCube(World world, BlockPos cornerPos, int size, IBlockState state) {

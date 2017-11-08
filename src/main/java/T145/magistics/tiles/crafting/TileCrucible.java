@@ -6,7 +6,7 @@ import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
-import T145.magistics.core.Init;
+import T145.magistics.core.ModInit;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageSendWispFX;
 import T145.magistics.tiles.base.TileSynchronized;
@@ -206,7 +206,7 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 
 					markForUpdate();
 					((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
-					world.playSound(null, pos, Init.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+					world.playSound(null, pos, ModInit.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 				}
 			} else {
 				ejectItem(item);
@@ -244,7 +244,7 @@ public class TileCrucible extends TileSynchronized implements ITickable, IQuintC
 		if (working) {
 			// discharge chunk aura
 			//markForUpdate();
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), Init.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModInit.SOUND_SUCK, SoundCategory.MASTER, 0.1F, 0.8F + world.rand.nextFloat() * 0.3F);
 		}
 
 		if (working != wasWorking) {

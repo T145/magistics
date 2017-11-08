@@ -10,12 +10,7 @@ import T145.magistics.Magistics;
 import T145.magistics.api.magic.Aspect;
 import T145.magistics.blocks.cosmetic.BlockCandle;
 import T145.magistics.blocks.cosmetic.BlockFloatingCandle;
-import T145.magistics.blocks.cosmetic.BlockLeaves;
-import T145.magistics.blocks.cosmetic.BlockLogs;
 import T145.magistics.blocks.cosmetic.BlockNitor;
-import T145.magistics.blocks.cosmetic.BlockPlanks;
-import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
-import T145.magistics.blocks.cosmetic.BlockSaplings;
 import T145.magistics.blocks.cosmetic.BlockVoidBorder;
 import T145.magistics.blocks.crafting.BlockCrucible;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
@@ -29,6 +24,11 @@ import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.blocks.devices.BlockChestVoid;
 import T145.magistics.blocks.devices.BlockElevator;
 import T145.magistics.blocks.nature.BlockCrystalOre;
+import T145.magistics.blocks.nature.BlockLeaves;
+import T145.magistics.blocks.nature.BlockLogs;
+import T145.magistics.blocks.nature.BlockPlanks;
+import T145.magistics.blocks.nature.BlockPlanks.WoodType;
+import T145.magistics.blocks.nature.BlockSaplings;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockQuintTank;
 import T145.magistics.blocks.storage.BlockQuintTank.TankType;
@@ -85,7 +85,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
 //@ObjectHolder(Magistics.MODID) // uncomment in 1.12
-public class Init {
+public class ModInit {
 
 	public static final BlockCrucible CRUCIBLE = new BlockCrucible();
 	public static final BlockConduit CONDUIT = new BlockConduit();

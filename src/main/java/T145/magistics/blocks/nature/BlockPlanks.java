@@ -1,7 +1,7 @@
-package T145.magistics.blocks.cosmetic;
+package T145.magistics.blocks.nature;
 
 import T145.magistics.blocks.MBlock;
-import T145.magistics.blocks.cosmetic.BlockPlanks.WoodType;
+import T145.magistics.blocks.nature.BlockPlanks.WoodType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;

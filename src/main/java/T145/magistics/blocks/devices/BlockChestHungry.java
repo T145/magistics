@@ -3,11 +3,11 @@ package T145.magistics.blocks.devices;
 import java.util.Random;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.logic.IOwned;
 import T145.magistics.blocks.MBlock;
 import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
 import T145.magistics.lib.managers.InventoryManager;
 import T145.magistics.tiles.devices.TileChestHungry;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,6 +32,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandler;
 
 public class BlockChestHungry extends MBlock<HungryChestType> {
 
@@ -121,36 +122,25 @@ public class BlockChestHungry extends MBlock<HungryChestType> {
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-		TileEntity tile = world.getTileEntity(pos);
-		EntityPlayer player = (EntityPlayer) placer;
+		TileChestHungry chest = (TileChestHungry) world.getTileEntity(pos);
 
-		if (tile instanceof IOwned && player != null && isEnderChest(state)) {
-			((IOwned) tile).setOwner(player);
+		if (chest != null) {
+			EntityPlayer player = (EntityPlayer) placer;
+
+			if (player != null && isEnderChest(state)) {
+				chest.setOwner(player);
+			}
+
+			chest.setFront(EnumFacing.getDirectionFromEntityLiving(pos, placer));
 		}
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		TileEntity tile = world.getTileEntity(pos);
+		TileChestHungry chest = (TileChestHungry) world.getTileEntity(pos);
 
-		if (tile instanceof TileChestHungry && entity instanceof EntityItem && !entity.isDead) {
-			TileChestHungry chest = (TileChestHungry) tile;
-			EntityItem item = (EntityItem) entity;
-			ItemStack stack = item.getItem();
-			ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(chest.getItemHandler(), stack);
-
-			if (leftovers == null || leftovers.getCount() != stack.getCount()) {
-				entity.playSound(SoundEvents.ENTITY_GENERIC_EAT, 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
-				world.addBlockEvent(pos, this, 2, 2);
-			}
-
-			if (leftovers != null) {
-				item.setItem(leftovers);
-			} else {
-				entity.setDead();
-			}
-
-			chest.markForUpdate();
+		if (chest != null) {
+			ChestStomach.gobbleEntityItem(chest.getItemHandler(), entity, world, pos, this, 2, 2);
 		}
 	}
 
@@ -217,6 +207,30 @@ public class BlockChestHungry extends MBlock<HungryChestType> {
 		@Override
 		public String getName() {
 			return name().toLowerCase();
+		}
+	}
+
+	public static class ChestStomach {
+
+		private ChestStomach() {}
+
+		public static void gobbleEntityItem(IItemHandler dest, Entity entity, World world, BlockPos pos, Block eventReciever, int eventID, int eventParam) {
+			if (entity instanceof EntityItem && !entity.isDead) {
+				EntityItem item = (EntityItem) entity;
+				ItemStack stack = item.getItem();
+				ItemStack leftovers = InventoryManager.tryInsertItemStackToInventory(dest, stack);
+
+				if (leftovers == null || leftovers.getCount() != stack.getCount()) {
+					entity.playSound(SoundEvents.ENTITY_GENERIC_EAT, 0.25F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);
+					world.addBlockEvent(pos, eventReciever, eventID, eventParam);
+				}
+
+				if (leftovers != null) {
+					item.setItem(leftovers);
+				} else {
+					entity.setDead();
+				}
+			}
 		}
 	}
 }

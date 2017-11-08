@@ -61,7 +61,9 @@ public class InventoryManager {
 			}
 		}
 
-		IItemHandler handler = tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side) ? tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side) : null;
+		IItemHandler handler = tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)
+				? tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side)
+				: null;
 
 		if (handler == null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
 			handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -102,7 +104,8 @@ public class InventoryManager {
 		return tryInsertItemStackToInventoryWithinSlotRange(inv, stack, new SlotRange(inv));
 	}
 
-	public static ItemStack tryInsertItemStackToInventoryWithinSlotRange(IItemHandler inv, @Nonnull ItemStack stack, SlotRange slotRange) {
+	public static ItemStack tryInsertItemStackToInventoryWithinSlotRange(IItemHandler inv, @Nonnull ItemStack stack,
+			SlotRange slotRange) {
 		final int lastSlot = Math.min(slotRange.lastInc, inv.getSlots() - 1);
 
 		for (int slot = slotRange.first; slot <= lastSlot; slot++) {
