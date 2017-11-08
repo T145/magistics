@@ -17,13 +17,6 @@ tile.forge.netherrack.name=Netherrack Furnace
 tile.forge.nether_forge.name=Nether Forge
 tile.elevator.name=Elevator
 
-tile.crystal_air.name=Air Crystals
-tile.crystal_earth.name=Earth Crystals
-tile.crystal_fire.name=Fire Crystals
-tile.crystal_water.name=Water Crystals
-tile.crystal_void.name=Void Crystals
-tile.crystal_magic.name=Magic Crystals
-
 tile.chest_hungry.basic.name=Hungry Chest
 tile.chest_hungry.trapped.name=Hungry Trapped Chest
 tile.chest_hungry.ender.name=Hungry Ender Chest
@@ -85,6 +78,14 @@ item.shard.water.name=Water Crystal
 item.shard.earth.name=Earth Crystal
 item.shard.magic.name=Vis Crystal
 item.shard.void.name=Taint Crystal
+
+item.shard.fragment.dull.name=Dull Crystal Fragment
+item.shard.fragment.air.name=Air Crystal Fragment
+item.shard.fragment.fire.name=Fire Crystal Fragment
+item.shard.fragment.water.name=Water Crystal Fragment
+item.shard.fragment.earth.name=Earth Crystal Fragment
+item.shard.fragment.magic.name=Vis Crystal Fragment
+item.shard.fragment.void.name=Taint Crystal Fragment
 
 tile.nitor.white.name=White Nitor
 tile.nitor.orange.name=Orange Nitor

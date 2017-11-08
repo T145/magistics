@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "magistics:items/shards/air"
+        "layer0": "magistics:items/shards/fragment"
     }
 }

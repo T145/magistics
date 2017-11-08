@@ -38,6 +38,11 @@ public class MItem extends Item {
 	}
 
 	@Override
+	public int getMetadata(int meta) {
+		return meta;
+	}
+
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		if (hasSubtypes && stack.getMetadata() < variants.length && variants[stack.getMetadata()] != name) {
 			return String.format(super.getUnlocalizedName() + ".%s", new Object[] { variants[stack.getMetadata()] });

@@ -28,6 +28,7 @@ import T145.magistics.blocks.devices.BlockChestHungry.HungryChestType;
 import T145.magistics.blocks.devices.BlockChestHungryMetal;
 import T145.magistics.blocks.devices.BlockChestVoid;
 import T145.magistics.blocks.devices.BlockElevator;
+import T145.magistics.blocks.nature.BlockCrystalOre;
 import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.blocks.storage.BlockQuintTank;
 import T145.magistics.blocks.storage.BlockQuintTank.TankType;
@@ -43,6 +44,7 @@ import T145.magistics.client.render.blocks.RenderVoidBorder;
 import T145.magistics.items.ItemDiscovery;
 import T145.magistics.items.ItemDiscovery.ResearchType;
 import T145.magistics.items.ItemShard;
+import T145.magistics.items.ItemShard.ShardType;
 import T145.magistics.items.MItem;
 import T145.magistics.tiles.cosmetic.TileFloatingCandle;
 import T145.magistics.tiles.cosmetic.TileVoidBorder;
@@ -99,11 +101,17 @@ public class Init {
 	public static final BlockPlanks PLANKS = new  BlockPlanks();
 	public static final BlockLogs LOGS = new BlockLogs();
 	public static final BlockLeaves LEAVES = new BlockLeaves();
+
+	public static final BlockCrystalOre OVERWORLD_CRYSTAL_ORE = new BlockCrystalOre("ore_overworld");
+	public static final BlockCrystalOre NETHER_CRYSTAL_ORE = new BlockCrystalOre("ore_nether");
+	public static final BlockCrystalOre END_CRYSTAL_ORE = new BlockCrystalOre("ore_end");
+
 	public static final BlockCandle CANDLE = new BlockCandle();
 	public static final BlockNitor NITOR = new BlockNitor();
 	public static final BlockFloatingCandle FLOATING_CANDLE = new BlockFloatingCandle();
 
-	public static final ItemShard CRYSTAL_SHARD = new ItemShard();
+	public static final ItemShard CRYSTAL_SHARD = new ItemShard("shard", true);
+	public static final ItemShard CRYSTAL_SHARD_FRAGMENT = new ItemShard("shard.fragment", false);
 	public static final MItem RESEARCH_NOTE = new MItem("research_note", ResearchType.getTypes());
 	public static final MItem RESEARCH_THEORY = new MItem("research_theory", ResearchType.getTypes());
 	public static final ItemDiscovery RESEARCH_DISCOVERY = new ItemDiscovery();
@@ -442,53 +450,59 @@ public class Init {
 
 		// NOTE: ALWAYS REGISTER THE LAST MODEL TO BE RENDERED IN THE INVENTORY
 		private static void registerDisplayInfo() {
-			ModelLoader.setCustomStateMapper(Init.INFUSER, Init.INFUSER.getStateMap());
-			ModelLoader.setCustomStateMapper(Init.TANK, Init.TANK.getStateMap());
+			ModelLoader.setCustomStateMapper(INFUSER, INFUSER.getStateMap());
+			ModelLoader.setCustomStateMapper(TANK, TANK.getStateMap());
 
 			for (InfuserType type : InfuserType.values()) {
-				registerBlockModel(Init.INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
+				registerBlockModel(INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
 			}
 
 			for (TankType type : TankType.values()) {
-				registerBlockModel(Init.TANK, type.ordinal(), type.getName() + "_tank", "inventory");
+				registerBlockModel(TANK, type.ordinal(), type.getName() + "_tank", "inventory");
 			}
 
-			registerBlockModel(Init.CONDUIT, 0, "inventory");
+			registerBlockModel(CONDUIT, 0, "inventory");
 
 			for (CrucibleType type : CrucibleType.values()) {
-				registerBlockModel(Init.CRUCIBLE, type.ordinal(), getVariantName(type) + ",working=false");
+				registerBlockModel(CRUCIBLE, type.ordinal(), getVariantName(type) + ",working=false");
 			}
 
-			registerBlockModel(Init.ELEVATOR, 0, "normal");
+			registerBlockModel(ELEVATOR, 0, "normal");
 
 			for (ForgeType type : ForgeType.values()) {
-				registerBlockModel(Init.FORGE, type.ordinal(), "inventory," + getVariantName(type));
+				registerBlockModel(FORGE, type.ordinal(), "inventory," + getVariantName(type));
 			}
 
 			for (HungryChestType type : HungryChestType.values()) {
-				registerBlockModel(Init.CHEST_HUNGRY, type.ordinal(), type);
+				registerBlockModel(CHEST_HUNGRY, type.ordinal(), type);
 			}
 
-			registerBlockModel(Init.CHEST_VOID, 0, "inventory");
-			registerBlockModel(Init.VOID_BORDER, 0, "inventory");
+			registerBlockModel(CHEST_VOID, 0, "inventory");
+			registerBlockModel(VOID_BORDER, 0, "inventory");
 
 			for (WoodType type : WoodType.values()) {
-				registerBlockModel(Init.LEAVES, type.ordinal(), type);
-				registerBlockModel(Init.LOGS, type.ordinal(), "axis=y,variant=" + type.getName());
-				registerBlockModel(Init.PLANKS, type.ordinal(), type);
-				registerBlockModel(Init.SAPLINGS, type.ordinal(), type);
+				registerBlockModel(LEAVES, type.ordinal(), type);
+				registerBlockModel(LOGS, type.ordinal(), "axis=y,variant=" + type.getName());
+				registerBlockModel(PLANKS, type.ordinal(), type);
+				registerBlockModel(SAPLINGS, type.ordinal(), type);
 			}
 
 			for (EnumDyeColor type : EnumDyeColor.values()) {
-				registerBlockModel(Init.NITOR, type.ordinal(), "inventory");
-				registerBlockModel(Init.CANDLE, type.ordinal(), "inventory");
-				registerBlockModel(Init.FLOATING_CANDLE, type.ordinal(), "inventory");
+				registerBlockModel(NITOR, type.ordinal(), "inventory");
+				registerBlockModel(CANDLE, type.ordinal(), "inventory");
+				registerBlockModel(FLOATING_CANDLE, type.ordinal(), "inventory");
 			}
 
 			if (Loader.isModLoaded("ironchest")) {
 				for (IronChestType type : IronChestType.values()) {
 					registerBlockModel(blockChestHungryMetal, type.ordinal(), ClientRegistrationHandler.getVariantName(type));
 				}
+			}
+
+			for (ShardType type : ShardType.values()) {
+				registerBlockModel(OVERWORLD_CRYSTAL_ORE, type.ordinal(), type);
+				registerBlockModel(NETHER_CRYSTAL_ORE, type.ordinal(), type);
+				registerBlockModel(END_CRYSTAL_ORE, type.ordinal(), type);
 			}
 
 			Magistics.LOG.info("Registered Block Rendering!");
@@ -512,16 +526,15 @@ public class Init {
 		}
 
 		private static void registerItemRenderers() {
-			registerItemModel(Init.CRYSTAL_SHARD, 0, "shards/dull");
-
-			for (Aspect type : Aspect.values()) {
-				registerItemModel(Init.CRYSTAL_SHARD, type.ordinal() + 1, "shards/" + type.getName());
+			for (int meta = 0; meta <= ShardType.values().length; ++meta) {
+				registerItemModel(CRYSTAL_SHARD, meta, "shards/dull");
+				registerItemModel(CRYSTAL_SHARD_FRAGMENT, meta, "shards/fragment");
 			}
 
 			for (ResearchType type : ResearchType.values()) {
-				registerItemModel(Init.RESEARCH_NOTE, type.ordinal(), "research/note/" + type.getName());
-				registerItemModel(Init.RESEARCH_THEORY, type.ordinal(), "research/theory/" + type.getName());
-				registerItemModel(Init.RESEARCH_DISCOVERY, type.ordinal(), "research/discovery/" + type.getName());
+				registerItemModel(RESEARCH_NOTE, type.ordinal(), "research/note/" + type.getName());
+				registerItemModel(RESEARCH_THEORY, type.ordinal(), "research/theory/" + type.getName());
+				registerItemModel(RESEARCH_DISCOVERY, type.ordinal(), "research/discovery/" + type.getName());
 			}
 		}
 	}
