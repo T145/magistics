@@ -21,7 +21,6 @@ public class ConfigMain {
 	public static int taintSeverity = 1;
 	public static int taintWeight = 4;
 	public static int enchantedForestWeight = 2;
-	public static float auraMax = 32766.0F;
 
 	private static Configuration config;
 
@@ -60,8 +59,6 @@ public class ConfigMain {
 		taintWeight = config.getInt("Taint Weight", CATEGORY_BIOMES, 4, 1, 10, "How often taint biomes are generated");
 		enchantedForestWeight = config.getInt("Enchanted Forest Weight", CATEGORY_BIOMES, 2, 1, 5, "How often enchanted forests are generated");
 		generateRoots = config.getBoolean("Generate Roots", CATEGORY_BIOMES, true, "Whether or not to generate roots on certain trees");
-
-		auraMax = config.getFloat("Aura Max", config.CATEGORY_GENERAL, auraMax, 15000.0F, 32766.0F, "The maximum amount of aura per chunk");
 		allowVoidRespawn = config.getBoolean("Allow Void Respawn", config.CATEGORY_GENERAL, true, "If you die in a void chest, can you respawn there?");
 		voidDimensionId = config.getInt("Void Dimension Id", config.CATEGORY_GENERAL, 14, 2, 100, "ID for the void dimension");
 		dimensionBlacklist = config.get(CATEGORY_WORLDGEN, "Dimension Blacklist", new int[] {}, "Add dimension ids that you don't want Magistics worldgen applied to").getIntList();

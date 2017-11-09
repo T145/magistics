@@ -21,44 +21,44 @@ public class AuraManager {
 	public static ConcurrentHashMap<Integer, BlockPos> blightTrigger = new ConcurrentHashMap();
 	static ConcurrentHashMap<Integer, AuraWorld> auras = new ConcurrentHashMap();
 
-	public static AuraWorld getAuraWorld(int dimID) {
-		return auras.get(dimID);
+	public static AuraWorld getAuraWorld(int dim) {
+		return auras.get(dim);
 	}
 
-	public static AuraChunk getAuraChunk(int dimID, ChunkPos pos) {
-		if (auras.containsKey(dimID)) {
-			return auras.get(dimID).getAuraChunkAt(pos);
+	public static AuraChunk getAuraChunk(int dim, ChunkPos pos) {
+		if (auras.containsKey(dim)) {
+			return auras.get(dim).getAuraChunkAt(pos);
 		}
 
 		return null;
 	}
 
-	public static void addAuraWorld(int dimID) {
-		if (!auras.containsKey(dimID)) {
-			auras.put(dimID, new AuraWorld(dimID));
-			Magistics.LOG.info("Creating aura cache for world " + dimID);
+	public static void addAuraWorld(int dim) {
+		if (!auras.containsKey(dim)) {
+			auras.put(dim, new AuraWorld(dim));
+			Magistics.LOG.info("Creating aura cache for world " + dim);
 		}
 	}
 
-	public static void removeAuraWorld(int dimID) {
-		auras.remove(dimID);
-		Magistics.LOG.info("Removing aura cache for world " + dimID);
+	public static void removeAuraWorld(int dim) {
+		auras.remove(dim);
+		Magistics.LOG.info("Removing aura cache for world " + dim);
 	}
 
-	public static void addAuraChunk(int dimID, Chunk chunk, short base, float vis, float flux) {
-		AuraWorld auraWorld = auras.get(dimID);
+	public static void addAuraChunk(int dim, Chunk chunk, short base, float vis, float flux) {
+		AuraWorld auraWorld = auras.get(dim);
 
 		if (auraWorld == null) {
-			auraWorld = new AuraWorld(dimID);
+			auraWorld = new AuraWorld(dim);
 		}
 
 		auraWorld.getAuraChunks().put(new ChunkPos(chunk.x, chunk.z), new AuraChunk(chunk, base, vis, flux));
 
-		auras.put(dimID, auraWorld);
+		auras.put(dim, auraWorld);
 	}
 
-	public static void removeAuraChunk(int dimID, int x, int y) {
-		AuraWorld auraWorld = auras.get(dimID);
+	public static void removeAuraChunk(int dim, int x, int y) {
+		AuraWorld auraWorld = auras.get(dim);
 
 		if (auraWorld != null) {
 			auraWorld.getAuraChunks().remove(new ChunkPos(x, y));
@@ -66,28 +66,28 @@ public class AuraManager {
 	}
 
 	public static float getTotalAura(World world, BlockPos pos) {
-		AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-		return auraChunk != null ? auraChunk.getVis() + auraChunk.getFlux() : 0.0F;
+		AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+		return aura != null ? aura.getVis() + aura.getFlux() : 0.0F;
 	}
 
 	public static float getFluxSaturation(World world, BlockPos pos) {
-		AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-		return auraChunk != null ? auraChunk.getFlux() / auraChunk.getBase() : 0.0F;
+		AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+		return aura != null ? aura.getFlux() / aura.getBase() : 0.0F;
 	}
 
 	public static float getVis(World world, BlockPos pos) {
-		AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-		return auraChunk != null ? auraChunk.getVis() : 0.0F;
+		AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+		return aura != null ? aura.getVis() : 0.0F;
 	}
 
 	public static float getFlux(World world, BlockPos pos) {
-		AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-		return auraChunk != null ? auraChunk.getFlux() : 0.0F;
+		AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+		return aura != null ? aura.getFlux() : 0.0F;
 	}
 
 	public static int getAuraBase(World world, BlockPos pos) {
-		AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-		return auraChunk != null ? auraChunk.getBase() : 0;
+		AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+		return aura != null ? aura.getBase() : 0;
 	}
 
 	public static void addVis(World world, BlockPos pos, float amount) {
@@ -96,8 +96,8 @@ public class AuraManager {
 		}
 
 		try {
-			AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-			modifyVisInChunk(auraChunk, amount, true);
+			AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+			modifyVisInChunk(aura, amount, true);
 		} catch (Exception err) {
 			Magistics.LOG.catching(err);
 		}
@@ -109,8 +109,8 @@ public class AuraManager {
 		}
 
 		try {
-			AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
-			modifyFluxInChunk(auraChunk, amount, true);
+			AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+			modifyFluxInChunk(aura, amount, true);
 		} catch (Exception err) {
 			Magistics.LOG.catching(err);
 		}
@@ -138,13 +138,13 @@ public class AuraManager {
 		boolean modified = false;
 
 		try {
-			AuraChunk auraChunk = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
+			AuraChunk aura = getAuraChunk(world.provider.getDimension(), world.getChunkFromBlockCoords(pos).getPos());
 
-			if (amount > auraChunk.getFlux()) {
-				amount = auraChunk.getFlux();
+			if (amount > aura.getFlux()) {
+				amount = aura.getFlux();
 			}
 
-			modified = modifyFluxInChunk(auraChunk, -amount, !simulate);
+			modified = modifyFluxInChunk(aura, -amount, !simulate);
 		} catch (Exception err) {
 			Magistics.LOG.catching(err);
 		}
@@ -152,20 +152,20 @@ public class AuraManager {
 		return modified ? amount : 0.0F;
 	}
 
-	public static boolean modifyVisInChunk(AuraChunk auraChunk, float amount, boolean doit) {
-		if (auraChunk != null) {
+	public static boolean modifyVisInChunk(AuraChunk aura, float amount, boolean doit) {
+		if (aura != null) {
 			if (doit) {
-				auraChunk.setVis(Math.max(0.0F, auraChunk.getVis() + amount));
+				aura.setVis(Math.max(0.0F, aura.getVis() + amount));
 			}
 			return true;
 		}
 		return false;
 	}
 
-	private static boolean modifyFluxInChunk(AuraChunk auraChunk, float amount, boolean doit) {
-		if (auraChunk != null) {
+	private static boolean modifyFluxInChunk(AuraChunk aura, float amount, boolean doit) {
+		if (aura != null) {
 			if (doit) {
-				auraChunk.setFlux(Math.max(0.0F, auraChunk.getFlux() + amount));
+				aura.setFlux(Math.max(0.0F, aura.getFlux() + amount));
 			}
 			return true;
 		}

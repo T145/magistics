@@ -2,6 +2,8 @@ package T145.magistics.tiles.storage;
 
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.blocks.storage.BlockQuintTank.TankType;
+import T145.magistics.network.PacketHandler;
+import T145.magistics.network.messages.client.MessageQuintLevel;
 import T145.magistics.tiles.base.TileSynchronized;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -87,90 +89,11 @@ public class TileQuintTank extends TileSynchronized implements ITickable, IQuint
 		if (world.isRemote) {
 			return;
 		}
-		
-		/*if (!world.isRemote) {
-			--updateDelay;
 
-			if (updateDelay <= 0) {
-				PacketHandler.INSTANCE.sendToAllAround(new MessageQuintLevel(pos, quints, suction), PacketHandler.getTargetPoint(world, pos));
-
-				updateDelay = 10;
-				calculateSuction();
-				Magistics.LOG.info("Tank Quints: " + quints);
-			}
-
-			distributeQuints();
-		}*/
-	}
-
-	/*private void calculateSuction() {
-		setSuction(10);
-	}
-
-	private void distributeQuints() {
-		float tempQuints = quints;
-		float tempMaxQuints = getCapacity();
-		TileQuintTank tank;
-		int offsetY = 1;
-
-		while ((tank = getValidTank(offsetY)) != null) {
-			tempQuints += tank.getQuints();
-			tempMaxQuints += tank.getCapacity();
-			++offsetY;
-		}
-
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, facing);
-
-			if (container != null && !(container instanceof TileQuintTank) && tempQuints < tempMaxQuints && suction > container.getSuction()) {
-				float diff = QuintHelper.subtractQuints(container, Math.min(1F, tempMaxQuints - tempQuints));
-
-				if (suction > container.getSuction()) {
-					tempQuints += diff;
-				} else {
-					container.setQuints(diff + container.getQuints());
-				}
-			}
-		}
-
-		float prevTempQuints = tempQuints;
-
-		if (Math.round(prevTempQuints) >= tempMaxQuints) {
-			setSuction(0);
-		}
-
-		float quintRatio = tempQuints / prevTempQuints;
-		boolean empty = false;
-		offsetY = 0;
-
-		while ((tank = getValidTank(offsetY)) != null) {
-			if (empty) {
-				tank.setQuints(0F);
-			} else if (prevTempQuints <= tank.getCapacity()) {
-				tank.setQuints(tempQuints);
-				empty = true;
-			} else {
-				tank.setQuints(tank.getCapacity() * quintRatio);
-				tempQuints -= tank.getQuints();
-			}
-
-			prevTempQuints = tempQuints;
-			++offsetY;
+		if (++updateTicks == 10) {
+			updateTicks = 0;
+			PacketHandler.sendToAllAround(new MessageQuintLevel(pos, quints, suction), world, pos);
+			setSuction(10);
 		}
 	}
-
-	@Nullable
-	protected TileQuintTank getValidTank(int offsetY) {
-		TileEntity tile = world.getTileEntity(pos.up(offsetY));
-
-		if (tile instanceof TileQuintTank) {
-			TileQuintTank tank = (TileQuintTank) tile;
-
-			if (tank.canConnectToTank(EnumFacing.UP)) {
-				return tank;
-			}
-		}
-
-		return null;
-	}*/
 }

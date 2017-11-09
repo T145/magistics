@@ -81,7 +81,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 	}
 
 	private boolean generateLeafNodeList() {
-		height = (int) ((double) heightLimit * heightAttenuation);
+		height = (int) (heightLimit * heightAttenuation);
 
 		if (height >= heightLimit)
 			height = heightLimit - 1;
@@ -98,7 +98,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			}
 		}
 
-		int i = (int) (1.382D + Math.pow((leafDensity * (double) heightLimit) / 13D, 2D));
+		int i = (int) (1.382D + Math.pow((leafDensity * heightLimit) / 13D, 2D));
 
 		if (i < 1) {
 			i = 1;
@@ -130,10 +130,10 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 				i1--;
 			} else {
 				for (double d0 = 0.5D; j1 < i; j1++) {
-					double d1 = scaleWidth * ((double) f * ((double) rand.nextFloat() + 0.328D));
-					double d2 = (double) rand.nextFloat() * 2D * Math.PI;
-					int k1 = MathHelper.floor(d1 * Math.sin(d2) + (double) basePos[0] + d0);
-					int l1 = MathHelper.floor(d1 * Math.cos(d2) + (double) basePos[2] + d0);
+					double d1 = scaleWidth * (f * (rand.nextFloat() + 0.328D));
+					double d2 = rand.nextFloat() * 2D * Math.PI;
+					int k1 = MathHelper.floor(d1 * Math.sin(d2) + basePos[0] + d0);
+					int l1 = MathHelper.floor(d1 * Math.cos(d2) + basePos[2] + d0);
 					int ai1[] = { k1, j, l1 };
 					int ai2[] = { k1, j + leafDistanceLimit, l1 };
 
@@ -145,10 +145,10 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 					double d3 = Math.sqrt(Math.pow(Math.abs(basePos[0] - ai1[0]), 2D) + Math.pow(Math.abs(basePos[2] - ai1[2]), 2D));
 					double d4 = d3 * branchSlope;
 
-					if ((double) ai1[1] - d4 > (double) l) {
+					if (ai1[1] - d4 > l) {
 						ai3[1] = l;
 					} else {
-						ai3[1] = (int) ((double) ai1[1] - d4);
+						ai3[1] = (int) (ai1[1] - d4);
 					}
 
 					if (checkBlockLine(ai3, ai1) == -1) {
@@ -171,7 +171,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 	}
 
 	void generateLeaves(int i, int j, int k, float f, byte byte0) {
-		int i1 = (int) ((double) f + 0.618D);
+		int i1 = (int) (f + 0.618D);
 		byte byte1 = COORD_PAIRS[byte0];
 		byte byte2 = COORD_PAIRS[byte0 + 3];
 		int ai[] = { i, j, k };
@@ -184,9 +184,9 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 		for (; j1 <= i1; j1++) {
 			ai1[byte1] = ai[byte1] + j1;
 			for (int l1 = -i1; l1 <= i1;) {
-				double d = Math.sqrt(Math.pow((double) Math.abs(j1) + 0.5D, 2D) + Math.pow((double) Math.abs(l1) + 0.5D, 2D));
+				double d = Math.sqrt(Math.pow(Math.abs(j1) + 0.5D, 2D) + Math.pow(Math.abs(l1) + 0.5D, 2D));
 
-				if (d > (double) f) {
+				if (d > f) {
 					l1++;
 				} else {
 					ai1[byte2] = ai[byte2] + l1;
@@ -215,17 +215,17 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 		}
 
 		if (trunkSize == 3) {
-			if ((double) i < (double) (float) heightLimit * 0.19999999999999999D) {
+			if (i < (float) heightLimit * 0.19999999999999999D) {
 				return -1.618F;
 			}
 		}
 		if (trunkSize < 3) {
-			if ((double) i < (double) (float) heightLimit * 0.29999999999999999D) {
+			if (i < (float) heightLimit * 0.29999999999999999D) {
 				return -1.618F;
 			}
 		}
 		if (trunkSize == 4) {
-			if ((double) i < (double) (float) heightLimit * 0.15999999999999999D) {
+			if (i < (float) heightLimit * 0.15999999999999999D) {
 				return -1.618F;
 			}
 		}
@@ -288,15 +288,15 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			byte3 = -1;
 		}
 
-		double d = (double) ai2[byte1] / (double) ai2[j];
-		double d1 = (double) ai2[byte2] / (double) ai2[j];
+		double d = ai2[byte1] / ai2[j];
+		double d1 = ai2[byte2] / ai2[j];
 		int ai3[] = { 0, 0, 0 };
 		int k = 0;
 
 		for (int l = ai2[j] + byte3; k != l; k += byte3) {
-			ai3[j] = MathHelper.floor((double) (ai[j] + k) + 0.5D);
-			ai3[byte1] = MathHelper.floor((double) ai[byte1] + (double) k * d + 0.5D);
-			ai3[byte2] = MathHelper.floor((double) ai[byte2] + (double) k * d1 + 0.5D);
+			ai3[j] = MathHelper.floor((ai[j] + k) + 0.5D);
+			ai3[byte1] = MathHelper.floor(ai[byte1] + k * d + 0.5D);
+			ai3[byte2] = MathHelper.floor(ai[byte2] + k * d1 + 0.5D);
 			setBlockAndNotifyAdequately(world, new BlockPos(ai3[0], ai3[1], ai3[2]), trunkState);
 		}
 	}
@@ -314,7 +314,7 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 		if (trunkSize != 2) {
 			return true;
 		}
-		return (double) i >= (double) heightLimit * 0.2D;
+		return i >= heightLimit * 0.2D;
 	}
 
 	void generateTrunk() {
@@ -527,8 +527,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			}
 
 			m += 1;
-			phi -= (double) rand.nextFloat() * 0.05;
-			theta += (double) rand.nextFloat() * 0.1 - 0.05;
+			phi -= rand.nextFloat() * 0.05;
+			theta += rand.nextFloat() * 0.1 - 0.05;
 
 			double direction = (2.0 * Math.PI) * theta;
 			double curl = rand.nextFloat() * 0.4F - 0.2F;
@@ -537,17 +537,17 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			double x, y, z;
 
 			if (l > 0) {
-				x = (double) l + 0.5;
+				x = l + 0.5;
 			} else {
-				x = (double) l - 0.5;
+				x = l - 0.5;
 			}
 
-			y = (double) m + 0.5;
+			y = m + 0.5;
 
 			if (n > 0) {
-				z = (double) n + 0.5;
+				z = n + 0.5;
 			} else {
-				z = (double) n - 0.5;
+				z = n - 0.5;
 			}
 
 			double x2, y2, z2, hoz;
@@ -798,10 +798,10 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 									if (med != 0) {
 										i = i2;
 										k = k2;
-										x = (double) i + 0.5;
-										z = (double) k + 0.5;
+										x = i + 0.5;
+										z = k + 0.5;
 										pitch = 0;
-										direction = (double) tdir[q] * 2.0 * Math.PI / 16.0;
+										direction = tdir[q] * 2.0 * Math.PI / 16.0;
 										break;
 									}
 								}
@@ -859,8 +859,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			byte3 = -1;
 		}
 
-		double d = (double) ai2[byte1] / (double) ai2[i];
-		double d1 = (double) ai2[byte2] / (double) ai2[i];
+		double d = ai2[byte1] / ai2[i];
+		double d1 = ai2[byte2] / ai2[i];
 		int ai3[] = { 0, 0, 0 };
 		int j = 0;
 		int k = ai2[i] + byte3;
@@ -871,8 +871,8 @@ public class WorldGenLargeTree extends WorldGenAbstractTree {
 			}
 
 			ai3[i] = ai[i] + j;
-			ai3[byte1] = MathHelper.floor((double) ai[byte1] + (double) j * d);
-			ai3[byte2] = MathHelper.floor((double) ai[byte2] + (double) j * d1);
+			ai3[byte1] = MathHelper.floor(ai[byte1] + j * d);
+			ai3[byte2] = MathHelper.floor(ai[byte2] + j * d1);
 
 			BlockPos pos = new BlockPos(ai3[0], ai3[1], ai3[2]);
 			IBlockState state = world.getBlockState(pos);

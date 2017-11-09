@@ -21,9 +21,9 @@ public class AuraEvents {
 			return;
 		}
 
-		int dimID = event.getWorld().provider.getDimension();
-		AuraManager.addAuraWorld(dimID);
-		Magistics.LOG.info("Loading aura world: " + dimID);
+		int dim = event.getWorld().provider.getDimension();
+		AuraManager.addAuraWorld(dim);
+		Magistics.LOG.info("Loading aura world: " + dim);
 	}
 
 	@SubscribeEvent
@@ -32,9 +32,9 @@ public class AuraEvents {
 			return;
 		}
 
-		int dimID = event.getWorld().provider.getDimension();
-		AuraManager.removeAuraWorld(dimID);
-		Magistics.LOG.info("Unloading aura world: " + dimID);
+		int dim = event.getWorld().provider.getDimension();
+		AuraManager.removeAuraWorld(dim);
+		Magistics.LOG.info("Unloading aura world: " + dim);
 	}
 
 	@SubscribeEvent
@@ -43,12 +43,12 @@ public class AuraEvents {
 			return;
 		}
 
-		int dimID = event.world.provider.getDimension();
+		int dim = event.world.provider.getDimension();
 
-		if (event.phase == TickEvent.Phase.START && !auraThreads.containsKey(dimID) && AuraManager.getAuraWorld(dimID) != null) {
-			AuraThread auraThread = new AuraThread(dimID);
+		if (event.phase == TickEvent.Phase.START && !auraThreads.containsKey(dim) && AuraManager.getAuraWorld(dim) != null) {
+			AuraThread auraThread = new AuraThread(dim);
 			new Thread(auraThread).start();
-			auraThreads.put(dimID, auraThread);
+			auraThreads.put(dim, auraThread);
 		}
 	}
 

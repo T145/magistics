@@ -42,21 +42,14 @@ public class VillagePieceDungeon extends StructureVillagePieces.Village {
 		}
 
 		IBlockState iblockstate = getBiomeSpecificBlockState(Blocks.COBBLESTONE.getDefaultState());
-		IBlockState iblockstate1 = getBiomeSpecificBlockState(
-				Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH));
-		IBlockState iblockstate2 = getBiomeSpecificBlockState(
-				Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH));
-		IBlockState iblockstate3 = getBiomeSpecificBlockState(
-				Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST));
-		IBlockState iblockstate4 = getBiomeSpecificBlockState(
-				Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST));
-		IBlockState iblockstate5 = getBiomeSpecificBlockState(
-				Blocks.PLANKS.getDefaultState().withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.BIRCH));
+		IBlockState iblockstate1 = getBiomeSpecificBlockState(Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH));
+		IBlockState iblockstate2 = getBiomeSpecificBlockState(Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH));
+		IBlockState iblockstate3 = getBiomeSpecificBlockState(Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST));
+		IBlockState iblockstate4 = getBiomeSpecificBlockState(Blocks.BIRCH_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST));
+		IBlockState iblockstate5 = getBiomeSpecificBlockState(Blocks.PLANKS.getDefaultState().withProperty(BlockPlanks.VARIANT, BlockPlanks.EnumType.BIRCH));
 		IBlockState iblockstate6 = getBiomeSpecificBlockState(Blocks.LOG.getDefaultState());
-		fillWithBlocks(world, structureBoundingBoxIn, 1, 1, 1, 7, 4, 4, Blocks.AIR.getDefaultState(),
-				Blocks.AIR.getDefaultState(), false);
-		fillWithBlocks(world, structureBoundingBoxIn, 2, 1, 6, 8, 4, 10, Blocks.AIR.getDefaultState(),
-				Blocks.AIR.getDefaultState(), false);
+		fillWithBlocks(world, structureBoundingBoxIn, 1, 1, 1, 7, 4, 4, Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), false);
+		fillWithBlocks(world, structureBoundingBoxIn, 2, 1, 6, 8, 4, 10, Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), false);
 		fillWithBlocks(world, structureBoundingBoxIn, 2, 0, 5, 8, 0, 10, iblockstate5, iblockstate5, false);
 		fillWithBlocks(world, structureBoundingBoxIn, 1, 0, 1, 7, 0, 4, iblockstate5, iblockstate5, false);
 		fillWithBlocks(world, structureBoundingBoxIn, 0, 0, 0, 0, 3, 5, iblockstate, iblockstate, false);
@@ -143,8 +136,7 @@ public class VillagePieceDungeon extends StructureVillagePieces.Village {
 		setBlockState(world, Blocks.AIR.getDefaultState(), 2, 2, 0, structureBoundingBoxIn);
 		placeTorch(world, EnumFacing.NORTH, 2, 3, 1, structureBoundingBoxIn);
 		createVillageDoor(world, structureBoundingBoxIn, rand, 2, 1, 0, EnumFacing.NORTH);
-		fillWithBlocks(world, structureBoundingBoxIn, 1, 0, -1, 3, 2, -1, Blocks.AIR.getDefaultState(),
-				Blocks.AIR.getDefaultState(), false);
+		fillWithBlocks(world, structureBoundingBoxIn, 1, 0, -1, 3, 2, -1, Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), false);
 
 		if (getBlockStateFromPos(world, 2, 0, -1, structureBoundingBoxIn).getMaterial() == Material.AIR
 				&& getBlockStateFromPos(world, 2, -1, -1, structureBoundingBoxIn).getMaterial() != Material.AIR) {

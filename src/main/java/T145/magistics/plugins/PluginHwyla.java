@@ -22,8 +22,7 @@ import net.minecraft.world.World;
 public class PluginHwyla extends HUDHandlerBase implements IWailaPlugin {
 
 	@Override
-	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor,
-			IWailaConfigHandler config) {
+	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		if (accessor.getBlock() instanceof BlockChestVoid) {
 			accessor.getBlock().addInformation(stack, accessor.getPlayer(), tooltip, true);
 		}
@@ -40,8 +39,7 @@ public class PluginHwyla extends HUDHandlerBase implements IWailaPlugin {
 	}
 
 	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world,
-			BlockPos pos) {
+	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, BlockPos pos) {
 		return tile.writeToNBT(tag);
 	}
 

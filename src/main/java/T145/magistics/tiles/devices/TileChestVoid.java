@@ -42,8 +42,7 @@ public class TileChestVoid extends TileSynchronized implements ITickable {
 	}
 
 	public void sendRecieveEventPacket() {
-		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing),
-				PacketHandler.getTargetPoint(world, pos));
+		PacketHandler.INSTANCE.sendToAllAround(new MessageRecieveClientEvent(pos, 1, numPlayersUsing), PacketHandler.getTargetPoint(world, pos));
 	}
 
 	@Override
@@ -61,8 +60,7 @@ public class TileChestVoid extends TileSynchronized implements ITickable {
 		if (numPlayersUsing > 0 && lidAngle == 0.0F) {
 			double d0 = i + 0.5D;
 			double d1 = k + 0.5D;
-			world.playSound(null, d0, j + 0.5D, d1, SoundEvents.BLOCK_ENDERCHEST_OPEN, SoundCategory.BLOCKS, 0.5F,
-					world.rand.nextFloat() * 0.1F + 0.9F);
+			world.playSound(null, d0, j + 0.5D, d1, SoundEvents.BLOCK_ENDERCHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 		}
 
 		if (numPlayersUsing == 0 && lidAngle > 0.0F || numPlayersUsing > 0 && lidAngle < 1.0F) {
@@ -83,8 +81,7 @@ public class TileChestVoid extends TileSynchronized implements ITickable {
 			if (lidAngle < 0.5F && f2 >= 0.5F) {
 				double d3 = i + 0.5D;
 				double d2 = k + 0.5D;
-				world.playSound(null, d3, j + 0.5D, d2, SoundEvents.BLOCK_ENDERCHEST_CLOSE, SoundCategory.BLOCKS, 0.5F,
-						world.rand.nextFloat() * 0.1F + 0.9F);
+				world.playSound(null, d3, j + 0.5D, d2, SoundEvents.BLOCK_ENDERCHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
 			if (lidAngle < 0.0F) {

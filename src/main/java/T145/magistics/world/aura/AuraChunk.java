@@ -2,7 +2,6 @@ package T145.magistics.world.aura;
 
 import java.lang.ref.WeakReference;
 
-import T145.magistics.core.ConfigMain;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
@@ -46,7 +45,7 @@ public class AuraChunk {
 	}
 
 	public void setVis(float vis) {
-		vis = Math.min(ConfigMain.auraMax, Math.max(0.0F, vis));
+		vis = Math.min(AuraManager.AURA_CEILING, Math.max(0.0F, vis));
 	}
 
 	public float getFlux() {
@@ -54,7 +53,7 @@ public class AuraChunk {
 	}
 
 	public void setFlux(float flux) {
-		flux = Math.min(ConfigMain.auraMax, Math.max(0.0F, flux));
+		flux = Math.min(AuraManager.AURA_CEILING, Math.max(0.0F, flux));
 	}
 
 	public ChunkPos getChunkPos() {

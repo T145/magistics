@@ -14,18 +14,18 @@ import net.minecraftforge.common.DimensionManager;
 
 public class AuraThread implements Runnable {
 
-	private final int dimID;
+	private final int dim;
 	private final long INTERVAL = 1000L;
 	private boolean stop = false;
 	private Random rand = new Random(System.currentTimeMillis());
 
-	public AuraThread(int dimID) {
-		this.dimID = dimID;
+	public AuraThread(int dim) {
+		this.dim = dim;
 	}
 
 	@Override
 	public void run() {
-		Magistics.LOG.info("Starting aura thread for dim " + dimID);
+		Magistics.LOG.info("Starting aura thread for dim " + dim);
 
 		while (!stop) {
 			if (AuraManager.auras.isEmpty()) {
@@ -35,10 +35,10 @@ public class AuraThread implements Runnable {
 
 			long startTime = System.currentTimeMillis();
 			int phaseTime = 0;
-			AuraWorld auraWorld = AuraManager.getAuraWorld(dimID);
+			AuraWorld auraWorld = AuraManager.getAuraWorld(dim);
 
 			if (auraWorld != null) {
-				World world = DimensionManager.getWorld(dimID);
+				World world = DimensionManager.getWorld(dim);
 
 				if (world != null) {
 					phaseTime = world.provider.getMoonPhase(world.getWorldInfo().getWorldTime());
@@ -56,7 +56,7 @@ public class AuraThread implements Runnable {
 
 			try {
 				if (executionTime > 1000L) {
-					Magistics.LOG.warn("AURAS TAKING " + (executionTime - 1000L) + " ms LONGER THAN NORMAL IN DIM " + dimID);
+					Magistics.LOG.warn("AURAS TAKING " + (executionTime - 1000L) + " ms LONGER THAN NORMAL IN DIM " + dim);
 				}
 
 				Thread.sleep(Math.max(1L, 1000L - executionTime - phaseTime));
@@ -65,8 +65,8 @@ public class AuraThread implements Runnable {
 			}
 		}
 
-		Magistics.LOG.info("Stopping aura thread for dim " + dimID);
-		AuraEvents.auraThreads.remove(dimID);
+		Magistics.LOG.info("Stopping aura thread for dim " + dim);
+		AuraEvents.auraThreads.remove(dim);
 	}
 
 	private void processAuraChunk(AuraWorld auraWorld, AuraChunk auraChunk) {
@@ -105,7 +105,7 @@ public class AuraThread implements Runnable {
 			currentVis -= 1F;
 			neighborVis.setVis(lowestVis + 1F);
 			dirty = true;
-			markChunkAsDirty(neighborVis, auraWorld.getDimensionId());
+			markChunkAsDirty(neighborVis, auraWorld.getDimension());
 			shared = true;
 		}
 
@@ -113,7 +113,7 @@ public class AuraThread implements Runnable {
 			currentFlux -= 1F;
 			neighborFlux.setFlux(lowestFlux + 1F);
 			dirty = true;
-			markChunkAsDirty(neighborFlux, auraWorld.getDimensionId());
+			markChunkAsDirty(neighborFlux, auraWorld.getDimension());
 		}
 
 		if (currentVis + currentFlux > base) {
@@ -122,7 +122,7 @@ public class AuraThread implements Runnable {
 
 			if (!shared && neighborVis != null && lowestVis < currentVis + currentFlux && ((lowestVis + lowestVisFlux) / (currentVis + currentFlux) < 0.75D)) {
 				neighborVis.setVis(lowestVis + 1F);
-				markChunkAsDirty(neighborVis, auraWorld.getDimensionId());
+				markChunkAsDirty(neighborVis, auraWorld.getDimension());
 			}
 		}
 
@@ -139,7 +139,7 @@ public class AuraThread implements Runnable {
 		if (dirty) {
 			auraChunk.setVis(currentVis);
 			auraChunk.setFlux(currentFlux);
-			markChunkAsDirty(auraChunk, auraWorld.getDimensionId());
+			markChunkAsDirty(auraChunk, auraWorld.getDimension());
 		}
 	}
 
