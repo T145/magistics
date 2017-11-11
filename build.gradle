@@ -93,14 +93,6 @@ dependencies {
 	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
 }
 
-build {
-	doLast {
-		project.file('release').deleteDir()
-		project.file('build/libs').renameTo(project.file('release'))
-		project.file('build/tmp/recompileMc/sources').renameTo(project.file('minecraftSrc'))
-	}
-}
-
 processResources {
 	exclude '**/*.db'
 	exclude '**/*.DS_Store'

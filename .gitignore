@@ -9,6 +9,9 @@
 _MACOSX
 *.db
 
+# Don't ignore GitHub documentation
+!.github
+
 # Ignore Gradle output
 /bin/
 /build/
