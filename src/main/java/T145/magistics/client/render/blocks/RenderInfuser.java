@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import T145.magistics.Magistics;
 import T145.magistics.client.lib.Render;
-import T145.magistics.client.particles.core.ParticleManager;
+import T145.magistics.client.particles.core.ParticleCreator;
 import T145.magistics.tiles.crafting.TileInfuser;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -28,7 +28,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
 			double yy = infuser.getPos().getY() + Render.W16;
 			double zz = infuser.getPos().getZ() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
-			ParticleManager.wispFX3(infuser.getWorld(), xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
+			ParticleCreator.wispFX3(xx, yy, zz, xx, yy + infuser.getWorld().rand.nextFloat(), zz, 0.1F, infuser.isDark() ? 5 : infuser.getWorld().rand.nextInt(5), false, 0);
 		}
 	}
 

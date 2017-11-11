@@ -5,7 +5,8 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -15,16 +16,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ParticleWisp extends Particle {
 
-	public boolean shrink = true;
-	public boolean tinkle = false;
-	public int blendmode = 1;
-
+	private Entity target;
+	public boolean shrink;
 	private float moteParticleScale;
 	private int moteHalfLife;
-	private Entity target;
+	public boolean tinkle;
+	public int blendmode = 1;
 
-	public void setGravity(float gravity) {
-		particleGravity = gravity;
+	public void setGravity(float particleGravity) {
+		this.particleGravity = particleGravity;
+	}
+
+	public void canCollide(boolean canCollide) {
+		this.canCollide = canCollide;
 	}
 
 	public ParticleWisp(World world, double d, double d1, double d2, float f, float f1, float f2) {
@@ -47,16 +51,17 @@ public class ParticleWisp extends Particle {
 		moteParticleScale = particleScale;
 		particleMaxAge = ((int) (36.0D / (Math.random() * 0.3D + 0.7D)));
 		moteHalfLife = (particleMaxAge / 2);
-		setNoClip(false);
+		canCollide = true;
 		setSize(0.1F, 0.1F);
 
+		Entity renderentity = FMLClientHandler.instance().getClient().getRenderViewEntity();
 		int visibleDistance = 50;
+
 		if (!FMLClientHandler.instance().getClient().gameSettings.fancyGraphics) {
 			visibleDistance = 25;
 		}
 
-		Entity entity = FMLClientHandler.instance().getClient().getRenderViewEntity();
-		if (entity != null && entity.getDistance(posX, posY, posZ) > visibleDistance) {
+		if (renderentity.getDistance(posX, posY, posZ) > visibleDistance) {
 			particleMaxAge = 0;
 		}
 
@@ -145,12 +150,8 @@ public class ParticleWisp extends Particle {
 		}
 	}
 
-	public void setNoClip(boolean noClip) {
-		canCollide = noClip;
-	}
-
 	@Override
-	public void renderParticle(VertexBuffer buffer, Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void renderParticle(VertexBuffer wr, Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		float agescale = 0.0F;
 
 		if (shrink) {
@@ -180,10 +181,10 @@ public class ParticleWisp extends Particle {
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 
-		buffer.pos(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10).tex(var9, var11).color(particleRed, particleBlue, particleGreen, 0.5F).lightmap(j, k).endVertex();
-		buffer.pos(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10).tex(var9, var10).color(particleRed, particleBlue, particleGreen, 0.5F).lightmap(j, k).endVertex();
-		buffer.pos(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10).tex(var8, var10).color(particleRed, particleBlue, particleGreen, 0.5F).lightmap(j, k).endVertex();
-		buffer.pos(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10).tex(var8, var11).color(particleRed, particleBlue, particleGreen, 0.5F).lightmap(j, k).endVertex();
+		wr.pos(f11 - f1 * f10 - f4 * f10, f12 - f2 * f10, f13 - f3 * f10 - f5 * f10).tex(var9, var11).color(particleRed, particleGreen, particleBlue, 0.5F).lightmap(j, k).endVertex();
+		wr.pos(f11 - f1 * f10 + f4 * f10, f12 + f2 * f10, f13 - f3 * f10 + f5 * f10).tex(var9, var10).color(particleRed, particleGreen, particleBlue, 0.5F).lightmap(j, k).endVertex();
+		wr.pos(f11 + f1 * f10 + f4 * f10, f12 + f2 * f10, f13 + f3 * f10 + f5 * f10).tex(var8, var10).color(particleRed, particleGreen, particleBlue, 0.5F).lightmap(j, k).endVertex();
+		wr.pos(f11 + f1 * f10 - f4 * f10, f12 - f2 * f10, f13 + f3 * f10 - f5 * f10).tex(var8, var11).color(particleRed, particleGreen, particleBlue, 0.5F).lightmap(j, k).endVertex();
 	}
 
 	@Override
@@ -198,7 +199,7 @@ public class ParticleWisp extends Particle {
 		prevPosZ = posZ;
 
 		if (particleAge == 0 && tinkle && world.rand.nextInt(3) == 0) {
-			// worldObj.playSoundAtEntity(this, "random.orb", 0.02F, 0.5F * ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.6F + 2.0F));
+			world.playSound(posX, posY, posZ, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT, 0.02F, 0.5F * ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.6F + 2.0F), false);
 		}
 
 		if (particleAge++ >= particleMaxAge) {
@@ -207,8 +208,8 @@ public class ParticleWisp extends Particle {
 
 		motionY -= 0.04D * particleGravity;
 
-		if (!canCollide) {
-			pushOutOfBlocks(posX, posY, posZ);
+		if (canCollide) {
+			setPosition(posX, posY, posZ);
 		}
 
 		move(motionX, motionY, motionZ);
@@ -232,94 +233,18 @@ public class ParticleWisp extends Particle {
 			motionY += dy * d13;
 			motionZ += dz * d13;
 
-			motionX = MathHelper.clamp((float) motionX, -0.2F, 0.2F);
-			motionY = MathHelper.clamp((float) motionY, -0.2F, 0.2F);
-			motionZ = MathHelper.clamp((float) motionZ, -0.2F, 0.2F);
+			motionX = MathHelper.clamp(motionX, -0.2F, 0.2F);
+			motionY = MathHelper.clamp(motionY, -0.2F, 0.2F);
+			motionZ = MathHelper.clamp(motionZ, -0.2F, 0.2F);
 		} else {
-			motionX *= 0.9800000190734863D;
-			motionY *= 0.9800000190734863D;
-			motionZ *= 0.9800000190734863D;
+			motionX *= 0.98D;
+			motionY *= 0.98D;
+			motionZ *= 0.98D;
 
-			if (canCollide) {
-				motionX *= 0.699999988079071D;
-				motionZ *= 0.699999988079071D;
+			if (onGround) {
+				motionX *= 0.7D;
+				motionZ *= 0.7D;
 			}
 		}
-	}
-
-	protected boolean pushOutOfBlocks(double x, double y, double z) {
-		int xx = MathHelper.floor(x);
-		int yy = MathHelper.floor(y);
-		int zz = MathHelper.floor(z);
-		double diffX = x - xx;
-		double diffY = y - yy;
-		double diffZ = z - zz;
-
-		if (!world.isAirBlock(new BlockPos(xx, yy, zz)) && world.isBlockNormalCube(new BlockPos(xx, yy, zz), true) && !world.containsAnyLiquid(getBoundingBox())) {
-			boolean var16 = !world.isBlockNormalCube(new BlockPos(xx - 1, yy, zz), true);
-			boolean var17 = !world.isBlockNormalCube(new BlockPos(xx + 1, yy, zz), true);
-			boolean var18 = !world.isBlockNormalCube(new BlockPos(xx, yy - 1, zz), true);
-			boolean var19 = !world.isBlockNormalCube(new BlockPos(xx, yy + 1, zz), true);
-			boolean var20 = !world.isBlockNormalCube(new BlockPos(xx, yy, zz - 1), true);
-			boolean var21 = !world.isBlockNormalCube(new BlockPos(xx, yy, zz + 1), true);
-
-			byte var22 = -1;
-			double var23 = 9999.0D;
-
-			if ((var16) && (diffX < var23)) {
-				var23 = diffX;
-				var22 = 0;
-			}
-			if ((var17) && (1.0D - diffX < var23)) {
-				var23 = 1.0D - diffX;
-				var22 = 1;
-			}
-			if ((var18) && (diffY < var23)) {
-				var23 = diffY;
-				var22 = 2;
-			}
-			if ((var19) && (1.0D - diffY < var23)) {
-				var23 = 1.0D - diffY;
-				var22 = 3;
-			}
-			if ((var20) && (diffZ < var23)) {
-				var23 = diffZ;
-				var22 = 4;
-			}
-			if ((var21) && (1.0D - diffZ < var23)) {
-				var23 = 1.0D - diffZ;
-				var22 = 5;
-			}
-
-			float var25 = rand.nextFloat() * 0.05F + 0.025F;
-			float var26 = (rand.nextFloat() - rand.nextFloat()) * 0.1F;
-
-			if (var22 == 0) {
-				motionX = (-var25);
-				motionY = (motionZ = var26);
-			}
-			if (var22 == 1) {
-				motionX = var25;
-				motionY = (motionZ = var26);
-			}
-			if (var22 == 2) {
-				motionY = (-var25);
-				motionX = (motionZ = var26);
-			}
-			if (var22 == 3) {
-				motionY = var25;
-				motionX = (motionZ = var26);
-			}
-			if (var22 == 4) {
-				motionZ = (-var25);
-				motionY = (motionX = var26);
-			}
-			if (var22 == 5) {
-				motionZ = var25;
-				motionY = (motionX = var26);
-			}
-			return true;
-		}
-		return false;
 	}
 }
