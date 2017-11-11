@@ -1,4 +1,4 @@
-package T145.magistics.client.fx.particles;
+package T145.magistics.client.particles;
 
 import org.lwjgl.opengl.GL11;
 
@@ -9,14 +9,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ParticleWisp extends Particle {
 
-	public boolean shrink = false;
-	float moteParticleScale;
-	int moteHalfLife;
+	public boolean shrink = true;
 	public boolean tinkle = false;
 	public int blendmode = 1;
+
+	private float moteParticleScale;
+	private int moteHalfLife;
 	private Entity target;
 
 	public void setGravity(float gravity) {
@@ -105,6 +109,7 @@ public class ParticleWisp extends Particle {
 			particleRed = (0.7F + world.rand.nextFloat() * 0.3F);
 			particleGreen = (0.5F + world.rand.nextFloat() * 0.2F);
 			particleBlue = (0.3F + world.rand.nextFloat() * 0.1F);
+			break;
 		}
 	}
 

@@ -2,9 +2,10 @@ package T145.magistics.network.messages.client;
 
 import java.io.IOException;
 
-import T145.magistics.client.fx.FXCreator;
+import T145.magistics.client.particles.core.ParticleManager;
 import T145.magistics.network.messages.MessageBase;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,7 +62,7 @@ public class MessageSendWispFX extends MessageBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IMessage process(MessageContext context) {
-		FXCreator.customWispFX(FXCreator.getWorld(), x, y, z, destX, destY, destZ, gravity, type);
+		ParticleManager.customWispFX(FMLClientHandler.instance().getWorldClient(), x, y, z, destX, destY, destZ, gravity, type);
 		return null;
 	}
 }

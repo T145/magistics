@@ -3,11 +3,11 @@ package T145.magistics.network.messages.client;
 import java.io.IOException;
 
 import T145.magistics.api.magic.IQuintContainer;
-import T145.magistics.client.fx.FXCreator;
 import T145.magistics.network.messages.MessageBase;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,7 +44,7 @@ public class MessageQuintLevel extends MessageBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IMessage process(MessageContext context) {
-		World world = FXCreator.getWorld();
+		World world = FMLClientHandler.instance().getWorldClient();
 		IQuintContainer container = (IQuintContainer) world.getTileEntity(pos);
 
 		if (container != null) {

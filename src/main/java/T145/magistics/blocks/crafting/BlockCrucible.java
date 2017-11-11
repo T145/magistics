@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
 
 import T145.magistics.blocks.MBlock;
 import T145.magistics.blocks.crafting.BlockCrucible.CrucibleType;
-import T145.magistics.client.fx.FXCreator;
 import T145.magistics.client.lib.Render;
+import T145.magistics.client.particles.core.ParticleManager;
 import T145.magistics.tiles.crafting.TileCrucible;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -103,7 +103,7 @@ public class BlockCrucible extends MBlock<CrucibleType> {
 		TileCrucible crucible = (TileCrucible) world.getTileEntity(pos);
 
 		if (crucible.isNormal()) {
-			FXCreator.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
+			ParticleManager.smallGreenFlameFX(world, pos.getX() + 0.2F + rand.nextFloat() * 0.6F, pos.getY() + 0.1F, pos.getZ() + 0.2F + rand.nextFloat() * 0.6F);
 		}
 	}
 
