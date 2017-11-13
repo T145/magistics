@@ -11,7 +11,7 @@
 ### Check lists (check `x` in `[ ]` of list items)
 
 - [ ] Building successful
-- [ ] Coding style (indentation, etc)
+- [ ] Proper formatting (indentation, etc)
 
 ### Additional Comments (if any)
 

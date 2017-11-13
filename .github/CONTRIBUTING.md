@@ -1,4 +1,9 @@
 ### Thank you for wanting to contribute to Magistics!
+***
+
+This project is made specifically for the community and mainstream use!
+If you see something wrong with it or want to add a new feature, then please fork it and make a contribution.
+
 ---
 
 Please keep the following things in mind when committing:
