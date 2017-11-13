@@ -1,10 +1,11 @@
-package T145.magistics.items;
+package T145.magistics.items.research;
 
+import T145.magistics.api.research.ResearchType;
+import T145.magistics.items.MItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.World;
 
 public class ItemDiscovery extends MItem {
@@ -13,23 +14,10 @@ public class ItemDiscovery extends MItem {
 		super("research_discovery", ResearchType.getTypes());
 	}
 
-	// unlock/discover researched object when right-clicked/activated
+	// show the research page when right-clicked; already discovered
+	// craft w/ codex arcanum to add the entry
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		return super.onItemRightClick(world, player, hand);
-	}
-
-	public static enum ResearchType implements IStringSerializable {
-
-		LOST, FORBIDDEN, BLIGHTED, ELDRITCH;
-
-		public static String[] getTypes() {
-			return new String[] { "lost", "forbidden", "blighted", "eldritch" };
-		}
-
-		@Override
-		public String getName() {
-			return name().toLowerCase();
-		}
 	}
 }

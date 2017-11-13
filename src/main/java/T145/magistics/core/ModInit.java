@@ -7,7 +7,8 @@ import java.util.Random;
 import java.util.Set;
 
 import T145.magistics.Magistics;
-import T145.magistics.api.magic.Aspect;
+import T145.magistics.api.magic.QuintAspect;
+import T145.magistics.api.research.ResearchType;
 import T145.magistics.blocks.cosmetic.BlockCandle;
 import T145.magistics.blocks.cosmetic.BlockFloatingCandle;
 import T145.magistics.blocks.cosmetic.BlockNitor;
@@ -41,11 +42,12 @@ import T145.magistics.client.render.blocks.RenderFloatingCandle;
 import T145.magistics.client.render.blocks.RenderInfuser;
 import T145.magistics.client.render.blocks.RenderTank;
 import T145.magistics.client.render.blocks.RenderVoidBorder;
-import T145.magistics.items.ItemDiscovery;
-import T145.magistics.items.ItemDiscovery.ResearchType;
 import T145.magistics.items.ItemShard;
 import T145.magistics.items.ItemShard.ShardType;
 import T145.magistics.items.MItem;
+import T145.magistics.items.research.ItemCodexArcanum;
+import T145.magistics.items.research.ItemDiscovery;
+import T145.magistics.items.research.ItemScribingTools;
 import T145.magistics.tiles.cosmetic.TileFloatingCandle;
 import T145.magistics.tiles.cosmetic.TileVoidBorder;
 import T145.magistics.tiles.crafting.TileCrucible;
@@ -112,6 +114,9 @@ public class ModInit {
 
 	public static final ItemShard CRYSTAL_SHARD = new ItemShard("shard", true);
 	public static final ItemShard CRYSTAL_SHARD_FRAGMENT = new ItemShard("shard.fragment", false);
+
+	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools();
+	public static final ItemCodexArcanum CODEX_ARCANUM = new ItemCodexArcanum();
 	public static final MItem RESEARCH_NOTE = new MItem("research_note", ResearchType.getTypes());
 	public static final MItem RESEARCH_THEORY = new MItem("research_theory", ResearchType.getTypes());
 	public static final ItemDiscovery RESEARCH_DISCOVERY = new ItemDiscovery();
@@ -185,7 +190,7 @@ public class ModInit {
 	public static HashMap<Integer, Integer> dimensionBlacklist = new HashMap();
 	public static HashMap<Integer, Integer> biomeBlacklist = new HashMap();
 
-	public static void registerBiomeInfo(BiomeDictionary.Type type, float auraLevel, Aspect tag, boolean greatwood, float greatwoodchance) {
+	public static void registerBiomeInfo(BiomeDictionary.Type type, float auraLevel, QuintAspect tag, boolean greatwood, float greatwoodchance) {
 		biomeInfo.put(type, Arrays.asList(new Object[] { auraLevel, tag, greatwood, greatwoodchance }));
 	}
 
@@ -208,10 +213,10 @@ public class ModInit {
 		return 0.5F;
 	}
 
-	public static Aspect getRandomBiomeTag(int biomeId, Random random) {
+	public static QuintAspect getRandomBiomeTag(int biomeId, Random random) {
 		try {
 			Set<Type> types = BiomeDictionary.getTypes(Biome.getBiome(biomeId));
-			return (Aspect) biomeInfo.get(random.nextInt(types.size())).get(1);
+			return (QuintAspect) biomeInfo.get(random.nextInt(types.size())).get(1);
 		} catch (Exception err) {
 			Magistics.LOG.catching(err);
 		}
@@ -364,41 +369,41 @@ public class ModInit {
 			//BiomeDictionary.registerBiomeType(BLIGHTLAND, new BiomeDictionary.Type[] { BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.WASTELAND });
 			//BiomeDictionary.registerBiomeType(MAGICAL_FOREST, new BiomeDictionary.Type[] { BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.FOREST });
 
-			registerBiomeInfo(BiomeDictionary.Type.WATER, 0.33F, Aspect.WATER, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.OCEAN, 0.33F, Aspect.WATER, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.RIVER, 0.4F, Aspect.WATER, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.WET, 0.4F, Aspect.WATER, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.LUSH, 0.5F, Aspect.WATER, true, 0.5F);
+			registerBiomeInfo(BiomeDictionary.Type.WATER, 0.33F, QuintAspect.WATER, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.OCEAN, 0.33F, QuintAspect.WATER, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.RIVER, 0.4F, QuintAspect.WATER, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.WET, 0.4F, QuintAspect.WATER, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.LUSH, 0.5F, QuintAspect.WATER, true, 0.5F);
 
-			registerBiomeInfo(BiomeDictionary.Type.HOT, 0.33F, Aspect.FIRE, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.DRY, 0.25F, Aspect.FIRE, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.NETHER, 0.125F, Aspect.FIRE, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.MESA, 0.33F, Aspect.FIRE, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.SPOOKY, 0.5F, Aspect.FIRE, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.HOT, 0.33F, QuintAspect.FIRE, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.DRY, 0.25F, QuintAspect.FIRE, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.NETHER, 0.125F, QuintAspect.FIRE, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.MESA, 0.33F, QuintAspect.FIRE, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SPOOKY, 0.5F, QuintAspect.FIRE, false, 0.0F);
 
-			registerBiomeInfo(BiomeDictionary.Type.DENSE, 0.4F, Aspect.MAGIC, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.SNOWY, 0.25F, Aspect.MAGIC, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.COLD, 0.25F, Aspect.MAGIC, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.MUSHROOM, 0.75F, Aspect.MAGIC, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.MAGICAL, 0.75F, Aspect.MAGIC, true, 1.0F);
+			registerBiomeInfo(BiomeDictionary.Type.DENSE, 0.4F, QuintAspect.MAGIC, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SNOWY, 0.25F, QuintAspect.MAGIC, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.COLD, 0.25F, QuintAspect.MAGIC, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.MUSHROOM, 0.75F, QuintAspect.MAGIC, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.MAGICAL, 0.75F, QuintAspect.MAGIC, true, 1.0F);
 
-			registerBiomeInfo(BiomeDictionary.Type.CONIFEROUS, 0.33F, Aspect.EARTH, true, 0.2F);
-			registerBiomeInfo(BiomeDictionary.Type.FOREST, 0.5F, Aspect.EARTH, true, 1.0F);
-			registerBiomeInfo(BiomeDictionary.Type.SANDY, 0.25F, Aspect.EARTH, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.BEACH, 0.3F, Aspect.EARTH, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.JUNGLE, 0.6F, Aspect.EARTH, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.CONIFEROUS, 0.33F, QuintAspect.EARTH, true, 0.2F);
+			registerBiomeInfo(BiomeDictionary.Type.FOREST, 0.5F, QuintAspect.EARTH, true, 1.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SANDY, 0.25F, QuintAspect.EARTH, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.BEACH, 0.3F, QuintAspect.EARTH, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.JUNGLE, 0.6F, QuintAspect.EARTH, false, 0.0F);
 
-			registerBiomeInfo(BiomeDictionary.Type.SAVANNA, 0.25F, Aspect.AIR, true, 0.2F);
-			registerBiomeInfo(BiomeDictionary.Type.MOUNTAIN, 0.3F, Aspect.AIR, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.HILLS, 0.33F, Aspect.AIR, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.PLAINS, 0.3F, Aspect.AIR, true, 0.2F);
-			registerBiomeInfo(BiomeDictionary.Type.END, 0.125F, Aspect.AIR, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SAVANNA, 0.25F, QuintAspect.AIR, true, 0.2F);
+			registerBiomeInfo(BiomeDictionary.Type.MOUNTAIN, 0.3F, QuintAspect.AIR, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.HILLS, 0.33F, QuintAspect.AIR, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.PLAINS, 0.3F, QuintAspect.AIR, true, 0.2F);
+			registerBiomeInfo(BiomeDictionary.Type.END, 0.125F, QuintAspect.AIR, false, 0.0F);
 
-			registerBiomeInfo(BiomeDictionary.Type.DRY, 0.125F, Aspect.VOID, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.SPARSE, 0.2F, Aspect.VOID, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.SWAMP, 0.5F, Aspect.VOID, true, 0.2F);
-			registerBiomeInfo(BiomeDictionary.Type.WASTELAND, 0.125F, Aspect.VOID, false, 0.0F);
-			registerBiomeInfo(BiomeDictionary.Type.DEAD, 0.1F, Aspect.VOID, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.DRY, 0.125F, QuintAspect.VOID, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SPARSE, 0.2F, QuintAspect.VOID, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.SWAMP, 0.5F, QuintAspect.VOID, true, 0.2F);
+			registerBiomeInfo(BiomeDictionary.Type.WASTELAND, 0.125F, QuintAspect.VOID, false, 0.0F);
+			registerBiomeInfo(BiomeDictionary.Type.DEAD, 0.1F, QuintAspect.VOID, false, 0.0F);
 
 			Magistics.LOG.info("Registered Biomes!");
 		}
@@ -536,6 +541,9 @@ public class ModInit {
 				registerItemModel(RESEARCH_THEORY, type.ordinal(), "research/theory/" + type.getName());
 				registerItemModel(RESEARCH_DISCOVERY, type.ordinal(), "research/discovery/" + type.getName());
 			}
+
+			registerItemModel(SCRIBING_TOOLS, 0, "scribing_tools");
+			registerItemModel(CODEX_ARCANUM, 0, "codex_arcanum");
 		}
 	}
 }
