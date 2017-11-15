@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import T145.magistics.api.MagisticsApi;
 import T145.magistics.api.crafting.InfuserRecipe;
-import T145.magistics.api.magic.IQuintContainer;
+import T145.magistics.api.magic.IQuintHandler;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.blocks.crafting.BlockInfuser.InfuserType;
 import T145.magistics.core.ModInit;
@@ -19,7 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileInfuser extends TileInventory implements ITickable, IQuintContainer {
+public class TileInfuser extends TileInventory implements ITickable, IQuintHandler {
 
 	public static final EnumFacing[] VALID_SIDES = new EnumFacing[] { EnumFacing.DOWN, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.WEST };
 
@@ -28,7 +28,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 	private InfuserType type;
 	private EnumFacing front;
-	private float quints;
 	private int suction;
 	private int soundTicks;
 	private int boost;
@@ -58,14 +57,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 
 	public boolean isDark() {
 		return type.isDark();
-	}
-
-	public boolean isFull() {
-		return quints == getCapacity();
-	}
-
-	public boolean isEmpty() {
-		return quints == 0;
 	}
 
 	public boolean canConnect(EnumFacing facing) {
@@ -98,21 +89,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 	}
 
 	@Override
-	public float getQuints() {
-		return quints;
-	}
-
-	@Override
-	public void setQuints(float quints) {
-		this.quints = quints;
-	}
-
-	@Override
-	public float getCapacity() {
-		return 150F;
-	}
-
-	@Override
 	public int getSuction() {
 		return suction;
 	}
@@ -132,7 +108,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 		nbt.setString("Type", type.toString());
 		nbt.setInteger("Facing", front.getIndex());
 		nbt.setInteger("Suction", suction);
-		nbt.setFloat("Quints", quints);
 		nbt.setFloat("Progress", progress);
 		nbt.setFloat("QuintCost", quintCost);
 	}
@@ -142,7 +117,6 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 		type = InfuserType.valueOf(nbt.getString("Type"));
 		front = EnumFacing.getFront(nbt.getInteger("Facing"));
 		suction = nbt.getInteger("Suction");
-		quints = nbt.getFloat("Quints");
 		progress = nbt.getFloat("Progress");
 		quintCost = nbt.getFloat("QuintCost");
 	}
@@ -153,19 +127,14 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 			return;
 		}
 
-		setSuction(0);
-
 		if (soundTicks > 0) {
 			--soundTicks;
 		}
 
 		if (isCrafting()) {
 			sendCraftingProgressPacket();
-		}
-
-		if (!isFull()) {
-			quints += QuintHelper.fillWithQuints(world, pos, 0.5F + 0.05F * boost, true);
-			//Magistics.LOG.info("Quints: " + quints);
+		} else {
+			setSuction(0);
 		}
 
 		/*
@@ -177,8 +146,7 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 		InfuserRecipe recipe = MagisticsApi.getMatchingInfuserRecipe(getItemHandler().getStacks(), isDark());
 
 		if (!world.isBlockPowered(pos) && canCraft(recipe)) {
-			quintCost = recipe.getCost();
-			progress += QuintHelper.drainQuints(this, Math.min(0.5F + 0.05F * boost, quintCost - progress + 0.01F), true);
+			progress += QuintHelper.fill(this, Math.min(0.5F + 0.05F * boost, quintCost - progress + 0.01F), true);
 
 			if (soundTicks == 0 && progress > 0.025F) {
 				soundTicks = 62;
@@ -214,22 +182,28 @@ public class TileInfuser extends TileInventory implements ITickable, IQuintConta
 	}
 
 	public boolean canCraft(InfuserRecipe recipe) {
-		if (recipe != null && quints <= recipe.getCost()) {
-			ItemStack result = recipe.getResult();
-
-			if (result.isEmpty()) {
-				return false;
-			} else if (getItemHandler().getStackInSlot(0).isEmpty()) {
-				return true;
-			} else if (!MagisticsApi.areItemStacksEqual(result, getItemHandler().getStackInSlot(0))) {
-				return false;
-			} else {
-				int resultCount = getItemHandler().getStackInSlot(0).getCount() + result.getCount();
-				return resultCount <= getItemHandler().getSlotLimit(0) && resultCount <= result.getMaxStackSize();
-			}
+		if (recipe == null) {
+			return false;
 		}
 
-		return false;
+		quintCost = recipe.getCost();
+
+		if (!(QuintHelper.fill(this, quintCost, false) > 0F)) {
+			return false;
+		}
+
+		ItemStack result = recipe.getResult();
+
+		if (result.isEmpty()) {
+			return false;
+		} else if (getItemHandler().getStackInSlot(0).isEmpty()) {
+			return true;
+		} else if (!MagisticsApi.areItemStacksEqual(result, getItemHandler().getStackInSlot(0))) {
+			return false;
+		} else {
+			int resultCount = getItemHandler().getStackInSlot(0).getCount() + result.getCount();
+			return resultCount <= getItemHandler().getSlotLimit(0) && resultCount <= result.getMaxStackSize();
+		}
 	}
 
 	private void addResult(InfuserRecipe invRecipe) {

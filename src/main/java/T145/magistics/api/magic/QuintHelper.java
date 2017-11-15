@@ -12,13 +12,13 @@ public class QuintHelper {
 	private QuintHelper() {}
 
 	@Nullable
-	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing side) {
+	public static IQuintHandler getConnectedHandler(World world, BlockPos pos, EnumFacing side) {
 		TileEntity currentTile = world.getTileEntity(pos);
 		TileEntity neighborTile = world.getTileEntity(pos.offset(side));
 
-		if (currentTile instanceof IQuintContainer && neighborTile instanceof IQuintContainer) {
-			IQuintContainer current = (IQuintContainer) currentTile;
-			IQuintContainer neighbor = (IQuintContainer) neighborTile;
+		if (currentTile instanceof IQuintHandler && neighborTile instanceof IQuintHandler) {
+			IQuintHandler current = (IQuintHandler) currentTile;
+			IQuintHandler neighbor = (IQuintHandler) neighborTile;
 
 			if (current.canConnectAtSide(side) && neighbor.canConnectAtSide(side.getOpposite())) {
 				return neighbor;
@@ -28,7 +28,12 @@ public class QuintHelper {
 		return null;
 	}
 
-	public static float drainQuints(IQuintContainer container, float amount, boolean doDrain) {
+	@Nullable
+	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing side) {
+		return (IQuintContainer) getConnectedHandler(world, pos, side);
+	}
+
+	public static float drain(IQuintContainer container, float amount, boolean doDrain) {
 		float drainAmount = Math.min(amount, container.getQuints());
 
 		if (drainAmount < 0.001F) {
@@ -42,19 +47,17 @@ public class QuintHelper {
 		return drainAmount;
 	}
 
-	public static float fillWithQuints(World world, BlockPos pos, float amount, boolean doDrain) {
-		TileEntity destTile = world.getTileEntity(pos);
+	public static float fill(TileEntity dest, float amount, boolean doDrain) {
 		float total = 0F;
 
-		if (destTile instanceof IQuintContainer) {
-			IQuintContainer dest = (IQuintContainer) world.getTileEntity(pos);
-			dest.setSuction(dest.MAX_SUCTION);
+		if (dest instanceof IQuintHandler) {
+			((IQuintHandler) dest).setSuction(IQuintHandler.MAX_SUCTION);
 
 			for (EnumFacing side : EnumFacing.VALUES) {
-				IQuintContainer container = getConnectedContainer(world, pos, side);
+				IQuintContainer container = getConnectedContainer(dest.getWorld(), dest.getPos(), side);
 
 				if (container != null) {
-					total = drainQuints(container, amount, doDrain);
+					total = drain(container, amount, doDrain);
 				}
 
 				if (total >= amount) {

@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class TileSynchronized extends TileEntity {
 
 	public boolean isConnected(EnumFacing side) {
-		return QuintHelper.getConnectedContainer(world, pos, side) != null;
+		return QuintHelper.getConnectedHandler(world, pos, side) != null;
 	}
 
 	@Override

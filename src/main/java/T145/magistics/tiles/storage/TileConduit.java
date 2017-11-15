@@ -1,7 +1,7 @@
 package T145.magistics.tiles.storage;
 
-import T145.magistics.Magistics;
 import T145.magistics.api.magic.IQuintContainer;
+import T145.magistics.api.magic.IQuintHandler;
 import T145.magistics.api.magic.QuintHelper;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageQuintLevel;
@@ -71,17 +71,18 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 			return;
 		}
 
-		IQuintContainer neighbor = QuintHelper.getConnectedContainer(world, pos, EnumFacing.getFront(faceIndex));
+		IQuintHandler handler = QuintHelper.getConnectedHandler(world, pos, EnumFacing.getFront(faceIndex));
 
-		Magistics.LOG.info("Phase: " + phase.name());
-		Magistics.LOG.info("Suction: " + suction);
+		if (handler != null) {
+			int neighborSuction = handler.getSuction() - 1;
 
-		if (neighbor != null && faceIndex < 6) {
-			if (phase.isCalculation() && suction < neighbor.getSuction() - 1) {
-				setSuction(neighbor.getSuction() - 1);
+			if (phase.isCalculation() && suction < neighborSuction) {
+				setSuction(neighborSuction);
 			}
 
-			if (phase.isDistribution()) {
+			if (phase.isDistribution() && handler instanceof IQuintContainer) {
+				IQuintContainer neighbor = (IQuintContainer) handler;
+
 				if (suction > neighbor.getSuction()) {
 					if (quints < getCapacity() && neighbor.getQuints() > 0) {
 						++quints;
@@ -91,8 +92,10 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 					neighbor.setQuints(neighbor.getQuints() + 1);
 				}
 			}
-		} else if (faceIndex == 6) {
-			faceIndex = 0;
+		}
+
+		if (faceIndex == 6) {
+			faceIndex = -1;
 
 			if (phase.isDistribution()) {
 				setSuction(0);
