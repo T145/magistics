@@ -1,34 +1,19 @@
 package T145.magistics.api.research;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchCategory {
 
-	public int minDisplayColumn;
-	public int minDisplayRow;
-	public int maxDisplayColumn;
-	public int maxDisplayRow;
-
 	private final String key;
+	private final String name;
 	private final ResourceLocation icon;
 	private final ResourceLocation background;
-	private final List<ResearchEntry> entries;
 
-	public ResearchCategory(String key, ResourceLocation icon, ResourceLocation background, ResearchEntry... entries) {
+	public ResearchCategory(String key, String name, ResourceLocation icon, ResourceLocation background) {
 		this.key = key;
+		this.name = name;
 		this.icon = icon;
 		this.background = background;
-		this.entries = new ArrayList<ResearchEntry>();
-
-		if (entries.length > 0) {
-			for (ResearchEntry entry : entries) {
-				this.entries.add(entry);
-			}
-		}
 	}
 
 	public String getKey() {
@@ -36,7 +21,7 @@ public class ResearchCategory {
 	}
 
 	public String getName() {
-		return I18n.format("magistics.research_category" + key);
+		return name;
 	}
 
 	public ResourceLocation getIcon() {

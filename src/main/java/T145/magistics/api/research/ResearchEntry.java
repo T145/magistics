@@ -1,49 +1,85 @@
 package T145.magistics.api.research;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.client.resources.I18n;
 
 public class ResearchEntry {
 
-	private final List<ResearchEntry> dependencies;
-	private final ResearchType type;
-	private final String text;
-	private final short x;
-	private final short y;
+	private final String key;
+	private final String name;
+	private final String title;
+	private final List<ResearchEntry> parents;
+	private final List<ResearchEntry> children;
+	private final short displayX;
+	private final short displayY;
+	private final List<String> pages;
+	private ResearchType type;
 
-	public ResearchEntry(ResearchType type, String text, short x, short y, ResearchEntry... dependencies) {
-		this.type = type;
-		this.text = text;
-		this.x = x;
-		this.y = y;
-		this.dependencies = new ArrayList<ResearchEntry>();
-
-		if (dependencies.length > 0) {
-
-			// will be O(1) a majority of the time, as most ppl only add one dependency
-			for (ResearchEntry dependency : dependencies) {
-				this.dependencies.add(dependency);
-			}
-		}
+	public ResearchEntry(String key, String name, String title, List<ResearchEntry> parents, List<ResearchEntry> children, short displayX, short displayY, List<String> pages) {
+		this.key = key;
+		this.name = name;
+		this.title = title;
+		this.parents = parents;
+		this.children = children;
+		this.displayX = displayX;
+		this.displayY = displayY;
+		this.pages = pages;
 	}
 
-	public List<ResearchEntry> getDependencies() {
-		return dependencies;
+	public String getKey() {
+		return key;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getLocalizedName() {
+		return I18n.format(name);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getLocalizedTitle() {
+		return I18n.format(title);
+	} 
+
+	public List<ResearchEntry> getParents() {
+		return parents;
+	}
+
+	public List<ResearchEntry> getChildren() {
+		return children;
+	}
+
+	public short getDisplayX() {
+		return displayX;
+	}
+
+	public short getDisplayY() {
+		return displayY;
+	}
+
+	public List<String> getPages() {
+		return pages;
 	}
 
 	public ResearchType getType() {
 		return type;
 	}
 
-	public String getText() {
-		return text;
+	public void setType(ResearchType type) {
+		this.type = type;
 	}
 
-	public short getX() {
-		return x;
+	public boolean hasType(ResearchType type) {
+		return this.type == type;
 	}
 
-	public short getY() {
-		return y;
+	public boolean isGeneric() {
+		return this.type == null;
 	}
 }
