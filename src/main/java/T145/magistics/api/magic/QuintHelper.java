@@ -30,7 +30,13 @@ public class QuintHelper {
 
 	@Nullable
 	public static IQuintContainer getConnectedContainer(World world, BlockPos pos, EnumFacing side) {
-		return (IQuintContainer) getConnectedHandler(world, pos, side);
+		IQuintHandler handler = getConnectedHandler(world, pos, side);
+
+		if (handler instanceof IQuintContainer) {
+			return (IQuintContainer) handler;
+		}
+
+		return null;
 	}
 
 	public static float drain(IQuintContainer container, float amount, boolean doDrain) {

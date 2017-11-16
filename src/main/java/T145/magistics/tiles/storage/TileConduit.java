@@ -3,6 +3,7 @@ package T145.magistics.tiles.storage;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.api.magic.IQuintHandler;
 import T145.magistics.api.magic.QuintHelper;
+import T145.magistics.blocks.storage.BlockConduit;
 import T145.magistics.network.PacketHandler;
 import T145.magistics.network.messages.client.MessageQuintLevel;
 import T145.magistics.tiles.base.TileSynchronized;
@@ -12,14 +13,8 @@ import net.minecraft.util.ITickable;
 
 public class TileConduit extends TileSynchronized implements ITickable, IQuintContainer {
 
-	private ConduitPhase phase;
 	private float quints;
 	private int suction;
-	private int faceIndex;
-
-	public TileConduit() {
-		this.phase = ConduitPhase.CALCULATING;
-	}
 
 	@Override
 	public boolean canConnectAtSide(EnumFacing side) {
@@ -53,14 +48,12 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound nbt) {
-		nbt.setString("Phase", phase.toString());
 		nbt.setFloat("Quints", quints);
 		nbt.setInteger("Suction", suction);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound nbt) {
-		phase = ConduitPhase.valueOf(nbt.getString("Phase"));
 		setQuints(nbt.getFloat("Quints"));
 		setSuction(nbt.getInteger("Suction"));
 	}
@@ -71,57 +64,45 @@ public class TileConduit extends TileSynchronized implements ITickable, IQuintCo
 			return;
 		}
 
-		IQuintHandler handler = QuintHelper.getConnectedHandler(world, pos, EnumFacing.getFront(faceIndex));
+		setSuction(0);
 
-		if (handler != null) {
-			int neighborSuction = handler.getSuction() - 1;
+		for (int side = 0; side < EnumFacing.VALUES.length; ++side) {
+			boolean connected = getState().getValue(BlockConduit.CONNECTIONS.get(side));
 
-			if (phase.isCalculation() && suction < neighborSuction) {
-				setSuction(neighborSuction);
-			}
+			if (connected) {
+				IQuintHandler handler = QuintHelper.getConnectedHandler(world, pos, EnumFacing.getFront(side));
 
-			if (phase.isDistribution() && handler instanceof IQuintContainer) {
-				IQuintContainer neighbor = (IQuintContainer) handler;
+				if (handler != null) {
+					int neighborSuction = handler.getSuction() - 1;
 
-				if (suction > neighbor.getSuction()) {
-					if (quints < getCapacity() && neighbor.getQuints() > 0) {
-						++quints;
-						neighbor.setQuints(neighbor.getQuints() - 1);
+					if (suction < neighborSuction) {
+						setSuction(neighborSuction);
 					}
-				} else if (quints > 0 && neighbor.getQuints() < neighbor.getCapacity()) {
-					neighbor.setQuints(neighbor.getQuints() + 1);
 				}
 			}
 		}
 
-		if (faceIndex == 6) {
-			faceIndex = -1;
+		if (suction > 0) {
+			for (int side = 0; side < EnumFacing.VALUES.length; ++side) {
+				boolean connected = getState().getValue(BlockConduit.CONNECTIONS.get(side));
 
-			if (phase.isDistribution()) {
-				setSuction(0);
-				PacketHandler.sendToAllAround(new MessageQuintLevel(pos, quints, suction), world, pos);
+				if (connected) {
+					IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, EnumFacing.getFront(side));
+
+					if (container != null) {
+						if (suction > container.getSuction()) {
+							if (quints < getCapacity() && container.getQuints() > 0) {
+								++quints;
+								container.setQuints(container.getQuints() - 1);
+							}
+						} else if (quints > 0 && container.getQuints() < container.getCapacity()) {
+							container.setQuints(container.getQuints() + 1);
+						}
+
+						PacketHandler.sendToAllAround(new MessageQuintLevel(pos, quints, suction), world, pos);
+					}
+				}
 			}
-
-			phase = phase.shift();
-		}
-
-		++faceIndex;
-	}
-
-	private static enum ConduitPhase {
-		CALCULATING,
-		DISTRIBUTING;
-
-		public boolean isCalculation() {
-			return this == CALCULATING;
-		}
-
-		public boolean isDistribution() {
-			return this == DISTRIBUTING;
-		}
-
-		public ConduitPhase shift() {
-			return this == CALCULATING ? DISTRIBUTING : CALCULATING;
 		}
 	}
 }
