@@ -4,7 +4,7 @@ import net.minecraft.util.IStringSerializable;
 
 public enum QuintAspect implements IStringSerializable {
 
-	AIR("aer", 16777086, "e", 1), EARTH("terra", 5685248, "2", 1), FIRE("ignis", 16734721, "c", 1), WATER("aqua", 3986684, "3", 1), VOID("vacuos", 8947848, 771), MAGIC("praecantatio", 13566207);
+	AIR("aer", 16777086, "e", 1), EARTH("terra", 5685248, "2", 1), FIRE("ignis", 16734721, "c", 1), WATER("aqua", 3986684, "3", 1), VOID("vocivus", 8947848, 771), MAGIC("praecantatio", 13566207);
 
 	private final String tag;
 	private final int color;

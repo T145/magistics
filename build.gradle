@@ -9,7 +9,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
 	}
 }
 
@@ -21,16 +21,20 @@ plugins {
 repositories {
 	mavenCentral()
 	maven {
-		name 'Mobius Repo'
+		name 'Tehnut Repo'
 		url 'http://tehnut.info/maven'
-	}
-	maven {
-		name 'JEI Repo'
-		url 'http://modmaven.k-4u.nl/'
 	}
 	maven {
 		name 'Progwm16 Repo'
 		url 'http://dvs1.progwml6.com/files/maven'
+	}
+	maven {
+		name 'CoFH Repo'
+		url 'http://maven.covers1624.net'
+	}
+	maven {
+		name 'ChickenBones Repo'
+		url 'http://chickenbones.net/maven'
 	}
 }
 
@@ -66,16 +70,6 @@ archivesBaseName = mod_id
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-compileJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
-
-compileApiJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
-
 minecraft {
 	version = forge_version
 	mappings = forge_mappings
@@ -83,14 +77,19 @@ minecraft {
 	useDepAts = true
 	makeObfSourceJar = false
 	
-	replaceIn 'Magistics.java'
+	replaceIn "${mod_id}.java"
 	replace "$version", project.version
 }
 
 dependencies {
-	deobfCompile 'mezz.jei:jei_1.11.2:4.5.0.287'
-	deobfCompile 'mcp.mobius.waila:Hwyla:1.8.17-B31_1.11'
-	deobfCompile 'cpw.mods:ironchest:1.11.2-7.0.21.806'
+	//deobfCompile 'mezz.jei:jei_1.12.2:4.8.0.114'
+	deobfCompile 'mcp.mobius.waila:Hwyla:1.8.22-B37_1.12'
+	deobfCompile 'codechicken:CodeChickenLib:1.12-3.1.3.313:deobf'
+	
+	deobfCompile 'cofh:RedstoneFlux:1.12-2.0.1.2:universal' // required by CoFHCore
+	deobfCompile 'cofh:CoFHCore:1.12-4.3.6.14:universal' // required by ThermalFoundation
+	deobfCompile 'cofh:CoFHWorld:1.12-1.0.1.8:universal' // required by ThermalFoundation
+	deobfCompile 'cofh:ThermalFoundation:1.12-2.3.6.16:universal'
 }
 
 processResources {

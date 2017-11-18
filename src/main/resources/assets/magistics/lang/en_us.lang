@@ -1,0 +1,7 @@
+itemGroup.magistics=Magistics
+
+tile.magistics.crucible.name=Crucible
+tile.magistics.conduit.name=Conduit
+tile.magistics.quint_tank.name=Quintessence Tank
+tile.magistics.infuser.light.name=Infuser
+tile.magistics.infuser.dark.name=Dark Infuser

@@ -9,11 +9,6 @@
         "uvlock": true
     },
     "variants": {
-        "inventory": [
-            {
-                "model": "magistics:conduit_inv"
-            }
-        ],
         "down": {
             "true": {
                 "submodel": {
@@ -102,6 +97,11 @@
             },
             "false": {
             }
-        }
+        },
+        "inventory": [
+            {
+                "model": "magistics:conduit_inv"
+            }
+        ]
     }
 }
