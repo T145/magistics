@@ -1,5 +1,6 @@
 package T145.magistics.core;
 
+import T145.magistics.client.render.RenderCrucible;
 import T145.magistics.common.blocks.BlockConduit;
 import T145.magistics.common.blocks.BlockCrucible;
 import T145.magistics.common.blocks.base.BlockItemBase;
@@ -15,6 +16,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -222,7 +224,7 @@ public class ModInit {
 		}
 
 		private static void registerTileRenderers() {
-			// TODO Implement
+			ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 		}
 
 		private static void registerItemRenderers() {

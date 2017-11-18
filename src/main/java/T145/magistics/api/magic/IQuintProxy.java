@@ -24,7 +24,7 @@ public interface IQuintProxy {
 	 *            If false, the fill will only be simulated.
 	 * @return Amount of quintessence that was accepted by the proxy.
 	 */
-	int fill(int amount, boolean doFill);
+	float fill(float amount, boolean doFill);
 
 	/**
 	 *
@@ -34,5 +34,5 @@ public interface IQuintProxy {
 	 *            If false, the drain will only be simulated.
 	 * @return Amount of quintessence that was removed from the proxy.
 	 */
-	int drain(int amount, boolean doDrain);
+	float drain(float amount, boolean doDrain);
 }

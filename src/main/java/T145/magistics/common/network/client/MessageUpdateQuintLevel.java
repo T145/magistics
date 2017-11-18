@@ -17,25 +17,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class MessageUpdateQuintLevel extends MessageBase {
 
 	private BlockPos pos;
+	private float quints;
 
 	public MessageUpdateQuintLevel() {}
 
-	public MessageUpdateQuintLevel(BlockPos pos) {
+	public MessageUpdateQuintLevel(BlockPos pos, float quints) {
 		this.pos = pos;
+		this.quints = quints;
 	}
 
-	public MessageUpdateQuintLevel(TileEntity tile) {
-		this(tile.getPos());
+	public MessageUpdateQuintLevel(TileEntity tile, float quints) {
+		this(tile.getPos(), quints);
 	}
 
 	@Override
 	public void serialize(PacketBuffer buffer) {
 		buffer.writeBlockPos(pos);
+		buffer.writeFloat(quints);
 	}
 
 	@Override
 	public void deserialize(PacketBuffer buffer) throws IOException {
 		pos = buffer.readBlockPos();
+		quints = buffer.readFloat();
 	}
 
 	@Override
@@ -46,7 +50,7 @@ public class MessageUpdateQuintLevel extends MessageBase {
 
 		if (tile instanceof IQuintContainer) {
 			IQuintContainer container = (IQuintContainer) tile;
-			container.setQuints(container.getQuints());
+			container.setQuints(quints);
 		}
 
 		return null;

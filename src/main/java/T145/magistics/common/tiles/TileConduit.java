@@ -9,7 +9,7 @@ import net.minecraft.util.ITickable;
 
 public class TileConduit extends TileBase implements ITickable, IQuintContainer {
 
-	private int quints;
+	private float quints;
 
 	@Override
 	public FillPriority getPriority() {
@@ -22,38 +22,38 @@ public class TileConduit extends TileBase implements ITickable, IQuintContainer 
 	}
 
 	@Override
-	public int fill(int amount, boolean doFill) {
+	public float fill(float amount, boolean doFill) {
 		return 0;
 	}
 
 	@Override
-	public int drain(int amount, boolean doDrain) {
+	public float drain(float amount, boolean doDrain) {
 		return 0;
 	}
 
 	@Override
-	public int getQuints() {
+	public float getQuints() {
 		return quints;
 	}
 
 	@Override
-	public void setQuints(int quints) {
+	public void setQuints(float quints) {
 		this.quints = quints;
 	}
 
 	@Override
-	public int getCapacity() {
+	public float getCapacity() {
 		return 4;
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
-		tag.setInteger("Quints", quints);
+		tag.setFloat("Quints", quints);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
-		quints = tag.getInteger("Quints");
+		quints = tag.getFloat("Quints");
 	}
 
 	@Override

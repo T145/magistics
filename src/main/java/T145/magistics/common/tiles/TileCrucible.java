@@ -22,7 +22,7 @@ import net.minecraft.world.WorldServer;
 
 public class TileCrucible extends TileBase implements ITickable, IQuintContainer {
 
-	private int quints;
+	private float quints;
 	private int smeltTicks;
 	private int soundTicks;
 	private short updateTicks;
@@ -54,17 +54,17 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 	}
 
 	@Override
-	public int fill(int amount, boolean doFill) {
+	public float fill(float amount, boolean doFill) {
 		return 0; // can't fill this
 	}
 
 	@Override
-	public int drain(int amount, boolean doDrain) {
+	public float drain(float amount, boolean doDrain) {
 		if (isEmpty()) {
 			return 0;
 		}
 
-		int drainAmount = Math.min(amount, quints);
+		float drainAmount = Math.min(amount, quints);
 
 		if (doDrain) {
 			quints -= drainAmount;
@@ -74,32 +74,32 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 	}
 
 	@Override
-	public int getQuints() {
+	public float getQuints() {
 		return quints;
 	}
 
 	@Override
-	public void setQuints(int quints) {
+	public void setQuints(float quints) {
 		this.quints = quints;
 	}
 
 	@Override
-	public int getCapacity() {
-		return 20;
+	public float getCapacity() {
+		return 20F;
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
-		tag.setInteger("Quints", quints);
+		tag.setFloat("Quints", quints);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
-		quints = tag.getInteger("Quints");
+		quints = tag.getFloat("Quints");
 	}
 
 	public void updateQuintLevel() {
-		PacketHandler.sendToAllAround(new MessageUpdateQuintLevel(this), world, pos);
+		PacketHandler.sendToAllAround(new MessageUpdateQuintLevel(this, quints), world, pos);
 	}
 
 	@Override
@@ -108,7 +108,9 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 			return;
 		}
 
-		--smeltTicks;
+		if (smeltTicks > -1) {
+			--smeltTicks;
+		}
 
 		if (++updateTicks % 10 == 0) {
 			updateTicks = 0;
@@ -117,20 +119,20 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 
 		--soundTicks;
 
-		if (soundTicks <= 0) { // may be used for ambient dripping or boiling noise
+		if (soundTicks <= 0) { // may be used for ambient noise
 			soundTicks = 15 + world.rand.nextInt(15);
 		}
 
 		if (isOverflowing()) {
-			int spiltQuints = Math.min((quints - getCapacity()) / 2, 1);
+			float spiltQuints = Math.min((quints - getCapacity()) / 2F, 1F);
 
 			if (quints >= spiltQuints) {
 				quints -= spiltQuints;
 			}
 
-			if (spiltQuints >= 1) {
+			if (spiltQuints >= 1F) {
 				// discharge chunk aura
-				// generate fx
+				// generate particles
 			}
 
 			updateQuintLevel();
@@ -143,35 +145,33 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 
 	private void smeltContentsWithin() {
 		List<EntityItem> items = getItemsWithin();
-		smeltTicks = 5;
+		smeltTicks = 10;
 
 		if (!items.isEmpty()) {
 			EntityItem item = items.get(world.rand.nextInt(items.size()));
 			ItemStack stack = item.getItem();
-			int quintYield = RecipeRegistry.getCrucibleOutput(stack);
+			float yield = RecipeRegistry.getCrucibleOutput(stack);
 
-			if (quintYield > 0) {
+			if (yield > 0) {
 				// boost conversion rate iff above arcane furnace
+				//if (quints + yield <= getCapacity())
 
-				if (quints + quintYield <= getCapacity()) {
-					quints += quintYield /** 0.5F*/;
-					smeltTicks = 10 + Math.round(quintYield / 5F / 0.25F);
+				quints += yield * 0.5F;
+				smeltTicks = 10 + Math.round(yield / 5F / 0.25F);
 
-					// decrease smeltTicks iff above arcane furnace
-					// discharge chunk aura
+				// decrease smeltTicks iff above arcane furnace
+				// discharge chunk aura
 
-					stack.shrink(1);
+				stack.shrink(1);
 
-					if (stack.isEmpty()) {
-						item.setDead();
-					}
-
-					updateQuintLevel();
-					((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
-					world.playSound(null, pos, ModInit.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
+				if (stack.isEmpty()) {
+					item.setDead();
 				}
+
+				updateQuintLevel();
+				((WorldServer) world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
+				world.playSound(null, pos, ModInit.SOUND_BUBBLING, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
 			} else {
-				//ejectItem(item);
 				burnItem(item);
 			}
 		}
@@ -192,12 +192,5 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 		// discharge chunk aura
 		((WorldServer) world).spawnParticle(EnumParticleTypes.FLAME, false, item.posX, item.posY, item.posZ, 1, 0D, 0D, 0D, 0D);
 		world.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.MASTER, 0.25F, 0.9F + world.rand.nextFloat() * 0.2F);
-	}
-
-	public void ejectItem(EntityItem item) {
-		item.motionX = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
-		item.motionY = 0.2F + world.rand.nextFloat() * 0.3F;
-		item.motionZ = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F;
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.5F, 2F + world.rand.nextFloat() * 0.45F);
 	}
 }

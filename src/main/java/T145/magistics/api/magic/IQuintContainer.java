@@ -5,15 +5,15 @@ public interface IQuintContainer extends IQuintProxy {
 	/**
 	 * @return The amount of quintessence in this container.
 	 */
-	int getQuints();
+	float getQuints();
 
 	/**
 	 * Set amount of quintessence in this container.
 	 */
-	void setQuints(int quints);
+	void setQuints(float quints);
 
 	/**
 	 * @return Quintessence capacity of this IQuintContainer.
 	 */
-	int getCapacity();
+	float getCapacity();
 }

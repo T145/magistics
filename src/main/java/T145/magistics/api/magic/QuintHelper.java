@@ -39,8 +39,8 @@ public class QuintHelper {
 		return null;
 	}
 
-	public static int fill(TileEntity dest, int amount, boolean doDrain) {
-		int total = 0;
+	public static float fill(TileEntity dest, float amount, boolean doDrain) {
+		float total = 0F;
 
 		for (EnumFacing side : EnumFacing.VALUES) {
 			IQuintContainer container = getConnectedContainer(dest.getWorld(), dest.getPos(), side);
