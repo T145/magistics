@@ -1,6 +1,7 @@
 package T145.magistics.common.network;
 
 import T145.magistics.common.network.base.MessageBase;
+import T145.magistics.common.network.client.MessageUpdateQuintLevel;
 import T145.magistics.core.Magistics;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +27,7 @@ public class PacketHandler {
 	}
 
 	public static void registerMessages() {
+		registerMessage(MessageUpdateQuintLevel.class, Side.CLIENT);
 	}
 
 	/*

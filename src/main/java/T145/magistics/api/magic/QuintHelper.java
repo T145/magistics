@@ -39,18 +39,14 @@ public class QuintHelper {
 		return null;
 	}
 
-	public static short drain(IQuintContainer container, float amount, boolean doDrain) {
-		return container.drain((short) Math.min(amount, container.getQuints()), doDrain);
-	}
-
-	public static short fill(TileEntity dest, float amount, boolean doDrain) {
-		short total = 0;
+	public static int fill(TileEntity dest, int amount, boolean doDrain) {
+		int total = 0;
 
 		for (EnumFacing side : EnumFacing.VALUES) {
 			IQuintContainer container = getConnectedContainer(dest.getWorld(), dest.getPos(), side);
 
 			if (container != null) {
-				total = drain(container, amount, doDrain);
+				total = container.drain(Math.min(amount, container.getQuints()), doDrain);
 			}
 
 			if (total >= amount) {
@@ -58,6 +54,6 @@ public class QuintHelper {
 			}
 		}
 
-		return (short) Math.min(amount, total);
+		return  Math.min(amount, total);
 	}
 }

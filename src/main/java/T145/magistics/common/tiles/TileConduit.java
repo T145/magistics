@@ -9,10 +9,11 @@ import net.minecraft.util.ITickable;
 
 public class TileConduit extends TileBase implements ITickable, IQuintContainer {
 
+	private int quints;
+
 	@Override
 	public FillPriority getPriority() {
-		// TODO Auto-generated method stub
-		return null;
+		return FillPriority.MEDIUM;
 	}
 
 	@Override
@@ -21,40 +22,44 @@ public class TileConduit extends TileBase implements ITickable, IQuintContainer 
 	}
 
 	@Override
-	public short fill(short amount, boolean doFill) {
-		// TODO Auto-generated method stub
+	public int fill(int amount, boolean doFill) {
 		return 0;
 	}
 
 	@Override
-	public short drain(short amount, boolean doDrain) {
-		// TODO Auto-generated method stub
+	public int drain(int amount, boolean doDrain) {
 		return 0;
 	}
 
 	@Override
-	public float getQuints() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getQuints() {
+		return quints;
 	}
 
 	@Override
-	public float getCapacity() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setQuints(int quints) {
+		this.quints = quints;
+	}
+
+	@Override
+	public int getCapacity() {
+		return 4;
 	}
 
 	@Override
 	public void writeCustomNBT(NBTTagCompound tag) {
+		tag.setInteger("Quints", quints);
 	}
 
 	@Override
 	public void readCustomNBT(NBTTagCompound tag) {
+		quints = tag.getInteger("Quints");
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		if (world.isRemote) {
+			return;
+		}
 	}
 }
