@@ -60,4 +60,8 @@ public class TileBase extends TileEntity {
 		super.onDataPacket(net, packet);
 		readCustomNBT(packet.getNbtCompound());
 	}
+
+	public IBlockState getState() {
+		return world.getBlockState(pos);
+	}
 }

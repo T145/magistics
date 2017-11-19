@@ -1,6 +1,8 @@
 package T145.magistics.api.magic;
 
-public interface IQuintContainer extends IQuintProxy {
+import net.minecraft.util.EnumFacing;
+
+public interface IQuintContainer extends IQuintHandler {
 
 	/**
 	 * @return The amount of quintessence in this container.
@@ -8,12 +10,12 @@ public interface IQuintContainer extends IQuintProxy {
 	float getQuints();
 
 	/**
-	 * Set amount of quintessence in this container.
+	 * Set the amount of quintessence in this container.
 	 */
 	void setQuints(float quints);
 
 	/**
-	 * @return Quintessence capacity of this IQuintContainer.
+	 * @return Quintessene capacity of this IQuintContainer.
 	 */
 	float getCapacity();
 }

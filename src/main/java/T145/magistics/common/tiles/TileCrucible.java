@@ -3,7 +3,6 @@ package T145.magistics.common.tiles;
 import java.util.List;
 
 import T145.magistics.api.crafting.RecipeRegistry;
-import T145.magistics.api.magic.FillPriority;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.common.network.PacketHandler;
 import T145.magistics.common.network.client.MessageUpdateQuintLevel;
@@ -44,34 +43,17 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 	}
 
 	@Override
-	public FillPriority getPriority() {
-		return FillPriority.LOW;
-	}
-
-	@Override
 	public boolean canConnectAtSide(EnumFacing side) {
 		return side.getAxis() != EnumFacing.Axis.Y;
 	}
 
 	@Override
-	public float fill(float amount, boolean doFill) {
-		return 0; // can't fill this
+	public int getSuction() {
+		return 0;
 	}
 
 	@Override
-	public float drain(float amount, boolean doDrain) {
-		if (isEmpty()) {
-			return 0;
-		}
-
-		float drainAmount = Math.min(amount, quints);
-
-		if (doDrain) {
-			quints -= drainAmount;
-		}
-
-		return drainAmount;
-	}
+	public void setSuction(int suction) {}
 
 	@Override
 	public float getQuints() {

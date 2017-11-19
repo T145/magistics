@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class BlockConduit extends BlockBase implements ITileEntityProvider {
 
-	public static final EnumMap<EnumFacing, IProperty<Boolean>> CONNECTIONS = new EnumMap<>(EnumFacing.class);
+	private static final EnumMap<EnumFacing, IProperty<Boolean>> CONNECTIONS = new EnumMap<>(EnumFacing.class);
 
 	static {
 		for (EnumFacing facing : EnumFacing.values()) {
@@ -68,8 +68,12 @@ public class BlockConduit extends BlockBase implements ITileEntityProvider {
 		return 0;
 	}
 
+	public boolean isConnected(final IBlockState ownState, final EnumFacing side) {
+		return ownState.getValue(CONNECTIONS.get(side));
+	}
+
 	private boolean canConnectTo(final IBlockState ownState, final IBlockAccess world, final BlockPos pos, final EnumFacing side) {
-		return QuintHelper.getConnectedProvider(world, pos, side) != null;
+		return QuintHelper.getConnectedHandler(world, pos, side) != null;
 	}
 
 	@Override
