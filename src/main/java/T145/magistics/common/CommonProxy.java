@@ -2,7 +2,9 @@ package T145.magistics.common;
 
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.internal.IProxy;
+import T145.magistics.common.containers.ContainerInfuser;
 import T145.magistics.common.network.PacketHandler;
+import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.core.Magistics;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +12,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -21,7 +25,15 @@ public class CommonProxy implements IProxy, IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
+		BlockPos pos = new BlockPos(x, y, z);
+		TileEntity tile = world.getTileEntity(pos);
+
+		switch (ID) {
+		case 0:
+			return new ContainerInfuser(player.inventory, (TileInfuser) tile);
+		default:
+			return null;
+		}
 	}
 
 	@Override

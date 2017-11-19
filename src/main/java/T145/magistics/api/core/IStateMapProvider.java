@@ -6,5 +6,5 @@ public interface IStateMapProvider {
 
 	StateMap getStateMap();
 
-	void initStateMap();
+	//void initStateMap();
 }

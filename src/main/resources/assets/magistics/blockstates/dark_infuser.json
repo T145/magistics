@@ -1,0 +1,73 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:infuser",
+        "textures": {
+            "top": "magistics:blocks/infuser/dark_t_c",
+            "bottom": "magistics:blocks/infuser/dark_b",
+            "particle": "magistics:blocks/infuser/dark_s"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/dark_t",
+                    "north": "magistics:blocks/infuser/dark_s",
+                    "south": "#north",
+                    "west": "#north",
+                    "east": "#north"
+                }
+            }
+        ],
+        "north": {
+            "true": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/dark_s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/dark_s"
+                }
+            }
+        },
+        "south": {
+            "true": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/dark_s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/dark_s"
+                }
+            }
+        },
+        "west": {
+            "true": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/dark_s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/dark_s"
+                }
+            }
+        },
+        "east": {
+            "true": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/dark_s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/dark_s"
+                }
+            }
+        }
+    }
+}

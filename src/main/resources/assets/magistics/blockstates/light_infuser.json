@@ -1,0 +1,73 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:infuser",
+        "textures": {
+            "top": "magistics:blocks/infuser/t_c",
+            "bottom": "magistics:blocks/infuser/b",
+            "particle": "magistics:blocks/infuser/s"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {
+                "textures": {
+                    "top": "magistics:blocks/infuser/t",
+                    "north": "magistics:blocks/infuser/s",
+                    "south": "#north",
+                    "west": "#north",
+                    "east": "#north"
+                }
+            }
+        ],
+        "north": {
+            "true": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "north": "magistics:blocks/infuser/s"
+                }
+            }
+        },
+        "south": {
+            "true": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "south": "magistics:blocks/infuser/s"
+                }
+            }
+        },
+        "west": {
+            "true": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "west": "magistics:blocks/infuser/s"
+                }
+            }
+        },
+        "east": {
+            "true": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/s_c"
+                }
+            },
+            "false": {
+                "textures": {
+                    "east": "magistics:blocks/infuser/s"
+                }
+            }
+        }
+    }
+}

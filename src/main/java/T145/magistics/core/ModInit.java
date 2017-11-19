@@ -1,13 +1,17 @@
 package T145.magistics.core;
 
 import T145.magistics.client.render.RenderCrucible;
+import T145.magistics.client.render.RenderInfuser;
 import T145.magistics.client.render.RenderQuintTank;
 import T145.magistics.common.blocks.BlockConduit;
 import T145.magistics.common.blocks.BlockCrucible;
+import T145.magistics.common.blocks.BlockInfuser;
+import T145.magistics.common.blocks.BlockInfuser.InfuserType;
 import T145.magistics.common.blocks.BlockQuintTank;
 import T145.magistics.common.blocks.base.BlockItemBase;
 import T145.magistics.common.tiles.TileConduit;
 import T145.magistics.common.tiles.TileCrucible;
+import T145.magistics.common.tiles.TileInfuser;
 import T145.magistics.common.tiles.TileQuintTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -32,6 +36,7 @@ public class ModInit {
 	public static final BlockCrucible CRUCIBLE = new BlockCrucible();
 	public static final BlockConduit CONDUIT = new BlockConduit();
 	public static final BlockQuintTank TANK = new BlockQuintTank();
+	public static final BlockInfuser INFUSER = new BlockInfuser();
 
 	public static final SoundEvent SOUND_ATTACH = getSoundEvent("attach");
 	public static final SoundEvent SOUND_BEAMLOOP = getSoundEvent("beamloop");
@@ -146,6 +151,7 @@ public class ModInit {
 			registry.register(CRUCIBLE);
 			registry.register(CONDUIT);
 			registry.register(TANK);
+			registry.register(INFUSER);
 			registerTileEntities();
 		}
 
@@ -153,6 +159,7 @@ public class ModInit {
 			registerTileEntity(TileCrucible.class);
 			registerTileEntity(TileConduit.class);
 			registerTileEntity(TileQuintTank.class);
+			registerTileEntity(TileInfuser.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
@@ -165,6 +172,7 @@ public class ModInit {
 			registerItemBlock(registry, CRUCIBLE);
 			registerItemBlock(registry, CONDUIT);
 			registerItemBlock(registry, TANK);
+			registerItemBlock(registry, INFUSER, InfuserType.class);
 		}
 
 		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
@@ -225,6 +233,10 @@ public class ModInit {
 			registerBlockModel(CRUCIBLE, 0, "inventory");
 			registerBlockModel(CONDUIT, 0, "inventory");
 			registerBlockModel(TANK, 0, "inventory");
+			ModelLoader.setCustomStateMapper(INFUSER, INFUSER.getStateMap());
+			for (InfuserType type : InfuserType.values()) {
+				registerBlockModel(INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
+			}
 		}
 
 		private static void registerItemModels() {
@@ -234,6 +246,7 @@ public class ModInit {
 		private static void registerTileRenderers() {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
 			ClientRegistry.bindTileEntitySpecialRenderer(TileQuintTank.class, new RenderQuintTank());
+			ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
 		}
 
 		private static void registerItemRenderers() {

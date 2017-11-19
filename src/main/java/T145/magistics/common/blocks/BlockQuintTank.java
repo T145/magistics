@@ -57,16 +57,6 @@ public class BlockQuintTank extends BlockBase implements ITileEntityProvider {
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(final int meta) {
-		return getDefaultState();
-	}
-
-	@Override
-	public int getMetaFromState(final IBlockState state) {
-		return 0;
-	}
-
-	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return TANK_AABB;
 	}

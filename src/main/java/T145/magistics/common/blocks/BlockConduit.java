@@ -27,7 +27,7 @@ public class BlockConduit extends BlockBase implements ITileEntityProvider {
 	private static final EnumMap<EnumFacing, IProperty<Boolean>> CONNECTIONS = new EnumMap<>(EnumFacing.class);
 
 	static {
-		for (EnumFacing facing : EnumFacing.values()) {
+		for (EnumFacing facing : EnumFacing.VALUES) {
 			CONNECTIONS.put(facing, PropertyBool.create(facing.getName()));
 		}
 	}
@@ -56,16 +56,6 @@ public class BlockConduit extends BlockBase implements ITileEntityProvider {
 	protected BlockStateContainer createBlockState() {
 		IProperty[] props = new IProperty[CONNECTIONS.size()];
 		return new BlockStateContainer(this, CONNECTIONS.values().toArray(props));
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(final int meta) {
-		return getDefaultState();
-	}
-
-	@Override
-	public int getMetaFromState(final IBlockState state) {
-		return 0;
 	}
 
 	public boolean isConnected(final IBlockState ownState, final EnumFacing side) {

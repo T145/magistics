@@ -45,4 +45,14 @@ public class BlockBase extends Block {
 	public boolean isOpaqueCube(IBlockState state) {
 		return isNormalized;
 	}
+
+	@Override
+	public IBlockState getStateFromMeta(final int meta) {
+		return getDefaultState();
+	}
+
+	@Override
+	public int getMetaFromState(final IBlockState state) {
+		return 0;
+	}
 }

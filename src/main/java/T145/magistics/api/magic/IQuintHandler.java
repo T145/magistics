@@ -4,7 +4,7 @@ import net.minecraft.util.EnumFacing;
 
 public interface IQuintHandler {
 
-	static final int MAX_SUCTION = 50;
+	static final int MAX_SUCTION = 25;
 
 	/**
 	 * @return Whether or not this container can be connect to at the given side.

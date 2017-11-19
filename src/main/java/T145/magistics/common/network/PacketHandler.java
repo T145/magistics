@@ -2,6 +2,7 @@ package T145.magistics.common.network;
 
 import T145.magistics.common.network.base.MessageBase;
 import T145.magistics.common.network.client.MessageUpdateContainer;
+import T145.magistics.common.network.client.MessageUpdateInfuser;
 import T145.magistics.core.Magistics;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
@@ -28,15 +29,8 @@ public class PacketHandler {
 
 	public static void registerMessages() {
 		registerMessage(MessageUpdateContainer.class, Side.CLIENT);
+		registerMessage(MessageUpdateInfuser.class, Side.CLIENT);
 	}
-
-	/*
-	 * public static void registerMessages() {
-	 * registerMessage(MessageInfuserProgress.class, Side.CLIENT);
-	 * registerMessage(MessageRecieveClientEvent.class, Side.CLIENT);
-	 * registerMessage(MessageSendWispFX.class, Side.CLIENT);
-	 * registerMessage(MessageQuintLevel.class, Side.CLIENT); }
-	 */
 
 	public static void registerMessage(Class<? extends MessageBase> message, Side side) {
 		INSTANCE.registerMessage((m, ctx) -> {
