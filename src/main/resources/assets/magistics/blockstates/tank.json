@@ -1,0 +1,44 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:tank",
+        "textures": {
+            "side": "magistics:blocks/tank/base_s",
+            "end": "magistics:blocks/tank/base_b"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {
+            }
+        ],
+        "joined_above": {
+            "true": {
+                "textures": {
+                    "side": "magistics:blocks/tank/base_s_b"
+                }
+            },
+            "false": {
+            }
+        },
+        "joined_below": {
+            "true": {
+                "textures": {
+                    "side": "magistics:blocks/tank/base_s_t"
+                }
+            },
+            "false": {
+            }
+        },
+        "inbetween": {
+            "true": {
+                "textures": {
+                    "side": "magistics:blocks/tank/base_s_c"
+                }
+            },
+            "false": {
+            }
+        }
+    }
+}

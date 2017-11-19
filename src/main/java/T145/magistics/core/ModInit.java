@@ -1,11 +1,14 @@
 package T145.magistics.core;
 
 import T145.magistics.client.render.RenderCrucible;
+import T145.magistics.client.render.RenderQuintTank;
 import T145.magistics.common.blocks.BlockConduit;
 import T145.magistics.common.blocks.BlockCrucible;
+import T145.magistics.common.blocks.BlockQuintTank;
 import T145.magistics.common.blocks.base.BlockItemBase;
 import T145.magistics.common.tiles.TileConduit;
 import T145.magistics.common.tiles.TileCrucible;
+import T145.magistics.common.tiles.TileQuintTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -28,6 +31,7 @@ public class ModInit {
 
 	public static final BlockCrucible CRUCIBLE = new BlockCrucible();
 	public static final BlockConduit CONDUIT = new BlockConduit();
+	public static final BlockQuintTank TANK = new BlockQuintTank();
 
 	public static final SoundEvent SOUND_ATTACH = getSoundEvent("attach");
 	public static final SoundEvent SOUND_BEAMLOOP = getSoundEvent("beamloop");
@@ -141,12 +145,14 @@ public class ModInit {
 			final IForgeRegistry<Block> registry = event.getRegistry();
 			registry.register(CRUCIBLE);
 			registry.register(CONDUIT);
+			registry.register(TANK);
 			registerTileEntities();
 		}
 
 		private static void registerTileEntities() {
 			registerTileEntity(TileCrucible.class);
 			registerTileEntity(TileConduit.class);
+			registerTileEntity(TileQuintTank.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
@@ -158,6 +164,7 @@ public class ModInit {
 			final IForgeRegistry<Item> registry = event.getRegistry();
 			registerItemBlock(registry, CRUCIBLE);
 			registerItemBlock(registry, CONDUIT);
+			registerItemBlock(registry, TANK);
 		}
 
 		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
@@ -217,6 +224,7 @@ public class ModInit {
 		private static void registerBlockModels() {
 			registerBlockModel(CRUCIBLE, 0, "inventory");
 			registerBlockModel(CONDUIT, 0, "inventory");
+			registerBlockModel(TANK, 0, "inventory");
 		}
 
 		private static void registerItemModels() {
@@ -225,6 +233,7 @@ public class ModInit {
 
 		private static void registerTileRenderers() {
 			ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
+			ClientRegistry.bindTileEntitySpecialRenderer(TileQuintTank.class, new RenderQuintTank());
 		}
 
 		private static void registerItemRenderers() {

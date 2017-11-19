@@ -1,21 +1,23 @@
 package T145.magistics.common.tiles;
 
 import T145.magistics.api.magic.IQuintContainer;
-import T145.magistics.api.magic.IQuintHandler;
-import T145.magistics.api.magic.QuintHelper;
-import T145.magistics.common.blocks.BlockConduit;
 import T145.magistics.common.network.PacketHandler;
 import T145.magistics.common.network.client.MessageUpdateContainer;
 import T145.magistics.common.tiles.base.TileBase;
-import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileConduit extends TileBase implements ITickable, IQuintContainer {
+public class TileQuintTank extends TileBase implements ITickable, IQuintContainer {
 
 	private float quints;
 	private int suction;
+
+	public boolean canConnectToTank(EnumFacing facing) {
+		TileEntity tile = world.getTileEntity(pos.offset(facing));
+		return tile instanceof TileQuintTank && facing.getAxis() == EnumFacing.Axis.Y;
+	}
 
 	public boolean isFull() {
 		return quints == getCapacity();
@@ -48,7 +50,7 @@ public class TileConduit extends TileBase implements ITickable, IQuintContainer 
 
 	@Override
 	public float getCapacity() {
-		return 4F;
+		return 50F;
 	}
 
 	@Override
@@ -73,38 +75,6 @@ public class TileConduit extends TileBase implements ITickable, IQuintContainer 
 			return;
 		}
 
-		setSuction(0);
-
-		Block source = getState().getBlock();
-
-		if (source instanceof BlockConduit) {
-			BlockConduit conduit = (BlockConduit) source;
-
-			for (EnumFacing side : EnumFacing.VALUES) {
-				if (conduit.isConnected(getState(), side)) {
-					IQuintHandler handler = QuintHelper.getConnectedHandler(world, pos, side);
-
-					if (handler != null) {
-						int neighborSuction = handler.getSuction() - 1;
-
-						if (suction < neighborSuction) {
-							setSuction(neighborSuction);
-						}
-					}
-				}
-			}
-
-			if (suction > 0 && !isFull()) {
-				for (EnumFacing side : EnumFacing.VALUES) {
-					IQuintContainer container = QuintHelper.getConnectedContainer(world, pos, side);
-
-					if (container != null) {
-						if (suction > container.getSuction()) {
-							quints += QuintHelper.drain(container, 1, true);
-						}
-					}
-				}
-			}
-		}
+		setSuction(10);
 	}
 }

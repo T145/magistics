@@ -5,7 +5,7 @@ import java.util.List;
 import T145.magistics.api.crafting.RecipeRegistry;
 import T145.magistics.api.magic.IQuintContainer;
 import T145.magistics.common.network.PacketHandler;
-import T145.magistics.common.network.client.MessageUpdateQuintLevel;
+import T145.magistics.common.network.client.MessageUpdateContainer;
 import T145.magistics.common.tiles.base.TileBase;
 import T145.magistics.core.ModInit;
 import net.minecraft.entity.item.EntityItem;
@@ -81,7 +81,7 @@ public class TileCrucible extends TileBase implements ITickable, IQuintContainer
 	}
 
 	public void updateQuintLevel() {
-		PacketHandler.sendToAllAround(new MessageUpdateQuintLevel(this, quints), world, pos);
+		PacketHandler.sendToAllAround(new MessageUpdateContainer(pos, quints, 0), world, pos);
 	}
 
 	@Override
