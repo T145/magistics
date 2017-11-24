@@ -24,18 +24,6 @@ repositories {
 		name 'Tehnut Repo'
 		url 'http://tehnut.info/maven'
 	}
-	maven {
-		name 'Progwm16 Repo'
-		url 'http://dvs1.progwml6.com/files/maven'
-	}
-	maven {
-		name 'CoFH Repo'
-		url 'http://maven.covers1624.net'
-	}
-	maven {
-		name 'ChickenBones Repo'
-		url 'http://chickenbones.net/maven'
-	}
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -84,12 +72,6 @@ minecraft {
 dependencies {
 	//deobfCompile 'mezz.jei:jei_1.12.2:4.8.0.114'
 	deobfCompile 'mcp.mobius.waila:Hwyla:1.8.22-B37_1.12'
-	deobfCompile 'codechicken:CodeChickenLib:1.12-3.1.3.313:deobf'
-	
-	deobfCompile 'cofh:RedstoneFlux:1.12-2.0.1.2:universal' // required by CoFHCore
-	deobfCompile 'cofh:CoFHCore:1.12-4.3.6.14:universal' // required by ThermalFoundation
-	deobfCompile 'cofh:CoFHWorld:1.12-1.0.1.8:universal' // required by ThermalFoundation
-	deobfCompile 'cofh:ThermalFoundation:1.12-2.3.6.16:universal'
 }
 
 processResources {
