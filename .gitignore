@@ -18,6 +18,7 @@ _MACOSX
 /minecraftSrc/
 /release/
 /run/
+/classes/
 *.launch
 
 # Ignore Forge documents
