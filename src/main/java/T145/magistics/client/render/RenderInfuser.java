@@ -21,7 +21,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileInfuser> {
 
 	@Override
 	public void render(@Nonnull TileInfuser infuser, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		drawDisk(infuser, x, y + Render.W13, z);
+		drawDisk(infuser, x, y + Render.W12 + 0.01D, z);
 
 		if (infuser.isCrafting() && infuser.getWorld().rand.nextFloat() < infuser.progress) {
 			double xx = infuser.getPos().getX() + 0.5F - (infuser.getWorld().rand.nextFloat() - infuser.getWorld().rand.nextFloat()) * 0.35F;
