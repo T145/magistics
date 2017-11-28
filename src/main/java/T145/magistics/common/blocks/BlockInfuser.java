@@ -1,6 +1,7 @@
 package T145.magistics.common.blocks;
 
 import static T145.magistics.client.lib.Render.W1;
+import static T145.magistics.client.lib.Render.W4;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -49,7 +50,7 @@ public class BlockInfuser extends BlockBase implements IStateMapProvider, ITileE
 		}
 	}
 
-	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - W1, 1D);
+	public static final AxisAlignedBB INFUSER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 1D - W4, 1D);
 
 	public BlockInfuser() {
 		super("infuser", Material.ROCK, false);
