@@ -1,6 +1,6 @@
 package T145.magistics.common.blocks.base;
 
-import T145.magistics.core.Magistics;
+import T145.magistics.common.Magistics;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;

@@ -1,14 +1,5 @@
 package T145.magistics.api.internal;
 
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public interface IProxy {
-
-	void preInit(FMLPreInitializationEvent event);
-
-	void init(FMLInitializationEvent event);
-
-	void postInit(FMLPostInitializationEvent event);
-}
+public interface IProxy extends IModProxy, IGuiHandler {}

@@ -1,18 +1,5 @@
-package T145.magistics.core;
+package T145.magistics.common;
 
-import T145.magistics.client.render.RenderCrucible;
-import T145.magistics.client.render.RenderInfuser;
-import T145.magistics.client.render.RenderQuintTank;
-import T145.magistics.common.blocks.BlockConduit;
-import T145.magistics.common.blocks.BlockCrucible;
-import T145.magistics.common.blocks.BlockInfuser;
-import T145.magistics.common.blocks.BlockInfuser.InfuserType;
-import T145.magistics.common.blocks.BlockQuintTank;
-import T145.magistics.common.blocks.base.BlockItemBase;
-import T145.magistics.common.tiles.TileConduit;
-import T145.magistics.common.tiles.TileCrucible;
-import T145.magistics.common.tiles.TileInfuser;
-import T145.magistics.common.tiles.TileQuintTank;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -23,20 +10,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@ObjectHolder(Magistics.ID)
-public class ModInit {
-
-	public static final BlockCrucible CRUCIBLE = new BlockCrucible();
-	public static final BlockConduit CONDUIT = new BlockConduit();
-	public static final BlockQuintTank TANK = new BlockQuintTank();
-	public static final BlockInfuser INFUSER = new BlockInfuser();
+@GameRegistry.ObjectHolder(Magistics.ID)
+public class MagisticsLoader {
 
 	public static final SoundEvent SOUND_ATTACH = getSoundEvent("attach");
 	public static final SoundEvent SOUND_BEAMLOOP = getSoundEvent("beamloop");
@@ -89,11 +69,7 @@ public class ModInit {
 	}
 
 	@EventBusSubscriber(modid = Magistics.ID)
-	public static class ServerRegistration {
-
-		// register everything that doesn't have a specific event here
-		static {
-		}
+	public static class ServerLoader {
 
 		@SubscribeEvent
 		public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
@@ -148,18 +124,6 @@ public class ModInit {
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 			final IForgeRegistry<Block> registry = event.getRegistry();
-			registry.register(CRUCIBLE);
-			registry.register(CONDUIT);
-			registry.register(TANK);
-			registry.register(INFUSER);
-			registerTileEntities();
-		}
-
-		private static void registerTileEntities() {
-			registerTileEntity(TileCrucible.class);
-			registerTileEntity(TileConduit.class);
-			registerTileEntity(TileQuintTank.class);
-			registerTileEntity(TileInfuser.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
@@ -169,23 +133,15 @@ public class ModInit {
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 			final IForgeRegistry<Item> registry = event.getRegistry();
-			registerItemBlock(registry, CRUCIBLE);
-			registerItemBlock(registry, CONDUIT);
-			registerItemBlock(registry, TANK);
-			registerItemBlock(registry, INFUSER, InfuserType.class);
 		}
 
 		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
 			registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
-
-		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block, Class types) {
-			registry.register(new BlockItemBase(block, types).setRegistryName(block.getRegistryName()));
-		}
 	}
 
 	@EventBusSubscriber(modid = Magistics.ID)
-	public static class ClientRegistration {
+	public static class ClientLoader {
 
 		public static String getVariantName(IStringSerializable variant) {
 			return "variant=" + variant.getName();
@@ -221,40 +177,16 @@ public class ModInit {
 			registerItemRenderers();
 		}
 
-		private static void registerFluidRenderers() {
-			// TODO Implement
-		}
+		private static void registerFluidRenderers() {}
 
-		private static void registerEntityRenderers() {
-			// TODO Implement
-		}
+		private static void registerEntityRenderers() {}
 
-		private static void registerBlockModels() {
-			registerBlockModel(CRUCIBLE, 0, "inventory");
-			registerBlockModel(CONDUIT, 0, "inventory");
-			registerBlockModel(TANK, 0, "inventory");
-			ModelLoader.setCustomStateMapper(INFUSER, INFUSER.getStateMap());
-			for (InfuserType type : InfuserType.values()) {
-				registerBlockModel(INFUSER, type.ordinal(), type.getName() + "_infuser", "inventory");
-			}
-		}
+		private static void registerBlockModels() {}
 
-		private static void registerItemModels() {
-			// TODO Implement
-		}
+		private static void registerItemModels() {}
 
-		private static void registerTileRenderers() {
-			ClientRegistry.bindTileEntitySpecialRenderer(TileCrucible.class, new RenderCrucible());
-			ClientRegistry.bindTileEntitySpecialRenderer(TileQuintTank.class, new RenderQuintTank());
-			ClientRegistry.bindTileEntitySpecialRenderer(TileInfuser.class, new RenderInfuser());
-		}
+		private static void registerTileRenderers() {}
 
-		private static void registerItemRenderers() {
-			// TODO Implement
-		}
-	}
-
-	@EventBusSubscriber(modid = Magistics.ID)
-	public static class EventRegistration {
+		private static void registerItemRenderers() {}
 	}
 }
