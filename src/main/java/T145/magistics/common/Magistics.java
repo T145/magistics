@@ -3,8 +3,8 @@ package T145.magistics.common;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import T145.magistics.api.internal.IModProxy;
-import T145.magistics.api.internal.IProxy;
+import T145.magistics.api.back.IModProxy;
+import T145.magistics.api.back.IProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = Magistics.ID, name = Magistics.NAME, version = Magistics.VERSION)
+@Mod(modid = Magistics.ID,
+name = Magistics.NAME,
+version = Magistics.VERSION,
+acceptedMinecraftVersions = "[1.12.2]",
+guiFactory = "T145.magistics.client.gui.config.ConfigGuiFactory")
 public class Magistics implements IModProxy {
 
 	public static final String ID = "magistics";

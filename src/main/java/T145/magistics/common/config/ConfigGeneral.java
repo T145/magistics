@@ -15,5 +15,5 @@ public class ConfigGeneral extends ConfigBase {
 
 	@Config.LangKey("config.general.blight.severity")
 	@Config.Comment("0 - n00b mode; 1 - TC3-4; 2 - TC2; 3 - aids")
-	public static final short BLIGHT_SEVERITY = 1;
+	public static short BLIGHT_SEVERITY = 1;
 }

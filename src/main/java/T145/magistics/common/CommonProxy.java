@@ -1,6 +1,6 @@
 package T145.magistics.common;
 
-import T145.magistics.api.internal.IProxy;
+import T145.magistics.api.back.IProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
