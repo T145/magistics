@@ -12,27 +12,27 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class TileInventory extends TileBase {
 
-	protected SimpleItemStackHandler itemHandler = createItemHandler();
+	protected SimpleItemStackHandler inventory = createItemHandler();
 
 	@Override
 	public void readPacketNBT(NBTTagCompound nbt) {
-		itemHandler = createItemHandler();
-		itemHandler.deserializeNBT(nbt);
+		inventory = createItemHandler();
+		inventory.deserializeNBT(nbt);
 	}
 
 	@Override
 	public void writePacketNBT(NBTTagCompound nbt) {
-		nbt.merge(itemHandler.serializeNBT());
+		nbt.merge(inventory.serializeNBT());
 	}
 
-	public abstract int getSizeInventory();
+	public abstract int getInventorySize();
 
 	protected SimpleItemStackHandler createItemHandler() {
 		return new SimpleItemStackHandler(this);
 	}
 
-	public IItemHandlerModifiable getItemHandler() {
-		return itemHandler;
+	public IItemHandlerModifiable getInventory() {
+		return inventory;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public abstract class TileInventory extends TileBase {
 	@Override
 	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing side) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler);
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
 		}
 
 		return super.getCapability(capability, side);
@@ -54,7 +54,7 @@ public abstract class TileInventory extends TileBase {
 		private final TileInventory tile;
 
 		public SimpleItemStackHandler(TileInventory tile) {
-			super(tile.getSizeInventory());
+			super(tile.getInventorySize());
 			this.tile = tile;
 		}
 

@@ -1,14 +1,16 @@
 package T145.magistics.common;
 
+import T145.magistics.common.blocks.BlockPedestal;
+import T145.magistics.common.blocks.BlockResearchTable;
+import T145.magistics.common.blocks.base.BlockItemBase;
+import T145.magistics.common.tiles.TilePedestal;
+import T145.magistics.common.tiles.TileResearchTable;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,6 +19,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 @GameRegistry.ObjectHolder(Magistics.ID)
 public class MagisticsLoader {
+
+	public static final BlockResearchTable RESEARCH_TABLE = new BlockResearchTable();
+	public static final BlockPedestal PEDESTAL = new BlockPedestal();
 
 	public static final SoundEvent SOUND_ATTACH = getSoundEvent("attach");
 	public static final SoundEvent SOUND_BEAMLOOP = getSoundEvent("beamloop");
@@ -124,6 +129,10 @@ public class MagisticsLoader {
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 			final IForgeRegistry<Block> registry = event.getRegistry();
+			registry.register(RESEARCH_TABLE);
+			registry.register(PEDESTAL);
+			registerTileEntity(TilePedestal.class);
+			registerTileEntity(TileResearchTable.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
@@ -133,39 +142,21 @@ public class MagisticsLoader {
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 			final IForgeRegistry<Item> registry = event.getRegistry();
+			registerItemBlock(registry, RESEARCH_TABLE);
+			registerItemBlock(registry, PEDESTAL);
 		}
 
 		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
 			registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
+
+		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block, Class types) {
+			registry.register(new BlockItemBase(block, types).setRegistryName(block.getRegistryName()));
+		}
 	}
 
 	@EventBusSubscriber(modid = Magistics.ID)
 	public static class ClientLoader {
-
-		public static String getVariantName(IStringSerializable variant) {
-			return "variant=" + variant.getName();
-		}
-
-		public static void registerBlockModel(Block block, int meta, String path, String variant) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Magistics.ID + ":" + path, variant));
-		}
-
-		public static void registerBlockModel(Block block, int meta, String variant) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), variant));
-		}
-
-		public static void registerBlockModel(Block block, int meta, IStringSerializable variant) {
-			registerBlockModel(block, meta, "variant=" + variant.getName());
-		}
-
-		public static void registerItemModel(Item item, int meta, String path) {
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Magistics.ID + ":" + path, "inventory"));
-		}
-
-		public static void registerItemModel(Item item, int meta) {
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-		}
 
 		@SubscribeEvent
 		public static void onModelRegistration(ModelRegistryEvent event) {
@@ -173,20 +164,17 @@ public class MagisticsLoader {
 			registerEntityRenderers();
 			registerBlockModels();
 			registerItemModels();
-			registerTileRenderers();
-			registerItemRenderers();
 		}
 
 		private static void registerFluidRenderers() {}
 
 		private static void registerEntityRenderers() {}
 
-		private static void registerBlockModels() {}
+		private static void registerBlockModels() {
+			RESEARCH_TABLE.initModel();
+			PEDESTAL.initModel();
+		}
 
 		private static void registerItemModels() {}
-
-		private static void registerTileRenderers() {}
-
-		private static void registerItemRenderers() {}
 	}
 }
