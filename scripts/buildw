@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+./gradlew setupWorkspace
+./gradlew eclipse
+./gradlew build
+./gradlew --stop
