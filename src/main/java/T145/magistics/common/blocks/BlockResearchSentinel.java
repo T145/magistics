@@ -3,10 +3,10 @@ package T145.magistics.common.blocks;
 import javax.annotation.Nonnull;
 
 import T145.magistics.api.front.IModelProvider;
-import T145.magistics.client.render.block.RenderPedestal;
+import T145.magistics.client.render.block.RenderResearchSentinel;
 import T145.magistics.common.blocks.base.BlockBase;
 import T145.magistics.common.lib.InventoryIO;
-import T145.magistics.common.tiles.TilePedestal;
+import T145.magistics.common.tiles.TileResearchSentinel;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -20,37 +20,59 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockPedestal extends BlockBase implements IModelProvider, ITileEntityProvider {
+public class BlockResearchSentinel extends BlockBase implements IModelProvider, ITileEntityProvider {
 
-	public BlockPedestal() {
-		super("pedestal", Material.ROCK, MapColor.STONE, false);
+	private final boolean isSentinel;
+
+	public BlockResearchSentinel(boolean isSentinel) {
+		super(getName(isSentinel), getMaterial(isSentinel), getMapColor(isSentinel), false);
+		this.isSentinel = isSentinel;
 		setHardness(2F);
 		setResistance(20F);
-		setSoundType(SoundType.STONE);
+		setSoundType(getSoundType(isSentinel));
 		setLightOpacity(0);
+	}
+
+	private static String getName(boolean isSentinel) {
+		return isSentinel ? "research_table" : "pedestal";
+	}
+
+	private static Material getMaterial(boolean isSentinel) {
+		return isSentinel ? Material.WOOD : Material.ROCK;
+	}
+
+	private static MapColor getMapColor(boolean isSentinel) {
+		return isSentinel ? MapColor.WOOD : MapColor.STONE;
+	}
+
+	private SoundType getSoundType(boolean isSentinel) {
+		return isSentinel ? SoundType.WOOD : SoundType.STONE;
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TilePedestal();
+		return new TileResearchSentinel(isSentinel);
 	}
 
 	@Override
 	public void initModel() {
 		IModelProvider.registerBlockModel(this, 0, "inventory");
-		IModelProvider.registerTileRenderer(TilePedestal.class, new RenderPedestal());
+
+		if (isSentinel) { // register the tile renderer one time
+			IModelProvider.registerTileRenderer(TileResearchSentinel.class, new RenderResearchSentinel());
+		}
 	}
 
 	private void dropItem(World world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 
-		if (te instanceof TilePedestal) {
-			TilePedestal tile = (TilePedestal) te;
-			ItemStack stack = tile.getInventory().getStackInSlot(0);
+		if (te instanceof TileResearchSentinel) {
+			TileResearchSentinel tile = (TileResearchSentinel) te;
+			ItemStack stack = tile.getObservableStack();
 
 			if (!stack.isEmpty()) {
 				InventoryIO.spawnEntityItem(world, stack, pos.getX(), pos.getY() + 0.8, pos.getZ());
-				tile.getInventory().setStackInSlot(0, ItemStack.EMPTY);
+				tile.setObservableStack(ItemStack.EMPTY);
 			}
 		}
 	}
@@ -75,11 +97,11 @@ public class BlockPedestal extends BlockBase implements IModelProvider, ITileEnt
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
-			if (!(te instanceof TilePedestal)) {
+			if (!(te instanceof TileResearchSentinel)) {
 				return true;
 			}
 
-			TilePedestal tile = (TilePedestal) te;
+			TileResearchSentinel tile = ((TileResearchSentinel) te);
 			ItemStack item = tile.getObservableStack();
 			ItemStack stack = player.getHeldItem(hand);
 

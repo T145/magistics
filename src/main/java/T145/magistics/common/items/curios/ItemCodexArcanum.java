@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import T145.magistics.api.front.IModelProvider;
 import T145.magistics.common.items.base.ItemBase;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,12 +18,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCodexArcanum extends ItemBase {
+public class ItemCodexArcanum extends ItemBase implements IModelProvider {
 
 	public ItemCodexArcanum() {
 		super("codex_arcanum");
 		setHasSubtypes(true);
 		setMaxStackSize(1);
+	}
+
+	@Override
+	public void initModel() {
+		IModelProvider.registerItemModel(this, 0);
 	}
 
 	@Override
@@ -40,6 +46,6 @@ public class ItemCodexArcanum extends ItemBase {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		return new ActionResult(EnumActionResult.SUCCESS, this);	
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
 	}
 }

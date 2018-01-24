@@ -1,10 +1,9 @@
 package T145.magistics.common;
 
-import T145.magistics.common.blocks.BlockPedestal;
-import T145.magistics.common.blocks.BlockResearchTable;
+import T145.magistics.common.blocks.BlockResearchSentinel;
 import T145.magistics.common.blocks.base.BlockItemBase;
-import T145.magistics.common.tiles.TilePedestal;
-import T145.magistics.common.tiles.TileResearchTable;
+import T145.magistics.common.items.curios.ItemCodexArcanum;
+import T145.magistics.common.tiles.TileResearchSentinel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -20,8 +19,10 @@ import net.minecraftforge.registries.IForgeRegistry;
 @GameRegistry.ObjectHolder(Magistics.ID)
 public class MagisticsLoader {
 
-	public static final BlockResearchTable RESEARCH_TABLE = new BlockResearchTable();
-	public static final BlockPedestal PEDESTAL = new BlockPedestal();
+	public static final BlockResearchSentinel RESEARCH_TABLE = new BlockResearchSentinel(true);
+	public static final BlockResearchSentinel PEDESTAL = new BlockResearchSentinel(false);
+
+	public static final ItemCodexArcanum CODEX_ARCANUM = new ItemCodexArcanum();
 
 	public static final SoundEvent SOUND_ATTACH = getSoundEvent("attach");
 	public static final SoundEvent SOUND_BEAMLOOP = getSoundEvent("beamloop");
@@ -131,8 +132,7 @@ public class MagisticsLoader {
 			final IForgeRegistry<Block> registry = event.getRegistry();
 			registry.register(RESEARCH_TABLE);
 			registry.register(PEDESTAL);
-			registerTileEntity(TilePedestal.class);
-			registerTileEntity(TileResearchTable.class);
+			registerTileEntity(TileResearchSentinel.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
@@ -144,6 +144,7 @@ public class MagisticsLoader {
 			final IForgeRegistry<Item> registry = event.getRegistry();
 			registerItemBlock(registry, RESEARCH_TABLE);
 			registerItemBlock(registry, PEDESTAL);
+			registry.register(CODEX_ARCANUM);
 		}
 
 		private static void registerItemBlock(IForgeRegistry<Item> registry, Block block) {
@@ -175,6 +176,8 @@ public class MagisticsLoader {
 			PEDESTAL.initModel();
 		}
 
-		private static void registerItemModels() {}
+		private static void registerItemModels() {
+			CODEX_ARCANUM.initModel();
+		}
 	}
 }
