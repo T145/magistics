@@ -1,7 +1,6 @@
 itemGroup.magistics=Magistics
 
-tile.magistics.crucible.name=Crucible
-tile.magistics.conduit.name=Conduit
-tile.magistics.tank.name=Quintessence Tank
-tile.magistics.infuser.light.name=Infuser
-tile.magistics.infuser.dark.name=Dark Infuser
+tile.magistics.research_table.name=Research Table
+tile.magistics.pedestal.name=Pedestal
+
+item.magistics.codex_arcanum.name=Codex Arcanum

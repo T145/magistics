@@ -21,47 +21,44 @@ public class TileBase extends TileEntity {
 	}
 
 	@Nonnull
-	@Override
 	@OverridingMethodsMustInvokeSuper
-	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		NBTTagCompound nbt = super.writeToNBT(tag);
-		writeCustomNBT(nbt);
-		return nbt;
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		NBTTagCompound tag = super.writeToNBT(nbt);
+		writePacketNBT(tag);
+		return tag;
 	}
 
 	@Nonnull
-	@Override
 	@OverridingMethodsMustInvokeSuper
+	@Override
 	public final NBTTagCompound getUpdateTag() {
 		return writeToNBT(new NBTTagCompound());
 	}
 
+	@OverridingMethodsMustInvokeSuper
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		super.readFromNBT(tag);
-		readCustomNBT(tag);
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		readPacketNBT(nbt);
 	}
 
-	public void writeCustomNBT(NBTTagCompound tag) {}
+	public void writePacketNBT(NBTTagCompound nbt) {}
 
-	public void readCustomNBT(NBTTagCompound tag) {}
+	public void readPacketNBT(NBTTagCompound nbt) {}
 
-	@Override
 	@OverridingMethodsMustInvokeSuper
+	@Override
 	public final SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
-		writeCustomNBT(tag);
+		writePacketNBT(tag);
 		return new SPacketUpdateTileEntity(pos, PACKET_ID, tag);
 	}
 
-	@Override
 	@OverridingMethodsMustInvokeSuper
+	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		super.onDataPacket(net, packet);
-		readCustomNBT(packet.getNbtCompound());
-	}
-
-	public IBlockState getState() {
-		return world.getBlockState(pos);
+		readPacketNBT(packet.getNbtCompound());
 	}
 }

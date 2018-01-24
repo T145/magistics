@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "magistics:pedestal"
+    },
+    "variants": {
+        "inventory": [
+            {
+            }
+        ],
+        "normal": [
+            {
+            }
+        ]
+    }
+}
