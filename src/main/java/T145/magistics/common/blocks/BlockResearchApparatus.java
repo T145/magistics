@@ -3,10 +3,10 @@ package T145.magistics.common.blocks;
 import javax.annotation.Nonnull;
 
 import T145.magistics.api.front.IModelProvider;
-import T145.magistics.client.render.block.RenderResearchSentinel;
+import T145.magistics.client.render.block.RenderResearchApparatus;
 import T145.magistics.common.blocks.base.BlockBase;
 import T145.magistics.common.lib.InventoryIO;
-import T145.magistics.common.tiles.TileResearchSentinel;
+import T145.magistics.common.tiles.TileResearchApparatus;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -20,11 +20,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockResearchSentinel extends BlockBase implements IModelProvider, ITileEntityProvider {
+public class BlockResearchApparatus extends BlockBase implements IModelProvider, ITileEntityProvider {
 
 	private final boolean isSentinel;
 
-	public BlockResearchSentinel(boolean isSentinel) {
+	public BlockResearchApparatus(boolean isSentinel) {
 		super(getName(isSentinel), getMaterial(isSentinel), getMapColor(isSentinel), false);
 		this.isSentinel = isSentinel;
 		setHardness(2F);
@@ -51,7 +51,7 @@ public class BlockResearchSentinel extends BlockBase implements IModelProvider, 
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileResearchSentinel(isSentinel);
+		return new TileResearchApparatus(isSentinel);
 	}
 
 	@Override
@@ -59,15 +59,15 @@ public class BlockResearchSentinel extends BlockBase implements IModelProvider, 
 		IModelProvider.registerBlockModel(this, 0, "inventory");
 
 		if (isSentinel) { // register the tile renderer one time
-			IModelProvider.registerTileRenderer(TileResearchSentinel.class, new RenderResearchSentinel());
+			IModelProvider.registerTileRenderer(TileResearchApparatus.class, new RenderResearchApparatus());
 		}
 	}
 
 	private void dropItem(World world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 
-		if (te instanceof TileResearchSentinel) {
-			TileResearchSentinel tile = (TileResearchSentinel) te;
+		if (te instanceof TileResearchApparatus) {
+			TileResearchApparatus tile = (TileResearchApparatus) te;
 			ItemStack stack = tile.getObservableStack();
 
 			if (!stack.isEmpty()) {
@@ -97,11 +97,11 @@ public class BlockResearchSentinel extends BlockBase implements IModelProvider, 
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
-			if (!(te instanceof TileResearchSentinel)) {
+			if (!(te instanceof TileResearchApparatus)) {
 				return true;
 			}
 
-			TileResearchSentinel tile = ((TileResearchSentinel) te);
+			TileResearchApparatus tile = ((TileResearchApparatus) te);
 			ItemStack item = tile.getObservableStack();
 			ItemStack stack = player.getHeldItem(hand);
 

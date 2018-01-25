@@ -2,7 +2,7 @@ package T145.magistics.client.render.block;
 
 import javax.annotation.Nonnull;
 
-import T145.magistics.common.tiles.TileResearchSentinel;
+import T145.magistics.common.tiles.TileResearchApparatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -14,10 +14,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderResearchSentinel extends TileEntitySpecialRenderer<TileResearchSentinel> {
+public class RenderResearchApparatus extends TileEntitySpecialRenderer<TileResearchApparatus> {
 
 	@Override
-	public void render(@Nonnull TileResearchSentinel te, double x, double y, double z, float partialTicks, int destroyStage, float unused) {
+	public void render(@Nonnull TileResearchApparatus te, double x, double y, double z, float partialTicks, int destroyStage, float unused) {
 		if (!te.isInvalid()) {
 			if (te.isSentinel() && Minecraft.getMinecraft().getRenderManager().isDebugBoundingBox()) {
 				GlStateManager.pushMatrix();

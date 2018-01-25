@@ -1,9 +1,9 @@
 package T145.magistics.common;
 
-import T145.magistics.common.blocks.BlockResearchSentinel;
+import T145.magistics.common.blocks.BlockResearchApparatus;
 import T145.magistics.common.blocks.base.BlockItemBase;
 import T145.magistics.common.items.curios.ItemCodexArcanum;
-import T145.magistics.common.tiles.TileResearchSentinel;
+import T145.magistics.common.tiles.TileResearchApparatus;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -19,8 +19,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 @GameRegistry.ObjectHolder(Magistics.ID)
 public class MagisticsLoader {
 
-	public static final BlockResearchSentinel RESEARCH_TABLE = new BlockResearchSentinel(true);
-	public static final BlockResearchSentinel PEDESTAL = new BlockResearchSentinel(false);
+	public static final BlockResearchApparatus RESEARCH_TABLE = new BlockResearchApparatus(true);
+	public static final BlockResearchApparatus PEDESTAL = new BlockResearchApparatus(false);
 
 	public static final ItemCodexArcanum CODEX_ARCANUM = new ItemCodexArcanum();
 
@@ -132,7 +132,7 @@ public class MagisticsLoader {
 			final IForgeRegistry<Block> registry = event.getRegistry();
 			registry.register(RESEARCH_TABLE);
 			registry.register(PEDESTAL);
-			registerTileEntity(TileResearchSentinel.class);
+			registerTileEntity(TileResearchApparatus.class);
 		}
 
 		private static void registerTileEntity(Class tileClass) {
