@@ -5,13 +5,13 @@ import javax.annotation.Nonnull;
 import T145.magistics.api.front.IModelProvider;
 import T145.magistics.client.render.block.RenderResearchApparatus;
 import T145.magistics.common.blocks.base.BlockBase;
-import T145.magistics.common.lib.InventoryIO;
 import T145.magistics.common.tiles.TileResearchApparatus;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -71,10 +71,21 @@ public class BlockResearchApparatus extends BlockBase implements IModelProvider,
 			ItemStack stack = tile.getObservableStack();
 
 			if (!stack.isEmpty()) {
-				InventoryIO.spawnEntityItem(world, stack, pos.getX(), pos.getY() + 0.8, pos.getZ());
+				spawnItem(world, stack, pos.getX(), pos.getY() + 0.6, pos.getZ());
 				tile.setObservableStack(ItemStack.EMPTY);
 			}
 		}
+	}
+
+	protected void spawnItem(World world, ItemStack stack, double x, double y, double z) {
+		float f = world.rand.nextFloat() * 0.8F + 0.1F;
+		float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+		float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
+		EntityItem item = new EntityItem(world, x + f, y + f1, z + f2, stack.copy());
+		item.motionX = world.rand.nextGaussian() * 0.05;
+		item.motionY = world.rand.nextGaussian() * 0.05 + 0.2;
+		item.motionZ = world.rand.nextGaussian() * 0.05;
+		world.spawnEntity(item);
 	}
 
 	@Override
