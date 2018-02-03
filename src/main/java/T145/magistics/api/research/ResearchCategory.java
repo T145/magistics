@@ -1,17 +1,16 @@
 package T145.magistics.api.research;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.util.ResourceLocation;
 
 public class ResearchCategory {
 
-	private final List<ResearchEntry> entries = new ArrayList<>();
-
 	private final String id;
 	private final ResourceLocation icon;
 	private final ResourceLocation background;
+	private final Map<String, ResearchEntry> entries = new HashMap<>();
 
 	public ResearchCategory(String id,  ResourceLocation icon, ResourceLocation background) {
 		this.id = id;
@@ -31,7 +30,11 @@ public class ResearchCategory {
 		return background;
 	}
 
-	public void addEntry(ResearchEntry entry) {
-		entries.add(entry);
+	void addEntry(ResearchEntry entry) {
+		entries.put(entry.getId(), entry);
+	}
+
+	public ResearchEntry getEntry(String entryId) {
+		return entries.get(entryId);
 	}
 }

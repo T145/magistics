@@ -1,19 +1,31 @@
 package T145.magistics.api.front;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import T145.magistics.api.research.ResearchCategory;
+import T145.magistics.api.research.ResearchEntry;
 
 public class MagisticsApi {
 
-	private static final Set<ResearchCategory> RESEARCH_REGISTRY = new HashSet<>();
+	private static final Map<String, ResearchCategory> RESEARCH_REGISTRY = new HashMap<>();
+
+	private MagisticsApi() {}
 
 	public static void registerResearch(ResearchCategory category) {
-		RESEARCH_REGISTRY.add(category);
+		RESEARCH_REGISTRY.put(category.getId(), category);
 	}
 
-	public Set<ResearchCategory> getResearch() {
-		return RESEARCH_REGISTRY;
+	@Nullable
+	public static ResearchCategory getCategory(String categoryId) {
+		return RESEARCH_REGISTRY.get(categoryId);
+	}
+
+	@Nullable
+	public static ResearchEntry getEntry(String parentId, String entryId) {
+		ResearchCategory parent = RESEARCH_REGISTRY.get(parentId);
+		return parent == null ? null : parent.getEntry(entryId);
 	}
 }

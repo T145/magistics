@@ -22,7 +22,7 @@ public class CommonProxy implements IProxy {
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
 		ResearchCategory info = new ResearchCategory("magistics.research_category.info", new ResourceLocation(Magistics.ID, "textures/gui/research/r_thaumaturgy.png"), new ResourceLocation(Magistics.ID, "textures/gui/research/bg.png"));
-		ResearchEntry test = new ResearchEntry("magistics.research_entry.test", info, new ResourceLocation(Magistics.ID, "textures/gui/research/r_crucible.png"));
+		ResearchEntry test = new ResearchEntry("magistics.research_entry.test", info, 4, 4, new ResourceLocation(Magistics.ID, "textures/gui/research/r_crucible.png"));
 		MagisticsApi.registerResearch(info);
 	}
 
